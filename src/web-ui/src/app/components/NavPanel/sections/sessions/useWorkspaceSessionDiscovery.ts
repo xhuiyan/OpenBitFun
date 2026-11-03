@@ -162,7 +162,7 @@ export function useWorkspaceSessionDiscovery(
       });
       if (!current()) return;
       if (!page.discoveryRefreshed || page.discoveryPending) {
-        throw new Error('This host does not support completing external session discovery in one request; update OpenBitFun on the host');
+        throw new Error('This host does not support completing external session discovery in one request; update StarMate on the host');
       }
       appliedSettingsVersions.current.set(key, settingsVersion);
       appliedRevealVersions.current.set(key, reveal);

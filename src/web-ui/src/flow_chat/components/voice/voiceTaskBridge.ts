@@ -72,7 +72,7 @@ export class VoiceTaskCancelledError extends Error {
   readonly sessionId: string;
 
   constructor(sessionId: string) {
-    super('OpenBitFun task was cancelled');
+    super('StarMate task was cancelled');
     this.name = 'VoiceTaskCancelledError';
     this.sessionId = sessionId;
   }
@@ -312,7 +312,7 @@ export function extractVoiceTaskProgressTexts(session: Session): Array<{ id: str
 export function extractVoiceTaskSummary(session: Session): string {
   const turn = latestTurn(session);
   if (!turn) {
-    return 'OpenBitFun completed the task without a text response.';
+    return 'StarMate completed the task without a text response.';
   }
   const parts: string[] = [];
   turn.modelRounds.forEach(round => {
@@ -324,7 +324,7 @@ export function extractVoiceTaskSummary(session: Session): string {
   });
   const summary = parts.join(' ').trim();
   if (new TextEncoder().encode(summary).length <= MAX_RESULT_CHARS) {
-    return summary || 'OpenBitFun completed the task without a text response.';
+    return summary || 'StarMate completed the task without a text response.';
   }
   // UTF-8 tool-result limits also apply to CJK and emoji responses.
   let result = '';
@@ -391,7 +391,7 @@ async function waitForSettledSession(
       stateSubscription.dispose();
       flowSubscription.dispose();
       scope.signal.removeEventListener('abort', disconnected);
-      reject(new Error('OpenBitFun task timed out after 30 minutes'));
+      reject(new Error('StarMate task timed out after 30 minutes'));
     }, TASK_TIMEOUT_MS);
     function disconnected() {
       if (finished) return;
@@ -528,11 +528,11 @@ async function observeVoiceTaskSession(
     scope.assertCurrent('complete voice task');
     const session = manager.getFlowChatState().sessions.get(sessionId);
     if (!session) {
-      throw new Error('OpenBitFun task session disappeared before completion');
+      throw new Error('StarMate task session disappeared before completion');
     }
     const turn = selectVoiceTaskTurn(session, baselineTurnIds, taskId);
     if (!turn || turn.status === 'error') {
-      throw new Error(turn?.error || session.error || 'OpenBitFun task failed');
+      throw new Error(turn?.error || session.error || 'StarMate task failed');
     }
     if (turn.status === 'cancelled') {
       throw new VoiceTaskCancelledError(sessionId);
@@ -573,7 +573,7 @@ export async function runOpenBitFunVoiceTask(
 ): Promise<VoiceTaskResult> {
   const normalizedTask = task.trim();
   if (!normalizedTask) {
-    throw new Error('OpenBitFun task description is empty');
+    throw new Error('StarMate task description is empty');
   }
 
   const scope = getActiveSurfaceScope();
@@ -610,7 +610,7 @@ export async function runMiniAppVoiceTask(
 ): Promise<VoiceTaskResult> {
   const normalizedTask = task.trim();
   if (!normalizedTask) {
-    throw new Error('OpenBitFun task description is empty');
+    throw new Error('StarMate task description is empty');
   }
 
   const session = FlowChatManager.getInstance()

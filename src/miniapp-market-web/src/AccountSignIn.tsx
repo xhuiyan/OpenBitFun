@@ -18,7 +18,7 @@ export function AccountSignIn() {
   const [retryAt, setRetryAt] = useState(0);
   const [now, setNow] = useState(Date.now());
   const initial = useRef<Promise<void> | null>(null);
-  useEffect(() => { document.title = `OpenBitFun · ${t('signIn')}`; }, [t]);
+  useEffect(() => { document.title = `StarMate · ${t('signIn')}`; }, [t]);
   useEffect(() => {
     const requestedReturnTo = new URLSearchParams(window.location.search).get('returnTo');
     const nativeReturnTo = rememberNativeAuthReturnTo(requestedReturnTo);

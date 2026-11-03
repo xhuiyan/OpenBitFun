@@ -76,7 +76,7 @@ export async function executeOpenBitFunPresentationRequest(
   }
   if (request.action === 'execute') {
     const capability = getInteractiveCapability(request.capabilityId);
-    if (!capability) throw new Error(`Unknown OpenBitFun capability: ${request.capabilityId}`);
+    if (!capability) throw new Error(`Unknown StarMate capability: ${request.capabilityId}`);
     const operation = capability.operations.find(({ id }) => id === request.operationId);
     if (!operation) {
       throw new Error(`Unknown operation for ${capability.id}: ${request.operationId ?? ''}`);

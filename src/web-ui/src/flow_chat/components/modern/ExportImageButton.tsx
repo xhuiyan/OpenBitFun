@@ -122,9 +122,9 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
           className={`export-content__logo ${LOGO_PLACEHOLDER_CLASS}`}
           data-openbitfun-product-component="export-image"
           data-openbitfun-product-part="logo"
-          aria-label="OpenBitFun"
+          aria-label="StarMate"
         />
-        <div className="export-content__title" data-openbitfun-product-component="export-image" data-openbitfun-product-part="title">OpenBitFun</div>
+        <div className="export-content__title" data-openbitfun-product-component="export-image" data-openbitfun-product-part="title">StarMate</div>
         <div className="export-content__timestamp" data-openbitfun-product-component="export-image" data-openbitfun-product-part="timestamp">
           {i18nService.formatDate(new Date())}
         </div>
@@ -193,7 +193,7 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
 
       <div className="export-content__footer" data-openbitfun-product-component="export-image" data-openbitfun-product-part="footer">
         <span>{i18nService.t('flow-chat:exportImage.poweredBy')}</span>
-        <span className="export-content__footer-brand">OpenBitFun</span>
+        <span className="export-content__footer-brand">StarMate</span>
       </div>
     </div>
   );

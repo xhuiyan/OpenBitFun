@@ -43,7 +43,7 @@ async fn endpoint(record: &launcher::LaunchRecord) -> Result<ipc::Endpoint, Stri
         .stderr(std::process::Stdio::null());
     let mut process = child.spawn().map_err(|e| {
         format!(
-            "Could not start OpenBitFun at {}: {e}",
+            "Could not start StarMate at {}: {e}",
             record.host_executable.display()
         )
     })?;
@@ -58,7 +58,7 @@ async fn endpoint(record: &launcher::LaunchRecord) -> Result<ipc::Endpoint, Stri
         }
         if tokio::time::Instant::now() >= deadline {
             return Err(
-                "OpenBitFun did not become ready. Open the host application and retry.".into(),
+                "StarMate did not become ready. Open the host application and retry.".into(),
             );
         }
         tokio::time::sleep(std::time::Duration::from_millis(300)).await;
@@ -419,7 +419,7 @@ pub(crate) async fn run(path: PathBuf) {
             Ok(current) if current.launch_id == record.launch_id => current,
             _ => {
                 crate::show_fatal_startup_error(
-                    "MiniApp launch record is incompatible. Recreate the system app in OpenBitFun.",
+                    "MiniApp launch record is incompatible. Recreate the system app in StarMate.",
                 );
                 return;
             }

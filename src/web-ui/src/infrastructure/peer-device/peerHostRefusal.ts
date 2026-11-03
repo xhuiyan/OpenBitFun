@@ -7,7 +7,7 @@ export interface PeerHostRefusal {
 
 // `PeerRefusal::message` keeps these prefixes byte-stable for frontend matching.
 const REFUSAL = /command '[^']+' is not supported on \w+ peer host(?:: (.+))?$/s;
-const UNKNOWN_TO_HOST = /command '[^']+' is unknown to this OpenBitFun \w+ peer host version/;
+const UNKNOWN_TO_HOST = /command '[^']+' is unknown to this StarMate \w+ peer host version/;
 /** Registry reason `CLI_NOT_IMPLEMENTED`: this host version has no handler yet. */
 const NOT_YET_IMPLEMENTED = 'has no handler for this command';
 

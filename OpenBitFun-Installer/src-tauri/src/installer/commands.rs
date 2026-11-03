@@ -839,13 +839,13 @@ pub(crate) fn launch_application(install_path: String) -> Result<(), String> {
     create_windows_silent_command(&exe)
         .current_dir(&install_path)
         .spawn()
-        .map_err(|e| format!("Failed to launch OpenBitFun: {}", e))?;
+        .map_err(|e| format!("Failed to launch StarMate: {}", e))?;
 
     #[cfg(not(target_os = "windows"))]
     std::process::Command::new(&exe)
         .current_dir(&install_path)
         .spawn()
-        .map_err(|e| format!("Failed to launch OpenBitFun: {}", e))?;
+        .map_err(|e| format!("Failed to launch StarMate: {}", e))?;
 
     Ok(())
 }
@@ -860,7 +860,7 @@ pub(crate) fn launch_legacy_data_migrator(
     request: LaunchLegacyDataMigratorRequest,
 ) -> Result<bool, String> {
     let _ = request;
-    Err("Data Migrator is distributed separately. Download and run OpenBitFun Data Migrator to import legacy data.".to_string())
+    Err("Data Migrator is distributed separately. Download and run StarMate Data Migrator to import legacy data.".to_string())
 }
 
 /// Close the installer window.
@@ -1274,7 +1274,7 @@ fn ensure_config_directory() -> Result<PathBuf, String> {
         .join(data_namespace())
         .join("config");
     std::fs::create_dir_all(&config_root)
-        .map_err(|e| format!("Failed to create OpenBitFun config directory: {}", e))?;
+        .map_err(|e| format!("Failed to create StarMate config directory: {}", e))?;
     Ok(config_root)
 }
 

@@ -1,8 +1,8 @@
 import type { ModeSkillInfo, SkillInfo } from './types';
 
 const SOURCE_LABEL_BY_ID: Record<string, string> = {
-  openbitfun: 'OpenBitFun',
-  'openbitfun-system': 'OpenBitFun',
+  openbitfun: 'StarMate',
+  'openbitfun-system': 'StarMate',
   'claude-code': 'Claude Code',
   claude: 'Claude Code',
   codex: 'Codex',

@@ -472,13 +472,13 @@ pub async fn miniapp_market_capture_window(
     }
     let position = window
         .outer_position()
-        .map_err(|error| format!("Could not read the OpenBitFun window position: {error}"))?;
+        .map_err(|error| format!("Could not read the StarMate window position: {error}"))?;
     let size = window
         .outer_size()
-        .map_err(|error| format!("Could not read the OpenBitFun window size: {error}"))?;
+        .map_err(|error| format!("Could not read the StarMate window size: {error}"))?;
     if size.width < 320 || size.height < 240 {
         return Err(
-            "The OpenBitFun window is too small to capture a review screenshot.".to_string(),
+            "The StarMate window is too small to capture a review screenshot.".to_string(),
         );
     }
 
@@ -511,7 +511,7 @@ pub async fn miniapp_market_capture_window(
             .capture_area(relative_x, relative_y, size.width, size.height)
             .map_err(|error| {
                 format!(
-                    "Window capture failed. On macOS, grant OpenBitFun Screen Recording permission: {error}"
+                    "Window capture failed. On macOS, grant StarMate Screen Recording permission: {error}"
                 )
             })?;
         let (width, height) = captured.dimensions();
@@ -674,17 +674,17 @@ fn require_permission_confirmation(
 
 fn validate_minimum_openbitfun_version(minimum: &str) -> Result<(), String> {
     let minimum = semver::Version::parse(minimum)
-        .map_err(|_| "The release declares an invalid minimum OpenBitFun version.".to_string())?;
+        .map_err(|_| "The release declares an invalid minimum StarMate version.".to_string())?;
     if minimum < OPENBITFUN_INITIAL_RELEASE_VERSION {
         return Err(
-            "The release declares a minimum OpenBitFun version earlier than 1.0.0.".to_string(),
+            "The release declares a minimum StarMate version earlier than 1.0.0.".to_string(),
         );
     }
     let current = semver::Version::parse(env!("CARGO_PKG_VERSION"))
-        .map_err(|_| "The current OpenBitFun version is invalid.".to_string())?;
+        .map_err(|_| "The current StarMate version is invalid.".to_string())?;
     if !supports_market_minimum_version(&current, &minimum) {
         return Err(format!(
-            "This MiniApp requires OpenBitFun {minimum} or newer. Current version: {current}."
+            "This MiniApp requires StarMate {minimum} or newer. Current version: {current}."
         ));
     }
     Ok(())

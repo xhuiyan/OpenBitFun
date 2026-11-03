@@ -301,7 +301,7 @@ function WorkspaceProjectPermissionsContent({
       if (!current()) return;
       log.error('Failed to save project permission rules', { workspaceId: workspace.id, error });
       notificationService.error(
-        error instanceof Error && error.message.includes('changed outside OpenBitFun')
+        error instanceof Error && error.message.includes('changed outside StarMate')
           ? t('projectPermissions.rulesConflict')
           : t('projectPermissions.rulesSaveFailed'),
       );
@@ -354,7 +354,7 @@ function WorkspaceProjectPermissionsContent({
     } catch (error) {
       if (!current() || epoch !== additionEpoch.current) return;
       log.error('Failed to add project permission rule', { workspaceId: workspace.id, error });
-      setAdditionError(t(error instanceof Error && error.message.includes('changed outside OpenBitFun')
+      setAdditionError(t(error instanceof Error && error.message.includes('changed outside StarMate')
         ? 'projectPermissions.rulesConflict' : 'projectPermissions.rulesSaveFailed'));
     } finally {
       mutationRunning.current = false;

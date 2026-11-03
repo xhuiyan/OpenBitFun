@@ -146,7 +146,7 @@ it('does not apply confirmation from a previous device and ignores its delayed r
 
 it('keeps the draft and revision intact after a conflicting save', async () => {
   await render();
-  mocks.save.mockRejectedValue(new Error('Rules changed outside OpenBitFun'));
+  mocks.save.mockRejectedValue(new Error('Rules changed outside StarMate'));
   await openList();
   await editRule();
   editResource('draft/*');

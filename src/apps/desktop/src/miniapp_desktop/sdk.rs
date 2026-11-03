@@ -154,7 +154,7 @@ pub(crate) async fn call(
         }
         // Reloading a view does not revoke accepted work. Explicit cancellation
         // remains available by the session/turn identity owned by the application.
-        "agent.cancelStaleRuns" => Err("This instance survives view reloads. Cancel a specific Agent turn, or stop the instance explicitly in OpenBitFun.".into()),
+        "agent.cancelStaleRuns" => Err("This instance survives view reloads. Cancel a specific Agent turn, or stop the instance explicitly in StarMate.".into()),
         "deck.renderPage" => {
             if strict
                 && !miniapp

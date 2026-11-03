@@ -17,7 +17,7 @@ describe('peerHostRefusal', () => {
       "command 'btw_ask_stream' is not supported on CLI peer host: the CLI peer host has no handler for this command",
     )?.kind).toBe('updateRequired');
     expect(classifyPeerHostRefusal(
-      "command 'x' is unknown to this OpenBitFun CLI peer host version; upgrade the peer host",
+      "command 'x' is unknown to this StarMate CLI peer host version; upgrade the peer host",
     )?.kind).toBe('updateRequired');
   });
 

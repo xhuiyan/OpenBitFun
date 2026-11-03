@@ -328,7 +328,7 @@ mod tests {
                 ..
             } => {
                 assert!(
-                    err.contains("is unknown to this OpenBitFun CLI peer host version"),
+                    err.contains("is unknown to this StarMate CLI peer host version"),
                     "{err}"
                 );
                 assert!(!err.contains("is not supported on CLI peer host"), "{err}");

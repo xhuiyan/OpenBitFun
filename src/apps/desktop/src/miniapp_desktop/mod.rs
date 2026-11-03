@@ -89,7 +89,7 @@ pub(crate) async fn claim_host(
         if let Ok(bytes) = tokio::fs::read(channel.endpoint_path(&paths.user_data_dir())).await {
             if let Ok(endpoint) = serde_json::from_slice::<ipc::Endpoint>(&bytes) {
                 if endpoint.protocol_version != MINIAPP_PRESENTATION_PROTOCOL {
-                    return Err("The running OpenBitFun host uses an incompatible MiniApp protocol. Restart the host before opening this version.".into());
+                    return Err("The running StarMate host uses an incompatible MiniApp protocol. Restart the host before opening this version.".into());
                 }
                 if let Ok(Ok(_)) = tokio::time::timeout(
                     std::time::Duration::from_secs(2),
@@ -108,7 +108,7 @@ pub(crate) async fn claim_host(
         }
         if tokio::time::Instant::now() >= deadline {
             return Err(
-                "The existing OpenBitFun host did not become ready; its data was left untouched"
+                "The existing StarMate host did not become ready; its data was left untouched"
                     .into(),
             );
         }
@@ -993,7 +993,7 @@ async fn dispatch(app: &tauri::AppHandle, method: &str, params: Value) -> Result
         )
         .await?;
         if miniapp.compiled_html.trim().is_empty() {
-            return Err("MiniApp document is empty; rebuild it in OpenBitFun".into());
+            return Err("MiniApp document is empty; rebuild it in StarMate".into());
         }
         let (instance, view) = host.instances.prepare(
             record.app_id.clone(),

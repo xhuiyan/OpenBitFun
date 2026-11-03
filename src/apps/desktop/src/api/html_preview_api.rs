@@ -105,7 +105,7 @@ fn require_preview_capability(ping: &serde_json::Value) -> Result<(), HtmlPrevie
         .and_then(serde_json::Value::as_bool)
         != Some(true)
     {
-        return Err(HtmlPreviewError::unavailable("This device does not support HTML preview resources; update OpenBitFun on the controlled device"));
+        return Err(HtmlPreviewError::unavailable("This device does not support HTML preview resources; update StarMate on the controlled device"));
     }
     Ok(())
 }

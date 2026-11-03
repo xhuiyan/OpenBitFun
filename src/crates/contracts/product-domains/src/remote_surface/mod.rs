@@ -281,7 +281,7 @@ impl PeerRefusal {
                 host.display_name()
             ),
             Self::UnknownToHost { host } => format!(
-                "command '{command}' is unknown to this OpenBitFun {} peer host version; upgrade the peer host or check the command name",
+                "command '{command}' is unknown to this StarMate {} peer host version; upgrade the peer host or check the command name",
                 host.display_name()
             ),
         }

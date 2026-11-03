@@ -85,7 +85,7 @@ async fn updater_endpoints_by_policy() -> Vec<tauri::Url> {
     );
     if prefer_mirror(&github_manifest, mirror_manifest.as_ref(), github_speed) {
         log::info!(
-            "GitHub updater speed is {} KiB/s, under the {} KiB/s bar; trying the synchronized OpenBitFun mirror first.",
+            "GitHub updater speed is {} KiB/s, under the {} KiB/s bar; trying the synchronized StarMate mirror first.",
             github_speed / 1024,
             HEALTHY_THROUGHPUT / 1024
         );

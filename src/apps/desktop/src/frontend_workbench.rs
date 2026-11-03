@@ -426,7 +426,7 @@ impl FrontendWorkbenchManager {
         fs::write(
             draft_path.join("CREATION.md"),
             format!(
-                "# OpenBitFun UI customization\n\nDraft id: `{draft_id}`\nBase revision: `{active_revision}`\n\nRead `openbitfun-creation-api.md`. Edit `openbitfun-creation.css` and `openbitfun-creation.js`; put optional modules/assets under `creation-assets/`. JavaScript exports a default activation function receiving the versioned UI API, and may return cleanup. The host loads it after the real shell is ready and loads CSS last. No repository, Node.js, package installation, build, or index.html edit is needed. Preserve existing customizations unless asked to replace them. Apply with `FrontendWorkbench` and this draft id. The host waits for activation, then provides 15 seconds to keep or roll back.\n"
+                "# StarMate UI customization\n\nDraft id: `{draft_id}`\nBase revision: `{active_revision}`\n\nRead `openbitfun-creation-api.md`. Edit `openbitfun-creation.css` and `openbitfun-creation.js`; put optional modules/assets under `creation-assets/`. JavaScript exports a default activation function receiving the versioned UI API, and may return cleanup. The host loads it after the real shell is ready and loads CSS last. No repository, Node.js, package installation, build, or index.html edit is needed. Preserve existing customizations unless asked to replace them. Apply with `FrontendWorkbench` and this draft id. The host waits for activation, then provides 15 seconds to keep or roll back.\n"
             ),
         )
         .map_err(io_error("write draft instructions"))?;
@@ -1234,7 +1234,7 @@ impl FrontendWorkbenchManager {
 fn ensure_local_confirmation_surface(attached_peer_controllers: usize) -> Result<(), String> {
     if attached_peer_controllers > 0 {
         return Err(
-            "FrontendWorkbench is unavailable while this OpenBitFun host is controlled through Peer Device Mode; run Creative mode on the visible local desktop instead"
+            "FrontendWorkbench is unavailable while this StarMate host is controlled through Peer Device Mode; run Creative mode on the visible local desktop instead"
                 .to_string(),
         );
     }

@@ -290,10 +290,10 @@ pub(crate) fn shell_executable(host: &Path) -> Result<PathBuf, String> {
     };
     let path = host
         .parent()
-        .ok_or("Missing OpenBitFun application directory")?
+        .ok_or("Missing StarMate application directory")?
         .join(name);
     if !path.is_file() {
-        return Err("The lightweight MiniApp shell is missing. Reinstall OpenBitFun, or run pnpm run prepare:miniapp-shell for a source build.".into());
+        return Err("The lightweight MiniApp shell is missing. Reinstall StarMate, or run pnpm run prepare:miniapp-shell for a source build.".into());
     }
     Ok(path)
 }

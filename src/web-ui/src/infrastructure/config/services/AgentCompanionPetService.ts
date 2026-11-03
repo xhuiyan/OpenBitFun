@@ -113,9 +113,9 @@ const BUILTIN_PETS: AgentCompanionPetSelection[] = [
   },
   {
     id: 'openbitfun',
-    displayName: 'OpenBitFun',
+    displayName: 'StarMate',
     description:
-      "OpenBitFun's mascot — Bifang, a figure from Chinese mythology said to live on Mount Zhang'e. In the Classic of Mountains and Seas (Shan Hai Jing · Western Mountains), Bifang is described as crane-like with one foot, blue feathers marked with red, and a white beak.",
+      "StarMate's mascot — Bifang, a figure from Chinese mythology said to live on Mount Zhang'e. In the Classic of Mountains and Seas (Shan Hai Jing · Western Mountains), Bifang is described as crane-like with one foot, blue feathers marked with red, and a white beak.",
     source: 'preset',
     packagePath: `${BUILTIN_PET_BASE}/openbitfun`,
     spritesheetPath: `${BUILTIN_PET_BASE}/openbitfun/spritesheet.webp`,

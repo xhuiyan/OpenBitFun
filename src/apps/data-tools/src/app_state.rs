@@ -63,7 +63,7 @@ impl CommandError {
             ),
             LegacyMigrationError::SourceEqualsTarget(_) => Self::new(
                 "source_equals_target",
-                "The legacy and OpenBitFun data locations are not safely separated.",
+                "The legacy and StarMate data locations are not safely separated.",
                 false,
             ),
             LegacyMigrationError::UnsupportedSource(_) => Self::new(
@@ -108,13 +108,13 @@ impl CommandError {
             ),
             LegacyMigrationError::ProcessInspection(_) => Self::new(
                 "process_inspection_failed",
-                "OpenBitFun could not verify that all data-writing processes have stopped.",
+                "StarMate could not verify that all data-writing processes have stopped.",
                 true,
             ),
             LegacyMigrationError::UntrustedExecutable(_)
             | LegacyMigrationError::TrustedInstallationUnavailable(_) => Self::new(
                 "trusted_installation_unavailable",
-                "The signed OpenBitFun installation could not be verified.",
+                "The signed StarMate installation could not be verified.",
                 true,
             ),
             LegacyMigrationError::InjectedCrash(_) => Self::new(
@@ -385,7 +385,7 @@ impl DataToolsCoordinator {
             if confirmation != "RESET" {
                 return Err(CommandError::new(
                     "reset_confirmation_required",
-                    "Type RESET to confirm permanent deletion of OpenBitFun data.",
+                    "Type RESET to confirm permanent deletion of StarMate data.",
                     true,
                 ));
             }
@@ -418,7 +418,7 @@ impl DataToolsCoordinator {
             )
             .map_err(|error| CommandError::from_legacy(&error))?;
             if !blockers.is_empty() {
-                return Err(CommandError::new("reset_writers_running", "Close BitFun, OpenBitFun, their CLI/background writers, and other Data Tools instances, then retry reset.", true));
+                return Err(CommandError::new("reset_writers_running", "Close BitFun, StarMate, their CLI/background writers, and other Data Tools instances, then retry reset.", true));
             }
             openbitfun_legacy_migration::reset_target_data(&roots, &preview.directories, &protected)
                 .map_err(|_| CommandError::new("reset_scope_changed", "Reset stopped because the directories failed revalidation. Review the paths again; some data may already have been removed.", true))
@@ -440,7 +440,7 @@ impl DataToolsCoordinator {
         match result {
             Ok(result) => {
                 if !result.failed.is_empty() {
-                    session.error = Some(CommandError::new("reset_incomplete", "Some OpenBitFun directories could not be fully removed. Close applications using them, then review and retry reset before migrating.", true));
+                    session.error = Some(CommandError::new("reset_incomplete", "Some StarMate directories could not be fully removed. Close applications using them, then review and retry reset before migrating.", true));
                 }
                 session.reset_result = Some(result);
             }
@@ -467,7 +467,7 @@ impl DataToolsCoordinator {
         let path = export_failure_diagnostics(&layout, &report).map_err(|_| {
             CommandError::new(
                 "diagnostics_export_failed",
-                "OpenBitFun could not write the sanitized migration diagnostics file.",
+                "StarMate could not write the sanitized migration diagnostics file.",
                 true,
             )
         })?;
@@ -1020,7 +1020,7 @@ fn redact_plan_for_ui(plan: &MigrationPlan) -> MigrationPlan {
         .collect();
     for conflict in &mut redacted.conflicts {
         conflict.source_summary = "Legacy item".to_string();
-        conflict.target_summary = "Existing OpenBitFun item".to_string();
+        conflict.target_summary = "Existing StarMate item".to_string();
     }
     redacted
 }

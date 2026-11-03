@@ -466,7 +466,7 @@ export function useMiniAppBridge(
           }
           if (method === 'agent.cancelStaleRuns') {
             if (hasLocalMiniAppPresentation() && runScopeRef.current.kind === 'active' && useMiniAppPresentationStore.getState().tabs[appId]) {
-              replyError('This instance survives view reloads. Cancel a specific Agent turn, or stop the instance explicitly in OpenBitFun.');
+              replyError('This instance survives view reloads. Cancel a specific Agent turn, or stop the instance explicitly in StarMate.');
               return;
             }
             const result = await miniAppAPI.agentCancelStaleRuns(appId);

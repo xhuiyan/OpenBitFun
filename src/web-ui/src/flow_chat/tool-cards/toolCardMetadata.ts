@@ -112,11 +112,11 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
   },
   'OpenBitFunControl': {
     toolName: 'OpenBitFunControl',
-    displayName: 'OpenBitFun',
+    displayName: 'StarMate',
     icon: 'CONTROL',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Discover and control OpenBitFun features and settings',
+    description: 'Discover and control StarMate features and settings',
     displayMode: 'standard',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.toolIdentity.assistantAction,
   },
@@ -514,7 +514,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'WEB',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'List, publish, update, delete, and manage access to OpenBitFun Pages',
+    description: 'List, publish, update, delete, and manage access to StarMate Pages',
     displayMode: 'standard',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.toolIdentity.terminal
   },
@@ -524,7 +524,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'WEB',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Deploy a saved OpenBitFun Page version to production',
+    description: 'Deploy a saved StarMate Page version to production',
     displayMode: 'standard',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.toolIdentity.terminal
   },
@@ -534,7 +534,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'WEB',
     requiresConfirmation: true,
     resultDisplayType: 'detailed',
-    description: 'Publish OpenBitFun Page content (upload, save version, deploy)',
+    description: 'Publish StarMate Page content (upload, save version, deploy)',
     displayMode: 'standard',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.toolIdentity.terminal
   },
@@ -571,14 +571,14 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     primaryColor: 'var(--openbitfun-color-accent-hover)'
   },
 
-  // OpenBitFun Canvas tools
+  // StarMate Canvas tools
   'CreateCanvas': {
     toolName: 'CreateCanvas',
     displayName: 'Create Canvas',
     icon: 'UI',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Create a OpenBitFun Canvas artifact',
+    description: 'Create a StarMate Canvas artifact',
     displayMode: 'detailed',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.generativeUi
   },
@@ -588,7 +588,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'UI',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Read a OpenBitFun Canvas artifact',
+    description: 'Read a StarMate Canvas artifact',
     displayMode: 'detailed',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.generativeUi
   },
@@ -598,7 +598,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'UI',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Update a OpenBitFun Canvas artifact',
+    description: 'Update a StarMate Canvas artifact',
     displayMode: 'detailed',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.generativeUi
   },
@@ -608,7 +608,7 @@ const TOOL_CARD_DEFINITIONS: Record<string, ToolCardDefinition> = {
     icon: 'UI',
     requiresConfirmation: false,
     resultDisplayType: 'detailed',
-    description: 'Patch a OpenBitFun Canvas artifact',
+    description: 'Patch a StarMate Canvas artifact',
     displayMode: 'detailed',
     primaryColor: APPEARANCE_DOMAIN_TOKENS.generativeUi
   },

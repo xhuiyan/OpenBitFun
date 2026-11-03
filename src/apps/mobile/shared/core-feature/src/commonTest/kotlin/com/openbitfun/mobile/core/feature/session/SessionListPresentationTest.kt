@@ -12,7 +12,7 @@ class SessionListPresentationTest {
 
     private val workspace = SessionWorkspaceContext(
         selectedPath = "/work/openbitfun",
-        selectedName = "OpenBitFun",
+        selectedName = "StarMate",
         selectedKind = "normal",
         recent = listOf(
             RecentWorkspace(path = "/work/other", name = "Other", lastOpened = "", kind = "normal"),

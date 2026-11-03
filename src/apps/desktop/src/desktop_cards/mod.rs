@@ -138,7 +138,7 @@ fn ensure_local_display_surface() -> Result<(), String> {
     if crate::api::peer_host_invoke::attached_controllers().is_empty() {
         Ok(())
     } else {
-        Err("This OpenBitFun host is being driven from another device through Peer Device Mode. Desktop cards would appear only on this host's screen, which that user cannot see.".to_string())
+        Err("This StarMate host is being driven from another device through Peer Device Mode. Desktop cards would appear only on this host's screen, which that user cannot see.".to_string())
     }
 }
 
@@ -226,7 +226,7 @@ impl DesktopCards {
         if self.is_enabled() {
             Ok(())
         } else {
-            Err("Desktop cards are turned off in OpenBitFun settings.".to_string())
+            Err("Desktop cards are turned off in StarMate settings.".to_string())
         }
     }
 

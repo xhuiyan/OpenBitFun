@@ -51,7 +51,7 @@ describe('AgentCompanionPetService built-in presets', () => {
       version: 2, columns: 8, rows: 11, supportsLook: true,
     });
     expect(openbitfun).toMatchObject({
-      displayName: 'OpenBitFun',
+      displayName: 'StarMate',
       packagePath: '/agent-companion-pets/openbitfun',
       spritesheetPath: '/agent-companion-pets/openbitfun/spritesheet.webp',
     });

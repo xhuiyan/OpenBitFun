@@ -93,7 +93,7 @@ pub async fn desktop_card_set_visible(
     request: DesktopCardSetVisibleRequest,
 ) -> Result<DesktopCardRecord, String> {
     if request.visible && !cards.is_enabled() {
-        return Err("Desktop cards are turned off in OpenBitFun settings.".to_string());
+        return Err("Desktop cards are turned off in StarMate settings.".to_string());
     }
     cards.set_visible(&request.card_id, request.visible).await
 }

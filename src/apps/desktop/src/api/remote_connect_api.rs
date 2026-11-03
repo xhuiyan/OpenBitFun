@@ -977,7 +977,7 @@ pub(crate) async fn wait_for_dispatch_account_device_online(
         }
         if tokio::time::Instant::now() >= deadline {
             return Err(
-                "remote OpenBitFun daemon did not connect to the relay within 30 seconds"
+                "remote StarMate daemon did not connect to the relay within 30 seconds"
                     .to_string(),
             );
         }
@@ -1383,7 +1383,7 @@ pub(crate) async fn execute_remote_control(
     }
     // Do not open an unanswerable host-only login dialog from a remote Agent.
     read_account_context().await.map_err(|_| {
-        "account_required: Sign in to OpenBitFun on the executing Desktop host first".to_string()
+        "account_required: Sign in to StarMate on the executing Desktop host first".to_string()
     })?;
     match request {
         Request::Start {
@@ -2024,9 +2024,9 @@ pub async fn remote_connect_get_methods() -> Result<Vec<ConnectionMethodInfo>, S
             },
             ConnectionMethod::OpenBitFunServer => ConnectionMethodInfo {
                 id: "openbitfun_server".into(),
-                name: "OpenBitFun Server".into(),
+                name: "StarMate Server".into(),
                 available: true,
-                description: "Official OpenBitFun relay".into(),
+                description: "Official StarMate relay".into(),
             },
             ConnectionMethod::BotFeishu => ConnectionMethodInfo {
                 id: "bot_feishu".into(),
