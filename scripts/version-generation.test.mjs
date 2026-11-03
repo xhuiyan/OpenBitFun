@@ -7,6 +7,9 @@ import test from 'node:test';
 
 const root = path.resolve(import.meta.dirname, '..');
 const expectedVersion = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version;
+const expectedDisplayName = JSON.parse(
+  fs.readFileSync(path.join(root, 'products/openbitfun/locales/en-US.json'), 'utf8')
+)['product.desktop.name'];
 
 for (const [buildEnv, isDev] of [['production', false], ['development', true]]) {
   test(`generates ${buildEnv} version metadata explicitly`, () => {
@@ -16,6 +19,7 @@ for (const [buildEnv, isDev] of [['production', false], ['development', true]]) 
     const generated = JSON.parse(
       fs.readFileSync(path.join(outputRoot, 'src/web-ui/public/version.json'), 'utf8')
     );
+    assert.equal(generated.name, expectedDisplayName);
     assert.equal(generated.version, expectedVersion);
     assert.equal(generated.buildEnv, buildEnv);
     assert.equal(generated.releaseChannel, 'stable');

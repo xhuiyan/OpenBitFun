@@ -194,7 +194,7 @@ export function matchesWorkspaceExternalDiscovery(
 }
 
 export function sessionSourceAgentLabel(source: string): string {
-  return source === 'openbitfun' ? 'OpenBitFun' : isExternalSessionEcosystem(source) ? EXTERNAL_SESSION_NAMES[source] : source;
+  return source === 'openbitfun' ? 'StarMate' : isExternalSessionEcosystem(source) ? EXTERNAL_SESSION_NAMES[source] : source;
 }
 
 export function deriveWorkspaceSessionWorktree(session: Session): WorkspaceSessionWorktree {

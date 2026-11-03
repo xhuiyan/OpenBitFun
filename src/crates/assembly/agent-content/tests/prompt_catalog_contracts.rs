@@ -337,7 +337,7 @@ fn creative_prompt_fetches_creative_skills_on_demand_and_keeps_product_owners() 
     }
     let normalized = prompt.split_whitespace().collect::<Vec<_>>().join(" ");
     for required in [
-        "They are not bundled with OpenBitFun and do not appear in the `Skill` listing",
+        "They are not bundled with StarMate and do not appear in the `Skill` listing",
         "https://raw.githubusercontent.com/<owner>/<repo>/HEAD/<path>",
         "git clone --depth 1 --filter=blob:none --sparse",
         "Never check out a whole HyperFrames or onetake repository",

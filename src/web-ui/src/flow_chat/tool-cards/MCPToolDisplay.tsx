@@ -369,7 +369,7 @@ export const MCPToolDisplay: React.FC<ToolCardProps> = ({
               id,
               result: {
                 protocolVersion: MCP_APPS_PROTOCOL_VERSION,
-                hostInfo: { name: 'OpenBitFun', version: '1.0.0' },
+                hostInfo: { name: 'StarMate', version: '1.0.0' },
                 hostCapabilities: {
                   openLinks: {},
                   serverTools: { listChanged: true },

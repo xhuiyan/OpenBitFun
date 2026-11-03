@@ -315,7 +315,7 @@ export class AccountIdentityService {
       const me = await this.dependencies.api.me();
       this.ensureCurrentAuth(generation);
       if (!me) {
-        throw new AccountIdentityError('failed', 'OpenBitFun authorized sign-in but returned no account.');
+        throw new AccountIdentityError('failed', 'StarMate authorized sign-in but returned no account.');
       }
       this.invalidateRefresh();
       this.setSnapshot({ resolved: true, status: 'signed-in', me });

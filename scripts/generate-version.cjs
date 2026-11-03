@@ -19,6 +19,23 @@ const {
 const packageJsonPath = path.resolve(__dirname, '../package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
+/**
+ * Product display name is owned by the product definition locales, not by the
+ * private root package name. Fall back to the package name when a standalone
+ * script copy has no product definition beside it.
+ */
+function resolveProductDisplayName() {
+  try {
+    const localePath = path.resolve(__dirname, '../products/openbitfun/locales/en-US.json');
+    const locale = JSON.parse(fs.readFileSync(localePath, 'utf-8'));
+    const displayName = locale['product.desktop.name'];
+    if (typeof displayName === 'string' && displayName.trim()) return displayName;
+  } catch {
+    // Fall through to the package name below.
+  }
+  return packageJson.name;
+}
+
 function parseBuildEnv(args) {
   const index = args.indexOf('--build-env');
   const buildEnv = index >= 0 ? args[index + 1] : undefined;
@@ -65,7 +82,7 @@ function generateVersionInfo(buildEnv) {
   }
   
   const versionInfo = {
-    name: packageJson.name === 'OpenBitFun' ? 'OpenBitFun' : packageJson.name,
+    name: resolveProductDisplayName(),
     version: packageJson.version,
     buildDate,
     buildTimestamp,
