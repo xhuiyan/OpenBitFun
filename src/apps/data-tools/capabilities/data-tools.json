@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "data-tools",
-  "description": "Minimal local capability set for OpenBitFun Data Tools",
+  "description": "Minimal local capability set for StarMate Data Tools",
   "windows": ["data-tools"],
   "permissions": [
     "core:default",

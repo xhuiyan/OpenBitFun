@@ -1651,7 +1651,7 @@ test('Mac recovery architecture command accepts a real Mach-O executable', { ski
   const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-recovery-architecture-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const target = process.arch === 'arm64' ? 'aarch64-apple-darwin' : 'x86_64-apple-darwin';
-  const executable = path.join(root, 'target', target, 'release/bundle/macos/OpenBitFun.app/Contents/MacOS/openbitfun-desktop');
+  const executable = path.join(root, 'target', target, 'release/bundle/macos/StarMate.app/Contents/MacOS/openbitfun-desktop');
   mkdirSync(path.dirname(executable), { recursive: true });
   symlinkSync(process.execPath, executable);
   const result = spawnSync('bash', ['-c', `set -euo pipefail\n${script}`], {
@@ -1664,8 +1664,8 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
   const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-staple-repair-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const bundle = path.join(root, 'target/x86_64-apple-darwin/release/bundle');
-  const app = path.join(bundle, 'macos/OpenBitFun.app');
-  const dmg = path.join(bundle, 'dmg/OpenBitFun_1.0.6_x64.dmg');
+  const app = path.join(bundle, 'macos/StarMate.app');
+  const dmg = path.join(bundle, 'dmg/StarMate_1.0.6_x64.dmg');
   mkdirSync(path.join(root, 'bin'));
   mkdirSync(path.join(root, 'scripts'));
   mkdirSync(path.join(app, 'Contents'), { recursive: true });
@@ -1696,7 +1696,7 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
     elif [[ "\${TICKET_ERROR:-}" == invalid ]]; then
       echo 'Invalid ticket'; exit 65
     elif [[ "\${VALID_TICKET:-}" != true && ! -f "$app/Contents/stapled-fixture" ]]; then
-      echo 'OpenBitFun.app does not have a ticket stapled to it.'; exit 65
+      echo 'StarMate.app does not have a ticket stapled to it.'; exit 65
     fi
   `);
   stub('hdiutil', `
@@ -1704,11 +1704,11 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
       convert)
         format="$3"; output="$5"; input="$6"
         if [[ "$format" == UDRW ]]; then cp "$input" "$output";
-        else mount="$(cat "$FIXTURE/mount-path")"; cat "$mount/OpenBitFun.app/Contents/stapled-fixture" > "$output"; fi
+        else mount="$(cat "$FIXTURE/mount-path")"; cat "$mount/StarMate.app/Contents/stapled-fixture" > "$output"; fi
         ;;
       attach)
         mount="$5"; printf '%s' "$mount" > "$FIXTURE/mount-path"
-        mkdir -p "$mount/OpenBitFun.app"
+        mkdir -p "$mount/StarMate.app"
         ;;
       detach) ;;
     esac
@@ -1753,7 +1753,7 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
   assert.equal(Buffer.from(readFileSync(`${app}.tar.gz.sig`, 'utf8'), 'base64').toString(), 'signed');
   const contents = spawnSync('tar', ['-tzf', `${app}.tar.gz`], { encoding: 'utf8', windowsHide: true });
   assert.equal(contents.status, 0, contents.stderr);
-  assert.match(contents.stdout, /OpenBitFun.app\/Contents\/stapled-fixture/);
+  assert.match(contents.stdout, /StarMate.app\/Contents\/stapled-fixture/);
   assert.equal(readFileSync(path.join(root, 'calls'), 'utf8').match(/stapler staple/g)?.length, 1);
   assert.equal(readFileSync(path.join(root, 'mounted-attempts'), 'utf8').trim(), '3');
   assert.match(readFileSync(path.join(root, 'calls'), 'utf8'), /sleep 10[\s\S]*sleep 20/);

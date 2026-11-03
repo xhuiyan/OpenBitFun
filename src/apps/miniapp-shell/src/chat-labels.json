@@ -20,7 +20,7 @@
     "retry": "Retry",
     "offline": "Disconnected from the host. Your accepted work stays on the host.",
     "limitedHistory": "Showing recent messages.",
-    "liveOnly": "This host supports live messages only. Update OpenBitFun to restore conversation history.",
+    "liveOnly": "This host supports live messages only. Update StarMate to restore conversation history.",
     "approval": "This app needs your approval.",
     "stopUnavailable": "The app is processing your request. Stop is available when its Agent turn starts."
   },
@@ -45,7 +45,7 @@
     "retry": "重试",
     "offline": "与宿主连接中断，已接受的任务仍由宿主管理。",
     "limitedHistory": "当前显示最近的消息。",
-    "liveOnly": "当前宿主仅支持实时消息，请更新 OpenBitFun 以恢复对话历史。",
+    "liveOnly": "当前宿主仅支持实时消息，请更新星伴以恢复对话历史。",
     "approval": "当前应用需要你的审批。",
     "stopUnavailable": "应用正在处理请求，Agent 回合开始后可停止。"
   },
@@ -70,7 +70,7 @@
     "retry": "重試",
     "offline": "與宿主的連線中斷，已接受的工作仍由宿主管理。",
     "limitedHistory": "目前顯示最近的訊息。",
-    "liveOnly": "目前宿主僅支援即時訊息，請更新 OpenBitFun 以還原對話歷史。",
+    "liveOnly": "目前宿主僅支援即時訊息，請更新星伴以還原對話歷史。",
     "approval": "目前應用需要你的核准。",
     "stopUnavailable": "應用正在處理請求，Agent 回合開始後可停止。"
   }

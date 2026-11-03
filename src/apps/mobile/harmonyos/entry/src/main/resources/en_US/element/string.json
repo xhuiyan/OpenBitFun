@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "OpenBitFun remote control client"
+      "value": "StarMate remote control client"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "Connect to OpenBitFun desktop and control remote sessions"
+      "value": "Connect to StarMate desktop and control remote sessions"
     },
     {
       "name": "EntryAbility_label",
-      "value": "OpenBitFun"
+      "value": "StarMate"
     },
     {
       "name": "permission_microphone_reason",
@@ -310,7 +310,7 @@
     },
     {
       "name": "notification_onboardingBody",
-      "value": "Allow OpenBitFun to notify you when tasks finish. You can change this later in system settings."
+      "value": "Allow StarMate to notify you when tasks finish. You can change this later in system settings."
     },
     {
       "name": "notification_onboardingLater",
@@ -322,7 +322,7 @@
     },
     {
       "name": "app_title",
-      "value": "OpenBitFun"
+      "value": "StarMate"
     },
     {
       "name": "common_cancel",
@@ -406,7 +406,7 @@
     },
     {
       "name": "notification_taskCompletedBody",
-      "value": "Your OpenBitFun task is ready. Tap to open OpenBitFun and view the result."
+      "value": "Your StarMate task is ready. Tap to open StarMate and view the result."
     },
     {
       "name": "chatHome_prompt",
@@ -414,7 +414,7 @@
     },
     {
       "name": "chatHome_placeholder",
-      "value": "Ask OpenBitFun"
+      "value": "Ask StarMate"
     },
     {
       "name": "chatHome_localHint",
@@ -474,7 +474,7 @@
     },
     {
       "name": "chatHome_codeHintBody",
-      "value": "Connect a desktop workspace before OpenBitFun can read project files, run commands, and change code."
+      "value": "Connect a desktop workspace before StarMate can read project files, run commands, and change code."
     },
     {
       "name": "chatHome_enterCode",
@@ -482,11 +482,11 @@
     },
     {
       "name": "generalChat_ready",
-      "value": "OpenBitFun is ready"
+      "value": "StarMate is ready"
     },
     {
       "name": "generalChat_generating",
-      "value": "OpenBitFun is answering"
+      "value": "StarMate is answering"
     },
     {
       "name": "generalChat_sending",
@@ -578,7 +578,7 @@
     },
     {
       "name": "settings_model_unsupported",
-      "value": "The OpenBitFun app on this device is too old to configure model defaults. Update OpenBitFun on that device to continue."
+      "value": "The StarMate app on this device is too old to configure model defaults. Update StarMate on that device to continue."
     },
     {
       "name": "settings_model_scopeNewSessions",
@@ -602,7 +602,7 @@
     },
     {
       "name": "settings_model_emptyText",
-      "value": "Add models in OpenBitFun on that device, then come back to set role defaults."
+      "value": "Add models in StarMate on that device, then come back to set role defaults."
     },
     {
       "name": "settings_model_filterTextChat",
@@ -654,7 +654,7 @@
     },
     {
       "name": "settings_about_openbitfun",
-      "value": "About OpenBitFun"
+      "value": "About StarMate"
     },
     {
       "name": "settings_about_product",
@@ -1062,7 +1062,7 @@
     },
     {
       "name": "code_title",
-      "value": "OpenBitFun Remote"
+      "value": "StarMate Remote"
     },
     {
       "name": "code_heroTitle",
@@ -1070,7 +1070,7 @@
     },
     {
       "name": "code_heroBody",
-      "value": "After connecting the desktop, OpenBitFun can access your repositories, run commands, and edit files."
+      "value": "After connecting the desktop, StarMate can access your repositories, run commands, and edit files."
     },
     {
       "name": "code_connectWorkspace",
@@ -1286,7 +1286,7 @@
     },
     {
       "name": "remote_settings_openbitfunUser",
-      "value": "OpenBitFun user"
+      "value": "StarMate user"
     },
     {
       "name": "remote_settings_accountSignedIn",
@@ -1410,7 +1410,7 @@
     },
     {
       "name": "remote_settings_githubAccount",
-      "value": "OpenBitFun account"
+      "value": "StarMate account"
     },
     {
       "name": "remote_settings_connectedDesktop",
@@ -1494,7 +1494,7 @@
     },
     {
       "name": "connect_subtitle",
-      "value": "After connecting the desktop, OpenBitFun can access repositories, run commands, and handle local development tasks."
+      "value": "After connecting the desktop, StarMate can access repositories, run commands, and handle local development tasks."
     },
     {
       "name": "connect_accountDevicesTitle",
@@ -1522,7 +1522,7 @@
     },
     {
       "name": "connect_deviceLinkUnavailable",
-      "value": "This device is offline or does not belong to your OpenBitFun account."
+      "value": "This device is offline or does not belong to your StarMate account."
     },
     {
       "name": "connect_accountPairTitle",
@@ -1530,7 +1530,7 @@
     },
     {
       "name": "connect_accountPairIntro",
-      "value": "The desktop is signed in to a OpenBitFun account. Verify the same account to continue."
+      "value": "The desktop is signed in to a StarMate account. Verify the same account to continue."
     },
     {
       "name": "connect_accountPairBody",
@@ -1542,11 +1542,11 @@
     },
     {
       "name": "connect_accountUsernamePlaceholder",
-      "value": "OpenBitFun username"
+      "value": "StarMate username"
     },
     {
       "name": "connect_accountPasswordPlaceholder",
-      "value": "OpenBitFun password"
+      "value": "StarMate password"
     },
     {
       "name": "connect_stepsTitle",
@@ -1854,7 +1854,7 @@
     },
     {
       "name": "sheet_instructionPlaceholder",
-      "value": "Tell OpenBitFun what to do..."
+      "value": "Tell StarMate what to do..."
     },
     {
       "name": "sheet_advancedOptions",
@@ -1962,7 +1962,7 @@
     },
     {
       "name": "chat_inputPlaceholder",
-      "value": "Ask OpenBitFun"
+      "value": "Ask StarMate"
     },
     {
       "name": "chat_voiceListeningPlaceholder",
@@ -2202,7 +2202,7 @@
     },
     {
       "name": "chat_executing",
-      "value": "OpenBitFun is working..."
+      "value": "StarMate is working..."
     },
     {
       "name": "chat_model",
@@ -2210,11 +2210,11 @@
     },
     {
       "name": "chat_openbitfunProcessing",
-      "value": "OpenBitFun is processing..."
+      "value": "StarMate is processing..."
     },
     {
       "name": "chat_updatedSession",
-      "value": "OpenBitFun updated the session"
+      "value": "StarMate updated the session"
     },
     {
       "name": "chat_desktopFile",
@@ -2646,7 +2646,7 @@
     },
     {
       "name": "errors_accountUsernameRequired",
-      "value": "Enter a OpenBitFun username."
+      "value": "Enter a StarMate username."
     },
     {
       "name": "errors_accountPasswordRequired",
@@ -2722,7 +2722,7 @@
     },
     {
       "name": "errors_hostStreamUnsupported",
-      "value": "The connected desktop runs an older OpenBitFun version that does not support on-demand session streaming. Update OpenBitFun on that device to continue."
+      "value": "The connected desktop runs an older StarMate version that does not support on-demand session streaming. Update StarMate on that device to continue."
     },
     {
       "name": "errors_imageTooLargeAfterCompression",
@@ -2786,7 +2786,7 @@
     },
     {
       "name": "watchProvision_doneBody",
-      "value": "%1$s is signed in and ready to use OpenBitFun."
+      "value": "%1$s is signed in and ready to use StarMate."
     },
     {
       "name": "watchProvision_rejected",
@@ -2810,7 +2810,7 @@
     },
     {
       "name": "watchProvision_errors_desktopAuthorizationFailed",
-      "value": "The desktop could not sign in the watch. Make sure it uses the same OpenBitFun account."
+      "value": "The desktop could not sign in the watch. Make sure it uses the same StarMate account."
     },
     {
       "name": "watchProvision_errors_passwordFailed",
@@ -2830,7 +2830,7 @@
     },
     {
       "name": "ui_seedConnected",
-      "value": "%1$s is connected. You can keep sending instructions; the desktop will run them in OpenBitFun."
+      "value": "%1$s is connected. You can keep sending instructions; the desktop will run them in StarMate."
     },
     {
       "name": "time_justNow",
@@ -2878,7 +2878,7 @@
     },
     {
       "name": "commands_degradedReason",
-      "value": "The connected desktop is too old to list skills. Upgrade OpenBitFun on that device; messages still send in this session."
+      "value": "The connected desktop is too old to list skills. Upgrade StarMate on that device; messages still send in this session."
     },
     {
       "name": "commands_busyReason",
@@ -2974,7 +2974,7 @@
     },
     {
       "name": "commands_skills_degradedBody",
-      "value": "The connected desktop is too old for the skill list. Upgrade OpenBitFun on that device, then check again."
+      "value": "The connected desktop is too old for the skill list. Upgrade StarMate on that device, then check again."
     },
     {
       "name": "commands_skills_footer",

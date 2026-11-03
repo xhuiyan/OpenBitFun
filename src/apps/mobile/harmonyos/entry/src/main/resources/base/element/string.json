@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "OpenBitFun remote control client"
+      "value": "StarMate remote control client"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "Connect to OpenBitFun desktop and control remote sessions"
+      "value": "Connect to StarMate desktop and control remote sessions"
     },
     {
       "name": "EntryAbility_label",
-      "value": "OpenBitFun"
+      "value": "StarMate"
     },
     {
       "name": "permission_microphone_reason",

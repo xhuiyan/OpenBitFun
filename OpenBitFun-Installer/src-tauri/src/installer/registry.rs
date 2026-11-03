@@ -14,13 +14,13 @@ use winreg::RegKey;
 
 use super::MAIN_APP_EXE;
 
-const APP_NAME: &str = "OpenBitFun";
-const UNINSTALL_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBitFun";
+const APP_NAME: &str = "StarMate";
+const UNINSTALL_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\StarMate";
 
 /// Matches Tauri NSIS `MANUFACTURER` (`bundle.publisher`).
-const TAURI_MANUFACTURER: &str = "OpenBitFun Team";
+const TAURI_MANUFACTURER: &str = "StarMate Team";
 /// Matches Tauri NSIS `PRODUCTNAME` (`productName`).
-const TAURI_PRODUCT_NAME: &str = "OpenBitFun";
+const TAURI_PRODUCT_NAME: &str = "StarMate";
 
 /// `HKCU\Software\{TAURI_MANUFACTURER}\{TAURI_PRODUCT_NAME}` — same as Tauri `MANUPRODUCTKEY`.
 fn tauri_manufacturer_product_key() -> String {
@@ -167,8 +167,8 @@ pub(super) fn read_existing_install_from_uninstall_registry() -> Option<Uninstal
 /// Remove OpenBitFun context menu entries (no longer registered on install).
 pub(super) fn remove_context_menu() -> Result<()> {
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
-    let _ = hkcu.delete_subkey_all(r"Software\Classes\Directory\Background\shell\OpenBitFun");
-    let _ = hkcu.delete_subkey_all(r"Software\Classes\Directory\shell\OpenBitFun");
+    let _ = hkcu.delete_subkey_all(r"Software\Classes\Directory\Background\shell\StarMate");
+    let _ = hkcu.delete_subkey_all(r"Software\Classes\Directory\shell\StarMate");
     Ok(())
 }
 

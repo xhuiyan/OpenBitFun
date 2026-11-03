@@ -22,7 +22,7 @@ function fixtureDirectory(t) {
 test('independent bundle owns version, offline assets, icons and identity', (t) => {
   const output = prepareDataToolsTauriConfig(join(APP, 'tauri.conf.json'), fixtureDirectory(t));
   const config = JSON.parse(readFileSync(output, 'utf8'));
-  assert.equal(config.productName, 'OpenBitFun Data Tools');
+  assert.equal(config.productName, 'StarMate Data Tools');
   assert.equal(config.identifier, 'com.openbitfun.data-tools');
   assert.deepEqual(config.app.windows.map(({ label }) => label), ['data-tools']);
   const capability = JSON.parse(readFileSync(join(APP, 'capabilities/data-tools.json'), 'utf8'));
@@ -43,7 +43,7 @@ test('a Desktop product environment cannot change the migration destination iden
   assert.equal(env.OPENBITFUN_DATA_NAMESPACE, 'openbitfun');
   assert.equal(env.OPENBITFUN_DESKTOP_BINARY_NAME, undefined);
   assert.equal(env.OPENBITFUN_PRODUCT_BINARY_NAME, 'openbitfun-data-tools');
-  assert.equal(env.OPENBITFUN_PRODUCT_DISPLAY_NAME, 'OpenBitFun Data Tools');
+  assert.equal(env.OPENBITFUN_PRODUCT_DISPLAY_NAME, 'StarMate Data Tools');
   assert.equal(env.CI, 'true');
 });
 
@@ -103,7 +103,7 @@ for (const [platform, metadata] of Object.entries(PLATFORMS)) {
     } else {
       const bundle = join(target, 'bundle', metadata.folder);
       mkdirSync(bundle, { recursive: true });
-      writeFileSync(join(bundle, `OpenBitFun Data Tools_${version}_arch.${metadata.extension}`), 'fixture package');
+      writeFileSync(join(bundle, `StarMate Data Tools_${version}_arch.${metadata.extension}`), 'fixture package');
       writeFileSync(join(bundle, `Other App_${version}_arch.${metadata.extension}`), 'unrelated package');
     }
     const output = stage(platform, { root, environment: {

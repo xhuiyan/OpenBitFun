@@ -1349,7 +1349,7 @@ fn show_confirmation_window(
     }
     let url = confirmation_window_url(transaction_id);
     let window = WebviewWindowBuilder::new(app, CONFIRM_WINDOW_LABEL, url)
-        .title("Review OpenBitFun frontend update")
+        .title("Review StarMate frontend update")
         .inner_size(440.0, 286.0)
         .resizable(false)
         .always_on_top(true)

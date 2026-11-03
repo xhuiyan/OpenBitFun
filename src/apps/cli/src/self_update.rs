@@ -106,17 +106,17 @@ pub(crate) async fn run_manual(check_only: bool) -> Result<UpdateOutcome> {
     match outcome {
         UpdateOutcome::Current => {
             println!(
-                "OpenBitFun CLI is up to date ({}).",
+                "StarMate CLI is up to date ({}).",
                 env!("CARGO_PKG_VERSION")
             )
         }
         // `try_source` already printed the available version and its source.
         UpdateOutcome::Available => println!("Run `openbitfun update` to install it."),
         UpdateOutcome::Updated => println!(
-            "OpenBitFun CLI was updated successfully. Restart this command to use the new version."
+            "StarMate CLI was updated successfully. Restart this command to use the new version."
         ),
         UpdateOutcome::Unsupported => println!(
-            "OpenBitFun CLI self-update supports official Linux x86_64/ARM64 archive installations."
+            "StarMate CLI self-update supports official Linux x86_64/ARM64 archive installations."
         ),
     }
     Ok(outcome)
@@ -167,7 +167,7 @@ pub(crate) async fn maybe_run_automatic() {
 
     match spawn_detached_install() {
         Ok(true) => eprintln!(
-            "OpenBitFun CLI {newest} is downloading in the background; it will be used next launch."
+            "StarMate CLI {newest} is downloading in the background; it will be used next launch."
         ),
         Ok(false) => tracing::debug!("A CLI update is already in progress; skipping."),
         Err(error) => tracing::debug!("Could not start background CLI update: {error}"),
@@ -346,7 +346,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
             .collect::<Vec<_>>()
             .join(", ");
         println!(
-            "OpenBitFun CLI {} is available from {} (current {}).",
+            "StarMate CLI {} is available from {} (current {}).",
             newest,
             from,
             env!("CARGO_PKG_VERSION")

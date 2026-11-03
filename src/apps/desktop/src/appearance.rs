@@ -608,7 +608,7 @@ pub fn create_main_window(
     let builder = tauri::WebviewWindowBuilder::new(app_handle, "main", main_url);
     #[allow(unused_mut)]
     let mut builder = builder
-        .title("OpenBitFun")
+        .title("StarMate")
         .inner_size(
             crate::MAIN_WINDOW_DEFAULT_WIDTH,
             crate::MAIN_WINDOW_DEFAULT_HEIGHT,
@@ -1115,7 +1115,7 @@ pub async fn show_agent_companion_desktop_pet(app: tauri::AppHandle) -> Result<(
 
     let url = app_url(&app, "?openbitfunWindow=agent-companion");
     let mut builder = tauri::WebviewWindowBuilder::new(&app, AGENT_COMPANION_WINDOW_LABEL, url)
-        .title("OpenBitFun Agent Companion")
+        .title("StarMate Agent Companion")
         .inner_size(
             AGENT_COMPANION_WINDOW_MIN_SIZE,
             AGENT_COMPANION_WINDOW_MIN_SIZE,

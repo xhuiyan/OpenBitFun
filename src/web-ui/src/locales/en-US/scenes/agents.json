@@ -43,7 +43,7 @@
       "Creative": {
         "name": "$t(shared:agents.Creative)",
         "purpose": "Create content and apps, shape your experience",
-        "description": "Turns ideas into finished work in natural language: motion videos, slide decks, prototypes, and web pages crafted with creative skills loaded on demand, plus MiniApps and a customized OpenBitFun."
+        "description": "Turns ideas into finished work in natural language: motion videos, slide decks, prototypes, and web pages crafted with creative skills loaded on demand, plus MiniApps and a customized StarMate."
       }
     }
   },

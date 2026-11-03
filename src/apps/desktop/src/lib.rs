@@ -149,7 +149,7 @@ fn show_fatal_startup_error(message: &str) {
     use windows::core::PCWSTR;
     use windows::Win32::UI::WindowsAndMessaging::{MessageBoxW, MB_ICONERROR, MB_OK};
 
-    let title = "OpenBitFun startup error"
+    let title = "StarMate startup error"
         .encode_utf16()
         .chain(std::iter::once(0))
         .collect::<Vec<_>>();
@@ -532,7 +532,7 @@ pub async fn run() {
     ) {
         log::error!("Failed to select Desktop agent profile: {}", error);
         show_fatal_startup_error(&format!(
-            "OpenBitFun could not select its Desktop agent profile and cannot continue.\n\n{error}\n\nSee early-startup.log for details."
+            "StarMate could not select its Desktop agent profile and cannot continue.\n\n{error}\n\nSee early-startup.log for details."
         ));
         return;
     }
@@ -541,7 +541,7 @@ pub async fn run() {
     if let Err(e) = openbitfun_core::service::config::initialize_global_config().await {
         log::error!("Failed to initialize global config service: {}", e);
         show_fatal_startup_error(&format!(
-            "OpenBitFun could not initialize its configuration and cannot continue.\n\n{e}\n\nSee early-startup.log for details."
+            "StarMate could not initialize its configuration and cannot continue.\n\n{e}\n\nSee early-startup.log for details."
         ));
         return;
     }
@@ -695,7 +695,7 @@ pub async fn run() {
         Err(e) => {
             log::error!("Failed to initialize AppState: {}", e);
             show_fatal_startup_error(&format!(
-                "OpenBitFun could not initialize its application state and cannot continue.\n\n{e}\n\nSee {} for details.",
+                "StarMate could not initialize its application state and cannot continue.\n\n{e}\n\nSee {} for details.",
                 logging::early_startup_log_path(&session_log_dir).display()
             ));
             return;
@@ -920,7 +920,7 @@ pub async fn run() {
                             match std::process::Command::new("reg")
                                 .args([
                                     "query",
-                                    r"HKCU\Software\OpenBitFun Team\OpenBitFun",
+                                    r"HKCU\Software\StarMate Team\StarMate",
                                     "/ve",
                                 ])
                                 .creation_flags(CREATE_NO_WINDOW)
@@ -936,7 +936,7 @@ pub async fn run() {
                             let _ = std::process::Command::new("reg")
                                 .args([
                                     "add",
-                                    r"HKCU\Software\OpenBitFun Team\OpenBitFun",
+                                    r"HKCU\Software\StarMate Team\StarMate",
                                     "/ve",
                                     "/d",
                                     &dir_str,

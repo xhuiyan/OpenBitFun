@@ -6,8 +6,8 @@
     "close": "關閉應用視窗"
   },
   "product": {
-    "name": "OpenBitFun",
-    "remote": "OpenBitFun Remote"
+    "name": "星伴",
+    "remote": "星伴遠端"
   },
   "features": {
     "remoteControl": "遠端控制",
@@ -43,7 +43,7 @@
   },
   "connectionMethods": {
     "lan": "區域網路",
-    "openbitfunServer": "OpenBitFun Server",
+    "openbitfunServer": "星伴伺服器",
     "customServer": "自訂伺服器",
     "botFeishu": "飛書機器人",
     "botTelegram": "Telegram Bot",

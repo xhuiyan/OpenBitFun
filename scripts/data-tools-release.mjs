@@ -46,7 +46,7 @@ export function stage(platform, { root = ROOT, environment = process.env } = {})
     if (result.status !== 0) throw new Error('Could not archive the portable Data Tools bundle');
   } else {
     const folder = join(target, 'bundle', metadata.folder);
-    const files = readdirSync(folder).filter((name) => name.startsWith(`OpenBitFun Data Tools_${version}_`) && name.endsWith(`.${metadata.extension}`));
+    const files = readdirSync(folder).filter((name) => name.startsWith(`StarMate Data Tools_${version}_`) && name.endsWith(`.${metadata.extension}`));
     if (files.length !== 1) throw new Error('Expected exactly one Data Tools package in the bundle output');
     copyFileSync(join(folder, files[0]), destination);
   }

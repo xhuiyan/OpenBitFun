@@ -985,7 +985,7 @@ pub(crate) async fn print_doctor(product_runtime: &ProductRuntimeParts) -> Resul
     let plugin_sources_ready =
         crate::plugin_diagnostics::plugin_source_check_passes(plugin_error_count);
 
-    println!("OpenBitFun CLI doctor");
+    println!("StarMate CLI doctor");
     println!();
     println!(
         "[ok] Product runtime: {} assembly-ready",

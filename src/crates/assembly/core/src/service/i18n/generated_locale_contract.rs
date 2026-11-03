@@ -140,7 +140,7 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhCN,
         key: "connectionMethods.openbitfunServer",
-        value: "OpenBitFun Server",
+        value: "星伴服务端",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhCN,
@@ -185,12 +185,12 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhCN,
         key: "product.name",
-        value: "OpenBitFun",
+        value: "星伴",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhCN,
         key: "product.remote",
-        value: "OpenBitFun Remote",
+        value: "星伴远程",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhCN,
@@ -350,7 +350,7 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhTW,
         key: "connectionMethods.openbitfunServer",
-        value: "OpenBitFun Server",
+        value: "星伴伺服器",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhTW,
@@ -395,12 +395,12 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhTW,
         key: "product.name",
-        value: "OpenBitFun",
+        value: "星伴",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhTW,
         key: "product.remote",
-        value: "OpenBitFun Remote",
+        value: "星伴遠端",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::ZhTW,
@@ -560,7 +560,7 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::EnUS,
         key: "connectionMethods.openbitfunServer",
-        value: "OpenBitFun Server",
+        value: "StarMate Server",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::EnUS,
@@ -605,12 +605,12 @@ pub const GENERATED_SHARED_TERMS: &[GeneratedSharedTermEntry] = &[
     GeneratedSharedTermEntry {
         locale: LocaleId::EnUS,
         key: "product.name",
-        value: "OpenBitFun",
+        value: "StarMate",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::EnUS,
         key: "product.remote",
-        value: "OpenBitFun Remote",
+        value: "StarMate Remote",
     },
     GeneratedSharedTermEntry {
         locale: LocaleId::EnUS,

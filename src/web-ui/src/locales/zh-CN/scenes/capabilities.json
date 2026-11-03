@@ -160,9 +160,9 @@
         },
         "browser": {
           "title": "内置浏览器",
-          "summary": "在 OpenBitFun 内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。",
+          "summary": "在星伴内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。",
           "items": {
-            "open-urls": "输入完整网址、本地域名或开发服务端口并在 OpenBitFun 内打开",
+            "open-urls": "输入完整网址、本地域名或开发服务端口并在星伴内打开",
             "agent-web-research": "让智能体搜索网页并按需读取指定页面正文",
             "history-navigation": "使用后退、前进和地址栏浏览页面历史",
             "reload-status": "刷新页面，并同步当前 URL、加载状态与错误提示",
@@ -211,7 +211,7 @@
         },
         "miniapps": {
           "title": "Mini Apps 小应用",
-          "summary": "在 OpenBitFun 内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。",
+          "summary": "在星伴内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。",
           "items": {
             "gallery-lifecycle": "查看、创建、编辑和删除已安装 Mini App",
             "market": "浏览市场、查看详情并安装或更新发布版本",
@@ -269,12 +269,12 @@
         },
         "ecosystem-compatibility": {
           "title": "外部导入",
-          "summary": "查看外部 AI 生态的内容与状态，导入受支持的 Skill、MCP、Hook，以及 Codex、Zcode 会话，并在 OpenBitFun 中继续对话。",
+          "summary": "查看外部 AI 生态的内容与状态，导入受支持的 Skill、MCP、Hook，以及 Codex、Zcode 会话，并在星伴中继续对话。",
           "items": {
             "source-discovery": "发现 OpenCode、Claude Code、Codex 等外部 AI 来源与可用内容",
             "source-policy": "按来源启用或停用集成，并选择管理、预览或只读策略",
-            "codex-session-import": "发现、移除和重新添加 Codex 来源会话，并在 OpenBitFun 分支中续聊",
-            "zcode-session-import": "发现、移除和重新添加 Zcode 来源会话，并在 OpenBitFun 分支中续聊",
+            "codex-session-import": "发现、移除和重新添加 Codex 来源会话，并在星伴分支中续聊",
+            "zcode-session-import": "发现、移除和重新添加 Zcode 来源会话，并在星伴分支中续聊",
             "prompts-commands": "展开外部 Prompt/Command 内容并处理与原生命令的冲突",
             "subagents": "启用外部智能体，处理同名冲突并绑定模型",
             "mcp-import": "预览 MCP 导入计划，逐个处理服务器冲突并应用",
@@ -302,7 +302,7 @@
         },
         "remote-connect": {
           "title": "Remote Connect 与多设备",
-          "summary": "从手机、Bot 或另一台 OpenBitFun 设备连接当前主机，远程查看会话、回答权限并继续工作。",
+          "summary": "从手机、Bot 或另一台星伴设备连接当前主机，远程查看会话、回答权限并继续工作。",
           "items": {
             "connection-methods": "选择局域网或官方 Relay",
             "start-stop-status": "启动、停止 Remote Connect 并查看实时连接状态和设备信息",
@@ -310,15 +310,15 @@
             "bots": "配置飞书、Telegram、微信等 Bot 并单独停止 Bot",
             "account": "使用 GitHub 登录、退出并查看身份状态",
             "devices": "列出、连接、查看设备型号与系统、设置别名和删除同账户设备",
-            "peer-device": "进入 Peer Device Mode，把另一台 OpenBitFun 设备作为命令与事件数据面"
+            "peer-device": "进入 Peer Device Mode，把另一台星伴设备作为命令与事件数据面"
           }
         },
         "detached-dispatch": {
           "title": "Detached Dispatch 远程派发",
-          "summary": "把可持续运行的任务派发到另一台 OpenBitFun 主机；控制端可以断开，目标主机继续执行并保留记录。",
+          "summary": "把可持续运行的任务派发到另一台星伴主机；控制端可以断开，目标主机继续执行并保留记录。",
           "items": {
             "targets": "列出同账户设备与已保存的 SSH 目标",
-            "provision": "为目标主机配置运行环境并安装或更新 OpenBitFun CLI",
+            "provision": "为目标主机配置运行环境并安装或更新星伴 CLI",
             "model-sync": "在提交任务前同步目标所需的模型配置",
             "submit": "从当前 Git 工作区把持久任务提交到同账户设备或 SSH 目标",
             "status-list": "列出派发任务并查询运行状态、结果和错误",
@@ -374,7 +374,7 @@
             "agent-cards": "按需求或在任务过程中创建倒计时、清单、便签、进度、指标、图表、定时任务和自定义卡片，可定时从 HTTP 接口或本机命令刷新数据",
             "home-management": "在首页“小卡片”区查看全部卡片，并显示、隐藏或删除单张卡片",
             "card-actions": "在卡片上刷新数据、勾选清单项、切换置顶、打开链接或回到来源会话",
-            "drag-restore": "拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭 OpenBitFun 时卡片消失，重新打开后按原位置和大小恢复",
+            "drag-restore": "拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭星伴时卡片消失，重新打开后按原位置和大小恢复",
             "desktop-pinning": "在卡片菜单、首页卡片列表或设置里把卡片固定到 Windows 桌面，隐藏的卡片同样可以切换固定状态"
           }
         }
@@ -387,8 +387,8 @@
             "items": {
               "automatic-updates": "启用或停用自动检查更新",
               "manual-update": "手动检查并后台下载更新，确认后安装并重启，或稍后从关于页面安装",
-              "launch-at-login": "控制 OpenBitFun 是否在登录系统后自动启动",
-              "prevent-sleep": "控制 OpenBitFun 运行期间是否阻止电脑自动睡眠",
+              "launch-at-login": "控制星伴是否在登录系统后自动启动",
+              "prevent-sleep": "控制星伴运行期间是否阻止电脑自动睡眠",
               "close-behavior": "选择关闭主窗口时退出、最小化到托盘或每次询问",
               "notifications": "分别控制任务完成和权限请求通知"
             }
@@ -480,7 +480,7 @@
           },
           "memory": {
             "title": "记忆设置",
-            "summary": "控制 OpenBitFun 是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。",
+            "summary": "控制星伴是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。",
             "items": {
               "generation-recall": "一键同时启用或停用长期记忆生成与会话召回",
               "btw": "决定 BTW 轻量会话是否参与记忆生成",
@@ -538,7 +538,7 @@
               "review-capacity": "设置 Deep Review 最大并行评审者和队列等待时间",
               "computer-use": "启用或停用已获系统授权的 Computer Use",
               "computer-use-permissions": "查看并请求辅助功能与屏幕录制权限",
-              "browser-auto-connect": "控制 OpenBitFun 启动时是否自动连接浏览器",
+              "browser-auto-connect": "控制星伴启动时是否自动连接浏览器",
               "browser-setup": "发现并选择浏览器、配置默认 CDP 或按需重启",
               "json-repair": "控制是否在安全边界内修复模型生成的非法工具参数 JSON"
             }
@@ -575,10 +575,10 @@
             "title": "网页搜索",
             "summary": "选择 WebSearch 工具运行时使用的搜索服务，并配置自建 HTTP 端点与当前执行主机的设备凭据。",
             "items": {
-              "provider": "在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与 OpenBitFun Search HTTP Protocol 之间选择运行时服务",
-              "http-endpoint": "为 OpenBitFun Search HTTP Protocol 配置端点、认证方式和受限凭据 Header",
+              "provider": "在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与星伴 Search HTTP Protocol 之间选择运行时服务",
+              "http-endpoint": "为星伴 Search HTTP Protocol 配置端点、认证方式和受限凭据 Header",
               "device-credential": "查看当前执行主机的凭据状态，并保存、替换或清除 API Key/Secret",
-              "http-protocol": "查看并复制 OpenBitFun Search HTTP Protocol v1 的请求、响应和传输限制"
+              "http-protocol": "查看并复制星伴 Search HTTP Protocol v1 的请求、响应和传输限制"
             }
           },
           "mcp": {

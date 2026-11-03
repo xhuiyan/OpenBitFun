@@ -53,15 +53,15 @@
   },
   "management": {
     "title": "Workspace worktrees",
-    "description": "Grouped by workspace; only worktrees in OpenBitFun's worktree root on the current execution host are listed",
-    "loading": "Scanning OpenBitFun worktrees…",
-    "loadFailed": "Could not load the OpenBitFun worktree list.",
+    "description": "Grouped by workspace; only worktrees in StarMate's worktree root on the current execution host are listed",
+    "loading": "Scanning StarMate worktrees…",
+    "loadFailed": "Could not load the StarMate worktree list.",
     "refresh": "Refresh worktrees",
     "retry": "Try again",
     "worktreeCount": "{{count}} worktrees",
     "deleted": "Deleted {{path}}.",
     "empty": {
-      "title": "No OpenBitFun worktrees",
+      "title": "No StarMate worktrees",
       "description": "Worktrees created for isolated sessions will appear here."
     },
     "lifecycle": {

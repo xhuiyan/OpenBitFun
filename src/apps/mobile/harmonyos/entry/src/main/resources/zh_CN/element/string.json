@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "OpenBitFun 远程控制客户端"
+      "value": "星伴远程控制客户端"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "连接 OpenBitFun 桌面端并控制远程会话"
+      "value": "连接星伴桌面端并控制远程会话"
     },
     {
       "name": "EntryAbility_label",
-      "value": "OpenBitFun"
+      "value": "星伴"
     },
     {
       "name": "permission_microphone_reason",
@@ -310,7 +310,7 @@
     },
     {
       "name": "notification_onboardingBody",
-      "value": "允许 OpenBitFun 在任务完成时发送通知。你可以稍后在系统设置中更改。"
+      "value": "允许星伴在任务完成时发送通知。你可以稍后在系统设置中更改。"
     },
     {
       "name": "notification_onboardingLater",
@@ -322,7 +322,7 @@
     },
     {
       "name": "app_title",
-      "value": "OpenBitFun"
+      "value": "星伴"
     },
     {
       "name": "common_cancel",
@@ -406,7 +406,7 @@
     },
     {
       "name": "notification_taskCompletedBody",
-      "value": "OpenBitFun 任务已经完成，点击打开 OpenBitFun 查看结果。"
+      "value": "星伴任务已经完成，点击打开星伴查看结果。"
     },
     {
       "name": "chatHome_prompt",
@@ -414,7 +414,7 @@
     },
     {
       "name": "chatHome_placeholder",
-      "value": "问问 OpenBitFun"
+      "value": "问问星伴"
     },
     {
       "name": "chatHome_localHint",
@@ -474,7 +474,7 @@
     },
     {
       "name": "chatHome_codeHintBody",
-      "value": "连接桌面工作区后，OpenBitFun 才能读取项目文件、运行命令并修改代码。"
+      "value": "连接桌面工作区后，星伴才能读取项目文件、运行命令并修改代码。"
     },
     {
       "name": "chatHome_enterCode",
@@ -482,11 +482,11 @@
     },
     {
       "name": "generalChat_ready",
-      "value": "OpenBitFun 已就绪"
+      "value": "星伴已就绪"
     },
     {
       "name": "generalChat_generating",
-      "value": "OpenBitFun 正在回复"
+      "value": "星伴正在回复"
     },
     {
       "name": "generalChat_sending",
@@ -578,7 +578,7 @@
     },
     {
       "name": "settings_model_unsupported",
-      "value": "该设备上的 OpenBitFun 版本过旧，不支持配置模型默认值。请升级该设备上的 OpenBitFun 后继续。"
+      "value": "该设备上的星伴版本过旧，不支持配置模型默认值。请升级该设备上的星伴后继续。"
     },
     {
       "name": "settings_model_scopeNewSessions",
@@ -602,7 +602,7 @@
     },
     {
       "name": "settings_model_emptyText",
-      "value": "请先在该设备的 OpenBitFun 里添加模型，再回到这里设置角色默认值。"
+      "value": "请先在该设备的星伴里添加模型，再回到这里设置角色默认值。"
     },
     {
       "name": "settings_model_filterTextChat",
@@ -654,7 +654,7 @@
     },
     {
       "name": "settings_about_openbitfun",
-      "value": "关于 OpenBitFun"
+      "value": "关于星伴"
     },
     {
       "name": "settings_about_product",
@@ -1062,7 +1062,7 @@
     },
     {
       "name": "code_title",
-      "value": "OpenBitFun 远程"
+      "value": "星伴远程"
     },
     {
       "name": "code_heroTitle",
@@ -1070,7 +1070,7 @@
     },
     {
       "name": "code_heroBody",
-      "value": "连接桌面端后，OpenBitFun 可以访问你的代码仓库、运行命令和修改文件。"
+      "value": "连接桌面端后，星伴可以访问你的代码仓库、运行命令和修改文件。"
     },
     {
       "name": "code_connectWorkspace",
@@ -1286,7 +1286,7 @@
     },
     {
       "name": "remote_settings_openbitfunUser",
-      "value": "OpenBitFun 用户"
+      "value": "星伴用户"
     },
     {
       "name": "remote_settings_accountSignedIn",
@@ -1410,7 +1410,7 @@
     },
     {
       "name": "remote_settings_githubAccount",
-      "value": "OpenBitFun 账号"
+      "value": "星伴账号"
     },
     {
       "name": "remote_settings_connectedDesktop",
@@ -1494,7 +1494,7 @@
     },
     {
       "name": "connect_subtitle",
-      "value": "连接桌面端后，OpenBitFun 可以访问代码仓库、运行命令和处理本地开发任务。"
+      "value": "连接桌面端后，星伴可以访问代码仓库、运行命令和处理本地开发任务。"
     },
     {
       "name": "connect_accountDevicesTitle",
@@ -1522,7 +1522,7 @@
     },
     {
       "name": "connect_deviceLinkUnavailable",
-      "value": "该设备已离线，或不属于当前 OpenBitFun 账户。"
+      "value": "该设备已离线，或不属于当前星伴账户。"
     },
     {
       "name": "connect_accountPairTitle",
@@ -1542,11 +1542,11 @@
     },
     {
       "name": "connect_accountUsernamePlaceholder",
-      "value": "OpenBitFun 用户名"
+      "value": "星伴用户名"
     },
     {
       "name": "connect_accountPasswordPlaceholder",
-      "value": "OpenBitFun 密码"
+      "value": "星伴密码"
     },
     {
       "name": "connect_stepsTitle",
@@ -1854,7 +1854,7 @@
     },
     {
       "name": "sheet_instructionPlaceholder",
-      "value": "告诉 OpenBitFun 要做什么..."
+      "value": "告诉星伴要做什么..."
     },
     {
       "name": "sheet_advancedOptions",
@@ -1962,7 +1962,7 @@
     },
     {
       "name": "chat_inputPlaceholder",
-      "value": "向 OpenBitFun 提问"
+      "value": "向星伴提问"
     },
     {
       "name": "chat_voiceListeningPlaceholder",
@@ -2202,7 +2202,7 @@
     },
     {
       "name": "chat_executing",
-      "value": "OpenBitFun 正在执行..."
+      "value": "星伴正在执行..."
     },
     {
       "name": "chat_model",
@@ -2210,11 +2210,11 @@
     },
     {
       "name": "chat_openbitfunProcessing",
-      "value": "OpenBitFun 正在处理..."
+      "value": "星伴正在处理..."
     },
     {
       "name": "chat_updatedSession",
-      "value": "OpenBitFun 已更新会话"
+      "value": "星伴已更新会话"
     },
     {
       "name": "chat_desktopFile",
@@ -2646,7 +2646,7 @@
     },
     {
       "name": "errors_accountUsernameRequired",
-      "value": "请输入 OpenBitFun 用户名。"
+      "value": "请输入星伴用户名。"
     },
     {
       "name": "errors_accountPasswordRequired",
@@ -2722,7 +2722,7 @@
     },
     {
       "name": "errors_hostStreamUnsupported",
-      "value": "已连接的桌面端 OpenBitFun 版本过旧，不支持按需会话流。请升级该设备上的 OpenBitFun 后继续。"
+      "value": "已连接的桌面端星伴版本过旧，不支持按需会话流。请升级该设备上的星伴后继续。"
     },
     {
       "name": "errors_imageTooLargeAfterCompression",
@@ -2786,7 +2786,7 @@
     },
     {
       "name": "watchProvision_doneBody",
-      "value": "%1$s 已登录，可以在手表上使用 OpenBitFun 了。"
+      "value": "%1$s 已登录，可以在手表上使用星伴了。"
     },
     {
       "name": "watchProvision_rejected",
@@ -2810,7 +2810,7 @@
     },
     {
       "name": "watchProvision_errors_desktopAuthorizationFailed",
-      "value": "桌面端没能完成手表登录，请确认桌面端已登录同一 OpenBitFun 账号。"
+      "value": "桌面端没能完成手表登录，请确认桌面端已登录同一星伴账号。"
     },
     {
       "name": "watchProvision_errors_passwordFailed",
@@ -2830,7 +2830,7 @@
     },
     {
       "name": "ui_seedConnected",
-      "value": "%1$s 已连接。你可以继续发送指令，桌面端会在 OpenBitFun 中执行。"
+      "value": "%1$s 已连接。你可以继续发送指令，桌面端会在星伴中执行。"
     },
     {
       "name": "time_justNow",
@@ -2878,7 +2878,7 @@
     },
     {
       "name": "commands_degradedReason",
-      "value": "桌面端版本过旧，无法提供技能列表。请升级该设备上的 OpenBitFun；本会话仍可正常发送消息。"
+      "value": "桌面端版本过旧，无法提供技能列表。请升级该设备上的星伴；本会话仍可正常发送消息。"
     },
     {
       "name": "commands_busyReason",
@@ -2974,7 +2974,7 @@
     },
     {
       "name": "commands_skills_degradedBody",
-      "value": "已连接的桌面端版本过旧，无法读取技能列表。请升级该设备上的 OpenBitFun 后重新检查。"
+      "value": "已连接的桌面端版本过旧，无法读取技能列表。请升级该设备上的星伴后重新检查。"
     },
     {
       "name": "commands_skills_footer",

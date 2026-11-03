@@ -70,7 +70,7 @@ fn sanitize_message(message: &str) -> String {
         .collect::<Vec<_>>()
         .join(" ");
     if normalized.is_empty() {
-        "OpenBitFun needs attention".to_string()
+        "StarMate needs attention".to_string()
     } else {
         normalized
     }

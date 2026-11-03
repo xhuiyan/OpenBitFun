@@ -121,7 +121,7 @@ struct WelcomeHomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @State private var started = Date()
-    private var phrases: [String] { ["OpenBitFun", model.localized("干点活儿"), model.localized("玩点花样"), model.localized("随你发挥")] }
+    private var phrases: [String] { ["StarMate", model.localized("干点活儿"), model.localized("玩点花样"), model.localized("随你发挥")] }
 
     var body: some View {
         GeometryReader { geometry in

@@ -558,7 +558,7 @@ fn print_external_policy_status(snapshot: &ExternalSourceCatalogSnapshot) {
             "Status: safely off (policy status '{}' is not supported by this version)",
             policy.status.as_str()
         );
-        println!("Recovery: upgrade OpenBitFun or connect through a compatible workspace host.");
+        println!("Recovery: upgrade StarMate or connect through a compatible workspace host.");
         return;
     }
 
@@ -624,7 +624,7 @@ fn external_cli_operation_error(error: String) -> anyhow::Error {
             "This external integration requires review before it can run."
         }
         ExternalSourceOperationErrorCode::PolicyIncompatible => {
-            "Compatibility settings were written by a newer OpenBitFun version."
+            "Compatibility settings were written by a newer StarMate version."
         }
         ExternalSourceOperationErrorCode::PolicyLimited => {
             "The current safety policy does not allow this change."
@@ -646,7 +646,7 @@ fn external_cli_operation_error(error: String) -> anyhow::Error {
         }
         ExternalSourceOperationErrorCode::Unsupported
         | ExternalSourceOperationErrorCode::IncompatibleVersion => {
-            "This external integration is not supported by the current OpenBitFun version."
+            "This external integration is not supported by the current StarMate version."
         }
         ExternalSourceOperationErrorCode::Timeout
         | ExternalSourceOperationErrorCode::Overloaded
@@ -658,7 +658,7 @@ fn external_cli_operation_error(error: String) -> anyhow::Error {
         }
         ExternalSourceOperationErrorCode::InvalidResponse
         | ExternalSourceOperationErrorCode::Internal => {
-            "OpenBitFun could not complete the external integration operation."
+            "StarMate could not complete the external integration operation."
         }
     };
     let reference = error
@@ -676,7 +676,7 @@ fn select_external_ecosystem(
 ) -> Result<EcosystemId> {
     if !status.is_compatible() {
         return Err(anyhow::anyhow!(
-            "External compatibility policy is unsupported and safely off; upgrade OpenBitFun or reset an incompatible policy before changing it"
+            "External compatibility policy is unsupported and safely off; upgrade StarMate or reset an incompatible policy before changing it"
         ));
     }
     if let Some(requested) = requested {
@@ -779,7 +779,7 @@ async fn update_external_policy(
                 == ExternalIntegrationPolicyStatus::IncompatibleSchema)
     {
         return Err(anyhow::anyhow!(
-            "External compatibility policy is unsupported and safely off; upgrade OpenBitFun or reset an incompatible policy before changing it"
+            "External compatibility policy is unsupported and safely off; upgrade StarMate or reset an incompatible policy before changing it"
         ));
     }
     let snapshot = update_external_integration_policy(
@@ -884,7 +884,7 @@ pub(crate) fn handle_health_command() -> Result<()> {
         openbitfun_core::product_runtime::build_local_runtime_services(&workspace, 16)?;
     let product_runtime = crate::product_assembly::assemble_cli_runtime_parts(services)?;
 
-    println!("OpenBitFun CLI health");
+    println!("StarMate CLI health");
     println!("Version: {}", env!("CARGO_PKG_VERSION"));
     println!(
         "Product runtime: {} assembly-ready",

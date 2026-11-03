@@ -138,7 +138,7 @@ pub(crate) fn ensure_cli_mcp_service(
 
 #[derive(Parser)]
 #[command(name = "openbitfun")]
-#[command(about = "OpenBitFun CLI - AI agent-driven command-line programming assistant", long_about = None)]
+#[command(about = "StarMate CLI - AI agent-driven command-line programming assistant", long_about = None)]
 #[command(version)]
 struct Cli {
     #[command(subcommand)]
@@ -1300,7 +1300,7 @@ async fn run_cli() -> Result<()> {
     let raw_args = std::env::args_os().collect::<Vec<_>>();
     let product_binary_name = option_env!("OPENBITFUN_PRODUCT_BINARY_NAME").unwrap_or("openbitfun");
     let product_display_name =
-        option_env!("OPENBITFUN_PRODUCT_DISPLAY_NAME").unwrap_or("OpenBitFun CLI");
+        option_env!("OPENBITFUN_PRODUCT_DISPLAY_NAME").unwrap_or("StarMate CLI");
     let parsed = Cli::command()
         .name(product_binary_name)
         .bin_name(product_binary_name)

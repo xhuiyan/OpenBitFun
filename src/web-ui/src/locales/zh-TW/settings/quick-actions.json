@@ -7,9 +7,9 @@
   "commitAttribution": {
     "title": "提交署名",
     "scope": "此執行主機上的所有工作區共用，下次載入內建提交流程時生效。",
-    "label": "新增 OpenBitFun 聯合提交人",
-    "description": "使用內建提交流程建立新提交時，將 OpenBitFun（{{account}}）標記為聯合提交人。",
-    "unsupported": "目前執行主機不支援此設定，請升級主機上的 OpenBitFun。"
+    "label": "新增星伴聯合提交人",
+    "description": "使用內建提交流程建立新提交時，將星伴（{{account}}）標記為聯合提交人。",
+    "unsupported": "目前執行主機不支援此設定，請升級主機上的星伴。"
   },
   "quickActions": {
     "defaults": {

@@ -108,10 +108,10 @@
   "launchAtLogin": {
     "sections": {
       "title": "登錄時啟動",
-      "hint": "登錄本用戶後是否自動運行 OpenBitFun"
+      "hint": "登錄本用戶後是否自動運行星伴"
     },
     "toggleLabel": "登入時自動啟動",
-    "toggleDescription": "目前使用者登入系統後自動啟動 OpenBitFun",
+    "toggleDescription": "目前使用者登入系統後自動啟動星伴",
     "messages": {
       "loading": "載入中…",
       "loadFailed": "無法讀取登入啟動設定",
@@ -121,7 +121,7 @@
   "preventSleep": {
     "sections": {
       "title": "電源",
-      "hint": "OpenBitFun 執行時的電腦睡眠行為"
+      "hint": "星伴執行時的電腦睡眠行為"
     },
     "toggleLabel": "防止電腦睡眠",
     "toggleDescription": "執行時防止自動睡眠，不影響關閉螢幕、手動睡眠和闔蓋。",
@@ -167,11 +167,11 @@
     },
     "startupRecovery": {
       "title": "上次會話異常結束",
-      "message": "OpenBitFun 發現上次會話留下了崩潰報告。如需回報問題，可以匯出診斷包。"
+      "message": "星伴發現上次會話留下了崩潰報告。如需回報問題，可以匯出診斷包。"
     },
     "configRecovery": {
       "title": "設定已復原",
-      "message": "OpenBitFun 已修復或隔離 {{count}} 個設定問題，應用程式得以繼續啟動。請檢查模型設定後再繼續使用。"
+      "message": "星伴已修復或隔離 {{count}} 個設定問題，應用程式得以繼續啟動。請檢查模型設定後再繼續使用。"
     },
     "levels": {
       "trace": "Trace",

@@ -160,9 +160,9 @@
         },
         "browser": {
           "title": "Built-in browser",
-          "summary": "Open webpages and local services inside OpenBitFun, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.",
+          "summary": "Open webpages and local services inside StarMate, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.",
           "items": {
-            "open-urls": "Open full URLs, local hostnames, or development-service ports inside OpenBitFun",
+            "open-urls": "Open full URLs, local hostnames, or development-service ports inside StarMate",
             "agent-web-research": "Let an agent search the web and fetch selected page content on demand",
             "history-navigation": "Navigate page history with Back, Forward, and the address bar",
             "reload-status": "Reload pages and synchronize the current URL, loading state, and errors",
@@ -211,7 +211,7 @@
         },
         "miniapps": {
           "title": "Mini Apps",
-          "summary": "Install, create, and run lightweight apps inside OpenBitFun, combining UI, data, and agent workflows.",
+          "summary": "Install, create, and run lightweight apps inside StarMate, combining UI, data, and agent workflows.",
           "items": {
             "gallery-lifecycle": "Inspect, create, update, and delete installed MiniApps",
             "market": "Browse the market, inspect listings, and install or update releases",
@@ -269,12 +269,12 @@
         },
         "ecosystem-compatibility": {
           "title": "External Import",
-          "summary": "Inspect external AI content and status, import supported Skills, MCP, Hooks, and Codex or Zcode sessions, and continue conversations in OpenBitFun.",
+          "summary": "Inspect external AI content and status, import supported Skills, MCP, Hooks, and Codex or Zcode sessions, and continue conversations in StarMate.",
           "items": {
             "source-discovery": "Discover OpenCode, Claude Code, Codex, and other external AI sources and content",
             "source-policy": "Enable or disable each source and choose managed, preview, or read-only policy",
-            "codex-session-import": "Discover, remove and restore Codex source sessions, then continue in OpenBitFun branches",
-            "zcode-session-import": "Discover, remove and restore Zcode source sessions, then continue in OpenBitFun branches",
+            "codex-session-import": "Discover, remove and restore Codex source sessions, then continue in StarMate branches",
+            "zcode-session-import": "Discover, remove and restore Zcode source sessions, then continue in StarMate branches",
             "prompts-commands": "Expand external prompt/command content and resolve conflicts with native commands",
             "subagents": "Enable external agents, resolve naming conflicts, and bind models",
             "mcp-import": "Preview MCP import plans, resolve server conflicts individually, and apply them",
@@ -302,7 +302,7 @@
         },
         "remote-connect": {
           "title": "Remote Connect & devices",
-          "summary": "Connect to this host from mobile, a bot, or another OpenBitFun device to inspect sessions, answer permissions, and continue work remotely.",
+          "summary": "Connect to this host from mobile, a bot, or another StarMate device to inspect sessions, answer permissions, and continue work remotely.",
           "items": {
             "connection-methods": "Choose LAN or the official Relay",
             "start-stop-status": "Start or stop Remote Connect and inspect live status and device information",
@@ -310,15 +310,15 @@
             "bots": "Configure Feishu, Telegram, WeChat, and other bots, and stop a bot independently",
             "account": "Sign in with GitHub, sign out, and inspect identity status",
             "devices": "List, connect, inspect model and OS, set aliases, and remove same-account devices",
-            "peer-device": "Enter Peer Device Mode and use another OpenBitFun device as the command and event data plane"
+            "peer-device": "Enter Peer Device Mode and use another StarMate device as the command and event data plane"
           }
         },
         "detached-dispatch": {
           "title": "Detached Dispatch",
-          "summary": "Dispatch durable work to another OpenBitFun host; the controller may disconnect while the target continues and keeps the record.",
+          "summary": "Dispatch durable work to another StarMate host; the controller may disconnect while the target continues and keeps the record.",
           "items": {
             "targets": "List same-account devices and saved SSH targets",
-            "provision": "Provision the target runtime and install or update the OpenBitFun CLI",
+            "provision": "Provision the target runtime and install or update the StarMate CLI",
             "model-sync": "Synchronize required model configuration before submitting a job",
             "submit": "Submit a durable job from the current Git workspace to a same-account device or SSH target",
             "status-list": "List dispatched jobs and query their status, result, and errors",
@@ -374,7 +374,7 @@
             "agent-cards": "Create countdown, checklist, note, progress, metrics, chart, scheduled-job, and custom cards on request or during a task, optionally refreshed from an HTTP endpoint or a local command",
             "home-management": "See every card in the Home Desktop cards section, and show, hide, or delete individual cards",
             "card-actions": "Refresh data, check off list items, toggle always-on-top, open the link, or return to the source session from a card",
-            "drag-restore": "Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when OpenBitFun closes and return with the same position and size when it reopens",
+            "drag-restore": "Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when StarMate closes and return with the same position and size when it reopens",
             "desktop-pinning": "Pin a card to the Windows desktop from the card menu, the Home card list, or Settings, including hidden cards"
           }
         }
@@ -387,8 +387,8 @@
             "items": {
               "automatic-updates": "Enable or disable automatic update checks",
               "manual-update": "Check and download updates in the background, then confirm installation and restart or install later from About",
-              "launch-at-login": "Choose whether OpenBitFun launches automatically after system sign-in",
-              "prevent-sleep": "Choose whether OpenBitFun prevents the computer from sleeping while it runs",
+              "launch-at-login": "Choose whether StarMate launches automatically after system sign-in",
+              "prevent-sleep": "Choose whether StarMate prevents the computer from sleeping while it runs",
               "close-behavior": "Choose whether closing the main window quits, minimizes to tray, or asks each time",
               "notifications": "Control completion and permission-request notifications independently"
             }
@@ -480,7 +480,7 @@
           },
           "memory": {
             "title": "Memory settings",
-            "summary": "Control whether OpenBitFun extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.",
+            "summary": "Control whether StarMate extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.",
             "items": {
               "generation-recall": "Enable or disable long-term memory generation and session recall together",
               "btw": "Choose whether lightweight BTW sessions contribute memories",
@@ -538,7 +538,7 @@
               "review-capacity": "Set the maximum parallel Deep Review workers and queue wait time",
               "computer-use": "Enable or disable Computer Use after operating-system authorization",
               "computer-use-permissions": "Inspect and request accessibility and screen-recording permissions",
-              "browser-auto-connect": "Choose whether OpenBitFun reconnects browser control at startup",
+              "browser-auto-connect": "Choose whether StarMate reconnects browser control at startup",
               "browser-setup": "Discover and choose a browser, configure default CDP, or restart it when needed",
               "json-repair": "Choose whether malformed model-generated tool-argument JSON may be repaired within safety boundaries"
             }
@@ -575,10 +575,10 @@
             "title": "Web Search",
             "summary": "Choose the search provider used by the WebSearch tool at runtime and configure custom HTTP endpoints and credentials on the current execution host.",
             "items": {
-              "provider": "Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or OpenBitFun Search HTTP Protocol as the runtime provider",
-              "http-endpoint": "Configure the endpoint, authentication mode, and restricted credential header for OpenBitFun Search HTTP Protocol",
+              "provider": "Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or StarMate Search HTTP Protocol as the runtime provider",
+              "http-endpoint": "Configure the endpoint, authentication mode, and restricted credential header for StarMate Search HTTP Protocol",
               "device-credential": "Inspect credential status on the current execution host and save, replace, or clear an API key or secret",
-              "http-protocol": "Inspect and copy the request, response, and transport limits for OpenBitFun Search HTTP Protocol v1"
+              "http-protocol": "Inspect and copy the request, response, and transport limits for StarMate Search HTTP Protocol v1"
             }
           },
           "mcp": {

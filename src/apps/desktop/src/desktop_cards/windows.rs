@@ -170,7 +170,7 @@ pub(crate) async fn open_window(
         &format!("?openbitfunWindow=desktop-card&cardId={}", card.id),
     );
     let mut builder = tauri::WebviewWindowBuilder::new(app, &label, url)
-        .title(format!("OpenBitFun Card - {}", card.title))
+        .title(format!("StarMate Card - {}", card.title))
         .inner_size(size.width, size.height)
         .min_inner_size(DESKTOP_CARD_MIN_WIDTH, DESKTOP_CARD_MIN_HEIGHT)
         .max_inner_size(DESKTOP_CARD_MAX_WIDTH, DESKTOP_CARD_MAX_HEIGHT)

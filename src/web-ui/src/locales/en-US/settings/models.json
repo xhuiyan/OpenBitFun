@@ -66,7 +66,7 @@
     "refreshFailed": "Refresh failed: {{error}}",
     "loginSuccess": "Signed in",
     "loginFailed": "Sign-in failed: {{error}}",
-    "peerLoginRequiresLocalDevice": "Antigravity sign-in must be completed on the device running OpenBitFun. Switch to that device and sign in there.",
+    "peerLoginRequiresLocalDevice": "Antigravity sign-in must be completed on the device running StarMate. Switch to that device and sign in there.",
     "logoutSuccess": "Signed out",
     "logoutCleanupPending": "Signed out. Credential cleanup is pending and will retry automatically.",
     "logoutFailed": "Sign-out failed: {{error}}",
@@ -129,7 +129,7 @@
     "vaultUnavailable": "Credential storage is temporarily unavailable. Try again; your sign-in has not been removed.",
     "retryVault": "Try vault again",
     "loginPending": "Sign-in authorization is in progress",
-    "browserInstructions": "Finish signing in in the browser OpenBitFun opened. Keep this page open; OpenBitFun will finish automatically.",
+    "browserInstructions": "Finish signing in in the browser StarMate opened. Keep this page open; StarMate will finish automatically.",
     "deviceInstructions": "Open the authorization page on any device, enter the verification code, then return here.",
     "loginCancelling": "Cancelling sign-in and closing the authorization session",
     "loginCompletedBeforeCancel": "Authorization had already completed, so this account remains signed in.",
@@ -247,8 +247,8 @@
       "description": "A model subscription plan from OpenCode."
     },
     "openbitfun": {
-      "name": "OpenBitFun Service",
-      "description": "OpenBitFun Model Platform",
+      "name": "StarMate Service",
+      "description": "StarMate Model Platform",
       "urlOptions": {
         "default": "Official API",
         "openai": "Official API"
@@ -528,7 +528,7 @@
     "password": "Password (optional)",
     "passwordPlaceholder": "Proxy authentication password",
     "save": "Save Proxy Configuration",
-    "saveSuccess": "Proxy configuration saved. Restart OpenBitFun to apply it"
+    "saveSuccess": "Proxy configuration saved. Restart StarMate to apply it"
   },
   "streamIdleTimeout": {
     "title": "Model response timeouts",
@@ -636,8 +636,8 @@
     "deleteSuccess": "Model configuration deleted",
     "providerDeleteFailed": "Failed to delete provider",
     "providerDeleteSuccess": "Provider and its model configurations deleted",
-    "referenceCheckFailed": "OpenBitFun could not verify whether other settings still reference this model, so deletion was cancelled",
-    "providerReferenceCheckFailed": "OpenBitFun could not verify whether other settings still reference this provider's models, so deletion was cancelled",
+    "referenceCheckFailed": "StarMate could not verify whether other settings still reference this model, so deletion was cancelled",
+    "providerReferenceCheckFailed": "StarMate could not verify whether other settings still reference this provider's models, so deletion was cancelled",
     "loadFailed": "Failed to load AI configuration",
     "testing": "Testing…",
     "testSuccess": "Test successful",
@@ -689,7 +689,7 @@
     "reveal": "Show in folder",
     "revealFailed": "Unable to open the cache folder",
     "offlineTitle": "Updating without network access",
-    "offlineDescription": "On a device with internet access, download the original models.dev file, name it catalog.json, and place it in the cache directory above. Restart OpenBitFun to apply it; Update now may overwrite this file.",
+    "offlineDescription": "On a device with internet access, download the original models.dev file, name it catalog.json, and place it in the cache directory above. Restart StarMate to apply it; Update now may overwrite this file.",
     "downloadOriginal": "Download original catalog",
     "openCacheDirectory": "Open cache directory",
     "fetchCatalog": "Get the models.dev catalog"
@@ -765,7 +765,7 @@
   "selectionModes": {
     "unavailable": "Not available yet",
     "smart": "Smart mode",
-    "smartHint": "Powered by OpenBitFun adaptive routing and collaborative multi-model reasoning to improve cost efficiency and task performance.",
+    "smartHint": "Powered by StarMate adaptive routing and collaborative multi-model reasoning to improve cost efficiency and task performance.",
     "battery": "Battery mode",
     "batteryHint": "Multi-source model pooling and failover automatically hand off when quota is exhausted or a connection fails.",
     "configure": "Configure smart mode"

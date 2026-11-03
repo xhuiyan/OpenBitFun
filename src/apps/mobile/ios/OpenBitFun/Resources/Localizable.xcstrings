@@ -238,7 +238,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun for iOS"
+            "value": "StarMate for iOS"
           }
         }
       }
@@ -698,7 +698,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ask OpenBitFun"
+            "value": "Ask StarMate"
           }
         }
       }
@@ -2118,7 +2118,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This is the OpenBitFun mobile conversation UI. Connect to a desktop to view workspaces, sessions, and agent status."
+            "value": "This is the StarMate mobile conversation UI. Connect to a desktop to view workspaces, sessions, and agent status."
           }
         }
       }
@@ -2128,7 +2128,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This is a OpenBitFun remote session preview."
+            "value": "This is a StarMate remote session preview."
           }
         }
       }
@@ -2668,7 +2668,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open OpenBitFun on desktop, then go to Remote Connect."
+            "value": "Open StarMate on desktop, then go to Remote Connect."
           }
         }
       }
@@ -2678,7 +2678,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This desktop requires your OpenBitFun account to verify your identity."
+            "value": "This desktop requires your StarMate account to verify your identity."
           }
         }
       }
@@ -2688,7 +2688,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun username"
+            "value": "StarMate username"
           }
         }
       }
@@ -2698,7 +2698,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun password"
+            "value": "StarMate password"
           }
         }
       }
@@ -2708,7 +2708,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun account"
+            "value": "StarMate account"
           }
         }
       }
@@ -2758,7 +2758,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tell OpenBitFun what to do"
+            "value": "Tell StarMate what to do"
           }
         }
       }
@@ -3008,7 +3008,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ask OpenBitFun"
+            "value": "Ask StarMate"
           }
         }
       }
@@ -3078,7 +3078,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun"
+            "value": "StarMate"
           }
         }
       }
@@ -3278,7 +3278,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connect a desktop workspace before OpenBitFun can read project files, run commands, and change code."
+            "value": "Connect a desktop workspace before StarMate can read project files, run commands, and change code."
           }
         }
       }
@@ -3298,7 +3298,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun is ready"
+            "value": "StarMate is ready"
           }
         }
       }
@@ -3308,7 +3308,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun is answering"
+            "value": "StarMate is answering"
           }
         }
       }
@@ -3868,7 +3868,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun Remote"
+            "value": "StarMate Remote"
           }
         }
       }
@@ -3888,7 +3888,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "After connecting the desktop, OpenBitFun can access your repositories, run commands, and edit files."
+            "value": "After connecting the desktop, StarMate can access your repositories, run commands, and edit files."
           }
         }
       }
@@ -4218,7 +4218,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun user"
+            "value": "StarMate user"
           }
         }
       }
@@ -4588,7 +4588,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "After connecting the desktop, OpenBitFun can access repositories, run commands, and handle local development tasks."
+            "value": "After connecting the desktop, StarMate can access repositories, run commands, and handle local development tasks."
           }
         }
       }
@@ -4618,7 +4618,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The desktop is signed in to a OpenBitFun account. Verify the same account to continue."
+            "value": "The desktop is signed in to a StarMate account. Verify the same account to continue."
           }
         }
       }
@@ -5228,7 +5228,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tell OpenBitFun what to do..."
+            "value": "Tell StarMate what to do..."
           }
         }
       }
@@ -5618,7 +5618,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun is working..."
+            "value": "StarMate is working..."
           }
         }
       }
@@ -5628,7 +5628,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun is processing..."
+            "value": "StarMate is processing..."
           }
         }
       }
@@ -5638,7 +5638,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenBitFun updated the session"
+            "value": "StarMate updated the session"
           }
         }
       }
@@ -6448,7 +6448,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enter a OpenBitFun username."
+            "value": "Enter a StarMate username."
           }
         }
       }
@@ -6618,7 +6618,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add this watch to your OpenBitFun account?"
+            "value": "Add this watch to your StarMate account?"
           }
         }
       }
@@ -6738,7 +6738,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ is connected. You can keep sending instructions; the desktop will run them in OpenBitFun."
+            "value": "%@ is connected. You can keep sending instructions; the desktop will run them in StarMate."
           }
         }
       }
@@ -7126,7 +7126,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open OpenBitFun authorization"
+            "value": "Open StarMate authorization"
           }
         }
       }
@@ -7136,13 +7136,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This device is offline or does not belong to your OpenBitFun account."
+            "value": "This device is offline or does not belong to your StarMate account."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "该设备已离线，或不属于当前 OpenBitFun 账户。"
+            "value": "该设备已离线，或不属于当前星伴账户。"
           }
         }
       }
@@ -7192,7 +7192,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open OpenBitFun to view the result."
+            "value": "Open StarMate to view the result."
           }
         }
       }
@@ -7232,7 +7232,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Allow OpenBitFun to notify you when tasks finish. You can change this later in system settings."
+            "value": "Allow StarMate to notify you when tasks finish. You can change this later in system settings."
           }
         }
       }
@@ -7574,7 +7574,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This is the OpenBitFun mobile conversation UI. Connect to a desktop to view workspaces, sessions, and agent status."
+            "value": "This is the StarMate mobile conversation UI. Connect to a desktop to view workspaces, sessions, and agent status."
           }
         }
       }

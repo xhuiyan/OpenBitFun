@@ -1,18 +1,18 @@
-# OpenBitFun Data Tools
+# StarMate Data Tools
 
 [中文](README.zh-CN.md)
 
 A separate, optional offline desktop utility. Its home page offers three tools,
-in order: **Data migration**, **Reset OpenBitFun data**, and **Session repair**.
+in order: **Data migration**, **Reset StarMate data**, and **Session repair**.
 Choose a tool to enter its workflow; return home when idle to choose another.
 Migration imports legacy BitFun data. Reset permanently clears the selected
-OpenBitFun destination when you need a clean start. Session repair restores
+StarMate destination when you need a clean start. Session repair restores
 sessions affected by earlier data or runtime-directory migrations.
 The GUI repair engine is native Rust; Python is not required.
 
 ## Session repair
 
-Open **Session repair**, confirm the OpenBitFun home and config roots, and select
+Open **Session repair**, confirm the StarMate home and config roots, and select
 **Scan and prepare repair plan**. A legacy BitFun install is not required.
 Review directory moves, assistant identity field changes and skipped items.
 Then close all product writers and select **Apply / resume repair**.
@@ -40,7 +40,7 @@ its task files are independent of GUI task files.
 Both tools share `.session-storage-repair.lock`. After a hard kill, close all
 repair/product writers before manually removing that stale sentinel to resume.
 
-The product and executable are **OpenBitFun Data Tools** and
+The product and executable are **StarMate Data Tools** and
 `openbitfun-data-tools`. New releases use `data-tools-v<version>` tags. The
 migration history remains readable. Tool settings use the new
 `com.openbitfun.data-tools` identity; previous tool locations and language
@@ -64,18 +64,18 @@ Windows needs the Microsoft Edge WebView2 runtime. macOS uses the system WebView
 Linux packages are built on Ubuntu 22.04. No login or network connection is
 needed for migration. ARM Windows/Linux packages are not currently produced.
 
-1. Close BitFun, OpenBitFun, their CLI instances, and background data writers.
+1. Close BitFun, StarMate, their CLI instances, and background data writers.
 2. Open Data Tools, choose **Data migration**, and check the **source and destination** directories.
 3. Select the data groups, scan, then run the preflight plan.
 4. Review the destination, scope, and conflicts, then start migration. If known writers
    remain open, the tool waits for them to stop; it does not terminate them.
 5. Read the report. Sign in again or repair paths where indicated, close the
-   tool, and open OpenBitFun yourself.
+   tool, and open StarMate yourself.
 
 ## Data and compatibility
 
 Supported sources are **stable BitFun releases 0.2.17–0.2.19**, targeting
-**OpenBitFun 1.0**. Direct migration from 0.2.16 or earlier is not supported;
+**StarMate 1.0**. Direct migration from 0.2.16 or earlier is not supported;
 upgrade BitFun first, launch it, and verify that your existing data is accessible.
 
 Scanning isolates errors in individual sessions, runtime event logs, Skills,
@@ -87,7 +87,7 @@ If a domain fails during execution, it is rolled back before independent domains
 continue. Execution stops if rollback cannot complete safely. Review warnings
 and the migration report before retrying.
 
-The destination is OpenBitFun: configuration schema **1**, workspace registry
+The destination is StarMate: configuration schema **1**, workspace registry
 format **1**, coordination database schema **2**, and the session, memory,
 extension, and connection formats accepted by the shared storage owners in
 this source revision. Unknown product/configuration schemas and newer SQLite
@@ -138,15 +138,15 @@ importing stored connection records does not connect to or migrate a remote host
 
 **Migration finishes, but workspaces or sessions are empty, or some data is missing**
 
-If you have already launched OpenBitFun or run a migration, existing destination data may take precedence and remain unchanged during retries.
+If you have already launched StarMate or run a migration, existing destination data may take precedence and remain unchanged during retries.
 
-If OpenBitFun contains no new data you need to keep, you can clear its destination data and retry:
+If StarMate contains no new data you need to keep, you can clear its destination data and retry:
 
-1. Fully quit BitFun, OpenBitFun, their CLI/background writers, and other Data Tools instances.
-2. Open Data Tools, choose **Reset OpenBitFun data** on the home page, check the destination locations, and select **Review reset directories**.
-3. Save any data and migration logs/backups you need from the listed directories. **Reset permanently removes all their contents, including existing OpenBitFun settings, credentials, assistant workspaces, and sessions.** It does not create a backup.
-4. Type `RESET`, then select **Permanently reset OpenBitFun data**. If a directory cannot be fully removed, close applications using it and retry before migrating.
-5. Return to the home page, choose **Data migration**, and start a new migration. Launch OpenBitFun after migration finishes.
+1. Fully quit BitFun, StarMate, their CLI/background writers, and other Data Tools instances.
+2. Open Data Tools, choose **Reset StarMate data** on the home page, check the destination locations, and select **Review reset directories**.
+3. Save any data and migration logs/backups you need from the listed directories. **Reset permanently removes all their contents, including existing StarMate settings, credentials, assistant workspaces, and sessions.** It does not create a backup.
+4. Type `RESET`, then select **Permanently reset StarMate data**. If a directory cannot be fully removed, close applications using it and retry before migrating.
+5. Return to the home page, choose **Data migration**, and start a new migration. Launch StarMate after migration finishes.
 
 The reset preview uses the selected destination locations. For standard locations,
 it also covers platform Skills/SSH parent directories and Desktop WebView/UI data
@@ -159,20 +159,20 @@ Windows destination directories:
 ```text
 %APPDATA%\openbitfun
 %USERPROFILE%\.openbitfun
-%LOCALAPPDATA%\OpenBitFun
+%LOCALAPPDATA%\StarMate
 ```
 
 On macOS the standard roots are `~/.openbitfun` and
-`~/Library/Application Support/{openbitfun,OpenBitFun}`. On Linux they are
+`~/Library/Application Support/{openbitfun,StarMate}`. On Linux they are
 `~/.openbitfun`, `~/.config/openbitfun`, and
-`~/.local/share/{openbitfun,OpenBitFun}` (or the corresponding XDG locations).
+`~/.local/share/{openbitfun,StarMate}` (or the corresponding XDG locations).
 Always review the actual paths shown by the tool before confirming.
 
 **The issue persists after retrying**
 
-Open a report in [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) or share your feedback in the OpenBitFun user WeChat group. Include:
+Open a report in [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) or share your feedback in the StarMate user WeChat group. Include:
 
-- Your operating system and the BitFun, OpenBitFun, and Data Tools versions.
+- Your operating system and the BitFun, StarMate, and Data Tools versions.
 - Steps to reproduce, the expected result, and the actual result.
 - The workspace and session name or ID associated with missing data.
 - Migration logs from the affected run.

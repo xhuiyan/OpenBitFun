@@ -39,7 +39,7 @@ test('prepares a versioned custom Windows installer asset', () => {
   ]);
   assert.equal(result.status, 0, result.stderr);
   assert.equal(
-    fs.readFileSync(path.join(out, 'OpenBitFun_1.2.3_windows-x86_64-installer.exe'), 'utf8'),
+    fs.readFileSync(path.join(out, 'StarMate_1.2.3_windows-x86_64-installer.exe'), 'utf8'),
     'installer'
   );
 });
@@ -52,10 +52,10 @@ test('1.0.0-beta manifest keeps the updater URL separate from the manual install
   fs.mkdirSync(updater, { recursive: true });
   fs.mkdirSync(manual, { recursive: true });
 
-  const updaterName = 'OpenBitFun_1.0.0-beta_windows-x86_64-setup.exe';
+  const updaterName = 'StarMate_1.0.0-beta_windows-x86_64-setup.exe';
   fs.writeFileSync(path.join(updater, updaterName), 'setup');
   fs.writeFileSync(path.join(updater, `${updaterName}.sig`), 'inline-updater-signature');
-  const installerName = 'OpenBitFun_1.0.0-beta_windows-x86_64-installer.exe';
+  const installerName = 'StarMate_1.0.0-beta_windows-x86_64-installer.exe';
   fs.writeFileSync(path.join(manual, installerName), 'installer');
   fs.writeFileSync(path.join(manual, `${installerName}.sig`), 'detached-signature');
 
@@ -93,8 +93,8 @@ test('updater manifest carries the version release notes for the update prompt',
   const out = path.join(temp, 'latest-v1.json');
   const notes = path.join(temp, '1.0.3.md');
   fs.mkdirSync(updater, { recursive: true });
-  fs.writeFileSync(path.join(updater, 'OpenBitFun_1.0.3_windows-x86_64-setup.exe'), 'setup');
-  fs.writeFileSync(path.join(updater, 'OpenBitFun_1.0.3_windows-x86_64-setup.exe.sig'), 'signature');
+  fs.writeFileSync(path.join(updater, 'StarMate_1.0.3_windows-x86_64-setup.exe'), 'setup');
+  fs.writeFileSync(path.join(updater, 'StarMate_1.0.3_windows-x86_64-setup.exe.sig'), 'signature');
   fs.writeFileSync(notes, '系统优化 AI 对话界面与整体性能，让对话更清晰、交互更流畅。\n');
 
   const generated = run('scripts/generate-tauri-latest-json.mjs', [
@@ -128,19 +128,19 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
   fs.mkdirSync(installers, { recursive: true });
 
   for (const arch of ['aarch64', 'x86_64']) {
-    const updaterName = `OpenBitFun_1.2.3_darwin-${arch}.app.tar.gz`;
+    const updaterName = `StarMate_1.2.3_darwin-${arch}.app.tar.gz`;
     fs.writeFileSync(path.join(updater, updaterName), 'updater payload');
     fs.writeFileSync(path.join(updater, `${updaterName}.sig`), 'inline-updater-signature');
   }
-  const windowsUpdaterName = 'OpenBitFun_1.2.3_windows-x86_64-setup.exe';
+  const windowsUpdaterName = 'StarMate_1.2.3_windows-x86_64-setup.exe';
   fs.writeFileSync(path.join(updater, windowsUpdaterName), 'setup');
   fs.writeFileSync(path.join(updater, `${windowsUpdaterName}.sig`), 'inline-updater-signature');
-  const windowsInstallerName = 'OpenBitFun_1.2.3_windows-x86_64-installer.exe';
+  const windowsInstallerName = 'StarMate_1.2.3_windows-x86_64-installer.exe';
   fs.writeFileSync(path.join(manual, windowsInstallerName), 'installer');
   fs.writeFileSync(path.join(manual, `${windowsInstallerName}.sig`), 'detached-signature');
   for (const arch of ['aarch64', 'x64']) {
-    fs.writeFileSync(path.join(installers, `OpenBitFun_1.2.3_${arch}.dmg`), 'disk image');
-    fs.writeFileSync(path.join(installers, `OpenBitFun_1.2.3_${arch}.dmg.sig`), 'detached-signature');
+    fs.writeFileSync(path.join(installers, `StarMate_1.2.3_${arch}.dmg`), 'disk image');
+    fs.writeFileSync(path.join(installers, `StarMate_1.2.3_${arch}.dmg.sig`), 'detached-signature');
   }
 
   const generatorArgs = [
@@ -163,11 +163,11 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
   assert.match(manifest.platforms['darwin-x86_64'].url, /_darwin-x86_64\.app\.tar\.gz$/);
   assert.equal(
     manifest.manual_installers['darwin-aarch64'].url,
-    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_aarch64.dmg'
+    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_aarch64.dmg'
   );
   assert.equal(
     manifest.manual_installers['darwin-x86_64'].url,
-    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_x64.dmg'
+    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_x64.dmg'
   );
   assert.match(manifest.manual_installers['windows-x86_64'].url, /-installer\.exe$/);
 
@@ -181,15 +181,15 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
 
   // An unsigned .dmg must fail the release rather than publish a manifest whose
   // signature URL 404s.
-  fs.unlinkSync(path.join(installers, 'OpenBitFun_1.2.3_x64.dmg.sig'));
+  fs.unlinkSync(path.join(installers, 'StarMate_1.2.3_x64.dmg.sig'));
   const unsigned = run('scripts/generate-tauri-latest-json.mjs', generatorArgs);
   assert.notEqual(unsigned.status, 0);
   assert.match(unsigned.stderr, /Missing signed manual installer pair/);
 
-  fs.unlinkSync(path.join(installers, 'OpenBitFun_1.2.3_x64.dmg'));
+  fs.unlinkSync(path.join(installers, 'StarMate_1.2.3_x64.dmg'));
   const absent = run('scripts/generate-tauri-latest-json.mjs', generatorArgs);
   assert.notEqual(absent.status, 0);
-  assert.match(absent.stderr, /Missing macOS installer OpenBitFun_1\.2\.3_x64\.dmg/);
+  assert.match(absent.stderr, /Missing macOS installer StarMate_1\.2\.3_x64\.dmg/);
 });
 
 // deb/rpm installs reject every payload that is not their own package format
@@ -202,10 +202,10 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
   const collected = path.join(temp, 'collected');
   const out = path.join(temp, 'latest-v1.json');
   const assets = [
-    ['OpenBitFun_1.2.3_amd64.AppImage', 'appimage'],
-    ['OpenBitFun_1.2.3_amd64.deb', 'deb'],
+    ['StarMate_1.2.3_amd64.AppImage', 'appimage'],
+    ['StarMate_1.2.3_amd64.deb', 'deb'],
     ['OpenBitFun-1.2.3-1.x86_64.rpm', 'rpm'],
-    ['OpenBitFun_1.2.3_arm64.deb', 'deb-arm64'],
+    ['StarMate_1.2.3_arm64.deb', 'deb-arm64'],
     ['OpenBitFun-1.2.3-1.aarch64.rpm', 'rpm-arm64'],
   ];
   for (const [name, body] of assets) {
@@ -221,16 +221,16 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
   ]);
   assert.equal(staging.status, 0, staging.stderr);
   assert.deepEqual(fs.readdirSync(collected).sort(), [
-    'OpenBitFun_1.2.3_linux-aarch64-deb.deb',
-    'OpenBitFun_1.2.3_linux-aarch64-deb.deb.sig',
-    'OpenBitFun_1.2.3_linux-aarch64-rpm.rpm',
-    'OpenBitFun_1.2.3_linux-aarch64-rpm.rpm.sig',
-    'OpenBitFun_1.2.3_linux-x86_64-deb.deb',
-    'OpenBitFun_1.2.3_linux-x86_64-deb.deb.sig',
-    'OpenBitFun_1.2.3_linux-x86_64-rpm.rpm',
-    'OpenBitFun_1.2.3_linux-x86_64-rpm.rpm.sig',
-    'OpenBitFun_1.2.3_linux-x86_64.AppImage',
-    'OpenBitFun_1.2.3_linux-x86_64.AppImage.sig',
+    'StarMate_1.2.3_linux-aarch64-deb.deb',
+    'StarMate_1.2.3_linux-aarch64-deb.deb.sig',
+    'StarMate_1.2.3_linux-aarch64-rpm.rpm',
+    'StarMate_1.2.3_linux-aarch64-rpm.rpm.sig',
+    'StarMate_1.2.3_linux-x86_64-deb.deb',
+    'StarMate_1.2.3_linux-x86_64-deb.deb.sig',
+    'StarMate_1.2.3_linux-x86_64-rpm.rpm',
+    'StarMate_1.2.3_linux-x86_64-rpm.rpm.sig',
+    'StarMate_1.2.3_linux-x86_64.AppImage',
+    'StarMate_1.2.3_linux-x86_64.AppImage.sig',
   ]);
 
   const generated = run('scripts/generate-tauri-latest-json.mjs', [
@@ -244,18 +244,18 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
   assert.equal(generated.status, 0, generated.stderr);
 
   const manifest = JSON.parse(fs.readFileSync(out, 'utf8'));
-  assert.match(manifest.platforms['linux-x86_64'].url, /OpenBitFun_1\.2\.3_linux-x86_64\.AppImage$/);
-  assert.match(manifest.platforms['linux-x86_64-deb'].url, /OpenBitFun_1\.2\.3_linux-x86_64-deb\.deb$/);
-  assert.match(manifest.platforms['linux-x86_64-rpm'].url, /OpenBitFun_1\.2\.3_linux-x86_64-rpm\.rpm$/);
-  assert.match(manifest.platforms['linux-aarch64-deb'].url, /OpenBitFun_1\.2\.3_linux-aarch64-deb\.deb$/);
-  assert.match(manifest.platforms['linux-aarch64-rpm'].url, /OpenBitFun_1\.2\.3_linux-aarch64-rpm\.rpm$/);
+  assert.match(manifest.platforms['linux-x86_64'].url, /StarMate_1\.2\.3_linux-x86_64\.AppImage$/);
+  assert.match(manifest.platforms['linux-x86_64-deb'].url, /StarMate_1\.2\.3_linux-x86_64-deb\.deb$/);
+  assert.match(manifest.platforms['linux-x86_64-rpm'].url, /StarMate_1\.2\.3_linux-x86_64-rpm\.rpm$/);
+  assert.match(manifest.platforms['linux-aarch64-deb'].url, /StarMate_1\.2\.3_linux-aarch64-deb\.deb$/);
+  assert.match(manifest.platforms['linux-aarch64-rpm'].url, /StarMate_1\.2\.3_linux-aarch64-rpm\.rpm$/);
   // collect renames the files but copies signatures byte-for-byte: minisign
   // signatures cover the package bytes, not the asset name.
   const renamedToRawSignature = {
-    'linux-x86_64': 'sig OpenBitFun_1.2.3_amd64.AppImage',
-    'linux-x86_64-deb': 'sig OpenBitFun_1.2.3_amd64.deb',
+    'linux-x86_64': 'sig StarMate_1.2.3_amd64.AppImage',
+    'linux-x86_64-deb': 'sig StarMate_1.2.3_amd64.deb',
     'linux-x86_64-rpm': 'sig OpenBitFun-1.2.3-1.x86_64.rpm',
-    'linux-aarch64-deb': 'sig OpenBitFun_1.2.3_arm64.deb',
+    'linux-aarch64-deb': 'sig StarMate_1.2.3_arm64.deb',
     'linux-aarch64-rpm': 'sig OpenBitFun-1.2.3-1.aarch64.rpm',
   };
   for (const [key, signature] of Object.entries(renamedToRawSignature)) {

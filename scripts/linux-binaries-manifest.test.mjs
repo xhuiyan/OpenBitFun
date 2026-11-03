@@ -196,7 +196,7 @@ test('release sync pins Relay and Linux metadata to the updater release during l
       OPENBITFUN_RELEASE_SYNC_LOCK: path.join(temp, 'sync.lock'),
       TEST_URLS: urls,
       TEST_LATEST_JSON: JSON.stringify({ version: '1.0.0', platforms: {
-        'linux-x86_64': { url: `${releaseBase}/OpenBitFun_1.0.0_linux-x86_64.AppImage` },
+        'linux-x86_64': { url: `${releaseBase}/StarMate_1.0.0_linux-x86_64.AppImage` },
       } }),
     },
   });
@@ -234,8 +234,8 @@ test('openbitfun sync mirrors the website installer from the exact updater relea
         TEST_LATEST_JSON: JSON.stringify({
           manual_installers: {
             'windows-x86_64': {
-              url: 'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe',
-              signature_url: 'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe.sig',
+              url: 'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe',
+              signature_url: 'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe.sig',
             },
           },
         }),
@@ -246,8 +246,8 @@ test('openbitfun sync mirrors the website installer from the exact updater relea
 
   const downloads = fs.readFileSync(calls, 'utf8').trim().split('\n');
   assert.deepEqual(downloads, [
-    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe\t${versionDir}/OpenBitFun_1.2.3_windows-x86_64-installer.exe`,
-    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe.sig\t${versionDir}/OpenBitFun_1.2.3_windows-x86_64-installer.exe.sig`,
+    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe\t${versionDir}/StarMate_1.2.3_windows-x86_64-installer.exe`,
+    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe.sig\t${versionDir}/StarMate_1.2.3_windows-x86_64-installer.exe.sig`,
   ]);
 });
 
@@ -351,20 +351,20 @@ test('website download manifest uses installer while updater manifest keeps setu
     pub_date: '2026-08-05T00:00:00Z',
     platforms: {
       'windows-x86_64': {
-        url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_windows-x86_64-setup.exe',
+        url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_windows-x86_64-setup.exe',
       },
       'darwin-aarch64': {
-        url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_darwin-aarch64.app.tar.gz',
+        url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_darwin-aarch64.app.tar.gz',
       },
     },
     manual_installers: {
       'windows-x86_64': {
-        url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe',
-        signature_url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe.sig',
+        url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe',
+        signature_url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe.sig',
       },
       'darwin-aarch64': {
-        url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_aarch64.dmg',
-        signature_url: 'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_aarch64.dmg.sig',
+        url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_aarch64.dmg',
+        signature_url: 'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_aarch64.dmg.sig',
       },
     },
   };
@@ -403,19 +403,19 @@ test('website download manifest uses installer while updater manifest keeps setu
   assert.equal(website.version, '1.2.3');
   assert.equal(
     website.platforms['windows-x86_64'].url,
-    'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe'
+    'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe'
   );
   assert.equal(
     website.platforms['windows-x86_64'].signatureUrl,
-    'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_windows-x86_64-installer.exe.sig'
+    'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_windows-x86_64-installer.exe.sig'
   );
   assert.equal(
     website.platforms['darwin-aarch64'].url,
-    'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_aarch64.dmg'
+    'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_aarch64.dmg'
   );
   assert.equal(
     website.platforms['darwin-aarch64'].signatureUrl,
-    'https://openbitfun.test/release/1.2.3/OpenBitFun_1.2.3_aarch64.dmg.sig'
+    'https://openbitfun.test/release/1.2.3/StarMate_1.2.3_aarch64.dmg.sig'
   );
 });
 

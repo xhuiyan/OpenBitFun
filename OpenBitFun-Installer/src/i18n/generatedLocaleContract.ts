@@ -59,8 +59,8 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
       "close": "Close app window"
     },
     "product": {
-      "name": "OpenBitFun",
-      "remote": "OpenBitFun Remote"
+      "name": "StarMate",
+      "remote": "StarMate Remote"
     },
     "features": {
       "remoteControl": "Remote Control",
@@ -96,7 +96,7 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
     },
     "connectionMethods": {
       "lan": "LAN",
-      "openbitfunServer": "OpenBitFun Server",
+      "openbitfunServer": "StarMate Server",
       "customServer": "Custom Server",
       "botFeishu": "Feishu Bot",
       "botTelegram": "Telegram Bot",
@@ -121,8 +121,8 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
       "close": "关闭应用窗口"
     },
     "product": {
-      "name": "OpenBitFun",
-      "remote": "OpenBitFun Remote"
+      "name": "星伴",
+      "remote": "星伴远程"
     },
     "features": {
       "remoteControl": "远程控制",
@@ -158,7 +158,7 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
     },
     "connectionMethods": {
       "lan": "局域网",
-      "openbitfunServer": "OpenBitFun Server",
+      "openbitfunServer": "星伴服务端",
       "customServer": "自定义服务器",
       "botFeishu": "飞书机器人",
       "botTelegram": "Telegram Bot",
@@ -183,8 +183,8 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
       "close": "關閉應用視窗"
     },
     "product": {
-      "name": "OpenBitFun",
-      "remote": "OpenBitFun Remote"
+      "name": "星伴",
+      "remote": "星伴遠端"
     },
     "features": {
       "remoteControl": "遠端控制",
@@ -220,7 +220,7 @@ export const SHARED_TERMS_BY_APP_LANGUAGE = {
     },
     "connectionMethods": {
       "lan": "區域網路",
-      "openbitfunServer": "OpenBitFun Server",
+      "openbitfunServer": "星伴伺服器",
       "customServer": "自訂伺服器",
       "botFeishu": "飛書機器人",
       "botTelegram": "Telegram Bot",

@@ -522,12 +522,12 @@ jobs:
           node scripts/restore-macos-verification-bundle.mjs --repo "$GITHUB_REPOSITORY" \
             --tag "$RELEASE_TAG" --platform "$MACOS_PLATFORM" --run-id "$RECOVERY_RUN"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' \
-            "target/$MACOS_TARGET/release/bundle/macos/OpenBitFun.app/Contents/Info.plist")" = "$RELEASE_VERSION"
+            "target/$MACOS_TARGET/release/bundle/macos/StarMate.app/Contents/Info.plist")" = "$RELEASE_VERSION"
           case "$MACOS_TARGET" in
             x86_64-apple-darwin) architecture=x86_64 ;;
             aarch64-apple-darwin) architecture=arm64 ;;
           esac
-          lipo "target/$MACOS_TARGET/release/bundle/macos/OpenBitFun.app/Contents/MacOS/openbitfun-desktop" -verify_arch "$architecture"
+          lipo "target/$MACOS_TARGET/release/bundle/macos/StarMate.app/Contents/MacOS/openbitfun-desktop" -verify_arch "$architecture"
       - name: Configure Apple Developer ID signing and notarization
         env:
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
@@ -995,7 +995,7 @@ jobs:
             200) ;;
             404)
               gh release create "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" \
-                --verify-tag --draft --title "OpenBitFun ${RELEASE_VERSION}" \
+                --verify-tag --draft --title "StarMate ${RELEASE_VERSION}" \
                 --generate-notes
               ;;
             *)
@@ -1022,7 +1022,7 @@ jobs:
           EOF
           fi
           gh release edit "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" \
-            --title "OpenBitFun ${RELEASE_VERSION}" --notes-file release-notes.md \
+            --title "StarMate ${RELEASE_VERSION}" --notes-file release-notes.md \
             --draft=false --prerelease="${RELEASE_PRERELEASE}" --latest="${RELEASE_LATEST}"
 
       - name: Verify published legacy update feeds
@@ -1141,7 +1141,7 @@ jobs:
               --repo "${GITHUB_REPOSITORY}" \
               --target "${CHECKOUT_REF}" \
               --prerelease \
-              --title "OpenBitFun Beta Update Channel" \
+              --title "StarMate Beta Update Channel" \
               --notes "Mutable updater pointer. Installable beta releases use immutable version tags."
           fi
           mkdir -p beta-channel

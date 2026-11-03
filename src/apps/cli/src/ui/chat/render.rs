@@ -245,7 +245,7 @@ impl ChatView {
             let welcome = vec![
                 Line::from(""),
                 Line::from(Span::styled(
-                    "Welcome to OpenBitFun CLI!",
+                    "Welcome to StarMate CLI!",
                     self.theme.style(StyleKind::Title),
                 )),
                 Line::from(""),
