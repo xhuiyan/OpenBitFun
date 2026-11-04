@@ -11,6 +11,11 @@ const ROOT_DIR = path.resolve(SCRIPT_DIR, '..');
 const SOURCE_DIR = path.join(ROOT_DIR, 'assets', 'brand', 'source');
 const SOURCE_SVG = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/starmate-mark.svg');
 const SOURCE_APP_MARK = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/starmate-app-mark.png');
+// The application icon is authored artwork, not a composition of the in-product
+// logo. The delivered master already carries the graphite tile, its rounded
+// silhouette, the silver ribbon shading, and transparent outer corners. Do not
+// rebuild it from a mark, and do not trace it back into a "vector" source.
+const SOURCE_APP_ICON = path.join(SOURCE_DIR, 'starmate-app-icon-1024.png');
 const SOURCE_MARKS = {
   dark: path.join(SOURCE_DIR, 'starmate-mark-dark.png'),
   light: path.join(SOURCE_DIR, 'starmate-mark-light.png'),
@@ -18,9 +23,16 @@ const SOURCE_MARKS = {
 
 const BRAND_SIZE = 512;
 const APP_ICON_SIZE = 1024;
-const APP_ICON_CORNER_RADIUS = 96;
-const APP_MARK_LIFT = 28;
-const ANDROID_FOREGROUND_SCALE = 0.66;
+// Opaque field used where the platform cannot keep the tile's transparent
+// corners: the iOS App Store icon is flattened, and the macOS legacy ICNS
+// export covers the transparent margin with the Icon Composer fill.
+const APP_ICON_FILL = { r: 17, g: 18, b: 21 };
+// The adaptive launcher foreground is the ribbon alone. Its luminance separates
+// cleanly from the uniform graphite tile (tile ~18, ribbon ~140-250).
+const LAUNCHER_MARK_LUMINANCE = { transparent: 60, opaque: 120 };
+// Fraction of the 108 dp adaptive canvas covered by the ribbon silhouette. The
+// launcher safe circle is 66 dp, so the mark stays inside the platform mask.
+const ANDROID_FOREGROUND_SCALE = 0.6;
 
 const ANDROID_DENSITIES = {
   mdpi: { icon: 48, adaptive: 108 },
@@ -84,17 +96,9 @@ async function writePng(filePath, buffer) {
 function createReusableWebMark(svg) {
   const reusableMark = svg.replaceAll('stroke="black"', 'stroke="currentColor"');
   if (!reusableMark.includes('stroke="currentColor"')) {
-    throw new Error('OpenBitFun mark source is missing its canonical inherited-color strokes');
+    throw new Error('StarMate mark source is missing its canonical inherited-color strokes');
   }
   return reusableMark;
-}
-
-async function normalizePng(input) {
-  return sharp(input)
-    .ensureAlpha()
-    .resize({ width: BRAND_SIZE, height: BRAND_SIZE, fit: 'contain', kernel: 'lanczos3' })
-    .png({ compressionLevel: 9, adaptiveFiltering: true })
-    .toBuffer();
 }
 
 async function renderMark(svg, size, tone, opticalSize = size) {
@@ -129,58 +133,111 @@ async function resizePng(input, size) {
     .toBuffer();
 }
 
-async function createApplicationMark(lightMark) {
-  const { data, info } = await sharp(lightMark)
+async function readApplicationIcon() {
+  const icon = await readFile(SOURCE_APP_ICON);
+  const metadata = await sharp(icon).metadata();
+  if (metadata.width !== APP_ICON_SIZE || metadata.height !== APP_ICON_SIZE || !metadata.hasAlpha) {
+    throw new Error(
+      `Application icon master must be a ${APP_ICON_SIZE}px RGBA PNG: ${SOURCE_APP_ICON}`,
+    );
+  }
+  return icon;
+}
+
+async function createComposerForeground(applicationIcon) {
+  // The Composer canvas is the icon grid square, not the delivered PNG's outer
+  // margin. Trim the tile to its rounded silhouette and scale that to the full
+  // canvas so macOS applies its own enclosure mask to the tile itself. Keeping
+  // the margin here would shrink the Dock artwork and make the legacy ICNS
+  // export inconsistent with the modern catalog.
+  const { data, info } = await sharp(applicationIcon)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  let minX = info.width;
+  let minY = info.height;
+  let maxX = -1;
+  let maxY = -1;
+  for (let y = 0; y < info.height; y++) {
+    for (let x = 0; x < info.width; x++) {
+      if (data[(y * info.width + x) * info.channels + 3] < 128) continue;
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
+    }
+  }
+  if (maxX < 0) throw new Error('Application icon master has no opaque tile silhouette.');
+  const side = Math.min(info.width, info.height, Math.max(maxX - minX + 1, maxY - minY + 1));
+  const left = Math.max(0, Math.min(info.width - side, Math.round(minX - (side - (maxX - minX + 1)) / 2)));
+  const top = Math.max(0, Math.min(info.height - side, Math.round(minY - (side - (maxY - minY + 1)) / 2)));
+  return sharp(applicationIcon)
+    .extract({ left, top, width: side, height: side })
+    .resize(APP_ICON_SIZE, APP_ICON_SIZE, { kernel: 'lanczos3' })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+}
+
+async function createAdaptiveForeground(applicationIcon, size) {
+  // Recover the ribbon from the authored tile. The tile field is a uniform dark
+  // graphite, so luminance gives the mark's coverage without drawing or tracing
+  // new geometry. Observed pixels are a blend of ribbon and graphite, so the
+  // ribbon colour is un-premultiplied back out before it is placed over the
+  // launcher field; that keeps a dark tile edge from bleeding into the artwork.
+  const { data, info } = await sharp(applicationIcon)
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
   const channels = info.channels;
-  const whiteMark = Buffer.alloc(data.length);
+  const field = [APP_ICON_FILL.r, APP_ICON_FILL.g, APP_ICON_FILL.b];
+  const mark = Buffer.alloc(data.length);
+  const { transparent, opaque } = LAUNCHER_MARK_LUMINANCE;
+  let minX = info.width;
+  let minY = info.height;
+  let maxX = -1;
+  let maxY = -1;
 
-  for (let index = 0; index < data.length; index += channels) {
-    const sourceTone = data[index];
-    const liftedTone = Math.min(255, sourceTone + APP_MARK_LIFT);
-    whiteMark[index] = liftedTone;
-    whiteMark[index + 1] = liftedTone;
-    whiteMark[index + 2] = liftedTone;
-    whiteMark[index + 3] = data[index + 3];
+  for (let y = 0; y < info.height; y++) {
+    for (let x = 0; x < info.width; x++) {
+      const index = (y * info.width + x) * channels;
+      const luminance = 0.2126 * data[index] + 0.7152 * data[index + 1] + 0.0722 * data[index + 2];
+      const coverage = Math.max(0, Math.min(1, (luminance - transparent) / (opaque - transparent)));
+      const alpha = Math.round(coverage * data[index + 3]);
+      mark[index + 3] = alpha;
+      if (coverage > 0) {
+        for (let channel = 0; channel < 3; channel++) {
+          mark[index + channel] = Math.max(0, Math.min(255,
+            Math.round(field[channel] + (data[index + channel] - field[channel]) / coverage)));
+        }
+      } else {
+        mark[index] = field[0];
+        mark[index + 1] = field[1];
+        mark[index + 2] = field[2];
+      }
+      if (alpha >= 8) {
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+      }
+    }
   }
 
-  return sharp(whiteMark, {
-    raw: { width: info.width, height: info.height, channels: 4 },
+  if (maxX < 0) throw new Error('Application icon has no visible ribbon to project onto launchers.');
+  // Crop a square around the ribbon so the resized artwork needs no padding.
+  const ribbonWidth = maxX - minX + 1;
+  const ribbonHeight = maxY - minY + 1;
+  const side = Math.min(info.width, info.height, Math.max(ribbonWidth, ribbonHeight));
+  const cropLeft = Math.max(0, Math.min(info.width - side, Math.round(minX - (side - ribbonWidth) / 2)));
+  const cropTop = Math.max(0, Math.min(info.height - side, Math.round(minY - (side - ribbonHeight) / 2)));
+  const artwork = await sharp(mark, {
+    raw: { width: info.width, height: info.height, channels },
   })
+    .extract({ left: cropLeft, top: cropTop, width: side, height: side })
     .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toBuffer();
-}
-
-async function createApplicationIcon(applicationMark) {
-  const { width: size } = await sharp(applicationMark).metadata();
-  const cornerRadius = APP_ICON_CORNER_RADIUS * size / BRAND_SIZE;
-  const background = Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">` +
-      `<rect width="${size}" height="${size}" rx="${cornerRadius}" fill="#000000"/>` +
-    '</svg>',
-  );
-
-  return sharp({
-    create: {
-      width: size,
-      height: size,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
-    },
-  })
-    .composite([
-      { input: background },
-      { input: applicationMark },
-    ])
-    .png({ compressionLevel: 9, adaptiveFiltering: true })
-    .toBuffer();
-}
-
-async function createAdaptiveForeground(applicationMark, size) {
   const artworkSize = Math.round(size * ANDROID_FOREGROUND_SCALE);
-  const artwork = await resizePng(applicationMark, artworkSize);
+  const resized = await resizePng(artwork, artworkSize);
 
   return sharp({
     create: {
@@ -191,10 +248,20 @@ async function createAdaptiveForeground(applicationMark, size) {
     },
   })
     .composite([{
-      input: artwork,
+      input: resized,
       left: Math.floor((size - artworkSize) / 2),
       top: Math.floor((size - artworkSize) / 2),
     }])
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+}
+
+async function createIosStoreIcon(applicationIcon) {
+  // App Store icons must be opaque; iOS applies its own corner mask, so the
+  // tile's transparent margin is flattened onto the same graphite field the
+  // Icon Composer document uses for macOS.
+  return sharp(applicationIcon)
+    .flatten({ background: APP_ICON_FILL })
     .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toBuffer();
 }
@@ -242,8 +309,12 @@ async function removeLegacyApplicationAssets() {
 }
 
 async function generateBrandAssets() {
-  const applicationMark = await createApplicationMark(await normalizePng(SOURCE_APP_MARK));
-  await writePng(path.join(COMPOSER_ICON, 'Assets/Mark.png'), await resizePng(applicationMark, APP_ICON_SIZE));
+  // The delivered application icon is final artwork. The macOS Icon Composer
+  // document consumes the tile silhouette (trimmed to the icon grid) on the
+  // graphite fill declared in icon.json; every other projection resizes the
+  // master and keeps its authored outer margin.
+  const applicationIcon = await readApplicationIcon();
+  await writePng(path.join(COMPOSER_ICON, 'Assets/Mark.png'), await createComposerForeground(applicationIcon));
   if (process.argv.includes('--macos-source-only')) return;
   const macosFallback = readMacosFallback();
   const svg = await readFile(SOURCE_SVG, 'utf8');
@@ -253,13 +324,10 @@ async function generateBrandAssets() {
   ]);
   await writePng(SOURCE_MARKS.dark, darkMark);
   await writePng(SOURCE_MARKS.light, lightMark);
-  const applicationIcon = await createApplicationIcon(applicationMark);
-  const applicationIconLarge = await resizePng(applicationIcon, APP_ICON_SIZE);
   const darkMarkSmall = await renderMark(svg, 128, '#202020');
   const lightMarkSmall = await renderMark(svg, 128, '#e8e8e8');
   const iconCache = new Map([
-    [BRAND_SIZE, Promise.resolve(applicationIcon)],
-    [APP_ICON_SIZE, Promise.resolve(applicationIconLarge)],
+    [APP_ICON_SIZE, Promise.resolve(applicationIcon)],
   ]);
   const renderIcon = size => {
     if (!iconCache.has(size)) {
@@ -267,7 +335,11 @@ async function generateBrandAssets() {
     }
     return iconCache.get(size);
   };
-  const windowsIcon = await generateWindowsIcon(applicationIconLarge, renderIcon);
+  const windowsIcon = await generateWindowsIcon(applicationIcon, renderIcon);
+  // Browser tabs, apple-touch previews, installer UI, and the verification email
+  // embed are unsized raster targets, so they ship the 512 px export instead of
+  // the 1024 px bundle icon; the master stays only where the platform needs it.
+  const webIcon = await renderIcon(BRAND_SIZE);
 
   const exportDir = outputPath('assets', 'brand', 'exports');
   await mkdir(exportDir, { recursive: true });
@@ -294,22 +366,24 @@ async function generateBrandAssets() {
   await writeFile(path.join(exportDir, 'starmate-app-icon.ico'), windowsIcon);
   await writeFile(path.join(exportDir, 'starmate-app-icon.icns'), macosFallback);
 
-  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'starmate-email-mark.png'), darkMarkSmall);
+  const marketAssetDir = outputPath('src', 'miniapp-market-web', 'public', 'assets');
+  await writePng(path.join(marketAssetDir, 'starmate-email-mark.png'), darkMarkSmall);
+  await writePng(path.join(marketAssetDir, 'starmate-email-app-icon.png'), webIcon);
+  await writePng(path.join(marketAssetDir, 'starmate-favicon-16.png'), await renderIcon(16));
+  await writePng(path.join(marketAssetDir, 'starmate-favicon-32.png'), await renderIcon(32));
 
-  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'starmate-email-app-icon.png'), applicationIcon);
-
-  await writePng(outputPath('src', 'crates', 'services', 'miniapp-market-service', 'src', 'email', 'app-icon.png'), applicationIcon);
+  await writePng(outputPath('src', 'crates', 'services', 'miniapp-market-service', 'src', 'email', 'app-icon.png'), webIcon);
 
   const webBrandDir = outputPath('src', 'web-ui', 'public', 'brand');
   await writePng(path.join(webBrandDir, 'starmate-mark-dark.png'), darkMark);
   await writePng(path.join(webBrandDir, 'starmate-mark-light.png'), lightMark);
   await writePng(path.join(webBrandDir, 'starmate-mark-dark-128.png'), darkMarkSmall);
   await writePng(path.join(webBrandDir, 'starmate-mark-light-128.png'), lightMarkSmall);
-  await writePng(path.join(webBrandDir, 'starmate-app-icon.png'), applicationIcon);
+  await writePng(path.join(webBrandDir, 'starmate-app-icon.png'), webIcon);
   await writeFile(path.join(webBrandDir, 'starmate-mark.svg'), createReusableWebMark(svg), 'utf8');
 
   const desktopIconDir = outputPath('src', 'apps', 'desktop', 'icons');
-  await writePng(path.join(desktopIconDir, 'starmate-app-icon.png'), applicationIconLarge);
+  await writePng(path.join(desktopIconDir, 'starmate-app-icon.png'), applicationIcon);
   await writePng(path.join(desktopIconDir, 'starmate-app-icon.ico'), windowsIcon);
   await writePng(path.join(desktopIconDir, 'starmate-app-icon.icns'), macosFallback);
   for (const size of DESKTOP_HICOLOR_SIZES) {
@@ -320,24 +394,29 @@ async function generateBrandAssets() {
     );
   }
 
+  const dataToolsIconDir = outputPath('src', 'apps', 'data-tools', 'icons');
+  await writePng(path.join(dataToolsIconDir, 'starmate-app-icon.png'), applicationIcon);
+  await writePng(path.join(dataToolsIconDir, 'starmate-app-icon.ico'), windowsIcon);
+  await writePng(path.join(dataToolsIconDir, 'starmate-app-icon.icns'), macosFallback);
+
   const mobileWebAssetDir = outputPath('src', 'mobile-web', 'src', 'assets');
   await writePng(path.join(mobileWebAssetDir, 'starmate-mark-dark.png'), darkMark);
   await writePng(path.join(mobileWebAssetDir, 'starmate-mark-light.png'), lightMark);
   await writePng(
     outputPath('src', 'mobile-web', 'public', 'brand', 'starmate-app-icon.png'),
-    applicationIcon,
+    webIcon,
   );
   await writePng(
     outputPath('src', 'apps', 'relay-server', 'static', 'brand', 'starmate-app-icon.png'),
-    applicationIcon,
+    webIcon,
   );
 
   const installerBrandDir = outputPath('OpenBitFun-Installer', 'src', 'assets');
   await writePng(path.join(installerBrandDir, 'starmate-mark-dark.png'), darkMark);
   await writePng(path.join(installerBrandDir, 'starmate-mark-light.png'), lightMark);
-  await writePng(path.join(installerBrandDir, 'starmate-app-icon.png'), applicationIcon);
+  await writePng(path.join(installerBrandDir, 'starmate-app-icon.png'), webIcon);
   const installerIconDir = outputPath('OpenBitFun-Installer', 'src-tauri', 'icons');
-  await writePng(path.join(installerIconDir, 'starmate-app-icon.png'), applicationIconLarge);
+  await writePng(path.join(installerIconDir, 'starmate-app-icon.png'), applicationIcon);
   await writePng(path.join(installerIconDir, 'starmate-app-icon.ico'), windowsIcon);
   await writePng(path.join(installerIconDir, 'starmate-app-icon.icns'), macosFallback);
 
@@ -351,7 +430,7 @@ async function generateBrandAssets() {
 
   for (const [density, sizes] of Object.entries(ANDROID_DENSITIES)) {
     const legacyIcon = await renderIcon(sizes.icon);
-    const adaptiveForeground = await createAdaptiveForeground(applicationMark, sizes.adaptive);
+    const adaptiveForeground = await createAdaptiveForeground(applicationIcon, sizes.adaptive);
     const androidDir = outputPath('src', 'apps', 'mobile', 'android', 'app', 'src', 'main', 'res', `mipmap-${density}`);
     await writePng(path.join(androidDir, 'ic_launcher.png'), legacyIcon);
     await writePng(path.join(androidDir, 'ic_launcher_round.png'), legacyIcon);
@@ -361,8 +440,7 @@ async function generateBrandAssets() {
 
   await writePng(
     outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'AppIcon.appiconset', 'starmate-app-icon.png'),
-    // App Store icons must be opaque; iOS applies its own corner mask.
-    await sharp(applicationIconLarge).flatten({ background: '#000000' }).png().toBuffer(),
+    await createIosStoreIcon(applicationIcon),
   );
   await writePng(
     outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'StarMateMark.imageset', 'starmate-mark-light.png'),
@@ -371,11 +449,11 @@ async function generateBrandAssets() {
 
   await writePng(
     outputPath('src', 'apps', 'mobile', 'harmonyos', 'AppScope', 'resources', 'base', 'media', 'starmate_app_icon.png'),
-    applicationIconLarge,
+    applicationIcon,
   );
   await writePng(
     outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'starmate_app_icon.png'),
-    applicationIconLarge,
+    applicationIcon,
   );
   await writePng(
     outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'starmate_start_window.png'),

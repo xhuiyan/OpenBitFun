@@ -32,7 +32,7 @@ export const openBitFunSolidMarkMeta = {
 export const openBitFunAppIconMeta = {
   category: "brand",
   name: "StarMateAppIcon",
-  description: "The installed application icon: the silver mark on its authored black rounded-square tile, with resolution-aware assets.",
+  description: "The installed application icon: the silver ribbon on its authored graphite tile, with resolution-aware assets.",
   maturity: "stable",
   props: [
     { name: "size", type: "number", defaultValue: "control.height.lg" },

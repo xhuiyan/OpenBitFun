@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Launcher-only field; the app UI does not consume this color. -->
-    <color name="ic_launcher_background">#000000</color>
+    <!-- Launcher-only field; the app UI does not consume this color. It matches
+         the graphite field of the delivered application icon artwork. -->
+    <color name="ic_launcher_background">#111215</color>
 </resources>

@@ -90,6 +90,21 @@ test('macOS ICNS PNG representations preserve a visible body and transparent Doc
     }
     assert.ok(first >= size * 0.07 && first <= size * 0.14, `visible body: ${size}, ${first}`);
     assert.ok(Math.abs(first - (size - 1 - last)) <= 1, 'centered body');
+    // A filled body would make the legacy Dock icon a hard square. The legacy
+    // ICNS must keep the authored rounded silhouette with transparent corners.
+    let bodyLeft = size;
+    let bodyTop = size;
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        if (data[(y * size + x) * 4 + 3] < 128) continue;
+        if (x < bodyLeft) bodyLeft = x;
+        if (y < bodyTop) bodyTop = y;
+      }
+    }
+    assert.ok(
+      data[(bodyTop * size + bodyLeft) * 4 + 3] < 128,
+      'legacy body corners must stay rounded, not filled square',
+    );
     checked++;
   }
   assert.equal(checked, 8);
@@ -112,25 +127,44 @@ test('desktop and installer retain independent Windows/Linux icons alongside the
   }
 });
 
-test('application icons preserve the submitted artwork independently from the startup Logo', async () => {
-  const applicationMark = readFileSync('assets/brand/source/starmate-app-mark.png');
+test('application icons preserve the delivered raster artwork independently from the startup Logo', async () => {
+  const artwork = 'assets/brand/source/starmate-app-icon-1024.png';
+  const applicationIcon = readFileSync(artwork);
   const startupMark = readFileSync('assets/brand/source/starmate-mark-light.png');
-  const generatedIcon = readFileSync('assets/brand/exports/starmate-app-icon-512.png');
 
   assert.equal(
-    createHash('sha256').update(applicationMark).digest('hex'),
-    '6cda0b01d037ef552690d210a1e5adfa807a806d685a49f46d110b1e3765b5a0',
+    createHash('sha256').update(applicationIcon).digest('hex'),
+    '1a3b9211ed91c9b27914814a71916167a8b7e8edec7f871be05d533d792035a9',
   );
-  assert.equal(
-    createHash('sha256').update(generatedIcon).digest('hex'),
-    'df460c4a43d9a68e15bee7b23b0bb68f7b9e70c26c68158ef82e2d4fd9e6288f',
-  );
-  assert.notDeepEqual(applicationMark, startupMark);
+  assert.notDeepEqual(applicationIcon, startupMark);
 
-  const metadata = await sharp(applicationMark).metadata();
-  assert.equal(metadata.width, 512);
-  assert.equal(metadata.height, 512);
+  const metadata = await sharp(applicationIcon).metadata();
+  assert.equal(metadata.width, 1024);
+  assert.equal(metadata.height, 1024);
   assert.equal(metadata.hasAlpha, true);
+
+  // The packaged icon is the authored pixels resized, not a re-composition of
+  // the in-product mark on a generated background.
+  const { data } = await sharp('assets/brand/exports/starmate-app-icon-512.png')
+    .raw().toBuffer({ resolveWithObject: true });
+  const expected = await sharp(applicationIcon)
+    .resize({ width: 512, height: 512, fit: 'contain', kernel: 'lanczos3' })
+    .raw()
+    .toBuffer();
+  assert.deepEqual(data, expected);
+  // The Icon Composer foreground is the tile silhouette trimmed to the icon
+  // grid, so the modern catalog and the legacy ICNS export show the same tile.
+  const composerMark = readFileSync('assets/brand/macos/starmate.icon/Assets/Mark.png');
+  assert.notDeepEqual(composerMark, applicationIcon);
+  const composerMetadata = await sharp(composerMark).metadata();
+  assert.equal(composerMetadata.width, 1024);
+  assert.equal(composerMetadata.height, 1024);
+  assert.equal(composerMetadata.hasAlpha, true);
+  const composerRaw = await sharp(composerMark).ensureAlpha()
+    .raw().toBuffer({ resolveWithObject: true });
+  const at = (x, y) => composerRaw.data[(y * 1024 + x) * 4 + 3];
+  assert.equal(at(0, 512), 255, 'the tile must fill the Composer canvas edge to edge');
+  assert.equal(at(0, 0), 0, 'the tile corners must stay transparent for the enclosure mask');
 });
 
 test('iOS App Store icon is a 1024 pixel RGB image without alpha', async () => {
@@ -193,22 +227,63 @@ test('Windows ICO frames contain the size-specific app PNGs', async () => {
   assert.deepEqual(ico, readFileSync('OpenBitFun-Installer/src-tauri/icons/starmate-app-icon.ico'));
 });
 
-test('small icons retain a bright rim around the entire silhouette', async () => {
+test('data-tools packaging uses the same application artwork as the desktop app', () => {
+  for (const file of ['starmate-app-icon.png', 'starmate-app-icon.ico', 'starmate-app-icon.icns']) {
+    assert.deepEqual(
+      readFileSync(`src/apps/data-tools/icons/${file}`),
+      readFileSync(`src/apps/desktop/icons/${file}`),
+    );
+  }
+});
+
+test('small icons keep the silver ribbon legible from every direction', async () => {
   for (const size of [16, 24, 32, 48, 64]) {
     const { data, info } = await sharp(`assets/brand/exports/starmate-app-icon-${size}.png`)
       .raw().toBuffer({ resolveWithObject: true });
-    const sectors = Array(12).fill(0);
+    const peak = Array(12).fill(0);
+    const brightPixels = Array(12).fill(0);
     for (let y = 0; y < size; y++) {
       for (let x = 0; x < size; x++) {
         const dx = (x + 0.5) / size - 0.5;
         const dy = (y + 0.5) / size - 0.5;
-        const radius = Math.hypot(dx, dy);
-        if (radius < 0.32 || radius > 0.44) continue;
+        if (Math.hypot(dx, dy) > 0.5) continue;
         const sector = Math.floor((Math.atan2(dy, dx) + Math.PI) * 12 / (2 * Math.PI)) % 12;
-        sectors[sector] = Math.max(sectors[sector], data[(y * size + x) * info.channels]);
+        const luminance = data[(y * size + x) * info.channels];
+        peak[sector] = Math.max(peak[sector], luminance);
+        if (luminance >= 150) brightPixels[sector] += 1;
       }
     }
-    assert.ok(sectors.every(value => value >= 200), `${size}px rim has a dim sector: ${sectors}`);
+    // The 3D ribbon has shaded sides, so the contract is legibility from every
+    // direction, not a uniformly bright ring: each sector needs visible silver.
+    const minimumPixels = size === 16 ? 2 : size === 24 ? 5 : 8;
+    assert.ok(peak.every(value => value >= 180), `${size}px ribbon has a dim sector: ${peak}`);
+    assert.ok(
+      brightPixels.every(value => value >= minimumPixels),
+      `${size}px ribbon is missing from a sector: ${brightPixels}`,
+    );
+  }
+});
+
+test('Android adaptive layers derive from the delivered graphite tile', async () => {
+  const { data, info } = await sharp('assets/brand/source/starmate-app-icon-1024.png')
+    .raw().toBuffer({ resolveWithObject: true });
+  // Sample the tile field inside the rounded silhouette, away from the ribbon.
+  const field = [...data.subarray((64 * info.width + 512) * info.channels, (64 * info.width + 512) * info.channels + 3)];
+  assert.deepEqual(field, [17, 18, 21]);
+
+  const colorXml = readFileSync('src/apps/mobile/android/app/src/main/res/values/ic_launcher_background.xml', 'utf8');
+  assert.match(colorXml, /<color name="ic_launcher_background">#111215<\/color>/);
+
+  for (const density of ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+    const foregroundPath = `src/apps/mobile/android/app/src/main/res/mipmap-${density}/ic_launcher_foreground.png`;
+    const foreground = await sharp(foregroundPath).raw().toBuffer({ resolveWithObject: true });
+    const channels = foreground.info.channels;
+    const corner = foreground.data.subarray(0, channels);
+    assert.equal(corner[channels - 1], 0, `${density} adaptive field must be transparent`);
+    assert.deepEqual(
+      readFileSync(`src/apps/mobile/android/app/src/main/res/mipmap-${density}/ic_launcher_monochrome.png`),
+      readFileSync(foregroundPath),
+    );
   }
 });
 
@@ -267,6 +342,27 @@ test('ICNS canonicalization rejects malformed containers', () => {
 
   const truncated = createIcns([createChunk('ic07', Buffer.from('small'))]).subarray(0, -1);
   assert.throws(() => canonicalizeIcns(truncated), /Invalid ICNS length/);
+});
+
+test('browser, launcher-preview, and email slots ship the 512 px export', () => {
+  const projected512 = readFileSync('assets/brand/exports/starmate-app-icon-512.png');
+  for (const file of [
+    'src/web-ui/public/brand/starmate-app-icon.png',
+    'src/mobile-web/public/brand/starmate-app-icon.png',
+    'src/apps/relay-server/static/brand/starmate-app-icon.png',
+    'OpenBitFun-Installer/src/assets/starmate-app-icon.png',
+    'src/miniapp-market-web/public/assets/starmate-email-app-icon.png',
+    'src/crates/services/miniapp-market-service/src/email/app-icon.png',
+  ]) {
+    assert.deepEqual(readFileSync(file), projected512, `${file} must not ship the 1024 px bundle master`);
+  }
+  // The MiniApp market ships app-icon favicons instead of hand-copied artwork.
+  for (const size of [16, 32]) {
+    assert.deepEqual(
+      readFileSync(`src/miniapp-market-web/public/assets/starmate-favicon-${size}.png`),
+      readFileSync(`assets/brand/exports/starmate-app-icon-${size}.png`),
+    );
+  }
 });
 
 test('verification email reuses the current mark and the OpenBitFun reference palette', () => {

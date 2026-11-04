@@ -17,7 +17,14 @@ const run = (command, args, options = {}) => execFileSync(command, args, {
 test('macOS uses a full-bleed Composer source and a current independent legacy export', async () => {
   const source = json(join(COMPOSER_ICON, 'icon.json'));
   assert.deepEqual(source['supported-platforms'], { squares: ['macOS'] });
-  assert.equal(source.fill.solid, 'srgb:0.00000,0.00000,0.00000,1.00000');
+  assert.equal(source.fill.solid, 'srgb:0.06667,0.07059,0.08235,1.00000');
+  // The Composer fill must stay the graphite field of the delivered tile: the
+  // legacy ICNS export and the iOS App Store icon flatten onto this same color.
+  const fill = /^srgb:([\d.]+),([\d.]+),([\d.]+),/.exec(source.fill.solid).slice(1).map(Number);
+  const tile = await sharp(join(ROOT, 'assets/brand/source/starmate-app-icon-1024.png'))
+    .raw().toBuffer({ resolveWithObject: true });
+  const fieldIndex = (64 * tile.info.width + 512) * tile.info.channels;
+  assert.deepEqual(fill.map(value => Math.round(value * 255)), [...tile.data.subarray(fieldIndex, fieldIndex + 3)]);
   const mark = await sharp(join(COMPOSER_ICON, 'Assets/Mark.png')).metadata();
   assert.equal(mark.width, 1024);
   assert.equal(mark.height, 1024);

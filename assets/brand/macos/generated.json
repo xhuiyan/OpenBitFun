@@ -1,6 +1,7 @@
 {
   "iconComposerVersion": "1.2",
   "iconComposerBuild": "76",
-  "sourceSha256": "a148b9dd61596c7c8b144768364737bf4d437f41fc4ba25ed9ba8fa41ca41cd6",
-  "icnsSha256": "04ca39fd01030f7dcdf787670c3e56f006e33e8384eba14e793db75b6765af3e"
+  "legacyExportRenderer": "sharp+iconutil",
+  "sourceSha256": "4e239b286afbdfc133df9243bcf2a6c4bf91d79d26bf77d7a9ed4f7904f40442",
+  "icnsSha256": "a497daef7e3b11f400b8dacf424bd067d71762176392b698c6dc05163b8c6a72"
 }

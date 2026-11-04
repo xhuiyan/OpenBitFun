@@ -1,14 +1,14 @@
 {
   "fill": {
-    "solid": "srgb:0.00000,0.00000,0.00000,1.00000"
+    "solid": "srgb:0.06667,0.07059,0.08235,1.00000"
   },
   "groups": [
     {
-      "name": "Application mark",
+      "name": "Application tile",
       "layers": [
         {
           "image-name": "Mark.png",
-          "name": "Silver mark",
+          "name": "Graphite tile with silver ribbon",
           "glass": false
         }
       ],

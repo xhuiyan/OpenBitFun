@@ -57,6 +57,11 @@
 `index.html` 里的 `<link rel="icon">` 必须带 `/miniapp/` 前缀——站点不在
 域名根目录下，浏览器默认探测的 `/favicon.ico` 会被 Nginx 挡在 404。
 
+`public/assets/starmate-favicon-16.png`、`starmate-favicon-32.png` 是浏览器
+标签页使用的产品应用图标投影，由 `pnpm run generate-brand-assets` 从
+`assets/brand/source/starmate-app-icon-1024.png` 生成，不要手工修改；它们与
+上面的市场立方体标志是两套不同用途的图标，不能互相替代。
+
 OpenBitFun 桌面端内嵌的原生市场 Scene 不在这里。它位于
 `src/web-ui/src/app/scenes/miniapps/`，通过
 `src/apps/desktop/src/api/miniapp_market_api.rs` 访问市场。
