@@ -34,7 +34,7 @@ import { AccountSignIn } from './AccountSignIn';
 import { takeNativeAuthReturnTo } from './authReturnTo';
 import { downloadUrl, loginUrl, marketApi, MarketApiError } from './api';
 import { formatCompactNumber, formatMarketDate, formatMarketDateTime } from './format';
-import { GetOpenBitFunCta } from './GetOpenBitFunCta';
+import { GetStarMateCta } from './GetStarMateCta';
 import { useLocale, type Locale, type MessageKey } from './i18n';
 import { STARMATE_HOME_URL } from './links';
 import { MiniAppIcon } from './MiniAppIcon';
@@ -479,7 +479,7 @@ function CatalogPage({
           </div>
           <h1>{t('headline')}</h1>
           <p>{t('intro')}</p>
-          <GetOpenBitFunCta placement="catalog" t={t} />
+          <GetStarMateCta placement="catalog" t={t} />
         </div>
         <div className="hero-visual">
           <img src="/miniapp/og.png" alt={t('heroImageAlt')} />
@@ -804,7 +804,7 @@ function DetailPage({
               </Button>
             )}
           </div>
-          <GetOpenBitFunCta placement="listing" t={t} />
+          <GetStarMateCta placement="listing" t={t} />
           <div className="rating-control" aria-label={t('ratingLabel')}>
             {[1, 2, 3, 4, 5].map((value) => (
               <IconButton

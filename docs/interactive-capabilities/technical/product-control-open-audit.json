@@ -1420,7 +1420,7 @@
         "sceneId": "session"
       },
       "evidence": [
-        "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#createCanvasElementContext"
+        "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#createCanvasElementContext"
       ]
     },
     {
@@ -1437,7 +1437,7 @@
       },
       "evidence": [
         "command:report_canvas_runtime_error",
-        "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#canvas-runtime-auto-repair"
+        "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#canvas-runtime-auto-repair"
       ]
     },
     {
@@ -1453,7 +1453,7 @@
         "sceneId": "session"
       },
       "evidence": [
-        "source:src/web-ui/src/tools/openbitfun-canvas/canvasHtmlExportService.ts#export async function exportCanvasHtml"
+        "source:src/web-ui/src/tools/starmate-canvas/canvasHtmlExportService.ts#export async function exportCanvasHtml"
       ]
     },
     {

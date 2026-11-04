@@ -1279,7 +1279,7 @@
       "visibility": "documented",
       "rustPath": "clear_web_search_credential",
       "sourceFile": "src/apps/desktop/src/api/config_api.rs",
-      "signature": "fn clear_web_search_credential( _state: State<'_, AppState>, request: openbitfun_core::service::web_search::ClearWebSearchCredentialRequest, ) -> Result<openbitfun_core::service::web_search::WebSearchCredentialStatus, String>",
+      "signature": "fn clear_web_search_credential( _state: State<'_, AppState>, request: starmate_core::service::web_search::ClearWebSearchCredentialRequest, ) -> Result<starmate_core::service::web_search::WebSearchCredentialStatus, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -1377,7 +1377,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_control_status",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_control_status( ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_control_status( ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1393,7 +1393,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_control_stop",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_control_stop( request: ComputerUseControlRequest, ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_control_stop( request: ComputerUseControlRequest, ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1481,7 +1481,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_share_control",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_share_control( state: State<'_, AppState>, request: ComputerUseShareControlRequest, ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_share_control( state: State<'_, AppState>, request: ComputerUseShareControlRequest, ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1529,7 +1529,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_share_input",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_share_input( request: crate::computer_use::shared_preview::SharedInputRequest, ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_share_input( request: crate::computer_use::shared_preview::SharedInputRequest, ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1561,7 +1561,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_share_request",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_share_request( request: ComputerUseShareRequest, ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_share_request( request: ComputerUseShareRequest, ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1577,7 +1577,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_share_start",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_share_start( state: State<'_, AppState>, request: ComputerUseShareStartRequest, ) -> Result<openbitfun_agent_tools::computer_use_control::ControlSnapshot, String>",
+      "signature": "fn computer_use_share_start( state: State<'_, AppState>, request: ComputerUseShareStartRequest, ) -> Result<starmate_agent_tools::computer_use_control::ControlSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1593,7 +1593,7 @@
       "visibility": "documented",
       "rustPath": "computer_use_share_targets",
       "sourceFile": "src/apps/desktop/src/api/computer_use_api.rs",
-      "signature": "fn computer_use_share_targets( ) -> Result<Vec<openbitfun_agent_tools::computer_use_control::ShareTarget>, String>",
+      "signature": "fn computer_use_share_targets( ) -> Result<Vec<starmate_agent_tools::computer_use_control::ShareTarget>, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -1703,7 +1703,7 @@
       "visibility": "implementation",
       "rustPath": "api::agentic_api::create_control_conversation",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn create_control_conversation( coordinator: State<'_, Arc<ConversationCoordinator>>, request: openbitfun_core::agentic::coordination::CreateControlConversationRequest, ) -> Result<openbitfun_core::agentic::coordination::ControlConversation, String>",
+      "signature": "fn create_control_conversation( coordinator: State<'_, Arc<ConversationCoordinator>>, request: starmate_core::agentic::coordination::CreateControlConversationRequest, ) -> Result<starmate_core::agentic::coordination::ControlConversation, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -2616,7 +2616,7 @@
       "visibility": "implementation",
       "rustPath": "api::agentic_api::ensure_control_conversation",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn ensure_control_conversation( coordinator: State<'_, Arc<ConversationCoordinator>>, ) -> Result<openbitfun_core::agentic::coordination::ControlConversation, String>",
+      "signature": "fn ensure_control_conversation( coordinator: State<'_, Arc<ConversationCoordinator>>, ) -> Result<starmate_core::agentic::coordination::ControlConversation, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -2982,7 +2982,7 @@
       "visibility": "documented",
       "rustPath": "get_ai_model_catalog",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_ai_model_catalog() -> Result<openbitfun_core::AIModelCatalog, String>",
+      "signature": "fn get_ai_model_catalog() -> Result<starmate_core::AIModelCatalog, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -3128,7 +3128,7 @@
       "visibility": "documented",
       "rustPath": "get_chat_mcp_catalog",
       "sourceFile": "src/apps/desktop/src/api/tool_api.rs",
-      "signature": "fn get_chat_mcp_catalog( request: openbitfun_core::agentic::tools::product_runtime::ChatMcpCatalogRequest, ) -> Result<openbitfun_core::agentic::tools::product_runtime::ChatMcpCatalog, String>",
+      "signature": "fn get_chat_mcp_catalog( request: starmate_core::agentic::tools::product_runtime::ChatMcpCatalogRequest, ) -> Result<starmate_core::agentic::tools::product_runtime::ChatMcpCatalog, String>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -3558,7 +3558,7 @@
       "visibility": "documented",
       "rustPath": "get_instruction_source_catalog",
       "sourceFile": "src/apps/desktop/src/api/external_sources_api.rs",
-      "signature": "fn get_instruction_source_catalog( request: ExternalSourceSnapshotRequest, ) -> ExternalSourceOperationResult<openbitfun_core::external_sources::InstructionSourceCatalog>",
+      "signature": "fn get_instruction_source_catalog( request: ExternalSourceSnapshotRequest, ) -> ExternalSourceOperationResult<starmate_core::external_sources::InstructionSourceCatalog>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -3588,7 +3588,7 @@
       "visibility": "implementation",
       "rustPath": "get_local_models_dev_catalogs",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_local_models_dev_catalogs( ) -> Result<openbitfun_core::LocalModelsDevCatalogs, String>",
+      "signature": "fn get_local_models_dev_catalogs( ) -> Result<starmate_core::LocalModelsDevCatalogs, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -3831,7 +3831,7 @@
       "visibility": "documented",
       "rustPath": "api::agentic_api::get_model_routing_status",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn get_model_routing_status( runtime: State<'_, DesktopRuntimeContext>, coordinator: State<'_, Arc<ConversationCoordinator>>, request: ModelRoutingStatusRequest, ) -> Result< openbitfun_core::agentic::execution::round_model_routing::configuration::ModelRoutingStatus, String, >",
+      "signature": "fn get_model_routing_status( runtime: State<'_, DesktopRuntimeContext>, coordinator: State<'_, Arc<ConversationCoordinator>>, request: ModelRoutingStatusRequest, ) -> Result< starmate_core::agentic::execution::round_model_routing::configuration::ModelRoutingStatus, String, >",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -3847,7 +3847,7 @@
       "visibility": "documented",
       "rustPath": "get_models_dev_catalog_status",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_models_dev_catalog_status() -> openbitfun_core_types::ModelsDevCatalogStatus",
+      "signature": "fn get_models_dev_catalog_status() -> starmate_core_types::ModelsDevCatalogStatus",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -4323,7 +4323,7 @@
       "visibility": "implementation",
       "rustPath": "get_subscription_account_quota",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_subscription_account_quota( state: State<'_, AppState>, request: SubscriptionAccountQuotaRequest, ) -> Result<openbitfun_core_types::subscription::SubscriptionQuotaSnapshot, String>",
+      "signature": "fn get_subscription_account_quota( state: State<'_, AppState>, request: SubscriptionAccountQuotaRequest, ) -> Result<starmate_core_types::subscription::SubscriptionQuotaSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -4339,7 +4339,7 @@
       "visibility": "documented",
       "rustPath": "get_subscription_login_status",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_subscription_login_status( request: SubscriptionLoginRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::LoginSessionSnapshot, String>",
+      "signature": "fn get_subscription_login_status( request: SubscriptionLoginRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::LoginSessionSnapshot, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -4437,7 +4437,7 @@
       "visibility": "documented",
       "rustPath": "get_web_search_credential_status",
       "sourceFile": "src/apps/desktop/src/api/config_api.rs",
-      "signature": "fn get_web_search_credential_status( _state: State<'_, AppState>, request: GetWebSearchCredentialStatusRequest, ) -> Result<openbitfun_core::service::web_search::WebSearchCredentialStatus, String>",
+      "signature": "fn get_web_search_credential_status( _state: State<'_, AppState>, request: GetWebSearchCredentialStatusRequest, ) -> Result<starmate_core::service::web_search::WebSearchCredentialStatus, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -4453,7 +4453,7 @@
       "visibility": "documented",
       "rustPath": "get_workspace_icon",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn get_workspace_icon( state: State<'_, AppState>, request: openbitfun_core::service::workspace::WorkspaceIconRequest, ) -> Result<openbitfun_core::service::workspace::WorkspaceIconSnapshot, String>",
+      "signature": "fn get_workspace_icon( state: State<'_, AppState>, request: starmate_core::service::workspace::WorkspaceIconRequest, ) -> Result<starmate_core::service::workspace::WorkspaceIconSnapshot, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -4501,7 +4501,7 @@
       "visibility": "documented",
       "rustPath": "git_add_worktree",
       "sourceFile": "src/apps/desktop/src/api/git_api.rs",
-      "signature": "fn git_add_worktree( state: State<'_, AppState>, mut request: GitAddWorktreeRequest, ) -> Result<openbitfun_core::service::git::GitWorktreeInfo, String>",
+      "signature": "fn git_add_worktree( state: State<'_, AppState>, mut request: GitAddWorktreeRequest, ) -> Result<starmate_core::service::git::GitWorktreeInfo, String>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -4725,7 +4725,7 @@
       "visibility": "documented",
       "rustPath": "git_get_graph",
       "sourceFile": "src/apps/desktop/src/api/git_api.rs",
-      "signature": "fn git_get_graph( _state: State<'_, AppState>, repository_path: Option<String>, mut workspace_id: Option<String>, max_count: Option<usize>, branch_name: Option<String>, ) -> Result<openbitfun_core::service::git::GitGraph, String>",
+      "signature": "fn git_get_graph( _state: State<'_, AppState>, repository_path: Option<String>, mut workspace_id: Option<String>, max_count: Option<usize>, branch_name: Option<String>, ) -> Result<starmate_core::service::git::GitGraph, String>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -4823,7 +4823,7 @@
       "visibility": "documented",
       "rustPath": "git_list_worktrees",
       "sourceFile": "src/apps/desktop/src/api/git_api.rs",
-      "signature": "fn git_list_worktrees( state: State<'_, AppState>, mut request: GitRepositoryRequest, ) -> Result<Vec<openbitfun_core::service::git::GitWorktreeInfo>, String>",
+      "signature": "fn git_list_worktrees( state: State<'_, AppState>, mut request: GitRepositoryRequest, ) -> Result<Vec<starmate_core::service::git::GitWorktreeInfo>, String>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -5367,7 +5367,7 @@
       "visibility": "documented",
       "rustPath": "list_ai_models_by_config",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn list_ai_models_by_config( state: State<'_, AppState>, request: ListAIModelsByConfigRequest, ) -> Result<Vec<openbitfun_core::util::types::RemoteModelInfo>, String>",
+      "signature": "fn list_ai_models_by_config( state: State<'_, AppState>, request: ListAIModelsByConfigRequest, ) -> Result<Vec<starmate_core::util::types::RemoteModelInfo>, String>",
       "remoteWorkspacePolicy": "LegacyUnaudited"
     },
     {
@@ -5657,7 +5657,7 @@
       "visibility": "implementation",
       "rustPath": "list_subscription_account_instances",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn list_subscription_account_instances() -> Result< Vec<openbitfun_core::infrastructure::subscription_auth::SubscriptionAccountInstance>, String, >",
+      "signature": "fn list_subscription_account_instances() -> Result< Vec<starmate_core::infrastructure::subscription_auth::SubscriptionAccountInstance>, String, >",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -5673,7 +5673,7 @@
       "visibility": "documented",
       "rustPath": "list_subscription_accounts",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn list_subscription_accounts( ) -> Result<Vec<openbitfun_core::infrastructure::subscription_auth::SubscriptionAccount>, String>",
+      "signature": "fn list_subscription_accounts( ) -> Result<Vec<starmate_core::infrastructure::subscription_auth::SubscriptionAccount>, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -5799,7 +5799,7 @@
       "visibility": "documented",
       "rustPath": "load_mcp_json_config",
       "sourceFile": "src/apps/desktop/src/api/mcp_api.rs",
-      "signature": "fn load_mcp_json_config( state: State<'_, AppState>, ) -> Result<openbitfun_core::service::mcp::config::MCPJsonConfigSnapshot, String>",
+      "signature": "fn load_mcp_json_config( state: State<'_, AppState>, ) -> Result<starmate_core::service::mcp::config::MCPJsonConfigSnapshot, String>",
       "remoteWorkspacePolicy": "LegacyUnaudited"
     },
     {
@@ -5847,7 +5847,7 @@
       "visibility": "documented",
       "rustPath": "api::agentic_api::load_session_trajectory",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn load_session_trajectory( runtime: State<'_, DesktopRuntimeContext>, request: LoadSessionTrajectoryRequest, ) -> Result<openbitfun_services_core::session::trajectory::SessionTrajectoryPage, String>",
+      "signature": "fn load_session_trajectory( runtime: State<'_, DesktopRuntimeContext>, request: LoadSessionTrajectoryRequest, ) -> Result<starmate_services_core::session::trajectory::SessionTrajectoryPage, String>",
       "remoteWorkspacePolicy": "RemoteRouted"
     },
     {
@@ -5909,7 +5909,7 @@
       "visibility": "documented",
       "rustPath": "logout_subscription_account",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn logout_subscription_account( request: SubscriptionProviderRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::SubscriptionLogoutResult, String>",
+      "signature": "fn logout_subscription_account( request: SubscriptionProviderRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::SubscriptionLogoutResult, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -5923,7 +5923,7 @@
       "visibility": "implementation",
       "rustPath": "logout_subscription_account_instance",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn logout_subscription_account_instance( request: SubscriptionAccountInstanceRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::SubscriptionLogoutResult, String>",
+      "signature": "fn logout_subscription_account_instance( request: SubscriptionAccountInstanceRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::SubscriptionLogoutResult, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -5939,7 +5939,7 @@
       "visibility": "documented",
       "rustPath": "api::agentic_api::manage_dialog_queue",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn manage_dialog_queue( runtime: State<'_, DesktopRuntimeContext>, request: openbitfun_runtime_ports::DialogQueueRequest, ) -> Result<openbitfun_runtime_ports::DialogQueueSnapshot, String>",
+      "signature": "fn manage_dialog_queue( runtime: State<'_, DesktopRuntimeContext>, request: starmate_runtime_ports::DialogQueueRequest, ) -> Result<starmate_runtime_ports::DialogQueueSnapshot, String>",
       "remoteWorkspacePolicy": "RemoteRouted"
     },
     {
@@ -7203,7 +7203,7 @@
       "visibility": "documented",
       "rustPath": "project_ai_model_reasoning_catalog",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn project_ai_model_reasoning_catalog( request: openbitfun_core_types::ReasoningCatalogProjectionRequest, ) -> openbitfun_core_types::ReasoningCatalogProjection",
+      "signature": "fn project_ai_model_reasoning_catalog( request: starmate_core_types::ReasoningCatalogProjectionRequest, ) -> starmate_core_types::ReasoningCatalogProjection",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -7299,7 +7299,7 @@
       "visibility": "implementation",
       "rustPath": "api::agentic_api::record_voice_exchange",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn record_voice_exchange( coordinator: State<'_, Arc<ConversationCoordinator>>, request: openbitfun_core::agentic::coordination::VoiceExchangeRequest, ) -> Result<(), String>",
+      "signature": "fn record_voice_exchange( coordinator: State<'_, Arc<ConversationCoordinator>>, request: starmate_core::agentic::coordination::VoiceExchangeRequest, ) -> Result<(), String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -7348,7 +7348,7 @@
       "visibility": "documented",
       "rustPath": "refresh_models_dev_catalog_now",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn refresh_models_dev_catalog_now( ) -> Result<openbitfun_core_types::ModelsDevRefreshResult, String>",
+      "signature": "fn refresh_models_dev_catalog_now( ) -> Result<starmate_core_types::ModelsDevRefreshResult, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -7364,7 +7364,7 @@
       "visibility": "documented",
       "rustPath": "refresh_subscription_account",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn refresh_subscription_account( state: State<'_, AppState>, request: SubscriptionProviderRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::SubscriptionAccount, String>",
+      "signature": "fn refresh_subscription_account( state: State<'_, AppState>, request: SubscriptionProviderRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::SubscriptionAccount, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -7378,7 +7378,7 @@
       "visibility": "implementation",
       "rustPath": "refresh_subscription_account_instance",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn refresh_subscription_account_instance( state: State<'_, AppState>, request: SubscriptionAccountInstanceRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::SubscriptionAccountInstance, String>",
+      "signature": "fn refresh_subscription_account_instance( state: State<'_, AppState>, request: SubscriptionAccountInstanceRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::SubscriptionAccountInstance, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -7456,7 +7456,7 @@
       "visibility": "documented",
       "rustPath": "api::agentic_api::reload_session_context",
       "sourceFile": "src/apps/desktop/src/api/agentic_api.rs",
-      "signature": "fn reload_session_context( runtime: State<'_, DesktopRuntimeContext>, request: openbitfun_runtime_ports::AgentContextReloadRequest, ) -> Result<(), String>",
+      "signature": "fn reload_session_context( runtime: State<'_, DesktopRuntimeContext>, request: starmate_runtime_ports::AgentContextReloadRequest, ) -> Result<(), String>",
       "remoteWorkspacePolicy": "RemoteRouted"
     },
     {
@@ -7860,7 +7860,7 @@
       "visibility": "documented",
       "rustPath": "api::ssh_api::remote_read_dir",
       "sourceFile": "src/apps/desktop/src/api/ssh_api.rs",
-      "signature": "fn remote_read_dir( state: State<'_, AppState>, connection_id: String, path: String, ) -> Result<Vec<openbitfun_core::service::remote_ssh::RemoteDirEntry>, String>",
+      "signature": "fn remote_read_dir( state: State<'_, AppState>, connection_id: String, path: String, ) -> Result<Vec<starmate_core::service::remote_ssh::RemoteDirEntry>, String>",
       "remoteWorkspacePolicy": "RemoteRouted"
     },
     {
@@ -8687,7 +8687,7 @@
       "visibility": "documented",
       "rustPath": "rollback_session_to_turn",
       "sourceFile": "src/apps/desktop/src/api/snapshot_service.rs",
-      "signature": "fn rollback_session_to_turn( runtime: State<'_, DesktopRuntimeContext>, mut request: openbitfun_runtime_ports::AgentSessionRollbackToTurnRequest, ) -> Result<openbitfun_runtime_ports::AgentSessionRollbackToTurnOutcome, String>",
+      "signature": "fn rollback_session_to_turn( runtime: State<'_, DesktopRuntimeContext>, mut request: starmate_runtime_ports::AgentSessionRollbackToTurnRequest, ) -> Result<starmate_runtime_ports::AgentSessionRollbackToTurnOutcome, String>",
       "remoteWorkspacePolicy": "RemoteUnsupported"
     },
     {
@@ -8891,7 +8891,7 @@
       "visibility": "documented",
       "rustPath": "save_web_search_credential",
       "sourceFile": "src/apps/desktop/src/api/config_api.rs",
-      "signature": "fn save_web_search_credential( _state: State<'_, AppState>, request: openbitfun_core::service::web_search::SaveWebSearchCredentialRequest, ) -> Result<openbitfun_core::service::web_search::WebSearchCredentialStatus, String>",
+      "signature": "fn save_web_search_credential( _state: State<'_, AppState>, request: starmate_core::service::web_search::SaveWebSearchCredentialRequest, ) -> Result<starmate_core::service::web_search::WebSearchCredentialStatus, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -9561,7 +9561,7 @@
       "visibility": "implementation",
       "rustPath": "set_subscription_account_enabled",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn set_subscription_account_enabled( request: SubscriptionAccountEnabledRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::SubscriptionAccountInstance, String>",
+      "signature": "fn set_subscription_account_enabled( request: SubscriptionAccountEnabledRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::SubscriptionAccountInstance, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -9591,7 +9591,7 @@
       "visibility": "documented",
       "rustPath": "set_workspace_icon",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn set_workspace_icon( state: State<'_, AppState>, request: openbitfun_core::service::workspace::SetWorkspaceIconRequest, ) -> Result<openbitfun_core::service::workspace::WorkspaceIconSnapshot, String>",
+      "signature": "fn set_workspace_icon( state: State<'_, AppState>, request: starmate_core::service::workspace::SetWorkspaceIconRequest, ) -> Result<starmate_core::service::workspace::WorkspaceIconSnapshot, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -10142,7 +10142,7 @@
       "visibility": "documented",
       "rustPath": "api::ssh_api::ssh_list_wsl_distributions",
       "sourceFile": "src/apps/desktop/src/api/ssh_api.rs",
-      "signature": "fn ssh_list_wsl_distributions( ) -> Result<openbitfun_core::service::remote_ssh::WslDistributions, String>",
+      "signature": "fn ssh_list_wsl_distributions( ) -> Result<starmate_core::service::remote_ssh::WslDistributions, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -10332,7 +10332,7 @@
       "visibility": "implementation",
       "rustPath": "start_subscription_account_login",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn start_subscription_account_login( state: State<'_, AppState>, request: SubscriptionAccountLoginRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::LoginStartResult, String>",
+      "signature": "fn start_subscription_account_login( state: State<'_, AppState>, request: SubscriptionAccountLoginRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::LoginStartResult, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -10348,7 +10348,7 @@
       "visibility": "documented",
       "rustPath": "start_subscription_login",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn start_subscription_login( state: State<'_, AppState>, request: SubscriptionLoginRequest, ) -> Result<openbitfun_core::infrastructure::subscription_auth::LoginStartResult, String>",
+      "signature": "fn start_subscription_login( state: State<'_, AppState>, request: SubscriptionLoginRequest, ) -> Result<starmate_core::infrastructure::subscription_auth::LoginStartResult, String>",
       "remoteWorkspacePolicy": "LocalOnly"
     },
     {
@@ -10751,7 +10751,7 @@
       "visibility": "documented",
       "rustPath": "test_ai_config_connection",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn test_ai_config_connection( state: State<'_, AppState>, request: TestAIConfigConnectionRequest, ) -> Result<openbitfun_core::util::types::ConnectionTestResult, String>",
+      "signature": "fn test_ai_config_connection( state: State<'_, AppState>, request: TestAIConfigConnectionRequest, ) -> Result<starmate_core::util::types::ConnectionTestResult, String>",
       "remoteWorkspacePolicy": "LegacyUnaudited"
     },
     {
@@ -10783,7 +10783,7 @@
       "visibility": "documented",
       "rustPath": "test_image_generation_service",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn test_image_generation_service( request: TestImageGenerationServiceRequest, ) -> Result<openbitfun_core::agentic::image_generation::ImageServiceTestOutcome, String>",
+      "signature": "fn test_image_generation_service( request: TestImageGenerationServiceRequest, ) -> Result<starmate_core::agentic::image_generation::ImageServiceTestOutcome, String>",
       "remoteWorkspacePolicy": "WorkspaceAgnostic"
     },
     {
@@ -11177,7 +11177,7 @@
       "visibility": "implementation",
       "rustPath": "workspace_file_upload",
       "sourceFile": "src/apps/desktop/src/api/commands.rs",
-      "signature": "fn workspace_file_upload( request: openbitfun_core::service::filesystem::upload::WorkspaceUploadRequest, ) -> Result<serde_json::Value, String>",
+      "signature": "fn workspace_file_upload( request: starmate_core::service::filesystem::upload::WorkspaceUploadRequest, ) -> Result<serde_json::Value, String>",
       "remoteWorkspacePolicy": "RemoteRouted"
     },
     {

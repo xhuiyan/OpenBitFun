@@ -3,7 +3,7 @@
 import React, { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { StarMateDesignSystemProvider } from './OpenBitFunDesignSystemProvider';
+import { StarMateDesignSystemProvider } from './StarMateDesignSystemProvider';
 
 const appearanceState = vi.hoisted(() => ({ mode: 'dark' as 'dark' | 'light' }));
 

@@ -12,7 +12,7 @@ import { useReportTypewriterReveal } from '../hooks/typewriterRevealGateContext'
 import { useI18n } from '@/infrastructure/i18n';
 import { openCanvasArtifactTab } from '@/shared/utils/tabUtils';
 import { createLogger } from '@/shared/utils/logger';
-import { CanvasPreflight, type CanvasPreflightStatus } from '@/tools/openbitfun-canvas/CanvasPreflight';
+import { CanvasPreflight, type CanvasPreflightStatus } from '@/tools/starmate-canvas/CanvasPreflight';
 import { useToolCardHeightContract } from './useToolCardHeightContract';
 import './CanvasToolCard.scss';
 

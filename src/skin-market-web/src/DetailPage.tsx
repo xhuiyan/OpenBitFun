@@ -17,7 +17,7 @@ import {
   formatPackageSize,
   shortHash,
 } from './format';
-import { GetOpenBitFunCta } from './GetOpenBitFunCta';
+import { GetStarMateCta } from './GetStarMateCta';
 import type { Locale, Translate } from './i18n';
 import { PosterImage } from './PosterImage';
 import type {
@@ -189,7 +189,7 @@ export function DetailPage({ catalogSearch, isAdmin, locale, onNavigate, slug, t
               <Desktop size={19} aria-hidden="true" />
               <span>{t('desktopInstallNote')}</span>
             </p>
-            <GetOpenBitFunCta placement="listing" t={t} />
+            <GetStarMateCta placement="listing" t={t} />
           </div>
         </section>
 

@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { skinMarketApi, SkinMarketApiError } from './api';
 import { formatCompactNumber, formatMarketDate } from './format';
-import { GetOpenBitFunCta } from './GetOpenBitFunCta';
+import { GetStarMateCta } from './GetStarMateCta';
 import type { Locale, Translate } from './i18n';
 import { PosterImage } from './PosterImage';
 import type {
@@ -156,7 +156,7 @@ export function CatalogPage({
           <h1 id="market-heading">{t('headline')}</h1>
           <p>{t('intro')}</p>
         </div>
-        <GetOpenBitFunCta placement="catalog" t={t} />
+        <GetStarMateCta placement="catalog" t={t} />
       </section>
 
       <section className="catalog shell" aria-labelledby="catalog-heading">

@@ -4,13 +4,13 @@ import { STARMATE_DOWNLOAD_URL } from './links';
 
 // A .bfminiapp package is useless without the desktop client, so the catalog
 // and every listing keep one explicit path to the official download page.
-export type GetOpenBitFunPlacement = 'catalog' | 'listing';
+export type GetStarMatePlacement = 'catalog' | 'listing';
 
-export function GetOpenBitFunCta({
+export function GetStarMateCta({
   placement,
   t,
 }: {
-  placement: GetOpenBitFunPlacement;
+  placement: GetStarMatePlacement;
   t: (key: MessageKey) => string;
 }) {
   return (

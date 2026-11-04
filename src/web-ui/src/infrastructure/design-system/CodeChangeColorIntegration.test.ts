@@ -14,9 +14,9 @@ const PRIMARY_CODE_CHANGE_SURFACES = [
   '../../tools/editor/components/DiffEditor.scss',
   '../../tools/git/components/BranchQuickSwitch.scss',
   '../../tools/git/components/GitDiffView/GitDiffView.scss',
-  '../../tools/openbitfun-canvas/runtime/sdk/data-display.tsx',
-  '../../tools/openbitfun-canvas/runtime/canvasRuntimeInstaller.ts',
-  '../../tools/openbitfun-canvas/runtime/styles/canvas-runtime.scss',
+  '../../tools/starmate-canvas/runtime/sdk/data-display.tsx',
+  '../../tools/starmate-canvas/runtime/canvasRuntimeInstaller.ts',
+  '../../tools/starmate-canvas/runtime/styles/canvas-runtime.scss',
   '../../app/components/panels/review-platform/ReviewPlatformPanel.scss',
 ] as const;
 

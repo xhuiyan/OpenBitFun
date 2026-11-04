@@ -1,4 +1,4 @@
-import { StarMateBrandMotion } from "../../brand/OpenBitFunBrandMotion";
+import { StarMateBrandMotion } from "../../brand/StarMateBrandMotion";
 import { classNames } from "../../internal/classNames";
 import styles from "./ToolProcessingDots.module.css";
 

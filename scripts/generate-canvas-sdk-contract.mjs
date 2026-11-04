@@ -65,7 +65,7 @@ const outputs = [
     content: formatRust(generateRust()),
   },
   {
-    path: 'src/web-ui/src/tools/openbitfun-canvas/runtime/sdk/contract.generated.ts',
+    path: 'src/web-ui/src/tools/starmate-canvas/runtime/sdk/contract.generated.ts',
     content: generateTypeScript(),
   },
   {

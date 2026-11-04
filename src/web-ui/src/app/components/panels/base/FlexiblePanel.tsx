@@ -121,7 +121,7 @@ const GenerativeWidgetPanel = lazyWithRecovery(() =>
 );
 
 const StarMateCanvasPanel = lazyWithRecovery(() =>
-  import('@/tools/openbitfun-canvas/OpenBitFunCanvasPanel')
+  import('@/tools/starmate-canvas/StarMateCanvasPanel')
 );
 
 const TaskDetailPanel = lazyWithRecovery(() =>

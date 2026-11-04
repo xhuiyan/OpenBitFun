@@ -1,7 +1,7 @@
 /** Opt-in OpenBitFun identity and motion, separate from generic UI controls. */
-export { StarMateSolidMark, StarMateAppIcon, type StarMateArtworkProps } from "./brand/OpenBitFunArtwork";
-export { StarMateMark, type StarMateMarkProps } from "./brand/OpenBitFunMark";
-export { StarMateBrandMotion, type StarMateBrandMotionProps } from "./brand/OpenBitFunBrandMotion";
+export { StarMateSolidMark, StarMateAppIcon, type StarMateArtworkProps } from "./brand/StarMateArtwork";
+export { StarMateMark, type StarMateMarkProps } from "./brand/StarMateMark";
+export { StarMateBrandMotion, type StarMateBrandMotionProps } from "./brand/StarMateBrandMotion";
 export { VoiceParticleLogo, type VoiceParticleLogoProps, type VoiceParticleAudio, type VoiceParticleAudioReader } from "./brand/VoiceParticleLogo";
 
 export * from "./brand/subagent/subagentMotion";

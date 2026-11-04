@@ -688,7 +688,7 @@ for (const sceneFile of walk(sceneRoot).filter(file => file.endsWith('Scene.tsx'
 
 const visualEntryPoints = new Set([
   'main.tsx',
-  'tools/openbitfun-canvas/runtime/entry.tsx',
+  'tools/starmate-canvas/runtime/entry.tsx',
 ]);
 const styledProductionTsx = productionCodeSources.filter(([file, source]) => {
   if (!file.endsWith('.tsx')) return false;

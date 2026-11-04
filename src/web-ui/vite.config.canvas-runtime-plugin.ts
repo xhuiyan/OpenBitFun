@@ -14,7 +14,7 @@ interface RuntimeBundleCache {
 export function openbitfunCanvasRuntimeBundlePlugin(): Plugin {
   let cache: RuntimeBundleCache | null = null;
   const webUiRoot = path.resolve(__dirname);
-  const runtimeRoot = path.resolve(webUiRoot, 'src/tools/openbitfun-canvas/runtime');
+  const runtimeRoot = path.resolve(webUiRoot, 'src/tools/starmate-canvas/runtime');
   const entry = path.resolve(runtimeRoot, 'entry.tsx');
 
   function collectRuntimeFiles(dir: string): string[] {

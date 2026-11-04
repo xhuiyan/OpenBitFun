@@ -21,7 +21,7 @@ import {
   isPeerDeviceModeActive,
   PEER_MODE_CANVAS_POLL_MS,
 } from '@/infrastructure/peer-device/peerModeFlag';
-import './OpenBitFunCanvasPanel.scss';
+import './StarMateCanvasPanel.scss';
 
 const log = createLogger('StarMateCanvasPanel');
 

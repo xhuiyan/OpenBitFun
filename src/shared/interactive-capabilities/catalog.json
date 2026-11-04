@@ -3532,8 +3532,8 @@
           },
           "evidence": [
             "command:report_canvas_runtime_ready",
-            "source:src/web-ui/src/tools/openbitfun-canvas/reactRuntime.ts#runtime: 'react'",
-            "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#renderedHtml"
+            "source:src/web-ui/src/tools/starmate-canvas/reactRuntime.ts#runtime: 'react'",
+            "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#renderedHtml"
           ]
         },
         {
@@ -3590,7 +3590,7 @@
             ]
           },
           "evidence": [
-            "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#lastKnownGoodRevision"
+            "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#lastKnownGoodRevision"
           ]
         },
         {
@@ -3604,7 +3604,7 @@
             "reasonEn": "“Select an element inside Canvas and add its reference to session context” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
           },
           "evidence": [
-            "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#createCanvasElementContext"
+            "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#createCanvasElementContext"
           ]
         },
         {
@@ -3619,7 +3619,7 @@
           },
           "evidence": [
             "command:report_canvas_runtime_error",
-            "source:src/web-ui/src/tools/openbitfun-canvas/OpenBitFunCanvasPanel.tsx#canvas-runtime-auto-repair"
+            "source:src/web-ui/src/tools/starmate-canvas/StarMateCanvasPanel.tsx#canvas-runtime-auto-repair"
           ]
         },
         {
@@ -3633,7 +3633,7 @@
             "reasonEn": "“Export the current Canvas as a standalone HTML file” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
           },
           "evidence": [
-            "source:src/web-ui/src/tools/openbitfun-canvas/canvasHtmlExportService.ts#export async function exportCanvasHtml"
+            "source:src/web-ui/src/tools/starmate-canvas/canvasHtmlExportService.ts#export async function exportCanvasHtml"
           ]
         }
       ],

@@ -4,13 +4,13 @@ import { STARMATE_DOWNLOAD_URL } from './links';
 
 // An appearance package only applies inside the desktop client, so the catalog
 // and every listing carry the same visible route to the official download page.
-export type GetOpenBitFunPlacement = 'catalog' | 'listing';
+export type GetStarMatePlacement = 'catalog' | 'listing';
 
-export function GetOpenBitFunCta({
+export function GetStarMateCta({
   placement,
   t,
 }: {
-  placement: GetOpenBitFunPlacement;
+  placement: GetStarMatePlacement;
   t: Translate;
 }) {
   return (

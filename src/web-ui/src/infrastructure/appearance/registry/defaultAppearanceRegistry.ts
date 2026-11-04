@@ -58,7 +58,7 @@ import { contextListAppearanceDescriptor } from '@/shared/context-system/appeara
 import { notificationAppearanceDescriptor } from '@/shared/notification-system/appearance';
 import { imageLightboxAppearanceDescriptor } from '@/shared/ui/ImageLightbox.appearance';
 import { productBrandIconAppearanceDescriptor } from '@/shared/ui/ProductBrandIcon.appearance';
-import { canvasToolAppearanceDescriptor } from '@/tools/openbitfun-canvas/appearance';
+import { canvasToolAppearanceDescriptor } from '@/tools/starmate-canvas/appearance';
 import { generativeWidgetAppearanceDescriptor } from '@/tools/generative-widget/appearance';
 import { editorToolAppearanceDescriptor } from '@/tools/editor/appearance';
 import { fileSystemAppearanceDescriptor } from '@/tools/file-system/appearance';
