@@ -26,6 +26,19 @@ test("resolves aliases and emits stable CSS variable names", () => {
   assert.match(renderCss(tokens), /--openbitfun-color-action-primary: #146c4b;/);
 });
 
+test("can emit compatibility aliases for a renamed prefix", () => {
+  const tokens = resolveTokens({
+    color: { action: { primary: { $type: "color", $value: "#146c4b" } } },
+  });
+  const css = renderCss(tokens, { aliasPrefix: "starmate" });
+
+  assert.match(css, /--openbitfun-color-action-primary: #146c4b;/);
+  assert.match(
+    css,
+    /--starmate-color-action-primary: var\(--openbitfun-color-action-primary\);/,
+  );
+});
+
 test("can preserve exact and embedded references in generated CSS", () => {
   const tokens = resolveTokens({
     font: {

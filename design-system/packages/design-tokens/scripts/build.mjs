@@ -138,16 +138,19 @@ const typescript = [
 const css = [
   "@layer openbitfun.tokens.system, openbitfun.tokens.theme, openbitfun.reset, openbitfun.base, openbitfun.components, openbitfun.overrides;\n",
   renderCss(systemTokens, {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.system",
     preserveReferences: true,
     selector: ":where([data-openbitfun-design-system-root])",
   }),
   renderCss(diffResolvedTokens(systemTokens, compactTokens), {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.system",
     preserveReferences: true,
     selector: ':where([data-openbitfun-design-system-root][data-density="compact"])',
   }),
   renderCss(diffResolvedTokens(systemTokens, touchTokens), {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.system",
     preserveReferences: true,
     selector: ':where([data-openbitfun-design-system-root][data-density="touch"])',

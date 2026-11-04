@@ -194,6 +194,7 @@ export function diffResolvedTokens(baseTokens, nextTokens) {
 
 export function renderCss(tokens, options = {}) {
   const {
+    aliasPrefix = null,
     layer = "openbitfun.tokens",
     prefix = "openbitfun",
     preserveReferences = false,
@@ -211,15 +212,28 @@ export function renderCss(tokens, options = {}) {
     );
   }
 
-  const declarations = Object.entries(tokens)
-    .sort(([left], [right]) => left.localeCompare(right))
+  const sortedNames = Object.keys(tokens).sort((left, right) => left.localeCompare(right));
+  const declarations = sortedNames
     .map(
-      ([name, token]) =>
-        `    ${tokenNameToCssVariable(name, prefix)}: ${renderTokenValue(token)};`,
+      (name) =>
+        `    ${tokenNameToCssVariable(name, prefix)}: ${renderTokenValue(tokens[name])};`,
     )
     .join("\n");
+  // Compatibility aliases: the canonical (legacy-prefixed) declarations keep
+  // user CSS overrides working, while new-prefixed names forward to them.
+  const declarationsWithAliases = aliasPrefix
+    ? [
+        declarations,
+        sortedNames
+          .map(
+            (name) =>
+              `    ${tokenNameToCssVariable(name, aliasPrefix)}: var(${tokenNameToCssVariable(name, prefix)});`,
+          )
+          .join("\n"),
+      ].join("\n")
+    : declarations;
 
-  return `@layer ${layer} {\n  ${selector} {\n${declarations}\n  }\n}\n`;
+  return `@layer ${layer} {\n  ${selector} {\n${declarationsWithAliases}\n  }\n}\n`;
 }
 
 export function createTokenArtifacts(tokens, options = {}) {

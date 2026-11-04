@@ -173,18 +173,22 @@ for (const tokens of [lightTokens, darkTokens, highContrastLightTokens, highCont
 
 const css = [
   renderCss(semanticThemes.light, {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
     selector: ':where([data-openbitfun-design-system-root]), :where([data-openbitfun-design-system-root][data-color-scheme="light"])',
   }),
   renderCss(semanticThemes.dark, {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
     selector: ':where([data-openbitfun-design-system-root][data-color-scheme="dark"])',
   }),
   renderCss(diffResolvedTokens(semanticThemes.light, semanticThemes.highContrastLight), {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
     selector: ':where([data-openbitfun-design-system-root][data-color-scheme="light"][data-contrast="high"])',
   }),
   renderCss(diffResolvedTokens(semanticThemes.dark, semanticThemes.highContrastDark), {
+    aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
     selector: ':where([data-openbitfun-design-system-root][data-color-scheme="dark"][data-contrast="high"])',
   }),
