@@ -43,7 +43,7 @@ pub(crate) struct ServerAppState {
 ///
 /// The optional `workspace` path, when provided, is opened automatically.
 pub(crate) async fn initialize(workspace: Option<String>) -> anyhow::Result<Arc<ServerAppState>> {
-    log::info!("Initializing OpenBitFun server core services");
+    log::info!("Initializing StarMate server core services");
 
     system::select_agentic_system_profile(system::DeliveryProfile::ProductFull)?;
 
@@ -203,6 +203,6 @@ pub(crate) async fn initialize(workspace: Option<String>) -> anyhow::Result<Arc<
         start_time: std::time::Instant::now(),
     });
 
-    log::info!("OpenBitFun server core services initialized");
+    log::info!("StarMate server core services initialized");
     Ok(state)
 }

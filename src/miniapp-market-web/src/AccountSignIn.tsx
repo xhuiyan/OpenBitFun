@@ -71,7 +71,7 @@ export function AccountSignIn() {
   }
   return <main className="account-auth-page"><div className="account-auth-shell">
     <header className="account-auth-header">
-      <div className="account-auth-brand"><img src="/miniapp/assets/starmate-email-app-icon.png" alt="" width="36" height="36" /><span>OpenBitFun</span></div>
+      <div className="account-auth-brand"><img src="/miniapp/assets/starmate-email-app-icon.png" alt="" width="36" height="36" /><span>StarMate</span></div>
       <div className="account-auth-language"><Globe size={16} aria-hidden="true" />
         <select aria-label={t('language')} value={locale} onChange={event => setLocale(event.target.value as typeof locale)}>
           <option value="en-US">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option>

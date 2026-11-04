@@ -43,13 +43,13 @@ const ExamplePlugin: Plugin = async (input) => {
     },
     tool: {
       openbitfun_demo_echo: tool({
-        description: "Echo text from the OpenBitFun OpenCode plugin demo",
+        description: "Echo text from the StarMate OpenCode plugin demo",
         args: {
           text: z.string().describe("Text to echo"),
         },
         async execute(args, context) {
           context.metadata({
-            title: "Preparing OpenBitFun demo echo",
+            title: "Preparing StarMate demo echo",
             metadata: { phase: "before-ask" },
           })
           await context.ask({
@@ -61,11 +61,11 @@ const ExamplePlugin: Plugin = async (input) => {
             },
           })
           context.metadata({
-            title: "OpenBitFun demo echo approved",
+            title: "StarMate demo echo approved",
             metadata: { phase: "after-ask" },
           })
           return {
-            title: "OpenBitFun demo echo",
+            title: "StarMate demo echo",
             output: `${args.text}:${input.directory}`,
           }
         },

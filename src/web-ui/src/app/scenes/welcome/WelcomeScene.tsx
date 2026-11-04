@@ -137,7 +137,7 @@ const WelcomeScene: React.FC = () => {
               <StarMateMark style={{ width: '100%', height: '100%' }} />
             </span>
             <span className="welcome-scene__brand-name" data-startup-reveal="">
-              OpenBitFun{t('welcomeScene.space.separator')}
+              StarMate{t('welcomeScene.space.separator')}
             </span>
           </h1>
           <h2

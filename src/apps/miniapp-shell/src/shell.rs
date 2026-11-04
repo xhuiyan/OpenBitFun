@@ -1,7 +1,7 @@
 use crate::string;
-use starmate_miniapp_ipc::{self as ipc, launcher};
 use serde::Deserialize;
 use serde_json::{json, Value};
+use starmate_miniapp_ipc::{self as ipc, launcher};
 use std::path::PathBuf;
 use tauri::Manager;
 use tauri_plugin_dialog::DialogExt;
@@ -92,7 +92,7 @@ mod host_tests {
         let record: launcher::LaunchRecord = serde_json::from_value(json!({
             "protocolVersion":2, "launchId":"00000000-0000-0000-0000-000000000001",
             "appId":"notes", "dataDir":"data", "userRoot":"user",
-            "hostExecutable":"OpenBitFun", "name":"Notes",
+            "hostExecutable":"StarMate", "name":"Notes",
             "hostChannel":"development", "productHome":"home"
         }))
         .unwrap();

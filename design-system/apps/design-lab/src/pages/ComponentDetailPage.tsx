@@ -369,7 +369,7 @@ function NumberInputPreview({ state }: { state: string }) {
 
 function SearchFieldStatePreview({ state }: { state: string }) {
   const { t } = useI18n();
-  const [value, setValue] = useState(state === "default" ? "" : "OpenBitFun");
+  const [value, setValue] = useState(state === "default" ? "" : "StarMate");
   const sharedProps = {
     disabled: state === "disabled",
     invalid: state === "invalid",
@@ -629,15 +629,15 @@ export function ComponentDetailPage({
         : previewState === "invalid"
           ? " invalid"
           : previewState === "read-only"
-            ? ' readOnly defaultValue="OpenBitFun"'
-            : previewState === "default" ? "" : ' defaultValue="OpenBitFun"';
+            ? ' readOnly defaultValue="StarMate"'
+            : previewState === "default" ? "" : ' defaultValue="StarMate"';
       return `import { Icon, Input } from "@starmate/ui";\n\n<Input\n  aria-label="${t("components.preview.inputLabel")}"\n  placeholder="${t("components.preview.inputPlaceholder")}"\n  trailing={<Icon name="eye" />}${stateProps}\n/>`;
     }
     if (component.name === "KeyHint") {
       return `import { Icon, KeyHint } from "@starmate/ui";\n\n<KeyHint icon={<Icon name="command-mac" />}>K</KeyHint>`;
     }
     if (component.name === "FieldGroup") {
-      return `import { Icon, Field, FieldGroup, FieldRow, FormSection, Input } from "@starmate/ui";\n\n<FormSection\n  description="${t("components.preview.fieldDescription")}"\n  headingAs="h3"\n  leading={<Icon name="gear" />}\n  title="${t("components.preview.modalSectionTitle")}"\n>\n  <FieldGroup appearance="subtle" dividers>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalProviderName")}" labelWidth="md" orientation="horizontal" required>\n        <Input defaultValue="OpenBitFun" />\n      </Field>\n    </FieldRow>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalApiUrl")}" labelWidth="md" orientation="horizontal">\n        <Input defaultValue="https://api.openbitfun.com" />\n      </Field>\n    </FieldRow>\n  </FieldGroup>\n</FormSection>`;
+      return `import { Icon, Field, FieldGroup, FieldRow, FormSection, Input } from "@starmate/ui";\n\n<FormSection\n  description="${t("components.preview.fieldDescription")}"\n  headingAs="h3"\n  leading={<Icon name="gear" />}\n  title="${t("components.preview.modalSectionTitle")}"\n>\n  <FieldGroup appearance="subtle" dividers>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalProviderName")}" labelWidth="md" orientation="horizontal" required>\n        <Input defaultValue="StarMate" />\n      </Field>\n    </FieldRow>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalApiUrl")}" labelWidth="md" orientation="horizontal">\n        <Input defaultValue="https://api.openbitfun.com" />\n      </Field>\n    </FieldRow>\n  </FieldGroup>\n</FormSection>`;
     }
     if (component.name === "LoadingState") {
       return `import { LoadingState } from "@starmate/ui";\n\n<LoadingState>${t("detail.loading")}</LoadingState>`;
@@ -662,7 +662,7 @@ export function ComponentDetailPage({
     }
     if (component.name === "SearchField") {
       const searchStateProps = previewState === "disabled" ? " disabled" : previewState === "invalid" ? " invalid" : previewState === "read-only" ? " readOnly" : "";
-      return `import { useState } from "react";\nimport { Icon, KeyHint, SearchField } from "@starmate/ui";\n\nfunction Example() {\n  const [query, setQuery] = useState(${JSON.stringify(previewState === "default" ? "" : "OpenBitFun")});\n  return (\n    <SearchField\n      clearLabel="${t("components.preview.searchClear")}"\n      onClear={() => setQuery("")}\n      onValueChange={setQuery}\n      value={query}\n      aria-label="${t("components.preview.searchLabel")}"\n      leadingIcon={<Icon name="search" />}\n      placeholder="${t("components.preview.searchPlaceholder")}"\n      shortcut={<KeyHint icon={<Icon name="command-mac" />}>K</KeyHint>}${searchStateProps}\n    />\n  );\n}`;
+      return `import { useState } from "react";\nimport { Icon, KeyHint, SearchField } from "@starmate/ui";\n\nfunction Example() {\n  const [query, setQuery] = useState(${JSON.stringify(previewState === "default" ? "" : "StarMate")});\n  return (\n    <SearchField\n      clearLabel="${t("components.preview.searchClear")}"\n      onClear={() => setQuery("")}\n      onValueChange={setQuery}\n      value={query}\n      aria-label="${t("components.preview.searchLabel")}"\n      leadingIcon={<Icon name="search" />}\n      placeholder="${t("components.preview.searchPlaceholder")}"\n      shortcut={<KeyHint icon={<Icon name="command-mac" />}>K</KeyHint>}${searchStateProps}\n    />\n  );\n}`;
     }
     if (component.name === "Combobox") {
       return `import { Combobox } from "@starmate/ui";\n\n<Combobox\n  aria-label="Mode"\n  onValueChange={setMode}\n  options={[\n    { label: "Ask", value: "ask" },\n    { label: "Plan", value: "plan" },\n    { disabled: true, label: "Agent", value: "agent" },\n  ]}\n  value={mode}\n/>`;
@@ -776,7 +776,7 @@ export function ComponentDetailPage({
               orientation="horizontal"
               required
             >
-              <Input defaultValue="OpenBitFun" />
+              <Input defaultValue="StarMate" />
             </Field>
           </FieldRow>
           <FieldRow>
@@ -1270,7 +1270,7 @@ export function ComponentDetailPage({
     if (component.name === "Avatar") {
       return state === "grouped"
         ? <AvatarGroup><Avatar>BF</Avatar><Avatar>UI</Avatar><Avatar>DS</Avatar></AvatarGroup>
-        : <Avatar alt="OpenBitFun" key={state} src={state === "image" ? previewImage : undefined}>BF</Avatar>;
+        : <Avatar alt="StarMate" key={state} src={state === "image" ? previewImage : undefined}>BF</Avatar>;
     }
     if (component.name === "Checkbox" || component.name === "Radio") {
       const Control = component.name === "Checkbox" ? Checkbox : Radio;
@@ -1563,7 +1563,7 @@ export function ComponentDetailPage({
         <Input
           aria-label={t("components.preview.inputLabel")}
           className={previewClassName}
-          defaultValue={state === "default" ? undefined : "OpenBitFun"}
+          defaultValue={state === "default" ? undefined : "StarMate"}
           key={state}
           disabled={state === "disabled"}
           invalid={state === "invalid"}
@@ -1637,7 +1637,7 @@ export function ComponentDetailPage({
                 orientation="horizontal"
                 required
               >
-                <Input defaultValue="OpenBitFun" />
+                <Input defaultValue="StarMate" />
               </Field>
             </FieldRow>
             <FieldRow>

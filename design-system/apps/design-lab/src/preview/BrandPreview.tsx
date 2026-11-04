@@ -33,7 +33,7 @@ export function BrandPreview({ name, state = "playing", active = true }: { name:
 
 export function brandCodeSample(name: string): string {
   const usage = name === "StarMateSolidMark" || name === "StarMateAppIcon"
-    ? `<${name} size={128} label="OpenBitFun" />`
+    ? `<${name} size={128} label="StarMate" />`
     : name === "StarMateMark"
     ? '<StarMateMark size={120} motion="breathe" active={isLoading} />'
     : name === "StarMateBrandMotion"

@@ -91,7 +91,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
   const previewSessions: readonly PreviewSessionRow[] = [
     { id: "claw", icon: "user", name: "Claw" },
     { id: "claw-session", indent: true, name: "New Claw Session" },
-    { id: "openbitfun", icon: "folder", name: "OpenBitFun" },
+    { id: "openbitfun", icon: "folder", name: "StarMate" },
     { id: "openbitfun-session", indent: true, name: "New Code Session" },
     { id: "openbitfun-welcome", indent: true, name: t("design.homePreview.welcome"), selected: true },
     { id: "openbitfun-more", name: t("design.homePreview.showMore"), metadata: <NumberBadge value="+14" /> },
@@ -184,7 +184,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
                             {t("design.homePreview.contextMachine")}
                           </Button>
                           <ComposerDivider />
-                          <Button size="xs" tabIndex={-1} trailingIcon={<Icon name="chevron-down" />} variant="text">OpenBitFun</Button>
+                          <Button size="xs" tabIndex={-1} trailingIcon={<Icon name="chevron-down" />} variant="text">StarMate</Button>
                           <ComposerDivider />
                           <span className="design-home-preview-context">1.0.0-explore</span>
                           <ComposerDivider />
@@ -244,7 +244,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
                 new tab and carries the arrow that says so. */}
             <a className="design-home-footer-wordmark" href="https://openbitfun.com/" rel="noreferrer"
               target="_blank" aria-label={t("design.homeFooter.siteLabel")}>
-              <span aria-hidden="true">&gt;_</span> OpenBitFun
+              <span aria-hidden="true">&gt;_</span> StarMate
               <Icon className="design-home-footer-wordmark-arrow" aria-hidden="true" name="arrow-up-right" size="sm" />
             </a>
             <p className="design-home-footer-tagline">

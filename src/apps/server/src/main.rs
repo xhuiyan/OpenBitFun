@@ -93,7 +93,7 @@ async fn main() -> Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    tracing::info!("OpenBitFun Server v{}", env!("CARGO_PKG_VERSION"));
+    tracing::info!("StarMate Server v{}", env!("CARGO_PKG_VERSION"));
     starmate_core::service::remote_connect::ensure_rustls_crypto_provider();
 
     let args = ServerArgs::parse();

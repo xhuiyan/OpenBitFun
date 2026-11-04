@@ -83,7 +83,7 @@ export function FormTypographyPattern() {
         </FieldRow>
         <FieldRow>
           <Field label={t("patterns.provider.headers")} description={t("components.preview.fieldDescription")} orientation="vertical" controlWidth="fill">
-            <Input defaultValue="X-OpenBitFun-Workspace-Display-Name-With-A-Long-Value" />
+            <Input defaultValue="X-StarMate-Workspace-Display-Name-With-A-Long-Value" />
           </Field>
         </FieldRow>
       </FieldGroup>
@@ -216,7 +216,7 @@ function ProviderFields() {
       </Disclosure>
     </Card>)}
     <Disclosure summary={t("patterns.provider.advanced")}>
-      <Field label={t("patterns.provider.headers")} controlWidth="fill"><Textarea defaultValue={'{\n  "X-Client": "OpenBitFun"\n}'} rows={3} /></Field>
+      <Field label={t("patterns.provider.headers")} controlWidth="fill"><Textarea defaultValue={'{\n  "X-Client": "StarMate"\n}'} rows={3} /></Field>
     </Disclosure>
   </div>;
 }

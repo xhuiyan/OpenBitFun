@@ -194,7 +194,7 @@ export function ComponentCardPreview({ component }: { component: ComponentMeta }
   if (component.category === "brand") return <BrandPreview name={component.name} active={false} />;
   if (component.name === "VoiceCallPanel") return <VoiceCallPreview compact />;
   if (component.name === "VoiceParticleLogo") return <VoiceParticlePreview />;
-  if (component.name === "Combobox") return <Combobox label={t("components.preview.modalProviderName")} defaultValue="openbitfun" options={[{ value: "openbitfun", label: "OpenBitFun" }, { value: "custom", label: t("components.preview.add") }]} />;
+  if (component.name === "Combobox") return <Combobox label={t("components.preview.modalProviderName")} defaultValue="openbitfun" options={[{ value: "openbitfun", label: "StarMate" }, { value: "custom", label: t("components.preview.add") }]} />;
   const flowChatPreview = getFlowChatPreviewDefinition(component.name);
 
   if (flowChatPreview) {
@@ -516,7 +516,7 @@ export function ComponentCardPreview({ component }: { component: ComponentMeta }
           <FieldGroup>
             <FieldRow>
               <Field controlWidth="fill" label={t("components.preview.modalProviderName")} labelWidth="sm" orientation="horizontal">
-                <Input defaultValue="OpenBitFun" readOnly />
+                <Input defaultValue="StarMate" readOnly />
               </Field>
             </FieldRow>
           </FieldGroup>
