@@ -129,17 +129,17 @@ async fn assert_hint(
 /// modifies the developer's login or races other desktop unit tests.
 #[tokio::test]
 async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
-    if std::env::var_os("OPENBITFUN_RELAY_ROUTE_TEST_CHILD").is_none() {
+    if std::env::var_os("STARMATE_RELAY_ROUTE_TEST_CHILD").is_none() {
         let root = tempfile::tempdir().unwrap();
         let mut command = starmate_services_core::process_manager::create_tokio_command(
             std::env::current_exe().unwrap(),
         );
         command.args(["api::remote_connect_api::relay_routes_tests::dual_relay_rpc_persistence_and_teardown_are_independent", "--exact", "--nocapture"])
-            .env("OPENBITFUN_RELAY_ROUTE_TEST_CHILD", "1")
+            .env("STARMATE_RELAY_ROUTE_TEST_CHILD", "1")
             .env("NO_PROXY", "127.0.0.1,localhost")
             .env("no_proxy", "127.0.0.1,localhost")
-            .env("OPENBITFUN_HOME", root.path())
-            .env("OPENBITFUN_DEVICE_IDENTITY_PATH", root.path().join("device_identity.json"))
+            .env("STARMATE_HOME", root.path())
+            .env("STARMATE_DEVICE_IDENTITY_PATH", root.path().join("device_identity.json"))
             .kill_on_drop(true);
         let output = tokio::time::timeout(std::time::Duration::from_secs(90), command.output())
             .await

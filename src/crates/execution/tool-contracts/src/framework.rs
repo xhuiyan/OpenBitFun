@@ -1696,8 +1696,8 @@ impl ToolPathResolution {
     }
 }
 
-pub const OPENBITFUN_RUNTIME_URI_PREFIX: &str = "openbitfun://runtime/";
-pub const OPENBITFUN_CURRENT_SESSION_URI_PREFIX: &str = "openbitfun://current-session/";
+pub const STARMATE_RUNTIME_URI_PREFIX: &str = "openbitfun://runtime/";
+pub const STARMATE_CURRENT_SESSION_URI_PREFIX: &str = "openbitfun://current-session/";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ParsedStarMateRuntimeUri {
@@ -1782,12 +1782,12 @@ impl fmt::Display for ToolPathContractError {
 impl std::error::Error for ToolPathContractError {}
 
 pub fn is_openbitfun_runtime_uri(path: &str) -> bool {
-    path.trim().starts_with(OPENBITFUN_RUNTIME_URI_PREFIX)
+    path.trim().starts_with(STARMATE_RUNTIME_URI_PREFIX)
 }
 
 pub fn is_openbitfun_current_session_uri(path: &str) -> bool {
     path.trim()
-        .starts_with(OPENBITFUN_CURRENT_SESSION_URI_PREFIX)
+        .starts_with(STARMATE_CURRENT_SESSION_URI_PREFIX)
 }
 
 pub fn is_openbitfun_tool_uri(path: &str) -> bool {
@@ -2006,7 +2006,7 @@ pub fn parse_openbitfun_runtime_uri(
 ) -> Result<ParsedStarMateRuntimeUri, ToolPathContractError> {
     let trimmed = path.trim();
     let suffix = trimmed
-        .strip_prefix(OPENBITFUN_RUNTIME_URI_PREFIX)
+        .strip_prefix(STARMATE_RUNTIME_URI_PREFIX)
         .ok_or_else(|| ToolPathContractError::UnsupportedRuntimeUri {
             uri: path.to_string(),
         })?;
@@ -2033,7 +2033,7 @@ pub fn parse_openbitfun_current_session_uri(
 ) -> Result<ParsedStarMateCurrentSessionUri, ToolPathContractError> {
     let trimmed = path.trim();
     let relative_path = trimmed
-        .strip_prefix(OPENBITFUN_CURRENT_SESSION_URI_PREFIX)
+        .strip_prefix(STARMATE_CURRENT_SESSION_URI_PREFIX)
         .ok_or_else(|| ToolPathContractError::UnsupportedRuntimeUri {
             uri: path.to_string(),
         })?;
@@ -2050,7 +2050,7 @@ pub fn build_openbitfun_current_session_uri(
 ) -> Result<String, ToolPathContractError> {
     Ok(format!(
         "{}{}",
-        OPENBITFUN_CURRENT_SESSION_URI_PREFIX,
+        STARMATE_CURRENT_SESSION_URI_PREFIX,
         normalize_runtime_relative_path(relative_path)?
     ))
 }
@@ -2066,7 +2066,7 @@ pub fn build_openbitfun_runtime_uri(
 
     Ok(format!(
         "{}{}/{}",
-        OPENBITFUN_RUNTIME_URI_PREFIX,
+        STARMATE_RUNTIME_URI_PREFIX,
         scope,
         normalize_runtime_relative_path(relative_path)?
     ))

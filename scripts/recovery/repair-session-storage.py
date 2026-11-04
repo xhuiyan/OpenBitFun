@@ -1085,8 +1085,8 @@ def main():
         else:
             if not args.plan:
                 parser.error("--plan is required")
-            home = args.home or Path(os.environ.get("OPENBITFUN_HOME", str(Path.home() / ".openbitfun")))
-            user_root = args.user_root or Path(os.environ.get("OPENBITFUN_USER_ROOT") or default_user_root())
+            home = args.home or Path(os.environ.get("STARMATE_HOME") or os.environ.get("OPENBITFUN_HOME") or str(Path.home() / ".openbitfun"))
+            user_root = args.user_root or Path(os.environ.get("STARMATE_USER_ROOT") or os.environ.get("OPENBITFUN_USER_ROOT") or default_user_root())
             plan = make_plan(home.absolute(), user_root.absolute())
             output = outside_data(args.plan.absolute(), plan)
             if output.exists():

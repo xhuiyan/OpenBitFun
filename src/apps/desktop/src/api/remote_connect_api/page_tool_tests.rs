@@ -12,7 +12,7 @@ use std::sync::atomic::AtomicBool;
 async fn desktop_page_manage_registration_reaches_the_executing_account() {
     // Registrations are process-wide OnceLocks. Isolate the production registry
     // and account state from other Desktop tests and from the developer's login.
-    if std::env::var_os("OPENBITFUN_PAGE_TOOL_TEST_CHILD").is_none() {
+    if std::env::var_os("STARMATE_PAGE_TOOL_TEST_CHILD").is_none() {
         let root = tempfile::tempdir().unwrap();
         let mut command = starmate_services_core::process_manager::create_tokio_command(
             std::env::current_exe().unwrap(),
@@ -21,8 +21,8 @@ async fn desktop_page_manage_registration_reaches_the_executing_account() {
             "api::remote_connect_api::page_tool_tests::desktop_page_manage_registration_reaches_the_executing_account",
             "--exact", "--nocapture",
         ])
-            .env("OPENBITFUN_PAGE_TOOL_TEST_CHILD", "1")
-            .env("OPENBITFUN_HOME", root.path())
+            .env("STARMATE_PAGE_TOOL_TEST_CHILD", "1")
+            .env("STARMATE_HOME", root.path())
             .env("NO_PROXY", "127.0.0.1,localhost")
             .env("no_proxy", "127.0.0.1,localhost")
             .kill_on_drop(true);

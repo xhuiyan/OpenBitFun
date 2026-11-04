@@ -83,7 +83,7 @@ required. The default dev profile keeps line tables while reducing PDB size.
 
 ## Target cache GC
 
-`desktop:dev` (on exit), `desktop:preview:debug` (on shutdown), and `desktop:build*` prune stale `target/<profile>` cache generations. Incremental roots keep the latest crate/session. Cargo fingerprint JSON identifies distinct lib, test, bin, and build-script units; GC keeps the latest generation of each unit plus every generation whose Cargo-managed `invoked.timestamp` was refreshed within the last 24 hours, then removes orphaned `deps` files and `build` directories. Busy detection is scoped to Cargo lock files in the selected profile, so an unrelated worktree build does not suppress GC. Manual: `pnpm run target:gc -- --profile debug`. Disable with `OPENBITFUN_TARGET_GC=0`; dry-run with `OPENBITFUN_TARGET_GC_DRY_RUN=1`; adjust the grace window with `OPENBITFUN_TARGET_GC_MIN_AGE_HOURS`.
+`desktop:dev` (on exit), `desktop:preview:debug` (on shutdown), and `desktop:build*` prune stale `target/<profile>` cache generations. Incremental roots keep the latest crate/session. Cargo fingerprint JSON identifies distinct lib, test, bin, and build-script units; GC keeps the latest generation of each unit plus every generation whose Cargo-managed `invoked.timestamp` was refreshed within the last 24 hours, then removes orphaned `deps` files and `build` directories. Busy detection is scoped to Cargo lock files in the selected profile, so an unrelated worktree build does not suppress GC. Manual: `pnpm run target:gc -- --profile debug`. Disable with `STARMATE_TARGET_GC=0`; dry-run with `STARMATE_TARGET_GC_DRY_RUN=1`; adjust the grace window with `STARMATE_TARGET_GC_MIN_AGE_HOURS`.
 
 `release-fast` profile (`Cargo.toml`): inherits `release` but disables LTO, increases `codegen-units` to 16, enables incremental compilation. Significantly faster at the cost of binary size and marginal runtime performance.
 
@@ -107,7 +107,7 @@ For application icon resources and packaging, run `pnpm run generate-brand-asset
 and `node --test scripts/generate-brand-assets.test.mjs scripts/macos-icon-bundle.test.mjs scripts/desktop-tauri-build.test.mjs`.
 The [brand guide](../../../assets/brand/README.md#macos-icons) owns native exports.
 On a Mac with full Xcode 26+, also run
-`OPENBITFUN_TEST_MACOS_BUNDLE=1 node --test scripts/macos-icon-bundle.test.mjs`;
+`STARMATE_TEST_MACOS_BUNDLE=1 node --test scripts/macos-icon-bundle.test.mjs`;
 CI requires this on both macOS architectures. The fixture bundles a Mach-O
 without launching UI. Resource-only edits do not require the Rust suites below;
 packaging/startup code changes still require the desktop build. These checks do
@@ -138,7 +138,7 @@ registration rather than assigning the executor's private usage field.
 Guarded E2E startup also isolates subscription metadata and secrets under
 the guarded PathManager user-data root, using the existing encrypted fixture
 vault instead of any native credential store. Debug-only subscription mock TLS
-may add the CA from `OPENBITFUN_E2E_SUBSCRIPTION_CA_FILE` under that same guard;
+may add the CA from `STARMATE_E2E_SUBSCRIPTION_CA_FILE` under that same guard;
 it does not turn off certificate verification. The native application fixture
 is `node tests/e2e/scripts/run-subscription-pool.mjs` (see its E2E guide).
 
@@ -358,7 +358,7 @@ node tests/e2e/scripts/run-creation-runtime.mjs --suspended-paint  # occluded We
 
 The harness copies a completed build into an independent frontend snapshot so
 concurrent builds cannot replace its lazy modules. It uses temporary product storage, a private WebView store, and
-`OPENBITFUN_E2E_PACKAGED_FRONTEND=1`. It checks state across document reloads;
+`STARMATE_E2E_PACKAGED_FRONTEND=1`. It checks state across document reloads;
 the private test store intentionally does not survive process exit.
 That debug-only switch takes effect only with the existing E2E storage guard;
 release builds always use the packaged protocol.
@@ -370,16 +370,16 @@ For launcher-only development storage mode changes, run
 `node --test scripts/dev-startup.test.mjs`; no native app launch is required.
 By default (or with `--shared-data`), both desktop development launchers leave
 storage selection to the app so existing settings, workspaces and sessions are
-visible. Only `--isolated-data` sets `OPENBITFUN_USER_ROOT` and `OPENBITFUN_HOME`
+visible. Only `--isolated-data` sets `STARMATE_USER_ROOT` and `STARMATE_HOME`
 before spawning children, defaulting to the checkout-local
 `.openbitfun/desktop-dev/{user,home}` directories. Keep existing isolated data in
 place; switching modes must not move, merge or delete it. The two flags are mutually exclusive. Preserve explicit
 overrides and the legacy E2E aliases in both modes. Development launchers set
-`OPENBITFUN_DESKTOP_HOST_CHANNEL=development`: its MiniApp lease, discovery and
+`STARMATE_DESKTOP_HOST_CHANNEL=development`: its MiniApp lease, discovery and
 launch records are separate even when product storage is shared. Keep per-session
 writer and scheduler leases intact. See the MiniApp presentation guide for the
 native host-channel and launch-record compatibility checks.
-`OPENBITFUN_DEV_PORT` selects the HTTP port; `OPENBITFUN_DEV_HMR_PORT` defaults
+`STARMATE_DEV_PORT` selects the HTTP port; `STARMATE_DEV_HMR_PORT` defaults
 to the previous port. Desktop and Vite must use the same values. Development
 launchers reuse the locked Sherpa library/archive cache across Git worktrees,
 or download the archive through curl when absent; explicit SHERPA_ONNX overrides win.
@@ -390,7 +390,7 @@ AppKit target and the `computer_use_native_roundtrip` test with `devtools`.
 The harness has its own main-thread CFRunLoop and exercises the production
 main-queue dispatcher; do not run this test through libtest or bypass that
 dispatcher. It requires local Accessibility and Screen Recording permission.
-To reuse the compiled harness, set `OPENBITFUN_TEST_BINARY` to its absolute path.
+To reuse the compiled harness, set `STARMATE_TEST_BINARY` to its absolute path.
 
 For the additive saved-model quota request and legacy account-request round trip:
 `cargo test --locked -p openbitfun-desktop --lib quota_request_compatibility_tests`.

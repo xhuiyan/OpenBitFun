@@ -76,39 +76,39 @@ impl Default for RouterContextConfig {
 impl RouterContextConfig {
     pub(super) fn from_env() -> StarMateResult<Self> {
         let summary_max_tokens =
-            parse_env_usize("OPENBITFUN_ROUND_ROUTER_SUMMARY_MAX_TOKENS", 16_384)?;
+            parse_env_usize("STARMATE_ROUND_ROUTER_SUMMARY_MAX_TOKENS", 16_384)?;
         let config = Self {
             summary_model_id: None,
-            max_input_tokens: parse_env_usize("OPENBITFUN_ROUND_ROUTER_MAX_INPUT_TOKENS", 65_536)?,
-            context_window: parse_env_usize("OPENBITFUN_ROUND_ROUTER_CONTEXT_WINDOW", 65_536)?,
-            summary_enabled: match std::env::var("OPENBITFUN_ROUND_ROUTER_SUMMARY_ENABLED")
+            max_input_tokens: parse_env_usize("STARMATE_ROUND_ROUTER_MAX_INPUT_TOKENS", 65_536)?,
+            context_window: parse_env_usize("STARMATE_ROUND_ROUTER_CONTEXT_WINDOW", 65_536)?,
+            summary_enabled: match std::env::var("STARMATE_ROUND_ROUTER_SUMMARY_ENABLED")
                 .as_deref()
             {
                 Ok("0" | "false") => false,
                 Ok("1" | "true") | Err(_) => true,
                 _ => {
                     return Err(StarMateError::Configuration(
-                        "OPENBITFUN_ROUND_ROUTER_SUMMARY_ENABLED must be true/false or 1/0".into(),
+                        "STARMATE_ROUND_ROUTER_SUMMARY_ENABLED must be true/false or 1/0".into(),
                     ))
                 }
             },
             summary_trigger_tokens: parse_env_usize(
-                "OPENBITFUN_ROUND_ROUTER_SUMMARY_TRIGGER_TOKENS",
+                "STARMATE_ROUND_ROUTER_SUMMARY_TRIGGER_TOKENS",
                 8_192,
             )?,
             summary_max_tokens,
             summary_target_tokens: parse_env_usize(
-                "OPENBITFUN_ROUND_ROUTER_SUMMARY_TARGET_TOKENS",
+                "STARMATE_ROUND_ROUTER_SUMMARY_TARGET_TOKENS",
                 (summary_max_tokens / 2).clamp(1, DEFAULT_SUMMARY_TARGET_TOKENS),
             )?,
             summary_reasoning_preset: std::env::var(
-                "OPENBITFUN_ROUND_ROUTER_SUMMARY_REASONING_PRESET",
+                "STARMATE_ROUND_ROUTER_SUMMARY_REASONING_PRESET",
             )
             .ok()
             .map(|value| value.trim().to_string())
             .filter(|value| !value.is_empty() && !value.eq_ignore_ascii_case("auto")),
             summary_timeout: Duration::from_millis(parse_env_usize(
-                "OPENBITFUN_ROUND_ROUTER_SUMMARY_TIMEOUT_MS",
+                "STARMATE_ROUND_ROUTER_SUMMARY_TIMEOUT_MS",
                 120_000,
             )? as u64),
         };

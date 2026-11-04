@@ -6,12 +6,12 @@ import { fileURLToPath } from 'node:url';
 import { createEmbeddedConfig } from './embedded-driver';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const root = process.env.OPENBITFUN_FLOWCHAT_SCROLL_EVIDENCE || realpathSync(mkdtempSync(join(tmpdir(), 'openbitfun-flowchat-scroll-')));
+const root = process.env.STARMATE_FLOWCHAT_SCROLL_EVIDENCE || realpathSync(mkdtempSync(join(tmpdir(), 'openbitfun-flowchat-scroll-')));
 const workspace = join(root, 'workspace');
 const home = join(root, 'home');
 const user = join(root, 'user');
 if (!existsSync(join(root, 'frontend'))) {
-  const source = resolve(process.env.OPENBITFUN_E2E_FRONTEND_DIR || join(repo, 'dist'));
+  const source = resolve(process.env.STARMATE_E2E_FRONTEND_DIR || join(repo, 'dist'));
   const revision = readFileSync(join(source, 'frontend-revision.json'), 'utf8');
   cpSync(source, join(root, 'frontend'), { recursive: true });
   if (revision !== readFileSync(join(source, 'frontend-revision.json'), 'utf8')) throw new Error('Frontend changed during snapshot');
@@ -25,11 +25,11 @@ if (!existsSync(join(root, 'frontend'))) {
   if (fixture.status !== 0) throw new Error(fixture.stderr || fixture.stdout);
 }
 Object.assign(process.env, {
-  OPENBITFUN_FLOWCHAT_SCROLL_EVIDENCE: root,
-  OPENBITFUN_E2E_STORAGE_ROOT: root, OPENBITFUN_E2E_HOME: home, OPENBITFUN_HOME: home,
-  OPENBITFUN_E2E_USER_ROOT: user, OPENBITFUN_USER_ROOT: user,
-  OPENBITFUN_E2E_LOG_DIR: join(root, 'logs'), OPENBITFUN_E2E_STORAGE_GUARD: '1',
-  OPENBITFUN_E2E_PACKAGED_FRONTEND: '1', OPENBITFUN_E2E_FRONTEND_DIR: join(root, 'frontend'),
+  STARMATE_FLOWCHAT_SCROLL_EVIDENCE: root,
+  STARMATE_E2E_STORAGE_ROOT: root, STARMATE_E2E_HOME: home, STARMATE_HOME: home,
+  STARMATE_E2E_USER_ROOT: user, STARMATE_USER_ROOT: user,
+  STARMATE_E2E_LOG_DIR: join(root, 'logs'), STARMATE_E2E_STORAGE_GUARD: '1',
+  STARMATE_E2E_PACKAGED_FRONTEND: '1', STARMATE_E2E_FRONTEND_DIR: join(root, 'frontend'),
   E2E_TEST_WORKSPACE: workspace,
   NO_PROXY: [process.env.NO_PROXY, '127.0.0.1', 'localhost', '::1'].filter(Boolean).join(','),
 });

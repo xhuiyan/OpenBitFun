@@ -49,9 +49,9 @@ This creates an isolated 80-Turn session, copies the completed packaged frontend
 and checks slow/fast bidirectional scrolling, reading-position restoration,
 draft preservation and search navigation. The printed temporary directory keeps
 `result.json`, per-phase frame data and screenshots. Set
-`OPENBITFUN_E2E_FRONTEND_DIR` to a completed build with `frontend-revision.json`,
-or `OPENBITFUN_E2E_WEBDRIVER_PORT` for a free driver port. Optional
-`OPENBITFUN_SCROLL_DIAGNOSTICS=1` records row geometry and write stacks with
+`STARMATE_E2E_FRONTEND_DIR` to a completed build with `frontend-revision.json`,
+or `STARMATE_E2E_WEBDRIVER_PORT` for a free driver port. Optional
+`STARMATE_SCROLL_DIAGNOSTICS=1` records row geometry and write stacks with
 additional overhead. Wheel actions exercise the real WebView layout, not OS
 trackpad inertia; local results do not establish remote or other-platform behavior.
 
@@ -67,9 +67,9 @@ snapshot, temporary application storage and a private WebView store. It checks
 click, pointer/wheel actions, element screenshot, input clear/send, offscreen reveal
 and oversized click targets, and retains `result.json` in its printed temporary
 directory. It does not use a mock page or establish remote/platform coverage.
-Set `OPENBITFUN_E2E_FRONTEND_DIR` to a completed build directory with
+Set `STARMATE_E2E_FRONTEND_DIR` to a completed build directory with
 `frontend-revision.json` to reuse an existing snapshot during concurrent builds.
-The runner also snapshots the executable; `OPENBITFUN_E2E_DESKTOP_BINARY` can
+The runner also snapshots the executable; `STARMATE_E2E_DESKTOP_BINARY` can
 select a freshly linked artifact when a development instance locks the default exe.
 
 For pet/bubble main-window activation after opening an embedded browser, build
@@ -87,7 +87,7 @@ controls and Agent tool dispatcher to check background opening, concurrent reads
 native visibility and document preservation across repeated session switches.
 Inspect its `result.json`; local native coverage does not prove remote behavior.
 Full visibility coverage needs an unlocked desktop. For a locked/headless display,
-`OPENBITFUN_E2E_BACKGROUND_ONLY=1` runs background execution and panel binding;
+`STARMATE_E2E_BACKGROUND_ONLY=1` runs background execution and panel binding;
 the report explicitly excludes foreground native visibility in that mode.
 
 Markdown editor browser interaction tests (no desktop binary required):
@@ -108,7 +108,7 @@ a fresh temporary application profile; it does not use another checkout's dev se
 For Windows live application-update discovery, reminder deferral and signed download completion,
 build the current frontend, then run `node tests/e2e/scripts/run-app-update.mjs --build`.
 The build uses the public verification key from `docs/verify-downloads.md`; the test
-requires a genuinely newer public release. `OPENBITFUN_E2E_FRONTEND_DIR` can select
+requires a genuinely newer public release. `STARMATE_E2E_FRONTEND_DIR` can select
 an independent build containing `frontend-revision.json`. The runner uses isolated
 application, updater-cache and WebView storage, downloads the real signed package,
 and never confirms installation. It retains `result.json` under its printed temporary
@@ -131,7 +131,7 @@ After building Desktop, verify the public Huawei endpoint through settings,
 health checks, document search, and document retrieval with isolated storage:
 
 ```bash
-OPENBITFUN_E2E_HUAWEI_MCP=1 OPENBITFUN_E2E_STORAGE_ROOT="$(mktemp -d /tmp/openbitfun-huawei-e2e.XXXXXX)" pnpm --dir tests/e2e exec wdio run ./config/wdio.conf.ts --spec "./specs/l1-mcp-huawei-health.spec.ts"
+STARMATE_E2E_HUAWEI_MCP=1 STARMATE_E2E_STORAGE_ROOT="$(mktemp -d /tmp/openbitfun-huawei-e2e.XXXXXX)" pnpm --dir tests/e2e exec wdio run ./config/wdio.conf.ts --spec "./specs/l1-mcp-huawei-health.spec.ts"
 ```
 
 The spec is skipped by default, uses no account credentials, and restores the
@@ -157,7 +157,7 @@ fixture CA, and drives the actual native commands, channel settings editor,
 chat, tools, statistics and product restart. The debug E2E storage guard must
 redirect subscription metadata and the encrypted fixture vault before account
 discovery. It never copies or uses real subscription credentials. The two
-`OPENBITFUN_E2E_FRONTEND_DIR` / `OPENBITFUN_E2E_DESKTOP_BINARY` snapshot overrides
+`STARMATE_E2E_FRONTEND_DIR` / `STARMATE_E2E_DESKTOP_BINARY` snapshot overrides
 are supported. Read the retained `result.json`; the existence of the runner is
 not evidence of a passing application scenario or any physical remote host.
 The additional service fixture models Antigravity browser authorization and
@@ -171,7 +171,7 @@ config commands or usage projections. Screenshots come from the real webview
 after overlay rendering settles, not from a recreated mock page.
 The runner records the copied binary SHA-256 and frontend revision, then removes
 only its copied binary/frontend after stopping the app. Logs, result and the
-isolated profile remain; set `OPENBITFUN_E2E_KEEP_SNAPSHOT=1` to retain the copies.
+isolated profile remain; set `STARMATE_E2E_KEEP_SNAPSHOT=1` to retain the copies.
 
 For workspace HTML preview resource loading, build Desktop and Web UI, then run:
 

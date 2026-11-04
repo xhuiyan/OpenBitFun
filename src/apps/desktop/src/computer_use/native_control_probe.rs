@@ -198,31 +198,31 @@ pub(super) async fn run() {
 }
 
 async fn run_inner() -> Result<(), String> {
-    let pid = std::env::var("OPENBITFUN_CUA_PROBE_PID")
+    let pid = std::env::var("STARMATE_CUA_PROBE_PID")
         .ok()
         .and_then(|value| value.parse::<i32>().ok())
         .filter(|pid| *pid > 0)
-        .ok_or("OPENBITFUN_CUA_PROBE_PID must identify one explicit target process")?;
-    let window = std::env::var("OPENBITFUN_CUA_PROBE_WINDOW_ID")
+        .ok_or("STARMATE_CUA_PROBE_PID must identify one explicit target process")?;
+    let window = std::env::var("STARMATE_CUA_PROBE_WINDOW_ID")
         .ok()
         .map(|value| {
             value
                 .parse::<u64>()
                 .ok()
                 .filter(|id| *id > 0 && *id <= u32::MAX as u64)
-                .ok_or("Invalid OPENBITFUN_CUA_PROBE_WINDOW_ID")
+                .ok_or("Invalid STARMATE_CUA_PROBE_WINDOW_ID")
         })
         .transpose()?;
-    let seconds = std::env::var("OPENBITFUN_CUA_PROBE_TIMEOUT_SECS")
+    let seconds = std::env::var("STARMATE_CUA_PROBE_TIMEOUT_SECS")
         .unwrap_or_else(|_| "600".into())
         .parse::<u64>()
         .ok()
         .filter(|seconds| (1..=1800).contains(seconds))
-        .ok_or("OPENBITFUN_CUA_PROBE_TIMEOUT_SECS must be between 1 and 1800")?;
-    let directory = std::env::var_os("OPENBITFUN_CUA_PROBE_OUTPUT_DIR").map(PathBuf::from);
+        .ok_or("STARMATE_CUA_PROBE_TIMEOUT_SECS must be between 1 and 1800")?;
+    let directory = std::env::var_os("STARMATE_CUA_PROBE_OUTPUT_DIR").map(PathBuf::from);
     if let Some(directory) = &directory {
         if !directory.is_absolute() {
-            return Err("OPENBITFUN_CUA_PROBE_OUTPUT_DIR must be absolute".into());
+            return Err("STARMATE_CUA_PROBE_OUTPUT_DIR must be absolute".into());
         }
         std::fs::create_dir_all(directory).map_err(|error| error.to_string())?;
     }

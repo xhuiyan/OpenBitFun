@@ -706,9 +706,9 @@ mod tests {
     #[test]
     #[ignore = "requires a separately built lightweight MiniApp shell"]
     fn macos_real_shell_export_is_compact_and_runs_headless_diagnostics() {
-        let shell = std::env::var_os("OPENBITFUN_MINIAPP_SHELL_TEST_BINARY")
+        let shell = std::env::var_os("STARMATE_MINIAPP_SHELL_TEST_BINARY")
             .map(PathBuf::from)
-            .expect("set OPENBITFUN_MINIAPP_SHELL_TEST_BINARY to the optimized sidecar");
+            .expect("set STARMATE_MINIAPP_SHELL_TEST_BINARY to the optimized sidecar");
         let root = tempfile::tempdir().unwrap();
         let mut record = fixture(root.path());
         record.host_executable = root.path().join("full-host");

@@ -6,7 +6,7 @@ use crate::util::string::shell_single_quote;
 pub(super) const MAX_GREP_BATCH_PATHS: usize = 128;
 pub(super) const MAX_GREP_BATCH_COMMAND_BYTES: usize = 16_384;
 
-const BATCH_END: &str = "\nOPENBITFUN_GREP_BATCH_END\n";
+const BATCH_END: &str = "\nSTARMATE_GREP_BATCH_END\n";
 
 /// Accept only literal branches whose union is a conservative byte prefilter.
 /// Escapes, inline flags and all other regex syntax stay with the Rust scanner.
@@ -137,7 +137,7 @@ set --"#,
         esac
     fi
 done
-printf '\nOPENBITFUN_GREP_BATCH_END\n'"#,
+printf '\nSTARMATE_GREP_BATCH_END\n'"#,
     );
     command
 }
@@ -181,9 +181,9 @@ openbitfun_search_bom_le=$(printf '\377\376') || exit 127
 openbitfun_search_bom_be=$(printf '\376\377') || exit 127
 openbitfun_search_probe=$(printf 'prefix\000ignored\nLiteral.Marker\n' | LC_ALL=C GREP_OPTIONS= command grep {flags}{excludes} -e '{probe_literal}' 2>/dev/null | tr '\000' '#')
 case "$openbitfun_search_probe" in *'#') ;; *) exit 127 ;; esac
-printf 'OPENBITFUN_RG_CANDIDATES_BEGIN\000'
+printf 'STARMATE_RG_CANDIDATES_BEGIN\000'
 if LC_ALL=C GREP_OPTIONS= command grep -r {flags}{excludes}{patterns} -e "$openbitfun_search_bom_le" -e "$openbitfun_search_bom_be" -- {path}; then openbitfun_search_status=0; else openbitfun_search_status=$?; fi
-printf 'OPENBITFUN_RG_CANDIDATES_END\000'
+printf 'STARMATE_RG_CANDIDATES_END\000'
 exit "$openbitfun_search_status""#
     )
 }
@@ -366,7 +366,7 @@ mod candidate_literal_tests {
         assert!(folded.contains("command grep -r -a -F -i -l --null"));
         assert!(folded.contains("--exclude-dir=.git") || folded.contains("--exclude-dir='.git'"));
         assert!(folded.contains("'/srv/my repo'"));
-        assert!(folded.contains("OPENBITFUN_RG_CANDIDATES_END"));
+        assert!(folded.contains("STARMATE_RG_CANDIDATES_END"));
 
         let exact = recursive_grep_candidate_command(&["needle"], "/srv", false, &[]);
         assert!(!exact.contains(" -i "));

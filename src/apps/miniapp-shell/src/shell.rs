@@ -68,17 +68,17 @@ async fn endpoint(record: &launcher::LaunchRecord) -> Result<ipc::Endpoint, Stri
 fn host_command(record: &launcher::LaunchRecord) -> std::process::Command {
     let mut command =
         starmate_services_core::process_manager::create_command(&record.host_executable);
-    command.env("OPENBITFUN_USER_ROOT", &record.user_root);
+    command.env("STARMATE_USER_ROOT", &record.user_root);
     match record.host_channel {
         ipc::HostChannel::Default => {
-            command.env_remove("OPENBITFUN_DESKTOP_HOST_CHANNEL");
+            command.env_remove("STARMATE_DESKTOP_HOST_CHANNEL");
         }
         ipc::HostChannel::Development => {
-            command.env("OPENBITFUN_DESKTOP_HOST_CHANNEL", "development");
+            command.env("STARMATE_DESKTOP_HOST_CHANNEL", "development");
         }
     }
     if let Some(home) = &record.product_home {
-        command.env("OPENBITFUN_HOME", home);
+        command.env("STARMATE_HOME", home);
     }
     command
 }
@@ -99,15 +99,15 @@ mod host_tests {
         let command = host_command(&record);
         let env: std::collections::HashMap<_, _> = command.get_envs().collect();
         assert_eq!(
-            env[std::ffi::OsStr::new("OPENBITFUN_USER_ROOT")],
+            env[std::ffi::OsStr::new("STARMATE_USER_ROOT")],
             Some(std::ffi::OsStr::new("user"))
         );
         assert_eq!(
-            env[std::ffi::OsStr::new("OPENBITFUN_HOME")],
+            env[std::ffi::OsStr::new("STARMATE_HOME")],
             Some(std::ffi::OsStr::new("home"))
         );
         assert_eq!(
-            env[std::ffi::OsStr::new("OPENBITFUN_DESKTOP_HOST_CHANNEL")],
+            env[std::ffi::OsStr::new("STARMATE_DESKTOP_HOST_CHANNEL")],
             Some(std::ffi::OsStr::new("development"))
         );
         let mut stable = record;
@@ -115,7 +115,7 @@ mod host_tests {
         let command = host_command(&stable);
         let env: std::collections::HashMap<_, _> = command.get_envs().collect();
         assert_eq!(
-            env[std::ffi::OsStr::new("OPENBITFUN_DESKTOP_HOST_CHANNEL")],
+            env[std::ffi::OsStr::new("STARMATE_DESKTOP_HOST_CHANNEL")],
             None
         );
     }

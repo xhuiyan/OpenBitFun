@@ -763,7 +763,7 @@ mod enabled {
                 _options: WorkspaceCommandOptions,
             ) -> anyhow::Result<WorkspaceCommandResult> {
                 Ok(WorkspaceCommandResult {
-                    stdout: "OPENBITFUN_RG_CANDIDATES_BEGIN\0OPENBITFUN_RG_CANDIDATES_END\0"
+                    stdout: "STARMATE_RG_CANDIDATES_BEGIN\0STARMATE_RG_CANDIDATES_END\0"
                         .to_string(),
                     stderr: "rg: repo: No such file or directory".to_string(),
                     exit_code: self.exit_code,

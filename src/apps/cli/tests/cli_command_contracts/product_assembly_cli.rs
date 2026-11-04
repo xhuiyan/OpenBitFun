@@ -11,11 +11,11 @@ fn doctor_reports_the_validated_cli_runtime_assembly() {
         starmate_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
             .arg("doctor")
             .current_dir(&workspace)
-            .env_remove("OPENBITFUN_USER_ROOT")
-            .env_remove("OPENBITFUN_HOME")
-            .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
-            .env("OPENBITFUN_E2E_USER_ROOT", &user_root)
-            .env("OPENBITFUN_E2E_HOME", &home_root)
+            .env_remove("STARMATE_USER_ROOT")
+            .env_remove("STARMATE_HOME")
+            .env("STARMATE_E2E_STORAGE_GUARD", "1")
+            .env("STARMATE_E2E_USER_ROOT", &user_root)
+            .env("STARMATE_E2E_HOME", &home_root)
             .env("APPDATA", &config_root)
             .env("XDG_CONFIG_HOME", &config_root)
             .env("HOME", &home_root)
@@ -60,11 +60,11 @@ fn health_reports_assembly_and_compatibility_boundaries() {
         starmate_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
             .arg("health")
             .current_dir(&workspace)
-            .env_remove("OPENBITFUN_USER_ROOT")
-            .env_remove("OPENBITFUN_HOME")
-            .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
-            .env("OPENBITFUN_E2E_USER_ROOT", &user_root)
-            .env("OPENBITFUN_E2E_HOME", &home_root)
+            .env_remove("STARMATE_USER_ROOT")
+            .env_remove("STARMATE_HOME")
+            .env("STARMATE_E2E_STORAGE_GUARD", "1")
+            .env("STARMATE_E2E_USER_ROOT", &user_root)
+            .env("STARMATE_E2E_HOME", &home_root)
             .env("APPDATA", &config_root)
             .env("XDG_CONFIG_HOME", &config_root)
             .env("HOME", &home_root)
@@ -110,28 +110,28 @@ fn doctor_rejects_incomplete_e2e_storage_roots() {
         command
             .arg("doctor")
             .current_dir(&workspace)
-            .env_remove("OPENBITFUN_USER_ROOT")
-            .env_remove("OPENBITFUN_E2E_USER_ROOT")
-            .env_remove("OPENBITFUN_HOME")
-            .env_remove("OPENBITFUN_E2E_HOME")
-            .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
+            .env_remove("STARMATE_USER_ROOT")
+            .env_remove("STARMATE_E2E_USER_ROOT")
+            .env_remove("STARMATE_HOME")
+            .env_remove("STARMATE_E2E_HOME")
+            .env("STARMATE_E2E_STORAGE_GUARD", "1")
             .env("APPDATA", &config_root)
             .env("XDG_CONFIG_HOME", &config_root)
             .env("HOME", &home_root);
         if provide_user_root {
-            command.env("OPENBITFUN_E2E_USER_ROOT", &user_root);
+            command.env("STARMATE_E2E_USER_ROOT", &user_root);
         }
         if provide_home_root {
-            command.env("OPENBITFUN_E2E_HOME", &home_root);
+            command.env("STARMATE_E2E_HOME", &home_root);
         }
 
         let output = command.output().expect("run openbitfun doctor");
         let stderr = String::from_utf8_lossy(&output.stderr);
         assert!(!output.status.success(), "{case_name}: {stderr}");
         assert!(
-            stderr.contains("OPENBITFUN_E2E_STORAGE_GUARD requires isolated")
-                && stderr.contains("OPENBITFUN_E2E_USER_ROOT")
-                && stderr.contains("OPENBITFUN_E2E_HOME"),
+            stderr.contains("STARMATE_E2E_STORAGE_GUARD requires isolated")
+                && stderr.contains("STARMATE_E2E_USER_ROOT")
+                && stderr.contains("STARMATE_E2E_HOME"),
             "{case_name}: {stderr}"
         );
         assert!(

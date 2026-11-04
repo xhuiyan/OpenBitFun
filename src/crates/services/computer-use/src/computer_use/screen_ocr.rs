@@ -14,9 +14,9 @@ mod native_fixture_tests {
     /// Exercises the actual Vision backend and global-coordinate projection on
     /// a browser-rendered image, without capturing or operating the user's UI.
     #[test]
-    #[ignore = "requires OPENBITFUN_OCR_FIXTURE containing a rendered screenshot DTO"]
+    #[ignore = "requires STARMATE_OCR_FIXTURE containing a rendered screenshot DTO"]
     fn native_vision_reads_rendered_fixture() {
-        let path = std::env::var("OPENBITFUN_OCR_FIXTURE").expect("rendered OCR fixture path");
+        let path = std::env::var("STARMATE_OCR_FIXTURE").expect("rendered OCR fixture path");
         let shot: ComputerScreenshot =
             serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
         let matches = macos::find_text_matches(&shot, "Save report").expect("real Vision OCR");
@@ -48,9 +48,9 @@ mod linux_native_fixture_tests {
     use super::*;
 
     #[test]
-    #[ignore = "requires OPENBITFUN_OCR_FIXTURE and Tesseract English data"]
+    #[ignore = "requires STARMATE_OCR_FIXTURE and Tesseract English data"]
     fn native_tesseract_reads_rendered_fixture() {
-        let path = std::env::var("OPENBITFUN_OCR_FIXTURE").expect("rendered OCR fixture path");
+        let path = std::env::var("STARMATE_OCR_FIXTURE").expect("rendered OCR fixture path");
         let shot: ComputerScreenshot =
             serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
         let lines = linux_backend::read_text(&shot).expect("native Tesseract TSV adapter");
@@ -129,7 +129,7 @@ pub(super) fn find_text_matches(
 /// Persist OCR input pixels only when explicitly enabled for local diagnosis.
 fn ocr_debug_save_enabled() -> bool {
     ocr_debug_opt_in(
-        std::env::var("OPENBITFUN_COMPUTER_USE_OCR_DEBUG")
+        std::env::var("STARMATE_COMPUTER_USE_OCR_DEBUG")
             .ok()
             .as_deref(),
     )

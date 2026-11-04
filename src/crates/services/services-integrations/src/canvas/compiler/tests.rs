@@ -14,7 +14,7 @@ mod enabled {
             CanvasRevision::new("rev_1"),
             "canvas.tsx",
             source,
-            OPENBITFUN_CANVAS_SDK_VERSION,
+            STARMATE_CANVAS_SDK_VERSION,
             1,
         )
     }

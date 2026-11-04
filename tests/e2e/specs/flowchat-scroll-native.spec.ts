@@ -5,7 +5,7 @@ import { openWorkspace } from '../helpers/workspace-helper';
 import { FlowChatScrollPage, type ScrollProbe } from '../page-objects/FlowChatScrollPage';
 
 const page = new FlowChatScrollPage();
-const evidence = process.env.OPENBITFUN_FLOWCHAT_SCROLL_EVIDENCE!;
+const evidence = process.env.STARMATE_FLOWCHAT_SCROLL_EVIDENCE!;
 const results: Record<string, unknown> = {};
 const percentile = (values: number[], p: number) => [...values].sort((a, b) => a - b)[Math.floor((values.length - 1) * p)] ?? 0;
 function summarize(probe: ScrollProbe) {

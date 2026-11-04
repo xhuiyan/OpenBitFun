@@ -38,12 +38,12 @@ test('independent bundle owns version, offline assets, icons and identity', (t) 
 });
 
 test('a Desktop product environment cannot change the migration destination identity', () => {
-  const env = dataToolsEnvironment({ OPENBITFUN_PRODUCT_ID: 'acme', OPENBITFUN_DATA_NAMESPACE: 'acme', OPENBITFUN_DESKTOP_BINARY_NAME: 'acme', CI: '1' });
-  assert.equal(env.OPENBITFUN_PRODUCT_ID, 'openbitfun');
-  assert.equal(env.OPENBITFUN_DATA_NAMESPACE, 'openbitfun');
-  assert.equal(env.OPENBITFUN_DESKTOP_BINARY_NAME, undefined);
-  assert.equal(env.OPENBITFUN_PRODUCT_BINARY_NAME, 'openbitfun-data-tools');
-  assert.equal(env.OPENBITFUN_PRODUCT_DISPLAY_NAME, 'StarMate Data Tools');
+  const env = dataToolsEnvironment({ STARMATE_PRODUCT_ID: 'acme', STARMATE_DATA_NAMESPACE: 'acme', STARMATE_DESKTOP_BINARY_NAME: 'acme', CI: '1' });
+  assert.equal(env.STARMATE_PRODUCT_ID, 'openbitfun');
+  assert.equal(env.STARMATE_DATA_NAMESPACE, 'openbitfun');
+  assert.equal(env.STARMATE_DESKTOP_BINARY_NAME, undefined);
+  assert.equal(env.STARMATE_PRODUCT_BINARY_NAME, 'openbitfun-data-tools');
+  assert.equal(env.STARMATE_PRODUCT_DISPLAY_NAME, 'StarMate Data Tools');
   assert.equal(env.CI, 'true');
 });
 

@@ -3,7 +3,7 @@ use super::keys::normalize_skill_keys as normalize_skill_key_list;
 use super::resolver::{
     resolve_skill_default_enabled_for_mode, resolve_skill_state_for_mode, UserModeSkillOverrides,
 };
-use super::roots::OPENBITFUN_USER_SKILL_SLOT;
+use super::roots::STARMATE_USER_SKILL_SLOT;
 use super::types::{ModeSkillInfo, SkillData, SkillInfo, SkillLocation};
 use std::collections::{HashMap, HashSet};
 
@@ -178,7 +178,7 @@ pub fn filter_implicit_image_skills(
             && skill.name == "imagegen"
             && skill.level == SkillLocation::User
             && !skill.is_builtin
-            && skill.source_slot != OPENBITFUN_USER_SKILL_SLOT)
+            && skill.source_slot != STARMATE_USER_SKILL_SLOT)
     });
     skills
 }
@@ -353,7 +353,7 @@ mod tests {
     #[test]
     fn native_image_route_replaces_only_external_user_imagegen_in_implicit_listing() {
         let mut user_authored = external_image_skill();
-        user_authored.source_slot = OPENBITFUN_USER_SKILL_SLOT.to_string();
+        user_authored.source_slot = STARMATE_USER_SKILL_SLOT.to_string();
         user_authored.key = "user::openbitfun::imagegen".to_string();
         let project = candidate("imagegen", "project::codex::imagegen", "/project/imagegen").info;
         let unrelated = candidate(

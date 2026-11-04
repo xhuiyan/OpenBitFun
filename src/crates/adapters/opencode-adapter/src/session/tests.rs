@@ -229,12 +229,12 @@ fn source_identity_missing_store_and_unsupported_schema_are_explicit() {
 #[test]
 #[ignore = "Reads installed OpenCode history without changing it; prints counts only"]
 fn inspect_installed_opencode() {
-    let reader = std::env::var_os("OPENBITFUN_TEST_OPENCODE_DATA")
+    let reader = std::env::var_os("STARMATE_TEST_OPENCODE_DATA")
         .map(|path| OpenCodeSessionReader::new(path.into()))
         .unwrap_or_default();
     let catalog = reader.discover_all().unwrap();
     assert!(!catalog.candidates.is_empty());
-    let expected = std::env::var("OPENBITFUN_TEST_OPENCODE_SESSION").ok();
+    let expected = std::env::var("STARMATE_TEST_OPENCODE_SESSION").ok();
     let mut total = (0, 0, 0);
     for candidate in catalog.candidates.iter().filter(|candidate| {
         expected

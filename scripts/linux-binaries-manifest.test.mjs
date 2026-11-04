@@ -162,7 +162,7 @@ test('openbitfun sync mirrors both products and their checksums', () => {
     syncScript,
     /for key in \("url", "sha256Url", "sha256SigUrl", "sigUrl"\)/
   );
-  assert.match(syncScript, /OPENBITFUN_BASE_URL/);
+  assert.match(syncScript, /STARMATE_BASE_URL/);
   assert.match(syncScript, /WEBSITE_RELEASE_DIR.*linux-binaries-v1\.json/);
   assert.match(syncScript, /mirror_dispatch_macos_cli_archives/);
   assert.match(syncScript, /x86_64-apple-darwin aarch64-apple-darwin/);
@@ -191,9 +191,9 @@ test('release sync pins Relay and Linux metadata to the updater release during l
     env: {
       ...process.env,
       SYNC_SCRIPT: path.join(repoRoot, 'scripts/openbitfun-release-sync.sh'),
-      OPENBITFUN_RELEASE_CHANNEL: 'stable',
+      STARMATE_RELEASE_CHANNEL: 'stable',
       WEBSITE_RELEASE_DIR: path.join(temp, 'release'),
-      OPENBITFUN_RELEASE_SYNC_LOCK: path.join(temp, 'sync.lock'),
+      STARMATE_RELEASE_SYNC_LOCK: path.join(temp, 'sync.lock'),
       TEST_URLS: urls,
       TEST_LATEST_JSON: JSON.stringify({ version: '1.0.0', platforms: {
         'linux-x86_64': { url: `${releaseBase}/StarMate_1.0.0_linux-x86_64.AppImage` },
@@ -375,7 +375,7 @@ test('website download manifest uses installer while updater manifest keeps setu
     ['-c', `
       source "$SYNC_SCRIPT"
       VERSION_DIR="$TEST_VERSION_DIR"
-      OPENBITFUN_BASE_URL="https://openbitfun.test/release"
+      STARMATE_BASE_URL="https://openbitfun.test/release"
       WINDOWS_INSTALLER_FILENAME="openbitfun-installer.exe"
       WEBSITE_DOWNLOADS_MANIFEST="downloads.json"
       write_website_download_manifest
@@ -486,7 +486,7 @@ test('openbitfun sync uses the in-repo script and an overridable lock', () => {
   );
   assert.match(
     syncScript,
-    /OPENBITFUN_RELEASE_SYNC_LOCK/,
+    /STARMATE_RELEASE_SYNC_LOCK/,
     'lock path must be overridable so a new host can run the repo script'
   );
   assert.match(
@@ -501,7 +501,7 @@ test('openbitfun sync uses the in-repo script and an overridable lock', () => {
   );
   assert.match(
     syncScript,
-    /LOCK_FILE="\$\{OPENBITFUN_RELEASE_SYNC_LOCK:-\/var\/lock\/openbitfun-release-sync\.lock\}"/,
+    /LOCK_FILE="\$\{STARMATE_RELEASE_SYNC_LOCK:-\/var\/lock\/openbitfun-release-sync\.lock\}"/,
     'default lock must stay off the Nginx /release/ alias'
   );
 });

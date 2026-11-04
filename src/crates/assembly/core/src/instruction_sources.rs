@@ -59,7 +59,7 @@ fn load_openbitfun_or_codex_user_instructions(
             read_local_instruction_file(
                 &root.join("AGENTS.md"),
                 &root,
-                "$OPENBITFUN_HOME/AGENTS.md",
+                "$STARMATE_HOME/AGENTS.md",
             )
         });
     match native {
@@ -409,12 +409,12 @@ pub(crate) mod test_support {
                 .collect();
             // Existing ecosystem fixtures must not discover native instructions
             // from the developer's real home directory.
-            let openbitfun_home = if values.iter().any(|(name, _)| *name == "OPENBITFUN_HOME") {
+            let openbitfun_home = if values.iter().any(|(name, _)| *name == "STARMATE_HOME") {
                 None
             } else {
                 let home = tempfile::tempdir().expect("isolated OpenBitFun home");
-                previous.push(("OPENBITFUN_HOME", std::env::var_os("OPENBITFUN_HOME")));
-                std::env::set_var("OPENBITFUN_HOME", home.path());
+                previous.push(("STARMATE_HOME", std::env::var_os("STARMATE_HOME")));
+                std::env::set_var("STARMATE_HOME", home.path());
                 Some(home)
             };
             Self {

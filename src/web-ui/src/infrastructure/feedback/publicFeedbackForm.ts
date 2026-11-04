@@ -9,7 +9,7 @@ export interface PublicFeedbackContext {
 
 /** Read and validate the build-time public questionnaire URL. */
 export function resolvePublicFeedbackFormUrl(
-  rawUrl: string | undefined = import.meta.env.VITE_OPENBITFUN_FEEDBACK_FORM_URL,
+  rawUrl: string | undefined = import.meta.env.VITE_STARMATE_FEEDBACK_FORM_URL,
 ): URL | null {
   const value = rawUrl?.trim();
   if (!value) return null;

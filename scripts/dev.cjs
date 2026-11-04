@@ -69,15 +69,15 @@ function resolveDesktopDevDataMode(args = []) {
 function resolveDesktopDevStorageEnvironment(env = process.env, rootDir = ROOT_DIR, dataMode = 'shared') {
   // Shared mode leaves path selection to the app, including caller overrides.
   if (dataMode === 'shared') {
-    return { OPENBITFUN_DESKTOP_HOST_CHANNEL: 'development' };
+    return { STARMATE_DESKTOP_HOST_CHANNEL: 'development' };
   }
   // Keep both user settings and workspace/session storage separate from the
   // installed app. Each checkout reuses its own persistent development data.
   const storageDir = path.join(rootDir, '.openbitfun', 'desktop-dev');
   return {
-    OPENBITFUN_DESKTOP_HOST_CHANNEL: 'development',
-    OPENBITFUN_USER_ROOT: env.OPENBITFUN_USER_ROOT || env.OPENBITFUN_E2E_USER_ROOT || path.join(storageDir, 'user'),
-    OPENBITFUN_HOME: env.OPENBITFUN_HOME || env.OPENBITFUN_E2E_HOME || path.join(storageDir, 'home'),
+    STARMATE_DESKTOP_HOST_CHANNEL: 'development',
+    STARMATE_USER_ROOT: env.STARMATE_USER_ROOT || env.STARMATE_E2E_USER_ROOT || path.join(storageDir, 'user'),
+    STARMATE_HOME: env.STARMATE_HOME || env.STARMATE_E2E_HOME || path.join(storageDir, 'home'),
   };
 }
 
@@ -595,7 +595,7 @@ async function startDesktopPreview() {
     // Debug previews must upload the current workspace build. The adjacent
     // target/debug resource tree is only a build-time copy and can lag behind
     // mobile-web edits made while the desktop binary is being reused.
-    OPENBITFUN_MOBILE_WEB_DIR: path.join(ROOT_DIR, 'src/mobile-web/dist'),
+    STARMATE_MOBILE_WEB_DIR: path.join(ROOT_DIR, 'src/mobile-web/dist'),
   });
 
   appProcess.on('error', (error) => {
@@ -650,8 +650,8 @@ async function main() {
   printBlank();
   if (desktopMode) {
     printInfo(`Desktop data mode: ${desktopDataMode}`);
-    printInfo(`Desktop user data: ${process.env.OPENBITFUN_USER_ROOT || process.env.OPENBITFUN_E2E_USER_ROOT || '(system default)'}`);
-    printInfo(`Desktop home: ${process.env.OPENBITFUN_HOME || process.env.OPENBITFUN_E2E_HOME || '(system default)'}`);
+    printInfo(`Desktop user data: ${process.env.STARMATE_USER_ROOT || process.env.STARMATE_E2E_USER_ROOT || '(system default)'}`);
+    printInfo(`Desktop home: ${process.env.STARMATE_HOME || process.env.STARMATE_E2E_HOME || '(system default)'}`);
     if (desktopDataMode === 'shared') {
       printInfo('Shared product data with a separate development host; session writer leases remain active');
     }
@@ -816,7 +816,7 @@ async function main() {
         // Tauri copies bundle resources into target/debug at process startup.
         // Point Remote Connect at the live workspace dist so a newly generated
         // QR code never uploads a stale mobile-web bundle.
-        OPENBITFUN_MOBILE_WEB_DIR: path.join(ROOT_DIR, 'src/mobile-web/dist'),
+        STARMATE_MOBILE_WEB_DIR: path.join(ROOT_DIR, 'src/mobile-web/dist'),
       };
       try {
         const args = ['dev', '--config', tauriConfig, '--config', JSON.stringify({ build: { devUrl: `http://localhost:${DEV_SERVER_PORT}` } })];
@@ -830,7 +830,7 @@ async function main() {
           const tauriBin = path.join(ROOT_DIR, 'node_modules', '.bin', 'tauri');
           await spawnCommand(tauriBin, args, desktopDir, {
             CARGO_PROFILE_DEV_CODEGEN_UNITS: tauriDevEnv.CARGO_PROFILE_DEV_CODEGEN_UNITS,
-            OPENBITFUN_MOBILE_WEB_DIR: tauriDevEnv.OPENBITFUN_MOBILE_WEB_DIR,
+            STARMATE_MOBILE_WEB_DIR: tauriDevEnv.STARMATE_MOBILE_WEB_DIR,
           });
         }
       } finally {

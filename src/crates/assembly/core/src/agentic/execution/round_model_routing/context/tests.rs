@@ -72,24 +72,24 @@ fn summary_environment_preserves_explicit_targets_and_generation_limits() {
                 "--ignored",
                 "--nocapture",
             ])
-            .env("OPENBITFUN_ROUTER_SUMMARY_CONFIG_FIXTURE", expected);
+            .env("STARMATE_ROUTER_SUMMARY_CONFIG_FIXTURE", expected);
         for name in [
-            "OPENBITFUN_ROUND_ROUTER_MAX_INPUT_TOKENS",
-            "OPENBITFUN_ROUND_ROUTER_CONTEXT_WINDOW",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_ENABLED",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_TRIGGER_TOKENS",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_MAX_TOKENS",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_TARGET_TOKENS",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_REASONING_PRESET",
-            "OPENBITFUN_ROUND_ROUTER_SUMMARY_TIMEOUT_MS",
+            "STARMATE_ROUND_ROUTER_MAX_INPUT_TOKENS",
+            "STARMATE_ROUND_ROUTER_CONTEXT_WINDOW",
+            "STARMATE_ROUND_ROUTER_SUMMARY_ENABLED",
+            "STARMATE_ROUND_ROUTER_SUMMARY_TRIGGER_TOKENS",
+            "STARMATE_ROUND_ROUTER_SUMMARY_MAX_TOKENS",
+            "STARMATE_ROUND_ROUTER_SUMMARY_TARGET_TOKENS",
+            "STARMATE_ROUND_ROUTER_SUMMARY_REASONING_PRESET",
+            "STARMATE_ROUND_ROUTER_SUMMARY_TIMEOUT_MS",
         ] {
             command.env_remove(name);
         }
         if let Some(value) = max {
-            command.env("OPENBITFUN_ROUND_ROUTER_SUMMARY_MAX_TOKENS", value);
+            command.env("STARMATE_ROUND_ROUTER_SUMMARY_MAX_TOKENS", value);
         }
         if let Some(value) = target {
-            command.env("OPENBITFUN_ROUND_ROUTER_SUMMARY_TARGET_TOKENS", value);
+            command.env("STARMATE_ROUND_ROUTER_SUMMARY_TARGET_TOKENS", value);
         }
         let output = command.output().unwrap();
         assert!(
@@ -104,7 +104,7 @@ fn summary_environment_preserves_explicit_targets_and_generation_limits() {
 #[test]
 #[ignore = "Invoked with an isolated synthetic environment by the parent test"]
 fn summary_environment_fixture_child() {
-    let expected = std::env::var("OPENBITFUN_ROUTER_SUMMARY_CONFIG_FIXTURE").unwrap();
+    let expected = std::env::var("STARMATE_ROUTER_SUMMARY_CONFIG_FIXTURE").unwrap();
     let result = RouterContextConfig::from_env();
     if expected == "error" {
         assert!(result.is_err());

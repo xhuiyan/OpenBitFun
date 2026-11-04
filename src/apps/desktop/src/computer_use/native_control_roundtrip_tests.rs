@@ -219,36 +219,36 @@ async fn wait_for_observer(path: &str) -> Value {
 }
 
 pub(crate) async fn run() {
-    if std::env::var_os("OPENBITFUN_CUA_SELF_TEST").is_some() {
+    if std::env::var_os("STARMATE_CUA_SELF_TEST").is_some() {
         self_webview_roundtrip().await;
         return;
     }
-    if std::env::var_os("OPENBITFUN_CUA_PROBE_PID").is_some() {
+    if std::env::var_os("STARMATE_CUA_PROBE_PID").is_some() {
         probe::run().await;
         return;
     }
-    if std::env::var_os("OPENBITFUN_INPUT_FIXTURE_PID").is_some() {
-        if let Ok(case) = std::env::var("OPENBITFUN_INPUT_LATENCY_CASE") {
+    if std::env::var_os("STARMATE_INPUT_FIXTURE_PID").is_some() {
+        if let Ok(case) = std::env::var("STARMATE_INPUT_LATENCY_CASE") {
             run_latency_case(&case).await;
         } else {
             run_covered_semantic().await;
         }
         return;
     }
-    let pid: i32 = std::env::var("OPENBITFUN_ROUNDTRIP_FIXTURE_PID")
+    let pid: i32 = std::env::var("STARMATE_ROUNDTRIP_FIXTURE_PID")
         .unwrap()
         .parse()
         .unwrap();
-    let x: f64 = std::env::var("OPENBITFUN_ROUNDTRIP_FIXTURE_X")
+    let x: f64 = std::env::var("STARMATE_ROUNDTRIP_FIXTURE_X")
         .unwrap()
         .parse()
         .unwrap();
-    let y: f64 = std::env::var("OPENBITFUN_ROUNDTRIP_FIXTURE_Y")
+    let y: f64 = std::env::var("STARMATE_ROUNDTRIP_FIXTURE_Y")
         .unwrap()
         .parse()
         .unwrap();
-    let result_path = std::env::var("OPENBITFUN_ROUNDTRIP_FIXTURE_RESULT").unwrap();
-    if let Ok(observer_path) = std::env::var("OPENBITFUN_INPUT_OBSERVER_RESULT") {
+    let result_path = std::env::var("STARMATE_ROUNDTRIP_FIXTURE_RESULT").unwrap();
+    if let Ok(observer_path) = std::env::var("STARMATE_INPUT_OBSERVER_RESULT") {
         wait_for_observer(&observer_path).await;
     }
     let foreground = starmate_computer_use::test_support::frontmost_pid();
@@ -667,12 +667,12 @@ async fn self_webview_roundtrip() {
 }
 
 async fn run_covered_semantic() {
-    let pid: i32 = std::env::var("OPENBITFUN_INPUT_FIXTURE_PID")
+    let pid: i32 = std::env::var("STARMATE_INPUT_FIXTURE_PID")
         .unwrap()
         .parse()
         .unwrap();
-    let path = std::env::var("OPENBITFUN_INPUT_FIXTURE_RESULT").unwrap();
-    let observer_path = std::env::var("OPENBITFUN_INPUT_OBSERVER_RESULT").unwrap();
+    let path = std::env::var("STARMATE_INPUT_FIXTURE_RESULT").unwrap();
+    let observer_path = std::env::var("STARMATE_INPUT_OBSERVER_RESULT").unwrap();
     let read = |path: &str| -> Value {
         serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
     };
@@ -700,7 +700,7 @@ async fn run_covered_semantic() {
     context.primary_model_facts.api_format = "anthropic".into();
     let tool = ComputerUseTool::new();
     let _cleanup = StopOnExit;
-    if std::env::var_os("OPENBITFUN_INPUT_FOREGROUND").is_some() {
+    if std::env::var_os("STARMATE_INPUT_FOREGROUND").is_some() {
         let app = json!({"pid":pid,"window_id":initial["window_id"]});
         call(&tool, &context, json!({"action":"get_app_state","app":app})).await;
         let background = host.control_snapshot();
@@ -845,7 +845,7 @@ async fn run_covered_semantic() {
     let opened_by_path = call(
         &tool,
         &context,
-        json!({"action":"open_app", "app_name":std::env::var("OPENBITFUN_INPUT_FIXTURE_APP").unwrap()}),
+        json!({"action":"open_app", "app_name":std::env::var("STARMATE_INPUT_FIXTURE_APP").unwrap()}),
     )
     .await;
     assert_eq!(opened_by_path["success"], true);
@@ -922,7 +922,7 @@ async fn run_covered_semantic() {
                 / global["height"].as_f64().unwrap();
         json!({"kind":"image_xy","x":x.round() as i32,"y":y.round() as i32,"screenshot_id":meta["screenshot_id"]})
     };
-    if std::env::var_os("OPENBITFUN_INPUT_BUSY_AX").is_some() {
+    if std::env::var_os("STARMATE_INPUT_BUSY_AX").is_some() {
         // Pause only the disposable fixture, after observing its exact window.
         // The real AX IPC must time out; no mock alters the production query.
         // Resume independently even if the tool panics, so cleanup cannot leave
@@ -1266,12 +1266,12 @@ async fn run_latency_case(case: &str) {
         "batch:ax" => (true, false),
         _ => panic!("Unknown native latency fixture case: {case}"),
     };
-    let pid: i32 = std::env::var("OPENBITFUN_INPUT_FIXTURE_PID")
+    let pid: i32 = std::env::var("STARMATE_INPUT_FIXTURE_PID")
         .unwrap()
         .parse()
         .unwrap();
-    let path = std::env::var("OPENBITFUN_INPUT_FIXTURE_RESULT").unwrap();
-    let observer_path = std::env::var("OPENBITFUN_INPUT_OBSERVER_RESULT").unwrap();
+    let path = std::env::var("STARMATE_INPUT_FIXTURE_RESULT").unwrap();
+    let observer_path = std::env::var("STARMATE_INPUT_OBSERVER_RESULT").unwrap();
     let read = |path: &str| -> Value {
         serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
     };

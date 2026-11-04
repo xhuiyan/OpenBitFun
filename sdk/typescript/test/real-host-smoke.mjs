@@ -74,11 +74,11 @@ async function runParent() {
   try {
     const address = await listenLocalhost(server);
     const workerEnvironment = {
-      OPENBITFUN_SDK_SMOKE_BASE_URL: `http://127.0.0.1:${String(address.port)}/v1`,
-      OPENBITFUN_SDK_SMOKE_WORKSPACE: workspace,
-      OPENBITFUN_E2E_STORAGE_GUARD: "1",
-      OPENBITFUN_E2E_USER_ROOT: userRoot,
-      OPENBITFUN_E2E_HOME: home,
+      STARMATE_SDK_SMOKE_BASE_URL: `http://127.0.0.1:${String(address.port)}/v1`,
+      STARMATE_SDK_SMOKE_WORKSPACE: workspace,
+      STARMATE_E2E_STORAGE_GUARD: "1",
+      STARMATE_E2E_USER_ROOT: userRoot,
+      STARMATE_E2E_HOME: home,
       APPDATA: configRoot,
       XDG_CONFIG_HOME: configRoot,
       HOME: home,
@@ -141,8 +141,8 @@ async function runParent() {
 
 async function runWorker() {
   const apiKey = await readApiKeyFromStdin();
-  const workspace = requiredEnvironment("OPENBITFUN_SDK_SMOKE_WORKSPACE");
-  const baseUrl = requiredEnvironment("OPENBITFUN_SDK_SMOKE_BASE_URL");
+  const workspace = requiredEnvironment("STARMATE_SDK_SMOKE_WORKSPACE");
+  const baseUrl = requiredEnvironment("STARMATE_SDK_SMOKE_BASE_URL");
   const missingHost = join(workspace, "missing-openbitfun-sdk-host");
 
   const validModel = {

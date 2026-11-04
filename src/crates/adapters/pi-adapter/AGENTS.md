@@ -17,7 +17,7 @@ Native persistence, following and continuation stay in Product Assembly/session 
 
 Session verification: `cargo test -p openbitfun-pi-adapter --lib session::tests`.
 For a real source, set `PI_CODING_AGENT_DIR` and optionally
-`OPENBITFUN_TEST_PI_SESSION`, then run `cargo test -p openbitfun-pi-adapter --lib
+`STARMATE_TEST_PI_SESSION`, then run `cargo test -p openbitfun-pi-adapter --lib
 inspect_installed_pi -- --ignored --nocapture`. The selected session checks the
 two-turn local verification scenario; this command never writes source files.
 

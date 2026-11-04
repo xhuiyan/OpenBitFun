@@ -4,10 +4,10 @@ fn main() {
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos") {
         println!("cargo:rustc-link-arg=-Wl,-weak_framework,ScreenCaptureKit");
     }
-    println!("cargo:rerun-if-env-changed=OPENBITFUN_RELEASE_CHANNEL");
-    println!("cargo:rerun-if-env-changed=OPENBITFUN_DESKTOP_BINARY_NAME");
-    println!("cargo:rerun-if-env-changed=OPENBITFUN_UPDATER_PRIMARY_ENDPOINT");
-    println!("cargo:rerun-if-env-changed=OPENBITFUN_UPDATER_FALLBACK_ENDPOINT");
+    println!("cargo:rerun-if-env-changed=STARMATE_RELEASE_CHANNEL");
+    println!("cargo:rerun-if-env-changed=STARMATE_DESKTOP_BINARY_NAME");
+    println!("cargo:rerun-if-env-changed=STARMATE_UPDATER_PRIMARY_ENDPOINT");
+    println!("cargo:rerun-if-env-changed=STARMATE_UPDATER_FALLBACK_ENDPOINT");
     // The Windows primary thread keeps the Tauri event loop and native window
     // creation stack. Reserve the same headroom as the Tokio workers so a
     // large debug invoke dispatcher cannot exhaust the default 1 MiB stack.

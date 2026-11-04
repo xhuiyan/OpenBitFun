@@ -75,8 +75,8 @@ Defaults match standard OpenBitFun storage:
 
 | Setting | Default |
 | --- | --- |
-| `--home` | `OPENBITFUN_HOME`, otherwise `~/.openbitfun` |
-| `--user-root` | `OPENBITFUN_USER_ROOT`, otherwise the OS config directory's `openbitfun` folder |
+| `--home` | `STARMATE_HOME`, otherwise `~/.openbitfun` |
+| `--user-root` | `STARMATE_USER_ROOT`, otherwise the OS config directory's `openbitfun` folder |
 | Registry | `<user-root>/data/workspace_data.json` |
 
 On Windows the default config directory is `%APPDATA%`; on macOS it is

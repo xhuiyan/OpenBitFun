@@ -4,13 +4,13 @@
 fn main() {
     use std::sync::mpsc;
     use std::time::{Duration, Instant};
-    if std::env::var_os("OPENBITFUN_ROUNDTRIP_FIXTURE_PID").is_none()
-        && std::env::var_os("OPENBITFUN_INPUT_FIXTURE_PID").is_none()
-        && std::env::var_os("OPENBITFUN_CUA_PROBE_PID").is_none()
-        && std::env::var_os("OPENBITFUN_CUA_SELF_TEST").is_none()
+    if std::env::var_os("STARMATE_ROUNDTRIP_FIXTURE_PID").is_none()
+        && std::env::var_os("STARMATE_INPUT_FIXTURE_PID").is_none()
+        && std::env::var_os("STARMATE_CUA_PROBE_PID").is_none()
+        && std::env::var_os("STARMATE_CUA_SELF_TEST").is_none()
     {
         eprintln!(
-            "Run node scripts/test-macos-control-roundtrip.mjs, or set OPENBITFUN_CUA_PROBE_PID for the scoped JSONL probe"
+            "Run node scripts/test-macos-control-roundtrip.mjs, or set STARMATE_CUA_PROBE_PID for the scoped JSONL probe"
         );
         std::process::exit(2);
     }
@@ -26,12 +26,12 @@ fn main() {
     let app: *mut objc2::runtime::AnyObject =
         unsafe { objc2::msg_send![objc2::class!(NSApplication), sharedApplication] };
     let _: bool = unsafe { objc2::msg_send![app, setActivationPolicy: 2isize] };
-    let _self_window = std::env::var_os("OPENBITFUN_CUA_SELF_TEST").map(|_| {
+    let _self_window = std::env::var_os("STARMATE_CUA_SELF_TEST").map(|_| {
         let _: bool = unsafe { objc2::msg_send![app, setActivationPolicy: 1isize] };
         let _: () = unsafe { objc2::msg_send![app, finishLaunching] };
         self_webview::create()
     });
-    if let Some(path) = std::env::var_os("OPENBITFUN_INPUT_HOST_READY") {
+    if let Some(path) = std::env::var_os("STARMATE_INPUT_HOST_READY") {
         std::fs::write(path, b"ready").unwrap();
     }
     let self_test = _self_window.is_some();
@@ -56,8 +56,8 @@ fn main() {
         let _: () = unsafe { objc2::msg_send![app, run] };
         return;
     }
-    let limit = if std::env::var_os("OPENBITFUN_CUA_PROBE_PID").is_some() {
-        std::env::var("OPENBITFUN_CUA_PROBE_TIMEOUT_SECS")
+    let limit = if std::env::var_os("STARMATE_CUA_PROBE_PID").is_some() {
+        std::env::var("STARMATE_CUA_PROBE_TIMEOUT_SECS")
             .ok()
             .and_then(|value| value.parse::<u64>().ok())
             .filter(|seconds| (1..=1800).contains(seconds))

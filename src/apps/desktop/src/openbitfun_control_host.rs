@@ -39,11 +39,11 @@ use crate::api::commands::{
     list_agent_companion_pets_impl, AgentCompanionPetPackageDto,
 };
 
-const OPENBITFUN_CONTROL_REQUEST_EVENT: &str = "agentic://openbitfun-control-request";
-const OPENBITFUN_CONTROL_APPLIED_EVENT: &str = "agentic://openbitfun-control-applied";
-const OPENBITFUN_CONTROL_EFFECT_EVENT: &str = "agentic://openbitfun-control-effect";
-const OPENBITFUN_CONTROL_RESPONSE_TIMEOUT: Duration = Duration::from_secs(120);
-const OPENBITFUN_CONTROL_EFFECT_TIMEOUT: Duration = Duration::from_secs(20);
+const STARMATE_CONTROL_REQUEST_EVENT: &str = "agentic://openbitfun-control-request";
+const STARMATE_CONTROL_APPLIED_EVENT: &str = "agentic://openbitfun-control-applied";
+const STARMATE_CONTROL_EFFECT_EVENT: &str = "agentic://openbitfun-control-effect";
+const STARMATE_CONTROL_RESPONSE_TIMEOUT: Duration = Duration::from_secs(120);
+const STARMATE_CONTROL_EFFECT_TIMEOUT: Duration = Duration::from_secs(20);
 
 type PendingResponse = oneshot::Sender<Result<Value, String>>;
 
@@ -133,9 +133,9 @@ async fn dispatch_surface_event(
 
 async fn dispatch_surface_request(request: OpenBitFunControlHostRequest) -> Result<Value, String> {
     dispatch_surface_event(
-        OPENBITFUN_CONTROL_REQUEST_EVENT,
+        STARMATE_CONTROL_REQUEST_EVENT,
         serde_json::to_value(request).map_err(|error| error.to_string())?,
-        OPENBITFUN_CONTROL_RESPONSE_TIMEOUT,
+        STARMATE_CONTROL_RESPONSE_TIMEOUT,
         "complete the presentation request",
     )
     .await
@@ -153,7 +153,7 @@ pub(crate) async fn dispatch_creation_runtime(
     dispatch_surface_event(
         "agentic://creation-runtime-request",
         json!({ "action": action, "commandId": command_id, "arguments": arguments.unwrap_or_else(|| json!({})) }),
-        OPENBITFUN_CONTROL_RESPONSE_TIMEOUT,
+        STARMATE_CONTROL_RESPONSE_TIMEOUT,
         "complete the Creation runtime request",
     )
     .await
@@ -231,7 +231,7 @@ async fn emit_applied(
         });
     }
     match emit_global_event(BackendEvent::Custom {
-        event_name: OPENBITFUN_CONTROL_APPLIED_EVENT.to_string(),
+        event_name: STARMATE_CONTROL_APPLIED_EVENT.to_string(),
         payload: json!({
             "capabilityId": capability_id,
             "operationId": operation_id,
@@ -312,7 +312,7 @@ async fn synchronize_required_effect(
         }));
     }
     dispatch_surface_event(
-        OPENBITFUN_CONTROL_EFFECT_EVENT,
+        STARMATE_CONTROL_EFFECT_EVENT,
         json!({
             "capabilityId": capability_id,
             "optionId": option_id,
@@ -320,7 +320,7 @@ async fn synchronize_required_effect(
             "value": value,
             "phase": phase,
         }),
-        OPENBITFUN_CONTROL_EFFECT_TIMEOUT,
+        STARMATE_CONTROL_EFFECT_TIMEOUT,
         "apply the required runtime effect",
     )
     .await

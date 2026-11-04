@@ -31,7 +31,7 @@ test('accepts the canonical product identity in supported casing and contracts',
     'OpenBitFun',
     'openBitFunTheme',
     'openbitfun',
-    'OPENBITFUN_USER_ROOT',
+    'STARMATE_USER_ROOT',
     '@starmate/ui',
     '.openbitfun/config',
     'openbitfun://runtime/',
@@ -311,7 +311,7 @@ test('keeps compile-time product identity reads in the canonical contract owner'
   const source = [
     'const PRODUCT_ID: &str = option_',
     'en',
-    'v!("OPENBITFUN_PRODUCT_ID").unwrap_or("openbitfun");',
+    'v!("STARMATE_PRODUCT_ID").unwrap_or("openbitfun");',
   ].join('');
   const violations = violationsFor(source, 'src/example.rs');
 

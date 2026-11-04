@@ -68,7 +68,7 @@ Never execute Cordis patches to discover custom persistence roots.
 ## Verification
 
 - `cargo test --locked -p openbitfun-dsh-adapter --lib session::tests`
-- Real installed-history check: set `DSH_HOME` and `OPENBITFUN_TEST_DSH_SESSION`, then
+- Real installed-history check: set `DSH_HOME` and `STARMATE_TEST_DSH_SESSION`, then
   `cargo test --locked -p openbitfun-dsh-adapter --lib inspect_installed_dsh_session_read_only -- --ignored --nocapture`.
 
 - `cargo test --locked -p openbitfun-dsh-adapter --lib mcp_source::tests`

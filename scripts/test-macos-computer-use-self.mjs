@@ -14,7 +14,7 @@ const run = (command, args, options = {}) => new Promise((resolve, reject) => {
   child.once('close', (code, signal) => code === 0 ? resolve(output) : reject(new Error(`${command} failed: code=${code} signal=${signal}`)));
 });
 const args = ['test', '--locked', '-p', 'starmate-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip'];
-let executable = process.env.OPENBITFUN_TEST_BINARY;
+let executable = process.env.STARMATE_TEST_BINARY;
 if (!executable) {
   const output = await run('cargo', [...args, '--no-run', '--message-format=json'], { stdio: ['ignore', 'pipe', 'inherit'] });
   executable = output.split('\n').filter(Boolean).map(line => JSON.parse(line))
@@ -22,7 +22,7 @@ if (!executable) {
   assert.ok(executable, 'Cargo must report the native harness executable');
 }
 await run(executable, [], {
-  env: { ...process.env, OPENBITFUN_CUA_SELF_TEST: '1' },
+  env: { ...process.env, STARMATE_CUA_SELF_TEST: '1' },
   timeout: 60_000,
   killSignal: 'SIGKILL',
 });

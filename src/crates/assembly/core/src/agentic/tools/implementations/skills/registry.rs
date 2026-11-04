@@ -31,9 +31,9 @@ use starmate_agent_runtime::skills::{
     filter_implicitly_invocable_skills, filter_user_invocable_skills, is_skill_globally_enabled,
     normalize_skill_keys, resolve_default_hidden_builtin_for_explicit_invocation,
     resolve_user_config_skill_root, resolve_visible_skills, sort_skill_candidates_by_dir,
-    sort_skills, ExplicitSkillInvocationResolution, SkillCandidate, OPENBITFUN_SKILL_SOURCE_ID,
-    OPENBITFUN_SKILL_SOURCE_LABEL, OPENBITFUN_SYSTEM_SKILL_DIR, OPENBITFUN_SYSTEM_SKILL_SLOT,
-    OPENBITFUN_USER_SKILL_SLOT, PROJECT_SKILL_KEY_PREFIX, PROJECT_SKILL_ROOTS,
+    sort_skills, ExplicitSkillInvocationResolution, SkillCandidate, STARMATE_SKILL_SOURCE_ID,
+    STARMATE_SKILL_SOURCE_LABEL, STARMATE_SYSTEM_SKILL_DIR, STARMATE_SYSTEM_SKILL_SLOT,
+    STARMATE_USER_SKILL_SLOT, PROJECT_SKILL_KEY_PREFIX, PROJECT_SKILL_ROOTS,
     USER_CONFIG_SKILL_ROOTS, USER_HOME_SKILL_ROOTS, USER_SKILL_KEY_PREFIX,
 };
 use starmate_services_core::bounded_fs::is_symlink_or_reparse;
@@ -971,9 +971,9 @@ impl SkillRegistry {
             SkillRootEntry {
                 path: path_manager.user_skills_dir(),
                 level: SkillLocation::User,
-                slot: OPENBITFUN_USER_SKILL_SLOT,
-                source_id: OPENBITFUN_SKILL_SOURCE_ID,
-                source_label: OPENBITFUN_SKILL_SOURCE_LABEL,
+                slot: STARMATE_USER_SKILL_SLOT,
+                source_id: STARMATE_SKILL_SOURCE_ID,
+                source_label: STARMATE_SKILL_SOURCE_LABEL,
                 priority: 0,
                 is_builtin: false,
             },
@@ -984,9 +984,9 @@ impl SkillRegistry {
         entries.push(SkillRootEntry {
             path: builtin_skills,
             level: SkillLocation::User,
-            slot: OPENBITFUN_SYSTEM_SKILL_SLOT,
-            source_id: OPENBITFUN_SKILL_SOURCE_ID,
-            source_label: OPENBITFUN_SKILL_SOURCE_LABEL,
+            slot: STARMATE_SYSTEM_SKILL_SLOT,
+            source_id: STARMATE_SKILL_SOURCE_ID,
+            source_label: STARMATE_SKILL_SOURCE_LABEL,
             priority,
             is_builtin: true,
         });

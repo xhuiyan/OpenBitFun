@@ -11,12 +11,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-const backgroundOnly = process.env.OPENBITFUN_E2E_BACKGROUND_ONLY === '1';
+const backgroundOnly = process.env.STARMATE_E2E_BACKGROUND_ONLY === '1';
 const root = await mkdtemp(path.join(tmpdir(), 'openbitfun-browser-sessions-'));
 const userRoot = path.join(root, 'user');
 const productHome = path.join(root, 'home');
 const frontend = path.join(root, 'frontend');
-const frontendSource = path.resolve(process.env.OPENBITFUN_E2E_FRONTEND_DIR || path.join(repo, 'dist'));
+const frontendSource = path.resolve(process.env.STARMATE_E2E_FRONTEND_DIR || path.join(repo, 'dist'));
 const manifest = await readFile(path.join(frontendSource, 'frontend-revision.json'), 'utf8');
 await cp(frontendSource, frontend, { recursive: true });
 assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'), 'utf8'), manifest,
@@ -24,7 +24,7 @@ assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'),
 await mkdir(userRoot, { recursive: true });
 await mkdir(productHome, { recursive: true });
 const binaryName = 'openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '');
-const binarySource = path.resolve(process.env.OPENBITFUN_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
+const binarySource = path.resolve(process.env.STARMATE_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
 const binary = path.join(root, binaryName);
 const before = await stat(binarySource);
 await cp(binarySource, binary);
@@ -113,11 +113,11 @@ fixtureUrl = `http://127.0.0.1:${fixture.address().port}`;
 const app = spawn(binary, [], {
   cwd: repo, windowsHide: true, stdio: ['ignore', log.fd, log.fd],
   env: { ...process.env,
-    OPENBITFUN_USER_ROOT: userRoot, OPENBITFUN_E2E_USER_ROOT: userRoot,
-    OPENBITFUN_HOME: productHome, OPENBITFUN_E2E_HOME: productHome,
-    OPENBITFUN_E2E_STORAGE_GUARD: '1', OPENBITFUN_E2E_PACKAGED_FRONTEND: '1',
-    OPENBITFUN_E2E_FRONTEND_DIR: frontend, OPENBITFUN_E2E_LOG_DIR: path.join(root, 'logs'),
-    OPENBITFUN_WEBDRIVER_PORT: String(port), OPENBITFUN_WEBDRIVER_LABEL: 'main',
+    STARMATE_USER_ROOT: userRoot, STARMATE_E2E_USER_ROOT: userRoot,
+    STARMATE_HOME: productHome, STARMATE_E2E_HOME: productHome,
+    STARMATE_E2E_STORAGE_GUARD: '1', STARMATE_E2E_PACKAGED_FRONTEND: '1',
+    STARMATE_E2E_FRONTEND_DIR: frontend, STARMATE_E2E_LOG_DIR: path.join(root, 'logs'),
+    STARMATE_WEBDRIVER_PORT: String(port), STARMATE_WEBDRIVER_LABEL: 'main',
     WEBVIEW2_USER_DATA_FOLDER: path.join(root, 'webview'),
   },
 });
@@ -360,7 +360,7 @@ try {
   fixture.closeAllConnections();
   await new Promise(resolve => fixture.close(resolve));
   await log.close();
-  if (process.env.OPENBITFUN_E2E_KEEP_SNAPSHOT !== '1') {
+  if (process.env.STARMATE_E2E_KEEP_SNAPSHOT !== '1') {
     await rm(binary, { force: true });
     await rm(frontend, { recursive: true, force: true });
   }

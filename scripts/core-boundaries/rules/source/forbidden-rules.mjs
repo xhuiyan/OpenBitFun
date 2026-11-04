@@ -3029,7 +3029,7 @@ export const forbiddenContentRules = [
     path: 'src/crates/assembly/core/src/agentic/tools/workspace_paths.rs',
     patterns: [
       {
-        regex: /\bpub const OPENBITFUN_RUNTIME_URI_PREFIX\b/,
+        regex: /\bpub const STARMATE_RUNTIME_URI_PREFIX\b/,
         message:
           'core workspace path facade must not redefine the runtime URI prefix; use starmate-agent-tools',
       },

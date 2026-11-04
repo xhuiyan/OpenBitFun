@@ -35,12 +35,12 @@ use super::remote_git::shell_quote_posix;
 use super::types::SSHCommandOptions;
 
 const GITHUB_RELEASE_BASE: &str = "https://github.com/GCWing/OpenBitFun/releases";
-const OPENBITFUN_RELEASE_BASE: &str = "https://openbitfun.com/release";
+const STARMATE_RELEASE_BASE: &str = "https://openbitfun.com/release";
 const GITHUB_LATEST_MANIFEST: &str =
     "https://github.com/GCWing/OpenBitFun/releases/latest/download/latest-v1.json";
-const OPENBITFUN_LATEST_MANIFEST: &str = "https://openbitfun.com/release/latest-v1.json";
+const STARMATE_LATEST_MANIFEST: &str = "https://openbitfun.com/release/latest-v1.json";
 const INSTALL_STEM: &str = "install-cli";
-const INSTALL_DONE_MARKER: &str = "OPENBITFUN_DISPATCH_CLI_INSTALL_DONE";
+const INSTALL_DONE_MARKER: &str = "STARMATE_DISPATCH_CLI_INSTALL_DONE";
 const INSTALL_PREPARE_GRACE_SECONDS: u64 = 30;
 const COMMAND_TIMEOUT_MS: u64 = 30_000;
 const ACCOUNT_DAEMON_COMMAND_TIMEOUT_MS: u64 = 90_000;
@@ -2240,11 +2240,11 @@ if command -v sha256sum >/dev/null 2>&1; then printf 'digest=sha256sum\n'
 elif command -v shasum >/dev/null 2>&1; then printf 'digest=shasum\n'
 else printf 'digest=\n'; fi
 if [ -x "$HOME/.local/bin/openbitfun" ]; then
-  OPENBITFUN_BIN="$HOME/.local/bin/openbitfun"
+  STARMATE_BIN="$HOME/.local/bin/openbitfun"
 else
-  OPENBITFUN_BIN="$(command -v openbitfun 2>/dev/null || true)"
+  STARMATE_BIN="$(command -v openbitfun 2>/dev/null || true)"
 fi
-printf 'cli=%s\n' "$OPENBITFUN_BIN"
+printf 'cli=%s\n' "$STARMATE_BIN"
 if [ "$(uname -s 2>/dev/null || true)" = "Linux" ]; then
   if ls /lib/ld-musl-* >/dev/null 2>&1 || ldd --version 2>&1 | head -n1 | grep -qi musl; then
     printf 'libc=musl\n'
@@ -2293,7 +2293,7 @@ fn release_sources(version: &str, filename: &str) -> Vec<ReleaseArtifactSource> 
         ),
         (
             ReleaseOrigin::OpenBitFun,
-            format!("{OPENBITFUN_RELEASE_BASE}/{version}"),
+            format!("{STARMATE_RELEASE_BASE}/{version}"),
         ),
     ]
     .into_iter()
@@ -2312,7 +2312,7 @@ fn release_sources(version: &str, filename: &str) -> Vec<ReleaseArtifactSource> 
 
 async fn fetch_latest_release_version(client: &reqwest::Client) -> Result<String> {
     let mut failures = Vec::new();
-    for manifest_url in [GITHUB_LATEST_MANIFEST, OPENBITFUN_LATEST_MANIFEST] {
+    for manifest_url in [GITHUB_LATEST_MANIFEST, STARMATE_LATEST_MANIFEST] {
         let text = match fetch_required_text(client, manifest_url).await {
             Ok(text) => text,
             Err(error) => {

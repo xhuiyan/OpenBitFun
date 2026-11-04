@@ -26,7 +26,7 @@ pub fn release_notice_required(mode: Option<&str>) -> bool {
 }
 
 fn legacy_requested() -> bool {
-    std::env::var("OPENBITFUN_ROUND_ROUTER_URL").is_ok_and(|value| !value.trim().is_empty())
+    std::env::var("STARMATE_ROUND_ROUTER_URL").is_ok_and(|value| !value.trim().is_empty())
 }
 
 pub fn require_available() -> StarMateResult<()> {
@@ -469,12 +469,12 @@ mod tests {
             "agentic::execution::round_model_routing::configuration::tests::smart_release_gate_fixture_child",
             "--ignored", "--nocapture",
         ])
-        .env("OPENBITFUN_SMART_RELEASE_GATE_FIXTURE", "1")
-        .env("OPENBITFUN_ROUND_ROUTER_URL", format!("http://{}/v1/chat/completions", listener.local_addr().unwrap()))
-        .env("OPENBITFUN_ROUND_ROUTER_MODEL", "synthetic-router")
-        .env("OPENBITFUN_ROUND_ROUTER_SUMMARY_ENABLED", "true")
-        .env("OPENBITFUN_ROUND_ROUTER_CONTEXT_WINDOW", "invalid-unread-settings")
-        .env("OPENBITFUN_ROUND_ROUTER_SUMMARY_MODEL", "synthetic-summary")
+        .env("STARMATE_SMART_RELEASE_GATE_FIXTURE", "1")
+        .env("STARMATE_ROUND_ROUTER_URL", format!("http://{}/v1/chat/completions", listener.local_addr().unwrap()))
+        .env("STARMATE_ROUND_ROUTER_MODEL", "synthetic-router")
+        .env("STARMATE_ROUND_ROUTER_SUMMARY_ENABLED", "true")
+        .env("STARMATE_ROUND_ROUTER_CONTEXT_WINDOW", "invalid-unread-settings")
+        .env("STARMATE_ROUND_ROUTER_SUMMARY_MODEL", "synthetic-summary")
         .output().unwrap();
         assert!(
             output.status.success(),
@@ -493,7 +493,7 @@ mod tests {
     async fn smart_release_gate_fixture_child() {
         assert!(!crate::service::config::GlobalConfigManager::is_initialized());
         assert_eq!(
-            std::env::var("OPENBITFUN_SMART_RELEASE_GATE_FIXTURE").unwrap(),
+            std::env::var("STARMATE_SMART_RELEASE_GATE_FIXTURE").unwrap(),
             "1"
         );
         assert!(!available());

@@ -49,7 +49,7 @@ pub(crate) fn miniapp_shell_call(request: Value) -> Result<Value, String> {
 /// storage while retaining the Runtime's existing per-session writer leases.
 pub(crate) fn host_channel() -> ipc::HostChannel {
     if cfg!(any(debug_assertions, feature = "devtools"))
-        && std::env::var("OPENBITFUN_DESKTOP_HOST_CHANNEL").as_deref() == Ok("development")
+        && std::env::var("STARMATE_DESKTOP_HOST_CHANNEL").as_deref() == Ok("development")
     {
         ipc::HostChannel::Development
     } else {

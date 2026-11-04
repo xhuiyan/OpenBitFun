@@ -88,8 +88,9 @@ impl EmbeddedRelayHost for DesktopEmbeddedRelayHost {
         // using exactly the same database schema and router as the official host.
         #[cfg(not(test))]
         let database_path = {
-            let root = std::env::var_os("OPENBITFUN_HOME")
-                .or_else(|| std::env::var_os("OPENBITFUN_E2E_HOME"))
+            let root = std::env::var_os("STARMATE_HOME")
+                .or_else(|| std::env::var_os("OPENBITFUN_HOME"))
+                .or_else(|| std::env::var_os("STARMATE_E2E_HOME"))
                 .map(std::path::PathBuf::from)
                 .filter(|path| !path.as_os_str().is_empty())
                 .or_else(|| {

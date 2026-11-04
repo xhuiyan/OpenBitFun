@@ -22,20 +22,20 @@
 # Host-specific paths and mirror configuration belong to your deployment.
 #
 # Optional immediate trigger. The release workflow POSTs to
-# ${OPENBITFUN_SYNC_WEBHOOK_URL} once assets are published (see the "Request
+# ${STARMATE_SYNC_WEBHOOK_URL} once assets are published (see the "Request
 # openbitfun mirror sync" step in .github/workflows/desktop-package.yml) so a
 # new release reaches the mirror in a couple of minutes rather than up to ten.
 # Point that secret at any receiver that runs this script, for example:
 #
 #   while true; do
 #     nc -l -p 8787 -q 1 >/dev/null \
-#       && OPENBITFUN_RELEASE_CHANNEL=stable \
+#       && STARMATE_RELEASE_CHANNEL=stable \
 #            /root/repos/OpenBitFun/scripts/openbitfun-release-sync.sh \
 #            >> /var/log/openbitfun-release-sync.log 2>&1
 #   done
 #
 # The current production origin is cron-only. Do not invent a detached webhook
-# listener unless OPENBITFUN_SYNC_WEBHOOK_URL is actually configured.
+# listener unless STARMATE_SYNC_WEBHOOK_URL is actually configured.
 #
 # Cron stays the source of truth: this script is idempotent and holds a flock,
 # so a webhook run and a cron run cannot collide and a missed webhook only costs
@@ -44,7 +44,7 @@
 set -euo pipefail
 
 # ── Configuration ──────────────────────────────────────────────
-RELEASE_CHANNEL="${OPENBITFUN_RELEASE_CHANNEL:-stable}"
+RELEASE_CHANNEL="${STARMATE_RELEASE_CHANNEL:-stable}"
 case "$RELEASE_CHANNEL" in
   stable)
     CHANNEL_PATH=""
@@ -55,14 +55,14 @@ case "$RELEASE_CHANNEL" in
     GITHUB_RELEASE_ROOT="https://github.com/GCWing/OpenBitFun/releases/download/channel-v1-beta"
     ;;
   *)
-    echo "Unsupported OPENBITFUN_RELEASE_CHANNEL: $RELEASE_CHANNEL" >&2
+    echo "Unsupported STARMATE_RELEASE_CHANNEL: $RELEASE_CHANNEL" >&2
     exit 1
     ;;
 esac
 GITHUB_LATEST_JSON_URL="${GITHUB_RELEASE_ROOT}/latest-v1.json"
 GITHUB_LINUX_BINARIES_URL="${GITHUB_RELEASE_ROOT}/linux-binaries-v1.json"
 GITHUB_RELAY_IMAGE_URL="${GITHUB_RELEASE_ROOT}/relay-image.json"
-OPENBITFUN_BASE_URL="https://openbitfun.com/release${CHANNEL_PATH}"
+STARMATE_BASE_URL="https://openbitfun.com/release${CHANNEL_PATH}"
 # The mirror deliberately lives outside the website checkout. It used to be
 # OpenBitFun-Website/dist/release, but `npm run build` empties dist/, so every
 # website deploy silently deleted the mirrored installers and manifests —
@@ -71,8 +71,8 @@ OPENBITFUN_BASE_URL="https://openbitfun.com/release${CHANNEL_PATH}"
 WEBSITE_RELEASE_ROOT="${WEBSITE_RELEASE_DIR:-/srv/openbitfun-release}"
 WEBSITE_RELEASE_DIR="${WEBSITE_RELEASE_ROOT}${CHANNEL_PATH}"
 # Keep the lock off the Nginx /release/ alias. Override with
-# OPENBITFUN_RELEASE_SYNC_LOCK if a host must share a lock across checkouts.
-LOCK_FILE="${OPENBITFUN_RELEASE_SYNC_LOCK:-/var/lock/openbitfun-release-sync.lock}"
+# STARMATE_RELEASE_SYNC_LOCK if a host must share a lock across checkouts.
+LOCK_FILE="${STARMATE_RELEASE_SYNC_LOCK:-/var/lock/openbitfun-release-sync.lock}"
 WINDOWS_INSTALLER_FILENAME="openbitfun-installer.exe"
 WINDOWS_INSTALLER_URL=""
 WINDOWS_INSTALLER_SIGNATURE_URL=""
@@ -181,7 +181,7 @@ write_website_download_manifest() {
   "$PYTHON" - \
     "${VERSION_DIR}/latest-v1.json" \
     "$output_tmp" \
-    "$OPENBITFUN_BASE_URL" \
+    "$STARMATE_BASE_URL" \
     "$WINDOWS_INSTALLER_FILENAME" <<'PY'
 import json, sys
 
@@ -356,7 +356,7 @@ PY
     cut -f2 <<< "$LINUX_ASSET_LIST" | verify_mirrored_checksums || exit 1
 
     "$PYTHON" - "$LINUX_MANIFEST_TMP" "${VERSION_DIR}/linux-binaries-v1.json" \
-      "$OPENBITFUN_BASE_URL" <<'PY'
+      "$STARMATE_BASE_URL" <<'PY'
 import json, sys
 source, dest, base = sys.argv[1:]
 with open(source, encoding="utf-8") as f:
@@ -651,7 +651,7 @@ for target, entry in data.get('manual_installers', {}).items():
 import sys, json
 data = json.load(sys.stdin)
 version = data['version']
-base = '${OPENBITFUN_BASE_URL}/' + version
+base = '${STARMATE_BASE_URL}/' + version
 for p, info in data.get('platforms', {}).items():
     fname = info['url'].split('/')[-1]
     info['url'] = base + '/' + fname

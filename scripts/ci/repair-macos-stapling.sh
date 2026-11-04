@@ -4,9 +4,9 @@ source "$(dirname "$0")/macos-ticket-network.sh"
 
 target="${1:?usage: repair-macos-stapling.sh <target-triple>}"
 [[ "$target" == x86_64-apple-darwin || "$target" == aarch64-apple-darwin ]] || exit 1
-test "${OPENBITFUN_APPLE_SIGNING_CONFIGURED:-false}" = true
-test -n "${OPENBITFUN_SIGNING_KEY:-}"
-test -n "${OPENBITFUN_SIGNING_PUBKEY:-}"
+test "${STARMATE_APPLE_SIGNING_CONFIGURED:-false}" = true
+test -n "${STARMATE_SIGNING_KEY:-}"
+test -n "${STARMATE_SIGNING_PUBKEY:-}"
 bundle="target/$target/release/bundle"
 app="$bundle/macos/StarMate.app"
 updater="$app.tar.gz"

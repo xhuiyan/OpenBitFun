@@ -94,13 +94,13 @@ jobs:
       - name: Sign and verify with the independent Data Tools release key
         shell: bash
         env:
-          OPENBITFUN_SIGNING_KEY: ${{ secrets.DATA_TOOLS_SIGNING_PRIVATE_KEY }}
-          OPENBITFUN_SIGNING_PASSWORD: ${{ secrets.DATA_TOOLS_SIGNING_PRIVATE_KEY_PASSWORD }}
-          OPENBITFUN_SIGNING_PUBKEY: ${{ secrets.DATA_TOOLS_SIGNING_PUBKEY }}
+          STARMATE_SIGNING_KEY: ${{ secrets.DATA_TOOLS_SIGNING_PRIVATE_KEY }}
+          STARMATE_SIGNING_PASSWORD: ${{ secrets.DATA_TOOLS_SIGNING_PRIVATE_KEY_PASSWORD }}
+          STARMATE_SIGNING_PUBKEY: ${{ secrets.DATA_TOOLS_SIGNING_PUBKEY }}
         run: |
           set -euo pipefail
-          test -n "$OPENBITFUN_SIGNING_KEY"
-          test -n "$OPENBITFUN_SIGNING_PUBKEY"
+          test -n "$STARMATE_SIGNING_KEY"
+          test -n "$STARMATE_SIGNING_PUBKEY"
           cat data-tools-release-assets/*.sha256 | sort -k2 > data-tools-release-assets/SHA256SUMS
           (cd data-tools-release-assets && sha256sum --check SHA256SUMS)
           bash scripts/sign-release-assets.sh data-tools-release-assets/*

@@ -125,7 +125,7 @@ mod tests {
     #[ignore = "Creates short-lived authorization flows against the real vendor APIs; no account is authorized or stored"]
     async fn live_browser_authorization_endpoints() {
         use super::super::{zcode, SubscriptionHttpOptions, SubscriptionProvider};
-        let proxy = std::env::var("OPENBITFUN_LIVE_SUBSCRIPTION_PROXY")
+        let proxy = std::env::var("STARMATE_LIVE_SUBSCRIPTION_PROXY")
             .ok()
             .map(|url| crate::types::ProxyConfig {
                 enabled: true,

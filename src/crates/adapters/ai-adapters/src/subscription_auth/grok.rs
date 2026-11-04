@@ -597,14 +597,14 @@ mod tests {
     #[tokio::test]
     #[ignore = "Reads the selected OpenBitFun Grok account's catalog from official xAI services; no inference requests"]
     async fn live_grok_model_catalog() {
-        let slot = std::env::var("OPENBITFUN_LIVE_GROK_ACCOUNT")
+        let slot = std::env::var("STARMATE_LIVE_GROK_ACCOUNT")
             .expect("select an exact in-app account slot");
         super::super::accounts::validate_account_id(
             super::super::SubscriptionProvider::Grok,
             &slot,
         )
         .unwrap();
-        let proxy = std::env::var("OPENBITFUN_LIVE_SUBSCRIPTION_PROXY")
+        let proxy = std::env::var("STARMATE_LIVE_SUBSCRIPTION_PROXY")
             .ok()
             .map(|url| crate::types::ProxyConfig {
                 enabled: true,

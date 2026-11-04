@@ -23,7 +23,7 @@ use starmate_product_domains::canvas::types::{
     CanvasSource,
 };
 use starmate_product_domains::canvas::{
-    OPENBITFUN_CANVAS_RUNTIME_VERSION, OPENBITFUN_CANVAS_SDK_VERSION,
+    STARMATE_CANVAS_RUNTIME_VERSION, STARMATE_CANVAS_SDK_VERSION,
 };
 
 pub use html::compile_canvas_html;
@@ -46,8 +46,8 @@ pub fn compile_canvas_source(source: &CanvasSource, compiled_at: i64) -> CanvasC
             let payload = CanvasCompiledPayload {
                 canvas_id: source.canvas_id.clone(),
                 source_revision: source.revision.clone(),
-                sdk_version: OPENBITFUN_CANVAS_SDK_VERSION.to_string(),
-                runtime_version: OPENBITFUN_CANVAS_RUNTIME_VERSION.to_string(),
+                sdk_version: STARMATE_CANVAS_SDK_VERSION.to_string(),
+                runtime_version: STARMATE_CANVAS_RUNTIME_VERSION.to_string(),
                 content_hash: stable_content_hash(&html),
                 html,
                 diagnostics: diagnostics.clone(),

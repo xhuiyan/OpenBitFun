@@ -124,9 +124,9 @@ pub struct HttpRoundModelRouterConfig {
 impl HttpRoundModelRouterConfig {
     /// Build opt-in configuration from process environment.
     ///
-    /// Routing remains disabled unless `OPENBITFUN_ROUND_ROUTER_URL` is set.
+    /// Routing remains disabled unless `STARMATE_ROUND_ROUTER_URL` is set.
     pub fn from_env() -> StarMateResult<Option<Self>> {
-        let Some(endpoint) = std::env::var("OPENBITFUN_ROUND_ROUTER_URL")
+        let Some(endpoint) = std::env::var("STARMATE_ROUND_ROUTER_URL")
             .ok()
             .map(|value| value.trim().to_string())
             .filter(|value| !value.is_empty())
@@ -135,15 +135,15 @@ impl HttpRoundModelRouterConfig {
         };
         if !endpoint.starts_with("http://") && !endpoint.starts_with("https://") {
             return Err(StarMateError::Configuration(
-                "OPENBITFUN_ROUND_ROUTER_URL must be an http(s) URL".to_string(),
+                "STARMATE_ROUND_ROUTER_URL must be an http(s) URL".to_string(),
             ));
         }
 
-        let prompt_path = std::env::var("OPENBITFUN_ROUND_ROUTER_PROMPT")
+        let prompt_path = std::env::var("STARMATE_ROUND_ROUTER_PROMPT")
             .map(PathBuf::from)
             .map_err(|_| {
                 StarMateError::Configuration(
-                    "OPENBITFUN_ROUND_ROUTER_PROMPT is required when routing is enabled"
+                    "STARMATE_ROUND_ROUTER_PROMPT is required when routing is enabled"
                         .to_string(),
                 )
             })?;
@@ -154,40 +154,40 @@ impl HttpRoundModelRouterConfig {
                 error
             ))
         })?;
-        let timeout_ms = parse_env_usize("OPENBITFUN_ROUND_ROUTER_TIMEOUT_MS", 10_000)?;
-        let recent_rounds = parse_env_usize("OPENBITFUN_ROUND_ROUTER_RECENT_ROUNDS", 3)?;
-        let simple_threshold = parse_env_f64("OPENBITFUN_ROUND_ROUTER_SIMPLE_THRESHOLD", 0.75)?;
+        let timeout_ms = parse_env_usize("STARMATE_ROUND_ROUTER_TIMEOUT_MS", 10_000)?;
+        let recent_rounds = parse_env_usize("STARMATE_ROUND_ROUTER_RECENT_ROUNDS", 3)?;
+        let simple_threshold = parse_env_f64("STARMATE_ROUND_ROUTER_SIMPLE_THRESHOLD", 0.75)?;
         if recent_rounds == 0 {
             return Err(StarMateError::Configuration(
-                "OPENBITFUN_ROUND_ROUTER_RECENT_ROUNDS must be positive".to_string(),
+                "STARMATE_ROUND_ROUTER_RECENT_ROUNDS must be positive".to_string(),
             ));
         }
         if !(0.0..=1.0).contains(&simple_threshold) {
             return Err(StarMateError::Configuration(
-                "OPENBITFUN_ROUND_ROUTER_SIMPLE_THRESHOLD must be between 0 and 1".to_string(),
+                "STARMATE_ROUND_ROUTER_SIMPLE_THRESHOLD must be between 0 and 1".to_string(),
             ));
         }
 
         Ok(Some(Self {
             endpoint,
             protocol: RouterProtocol::OpenAiLogprobs,
-            model: std::env::var("OPENBITFUN_ROUND_ROUTER_MODEL")
+            model: std::env::var("STARMATE_ROUND_ROUTER_MODEL")
                 .ok()
                 .filter(|value| !value.trim().is_empty())
                 .unwrap_or_else(|| "router-best".to_string()),
             system_prompt,
-            api_key: std::env::var("OPENBITFUN_ROUND_ROUTER_API_KEY")
+            api_key: std::env::var("STARMATE_ROUND_ROUTER_API_KEY")
                 .ok()
                 .filter(|value| !value.trim().is_empty()),
             timeout: Duration::from_millis(timeout_ms as u64),
             admission: RouterAdmissionLimits::from_env()?,
             recent_rounds,
             simple_threshold,
-            trace_path: std::env::var("OPENBITFUN_ROUND_ROUTER_TRACE")
+            trace_path: std::env::var("STARMATE_ROUND_ROUTER_TRACE")
                 .ok()
                 .map(PathBuf::from),
             context: RouterContextConfig::from_env()?,
-            tokenizer_path: std::env::var_os("OPENBITFUN_ROUND_ROUTER_TOKENIZER_PATH")
+            tokenizer_path: std::env::var_os("STARMATE_ROUND_ROUTER_TOKENIZER_PATH")
                 .filter(|value| !value.to_string_lossy().trim().is_empty())
                 .map(PathBuf::from),
             proxy: None,

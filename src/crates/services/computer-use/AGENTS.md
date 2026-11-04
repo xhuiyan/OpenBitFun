@@ -260,7 +260,7 @@ before choosing another action; the probe never retries input automatically.
 ```bash
 cargo test -p openbitfun-desktop --features devtools --test computer_use_native_roundtrip --no-run --message-format=json
 # Use the executable path emitted above; EOF or the total deadline stops control.
-OPENBITFUN_CUA_PROBE_PID=<pid> OPENBITFUN_CUA_PROBE_OUTPUT_DIR=/tmp/cua-probe <executable>
+STARMATE_CUA_PROBE_PID=<pid> STARMATE_CUA_PROBE_OUTPUT_DIR=/tmp/cua-probe <executable>
 # stdin JSONL: {"id":"observe","input":{"action":"get_app_state","include_image":true}}
 cargo test -p openbitfun-desktop --features devtools --lib native_control_roundtrip::probe
 # Independent read-only witness; no app launch, permission prompts or input.

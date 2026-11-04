@@ -25,7 +25,7 @@ describe('FrontendLogLevelSync startup privacy', () => {
   beforeEach(() => {
     vi.resetModules();
     vi.resetAllMocks();
-    vi.stubGlobal('__OPENBITFUN_BOOTSTRAP_LOG_LEVEL__', 'trace');
+    vi.stubGlobal('__STARMATE_BOOTSTRAP_LOG_LEVEL__', 'trace');
     vi.stubGlobal('requestAnimationFrame', () => 1);
     vi.stubGlobal('cancelAnimationFrame', () => {});
   });

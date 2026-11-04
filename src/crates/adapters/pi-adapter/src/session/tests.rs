@@ -253,7 +253,7 @@ fn inspect_installed_pi() {
     let reader = PiSessionReader::default();
     let catalog = reader.discover_all().unwrap();
     assert!(catalog.diagnostics.is_empty(), "{:?}", catalog.diagnostics);
-    let expected = std::env::var("OPENBITFUN_TEST_PI_SESSION").ok();
+    let expected = std::env::var("STARMATE_TEST_PI_SESSION").ok();
     let mut counts = (0, 0, 0);
     for candidate in catalog.candidates.iter().filter(|candidate| {
         expected

@@ -885,8 +885,8 @@ fn local_recursive_delete_fallback_finds_protected_descendant() {
 #[ignore = "requires explicit archived input and report paths"]
 fn complete_shell_archive_replay() {
     use tool_runtime::shell_analysis::analyze;
-    let input = std::env::var("OPENBITFUN_SHELL_REPLAY_INPUT").expect("input JSONL path");
-    let output = std::env::var("OPENBITFUN_SHELL_REPLAY_OUTPUT").expect("output report path");
+    let input = std::env::var("STARMATE_SHELL_REPLAY_INPUT").expect("input JSONL path");
+    let output = std::env::var("STARMATE_SHELL_REPLAY_OUTPUT").expect("output report path");
     let source = fs::read_to_string(input).unwrap();
     let mut rows = vec![];
     for line in source.lines() {
@@ -937,8 +937,8 @@ fn complete_shell_archive_replay() {
 #[ignore = "requires explicit non-failure sample paths; pure analysis only"]
 fn complete_shell_normal_sample_replay() {
     let source =
-        fs::read_to_string(std::env::var("OPENBITFUN_SHELL_NORMAL_INPUT").unwrap()).unwrap();
-    let output = std::env::var("OPENBITFUN_SHELL_NORMAL_OUTPUT").unwrap();
+        fs::read_to_string(std::env::var("STARMATE_SHELL_NORMAL_INPUT").unwrap()).unwrap();
+    let output = std::env::var("STARMATE_SHELL_NORMAL_OUTPUT").unwrap();
     let mut rows = vec![];
     for line in source.lines() {
         let row: Value = serde_json::from_str(line).unwrap();

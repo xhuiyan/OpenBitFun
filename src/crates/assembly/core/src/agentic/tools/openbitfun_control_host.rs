@@ -9,21 +9,21 @@ pub use starmate_product_domains::product_control::{
     ProductControlRequest as OpenBitFunControlHostRequest, ProductControlSource,
 };
 
-static OPENBITFUN_CONTROL_PORT: OnceLock<Arc<dyn ProductControlPort>> = OnceLock::new();
+static STARMATE_CONTROL_PORT: OnceLock<Arc<dyn ProductControlPort>> = OnceLock::new();
 
 /// Register the product adapter. The first registered host owns the process.
 pub fn set_openbitfun_control_port(port: Arc<dyn ProductControlPort>) {
-    let _ = OPENBITFUN_CONTROL_PORT.set(port);
+    let _ = STARMATE_CONTROL_PORT.set(port);
 }
 
 pub fn openbitfun_control_host_available() -> bool {
-    OPENBITFUN_CONTROL_PORT.get().is_some()
+    STARMATE_CONTROL_PORT.get().is_some()
 }
 
 pub async fn invoke_openbitfun_control(
     request: OpenBitFunControlHostRequest,
 ) -> Result<Value, String> {
-    let Some(port) = OPENBITFUN_CONTROL_PORT.get() else {
+    let Some(port) = STARMATE_CONTROL_PORT.get() else {
         return Err("OpenBitFunControl host is not available on this product surface".to_string());
     };
     port.invoke(request).await

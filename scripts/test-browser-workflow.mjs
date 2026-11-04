@@ -58,17 +58,17 @@ try {
   const testName = 'agentic::tools::implementations::control_hub_tool::browser_workflow_tests::real_browser_workflow';
   const args = ['--ignored', '--exact', testName, '--nocapture'];
   const exitCode = await new Promise((resolve, reject) => {
-    const child = spawn(process.env.OPENBITFUN_TEST_BINARY || 'cargo', process.env.OPENBITFUN_TEST_BINARY ? args : [
+    const child = spawn(process.env.STARMATE_TEST_BINARY || 'cargo', process.env.STARMATE_TEST_BINARY ? args : [
       'test', '-p', 'starmate-core', '--no-default-features', '--features',
       'agent-runtime,tools-browser-web,tools-computer-use,git', '--lib', 'real_browser_workflow', '--', ...args,
     ], {
       cwd: root, stdio: 'inherit', windowsHide: true,
       env: {
         ...process.env,
-        OPENBITFUN_BROWSER_TEST_WS: browser.wsEndpoint(),
-        OPENBITFUN_BROWSER_TEST_PORT: new URL(browser.wsEndpoint()).port,
-        OPENBITFUN_OTHER_BROWSER_TEST_PORT: new URL(otherBrowser.wsEndpoint()).port,
-        OPENBITFUN_BROWSER_TEST_URL: `http://127.0.0.1:${server.address().port}/`,
+        STARMATE_BROWSER_TEST_WS: browser.wsEndpoint(),
+        STARMATE_BROWSER_TEST_PORT: new URL(browser.wsEndpoint()).port,
+        STARMATE_OTHER_BROWSER_TEST_PORT: new URL(otherBrowser.wsEndpoint()).port,
+        STARMATE_BROWSER_TEST_URL: `http://127.0.0.1:${server.address().port}/`,
       },
     });
     child.on('error', reject);

@@ -25,8 +25,8 @@ const retiredProductToken = `${'bit'}${'fun'}`;
 const shortPrefix = `${'b'}${'f'}`;
 const productIdentityOwner = 'src/crates/contracts/core-types/src/product_identity.rs';
 const retiredIdentityDataBoundaryFiles = new Set([
-  'OPENBITFUN_LEGACY_DATA_MIGRATION_IMPLEMENTATION_PLAN.md',
-  'OPENBITFUN_LEGACY_DATA_MIGRATION_INVENTORY.md',
+  'STARMATE_LEGACY_DATA_MIGRATION_IMPLEMENTATION_PLAN.md',
+  'STARMATE_LEGACY_DATA_MIGRATION_INVENTORY.md',
   'deploy/market-data-migration/migrate-market-data-v1.py',
   // Offline recovery must recognize the pre-rename assistant data location.
   'scripts/recovery/repair-session-storage.py',
@@ -52,7 +52,7 @@ const retiredIdentityDataBoundaryPrefixes = Object.freeze([
   'scripts/fixtures/legacy-update-feeds/',
 ]);
 const noncanonicalIdentityDataBoundaryFiles = new Set([
-  'OPENBITFUN_LEGACY_DATA_MIGRATION_INVENTORY.md',
+  'STARMATE_LEGACY_DATA_MIGRATION_INVENTORY.md',
   'deploy/market-data-migration/migrate-market-data-v1.py',
 ]);
 
@@ -156,7 +156,7 @@ const identityRules = Object.freeze([
   Object.freeze({
     id: 'duplicate-product-identity-owner',
     description: 'product identity compile-time environment read outside the canonical owner',
-    pattern: /\b(?:option_)?env!\s*\(\s*["']OPENBITFUN_(?:PRODUCT_ID|DATA_NAMESPACE|HIDDEN_DATA_DIRECTORY)["']\s*\)/gu,
+    pattern: /\b(?:option_)?env!\s*\(\s*["']STARMATE_(?:PRODUCT_ID|DATA_NAMESPACE|HIDDEN_DATA_DIRECTORY)["']\s*\)/gu,
     allowedFiles: new Set([productIdentityOwner]),
   }),
   Object.freeze({

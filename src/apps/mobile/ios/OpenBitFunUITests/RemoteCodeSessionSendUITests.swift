@@ -313,9 +313,9 @@ final class RemoteAccountWorkflowPerformanceUITests: XCTestCase {
 
     func testLoginDeviceWorkspaceSessionSwitchAndSend() throws {
         let environment = ProcessInfo.processInfo.environment
-        guard let username = environment["OPENBITFUN_E2E_USERNAME"], !username.isEmpty,
-              let password = environment["OPENBITFUN_E2E_PASSWORD"], !password.isEmpty else {
-            throw XCTSkip("Set OPENBITFUN_E2E_USERNAME and OPENBITFUN_E2E_PASSWORD to run the real relay workflow.")
+        guard let username = environment["STARMATE_E2E_USERNAME"], !username.isEmpty,
+              let password = environment["STARMATE_E2E_PASSWORD"], !password.isEmpty else {
+            throw XCTSkip("Set STARMATE_E2E_USERNAME and STARMATE_E2E_PASSWORD to run the real relay workflow.")
         }
 
         let sidebarAlreadyOpen = try signIn(username: username, password: password)
@@ -1454,9 +1454,9 @@ final class RemoteTimelineScrollProbeUITests: XCTestCase {
 /// ordinary test runs skip it and never choose a user's device implicitly.
 final class RemoteTerminalLiveUITests: XCTestCase {
     func testNativeTerminalInputAndClose() throws {
-        let target = ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_TERMINAL_DEVICE"] ?? ""
-        try XCTSkipIf(target.isEmpty, "Set OPENBITFUN_LIVE_TERMINAL_DEVICE to an authorized test desktop.")
-        let sshName = ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_TERMINAL_SSH"] ?? ""
+        let target = ProcessInfo.processInfo.environment["STARMATE_LIVE_TERMINAL_DEVICE"] ?? ""
+        try XCTSkipIf(target.isEmpty, "Set STARMATE_LIVE_TERMINAL_DEVICE to an authorized test desktop.")
+        let sshName = ProcessInfo.processInfo.environment["STARMATE_LIVE_TERMINAL_SSH"] ?? ""
         continueAfterFailure = false
         let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
         app.launch()
@@ -1493,7 +1493,7 @@ final class RemoteTerminalLiveUITests: XCTestCase {
         XCTAssertTrue(terminalTab.waitForExistence(timeout: 20)); terminalTab.tap()
         let openTerminal = app.buttons["device.tools.openTerminal"]
         XCTAssertTrue(openTerminal.waitForExistence(timeout: 20))
-        if ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_TOOLS_TABS_ONLY"] == "1" {
+        if ProcessInfo.processInfo.environment["STARMATE_LIVE_TOOLS_TABS_ONLY"] == "1" {
             XCTAssertTrue(terminalTab.isSelected)
             let filesTab = app.buttons["device.tools.panel.files"]
             filesTab.tap()
@@ -1503,7 +1503,7 @@ final class RemoteTerminalLiveUITests: XCTestCase {
             XCTAssertTrue(openTerminal.waitForExistence(timeout: 10))
             XCTAssertTrue(terminalTab.isSelected)
             XCTAssertFalse(app.textViews["Terminal input"].exists)
-            if ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_TOOLS_ROTATE"] == "1" {
+            if ProcessInfo.processInfo.environment["STARMATE_LIVE_TOOLS_ROTATE"] == "1" {
                 defer { XCUIDevice.shared.orientation = .portrait }
                 XCUIDevice.shared.orientation = .landscapeLeft
                 XCTAssertTrue(openTerminal.waitForExistence(timeout: 15))
@@ -1554,7 +1554,7 @@ final class RemoteTerminalLiveUITests: XCTestCase {
 /// and a fresh temporary destination; the host rejects overwriting an old file.
 final class RemoteHomeLiveUITests: XCTestCase {
     func testSelectedDeviceHomeAndSidebar() throws {
-        let target = ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_FILE_DEVICE"] ?? ""
+        let target = ProcessInfo.processInfo.environment["STARMATE_LIVE_FILE_DEVICE"] ?? ""
         try XCTSkipIf(target.isEmpty, "Supply an authorized device.")
         continueAfterFailure = false
         let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
@@ -1567,7 +1567,7 @@ final class RemoteHomeLiveUITests: XCTestCase {
         expectation(for: NSPredicate { object, _ in (object as? XCUIElement)?.isEnabled == true }, evaluatedWith: tools)
         waitForExpectations(timeout: 30)
         let drawer = XCTAttachment(screenshot: app.screenshot()); drawer.name = "LiveSelectedDeviceSidebar"; drawer.lifetime = .keepAlways; add(drawer)
-        if ProcessInfo.processInfo.environment["OPENBITFUN_LIVE_HEALTH_OUTAGE"] == "1" {
+        if ProcessInfo.processInfo.environment["STARMATE_LIVE_HEALTH_OUTAGE"] == "1" {
             let connectedValue = device.value as? String
             XCTAssertNotNil(connectedValue)
             print("LIVE_HEALTH_READY_FOR_HOST_PAUSE")
@@ -1597,8 +1597,8 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
     func testCreateFileFromDeviceToolsWithKeyboardOpen() throws {
         XCUIDevice.shared.orientation = .portrait
         let environment = ProcessInfo.processInfo.environment
-        let target = environment["OPENBITFUN_LIVE_FILE_DEVICE"] ?? ""
-        let path = environment["OPENBITFUN_LIVE_FILE_PATH"] ?? ""
+        let target = environment["STARMATE_LIVE_FILE_DEVICE"] ?? ""
+        let path = environment["STARMATE_LIVE_FILE_PATH"] ?? ""
         try XCTSkipIf(target.isEmpty || path.isEmpty, "Supply an authorized device and fresh temporary file path.")
         continueAfterFailure = false
         let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
@@ -1615,7 +1615,7 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
         XCTAssertTrue(device.waitForExistence(timeout: 30)); expectation(for: hittable, evaluatedWith: device); waitForExpectations(timeout: 15); device.tap()
         let tools = app.buttons["sidebar.deviceTools"]
         expectation(for: NSPredicate { object, _ in (object as? XCUIElement)?.isEnabled == true }, evaluatedWith: tools); waitForExpectations(timeout: 30); tools.tap()
-        let sshName = environment["OPENBITFUN_LIVE_FILE_SSH"] ?? ""
+        let sshName = environment["STARMATE_LIVE_FILE_SSH"] ?? ""
         if !sshName.isEmpty {
             let location = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "受控设备本机")).firstMatch
             XCTAssertTrue(location.waitForExistence(timeout: 20)); location.tap()
@@ -1626,7 +1626,7 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
         let create = app.buttons["file.browser.create"]
         XCTAssertTrue(create.waitForExistence(timeout: 30)); expectation(for: NSPredicate { object, _ in (object as? XCUIElement)?.isEnabled == true }, evaluatedWith: create); waitForExpectations(timeout: 30)
         let listing = XCTAttachment(screenshot: app.screenshot()); listing.name = "LiveFileListing"; listing.lifetime = .keepAlways; add(listing)
-        let editRelativePath = environment["OPENBITFUN_LIVE_FILE_EDIT_RELATIVE_PATH"] ?? ""
+        let editRelativePath = environment["STARMATE_LIVE_FILE_EDIT_RELATIVE_PATH"] ?? ""
         if !editRelativePath.isEmpty {
             defer { XCUIDevice.shared.orientation = .portrait }
             app.buttons["文件排序"].tap()
@@ -1668,7 +1668,7 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
             XCTAssertTrue(create.waitForExistence(timeout: 10))
             return
         }
-        if environment["OPENBITFUN_LIVE_FILE_DOWNLOAD"] == "1" {
+        if environment["STARMATE_LIVE_FILE_DOWNLOAD"] == "1" {
             let components = path.split(separator: "/").map(String.init)
             for component in components.dropLast() {
                 let folder = app.buttons[component].firstMatch
@@ -1693,8 +1693,8 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
             waitForExpectations(timeout: 30)
             return
         }
-        let verifyUploadCancel = environment["OPENBITFUN_LIVE_FILE_UPLOAD_CANCEL"] == "1"
-        let uploadSource = environment["OPENBITFUN_LIVE_FILE_UPLOAD_SOURCE"] ?? ""
+        let verifyUploadCancel = environment["STARMATE_LIVE_FILE_UPLOAD_CANCEL"] == "1"
+        let uploadSource = environment["STARMATE_LIVE_FILE_UPLOAD_SOURCE"] ?? ""
         create.tap(); app.buttons[(verifyUploadCancel || !uploadSource.isEmpty) ? "上传文件" : "新建文件"].tap()
         let input = app.textFields["file.action.name"]
         XCTAssertTrue(input.waitForExistence(timeout: 10)); input.tap(); input.typeText(path)
@@ -1731,10 +1731,10 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
 final class RemoteMailboxLiveUITests: XCTestCase {
     func testQuestionRoundTrip() throws {
         let env = ProcessInfo.processInfo.environment
-        let permissionReply = env["OPENBITFUN_LIVE_MAILBOX_PERMISSION_REPLY"]
-        let title = env["OPENBITFUN_LIVE_MAILBOX_TITLE"] ?? ""
-        let deviceID = env["OPENBITFUN_LIVE_FILE_DEVICE"] ?? ""
-        let workspacePath = env["OPENBITFUN_LIVE_MAILBOX_WORKSPACE"] ?? ""
+        let permissionReply = env["STARMATE_LIVE_MAILBOX_PERMISSION_REPLY"]
+        let title = env["STARMATE_LIVE_MAILBOX_TITLE"] ?? ""
+        let deviceID = env["STARMATE_LIVE_FILE_DEVICE"] ?? ""
+        let workspacePath = env["STARMATE_LIVE_MAILBOX_WORKSPACE"] ?? ""
         try XCTSkipIf(title.isEmpty || deviceID.isEmpty || workspacePath.isEmpty, "Supply the authorized test conversation title.")
         continueAfterFailure = false
         let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
@@ -1752,29 +1752,29 @@ final class RemoteMailboxLiveUITests: XCTestCase {
         XCTAssertTrue(device.waitForExistence(timeout: 30))
         if !device.isHittable { sidebar.tap() }
         expectation(for: hittable, evaluatedWith: device); waitForExpectations(timeout: 30); device.tap()
-        let workspacePrefix = env["OPENBITFUN_LIVE_MAILBOX_DISCLOSURE"] == "1" ? "sidebar.workspaceDisclosure" : "sidebar.workspace"
+        let workspacePrefix = env["STARMATE_LIVE_MAILBOX_DISCLOSURE"] == "1" ? "sidebar.workspaceDisclosure" : "sidebar.workspace"
         let workspace = app.buttons["\(workspacePrefix).\(deviceID).\(workspacePath)"]
         XCTAssertTrue(workspace.waitForExistence(timeout: 30)); workspace.tap()
         let session = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "sidebar.session.", title)).firstMatch
         XCTAssertTrue(session.waitForExistence(timeout: 30)); session.tap()
-        if env["OPENBITFUN_LIVE_MAILBOX_READ_ONLY"] == "1" {
+        if env["STARMATE_LIVE_MAILBOX_READ_ONLY"] == "1" {
             let message = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH %@", "message.user.")).firstMatch
             XCTAssertTrue(message.waitForExistence(timeout: 60), "Existing conversation must hydrate without sending another message.")
-            if let marker = env["OPENBITFUN_LIVE_INCOMING_MARKER"], !marker.isEmpty {
+            if let marker = env["STARMATE_LIVE_INCOMING_MARKER"], !marker.isEmpty {
                 let incoming = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", marker)).firstMatch
                 XCTAssertTrue(incoming.waitForExistence(timeout: 120), "Another controller's message must arrive without reopening the conversation.")
-                if let reply = env["OPENBITFUN_LIVE_INCOMING_REPLY"], !reply.isEmpty {
+                if let reply = env["STARMATE_LIVE_INCOMING_REPLY"], !reply.isEmpty {
                     XCTAssertTrue(app.staticTexts[reply].waitForExistence(timeout: 120), "The other controller's completed reply must arrive on the same subscription.")
                 }
             }
-            if let expectedModel = env["OPENBITFUN_LIVE_EXPECTED_MODEL"], !expectedModel.isEmpty {
+            if let expectedModel = env["STARMATE_LIVE_EXPECTED_MODEL"], !expectedModel.isEmpty {
                 let input = app.textFields["composer.input"]
                 XCTAssertTrue(input.waitForExistence(timeout: 15)); input.tap()
                 let modelLabel = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", expectedModel)).firstMatch
                 XCTAssertTrue(modelLabel.waitForExistence(timeout: 30), "The opened session must hydrate its model without a manual refresh.")
                 let image = XCTAttachment(screenshot: app.screenshot())
                 image.name = "InitialSessionModel"; image.lifetime = .keepAlways; add(image)
-                if let changedModel = env["OPENBITFUN_LIVE_CHANGED_MODEL"], !changedModel.isEmpty {
+                if let changedModel = env["STARMATE_LIVE_CHANGED_MODEL"], !changedModel.isEmpty {
                     print("LIVE_MODEL_READY_FOR_EXTERNAL_CHANGE")
                     let changed = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", changedModel)).firstMatch
                     XCTAssertTrue(changed.waitForExistence(timeout: 90), "Another controller's model change must arrive without reopening or refreshing.")
@@ -1782,7 +1782,7 @@ final class RemoteMailboxLiveUITests: XCTestCase {
                     changedImage.name = "ExternalSessionModel"; changedImage.lifetime = .keepAlways; add(changedImage)
                 }
             }
-            if env["OPENBITFUN_LIVE_SIDEBAR_CAPTURE"] == "1" {
+            if env["STARMATE_LIVE_SIDEBAR_CAPTURE"] == "1" {
                 XCTAssertTrue(sidebar.waitForExistence(timeout: 10)); sidebar.tap()
                 XCTAssertTrue(app.buttons["刷新设备"].waitForExistence(timeout: 10))
                 XCTAssertTrue(session.waitForExistence(timeout: 10))
@@ -1791,7 +1791,7 @@ final class RemoteMailboxLiveUITests: XCTestCase {
             }
             return
         }
-        if env["OPENBITFUN_LIVE_MAILBOX_RESUME"] != "1" {
+        if env["STARMATE_LIVE_MAILBOX_RESUME"] != "1" {
             let input = app.textFields["composer.input"]
             XCTAssertTrue(input.waitForExistence(timeout: 30)); input.tap()
             input.typeText(permissionReply == nil ?
@@ -1815,7 +1815,7 @@ final class RemoteMailboxLiveUITests: XCTestCase {
         }
         let choices = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@", "question.option.", ".Beta"))
         let choice = choices.firstMatch
-        let questionTimeout = min(300, max(60, Double(env["OPENBITFUN_LIVE_MAILBOX_WAIT_SECONDS"] ?? "60") ?? 60))
+        let questionTimeout = min(300, max(60, Double(env["STARMATE_LIVE_MAILBOX_WAIT_SECONDS"] ?? "60") ?? 60))
         XCTAssertTrue(choice.waitForExistence(timeout: questionTimeout))
         XCTAssertEqual(choices.count, 1, "The mailbox and transcript must not expose duplicate answer forms.")
         choice.tap()

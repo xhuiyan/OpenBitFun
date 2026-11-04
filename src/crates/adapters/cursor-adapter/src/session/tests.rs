@@ -557,8 +557,8 @@ fn duplicate_tool_and_turn_identities_cannot_silently_overwrite_history() {
 #[test]
 #[ignore = "reads an explicitly selected installed Cursor session; prints counts only"]
 fn inspect_installed_cursor() {
-    let id = std::env::var("OPENBITFUN_TEST_CURSOR_SESSION_ID")
-        .expect("set OPENBITFUN_TEST_CURSOR_SESSION_ID");
+    let id = std::env::var("STARMATE_TEST_CURSOR_SESSION_ID")
+        .expect("set STARMATE_TEST_CURSOR_SESSION_ID");
     let reader = CursorSessionReader::default();
     let catalog = reader.discover_all().unwrap();
     assert!(catalog.candidates.iter().any(|c| c.source_session_id == id));

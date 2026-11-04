@@ -27,7 +27,7 @@ test('conflicting desktop data flags fail before resource preparation', () => {
   ], {
     encoding: 'utf8',
     windowsHide: true,
-    env: { ...process.env, OPENBITFUN_DEV_PORT: '1422', OPENBITFUN_DEV_HMR_PORT: '1421' },
+    env: { ...process.env, STARMATE_DEV_PORT: '1422', STARMATE_DEV_HMR_PORT: '1421' },
   });
   assert.ifError(result.error);
   assert.equal(result.status, 1);
@@ -36,14 +36,14 @@ test('conflicting desktop data flags fail before resource preparation', () => {
 });
 
 test('default and explicit shared desktop data keep app defaults and storage overrides intact', () => {
-  const channel = { OPENBITFUN_DESKTOP_HOST_CHANNEL: 'development' };
+  const channel = { STARMATE_DESKTOP_HOST_CHANNEL: 'development' };
   assert.deepEqual(resolveDesktopDevStorageEnvironment({}, tmpdir()), channel);
   assert.deepEqual(resolveDesktopDevStorageEnvironment({}, tmpdir(), 'shared'), channel);
   const env = {
-    OPENBITFUN_USER_ROOT: '/custom/user',
-    OPENBITFUN_HOME: '/custom/home',
-    OPENBITFUN_E2E_USER_ROOT: '/legacy/user',
-    OPENBITFUN_E2E_HOME: '/legacy/home',
+    STARMATE_USER_ROOT: '/custom/user',
+    STARMATE_HOME: '/custom/home',
+    STARMATE_E2E_USER_ROOT: '/legacy/user',
+    STARMATE_E2E_HOME: '/legacy/home',
   };
   const original = { ...env };
   assert.deepEqual(resolveDesktopDevStorageEnvironment(env, tmpdir()), channel);
@@ -55,39 +55,39 @@ test('explicitly isolated desktop development uses persistent storage scoped to 
   const root = join(tmpdir(), 'desktop dev & spaces');
   const storage = resolveDesktopDevStorageEnvironment({}, root, 'isolated');
   assert.deepEqual(storage, {
-    OPENBITFUN_DESKTOP_HOST_CHANNEL: 'development',
-    OPENBITFUN_USER_ROOT: join(root, '.openbitfun', 'desktop-dev', 'user'),
-    OPENBITFUN_HOME: join(root, '.openbitfun', 'desktop-dev', 'home'),
+    STARMATE_DESKTOP_HOST_CHANNEL: 'development',
+    STARMATE_USER_ROOT: join(root, '.openbitfun', 'desktop-dev', 'user'),
+    STARMATE_HOME: join(root, '.openbitfun', 'desktop-dev', 'home'),
   });
   assert.deepEqual(resolveDesktopDevStorageEnvironment({}, root, 'isolated'), storage);
   const other = resolveDesktopDevStorageEnvironment({}, join(root, 'worktree'), 'isolated');
-  assert.notEqual(other.OPENBITFUN_USER_ROOT, storage.OPENBITFUN_USER_ROOT);
-  assert.notEqual(other.OPENBITFUN_HOME, storage.OPENBITFUN_HOME);
+  assert.notEqual(other.STARMATE_USER_ROOT, storage.STARMATE_USER_ROOT);
+  assert.notEqual(other.STARMATE_HOME, storage.STARMATE_HOME);
 });
 
 test('desktop development preserves explicit and legacy isolated storage overrides', () => {
   const explicit = {
-    OPENBITFUN_USER_ROOT: '/custom/user',
-    OPENBITFUN_HOME: '/custom/home',
+    STARMATE_USER_ROOT: '/custom/user',
+    STARMATE_HOME: '/custom/home',
   };
   const legacy = {
-    OPENBITFUN_E2E_USER_ROOT: '/legacy/user',
-    OPENBITFUN_E2E_HOME: '/legacy/home',
+    STARMATE_E2E_USER_ROOT: '/legacy/user',
+    STARMATE_E2E_HOME: '/legacy/home',
   };
-  const channel = { OPENBITFUN_DESKTOP_HOST_CHANNEL: 'development' };
+  const channel = { STARMATE_DESKTOP_HOST_CHANNEL: 'development' };
   assert.deepEqual(resolveDesktopDevStorageEnvironment({ ...legacy, ...explicit }, tmpdir(), 'isolated'), { ...explicit, ...channel });
   assert.deepEqual(resolveDesktopDevStorageEnvironment(legacy, tmpdir(), 'isolated'), {
     ...channel,
-    OPENBITFUN_USER_ROOT: legacy.OPENBITFUN_E2E_USER_ROOT,
-    OPENBITFUN_HOME: legacy.OPENBITFUN_E2E_HOME,
+    STARMATE_USER_ROOT: legacy.STARMATE_E2E_USER_ROOT,
+    STARMATE_HOME: legacy.STARMATE_E2E_HOME,
   });
   const root = tmpdir();
   assert.deepEqual(resolveDesktopDevStorageEnvironment({
-    ...explicit, OPENBITFUN_HOME: '',
+    ...explicit, STARMATE_HOME: '',
   }, root, 'isolated'), {
     ...channel,
-    OPENBITFUN_USER_ROOT: explicit.OPENBITFUN_USER_ROOT,
-    OPENBITFUN_HOME: join(root, '.openbitfun', 'desktop-dev', 'home'),
+    STARMATE_USER_ROOT: explicit.STARMATE_USER_ROOT,
+    STARMATE_HOME: join(root, '.openbitfun', 'desktop-dev', 'home'),
   });
 });
 
@@ -98,17 +98,17 @@ test('desktop child processes inherit both isolated storage roots', async t => {
   const output = join(root, 'storage.json');
   writeFileSync(script, `
     require('node:fs').writeFileSync(process.argv[2], JSON.stringify({
-      user: process.env.OPENBITFUN_USER_ROOT,
-      home: process.env.OPENBITFUN_HOME,
-      channel: process.env.OPENBITFUN_DESKTOP_HOST_CHANNEL,
+      user: process.env.STARMATE_USER_ROOT,
+      home: process.env.STARMATE_HOME,
+      channel: process.env.STARMATE_DESKTOP_HOST_CHANNEL,
     }));
   `);
   const env = resolveDesktopDevStorageEnvironment({}, root, 'isolated');
   const result = await runCommandPrefixed('storage-fixture', 'node', [script, output], root, env);
   assert.equal(result.ok, true);
   assert.deepEqual(JSON.parse(readFileSync(output, 'utf8')), {
-    user: env.OPENBITFUN_USER_ROOT,
-    home: env.OPENBITFUN_HOME,
+    user: env.STARMATE_USER_ROOT,
+    home: env.STARMATE_HOME,
     channel: 'development',
   });
 });
@@ -120,26 +120,26 @@ test('default desktop children retain the callers shared data roots without inje
   const output = join(root, 'storage.json');
   writeFileSync(script, `
     require('node:fs').writeFileSync(process.argv[2], JSON.stringify({
-      user: process.env.OPENBITFUN_USER_ROOT,
-      home: process.env.OPENBITFUN_HOME,
-      channel: process.env.OPENBITFUN_DESKTOP_HOST_CHANNEL,
+      user: process.env.STARMATE_USER_ROOT,
+      home: process.env.STARMATE_HOME,
+      channel: process.env.STARMATE_DESKTOP_HOST_CHANNEL,
     }));
   `);
   const original = {
-    OPENBITFUN_USER_ROOT: join(root, 'existing user data'),
-    OPENBITFUN_HOME: join(root, 'existing session data'),
+    STARMATE_USER_ROOT: join(root, 'existing user data'),
+    STARMATE_HOME: join(root, 'existing session data'),
   };
   const storage = resolveDesktopDevStorageEnvironment(original, root);
-  assert.equal(storage.OPENBITFUN_USER_ROOT, undefined);
-  assert.equal(storage.OPENBITFUN_HOME, undefined);
+  assert.equal(storage.STARMATE_USER_ROOT, undefined);
+  assert.equal(storage.STARMATE_HOME, undefined);
   const result = await runCommandPrefixed('storage-fixture', 'node', [script, output], root, {
     ...original,
     ...storage,
   });
   assert.equal(result.ok, true);
   assert.deepEqual(JSON.parse(readFileSync(output, 'utf8')), {
-    user: original.OPENBITFUN_USER_ROOT,
-    home: original.OPENBITFUN_HOME,
+    user: original.STARMATE_USER_ROOT,
+    home: original.STARMATE_HOME,
     channel: 'development',
   });
 });
@@ -202,12 +202,12 @@ test('workspace installation finishes before parallel dependency consumers start
 
 test('HTTP and HMR ports share one contract and reject conflicting overrides', () => {
   assert.deepEqual(resolveDevServerPorts({}), { port: 1422, hmrPort: 1421 });
-  assert.deepEqual(resolveDevServerPorts({ OPENBITFUN_DEV_PORT: '1432' }), { port: 1432, hmrPort: 1431 });
-  assert.deepEqual(resolveDevServerPorts({ OPENBITFUN_DEV_PORT: '1432', OPENBITFUN_DEV_HMR_PORT: '1440' }), { port: 1432, hmrPort: 1440 });
+  assert.deepEqual(resolveDevServerPorts({ STARMATE_DEV_PORT: '1432' }), { port: 1432, hmrPort: 1431 });
+  assert.deepEqual(resolveDevServerPorts({ STARMATE_DEV_PORT: '1432', STARMATE_DEV_HMR_PORT: '1440' }), { port: 1432, hmrPort: 1440 });
   for (const port of ['abc', '0', '65536', '1.5']) {
-    assert.throws(() => resolveDevServerPorts({ OPENBITFUN_DEV_PORT: port }), /ports/);
+    assert.throws(() => resolveDevServerPorts({ STARMATE_DEV_PORT: port }), /ports/);
   }
-  assert.throws(() => resolveDevServerPorts({ OPENBITFUN_DEV_PORT: '1432', OPENBITFUN_DEV_HMR_PORT: '1432' }), /distinct/);
+  assert.throws(() => resolveDevServerPorts({ STARMATE_DEV_PORT: '1432', STARMATE_DEV_HMR_PORT: '1432' }), /distinct/);
 });
 
 function fixture(t) {

@@ -16,5 +16,5 @@ Verification: `cargo test -p openbitfun-claude-code-adapter --lib session::tests
 
 Optional installed-source check (counts only):
 `cargo test -p openbitfun-claude-code-adapter --lib inspect_installed_claude_code -- --ignored --nocapture`.
-`OPENBITFUN_TEST_CLAUDE_HOME` selects an isolated source home; otherwise use the
+`STARMATE_TEST_CLAUDE_HOME` selects an isolated source home; otherwise use the
 normal `CLAUDE_CONFIG_DIR` / `~/.claude` discovery path.

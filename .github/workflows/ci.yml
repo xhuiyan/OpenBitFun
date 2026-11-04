@@ -111,7 +111,7 @@ jobs:
 
           PATH="$test_root/stubs:/usr/bin:/bin" \
             RUNNER_TEMP="$test_root" \
-            OPENBITFUN_SIGNING_KEY="YQ==" \
+            STARMATE_SIGNING_KEY="YQ==" \
             bash scripts/sign-release-assets.sh "$test_root/missing-asset"
 
           "$test_root/openbitfun-minisign-0.12/bin/minisign" -v
@@ -655,7 +655,7 @@ jobs:
         run: |
           if git rev-parse HEAD^1 >/dev/null 2>&1 &&
             git diff --name-only HEAD^1 HEAD -- scripts/i18n-audit.mjs scripts/i18n-contract.test.mjs | grep -q .; then
-            echo "OPENBITFUN_I18N_CONTRACT_TEST_AUDIT_INTEGRATION=1" >> "$GITHUB_ENV"
+            echo "STARMATE_I18N_CONTRACT_TEST_AUDIT_INTEGRATION=1" >> "$GITHUB_ENV"
           fi
 
       - name: Validate i18n contract

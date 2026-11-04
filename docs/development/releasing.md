@@ -208,7 +208,7 @@ Installing beta replaces stable; side-by-side installation is not supported.
 The mirror script defaults to stable. Run a separate beta sync with:
 
 ```bash
-OPENBITFUN_RELEASE_CHANNEL=beta scripts/openbitfun-release-sync.sh
+STARMATE_RELEASE_CHANNEL=beta scripts/openbitfun-release-sync.sh
 ```
 
 The beta invocation writes below `/release/beta` and intentionally skips the

@@ -237,10 +237,10 @@ mod tests {
             "openbitfun_control_host::miniapps::tests::isolated_crud_child",
             "--nocapture",
         ])
-        .env("OPENBITFUN_CREATION_CRUD_TEST", "1")
-        .env("OPENBITFUN_USER_ROOT", root.path().join("user"))
-        .env("OPENBITFUN_HOME", root.path().join("home"))
-        .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
+        .env("STARMATE_CREATION_CRUD_TEST", "1")
+        .env("STARMATE_USER_ROOT", root.path().join("user"))
+        .env("STARMATE_HOME", root.path().join("home"))
+        .env("STARMATE_E2E_STORAGE_GUARD", "1")
         .output()
         .unwrap();
         assert!(
@@ -255,7 +255,7 @@ mod tests {
     #[ignore = "Invoked by installed_miniapp_crud_uses_isolated_product_storage with isolated roots"]
     async fn isolated_crud_child() {
         assert_eq!(
-            std::env::var("OPENBITFUN_CREATION_CRUD_TEST").as_deref(),
+            std::env::var("STARMATE_CREATION_CRUD_TEST").as_deref(),
             Ok("1")
         );
         let paths =

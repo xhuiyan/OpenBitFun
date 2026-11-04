@@ -10,7 +10,7 @@ use std::sync::{Mutex, OnceLock};
 use tauri::Manager;
 use tokio::sync::watch;
 
-const VIDEO_DECODER_MODE_ENV: &str = "OPENBITFUN_BROWSER_VIDEO_DECODER_MODE";
+const VIDEO_DECODER_MODE_ENV: &str = "STARMATE_BROWSER_VIDEO_DECODER_MODE";
 
 fn video_decoder_compatibility_script() -> String {
     let mode =

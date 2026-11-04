@@ -69,9 +69,9 @@ process.stdout.write("local-package-consumer: PASS\\n");
 
   const result = await run(process.execPath, [join(consumerRoot, "run.mjs")], consumerRoot, {
     ...process.env,
-    OPENBITFUN_E2E_STORAGE_GUARD: "1",
-    OPENBITFUN_E2E_USER_ROOT: userRoot,
-    OPENBITFUN_E2E_HOME: userRoot,
+    STARMATE_E2E_STORAGE_GUARD: "1",
+    STARMATE_E2E_USER_ROOT: userRoot,
+    STARMATE_E2E_HOME: userRoot,
     APPDATA: configRoot,
     XDG_CONFIG_HOME: configRoot,
     HOME: userRoot,

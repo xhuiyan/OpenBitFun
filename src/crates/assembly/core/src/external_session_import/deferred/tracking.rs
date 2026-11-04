@@ -649,9 +649,9 @@ mod tests {
         use crate::agentic::persistence::PersistenceManager;
         use crate::infrastructure::PathManager;
         let ecosystem =
-            std::env::var("OPENBITFUN_TEST_SESSION_ECOSYSTEM").expect("Select a source ecosystem");
+            std::env::var("STARMATE_TEST_SESSION_ECOSYSTEM").expect("Select a source ecosystem");
         let source_id =
-            std::env::var("OPENBITFUN_TEST_SESSION_ID").expect("Select a real source session");
+            std::env::var("STARMATE_TEST_SESSION_ID").expect("Select a real source session");
         let source = ImportSource::from_ecosystem(&ecosystem).unwrap();
         let candidate = source
             .discover_all()

@@ -122,7 +122,7 @@ OpenCode 的 `providerID` / `modelID` 与兼容存储的旧拼写均可读取；
 Desktop 基线为本机 3.17.8 的真实保存会话：读取 `User/globalStorage/state.vscdb` 中的 composer/bubble，
 按保存的 header 顺序读取，并在同一 SQLite 快照内从可选的 `composerHeaders` 表读取工作区身份。
 兼容缺少该表的旧数据库及 inline conversation；未知必需结构或缺失引用明确失败。
-默认 Desktop 根为系统的 Cursor 用户数据目录；OpenBitFun 的 `OPENBITFUN_CURSOR_USER_DATA_DIR` 可覆盖它。
+默认 Desktop 根为系统的 Cursor 用户数据目录；OpenBitFun 的 `STARMATE_CURSOR_USER_DATA_DIR` 可覆盖它。
 
 `CURSOR_DATA_DIR/projects`（缺省 `~/.cursor/projects`）的 JSONL 仅作无数据库来源时的回退；
 缺少结果的调用保持中断并显示提示。Desktop 保存时移除的结果内容和未完整缓存的云端历史明确说明。

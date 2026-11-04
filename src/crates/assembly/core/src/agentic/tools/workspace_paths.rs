@@ -8,8 +8,8 @@ use crate::util::errors::{StarMateError, StarMateResult};
 pub use starmate_agent_tools::{
     build_openbitfun_current_session_uri, is_openbitfun_current_session_uri,
     is_openbitfun_runtime_uri, is_openbitfun_tool_uri, ParsedStarMateCurrentSessionUri,
-    ParsedStarMateRuntimeUri, OPENBITFUN_CURRENT_SESSION_URI_PREFIX,
-    OPENBITFUN_RUNTIME_URI_PREFIX,
+    ParsedStarMateRuntimeUri, STARMATE_CURRENT_SESSION_URI_PREFIX,
+    STARMATE_RUNTIME_URI_PREFIX,
 };
 use std::path::Path;
 

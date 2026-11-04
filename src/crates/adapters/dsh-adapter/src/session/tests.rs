@@ -218,7 +218,7 @@ fn discovery_pages_beyond_fifty_and_excludes_subagents() {
 #[ignore = "Reads installed DeepSeek Harness history without modifying it"]
 fn inspect_installed_dsh_session_read_only() {
     let reader = DshSessionReader::default();
-    let id = std::env::var("OPENBITFUN_TEST_DSH_SESSION").expect("Select a real DSH session");
+    let id = std::env::var("STARMATE_TEST_DSH_SESSION").expect("Select a real DSH session");
     let catalog = reader.discover_all().unwrap();
     let candidate = catalog
         .candidates

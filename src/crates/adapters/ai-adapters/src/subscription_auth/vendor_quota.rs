@@ -479,10 +479,10 @@ mod tests {
     #[tokio::test]
     #[ignore = "Reads billing for an explicitly selected OpenBitFun Grok OAuth account; no inference or third-party credentials"]
     async fn live_grok_quota_diagnostic() {
-        let slot = std::env::var("OPENBITFUN_LIVE_GROK_ACCOUNT")
+        let slot = std::env::var("STARMATE_LIVE_GROK_ACCOUNT")
             .expect("select an exact in-app account slot");
         accounts::validate_account_id(SubscriptionProvider::Grok, &slot).unwrap();
-        let proxy = std::env::var("OPENBITFUN_LIVE_SUBSCRIPTION_PROXY")
+        let proxy = std::env::var("STARMATE_LIVE_SUBSCRIPTION_PROXY")
             .ok()
             .map(|url| crate::types::ProxyConfig {
                 enabled: true,

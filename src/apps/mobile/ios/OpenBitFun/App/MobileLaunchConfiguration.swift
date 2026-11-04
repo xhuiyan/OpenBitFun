@@ -159,7 +159,7 @@ enum MobileLaunchConfiguration {
             model.settingsOpen = true
         }
         if arguments.contains("--composer-model-picker") || arguments.contains("--composer-draft-preview") ||
-            ProcessInfo.processInfo.environment["OPENBITFUN_COMPOSER_MODEL_PICKER"] == "1" {
+            ProcessInfo.processInfo.environment["STARMATE_COMPOSER_MODEL_PICKER"] == "1" {
             model.composerModelPickerPreview = !arguments.contains("--composer-draft-preview")
             model.surface = .local
             model.localSessionSelected = true

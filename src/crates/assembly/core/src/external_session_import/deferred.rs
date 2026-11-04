@@ -979,11 +979,11 @@ mod tests {
     #[ignore = "Read-only installed history verification; writes only to a temporary copy"]
     async fn inspect_installed_codex_history_repair() {
         let input_root = PathBuf::from(
-            std::env::var_os("OPENBITFUN_TEST_NATIVE_SESSIONS_ROOT")
-                .expect("Set OPENBITFUN_TEST_NATIVE_SESSIONS_ROOT"),
+            std::env::var_os("STARMATE_TEST_NATIVE_SESSIONS_ROOT")
+                .expect("Set STARMATE_TEST_NATIVE_SESSIONS_ROOT"),
         );
-        let id = std::env::var("OPENBITFUN_TEST_NATIVE_SESSION_ID")
-            .expect("Set OPENBITFUN_TEST_NATIVE_SESSION_ID");
+        let id = std::env::var("STARMATE_TEST_NATIVE_SESSION_ID")
+            .expect("Set STARMATE_TEST_NATIVE_SESSION_ID");
         let source_store = OfflineSessionImportStore::new(&input_root);
         let before = source_store.load_bundle(&id).await.unwrap().unwrap();
         assert!(needs_legacy_history_repair(&before.metadata));

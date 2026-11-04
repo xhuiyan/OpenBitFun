@@ -9,7 +9,7 @@
 //
 // Host binary resolution order per call:
 //   1. `hostPath` in this plugin's patch config,
-//   2. the OPENBITFUN_SDK_HOST environment variable,
+//   2. the STARMATE_SDK_HOST environment variable,
 //   3. `<session cwd>/target/{debug,release}/openbitfun-sdk-host(.exe)` walking up
 //      the directory tree (a OpenBitFun checkout-local build),
 //   4. `openbitfun-sdk-host` on PATH.
@@ -85,7 +85,7 @@ function findOnPath(binaryName) {
 function resolveHostPath(config, cwd) {
   const candidates = [];
   const configured = isNonEmptyString(config?.hostPath) ? config.hostPath : undefined;
-  const fromEnv = isNonEmptyString(process.env.OPENBITFUN_SDK_HOST) ? process.env.OPENBITFUN_SDK_HOST : undefined;
+  const fromEnv = isNonEmptyString(process.env.STARMATE_SDK_HOST) ? process.env.STARMATE_SDK_HOST : undefined;
   for (const candidate of [configured, fromEnv]) {
     if (candidate === undefined) continue;
     if (isPathLike(candidate)) {
@@ -502,7 +502,7 @@ export function apply(ctx, config) {
     if (resolved === null) {
       throw new Error(
         'cannot locate the OpenBitFun SDK Host binary ("openbitfun-sdk-host"). ' +
-          'Build it with `cargo build -p openbitfun-sdk-host-app`, set the OPENBITFUN_SDK_HOST environment variable, ' +
+          'Build it with `cargo build -p openbitfun-sdk-host-app`, set the STARMATE_SDK_HOST environment variable, ' +
           'or configure the hostPath option of the dsh-openbitfun plugin row.',
       );
     }

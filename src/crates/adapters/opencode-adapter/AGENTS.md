@@ -157,10 +157,10 @@ native import; OpenBitFun source suppression and revision fencing still apply.
 
 - `cargo test -p openbitfun-opencode-adapter --lib session::tests`
 - `cargo test -p openbitfun-zcode-adapter --lib session::tests`
-- Optional real source check: set `OPENBITFUN_TEST_OPENCODE_DATA` to the OpenCode
+- Optional real source check: set `STARMATE_TEST_OPENCODE_DATA` to the OpenCode
   data directory, then run `cargo test -p openbitfun-opencode-adapter --lib
   inspect_installed_opencode -- --ignored --nocapture`. A selected
-  `OPENBITFUN_TEST_OPENCODE_SESSION` checks the two-turn verification session.
+  `STARMATE_TEST_OPENCODE_SESSION` checks the two-turn verification session.
 
 - `cargo test --locked -p openbitfun-opencode-adapter --lib instruction_source::tests::`
 - `cargo test -p openbitfun-opencode-adapter --test opencode_source_adapter`

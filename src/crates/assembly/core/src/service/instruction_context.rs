@@ -391,7 +391,7 @@ mod tests {
         .unwrap();
         std::fs::write(workspace.join("AGENTS.md"), "Workspace instructions\n").unwrap();
         let _guard = EnvironmentGuard::set(&[
-            ("OPENBITFUN_HOME", &native),
+            ("STARMATE_HOME", &native),
             ("CODEX_HOME", &codex),
             ("CLAUDE_CONFIG_DIR", &claude),
             ("XDG_CONFIG_HOME", &xdg),
@@ -402,7 +402,7 @@ mod tests {
             .expect("native instruction context");
         assert!(build.cacheable);
         let rendered = build.content.expect("rendered instructions");
-        assert!(rendered.contains("<document name=\"$OPENBITFUN_HOME/AGENTS.md\">"));
+        assert!(rendered.contains("<document name=\"$STARMATE_HOME/AGENTS.md\">"));
         assert!(!rendered.contains("Codex base instructions"));
         let positions = [
             "OpenCode user instructions",
@@ -417,7 +417,7 @@ mod tests {
         assert!(catalog.failed_ecosystems.is_empty());
         assert!(catalog.entries.iter().any(|entry| {
             entry.ecosystem_id == "openbitfun"
-                && entry.name == "$OPENBITFUN_HOME/AGENTS.md"
+                && entry.name == "$STARMATE_HOME/AGENTS.md"
                 && entry.scope == "user"
         }));
         assert!(!catalog
@@ -473,7 +473,7 @@ mod tests {
         std::fs::write(codex.join("AGENTS.md"), "Codex must stay absent\n").unwrap();
         std::fs::write(workspace.join("AGENTS.md"), "Workspace survives\n").unwrap();
         let _guard = EnvironmentGuard::set(&[
-            ("OPENBITFUN_HOME", &native),
+            ("STARMATE_HOME", &native),
             ("CODEX_HOME", &codex),
             ("CLAUDE_CONFIG_DIR", &claude),
             ("XDG_CONFIG_HOME", &xdg),
@@ -721,7 +721,7 @@ mod tests {
         std::fs::write(workspace.join("AGENTS.md"), "Port project instructions\n")
             .expect("workspace instructions");
         let _guard = EnvironmentGuard::set(&[
-            ("OPENBITFUN_HOME", &native),
+            ("STARMATE_HOME", &native),
             ("XDG_CONFIG_HOME", &xdg),
             ("CODEX_HOME", &codex),
             ("CLAUDE_CONFIG_DIR", &claude),

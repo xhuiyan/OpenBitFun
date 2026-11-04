@@ -2364,7 +2364,7 @@ mod tests {
 
     #[test]
     fn completed_clean_sync_poll_returns_the_durable_result() {
-        const CHILD_ENV: &str = "OPENBITFUN_DISPATCH_CLEAN_SYNC_POLL_CHILD";
+        const CHILD_ENV: &str = "STARMATE_DISPATCH_CLEAN_SYNC_POLL_CHILD";
         if let Some(openbitfun_home) = std::env::var_os(CHILD_ENV) {
             let store = DispatchStore::open_default().expect("open isolated default store");
             let source = PathBuf::from(openbitfun_home).join("source");
@@ -2429,11 +2429,11 @@ mod tests {
             "--nocapture",
         ])
         .env(CHILD_ENV, &openbitfun_home)
-        .env("OPENBITFUN_HOME", &openbitfun_home)
-        .env("OPENBITFUN_USER_ROOT", &user_root)
-        .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
-        .env_remove("OPENBITFUN_E2E_HOME")
-        .env_remove("OPENBITFUN_E2E_USER_ROOT")
+        .env("STARMATE_HOME", &openbitfun_home)
+        .env("STARMATE_USER_ROOT", &user_root)
+        .env("STARMATE_E2E_STORAGE_GUARD", "1")
+        .env_remove("STARMATE_E2E_HOME")
+        .env_remove("STARMATE_E2E_USER_ROOT")
         .output()
         .expect("run isolated clean-sync poll test");
         assert!(

@@ -125,5 +125,5 @@ After preparing a macOS shell, exercise the real temporary export and headless
 diagnostic with:
 
 ```bash
-OPENBITFUN_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/openbitfun-miniapp-shell" cargo test --locked -p openbitfun-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
+STARMATE_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/openbitfun-miniapp-shell" cargo test --locked -p openbitfun-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
 ```

@@ -46,7 +46,7 @@ describe('ApiClient startup trace classification', () => {
   beforeEach(() => {
     activateSurface(LOCAL_SURFACE_ID);
     vi.clearAllMocks();
-    delete globalThis.__OPENBITFUN_PERF_TRACE_ENABLED__;
+    delete globalThis.__STARMATE_PERF_TRACE_ENABLED__;
   });
 
   it('does not record optional get_config not found as a startup failure', async () => {
@@ -347,7 +347,7 @@ describe('ApiClient startup trace classification', () => {
   });
 
   it('uses a bounded response estimate cap for session view restore when perf trace is enabled', async () => {
-    globalThis.__OPENBITFUN_PERF_TRACE_ENABLED__ = true;
+    globalThis.__STARMATE_PERF_TRACE_ENABLED__ = true;
     adapterMocks.request.mockResolvedValueOnce({ turns: [] });
     const client = new ApiClient({ enableLogging: false, retries: 0 });
 
@@ -365,7 +365,7 @@ describe('ApiClient startup trace classification', () => {
   });
 
   it('uses the Session response estimate cap for Turn windows', async () => {
-    globalThis.__OPENBITFUN_PERF_TRACE_ENABLED__ = true;
+    globalThis.__STARMATE_PERF_TRACE_ENABLED__ = true;
     adapterMocks.request.mockResolvedValueOnce({ status: 'ready', turns: [] });
     const client = new ApiClient({ enableLogging: false, retries: 0 });
 

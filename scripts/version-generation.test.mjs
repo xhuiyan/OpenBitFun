@@ -31,7 +31,7 @@ test('records the immutable release channel in generated metadata', () => {
   const outputRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-version-beta-'));
   const result = run(
     ['--build-env', 'production', '--output-root', outputRoot],
-    { OPENBITFUN_RELEASE_CHANNEL: 'beta' },
+    { STARMATE_RELEASE_CHANNEL: 'beta' },
   );
   assert.equal(result.status, 0, result.stderr);
   const generated = JSON.parse(

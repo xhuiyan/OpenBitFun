@@ -392,7 +392,7 @@ fn unfinished_tool_and_api_error_are_not_successful_turns() {
 #[test]
 #[ignore = "reads the installed Claude Code source; prints counts only"]
 fn inspect_installed_claude_code() {
-    let reader = std::env::var_os("OPENBITFUN_TEST_CLAUDE_HOME")
+    let reader = std::env::var_os("STARMATE_TEST_CLAUDE_HOME")
         .map(PathBuf::from)
         .map(ClaudeCodeSessionReader::new)
         .unwrap_or_default();
@@ -421,7 +421,7 @@ fn inspect_installed_claude_code() {
                         errors += usize::from(*success == Some(false));
                     }
                 }
-                if std::env::var("OPENBITFUN_TEST_CLAUDE_SESSION")
+                if std::env::var("STARMATE_TEST_CLAUDE_SESSION")
                     .ok()
                     .as_deref()
                     == Some(candidate.source_session_id.as_str())

@@ -335,7 +335,7 @@ fn stream_json_patch_write_failure_emits_error_without_success_terminal() {
     assert!(
         stderr(&output)
             .lines()
-            .any(|line| line.starts_with("OPENBITFUN_EXIT: patch_write_failed:")),
+            .any(|line| line.starts_with("STARMATE_EXIT: patch_write_failed:")),
         "missing stable patch failure diagnostic: {}",
         stderr(&output)
     );
@@ -562,7 +562,7 @@ fn stream_json_provider_http_403_emits_one_error_terminal() {
     assert!(
         stderr(&output)
             .lines()
-            .any(|line| line.starts_with("OPENBITFUN_EXIT: dialog_turn_failed:")),
+            .any(|line| line.starts_with("STARMATE_EXIT: dialog_turn_failed:")),
         "missing stable provider failure diagnostic: {}",
         stderr(&output)
     );
@@ -624,7 +624,7 @@ fn stream_json_provider_and_patch_failures_publish_one_final_classification() {
     assert_eq!(output.status.code(), Some(1), "{stderr}\n{stdout}");
     let exit_diagnostics = stderr
         .lines()
-        .filter(|line| line.starts_with("OPENBITFUN_EXIT:"))
+        .filter(|line| line.starts_with("STARMATE_EXIT:"))
         .collect::<Vec<_>>();
     assert_eq!(
         exit_diagnostics.len(),
@@ -632,7 +632,7 @@ fn stream_json_provider_and_patch_failures_publish_one_final_classification() {
         "combined failure must have one stable classifier: {stderr}"
     );
     assert!(
-        exit_diagnostics[0].starts_with("OPENBITFUN_EXIT: patch_write_failed:"),
+        exit_diagnostics[0].starts_with("STARMATE_EXIT: patch_write_failed:"),
         "patch delivery failure must be the final classifier: {stderr}"
     );
 
@@ -865,7 +865,7 @@ fn computer_use_graphical_cli_routes_the_real_tool_to_the_native_provider() {
 #[ignore = "requires the disposable AX fixture plus Accessibility and Screen Recording; run test-native-ax-context.mjs --cli"]
 fn computer_use_native_cli_observes_and_stops_fixture() {
     use serde_json::json;
-    let pid: i32 = std::env::var("OPENBITFUN_AX_FIXTURE_PID")
+    let pid: i32 = std::env::var("STARMATE_AX_FIXTURE_PID")
         .expect("disposable fixture PID")
         .parse()
         .unwrap();

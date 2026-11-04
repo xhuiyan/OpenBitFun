@@ -673,7 +673,7 @@ mod tests {
             metadata: stored_metadata.metadata,
             turns: vec![stored_turn.turn],
         };
-        let temp_root = std::env::var_os("OPENBITFUN_TEST_TMPDIR")
+        let temp_root = std::env::var_os("STARMATE_TEST_TMPDIR")
             .map(PathBuf::from)
             .unwrap_or_else(|| PathBuf::from("E:/tmp"));
         fs::create_dir_all(&temp_root).unwrap();

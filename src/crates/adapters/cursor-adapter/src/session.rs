@@ -37,7 +37,7 @@ impl Default for CursorSessionReader {
             .or_else(|| environment_path("XDG_CONFIG_HOME").map(|root| root.join("cursor")))
             .unwrap_or_else(|| home.join(".cursor"));
         let data_dir = environment_path("CURSOR_DATA_DIR").unwrap_or_else(|| home.join(".cursor"));
-        let desktop = environment_path("OPENBITFUN_CURSOR_USER_DATA_DIR").unwrap_or_else(|| {
+        let desktop = environment_path("STARMATE_CURSOR_USER_DATA_DIR").unwrap_or_else(|| {
             #[cfg(target_os = "macos")]
             {
                 home.join("Library/Application Support/Cursor")

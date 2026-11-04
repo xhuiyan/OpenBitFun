@@ -95,7 +95,7 @@ pub use framework::{
     ToolPathPolicy, ToolPathResolution, ToolRef, ToolRegistry, ToolRegistryItem, ToolRenderOptions,
     ToolRestrictionError, ToolResult, ToolRuntimeAssembly, ToolRuntimeRestrictions,
     ToolWorkspaceKind, ValidationResult, GET_TOOL_SPEC_TOOL_NAME,
-    OPENBITFUN_CURRENT_SESSION_URI_PREFIX, OPENBITFUN_RUNTIME_URI_PREFIX,
+    STARMATE_CURRENT_SESSION_URI_PREFIX, STARMATE_RUNTIME_URI_PREFIX,
 };
 pub use input_validator::InputValidator;
 #[cfg(feature = "mcp-bridge")]

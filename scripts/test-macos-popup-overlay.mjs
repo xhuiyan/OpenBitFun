@@ -38,9 +38,9 @@ try {
       });
     });
     const testArgs = ['native_popup_overlay_fixture', '--ignored', '--test-threads=1', '--nocapture'];
-    const command = process.env.OPENBITFUN_TEST_BINARY || 'cargo';
-    const args = process.env.OPENBITFUN_TEST_BINARY ? testArgs : ['test', '-p', 'starmate-computer-use', '--lib', 'native_popup_overlay_fixture', '--', ...testArgs.slice(1)];
-    await run(command, args, { ...process.env, OPENBITFUN_POPUP_FIXTURE_PID: pid, OPENBITFUN_POPUP_FIXTURE_RESULT: result });
+    const command = process.env.STARMATE_TEST_BINARY || 'cargo';
+    const args = process.env.STARMATE_TEST_BINARY ? testArgs : ['test', '-p', 'starmate-computer-use', '--lib', 'native_popup_overlay_fixture', '--', ...testArgs.slice(1)];
+    await run(command, args, { ...process.env, STARMATE_POPUP_FIXTURE_PID: pid, STARMATE_POPUP_FIXTURE_RESULT: result });
     const final = JSON.parse(await readFile(result, 'utf8'));
     assert.equal(final.popup_presses.length, 2, `${mode}: popup received exactly one press and release`);
     assert.ok(final.popup_presses.every(press => press.window_id === final.popup_window_id), `${mode}: presses carry the popup window`);

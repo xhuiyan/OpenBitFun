@@ -503,11 +503,11 @@ async fn external_browser_is_invisible_until_user_grants_access_and_disconnect_r
 #[tokio::test]
 #[ignore = "requires disposable Chromium and HTTP fixtures; run scripts/test-browser-workflow.mjs"]
 async fn real_browser_workflow() {
-    let port: u16 = std::env::var("OPENBITFUN_BROWSER_TEST_PORT")
+    let port: u16 = std::env::var("STARMATE_BROWSER_TEST_PORT")
         .unwrap()
         .parse()
         .unwrap();
-    let url = std::env::var("OPENBITFUN_BROWSER_TEST_URL").unwrap();
+    let url = std::env::var("STARMATE_BROWSER_TEST_URL").unwrap();
     let ctx = context("real-browser-workflow");
     let (unapproved, _) = call("list_pages", json!({"target":"external","port":port}), &ctx).await;
     assert_eq!(unapproved["error"]["code"], "NOT_AVAILABLE");
@@ -517,7 +517,7 @@ async fn real_browser_workflow() {
         port,
         port,
         &BrowserKind::Chrome,
-        &std::env::var("OPENBITFUN_BROWSER_TEST_WS").unwrap(),
+        &std::env::var("STARMATE_BROWSER_TEST_WS").unwrap(),
     )
     .await
     .unwrap();
@@ -543,7 +543,7 @@ async fn real_browser_workflow() {
     assert_eq!(opened["data"]["loaded"], true, "{opened}");
     assert!(snapshot.contains("Name"));
     let id = opened["data"]["session_id"].as_str().unwrap();
-    let other_port: u16 = std::env::var("OPENBITFUN_OTHER_BROWSER_TEST_PORT")
+    let other_port: u16 = std::env::var("STARMATE_OTHER_BROWSER_TEST_PORT")
         .unwrap()
         .parse()
         .unwrap();

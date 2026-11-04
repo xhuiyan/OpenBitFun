@@ -315,10 +315,10 @@ cargo test -p openbitfun-core --no-default-features --features agent-runtime,git
 ```
 
 The ignored `complete_shell_archive_replay` and `complete_shell_normal_sample_replay`
-tests take absolute JSONL input/report paths in `OPENBITFUN_SHELL_REPLAY_INPUT` /
-`OPENBITFUN_SHELL_REPLAY_OUTPUT` and `OPENBITFUN_SHELL_NORMAL_INPUT` /
-`OPENBITFUN_SHELL_NORMAL_OUTPUT`. They only analyze strings; never execute archived
-commands. The ignored Bash append integration test requires `OPENBITFUN_SHELL_TEST_BASH`
+tests take absolute JSONL input/report paths in `STARMATE_SHELL_REPLAY_INPUT` /
+`STARMATE_SHELL_REPLAY_OUTPUT` and `STARMATE_SHELL_NORMAL_INPUT` /
+`STARMATE_SHELL_NORMAL_OUTPUT`. They only analyze strings; never execute archived
+commands. The ignored Bash append integration test requires `STARMATE_SHELL_TEST_BASH`
 to name a trusted Bash 4+ executable and uses only isolated synthetic commands.
 
 For automatic/manual context compaction cancellation, preparation, and commit races, use:

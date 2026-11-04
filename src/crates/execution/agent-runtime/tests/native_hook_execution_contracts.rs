@@ -820,10 +820,10 @@ mod skill_hooks {
 #[tokio::test]
 async fn host_environment_defaults_reach_the_handler() {
     let engine = engine(
-        r#"{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"printf '%s' \"$OPENBITFUN_HOOK_ENV_PROBE\""}]}]}}"#,
+        r#"{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"printf '%s' \"$STARMATE_HOOK_ENV_PROBE\""}]}]}}"#,
     )
     .with_environment_defaults(std::collections::BTreeMap::from([(
-        "OPENBITFUN_HOOK_ENV_PROBE".to_string(),
+        "STARMATE_HOOK_ENV_PROBE".to_string(),
         "from-host".to_string(),
     )]));
 
@@ -840,7 +840,7 @@ async fn handler_environment_overrides_the_host_defaults() {
     let (settings, issues) = AgentHookSettings::from_layers(&[AgentHookSettingsLayer {
         scope: AgentHookScope::User,
         source: "test hooks.json".to_string(),
-        bytes: br#"{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"printf '%s' \"$OPENBITFUN_HOOK_ENV_PROBE\""}]}]}}"#.to_vec(),
+        bytes: br#"{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"printf '%s' \"$STARMATE_HOOK_ENV_PROBE\""}]}]}}"#.to_vec(),
     }]);
     assert!(issues.is_empty(), "unexpected settings issues: {issues:?}");
     let mut registration = settings
@@ -849,7 +849,7 @@ async fn handler_environment_overrides_the_host_defaults() {
         .expect("one command registration");
     registration = registration.with_command_options(CommandHookOptions {
         environment: std::collections::BTreeMap::from([(
-            "OPENBITFUN_HOOK_ENV_PROBE".to_string(),
+            "STARMATE_HOOK_ENV_PROBE".to_string(),
             "from-handler".to_string(),
         )]),
         ..Default::default()
@@ -860,7 +860,7 @@ async fn handler_environment_overrides_the_host_defaults() {
         .expect("valid registration");
     let engine = AgentHookEngine::with_registry(registry).with_environment_defaults(
         std::collections::BTreeMap::from([(
-            "OPENBITFUN_HOOK_ENV_PROBE".to_string(),
+            "STARMATE_HOOK_ENV_PROBE".to_string(),
             "from-host".to_string(),
         )]),
     );

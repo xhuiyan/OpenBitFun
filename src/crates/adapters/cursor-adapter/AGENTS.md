@@ -26,9 +26,9 @@ cargo test -p openbitfun-cursor-adapter --lib session::tests
 
 Optional installed-source verification (counts only):
 `cargo test -p openbitfun-cursor-adapter --lib inspect_installed_cursor -- --ignored --nocapture`.
-Set `OPENBITFUN_TEST_CURSOR_SESSION_ID` to the real two-turn validation fixture:
+Set `STARMATE_TEST_CURSOR_SESSION_ID` to the real two-turn validation fixture:
 three Read calls (one missing file), one Write, and final `CURSOR_IMPORT_OK` /
 `CURSOR_RESUME_OK` markers. Ordinary user sessions are not this assertion fixture.
 Use Cursor's `CURSOR_CONFIG_DIR` and `CURSOR_DATA_DIR` for an isolated CLI home.
-`OPENBITFUN_CURSOR_USER_DATA_DIR` selects a custom desktop user-data root for
+`STARMATE_CURSOR_USER_DATA_DIR` selects a custom desktop user-data root for
 OpenBitFun discovery; it does not configure Cursor itself.

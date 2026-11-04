@@ -26,9 +26,9 @@ mod windows_process_cleanup {
     };
 
     const FIXTURE_TEST: &str = "windows_process_cleanup::fixture_process";
-    const FIXTURE_ROLE: &str = "OPENBITFUN_PROCESS_CLEANUP_FIXTURE";
-    const FIXTURE_DIR: &str = "OPENBITFUN_PROCESS_CLEANUP_DIR";
-    const HOST_PID: &str = "OPENBITFUN_PROCESS_CLEANUP_HOST_PID";
+    const FIXTURE_ROLE: &str = "STARMATE_PROCESS_CLEANUP_FIXTURE";
+    const FIXTURE_DIR: &str = "STARMATE_PROCESS_CLEANUP_DIR";
+    const HOST_PID: &str = "STARMATE_PROCESS_CLEANUP_HOST_PID";
 
     #[tokio::test]
     async fn empty_cleanup_returns_and_handoff_survives_host_exit() {
@@ -260,7 +260,7 @@ mod platform_path_environment {
 
     /// Set only in the probe child, so the parent test can run the assertion
     /// with a deliberately narrow `PATH`.
-    const PROBE_ENV: &str = "OPENBITFUN_PLATFORM_PATH_PROBE";
+    const PROBE_ENV: &str = "STARMATE_PLATFORM_PATH_PROBE";
     const NARROW_PATH: &str = "/openbitfun-probe-missing";
 
     #[test]

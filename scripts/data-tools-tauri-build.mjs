@@ -40,15 +40,15 @@ export function prepareDataToolsTauriConfig(
 // branded Desktop build's data namespace or sibling-executable projections.
 export function dataToolsEnvironment(environment = process.env) {
   const result = { ...environment };
-  delete result.OPENBITFUN_DESKTOP_BINARY_NAME;
+  delete result.STARMATE_DESKTOP_BINARY_NAME;
   return {
     ...result,
     CI: 'true',
-    OPENBITFUN_PRODUCT_ID: 'openbitfun',
-    OPENBITFUN_DATA_NAMESPACE: 'openbitfun',
-    OPENBITFUN_HIDDEN_DATA_DIRECTORY: '.openbitfun',
-    OPENBITFUN_PRODUCT_BINARY_NAME: 'openbitfun-data-tools',
-    OPENBITFUN_PRODUCT_DISPLAY_NAME: 'StarMate Data Tools',
+    STARMATE_PRODUCT_ID: 'openbitfun',
+    STARMATE_DATA_NAMESPACE: 'openbitfun',
+    STARMATE_HIDDEN_DATA_DIRECTORY: '.openbitfun',
+    STARMATE_PRODUCT_BINARY_NAME: 'openbitfun-data-tools',
+    STARMATE_PRODUCT_DISPLAY_NAME: 'StarMate Data Tools',
   };
 }
 

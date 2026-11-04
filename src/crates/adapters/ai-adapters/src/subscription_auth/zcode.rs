@@ -798,7 +798,7 @@ mod tests {
     #[tokio::test]
     #[ignore = "Creates short-lived ZCode authorization flows; never polls, authorizes, or stores an account"]
     async fn live_browser_authorization_init() {
-        let proxy = std::env::var("OPENBITFUN_LIVE_SUBSCRIPTION_PROXY")
+        let proxy = std::env::var("STARMATE_LIVE_SUBSCRIPTION_PROXY")
             .ok()
             .map(|url| crate::types::ProxyConfig {
                 enabled: true,
@@ -824,7 +824,7 @@ mod tests {
     #[tokio::test]
     #[ignore = "Reads the real public ZCode catalogs; no account or inference credentials are used"]
     async fn live_public_coding_catalogs() {
-        let proxy = std::env::var("OPENBITFUN_LIVE_SUBSCRIPTION_PROXY")
+        let proxy = std::env::var("STARMATE_LIVE_SUBSCRIPTION_PROXY")
             .ok()
             .map(|url| crate::types::ProxyConfig {
                 enabled: true,

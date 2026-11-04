@@ -117,8 +117,8 @@ Compared on 2026-09-08 against [OpenCode v1.18.29](https://github.com/anomalyco/
   The ignored `providers::opencode::tests::live_mimo_public_connection` test
   sends a synthetic prompt and the settings connection probe over real network
   transport. Run it explicitly with `-- --ignored --nocapture`; set
-  `OPENBITFUN_LIVE_OPENCODE_PROXY` only for an explicit proxy, or
-  `OPENBITFUN_LIVE_OPENCODE_CONFIG` to verify an explicitly selected local
+  `STARMATE_LIVE_OPENCODE_PROXY` only for an explicit proxy, or
+  `STARMATE_LIVE_OPENCODE_CONFIG` to verify an explicitly selected local
   application config's public MiMo model and proxy. The latter requires the
   selected model to have API-key auth with literal `public`; it never resolves
   OAuth or prints credentials. This proves the tested network at that time,
@@ -198,8 +198,8 @@ Responses models; an empty or failed read stays an error.
 Focused checks: `cargo test --locked -p openbitfun-ai-adapters --features
 subscription-auth --lib subscription_auth::grok` and the shared-header command
 below. The ignored `subscription_auth::grok::tests::live_grok_model_catalog`
-accepts `OPENBITFUN_LIVE_GROK_ACCOUNT` (an exact in-app slot) and optionally
-`OPENBITFUN_LIVE_SUBSCRIPTION_PROXY`. It may refresh that slot, then exercises
+accepts `STARMATE_LIVE_GROK_ACCOUNT` (an exact in-app slot) and optionally
+`STARMATE_LIVE_SUBSCRIPTION_PROXY`. It may refresh that slot, then exercises
 production discovery without inference or reading third-party credentials.
 This verifies the selected host's catalog, not generation eligibility or remote
 transport behavior.
@@ -230,7 +230,7 @@ Focused checks: `cargo test --locked -p openbitfun-ai-adapters --features
 subscription-auth --lib subscription_auth` and `cargo test --locked -p
 openbitfun-ai-adapters --features subscription-auth --lib providers`.
 The ignored `subscription_auth::browser_poll::tests::live_browser_authorization_endpoints`
-probe accepts an optional `OPENBITFUN_LIVE_SUBSCRIPTION_PROXY`, creates short-lived
+probe accepts an optional `STARMATE_LIVE_SUBSCRIPTION_PROXY`, creates short-lived
 flows, prints browser hosts only, and never polls, authorizes, or stores an account.
 It verifies initiation only, not inference or any remote transport scenario. The
 ZCode-only probe is
@@ -368,7 +368,7 @@ A successful Grok billing response may include a current period/reset without
 `creditUsagePercent`. Retain the period with unknown usage instead of reporting
 a query failure or inventing zero usage. The ignored
 `subscription_auth::vendor_quota::tests::live_grok_quota_diagnostic` uses
-`OPENBITFUN_LIVE_GROK_ACCOUNT` and optional `OPENBITFUN_LIVE_SUBSCRIPTION_PROXY`
+`STARMATE_LIVE_GROK_ACCOUNT` and optional `STARMATE_LIVE_SUBSCRIPTION_PROXY`
 to verify billing and the production quota read for that exact in-app slot. It
 may refresh credentials and quota cache, prints only response field names/status,
 and sends no inference request. This does not verify remote-host behavior.

@@ -58,7 +58,7 @@ cargo build --locked -p openbitfun-cli --bin openbitfun
 ```
 
 启动脚本默认使用 `target/debug/openbitfun`。如果使用 release 构建或复制到其他位置的
-二进制文件，请通过 `OPENBITFUN_BIN` 指定路径。
+二进制文件，请通过 `STARMATE_BIN` 指定路径。
 
 ## 连接远程 Router
 
@@ -207,7 +207,7 @@ Fast 增量摘要：     开启；触发门槛上限 8192 个预算 tokens，预
 `ROUTER_SUMMARY_MAX_TOKENS`、`ROUTER_SUMMARY_TARGET_TOKENS`、
 `ROUTER_SUMMARY_REASONING_PRESET` 和 `ROUTER_SUMMARY_TIMEOUT_MS` 覆盖这些默认值。
 未指定正文目标时取生成上限的一半与 4096 的较小值，以兼容已有的较小生成上限；显式目标
-必须为正数且不大于生成上限。直接运行宿主时使用相应的 `OPENBITFUN_ROUND_ROUTER_*` 变量。
+必须为正数且不大于生成上限。直接运行宿主时使用相应的 `STARMATE_ROUND_ROUTER_*` 变量。
 
 65536 是当前客户端默认值，不代表任意部署的真实窗口或训练长度。应按实际服务配置设置
 输入上限和上下文窗口；OpenBitFun 会扣除固定 system prompt、128 个输出 tokens、
@@ -220,8 +220,8 @@ Fast 增量摘要：     开启；触发门槛上限 8192 个预算 tokens，预
 空闲执行槽可以借用。根分组是调度隔离机制，不表示子代理参与路由；当前只有符合条件的
 主对话发起分类请求。这是进程内公平调度，多宿主共用服务仍需服务端限制总容量。
 排队和网络请求共用超时，队列满或超时仍按现有路径回退主力模型，取消会立即释放等待位置。
-可在启动宿主前设置 `OPENBITFUN_ROUND_ROUTER_MAX_CONCURRENT`（默认 2）和
-`OPENBITFUN_ROUND_ROUTER_MAX_QUEUED`（默认 32，允许 0）；GUI 与环境变量配置都使用这些
+可在启动宿主前设置 `STARMATE_ROUND_ROUTER_MAX_CONCURRENT`（默认 2）和
+`STARMATE_ROUND_ROUTER_MAX_QUEUED`（默认 32，允许 0）；GUI 与环境变量配置都使用这些
 宿主级限制。活动服务的额度变更需要重启宿主，服务端及其他进程仍有各自的容量与队列。
 这些设置限制同时请求数，不代表 Router 服务已具备相应吞吐量。
 
@@ -267,7 +267,7 @@ history，不计算也不持久化 summary 的 tokens。
 保留原状态；同一 Router round 内不会循环重试，下一轮会重新压缩现有的 summary + pending，
 不需要重新积累一份触发量，也不回退到主力模型做摘要。摘要请求使用辅助模型
 本身的 provider 和采样配置，不套用主 Agent 的 reasoning preset。可通过
-`OPENBITFUN_ROUND_ROUTER_SUMMARY_REASONING_PRESET=low` 给摘要单独选择已支持的推理档位；
+`STARMATE_ROUND_ROUTER_SUMMARY_REASONING_PRESET=low` 给摘要单独选择已支持的推理档位；
 未设置或 `auto` 时，只从明确匹配的模型目录、模型专属适配器或用户声明的预设中选择最低
 支持档位。未知服务仅有通用手动候选时，不自动添加 `low` 或关闭思考；保留该模型的显式默认
 和自定义请求体，默认档位为 Auto 时跟随服务端。自动选择遵循模型默认层的请求体覆盖规则，
@@ -329,13 +329,13 @@ Router 会随着摘要更新重新排列输入，因此不能直接套用主模�
 
 旧配置中的 tokenizer 路径仍可作为可选高级设置读取。使用启动脚本时可显式设置
 `ROUTER_TOKENIZER_PATH=/absolute/path/tokenizer.json`，直接启动宿主时对应
-`OPENBITFUN_ROUND_ROUTER_TOKENIZER_PATH`；启动脚本不会默认注入任何分词文件路径，显式设置
+`STARMATE_ROUND_ROUTER_TOKENIZER_PATH`；启动脚本不会默认注入任何分词文件路径，显式设置
 `ROUTER_TOKENIZER_PATH` 才会覆盖继承的宿主变量。文件应与服务端模型一致。文件不可用时记录警告并
 回退到估算，不会因此要求用户下载文件或阻止智能模式。即使使用本地 tokenizer，服务端模板
 和特殊 token 开销仍需要预留与校准。
 
 CLI 与 Desktop 共用此 Core 路径；无需分别实现压缩。在不经启动脚本的 Desktop/CLI 宿主上，
-使用对应的 `OPENBITFUN_ROUND_ROUTER_*` 环境变量（例如 `..._MAX_INPUT_TOKENS`、
+使用对应的 `STARMATE_ROUND_ROUTER_*` 环境变量（例如 `..._MAX_INPUT_TOKENS`、
 `..._SUMMARY_TRIGGER_TOKENS`）。远程工作区、远程控制、Peer 或 Detached Dispatch 均由
 **真正执行 turn 的宿主**准备
 Router 上下文并访问 Router/辅助摘要 API，其配置、凭证及可选本地资源均属于执行宿主。

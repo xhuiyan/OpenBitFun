@@ -4,7 +4,7 @@ use starmate_product_domains::miniapp::market::{
     MarketPackageMeta, MARKET_MAX_PACKAGE_BYTES, MARKET_MAX_SCREENSHOT_BYTES,
     MARKET_MAX_UNCOMPRESSED_BYTES,
 };
-use starmate_product_domains::product_release::OPENBITFUN_INITIAL_RELEASE_VERSION;
+use starmate_product_domains::product_release::STARMATE_INITIAL_RELEASE_VERSION;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, HashSet};
@@ -416,7 +416,7 @@ pub fn validate_min_openbitfun_version(value: &str) -> MarketResult<()> {
             "minStarMateVersion must use semantic version syntax, for example 1.0.0.",
         )
     })?;
-    if version < OPENBITFUN_INITIAL_RELEASE_VERSION {
+    if version < STARMATE_INITIAL_RELEASE_VERSION {
         return Err(MarketError::bad_request(
             "invalid_min_openbitfun_version",
             "minStarMateVersion must be 1.0.0 or newer.",

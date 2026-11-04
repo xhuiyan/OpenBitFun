@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 use crate::agentic::core::message::{MemoryCitation, MemoryCitationEntry};
 use starmate_agent_stream::{HiddenTextStreamParser, HiddenTextTag};
 
-const OPENBITFUN_MEMORY_CITATION_OPEN: &str = "<openbitfun-mem-citation>";
-const OPENBITFUN_MEMORY_CITATION_CLOSE: &str = "</openbitfun-mem-citation>";
+const STARMATE_MEMORY_CITATION_OPEN: &str = "<openbitfun-mem-citation>";
+const STARMATE_MEMORY_CITATION_CLOSE: &str = "</openbitfun-mem-citation>";
 const CITATION_ENTRIES_OPEN: &str = "<citation_entries>";
 const CITATION_ENTRIES_CLOSE: &str = "</citation_entries>";
 const ROLLOUT_IDS_OPEN: &str = "<rollout_ids>";
@@ -64,8 +64,8 @@ where
 pub fn strip_openbitfun_memory_citations(text: &str) -> (String, Vec<String>) {
     let mut parser = HiddenTextStreamParser::new(vec![HiddenTextTag::new(
         "memory_citation",
-        OPENBITFUN_MEMORY_CITATION_OPEN,
-        OPENBITFUN_MEMORY_CITATION_CLOSE,
+        STARMATE_MEMORY_CITATION_OPEN,
+        STARMATE_MEMORY_CITATION_CLOSE,
     )]);
     let mut parsed = parser.push_str(text);
     let tail = parser.finish();

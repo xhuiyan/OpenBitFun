@@ -4491,13 +4491,13 @@ pub(super) mod tests {
                         "--nocapture",
                         "--test-threads=1",
                     ])
-                    .env("OPENBITFUN_ACCOUNT_RESTART_FIXTURE", &manifest)
-                    .env("OPENBITFUN_ACCOUNT_RESTART_PHASE", phase)
-                    .env("OPENBITFUN_E2E_STORAGE_GUARD", "1")
-                    .env("OPENBITFUN_E2E_USER_ROOT", dir.path().join("host"))
-                    .env("OPENBITFUN_E2E_HOME", dir.path().join("home"))
-                    .env_remove("OPENBITFUN_USER_ROOT")
-                    .env_remove("OPENBITFUN_HOME")
+                    .env("STARMATE_ACCOUNT_RESTART_FIXTURE", &manifest)
+                    .env("STARMATE_ACCOUNT_RESTART_PHASE", phase)
+                    .env("STARMATE_E2E_STORAGE_GUARD", "1")
+                    .env("STARMATE_E2E_USER_ROOT", dir.path().join("host"))
+                    .env("STARMATE_E2E_HOME", dir.path().join("home"))
+                    .env_remove("STARMATE_USER_ROOT")
+                    .env_remove("STARMATE_HOME")
                     .kill_on_drop(true);
                 let output = tokio::time::timeout(Duration::from_secs(20), command.output())
                     .await
@@ -4616,13 +4616,13 @@ pub(super) mod tests {
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
         use starmate_services_core::token_usage::types::ModelRequestOutcome;
         let manifest_path = std::path::PathBuf::from(
-            std::env::var_os("OPENBITFUN_ACCOUNT_RESTART_FIXTURE")
+            std::env::var_os("STARMATE_ACCOUNT_RESTART_FIXTURE")
                 .expect("only the restart parent may invoke this fixture"),
         );
         let root = manifest_path.parent().unwrap();
         let manifest: serde_json::Value =
             serde_json::from_slice(&std::fs::read(&manifest_path).unwrap()).unwrap();
-        let phase = std::env::var("OPENBITFUN_ACCOUNT_RESTART_PHASE").unwrap();
+        let phase = std::env::var("STARMATE_ACCOUNT_RESTART_PHASE").unwrap();
         assert!(matches!(phase.as_str(), "seed" | "resume" | "replay"));
         let backup_id = manifest["backupId"].as_str().unwrap();
         let opaque = manifest["opaque"].as_bool().unwrap();

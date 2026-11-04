@@ -1,6 +1,6 @@
 import { ArrowRight, Download as DownloadSimple } from 'lucide-react';
 import type { MessageKey } from './i18n';
-import { OPENBITFUN_DOWNLOAD_URL } from './links';
+import { STARMATE_DOWNLOAD_URL } from './links';
 
 // A .bfminiapp package is useless without the desktop client, so the catalog
 // and every listing keep one explicit path to the official download page.
@@ -16,7 +16,7 @@ export function GetOpenBitFunCta({
   return (
     <a
       className={`get-openbitfun get-openbitfun-${placement}`}
-      href={OPENBITFUN_DOWNLOAD_URL}
+      href={STARMATE_DOWNLOAD_URL}
       target="_blank"
       rel="noreferrer"
     >

@@ -607,7 +607,7 @@ mod tests {
 
     #[test]
     fn mcp_process_timeout_child() {
-        if std::env::var_os("OPENBITFUN_MCP_PROCESS_TIMEOUT_CHILD").is_some() {
+        if std::env::var_os("STARMATE_MCP_PROCESS_TIMEOUT_CHILD").is_some() {
             std::thread::sleep(Duration::from_secs(30));
         }
     }
@@ -621,7 +621,7 @@ mod tests {
             "--nocapture".to_string(),
         ];
         let environment = HashMap::from([(
-            "OPENBITFUN_MCP_PROCESS_TIMEOUT_CHILD".to_string(),
+            "STARMATE_MCP_PROCESS_TIMEOUT_CHILD".to_string(),
             "1".to_string(),
         )]);
         let mut process = MCPServerProcess::new(

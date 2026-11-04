@@ -281,7 +281,7 @@ mod tests {
 
     #[tokio::test]
     async fn capacity_process_fixture() {
-        let Some(directory) = std::env::var_os("OPENBITFUN_CAPACITY_FIXTURE_DIR") else {
+        let Some(directory) = std::env::var_os("STARMATE_CAPACITY_FIXTURE_DIR") else {
             return;
         };
         let directory = PathBuf::from(directory);
@@ -316,7 +316,7 @@ mod tests {
                     "resource_capacity::tests::capacity_process_fixture",
                     "--nocapture",
                 ])
-                .env("OPENBITFUN_CAPACITY_FIXTURE_DIR", directory.path())
+                .env("STARMATE_CAPACITY_FIXTURE_DIR", directory.path())
                 .stdout(std::process::Stdio::null())
                 .stderr(std::process::Stdio::null())
                 .spawn()

@@ -120,7 +120,7 @@ const PersistentFooterActions: React.FC = () => {
   const handleOpenFeedback = useCallback(() => {
     closeMenu();
     const account = accountIdentity.status === 'signed-in' ? accountIdentity.me?.user : undefined;
-    const url = buildPublicFeedbackFormUrl(import.meta.env.VITE_OPENBITFUN_FEEDBACK_FORM_URL, {
+    const url = buildPublicFeedbackFormUrl(import.meta.env.VITE_STARMATE_FEEDBACK_FORM_URL, {
       uid: account?.accountId ?? account?.githubId,
       version: getVersionInfo().version,
       deviceInfo: typeof navigator === 'undefined' ? undefined : navigator.userAgent,

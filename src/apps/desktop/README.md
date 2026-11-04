@@ -129,7 +129,7 @@ out closes both connections.
 
 Put personal instructions for local OpenBitFun sessions in
 `~/.openbitfun/AGENTS.md` (`%USERPROFILE%\.openbitfun\AGENTS.md` on Windows).
-If `OPENBITFUN_HOME` is set, the file is read from that directory instead.
+If `STARMATE_HOME` is set, the file is read from that directory instead.
 A non-empty file replaces Codex's global instructions, including
 `AGENTS.override.md`. If the OpenBitFun file is missing, empty, or whitespace-only,
 OpenBitFun keeps loading Codex's global instructions as before. OpenCode,
@@ -703,10 +703,10 @@ different ports. Changing ports alone does not separate the development host
 that owns the shared product data:
 
 ```sh
-OPENBITFUN_DEV_PORT=1432 pnpm run desktop:dev -- --isolated-data
+STARMATE_DEV_PORT=1432 pnpm run desktop:dev -- --isolated-data
 ```
 
-HMR uses port 1431 in this example; `OPENBITFUN_DEV_HMR_PORT` can override it.
+HMR uses port 1431 in this example; `STARMATE_DEV_HMR_PORT` can override it.
 The launcher supplies the same HTTP URL to Tauri that Vite listens on, and both
 the main window and companion window read that configured URL.
 

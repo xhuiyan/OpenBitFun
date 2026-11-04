@@ -274,9 +274,9 @@ mod tests {
         use starmate_services_core::process_manager::create_tokio_command;
         use std::time::Duration;
 
-        const CHILD: &str = "OPENBITFUN_HTTP_PROXY_FIXTURE_CHILD";
-        const DIRECT_URL: &str = "OPENBITFUN_HTTP_PROXY_FIXTURE_DIRECT";
-        const EXPLICIT_PROXY: &str = "OPENBITFUN_HTTP_PROXY_FIXTURE_EXPLICIT";
+        const CHILD: &str = "STARMATE_HTTP_PROXY_FIXTURE_CHILD";
+        const DIRECT_URL: &str = "STARMATE_HTTP_PROXY_FIXTURE_DIRECT";
+        const EXPLICIT_PROXY: &str = "STARMATE_HTTP_PROXY_FIXTURE_EXPLICIT";
         const TEST_NAME: &str = "client::http::tests::router_proxy_policy_preserves_environment_explicit_and_disabled_routes";
 
         if std::env::var(CHILD).as_deref() == Ok("1") {

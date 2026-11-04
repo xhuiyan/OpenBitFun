@@ -334,7 +334,7 @@ fn shell_single_quote_preserves_existing_remote_escape_style() {
 fn noninteractive_terminal_env_preserves_agent_session_contract() {
     let env = noninteractive_terminal_env();
     assert_eq!(
-        env.get("OPENBITFUN_NONINTERACTIVE").map(String::as_str),
+        env.get("STARMATE_NONINTERACTIVE").map(String::as_str),
         Some("1")
     );
     assert_eq!(env.get("GIT_PAGER").map(String::as_str), Some("cat"));

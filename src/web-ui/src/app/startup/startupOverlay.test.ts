@@ -11,7 +11,7 @@ import {
 
 afterEach(() => {
   document.body.innerHTML = '';
-  delete window.__OPENBITFUN_STARTUP_OVERLAY_STARTED_AT__;
+  delete window.__STARMATE_STARTUP_OVERLAY_STARTED_AT__;
   Reflect.deleteProperty(document, 'fonts');
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
@@ -76,7 +76,7 @@ describe('startupOverlay', () => {
 
   it('tracks elapsed time from the static overlay first paint', () => {
     vi.spyOn(performance, 'now').mockReturnValue(1500);
-    window.__OPENBITFUN_STARTUP_OVERLAY_STARTED_AT__ = 1200;
+    window.__STARMATE_STARTUP_OVERLAY_STARTED_AT__ = 1200;
 
     expect(getStartupOverlayElapsedMs()).toBe(300);
   });

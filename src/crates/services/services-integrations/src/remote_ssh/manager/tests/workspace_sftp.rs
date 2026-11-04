@@ -941,10 +941,10 @@ async fn timed_out_create_retires_only_sftp_without_replaying_mutation() {
 }
 
 #[tokio::test]
-#[ignore = "Set OPENBITFUN_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
+#[ignore = "Set STARMATE_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
 async fn openssh_real_files_over_loopback_ssh() {
     use tokio::io::{AsyncSeekExt, AsyncWriteExt};
-    let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER")
+    let executable = std::env::var("STARMATE_TEST_SFTP_SERVER")
         .expect("OpenSSH sftp-server executable required");
     let f = Fixture::with_openssh(Some(executable)).await;
     let path = f
@@ -1011,7 +1011,7 @@ async fn openssh_real_files_over_loopback_ssh() {
 
 #[cfg(feature = "remote-connect")]
 #[tokio::test]
-#[ignore = "Set OPENBITFUN_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
+#[ignore = "Set STARMATE_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
 async fn openssh_html_preview_reads_nested_site_resources() {
     use crate::remote_connect::{
         file_projection::SessionFileTarget, html_preview::HtmlPreviewSource,
@@ -1021,7 +1021,7 @@ async fn openssh_html_preview_reads_nested_site_resources() {
     use starmate_product_domains::html_preview::{
         HtmlPreviewErrorCode, HtmlPreviewResourceRequest, PREVIEW_CHUNK_BYTES,
     };
-    let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER").unwrap();
+    let executable = std::env::var("STARMATE_TEST_SFTP_SERVER").unwrap();
     let f = Fixture::with_openssh(Some(executable)).await;
     let root = f._dir.path().canonicalize().unwrap();
     std::fs::create_dir_all(root.join("website/dist/assets")).unwrap();
@@ -1123,7 +1123,7 @@ async fn openssh_html_preview_reads_nested_site_resources() {
 
 #[cfg(feature = "remote-connect")]
 #[tokio::test]
-#[ignore = "Performance experiment: set OPENBITFUN_TEST_SFTP_SERVER; adds 40 ms to each SFTP reply"]
+#[ignore = "Performance experiment: set STARMATE_TEST_SFTP_SERVER; adds 40 ms to each SFTP reply"]
 async fn openssh_html_preview_loading_benchmark() {
     use crate::remote_connect::{
         file_projection::SessionFileTarget,
@@ -1131,7 +1131,7 @@ async fn openssh_html_preview_loading_benchmark() {
     };
     use crate::remote_ssh::workspace_services::RemoteWorkspaceFs;
     use starmate_product_domains::html_preview::HtmlPreviewResourceRequest;
-    let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER").unwrap();
+    let executable = std::env::var("STARMATE_TEST_SFTP_SERVER").unwrap();
     let f = Fixture::with_openssh(Some(executable)).await;
     f.state.response_delay_ms.store(40, Ordering::SeqCst);
     let root = f._dir.path().canonicalize().unwrap();
@@ -1181,10 +1181,10 @@ async fn openssh_html_preview_loading_benchmark() {
 
 #[cfg(unix)]
 #[tokio::test]
-#[ignore = "Set OPENBITFUN_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
+#[ignore = "Set STARMATE_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
 async fn openssh_directory_symlink_browsing() {
     use std::os::unix::fs::symlink;
-    let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER")
+    let executable = std::env::var("STARMATE_TEST_SFTP_SERVER")
         .expect("OpenSSH sftp-server executable required");
     let f = Fixture::with_openssh(Some(executable)).await;
     let service = crate::remote_ssh::RemoteFileService::new(Arc::new(tokio::sync::RwLock::new(
@@ -1397,10 +1397,10 @@ async fn mkdir_all_after_the_subsystem_channel_closed_replays_on_a_new_channel()
 }
 
 #[tokio::test]
-#[ignore = "Set OPENBITFUN_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
+#[ignore = "Set STARMATE_TEST_SFTP_SERVER to the OpenSSH sftp-server executable"]
 async fn openssh_streaming_upload_create_is_exclusive_and_closes_handle() {
     use tokio::io::AsyncWriteExt;
-    let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER")
+    let executable = std::env::var("STARMATE_TEST_SFTP_SERVER")
         .expect("OpenSSH sftp-server executable required");
     let f = Fixture::with_openssh(Some(executable)).await;
     let path = f

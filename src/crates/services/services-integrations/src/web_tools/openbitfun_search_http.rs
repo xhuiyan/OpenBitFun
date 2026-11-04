@@ -12,8 +12,8 @@ use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use std::net::IpAddr;
 
-const OPENBITFUN_SEARCH_TIMEOUT_SECS: u64 = 60;
-const OPENBITFUN_SEARCH_MEDIA_TYPE: &str = "application/vnd.openbitfun.web-search.v1+json";
+const STARMATE_SEARCH_TIMEOUT_SECS: u64 = 60;
+const STARMATE_SEARCH_MEDIA_TYPE: &str = "application/vnd.openbitfun.web-search.v1+json";
 
 pub enum StarMateSearchHttpAuth {
     None,
@@ -31,7 +31,7 @@ impl StarMateSearchHttpProvider {
         endpoint: impl AsRef<str>,
         auth: StarMateSearchHttpAuth,
     ) -> Result<Self, WebSearchError> {
-        let provider = WebSearchProviderId::new(WebSearchProviderId::OPENBITFUN_SEARCH_HTTP);
+        let provider = WebSearchProviderId::new(WebSearchProviderId::STARMATE_SEARCH_HTTP);
         let endpoint = Url::parse(endpoint.as_ref()).map_err(|error| {
             WebSearchError::new(
                 provider.clone(),
@@ -86,16 +86,16 @@ struct ProtocolErrorBody {
 #[async_trait]
 impl WebSearchProvider for StarMateSearchHttpProvider {
     fn id(&self) -> WebSearchProviderId {
-        WebSearchProviderId::new(WebSearchProviderId::OPENBITFUN_SEARCH_HTTP)
+        WebSearchProviderId::new(WebSearchProviderId::STARMATE_SEARCH_HTTP)
     }
 
     async fn search(&self, request: WebSearchRequest) -> Result<WebSearchResponse, WebSearchError> {
         let provider = self.id();
         validate_search_request(provider.clone(), &request)?;
-        let client = search_client(provider.clone(), OPENBITFUN_SEARCH_TIMEOUT_SECS)?;
+        let client = search_client(provider.clone(), STARMATE_SEARCH_TIMEOUT_SECS)?;
         let mut builder = client
             .post(self.endpoint.clone())
-            .header(ACCEPT, OPENBITFUN_SEARCH_MEDIA_TYPE)
+            .header(ACCEPT, STARMATE_SEARCH_MEDIA_TYPE)
             .json(&ProtocolRequest {
                 query: &request.query,
                 max_results: request.max_results,
@@ -289,7 +289,7 @@ fn validate_content_type(
         .unwrap_or_default()
         .to_ascii_lowercase();
     if content_type.starts_with("application/json")
-        || content_type.starts_with(OPENBITFUN_SEARCH_MEDIA_TYPE)
+        || content_type.starts_with(STARMATE_SEARCH_MEDIA_TYPE)
     {
         return Ok(());
     }

@@ -1298,9 +1298,9 @@ fn is_dispatch_command(command: &Option<Commands>) -> bool {
 
 async fn run_cli() -> Result<()> {
     let raw_args = std::env::args_os().collect::<Vec<_>>();
-    let product_binary_name = option_env!("OPENBITFUN_PRODUCT_BINARY_NAME").unwrap_or("openbitfun");
+    let product_binary_name = option_env!("STARMATE_PRODUCT_BINARY_NAME").unwrap_or("openbitfun");
     let product_display_name =
-        option_env!("OPENBITFUN_PRODUCT_DISPLAY_NAME").unwrap_or("StarMate CLI");
+        option_env!("STARMATE_PRODUCT_DISPLAY_NAME").unwrap_or("StarMate CLI");
     let parsed = Cli::command()
         .name(product_binary_name)
         .bin_name(product_binary_name)

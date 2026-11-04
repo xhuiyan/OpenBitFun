@@ -357,7 +357,7 @@ fn handle_secondary_launch(app: &tauri::AppHandle) {
 }
 
 pub(crate) fn e2e_storage_guard_enabled() -> bool {
-    std::env::var("OPENBITFUN_E2E_STORAGE_GUARD")
+    std::env::var("STARMATE_E2E_STORAGE_GUARD")
         .ok()
         .is_some_and(|value| value == "1" || value.eq_ignore_ascii_case("true"))
 }
@@ -449,12 +449,12 @@ pub async fn run() {
             paths.user_data_dir().join("subscription_auth.json"),
         );
         #[cfg(not(debug_assertions))]
-        if std::env::var_os("OPENBITFUN_E2E_SUBSCRIPTION_CA_FILE").is_some() {
+        if std::env::var_os("STARMATE_E2E_SUBSCRIPTION_CA_FILE").is_some() {
             eprintln!("Isolated subscription mock TLS requires a debug build");
             return;
         }
         #[cfg(debug_assertions)]
-        if let Some(certificate_path) = std::env::var_os("OPENBITFUN_E2E_SUBSCRIPTION_CA_FILE") {
+        if let Some(certificate_path) = std::env::var_os("STARMATE_E2E_SUBSCRIPTION_CA_FILE") {
             let result = std::fs::read(certificate_path)
                 .map_err(|error| error.to_string())
                 .and_then(|pem| starmate_core::infrastructure::subscription_auth::set_isolated_http_root_certificate_for_test(&pem).map_err(|error| error.to_string()));
@@ -769,7 +769,7 @@ pub async fn run() {
         // port are already test-scoped, so joining the product single-instance
         // group would make the E2E child exit before WebDriver can attach.
         if !logging::is_embedded_webdriver_mode()
-            && std::env::var_os("OPENBITFUN_USER_ROOT").is_none()
+            && std::env::var_os("STARMATE_USER_ROOT").is_none()
             && miniapp_host_channel.is_default()
         {
             builder = builder.plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
@@ -873,10 +873,10 @@ pub async fn run() {
                     .join("../../..")
                     .join("dist");
                 #[cfg(debug_assertions)]
-                let development_dist = if std::env::var("OPENBITFUN_E2E_STORAGE_GUARD").as_deref() == Ok("1")
-                    && std::env::var("OPENBITFUN_E2E_PACKAGED_FRONTEND").as_deref() == Ok("1")
+                let development_dist = if std::env::var("STARMATE_E2E_STORAGE_GUARD").as_deref() == Ok("1")
+                    && std::env::var("STARMATE_E2E_PACKAGED_FRONTEND").as_deref() == Ok("1")
                 {
-                    std::env::var_os("OPENBITFUN_E2E_FRONTEND_DIR").map(PathBuf::from).unwrap_or(development_dist)
+                    std::env::var_os("STARMATE_E2E_FRONTEND_DIR").map(PathBuf::from).unwrap_or(development_dist)
                 } else { development_dist };
                 development_dist
                     .join("index.html")

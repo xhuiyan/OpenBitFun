@@ -956,8 +956,8 @@ mod tests {
     #[test]
     #[ignore = "Read-only inspection of one installed Codex thread, selected by environment variable"]
     fn inspect_installed_codex_thread_history() {
-        let id = std::env::var("OPENBITFUN_TEST_CODEX_THREAD")
-            .expect("Set OPENBITFUN_TEST_CODEX_THREAD");
+        let id = std::env::var("STARMATE_TEST_CODEX_THREAD")
+            .expect("Set STARMATE_TEST_CODEX_THREAD");
         let reader = CodexSessionReader::default();
         let catalog = reader.discover_all().unwrap();
         let candidates = catalog

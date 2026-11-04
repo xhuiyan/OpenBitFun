@@ -447,7 +447,7 @@ fn compaction_requires_full_history_and_orphan_items_are_reported() {
 #[test]
 #[ignore = "Read-only installed Codex catalog and history inspection, printing only aggregate counts"]
 fn inspect_installed_codex_paginated_workspace() {
-    let workspace = std::env::var("OPENBITFUN_TEST_CODEX_WORKSPACE").ok();
+    let workspace = std::env::var("STARMATE_TEST_CODEX_WORKSPACE").ok();
     let normalize = |path: &str| {
         let path = path.strip_prefix("\\\\?\\").unwrap_or(path);
         if cfg!(windows) {

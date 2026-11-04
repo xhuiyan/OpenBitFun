@@ -403,7 +403,7 @@ impl SkillRegistry {
                         match fs.read_file_text_bounded(&skill_md, MAX_SKILL_BYTES).await {
                             Ok(Some(content)) => {
                                 let marker = format!("{path}/{}", imports::IMPORT_MARKER);
-                                let import_origin = if entry.source_id == OPENBITFUN_SKILL_SOURCE_ID
+                                let import_origin = if entry.source_id == STARMATE_SKILL_SOURCE_ID
                                 {
                                     let marker_content = match fs.exists(&marker).await {
                                         Ok(false) => Ok(None),
@@ -748,7 +748,7 @@ impl SkillRegistry {
                                 "SKILL.md exceeds the discovery size limit",
                             ));
                         } else {
-                            let import_origin = if entry.source_id == OPENBITFUN_SKILL_SOURCE_ID
+                            let import_origin = if entry.source_id == STARMATE_SKILL_SOURCE_ID
                                 && !entry.is_builtin
                             {
                                 match imports::read_import_origin(&path).await {
@@ -884,8 +884,8 @@ impl SkillRegistry {
                 }
                 let child_path = child.path();
                 if depth == 0
-                    && matches!(entry.slot, OPENBITFUN_USER_SKILL_SLOT | "home.dsh")
-                    && child.file_name() == OPENBITFUN_SYSTEM_SKILL_DIR
+                    && matches!(entry.slot, STARMATE_USER_SKILL_SLOT | "home.dsh")
+                    && child.file_name() == STARMATE_SYSTEM_SKILL_DIR
                 {
                     continue;
                 }

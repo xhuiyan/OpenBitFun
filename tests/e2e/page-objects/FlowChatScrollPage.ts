@@ -85,7 +85,7 @@ export class FlowChatScrollPage {
         if (diagnostics) delete (scroller as any).scrollTop;
         return probe;
       };
-    }, direction, process.env.OPENBITFUN_SCROLL_DIAGNOSTICS === '1');
+    }, direction, process.env.STARMATE_SCROLL_DIAGNOSTICS === '1');
   }
 
   async wheel(delta: number, count = 72) {

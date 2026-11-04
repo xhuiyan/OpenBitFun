@@ -2,7 +2,7 @@
  * Live opt-in: a completed real-model turn offers a one-sentence next input
  * in the empty ChatInput, and Tab moves it into the editor.
  *
- * OPENBITFUN_E2E_PROMPT_SUGGESTION_MODELS points to a JSON file
+ * STARMATE_E2E_PROMPT_SUGGESTION_MODELS points to a JSON file
  * `{ "models": [...], "default_models": {...} }` applied to the isolated
  * profile; credentials stay outside the test source and retained evidence.
  */
@@ -27,7 +27,7 @@ async function setConfig(path: string, value: unknown): Promise<void> {
   }, path, value);
 }
 
-const modelsFile = process.env.OPENBITFUN_E2E_PROMPT_SUGGESTION_MODELS;
+const modelsFile = process.env.STARMATE_E2E_PROMPT_SUGGESTION_MODELS;
 const live = modelsFile ? describe : describe.skip;
 
 live('L1 prompt suggestion with a real model', () => {
@@ -36,7 +36,7 @@ live('L1 prompt suggestion with a real model', () => {
   const startupPage = new StartupPage();
 
   before(async () => {
-    if (process.env.OPENBITFUN_E2E_STORAGE_GUARD !== '1') throw new Error('Isolated E2E storage required');
+    if (process.env.STARMATE_E2E_STORAGE_GUARD !== '1') throw new Error('Isolated E2E storage required');
     const { models, default_models: defaultModels } = JSON.parse(fs.readFileSync(modelsFile!, 'utf8'));
     await header.waitForLoad();
     await setConfig('ai.models', models);

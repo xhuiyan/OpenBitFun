@@ -905,7 +905,7 @@ export function runManifestParserSelfTest({
     throw new Error('missing core workspace path boundary rule');
   }
   const coreWorkspacePathContracts = [
-    'OPENBITFUN_RUNTIME_URI_PREFIX',
+    'STARMATE_RUNTIME_URI_PREFIX',
     'ParsedStarMateRuntimeUri',
     'posix_normalize_components',
     'Component::ParentDir',

@@ -411,7 +411,7 @@ and workspace. Older hosts display an unavailable switch. SSH workspace discover
 is explicitly unsupported and never reads controller-side history.
 Cursor reads CLI snapshots under `CURSOR_CONFIG_DIR/chats` (otherwise
 `XDG_CONFIG_HOME/cursor/chats` or `~/.cursor/chats`) and Desktop's local
-`Cursor/User/globalStorage/state.vscdb`. Set `OPENBITFUN_CURSOR_USER_DATA_DIR` on
+`Cursor/User/globalStorage/state.vscdb`. Set `STARMATE_CURSOR_USER_DATA_DIR` on
 the OpenBitFun host for a custom Desktop profile. CLI JSONL transcripts under
 `CURSOR_DATA_DIR/projects` (default `~/.cursor/projects`) are a fallback and can
 lack tool results. Desktop can also omit saved file contents. These gaps are shown

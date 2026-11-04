@@ -2122,9 +2122,9 @@ mod file_lock_tests {
         std::fs::remove_dir_all(path.parent().unwrap()).unwrap();
     }
 
-    const LOCK_CHILD_METADATA_ENV: &str = "OPENBITFUN_SUBAUTH_LOCK_CHILD_METADATA";
-    const LOCK_CHILD_STARTED_ENV: &str = "OPENBITFUN_SUBAUTH_LOCK_CHILD_STARTED";
-    const LOCK_CHILD_OBSERVED_ENV: &str = "OPENBITFUN_SUBAUTH_LOCK_CHILD_OBSERVED";
+    const LOCK_CHILD_METADATA_ENV: &str = "STARMATE_SUBAUTH_LOCK_CHILD_METADATA";
+    const LOCK_CHILD_STARTED_ENV: &str = "STARMATE_SUBAUTH_LOCK_CHILD_STARTED";
+    const LOCK_CHILD_OBSERVED_ENV: &str = "STARMATE_SUBAUTH_LOCK_CHILD_OBSERVED";
     const CROSS_PROCESS_TEST_LOCK_TIMEOUT: Duration = Duration::from_secs(30);
     const CROSS_PROCESS_TEST_PROCESS_TIMEOUT: Duration = Duration::from_secs(10);
 

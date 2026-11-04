@@ -27,10 +27,10 @@ impl RouterAdmissionLimits {
         let defaults = Self::default();
         let limits = Self {
             max_concurrent: parse_env_usize(
-                "OPENBITFUN_ROUND_ROUTER_MAX_CONCURRENT",
+                "STARMATE_ROUND_ROUTER_MAX_CONCURRENT",
                 defaults.max_concurrent,
             )?,
-            max_queued: parse_env_usize("OPENBITFUN_ROUND_ROUTER_MAX_QUEUED", defaults.max_queued)?,
+            max_queued: parse_env_usize("STARMATE_ROUND_ROUTER_MAX_QUEUED", defaults.max_queued)?,
         };
         limits.validate()?;
         Ok(limits)

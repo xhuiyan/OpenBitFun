@@ -11,20 +11,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function defaultOpenBitFunHome() {
-  if (process.env.OPENBITFUN_E2E_HOME) {
-    return process.env.OPENBITFUN_E2E_HOME;
+  if (process.env.STARMATE_E2E_HOME) {
+    return process.env.STARMATE_E2E_HOME;
   }
-  if (process.env.OPENBITFUN_E2E_USE_REAL_PROFILE === '1') {
-    return process.env.OPENBITFUN_HOME || path.join(os.homedir(), '.openbitfun');
+  if (process.env.STARMATE_E2E_USE_REAL_PROFILE === '1') {
+    return process.env.STARMATE_HOME || path.join(os.homedir(), '.openbitfun');
   }
   return path.resolve(__dirname, '..', '.openbitfun', 'runtime', 'home');
 }
 
 function defaultOpenBitFunUserRoot() {
-  if (process.env.OPENBITFUN_E2E_USER_ROOT) {
-    return process.env.OPENBITFUN_E2E_USER_ROOT;
+  if (process.env.STARMATE_E2E_USER_ROOT) {
+    return process.env.STARMATE_E2E_USER_ROOT;
   }
-  if (process.env.OPENBITFUN_E2E_USE_REAL_PROFILE === '1') {
+  if (process.env.STARMATE_E2E_USE_REAL_PROFILE === '1') {
     return null;
   }
   return path.resolve(__dirname, '..', '.openbitfun', 'runtime', 'user-root');
@@ -166,8 +166,8 @@ Options:
   --last-active-step-ms <n> lastActiveAt decrement per session index. Default: 1000
   --session-prefix <text>   Session id prefix. Default: perf-long-session
   --scenario <name>         Fixture shape: mixed-visible, dense-visible, explore-only, or user-only-latest. Default: mixed-visible
-  --openbitfun-home <path>      OpenBitFun home root. Default: OPENBITFUN_E2E_HOME or isolated tests/e2e/.openbitfun/runtime/home; OPENBITFUN_HOME is used only with OPENBITFUN_E2E_USE_REAL_PROFILE=1
-  --openbitfun-user-root <path> OpenBitFun user config root for seeding active workspace. Default: OPENBITFUN_E2E_USER_ROOT or isolated tests/e2e/.openbitfun/runtime/user-root; skipped for real profile unless provided
+  --openbitfun-home <path>      OpenBitFun home root. Default: STARMATE_E2E_HOME or isolated tests/e2e/.openbitfun/runtime/home; STARMATE_HOME is used only with STARMATE_E2E_USE_REAL_PROFILE=1
+  --openbitfun-user-root <path> OpenBitFun user config root for seeding active workspace. Default: STARMATE_E2E_USER_ROOT or isolated tests/e2e/.openbitfun/runtime/user-root; skipped for real profile unless provided
   --cleanup                 Remove generated sessions for the prefix.
 `);
 }

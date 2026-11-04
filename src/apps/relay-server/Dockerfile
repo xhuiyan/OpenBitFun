@@ -9,8 +9,8 @@
 #   RUN (cache mounts are not part of the image filesystem).
 #
 # China mirrors (optional):
-#   docker compose build --build-arg OPENBITFUN_USE_CN_MIRROR=1
-#   Also: OPENBITFUN_APT_MIRROR, OPENBITFUN_CARGO_SPARSE_URL
+#   docker compose build --build-arg STARMATE_USE_CN_MIRROR=1
+#   Also: STARMATE_APT_MIRROR, STARMATE_CARGO_SPARSE_URL
 
 # Pin a minor toolchain so floating `rust:1-bookworm` updates do not bust the
 # entire builder cache on every upstream image refresh.
@@ -22,9 +22,9 @@ WORKDIR /build/src/apps/relay-server
 #   docker compose build --build-arg CARGO_BUILD_JOBS=1
 # Note: empty value must NOT be set as ENV — cargo chokes on empty string.
 ARG CARGO_BUILD_JOBS=
-ARG OPENBITFUN_USE_CN_MIRROR=0
-ARG OPENBITFUN_APT_MIRROR=mirrors.aliyun.com
-ARG OPENBITFUN_CARGO_SPARSE_URL=sparse+https://rsproxy.cn/index/
+ARG STARMATE_USE_CN_MIRROR=0
+ARG STARMATE_APT_MIRROR=mirrors.aliyun.com
+ARG STARMATE_CARGO_SPARSE_URL=sparse+https://rsproxy.cn/index/
 
 ENV DEBIAN_FRONTEND=noninteractive \
     CARGO_TERM_COLOR=always \
@@ -32,15 +32,15 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Configure apt + cargo mirrors inside the builder when deploying from China.
 RUN set -eux; \
-    if [ "${OPENBITFUN_USE_CN_MIRROR}" = "1" ]; then \
+    if [ "${STARMATE_USE_CN_MIRROR}" = "1" ]; then \
       sed -i \
-        -e "s|deb.debian.org/debian|${OPENBITFUN_APT_MIRROR}/debian|g" \
-        -e "s|security.debian.org/debian-security|${OPENBITFUN_APT_MIRROR}/debian-security|g" \
+        -e "s|deb.debian.org/debian|${STARMATE_APT_MIRROR}/debian|g" \
+        -e "s|security.debian.org/debian-security|${STARMATE_APT_MIRROR}/debian-security|g" \
         /etc/apt/sources.list 2>/dev/null || true; \
       if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
         sed -i \
-          -e "s|deb.debian.org/debian|${OPENBITFUN_APT_MIRROR}/debian|g" \
-          -e "s|security.debian.org/debian-security|${OPENBITFUN_APT_MIRROR}/debian-security|g" \
+          -e "s|deb.debian.org/debian|${STARMATE_APT_MIRROR}/debian|g" \
+          -e "s|security.debian.org/debian-security|${STARMATE_APT_MIRROR}/debian-security|g" \
           /etc/apt/sources.list.d/debian.sources; \
       fi; \
       mkdir -p /usr/local/cargo; \
@@ -57,7 +57,7 @@ RUN set -eux; \
         'replace-with = "openbitfun-rsproxy-sparse"' \
         '' \
         '[source.openbitfun-rsproxy-sparse]' \
-        "registry = \"${OPENBITFUN_CARGO_SPARSE_URL}\"" \
+        "registry = \"${STARMATE_CARGO_SPARSE_URL}\"" \
         > /usr/local/cargo/config.toml; \
     fi
 
@@ -129,8 +129,8 @@ RUN --mount=type=cache,id=openbitfun-relay-cargo-registry,target=/usr/local/carg
 FROM debian:bookworm-slim
 
 ARG RELAY_GIT_COMMIT=unknown
-ARG OPENBITFUN_USE_CN_MIRROR=0
-ARG OPENBITFUN_APT_MIRROR=mirrors.aliyun.com
+ARG STARMATE_USE_CN_MIRROR=0
+ARG STARMATE_APT_MIRROR=mirrors.aliyun.com
 
 LABEL org.opencontainers.image.title="OpenBitFun Relay Server" \
       org.opencontainers.image.description="Self-hosted relay server for OpenBitFun" \
@@ -141,15 +141,15 @@ LABEL org.opencontainers.image.title="OpenBitFun Relay Server" \
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN set -eux; \
-    if [ "${OPENBITFUN_USE_CN_MIRROR}" = "1" ]; then \
+    if [ "${STARMATE_USE_CN_MIRROR}" = "1" ]; then \
       sed -i \
-        -e "s|deb.debian.org/debian|${OPENBITFUN_APT_MIRROR}/debian|g" \
-        -e "s|security.debian.org/debian-security|${OPENBITFUN_APT_MIRROR}/debian-security|g" \
+        -e "s|deb.debian.org/debian|${STARMATE_APT_MIRROR}/debian|g" \
+        -e "s|security.debian.org/debian-security|${STARMATE_APT_MIRROR}/debian-security|g" \
         /etc/apt/sources.list 2>/dev/null || true; \
       if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
         sed -i \
-          -e "s|deb.debian.org/debian|${OPENBITFUN_APT_MIRROR}/debian|g" \
-          -e "s|security.debian.org/debian-security|${OPENBITFUN_APT_MIRROR}/debian-security|g" \
+          -e "s|deb.debian.org/debian|${STARMATE_APT_MIRROR}/debian|g" \
+          -e "s|security.debian.org/debian-security|${STARMATE_APT_MIRROR}/debian-security|g" \
           /etc/apt/sources.list.d/debian.sources; \
       fi; \
     fi; \

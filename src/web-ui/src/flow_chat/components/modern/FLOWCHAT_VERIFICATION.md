@@ -93,7 +93,7 @@ rectangle reads, DOM scans and mounted rows. Reversals over 4px, empty frames,
 post-gesture drift, lost session reading position, lost draft text and failed
 search navigation are assertions. Frame intervals are diagnostic measurements,
 not hard timing gates on shared machines. JSON evidence and a screenshot remain
-in the printed temporary directory. `OPENBITFUN_SCROLL_DIAGNOSTICS=1` additionally
+in the printed temporary directory. `STARMATE_SCROLL_DIAGNOSTICS=1` additionally
 captures per-frame row geometry and scroll-write stacks; use it for attribution,
 not timing comparisons.
 

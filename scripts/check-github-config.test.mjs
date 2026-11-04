@@ -51,7 +51,7 @@ function runCheck(root) {
     cwd: repoRoot,
     env: {
       ...process.env,
-      OPENBITFUN_GITHUB_CONFIG_TEST_ROOT: root,
+      STARMATE_GITHUB_CONFIG_TEST_ROOT: root,
     },
     encoding: 'utf8',
   });
@@ -103,7 +103,7 @@ test('partial Desktop publication requires successful trusted producers and leav
     ...process.env, PATH: `${path.join(root, 'bin')}:${process.env.PATH}`,
     FIXTURE: root, GITHUB_ENV: path.join(root, 'env'),
     GITHUB_REPOSITORY: 'GCWing/OpenBitFun', RELEASE_TAG: 'v1.0.6', SOURCE_RUN: '123',
-    OPENBITFUN_SIGNING_KEY: 'fixture-only', OPENBITFUN_SIGNING_PUBKEY: 'fixture-only', GH_TOKEN: 'fixture-only',
+    STARMATE_SIGNING_KEY: 'fixture-only', STARMATE_SIGNING_PUBKEY: 'fixture-only', GH_TOKEN: 'fixture-only',
   };
   const run = {
     repository: { full_name: env.GITHUB_REPOSITORY },
@@ -138,7 +138,7 @@ test('partial Desktop publication requires successful trusted producers and leav
   }
   fixtures();
   assert.notEqual(execute(validate, { RELEASE_TAG: 'v1.0.6;echo injected' }).status, 0);
-  assert.notEqual(execute(validate, { OPENBITFUN_SIGNING_KEY: '' }).status, 0);
+  assert.notEqual(execute(validate, { STARMATE_SIGNING_KEY: '' }).status, 0);
   mkdirSync(path.join(root, 'release-upload-assets'));
   writeFileSync(path.join(root, 'release-upload-assets/fixture.exe'), 'signed fixture payload');
   writeFileSync(path.join(root, 'state.json'), JSON.stringify({ assets: [{ name: 'latest-v1.json' }] }));
@@ -1238,7 +1238,7 @@ test('passes the verification key when signing the versioned Windows installer',
   );
 
   assert.equal(
-    signingStep?.env?.OPENBITFUN_SIGNING_PUBKEY,
+    signingStep?.env?.STARMATE_SIGNING_PUBKEY,
     '${{ secrets.TAURI_UPDATER_PUBKEY }}',
     'release signatures must be self-verified with the configured public key',
   );
@@ -1355,14 +1355,14 @@ test('Desktop packaging keeps beta identity explicit and stable-safe', () => {
 
   const packageJob = workflow.jobs.package;
   assert.equal(
-    packageJob.env.OPENBITFUN_RELEASE_CHANNEL,
+    packageJob.env.STARMATE_RELEASE_CHANNEL,
     '${{ needs.prepare.outputs.release_channel }}',
   );
   assert.match(packageJob.env.TAURI_UPDATER_ENDPOINT, /github\.repository/);
   assert.match(packageJob.env.TAURI_UPDATER_ENDPOINT, /channel-v1-beta/);
   assert.ok(packageJob.env.TAURI_UPDATER_ENDPOINT.includes("format('https://github.com/{0}/releases/latest/download/latest-v1.json', github.repository)"));
   assert.equal(packageJob.env.TAURI_UPDATER_ENDPOINT, packageJob.env.TAURI_UPDATER_FALLBACK_ENDPOINT);
-  assert.match(packageJob.env.OPENBITFUN_RELEASE_PUBKEY, /OPENBITFUN_RELEASE_PUBKEY/);
+  assert.match(packageJob.env.STARMATE_RELEASE_PUBKEY, /STARMATE_RELEASE_PUBKEY/);
   const appleSetupIndex = packageJob.steps.findIndex(
     (step) => step.name === 'Configure Apple Developer ID signing and notarization',
   );
@@ -1380,7 +1380,7 @@ test('Desktop packaging keeps beta identity explicit and stable-safe', () => {
   );
   assert.equal(packageJob.steps[appleSetupIndex].if, "runner.os == 'macOS'");
   assert.equal(
-    packageJob.steps[appleSetupIndex].env.OPENBITFUN_REQUIRE_APPLE_SIGNING,
+    packageJob.steps[appleSetupIndex].env.STARMATE_REQUIRE_APPLE_SIGNING,
     '${{ needs.prepare.outputs.upload_to_release }}',
   );
   assert.equal(packageJob.steps[appleVerifyIndex].if, "runner.os == 'macOS'");
@@ -1431,7 +1431,7 @@ test('Desktop packaging keeps beta identity explicit and stable-safe', () => {
     (step) => step.name === 'Sign installer packages',
   );
   assert.match(signingStep.run, /write-minisign-public-key\.mjs/);
-  assert.doesNotMatch(signingStep.run, /OPENBITFUN_SIGNING_PUBKEY.*base64 -d/);
+  assert.doesNotMatch(signingStep.run, /STARMATE_SIGNING_PUBKEY.*base64 -d/);
   const promotionStep = uploadSteps.find(
     (step) => step.name === 'Resolve beta channel promotion',
   );
@@ -1577,7 +1577,7 @@ test('Desktop recovery selects only one Mac target and cannot publish an incompl
     const condition = workflow.jobs[name].if;
     assert.ok(condition.includes("needs.prepare.outputs.target_platform == 'all'"), name);
   }
-  assert.equal(workflow.jobs.package.env.OPENBITFUN_ENABLE_UPDATER_ARTIFACTS, '${{ needs.prepare.outputs.upload_to_release }}');
+  assert.equal(workflow.jobs.package.env.STARMATE_ENABLE_UPDATER_ARTIFACTS, '${{ needs.prepare.outputs.upload_to_release }}');
   assert.match(workflow.concurrency.group, /inputs.target_platform/);
   assert.equal(workflow.concurrency['cancel-in-progress'], false);
   for (const [target, upload, run, artifacts, success] of [
@@ -1716,8 +1716,8 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
   stub('ditto', 'cp -R "$1" "$2"');
   writeFileSync(path.join(root, 'scripts/sign-release-assets.sh'), '#!/usr/bin/env bash\nset -euo pipefail\nprintf signed | base64 > "$1.sig"\n');
   const env = { ...process.env, PATH: `${path.join(root, 'bin')}:${process.env.PATH}`, FIXTURE: root,
-    OPENBITFUN_APPLE_SIGNING_CONFIGURED: 'true', APPLE_SIGNING_IDENTITY: 'Fixture Developer ID',
-    OPENBITFUN_SIGNING_KEY: 'fixture', OPENBITFUN_SIGNING_PUBKEY: 'untrusted comment: fixture\nfixture-key' };
+    STARMATE_APPLE_SIGNING_CONFIGURED: 'true', APPLE_SIGNING_IDENTITY: 'Fixture Developer ID',
+    STARMATE_SIGNING_KEY: 'fixture', STARMATE_SIGNING_PUBKEY: 'untrusted comment: fixture\nfixture-key' };
   function reset() {
     rmSync(path.join(root, 'mounted-attempts'), { force: true });
     rmSync(path.join(app, 'Contents/stapled-fixture'), { force: true });
@@ -2002,7 +2002,7 @@ test('nightly and beta use the shared build-version projection', () => {
     (step) => step.name === 'Patch nightly version',
   );
   assert.match(patch.run, /node scripts\/set-build-version\.mjs/);
-  assert.equal(artifacts.jobs.package.env.OPENBITFUN_RELEASE_CHANNEL, 'nightly');
+  assert.equal(artifacts.jobs.package.env.STARMATE_RELEASE_CHANNEL, 'nightly');
   assert.equal(
     artifacts.jobs.package.env.TAURI_UPDATER_ENDPOINT,
     'https://github.com/GCWing/OpenBitFun/releases/latest/download/latest-v1.json',
@@ -2011,7 +2011,7 @@ test('nightly and beta use the shared build-version projection', () => {
     artifacts.jobs.package.env.TAURI_UPDATER_FALLBACK_ENDPOINT,
     'https://openbitfun.com/release/latest-v1.json',
   );
-  assert.equal(artifacts.jobs.package.env.OPENBITFUN_ENABLE_UPDATER_ARTIFACTS, undefined);
+  assert.equal(artifacts.jobs.package.env.STARMATE_ENABLE_UPDATER_ARTIFACTS, undefined);
   const signingStep = nightly.jobs['publish-nightly'].steps.find(
     (step) => step.name === 'Sign installer packages',
   );
@@ -2282,7 +2282,7 @@ for (const scenario of [
       export -f codesign file spctl sleep xcrun
       bash scripts/ci/verify-macos-signing.sh fixture
     `], { cwd, encoding: 'utf8', windowsHide: true, env: { ...process.env,
-      OPENBITFUN_APPLE_SIGNING_CONFIGURED: 'true', FIXTURE_CALLS: path.join(cwd, 'calls'),
+      STARMATE_APPLE_SIGNING_CONFIGURED: 'true', FIXTURE_CALLS: path.join(cwd, 'calls'),
       SIGNATURE_STATUS: String(scenario.signatureStatus ?? 0), GATEKEEPER_STATUS: String(scenario.gatekeeperStatus ?? 0),
       SUBMISSION_ID: scenario.submissionId ?? '11111111-1111-4111-8111-111111111111', RESPONSE_ID: scenario.responseId ?? '11111111-1111-4111-8111-111111111111',
       WAIT_FAILURES: String(scenario.waitFailures ?? 0), WAIT_CODE: String(scenario.waitCode ?? -1009), WAIT_STATUS: scenario.waitStatus ?? 'Accepted',
@@ -2318,7 +2318,7 @@ for (const scenario of [
         bash scripts/ci/verify-macos-signing.sh fixture
       `;
       const retryOptions = { cwd, encoding: 'utf8', windowsHide: true, env: { ...process.env,
-        OPENBITFUN_APPLE_SIGNING_CONFIGURED: 'true', FIXTURE_CALLS: path.join(cwd, 'calls'),
+        STARMATE_APPLE_SIGNING_CONFIGURED: 'true', FIXTURE_CALLS: path.join(cwd, 'calls'),
         APPLE_API_ISSUER: 'fixture', APPLE_API_KEY: 'fixture', APPLE_API_KEY_PATH: 'fixture' } };
       const retry = spawnSync('bash', ['-c', retryScript], retryOptions);
       assert.equal(retry.status, 0, retry.stderr);

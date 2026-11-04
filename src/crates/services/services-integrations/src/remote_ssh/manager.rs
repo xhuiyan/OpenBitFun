@@ -8646,7 +8646,7 @@ mod tests {
         // the trap must exit instead of proceeding into target redirection.
         std::fs::write(
             &wc,
-            "#!/bin/sh\ncat >/dev/null\nkill -TERM \"$OPENBITFUN_TEST_WRITE_PID\"\nprintf '8\\n'\n",
+            "#!/bin/sh\ncat >/dev/null\nkill -TERM \"$STARMATE_TEST_WRITE_PID\"\nprintf '8\\n'\n",
         )
         .unwrap();
         std::fs::set_permissions(&wc, std::fs::Permissions::from_mode(0o755)).unwrap();
@@ -8656,7 +8656,7 @@ mod tests {
             std::env::var("PATH").unwrap_or_default()
         );
         let command = format!(
-            "OPENBITFUN_TEST_WRITE_PID=$$; export OPENBITFUN_TEST_WRITE_PID; PATH={}; export PATH; {}",
+            "STARMATE_TEST_WRITE_PID=$$; export STARMATE_TEST_WRITE_PID; PATH={}; export PATH; {}",
             crate::remote_ssh::shell::quote_arg(&path),
             container_workspace_write_command(
                 target.to_str().unwrap(),
@@ -9602,9 +9602,9 @@ Host *
     }
 
     #[tokio::test]
-    #[ignore = "requires OPENBITFUN_TEST_DOCKER_CONTAINER to name a running container"]
+    #[ignore = "requires STARMATE_TEST_DOCKER_CONTAINER to name a running container"]
     async fn local_docker_workspace_round_trip() {
-        let Ok(container_name) = std::env::var("OPENBITFUN_TEST_DOCKER_CONTAINER") else {
+        let Ok(container_name) = std::env::var("STARMATE_TEST_DOCKER_CONTAINER") else {
             return;
         };
         let dir = test_data_dir("local-docker-round-trip");

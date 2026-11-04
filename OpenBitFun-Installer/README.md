@@ -53,7 +53,7 @@ and its adjacent runtime directories. It never falls back to `release-fast` or
 `debug`. For an explicit Cargo target, pass the exact executable:
 
 ```powershell
-$env:OPENBITFUN_INSTALLER_APP_EXE = "target/x86_64-pc-windows-msvc/release/openbitfun-desktop.exe"
+$env:STARMATE_INSTALLER_APP_EXE = "target/x86_64-pc-windows-msvc/release/openbitfun-desktop.exe"
 pnpm run installer:build:only
 ```
 

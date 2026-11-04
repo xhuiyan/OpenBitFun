@@ -623,7 +623,7 @@ mod tests {
         .config;
         config.api_key = "public".into();
         config.max_tokens = Some(256);
-        let mut proxy = std::env::var("OPENBITFUN_LIVE_OPENCODE_PROXY")
+        let mut proxy = std::env::var("STARMATE_LIVE_OPENCODE_PROXY")
             .ok()
             .map(|url| ProxyConfig {
                 enabled: true,
@@ -631,7 +631,7 @@ mod tests {
                 username: None,
                 password: None,
             });
-        if let Ok(path) = std::env::var("OPENBITFUN_LIVE_OPENCODE_CONFIG") {
+        if let Ok(path) = std::env::var("STARMATE_LIVE_OPENCODE_CONFIG") {
             let settings: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
             let selected = settings["ai"]["models"]
                 .as_array()
@@ -658,7 +658,7 @@ mod tests {
         let response = client
             .send_message_once_with_trace_and_request_context(
                 vec![Message::user(
-                    "Reply with exactly: OPENBITFUN_ZEN_OK".into(),
+                    "Reply with exactly: STARMATE_ZEN_OK".into(),
                 )],
                 None,
                 None,
@@ -667,7 +667,7 @@ mod tests {
             .await
             .expect("live public Zen request must complete");
         eprintln!("live_mimo_public_text={}", response.text);
-        assert!(response.text.contains("OPENBITFUN_ZEN_OK"));
+        assert!(response.text.contains("STARMATE_ZEN_OK"));
         // Exercise the same one-attempt tool probe used by the settings button.
         let probe = crate::client::healthcheck::test_connection(&client, 1)
             .await

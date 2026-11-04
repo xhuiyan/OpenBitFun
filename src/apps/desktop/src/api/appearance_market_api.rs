@@ -15,7 +15,7 @@ use starmate_product_domains::appearance_market::{
     APPEARANCE_MARKET_MAX_PACKAGE_BYTES,
 };
 use starmate_product_domains::product_release::{
-    supports_market_minimum_version, OPENBITFUN_INITIAL_RELEASE_VERSION,
+    supports_market_minimum_version, STARMATE_INITIAL_RELEASE_VERSION,
 };
 use starmate_services_integrations::appearance_market::{
     resolve_appearance_release_target, submit_appearance_package, suggest_appearance_slug,
@@ -353,7 +353,7 @@ fn find_release(
 fn validate_minimum_openbitfun_version(minimum: &str) -> Result<(), String> {
     let minimum = semver::Version::parse(minimum)
         .map_err(|_| "The release declares an invalid minimum StarMate version.".to_string())?;
-    if minimum < OPENBITFUN_INITIAL_RELEASE_VERSION {
+    if minimum < STARMATE_INITIAL_RELEASE_VERSION {
         return Err(
             "The release declares a minimum StarMate version earlier than 1.0.0.".to_string(),
         );

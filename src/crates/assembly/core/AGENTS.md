@@ -517,8 +517,8 @@ cargo test -p openbitfun-core --no-default-features --features external-sources,
 cargo test -p openbitfun-core --no-default-features --features external-sources,git,product-search --lib agentic::session::session_manager::tests::restore_session_
 ```
 
-For installed-source acceptance, set `OPENBITFUN_TEST_SESSION_ECOSYSTEM` and
-`OPENBITFUN_TEST_SESSION_ID` to a real source session, then run the same target
+For installed-source acceptance, set `STARMATE_TEST_SESSION_ECOSYSTEM` and
+`STARMATE_TEST_SESSION_ID` to a real source session, then run the same target
 with filter `inspect_installed_external_session_follow_and_fork -- --ignored --nocapture`.
 The source is read-only; native records are written only to a temporary user root.
 Set `TEMP` / `TMP` to the validation drive when testing a large local history.
@@ -533,7 +533,7 @@ snapshot compatibility and viewed-version isolation, use the same target with
 builds and copied turns; they do not measure native WebView or remote latency.
 
 The same target also supports `inspect_installed_codex_history_repair -- --ignored --nocapture`.
-Set `OPENBITFUN_TEST_NATIVE_SESSIONS_ROOT` and `OPENBITFUN_TEST_NATIVE_SESSION_ID`
+Set `STARMATE_TEST_NATIVE_SESSIONS_ROOT` and `STARMATE_TEST_NATIVE_SESSION_ID`
 to an existing answerless Codex import. It reads the installed native copy and
 Codex source, exercises the repair in a temporary copy, and verifies the original
 native history is unchanged.
