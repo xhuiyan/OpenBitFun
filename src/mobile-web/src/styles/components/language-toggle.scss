@@ -5,18 +5,18 @@
   min-width: 44px;
   height: 44px;
   padding: 0 10px;
-  border: 1px solid var(--openbitfun-color-border-subtle);
+  border: 1px solid var(--starmate-color-border-subtle);
   border-radius: 999px;
-  background: var(--openbitfun-color-surface-subtle);
-  color: var(--openbitfun-color-content-secondary);
-  font-size: var(--openbitfun-type-support-font-size);
-  font-weight: var(--openbitfun-type-label-selected-font-weight);
-  letter-spacing: var(--openbitfun-type-modifier-tracking-wider-letter-spacing);
+  background: var(--starmate-color-surface-subtle);
+  color: var(--starmate-color-content-secondary);
+  font-size: var(--starmate-type-support-font-size);
+  font-weight: var(--starmate-type-label-selected-font-weight);
+  letter-spacing: var(--starmate-type-modifier-tracking-wider-letter-spacing);
   cursor: pointer;
   transition: all var(--motion-fast) var(--easing-standard);
 
   &:active {
-    color: var(--openbitfun-color-content-primary);
-    background: var(--openbitfun-color-action-neutral-surface-hover);
+    color: var(--starmate-color-content-primary);
+    background: var(--starmate-color-action-neutral-surface-hover);
   }
 }

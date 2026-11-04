@@ -136,9 +136,9 @@ test('sidebar navigation preserves its scroll position across page loads', () =>
 });
 
 test('callouts and ordinary UI consume canonical semantic color tokens only', () => {
-  assert.match(cssBlock('.detail-aside'), /background:\s*var\(--openbitfun-color-status-success-surface\)/u);
-  assert.match(cssBlock('.detail-aside'), /color:\s*var\(--openbitfun-color-status-success-content\)/u);
-  assert.match(cssBlock('.control-unsupported'), /color:\s*var\(--openbitfun-color-status-danger-content\)/u);
+  assert.match(cssBlock('.detail-aside'), /background:\s*var\(--starmate-color-status-success-surface\)/u);
+  assert.match(cssBlock('.detail-aside'), /color:\s*var\(--starmate-color-status-success-content\)/u);
+  assert.match(cssBlock('.control-unsupported'), /color:\s*var\(--starmate-color-status-danger-content\)/u);
   assert.doesNotMatch(stylesSource, /#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(/iu);
   assert.doesNotMatch(stylesSource, /var\(--(?:paper|ink|muted|line|panel|accent|danger|shadow)\)/u);
 });
