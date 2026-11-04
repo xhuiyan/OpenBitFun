@@ -1,7 +1,7 @@
-import { OpenBitFunMark } from '@openbitfun/ui/brand';
+import { StarMateMark } from '@starmate/ui/brand';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Phone } from 'lucide-react';
-import { OverflowText, IconButton, VoiceCallIdentity, VoiceCallControls, VoiceCallHeader, Icon } from '@openbitfun/ui';
+import { OverflowText, IconButton, VoiceCallIdentity, VoiceCallControls, VoiceCallHeader, Icon } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 
 import { RealtimeVoiceCallPanel } from './RealtimeVoiceCallPanel';
@@ -111,7 +111,7 @@ export function ConversationModeSurface({
       {!isVoiceMode && renderHeader?.(integrated ? null : <IconButton
         size="sm"
         data-testid={switchTestId}
-        icon={<OpenBitFunMark className="openbitfun-conversation-mode-surface__logo" aria-hidden="true" />}
+        icon={<StarMateMark className="openbitfun-conversation-mode-surface__logo" aria-hidden="true" />}
         aria-label={t(isVoiceMode ? 'voiceCall.call.switchToChat' : 'voiceCall.call.switchToVoice')}
         aria-pressed={isVoiceMode}
         title={t(isVoiceMode ? 'voiceCall.call.switchToChat' : 'voiceCall.call.switchToVoice')}

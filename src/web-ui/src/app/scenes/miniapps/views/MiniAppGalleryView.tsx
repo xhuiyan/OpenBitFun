@@ -28,7 +28,7 @@ import { subscribeOverlayInteraction, createOverlayPortal,
   NumberBadge,
   SearchField,
   SegmentedControl,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 
 import {
   GalleryEmpty,

@@ -50,8 +50,8 @@ function renderPage(template, { title, description, url, pageData, assetVersion 
 
 async function main() {
   await buildThemeContracts();
-  const designTokensCssPath = fileURLToPath(import.meta.resolve('@openbitfun/design-tokens/tokens.css'));
-  const themeCssPath = fileURLToPath(import.meta.resolve('@openbitfun/theme-openbitfun/themes.css'));
+  const designTokensCssPath = fileURLToPath(import.meta.resolve('@starmate/design-tokens/tokens.css'));
+  const themeCssPath = fileURLToPath(import.meta.resolve('@starmate/theme-openbitfun/themes.css'));
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const template = await readFile(path.join(sourceRoot, 'index.html'), 'utf8');
   const appSource = await readFile(path.join(sourceRoot, 'app.js'), 'utf8');

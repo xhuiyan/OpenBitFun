@@ -93,7 +93,7 @@ require a retest.
 The resident completed-turn footer keeps `FlowChatTurnMetrics` on the left and
 elapsed time with the existing actions on the right. Only elapsed time is shown
 inline; its shared Tooltip exposes the completion timestamp and elapsed time.
-Metric typography and Lucide glyph sizing belong to `@openbitfun/ui`.
+Metric typography and Lucide glyph sizing belong to `@starmate/ui`.
 The completed-turn copy menu contains one export-as-image action alongside the
 copy actions, without sections. It prefers opening below the copy button, aligned
 to its trailing edge, and flips above when the lower viewport space is insufficient.

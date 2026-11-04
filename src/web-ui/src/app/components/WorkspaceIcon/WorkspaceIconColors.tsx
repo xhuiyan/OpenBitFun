@@ -1,4 +1,4 @@
-import { ColorPicker, Dialog, DialogBody, DialogClose, DialogHeader, DialogHeading, DialogTitle, Icon, IconButton } from '@openbitfun/ui';
+import { ColorPicker, Dialog, DialogBody, DialogClose, DialogHeader, DialogHeading, DialogTitle, Icon, IconButton } from '@starmate/ui';
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useAppearance } from '@/infrastructure/appearance';
 import { useI18n } from '@/infrastructure/i18n';

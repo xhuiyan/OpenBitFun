@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Icon, MenuItem, MenuList, MenuSection, OverflowText, ScrollArea, SearchField, Switch, Tooltip } from '@openbitfun/ui';
+import { Button, Icon, MenuItem, MenuList, MenuSection, OverflowText, ScrollArea, SearchField, Switch, Tooltip } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { AIModelConfig } from '@/infrastructure/config/types';
 import { filterSelectableTextChatModels } from '@/infrastructure/config/services/modelCategory';

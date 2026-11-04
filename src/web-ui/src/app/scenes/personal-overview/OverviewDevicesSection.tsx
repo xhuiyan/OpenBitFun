@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Card, Icon, IconButton, OverflowText, StatusPill } from '@openbitfun/ui';
+import { Button, Card, Icon, IconButton, OverflowText, StatusPill } from '@starmate/ui';
 import { ChevronLeft, ChevronRight, MonitorSmartphone } from 'lucide-react';
 import type { AccountIdentitySnapshot } from '@/infrastructure/account-identity';
 import { isDeviceControllable, refreshDeviceDirectory, useDeviceDirectory } from '@/infrastructure/account/deviceDirectory';

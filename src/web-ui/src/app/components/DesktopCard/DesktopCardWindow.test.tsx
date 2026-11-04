@@ -36,7 +36,7 @@ vi.mock('./DesktopCardTemplates', () => {
   };
 });
 
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Button: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => <button onClick={onClick}>{children}</button>,
   Icon: () => <span />,
   IconButton: React.forwardRef<HTMLButtonElement, { 'aria-label'?: string; onClick?: () => void }>(

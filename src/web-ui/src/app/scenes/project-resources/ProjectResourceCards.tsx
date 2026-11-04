@@ -1,5 +1,5 @@
 import { useCallback, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { Icon, IconButton } from '@openbitfun/ui';
+import { Icon, IconButton } from '@starmate/ui';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getMotionAwareScrollBehavior } from '@/shared/utils/motionPreference';
 import './ProjectResourceCards.scss';

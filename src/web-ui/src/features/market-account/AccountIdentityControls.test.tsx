@@ -48,8 +48,8 @@ vi.mock('@/shared/notification-system', () => ({
   useNotification: () => ({ success: mocks.success, error: mocks.error }),
 }));
 
-vi.mock('@openbitfun/ui', async (importOriginal) => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async (importOriginal) => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Avatar: ({ src, alt }: any) => <img src={src} alt={alt} />,
   Icon: ({ name, ...props }: { name: string } & React.HTMLAttributes<HTMLSpanElement>) => <span data-icon={name} {...props} />,
   OverflowText: ({ children, behavior: _behavior, marqueeActive: _marqueeActive, ...props }: any) => <span {...props}>{children}</span>,

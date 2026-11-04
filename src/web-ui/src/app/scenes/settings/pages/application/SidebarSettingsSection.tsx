@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useStore } from 'zustand';
-import { Button, Icon, IconButton, OverflowText, Tooltip } from '@openbitfun/ui';
+import { Button, Icon, IconButton, OverflowText, Tooltip } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { ConfigPageRow, ConfigPageSection } from '@/infrastructure/config/components/common';
 import { useSidebarNavigation } from '@/app/navigation/useSidebarNavigation';

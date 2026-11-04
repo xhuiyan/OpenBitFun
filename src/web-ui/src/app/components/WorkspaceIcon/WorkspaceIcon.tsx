@@ -1,4 +1,4 @@
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { Plane, Utensils, Dumbbell, Music, BookOpen, House, Wallet, Camera, PawPrint, Sprout, ShoppingBag, Clapperboard, BriefcaseBusiness, CodeXml, Database, FileText, FlaskConical, Folder, FolderOpen, Gamepad2, Globe, GraduationCap, Palette, Server, Smartphone, Wrench, type LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';

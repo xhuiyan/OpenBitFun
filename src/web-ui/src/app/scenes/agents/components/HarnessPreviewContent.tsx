@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import {
   Button, DialogBody, DialogDescription, DialogFooter, Icon, type IconName,
-} from '@openbitfun/ui';
-import { useSubagentAvatarMotion } from '@openbitfun/ui/brand';
+} from '@starmate/ui';
+import { useSubagentAvatarMotion } from '@starmate/ui/brand';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { APPEARANCE_DOMAIN_TOKENS } from '@/infrastructure/appearance/appearanceDomainTokens';
 import type { HarnessId } from '@/shared/agents/identity';

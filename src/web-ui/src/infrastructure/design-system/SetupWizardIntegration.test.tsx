@@ -2,7 +2,7 @@
 import React, { act, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Button, Dialog, SetupWizard } from '@openbitfun/ui';
+import { Button, Dialog, SetupWizard } from '@starmate/ui';
 
 let container: HTMLDivElement;
 let root: Root;

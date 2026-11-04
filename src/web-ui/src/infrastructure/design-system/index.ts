@@ -1,2 +1,2 @@
-export { OpenBitFunDesignSystemProvider } from './OpenBitFunDesignSystemProvider';
+export { StarMateDesignSystemProvider } from './OpenBitFunDesignSystemProvider';
 export * from './typographyRuntime';

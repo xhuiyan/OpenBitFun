@@ -1,4 +1,4 @@
-import { themeCssVariables, themes, type ThemeTokenName } from '@openbitfun/theme-openbitfun';
+import { themeCssVariables, themes, type ThemeTokenName } from '@starmate/theme-openbitfun';
 
 import type { AppearancePalette } from './AppearancePalette';
 import { withLegacyButtonTokens } from './buttonThemeCompatibility';

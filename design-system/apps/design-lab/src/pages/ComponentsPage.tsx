@@ -68,7 +68,7 @@ import {
   type ContrastMode,
   type DensityMode,
   type TokenOverrides,
-} from "@openbitfun/ui";
+} from "@starmate/ui";
 import {
   MobileAvatar,
   MobileBadge,
@@ -99,8 +99,8 @@ import {
   MobileTextarea,
   MobileToolbar,
 }
-from "@openbitfun/ui/mobile";
-import { type ComponentMeta } from "@openbitfun/ui/registry";
+from "@starmate/ui/mobile";
+import { type ComponentMeta } from "@starmate/ui/registry";
 import { useI18n } from "../i18n";
 import { defaultComponent } from "../componentNavigation";
 import {

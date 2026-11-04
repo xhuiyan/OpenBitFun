@@ -16,7 +16,7 @@ import {
   DialogBody,
   DialogClose,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import {
@@ -27,7 +27,7 @@ import {
 import { createLogger } from '@/shared/utils/logger';
 import { systemAPI } from '@/infrastructure/api';
 import { isTauriRuntime } from '@/infrastructure/update/tauriEnv';
-import { OpenBitFunBrandMotion } from '@openbitfun/ui/brand';
+import { StarMateBrandMotion } from '@starmate/ui/brand';
 import './AboutDialog.scss';
 
 const log = createLogger('AboutDialog');
@@ -130,7 +130,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                 aria-hidden="true"
               >
                 <div className="openbitfun-about-dialog__artwork">
-                  <OpenBitFunBrandMotion className="openbitfun-about-dialog__brand-mark" active={isOpen} />
+                  <StarMateBrandMotion className="openbitfun-about-dialog__brand-mark" active={isOpen} />
                 </div>
                 <p className="openbitfun-about-dialog__brand-statement">
                   {t('about.brandStatement')}

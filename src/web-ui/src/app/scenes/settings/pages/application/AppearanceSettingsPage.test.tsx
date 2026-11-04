@@ -11,8 +11,8 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-vi.mock('@openbitfun/ui', async (importOriginal) => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async (importOriginal) => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   ScrollArea: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
   FormSection: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => <section {...props}>{children}</section>,
   FieldGroup: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,

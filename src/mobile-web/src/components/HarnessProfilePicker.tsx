@@ -1,5 +1,5 @@
 import React from 'react';
-import { MobileChoiceSheet } from '@openbitfun/ui/mobile';
+import { MobileChoiceSheet } from '@starmate/ui/mobile';
 import { useI18n } from '../i18n';
 
 interface HarnessProfilePickerProps {

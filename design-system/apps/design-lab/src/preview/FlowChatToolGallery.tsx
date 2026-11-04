@@ -1,8 +1,8 @@
-import { Button, Icon } from "@openbitfun/ui";
+import { Button, Icon } from "@starmate/ui";
 import {
   Eye,
 } from "lucide-react";
-import { productOwnedToolNames } from '@openbitfun/flow-chat-presentation/registry';
+import { productOwnedToolNames } from '@starmate/flow-chat-presentation/registry';
 import { FlowChatScenarios } from './FlowChatScenarios';
 import { useI18n } from "../i18n";
 import { getComponentDescription } from "../i18n/componentMetadata";

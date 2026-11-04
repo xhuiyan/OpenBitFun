@@ -1,4 +1,4 @@
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { CalendarClock } from 'lucide-react';
 import type { CronJob } from '@/infrastructure/api/service-api/CronAPI';
 import { useI18n } from '@/infrastructure/i18n';

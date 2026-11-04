@@ -1,4 +1,4 @@
-import { OverflowText, Switch, Tooltip } from '@openbitfun/ui';
+import { OverflowText, Switch, Tooltip } from '@starmate/ui';
 import React from 'react';
 import { CircleAlert } from 'lucide-react';
 import type { TFunction } from 'i18next';

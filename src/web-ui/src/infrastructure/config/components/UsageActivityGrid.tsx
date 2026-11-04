@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Tooltip } from '@openbitfun/ui';
+import { Tooltip } from '@starmate/ui';
 import type { UsageTrendPoint } from '@/infrastructure/api/tokenUsageStatisticsApi';
 import { useI18n } from '@/infrastructure/i18n';
 import { formatTokenCount } from '@/shared/utils/tokenUsageFormatting';

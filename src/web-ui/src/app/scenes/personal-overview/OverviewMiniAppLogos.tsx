@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ActionCard, Avatar, Icon, Tooltip } from '@openbitfun/ui';
+import { ActionCard, Avatar, Icon, Tooltip } from '@starmate/ui';
 import { Play } from 'lucide-react';
 import type { MiniAppMeta } from '@/infrastructure/api/service-api/MiniAppAPI';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';

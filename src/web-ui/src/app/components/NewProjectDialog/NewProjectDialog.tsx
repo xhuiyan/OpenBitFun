@@ -2,7 +2,7 @@
 import {
   ActionCard, Button, Card, CardBody, Dialog, DialogBody, DialogClose, DialogDescription, DialogFooter,
   DialogHeader, DialogHeading, DialogTitle, Icon, IconButton, Input, OverflowText, Tooltip,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { FolderPlus, Server } from 'lucide-react';
 import React, { useState, useCallback, useEffect, useId, useMemo, useRef } from 'react';
 import { useI18n } from '@/infrastructure/i18n';

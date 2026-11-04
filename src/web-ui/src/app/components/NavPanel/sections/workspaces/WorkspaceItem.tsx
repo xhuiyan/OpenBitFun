@@ -1,6 +1,6 @@
 import { resolveAssistantName } from '@/shared/utils/assistantName';
 import { lazyWithRecovery } from '@/shared/utils/lazyWithRecovery';
-import { subscribeOverlayInteraction, createOverlayPortal, ActionItem } from '@openbitfun/ui';
+import { subscribeOverlayInteraction, createOverlayPortal, ActionItem } from '@starmate/ui';
 import {
   Button,
   ConfirmDialog,
@@ -17,7 +17,7 @@ import {
   DialogTitle,
   OverflowText,
   StatusPill,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { Suspense, useCallback, useContext, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { ChevronUp, EyeOff, FolderOpen, FolderSearch, History, Link2, MessageCirclePlus, RotateCcw, ListChecks, Network, Settings2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

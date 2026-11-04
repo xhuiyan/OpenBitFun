@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ArrowLeftRight, Maximize2, Minimize2 } from 'lucide-react';
-import { Icon, IconButton, SplitView, SplitViewSurface, ToolbarGroup, Tooltip, type SplitViewHeaderGeometry } from '@openbitfun/ui';
+import { Icon, IconButton, SplitView, SplitViewSurface, ToolbarGroup, Tooltip, type SplitViewHeaderGeometry } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';
 import SceneBar from '../components/SceneBar/SceneBar';

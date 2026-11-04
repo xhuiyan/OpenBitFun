@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Combobox, FieldGroup, Select, Spinner } from '@openbitfun/ui';
+import { Button, Combobox, FieldGroup, Select, Spinner } from '@starmate/ui';
 import { agentAPI, type ModeInfo } from '@/infrastructure/api/service-api/AgentAPI';
 import { configAPI } from '@/infrastructure/api/service-api/ConfigAPI';
 import { useModelSelectPresentation } from '@/infrastructure/config/components/ModelSelectPresentation';

@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState, useId, type PointerEvent, type KeyboardEvent, type RefObject } from 'react';
 import { GripVertical } from 'lucide-react';
-import { Button, Card, Icon, IconButton, createOverlayPortal } from '@openbitfun/ui';
+import { Button, Card, Icon, IconButton, createOverlayPortal } from '@starmate/ui';
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';
 import { useI18n } from '@/infrastructure/i18n';
 import { computeFixedPopoverPositionInViewport } from '@/shared/utils/fixedPopoverViewport';

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
-import { tokenCatalog } from "@openbitfun/design-tokens";
-import { themeTokenCatalog } from "@openbitfun/theme-openbitfun";
+import { tokenCatalog } from "@starmate/design-tokens";
+import { themeTokenCatalog } from "@starmate/theme-openbitfun";
 
 const stylesSource = new URL("../src/styles.css", import.meta.url);
 

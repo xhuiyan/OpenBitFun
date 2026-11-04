@@ -15,7 +15,7 @@ vi.mock('@tauri-apps/api/path', () => ({
   join: async (directory: string, name: string) => `${directory}/${name}`,
 }));
 vi.mock('@tauri-apps/plugin-fs', () => ({ writeFile: mocks.write }));
-vi.mock('@openbitfun/ui', () => ({ Button: () => null }));
+vi.mock('@starmate/ui', () => ({ Button: () => null }));
 vi.mock('@/shared/notification-system', () => ({ notificationService: { success: mocks.success } }));
 vi.mock('@/infrastructure/i18n', () => ({
   i18nService: { t: (key: string) => key, formatDate: () => 'export-date' },

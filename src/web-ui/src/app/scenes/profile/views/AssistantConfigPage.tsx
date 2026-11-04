@@ -41,7 +41,7 @@ import {
   ScrollArea,
   Spinner,
   Textarea,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 
 const log = createLogger('AssistantConfigPage');
 

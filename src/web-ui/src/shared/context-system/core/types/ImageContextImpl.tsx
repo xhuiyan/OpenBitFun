@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogHeading,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React from 'react';
 import { api } from '@/infrastructure/api/service-api/ApiClient';
 ;

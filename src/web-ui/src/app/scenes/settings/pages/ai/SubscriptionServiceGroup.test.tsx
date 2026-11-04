@@ -2,7 +2,7 @@
 import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { expect, it, vi } from 'vitest';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { SubscriptionAccountList, SubscriptionServiceGroup } from './SubscriptionServiceGroup';
 import type { ManagedSubscriptionAccount } from './subscriptionServices';
 it('keeps one service heading and separate exact-slot rows for identical account names', () => {

@@ -20,10 +20,10 @@ vi.mock('@/infrastructure/api/service-api/ExternalSourcesAPI', () => ({
 vi.mock('@/infrastructure/peer-device/pickWorkspaceDirectory', () => ({ pickWorkspaceDirectory: mocks.pick }));
 vi.mock('@/features/ssh-remote/sshApi', () => ({ sshApi: { getServerInfo: mocks.serverInfo } }));
 vi.mock('@/features/ssh-remote/RemoteFileBrowser', () => ({ default: (props: unknown) => { mocks.browser(props); return null; } }));
-vi.mock('@openbitfun/ui', async (importOriginal) => {
+vi.mock('@starmate/ui', async (importOriginal) => {
   const Wrapper = ({ children }: React.PropsWithChildren) => <div>{children}</div>;
   return {
-    ...await importOriginal<typeof import('@openbitfun/ui')>(),
+    ...await importOriginal<typeof import('@starmate/ui')>(),
     Dialog: ({ open, children }: React.PropsWithChildren<{ open: boolean }>) => open ? <div role="dialog">{children}</div> : null,
     DialogBody: Wrapper, DialogFooter: Wrapper, DialogHeader: Wrapper, DialogHeading: Wrapper, DialogTitle: Wrapper, DialogDescription: Wrapper,
     DialogClose: () => null,

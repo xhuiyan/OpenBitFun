@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Eye, EyeOff, Pin, PinOff, Settings, Trash2 } from 'lucide-react';
-import { Button, Icon, IconButton, OverflowText } from '@openbitfun/ui';
+import { Button, Icon, IconButton, OverflowText } from '@starmate/ui';
 import {
   desktopCardAPI,
   hasDesktopPinFailure,

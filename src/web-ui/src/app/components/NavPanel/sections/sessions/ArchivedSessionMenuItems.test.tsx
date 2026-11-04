@@ -2,7 +2,7 @@
 import React, { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Menu } from '@openbitfun/ui';
+import { Menu } from '@starmate/ui';
 import type { FlowChatState, Session } from '@/flow_chat/types/flow-chat';
 import { activateSurface, resetDeviceSurfaceForTest } from '@/infrastructure/peer-device/deviceSurface';
 

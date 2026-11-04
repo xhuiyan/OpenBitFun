@@ -1,10 +1,10 @@
-# @openbitfun/theme-openbitfun
+# @starmate/theme-openbitfun
 
-Replaceable OpenBitFun theme values for the framework-neutral `@openbitfun/ui` package.
+Replaceable OpenBitFun theme values for the framework-neutral `@starmate/ui` package.
 
 ```ts
-import "@openbitfun/theme-openbitfun/default.css";
-import { themeModes, themeTokenCatalog, themes } from "@openbitfun/theme-openbitfun";
+import "@starmate/theme-openbitfun/default.css";
+import { themeModes, themeTokenCatalog, themes } from "@starmate/theme-openbitfun";
 ```
 
 `default.css` synchronously imports the system token contract and all built-in theme variants. Theme selection is scoped to a `data-openbitfun-design-system-root` element and uses independent `data-color-scheme` and `data-contrast` axes.
@@ -27,10 +27,10 @@ Design tools can read the palette through the authoring-only export:
 import {
   referenceColorCatalog,
   referenceColorScales,
-} from "@openbitfun/theme-openbitfun/authoring";
+} from "@starmate/theme-openbitfun/authoring";
 ```
 
-The same data is available as `@openbitfun/theme-openbitfun/reference-colors.json`. Reference colors deliberately do not emit runtime CSS variables; application and component CSS must continue to use semantic theme variables.
+The same data is available as `@starmate/theme-openbitfun/reference-colors.json`. Reference colors deliberately do not emit runtime CSS variables; application and component CSS must continue to use semantic theme variables.
 
 ## Surface and state roles
 

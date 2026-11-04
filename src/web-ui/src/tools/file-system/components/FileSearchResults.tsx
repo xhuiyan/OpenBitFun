@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback, startTransition, memo, useEffect, useRef } from 'react';
-import { OverflowText, Icon, ScrollArea } from '@openbitfun/ui';
+import { OverflowText, Icon, ScrollArea } from '@starmate/ui';
 import { FileText } from 'lucide-react';
 import type {
   FileSearchResult,

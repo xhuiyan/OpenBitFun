@@ -1,7 +1,7 @@
 import {
   Button, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader,
   DialogHeading, DialogTitle, Field, Icon, IconButton, Input, Select,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { useEffect, useRef } from 'react';
 import { FolderOpen } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';

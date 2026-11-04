@@ -3,7 +3,7 @@ import {
   Button, Combobox, Dialog, DialogBody, DialogClose, DialogFooter,
   DialogHeader, DialogHeaderActions, DialogHeading, DialogTitle, Field,
   FormSection, Icon, IconButton, SearchField, Select, StatusPill, Toolbar, Tooltip,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { TFunction } from 'i18next';
 import { RotateCcw } from 'lucide-react';

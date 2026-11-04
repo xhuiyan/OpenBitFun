@@ -7,9 +7,9 @@ import type { TrajectoryNode } from './trajectoryModel';
 const mocks = vi.hoisted(() => ({ nodes: [] as TrajectoryNode[], loading: false, select: vi.fn(), clearSelection: vi.fn(), range: vi.fn(), close: vi.fn(), query: vi.fn(), searchState: vi.fn() }));
 vi.mock('./useTrajectory', () => ({ useTrajectory: () => ({ nodes: mocks.nodes, complete: !mocks.loading, supported: true, loading: mocks.loading, error: false, retry: vi.fn() }) }));
 vi.mock('@/infrastructure/i18n', () => ({ useI18n: () => ({ t: (key: string) => key, formatNumber: (value: number) => String(value) }) }));
-vi.mock('@openbitfun/ui', async importOriginal => {
+vi.mock('@starmate/ui', async importOriginal => {
   const { forwardRef } = await import('react');
-  const { Spinner } = await importOriginal<typeof import('@openbitfun/ui')>();
+  const { Spinner } = await importOriginal<typeof import('@starmate/ui')>();
   return {
     Spinner,
     Button: ({ children, variant: _v, size: _s, ...props }: any) => <button {...props}>{children}</button>,

@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogHeading,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Copy, FolderOpen, ShieldAlert } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';

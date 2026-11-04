@@ -1,7 +1,7 @@
 import {
   themes,
   type ThemeTokenName,
-} from '@openbitfun/theme-openbitfun';
+} from '@starmate/theme-openbitfun';
 
 type BuiltinThemeMode = 'dark' | 'light';
 

@@ -1,4 +1,4 @@
-import { themeCssVariables } from '@openbitfun/theme-openbitfun';
+import { themeCssVariables } from '@starmate/theme-openbitfun';
 
 import type { AppearanceThemeTokenName } from '../types';
 

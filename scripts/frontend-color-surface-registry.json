@@ -19,7 +19,7 @@
       "id": "design-system-token-owner",
       "label": "Design system token authoring",
       "kind": "contract-owner",
-      "owner": "@openbitfun/design-tokens and @openbitfun/theme-openbitfun",
+      "owner": "@starmate/design-tokens and @starmate/theme-openbitfun",
       "roots": [
         "design-system/packages/design-tokens/src",
         "design-system/packages/theme-openbitfun/src"
@@ -29,7 +29,7 @@
       "id": "web-ui",
       "label": "Web UI",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun plus Web UI Appearance theme-tokens",
+      "owner": "@starmate/theme-openbitfun plus Web UI Appearance theme-tokens",
       "root": "src/web-ui",
       "audit": {
         "engine": "theme",
@@ -62,32 +62,32 @@
       "id": "design-system-ui",
       "label": "Public design-system UI package",
       "kind": "canonical-web",
-      "owner": "@openbitfun/ui consuming peer-owned canonical tokens",
+      "owner": "@starmate/ui consuming peer-owned canonical tokens",
       "root": "design-system/packages/ui",
       "audit": {
         "engine": "theme",
         "baseline": "scripts/theme-color-governance-baseline.design-system-ui.json",
         "excludePaths": ["src/brand/assets/subagent-egg.svg"],
-        "packageContracts": ["@openbitfun/design-tokens", "@openbitfun/theme-openbitfun"]
+        "packageContracts": ["@starmate/design-tokens", "@starmate/theme-openbitfun"]
       }
     },
     {
       "id": "flow-chat-presentation",
       "label": "Shared FlowChat presentation",
       "kind": "canonical-web",
-      "owner": "@openbitfun/flow-chat-presentation consuming canonical tokens and injected renderer themes",
+      "owner": "@starmate/flow-chat-presentation consuming canonical tokens and injected renderer themes",
       "root": "packages/flow-chat-presentation",
       "audit": {
         "engine": "theme",
         "policy": "canonical-ui-zero",
-        "packageContracts": ["@openbitfun/design-tokens", "@openbitfun/theme-openbitfun"]
+        "packageContracts": ["@starmate/design-tokens", "@starmate/theme-openbitfun"]
       }
     },
     {
       "id": "design-lab",
       "label": "Design Lab",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun",
+      "owner": "@starmate/theme-openbitfun",
       "root": "design-system/apps/design-lab",
       "audit": {
         "engine": "theme",
@@ -98,7 +98,7 @@
       "id": "miniapp-market",
       "label": "Mini App Market",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun",
+      "owner": "@starmate/theme-openbitfun",
       "root": "src/miniapp-market-web",
       "audit": {
         "engine": "theme",
@@ -109,7 +109,7 @@
       "id": "skin-market",
       "label": "Skin Market",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun",
+      "owner": "@starmate/theme-openbitfun",
       "root": "src/skin-market-web",
       "audit": {
         "engine": "theme",
@@ -120,7 +120,7 @@
       "id": "website",
       "label": "Public website",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun",
+      "owner": "@starmate/theme-openbitfun",
       "root": "website",
       "audit": {
         "engine": "theme",
@@ -131,7 +131,7 @@
       "id": "mobile-web",
       "label": "Mobile Web and Remote Control",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun",
+      "owner": "@starmate/theme-openbitfun",
       "root": "src/mobile-web",
       "audit": {
         "engine": "theme",
@@ -142,7 +142,7 @@
       "id": "installer",
       "label": "OpenBitFun Installer",
       "kind": "canonical-web",
-      "owner": "@openbitfun/theme-openbitfun with the installer preset owner",
+      "owner": "@starmate/theme-openbitfun with the installer preset owner",
       "root": "OpenBitFun-Installer",
       "audit": {
         "engine": "theme",
@@ -153,12 +153,12 @@
       "id": "data-tools",
       "label": "Offline Data Tools",
       "kind": "canonical-web",
-      "owner": "@openbitfun/design-tokens and @openbitfun/theme-openbitfun public CSS exports",
+      "owner": "@starmate/design-tokens and @starmate/theme-openbitfun public CSS exports",
       "root": "src/apps/data-tools/ui",
       "audit": {
         "engine": "theme",
         "policy": "canonical-ui-zero",
-        "packageContracts": ["@openbitfun/design-tokens", "@openbitfun/theme-openbitfun"],
+        "packageContracts": ["@starmate/design-tokens", "@starmate/theme-openbitfun"],
         "excludePaths": ["generated"]
       }
     },
@@ -172,8 +172,8 @@
         "engine": "theme",
         "policy": "canonical-ui-zero",
         "packageContracts": [
-          "@openbitfun/design-tokens",
-          "@openbitfun/theme-openbitfun"
+          "@starmate/design-tokens",
+          "@starmate/theme-openbitfun"
         ],
         "excludePaths": [
           "generated"
@@ -190,8 +190,8 @@
         "engine": "theme",
         "policy": "canonical-ui-zero",
         "packageContracts": [
-          "@openbitfun/design-tokens",
-          "@openbitfun/theme-openbitfun"
+          "@starmate/design-tokens",
+          "@starmate/theme-openbitfun"
         ]
       }
     },
@@ -199,12 +199,12 @@
       "id": "desktop-bootstrap",
       "label": "Desktop pre-JavaScript bootstrap pages",
       "kind": "canonical-web",
-      "owner": "generated @openbitfun/theme-openbitfun bootstrap projection",
+      "owner": "generated @starmate/theme-openbitfun bootstrap projection",
       "root": "src/apps/desktop/bootstrap-ui",
       "audit": {
         "engine": "theme",
         "policy": "canonical-ui-zero",
-        "packageContracts": ["@openbitfun/design-tokens", "@openbitfun/theme-openbitfun"]
+        "packageContracts": ["@starmate/design-tokens", "@starmate/theme-openbitfun"]
       }
     },
     {
@@ -216,7 +216,7 @@
       "audit": {
         "engine": "theme",
         "policy": "canonical-ui-zero",
-        "packageContracts": ["@openbitfun/design-tokens", "@openbitfun/theme-openbitfun"],
+        "packageContracts": ["@starmate/design-tokens", "@starmate/theme-openbitfun"],
         "excludePaths": ["generated"]
       }
     },

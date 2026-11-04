@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogBody, DialogClose, DialogHeader, DialogHeading, DialogTitle, SegmentedControl } from '@openbitfun/ui';
+import { Button, Dialog, DialogBody, DialogClose, DialogHeader, DialogHeading, DialogTitle, SegmentedControl } from '@starmate/ui';
 import { useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { workspaceIconGlyphs } from '@/infrastructure/workspace-icons/workspaceIcons';

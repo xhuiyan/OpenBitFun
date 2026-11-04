@@ -237,8 +237,8 @@ vi.mock('react-i18next', async (importOriginal) => ({
   }),
 }));
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Tooltip: ({ children, content }: { children: React.ReactNode; content?: React.ReactNode }) => {
     const tooltipContent = typeof content === 'string' ? content : undefined;
     let trigger = children;
@@ -260,7 +260,7 @@ vi.mock('@/infrastructure/markdown', () => ({
   MarkdownRenderer: ({ content }: { content: string }) => <div data-testid="markdown">{content}</div>,
 }));
 
-vi.mock('@openbitfun/ui/flow-chat', () => ({
+vi.mock('@starmate/ui/flow-chat', () => ({
   ToolProcessingDots: ({ className }: { className?: string }) => <span className={className}>...</span>,
 }));
 

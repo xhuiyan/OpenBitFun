@@ -9,7 +9,7 @@ import { subscribeOverlayInteraction, createOverlayPortal,
   Select,
   StatusPill,
   type SelectOption,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { open } from '@tauri-apps/plugin-dialog';
 import {
   AlertTriangle,

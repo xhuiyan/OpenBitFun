@@ -1,5 +1,5 @@
 import { lazyWithRecovery } from '@/shared/utils/lazyWithRecovery';
-import { OverflowText } from '@openbitfun/ui';
+import { OverflowText } from '@starmate/ui';
 /**
  * Main application layout.
  *

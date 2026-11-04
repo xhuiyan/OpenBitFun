@@ -29,7 +29,7 @@ import {
   MobilePageHeader,
   MobileStatus,
   MobileTextField,
-} from '@openbitfun/ui/mobile';
+} from '@starmate/ui/mobile';
 import {
   RelayHttpClient,
   deviceDisplayName,

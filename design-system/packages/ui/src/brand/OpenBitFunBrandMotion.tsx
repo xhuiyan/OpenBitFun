@@ -163,14 +163,14 @@ function createConstructionAnimations(svg: SVGSVGElement): Animation[] {
   return animations;
 }
 
-export interface OpenBitFunBrandMotionProps extends Omit<SVGProps<SVGSVGElement>, "children"> {
+export interface StarMateBrandMotionProps extends Omit<SVGProps<SVGSVGElement>, "children"> {
   active?: boolean;
   size?: number;
   label?: string;
   variant?: "flow" | "counter-rotate" | "construction";
 }
 
-export function OpenBitFunBrandMotion({ active = true, size = 192, label, variant = "flow", className, style, ...props }: OpenBitFunBrandMotionProps) {
+export function StarMateBrandMotion({ active = true, size = 192, label, variant = "flow", className, style, ...props }: StarMateBrandMotionProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const svg = svgRef.current;

@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useSyncExternalStore,
 } from 'react';
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { getToolCardStatusDescription } from './toolCardStatus';
 
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
@@ -17,7 +17,7 @@ import {
   AmbientToolCard,
   AmbientToolCardHeader,
   ToolCardStatusSlot,
-} from '@openbitfun/ui/flow-chat';
+} from '@starmate/ui/flow-chat';
 import { getReviewerContextBySubagentId } from '@/shared/services/reviewTeamService';
 import type { ReviewerContext } from '@/shared/services/reviewTeamService';
 import { openBtwSessionInAuxPane } from '../services/btwSessionPane';

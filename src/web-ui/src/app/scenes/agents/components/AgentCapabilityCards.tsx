@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Icon, type IconName } from '@openbitfun/ui';
+import { Card, CardBody, CardHeader, Icon, type IconName } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 
 export type CapabilitySection = 'model' | 'tools' | 'skills' | 'subagents';

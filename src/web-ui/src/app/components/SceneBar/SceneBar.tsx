@@ -12,7 +12,7 @@ import { useContextMenuStore } from '@/shared/context-menu-system/store/ContextM
 import { ContextType } from '@/shared/context-menu-system/types/context.types';
 import type { MenuItem } from '@/shared/context-menu-system/types/menu.types';
 
-import { Icon, TabGroup, type TabGroupItem } from '@openbitfun/ui';
+import { Icon, TabGroup, type TabGroupItem } from '@starmate/ui';
 import { useSceneTabNavigation } from './useSceneTabNavigation';
 import { SessionTabHistoryMenu } from './SessionTabHistoryMenu';
 import { useSceneManager } from '../../hooks/useSceneManager';

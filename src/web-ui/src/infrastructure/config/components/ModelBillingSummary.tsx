@@ -1,5 +1,5 @@
 import { useId, useState, useSyncExternalStore } from 'react';
-import { Button, Icon, MenuItem, MenuList, OverflowText } from '@openbitfun/ui';
+import { Button, Icon, MenuItem, MenuList, OverflowText } from '@starmate/ui';
 import { TriangleAlert, Wallet } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';

@@ -13,7 +13,7 @@ vi.mock('@/infrastructure/api', () => ({ agentAPI: { restoreSessionView: api.res
 vi.mock('../store/FlowChatStore', () => ({ flowChatStore: { loadSessionHistory: api.load, ensurePersistedSessionMetadata: api.ensure } }));
 vi.mock('../services/sessionActivation', () => ({ openMainSession: api.open }));
 vi.mock('@/infrastructure/i18n', () => ({ useI18n: () => ({ t: (key: string, values?: { source?: string }) => values?.source ? `${key}: ${values.source}` : key }) }));
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Button: ({ children, onClick, disabled }: { children: ReactNode; onClick: () => void; disabled: boolean }) =>
     <button disabled={disabled} onClick={onClick}>{children}</button>,
 }));

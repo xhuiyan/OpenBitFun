@@ -1,4 +1,4 @@
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import type { SkillScanDiagnostic } from '@/infrastructure/config/types';
 import { getEcosystemSourceLabel } from '@/infrastructure/config/skillSourcePresentation';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';

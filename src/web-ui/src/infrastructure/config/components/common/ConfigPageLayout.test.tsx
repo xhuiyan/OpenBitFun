@@ -13,7 +13,7 @@ import {
   SearchField,
   Select,
   Switch,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createRoot, type Root } from 'react-dom/client';

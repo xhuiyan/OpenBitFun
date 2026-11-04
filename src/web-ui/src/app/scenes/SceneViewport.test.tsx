@@ -40,8 +40,8 @@ vi.mock('@/infrastructure/i18n/hooks/useI18n', () => ({
   useI18n: () => ({ t: (key: string) => key }),
 }));
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Spinner: () => <div data-testid="scene-loader" />,
 }));
 

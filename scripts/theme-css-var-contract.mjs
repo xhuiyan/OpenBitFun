@@ -34,12 +34,12 @@ const publicThemePrefixes = [
 export const PACKAGE_CSS_VAR_DEFINITION_CONTRACTS = Object.freeze([
   Object.freeze({
     owner: 'design-system/packages/design-tokens/src/system.tokens.json',
-    packageName: '@openbitfun/design-tokens',
+    packageName: '@starmate/design-tokens',
     variables: Object.freeze(Object.keys(designSystemTokens).map(name => tokenNameToCssVariable(name))),
   }),
   Object.freeze({
     owner: 'design-system/packages/theme-openbitfun/src/light.tokens.json',
-    packageName: '@openbitfun/theme-openbitfun',
+    packageName: '@starmate/theme-openbitfun',
     variables: Object.freeze(
       Object.keys(openbitfunThemeTokens)
         .filter(name => publicThemePrefixes.some(prefix => name.startsWith(prefix)))
@@ -69,16 +69,16 @@ export const CANONICAL_THEME_COLOR_TOKENS = Object.freeze(
 
 export const PACKAGE_CSS_VAR_IMPORT_CONTRACTS = Object.freeze([
   Object.freeze({
-    specifier: '@openbitfun/design-tokens/tokens.css',
-    packageNames: Object.freeze(['@openbitfun/design-tokens']),
+    specifier: '@starmate/design-tokens/tokens.css',
+    packageNames: Object.freeze(['@starmate/design-tokens']),
   }),
   Object.freeze({
-    specifier: '@openbitfun/theme-openbitfun/default.css',
-    packageNames: Object.freeze(['@openbitfun/design-tokens', '@openbitfun/theme-openbitfun']),
+    specifier: '@starmate/theme-openbitfun/default.css',
+    packageNames: Object.freeze(['@starmate/design-tokens', '@starmate/theme-openbitfun']),
   }),
   Object.freeze({
-    specifier: '@openbitfun/theme-openbitfun/themes.css',
-    packageNames: Object.freeze(['@openbitfun/theme-openbitfun']),
+    specifier: '@starmate/theme-openbitfun/themes.css',
+    packageNames: Object.freeze(['@starmate/theme-openbitfun']),
   }),
 ]);
 

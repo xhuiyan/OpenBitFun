@@ -14,7 +14,7 @@ import {
   IconButton,
   ScrollArea,
   SearchField,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 
 export interface ModelDiscoveryOption {

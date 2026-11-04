@@ -3,7 +3,7 @@ import {
   Button, Capsule, Card, CardBody, CardHeader, ConfirmDialog, Dialog, DialogBody, DialogClose, DialogFooter,
   DialogHeader, DialogHeading, DialogTitle, Icon, IconButton, Input, MenuPopover, OverflowText, Radio, StatusPill, Tooltip,
   type MenuEntry,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { ConfigPageRow, ConfigPageSection } from '@/infrastructure/config/components/common';
 import { useI18n } from '@/infrastructure/i18n';
 import { useSettingsDraft } from '@/infrastructure/config/settingsDraftRegistry';

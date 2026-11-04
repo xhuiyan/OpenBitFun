@@ -67,7 +67,7 @@ describe('Nursery gallery presentation', () => {
     expect(cardSection).not.toContain('&__new-session-btn {');
     expect(cardSection).not.toContain('&__set-primary-btn {');
     expect(cardSection).not.toContain('&__delete-btn {');
-    expect(source).toMatch(/import \{[^}]*\bIconButton\b[^}]*} from '@openbitfun\/ui';/);
+    expect(source).toMatch(/import \{[^}]*\bIconButton\b[^}]*} from '@starmate\/ui';/);
     expect(source).toContain('<CardHeader');
     expect(source).toContain('<CardFooter');
     expect(source).not.toContain('className="assistant-card__configure"');

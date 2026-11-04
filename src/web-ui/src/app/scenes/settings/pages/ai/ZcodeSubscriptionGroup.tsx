@@ -5,7 +5,7 @@ import type { SubscriptionAccount } from '@/infrastructure/api/service-api/AIApi
 import type { SubscriptionProvider } from '@/infrastructure/config/types';
 import { ConfigPageRow } from '@/infrastructure/config/components/common';
 import { useI18n } from '@/infrastructure/i18n';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 
 interface Props {
   accounts: SubscriptionAccount[];

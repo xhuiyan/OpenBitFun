@@ -10,7 +10,7 @@ import { OverflowText,
   DialogHeader,
   DialogHeading,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useMemo, useRef } from 'react';
 import { Bot, Cpu, Database, FolderKanban, Play, ShieldCheck, Square } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';

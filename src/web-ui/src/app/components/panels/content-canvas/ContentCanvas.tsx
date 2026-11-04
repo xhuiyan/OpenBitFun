@@ -4,7 +4,7 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { Toolbar } from '@openbitfun/ui';
+import { Toolbar } from '@starmate/ui';
 import { CanvasToolbarContribution, useExternalCanvasToolbar } from './CanvasToolbar';
 import { EditorArea } from './editor-area';
 import { AnchorZone } from './anchor-zone';

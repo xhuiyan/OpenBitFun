@@ -3,7 +3,7 @@ import React, { act, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { Simulate } from 'react-dom/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ColorPicker, type ColorPickerProps } from '@openbitfun/ui';
+import { ColorPicker, type ColorPickerProps } from '@starmate/ui';
 
 describe('ColorPicker interaction', () => {
   let host: HTMLDivElement;

@@ -6,11 +6,11 @@ import { useToolCardDisclosure } from '../timeline/readerState';
 
 import React, { useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { isShellToolName } from '../grouping/activityClassification';
 import { getToolCardStatus, getToolCardStatusDescription } from './toolCardStatus';
 import type { ToolCardProps } from '../types/flow-chat';
-import { DefaultToolCard as DefaultToolCardView } from '@openbitfun/ui/flow-chat';
+import { DefaultToolCard as DefaultToolCardView } from '@starmate/ui/flow-chat';
 import { useToolCardHeightContract } from './useToolCardHeightContract';
 import {
   formatSessionViewPreviewText,

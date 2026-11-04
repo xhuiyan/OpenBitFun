@@ -1,4 +1,4 @@
-import { Button, Icon, MenuItem, MenuPopover, Tooltip, type MenuItemProps } from '@openbitfun/ui';
+import { Button, Icon, MenuItem, MenuPopover, Tooltip, type MenuItemProps } from '@starmate/ui';
 import { forwardRef, useRef, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 

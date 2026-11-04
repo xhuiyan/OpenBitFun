@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
-import { DesignSystemProvider, Select } from '@openbitfun/ui';
+import { DesignSystemProvider, Select } from '@starmate/ui';
 import { useTranslation } from 'react-i18next';
 import { WindowControls } from './components/WindowControls';
 import { StepIndicator } from './components/StepIndicator';
-import { OpenBitFunAppIcon } from '@openbitfun/ui/brand';
+import { StarMateAppIcon } from '@starmate/ui/brand';
 import { LanguageSelect } from './pages/LanguageSelect';
 import { Options } from './pages/Options';
 import { ModelSetup } from './pages/ModelSetup';
@@ -128,7 +128,7 @@ function App() {
       <div className="installer-app">
         <div className="titlebar" data-tauri-drag-region>
           <div className="titlebar-brand" data-tauri-drag-region>
-            <OpenBitFunAppIcon size={16} data-tauri-drag-region />
+            <StarMateAppIcon size={16} data-tauri-drag-region />
             <span className="titlebar-title" data-tauri-drag-region>{t('shared.product.name')}</span>
           </div>
           {installer.previewOnly && (

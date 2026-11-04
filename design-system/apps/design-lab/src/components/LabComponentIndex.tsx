@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Icon as CatalogIcon, OverflowText, SearchField } from "@openbitfun/ui";
-import { componentRegistry } from "@openbitfun/ui/registry";
+import { Button, Icon as CatalogIcon, OverflowText, SearchField } from "@starmate/ui";
+import { componentRegistry } from "@starmate/ui/registry";
 import { useI18n } from "../i18n";
 import { getComponentCategoryLabel, getComponentDescription } from "../i18n/componentMetadata";
 

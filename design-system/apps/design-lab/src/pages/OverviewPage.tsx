@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-import { Button, ComposerContextBar, ComposerDivider, Icon, IconButton, KeyHint, NavigationPanel, NavigationPanelBody, NavigationPanelContent, NavigationPanelFooter, NavigationPanelHeader, NavigationPanelItem, NavigationPanelSection, NumberBadge, PageHeader, SearchField, SegmentedControl, StatusPill, ThemeRoot, type IconName, type ThemeRootProps } from "@openbitfun/ui";
-import { ChatComposer, ChatComposerActionButton } from "@openbitfun/ui/flow-chat";
-import { OpenBitFunSolidMark, SubagentHatch, type SubagentHatchPhase } from "@openbitfun/ui/brand";
+import { Button, ComposerContextBar, ComposerDivider, Icon, IconButton, KeyHint, NavigationPanel, NavigationPanelBody, NavigationPanelContent, NavigationPanelFooter, NavigationPanelHeader, NavigationPanelItem, NavigationPanelSection, NumberBadge, PageHeader, SearchField, SegmentedControl, StatusPill, ThemeRoot, type IconName, type ThemeRootProps } from "@starmate/ui";
+import { ChatComposer, ChatComposerActionButton } from "@starmate/ui/flow-chat";
+import { StarMateSolidMark, SubagentHatch, type SubagentHatchPhase } from "@starmate/ui/brand";
 import { useI18n } from "../i18n";
 import { SUBAGENT_AVATAR_CATALOG } from "../assets/subagentAvatars";
 import { GuideCodeCard, GuideStepList } from "../components/GuideContract";
@@ -168,7 +168,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
               </div>
               <div className="design-home-preview-stage">
                 <div className="design-home-preview-welcome">
-                  <OpenBitFunSolidMark className="design-app-mark design-home-preview-welcome-mark" size={48} />
+                  <StarMateSolidMark className="design-app-mark design-home-preview-welcome-mark" size={48} />
                   {/* The product's welcome screen is a display PageHeader; the picture uses the same
                       part, so the greeting and its line keep the roles the product publishes. */}
                   <PageHeader align="center" className="design-home-preview-welcome-header" level={2} size="display"

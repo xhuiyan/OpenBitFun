@@ -5,7 +5,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createServer } from "vite";
 import react from "@vitejs/plugin-react";
-import { componentRegistry } from "@openbitfun/ui/registry";
+import { componentRegistry } from "@starmate/ui/registry";
 
 test("brand resources use original artwork, localized names and real downloads", async () => {
   const server = await createServer({
@@ -32,9 +32,9 @@ test("brand resources use original artwork, localized names and real downloads",
       assert.match(html, /download="openbitfun-silver-mark.png"/);
       assert.match(html, /href="#subagent-ip"/);
       assert.match(html, /aria-pressed="true"/);
-      assert.doesNotMatch(html, /<h2>OpenBitFunSolidMark<|>brand\.|>design\./);
-      assert.ok(brandResources.find(item => item.name === "OpenBitFunAppIcon").downloads.some(item => item.filename.endsWith(".ico")));
-      assert.ok(brandResources.find(item => item.name === "OpenBitFunAppIcon").downloads.some(item => item.filename.endsWith(".icns")));
+      assert.doesNotMatch(html, /<h2>StarMateSolidMark<|>brand\.|>design\./);
+      assert.ok(brandResources.find(item => item.name === "StarMateAppIcon").downloads.some(item => item.filename.endsWith(".ico")));
+      assert.ok(brandResources.find(item => item.name === "StarMateAppIcon").downloads.some(item => item.filename.endsWith(".icns")));
 
     }
   } finally {

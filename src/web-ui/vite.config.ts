@@ -95,23 +95,23 @@ export function createDesignSystemSourceAliases(command: 'serve' | 'build') {
 
   return [
     {
-      find: /^@openbitfun\/ui\/brand$/,
+      find: /^@starmate\/ui\/brand$/,
       replacement: path.join(designSystemUiSourceDirectory, 'brand.ts'),
     },
     {
-      find: /^@openbitfun\/ui\/flow-chat$/,
+      find: /^@starmate\/ui\/flow-chat$/,
       replacement: path.join(designSystemUiSourceDirectory, 'flow-chat.ts'),
     },
     {
-      find: /^@openbitfun\/ui\/registry$/,
+      find: /^@starmate\/ui\/registry$/,
       replacement: path.join(designSystemUiSourceDirectory, 'registry.ts'),
     },
     {
-      find: /^@openbitfun\/ui\/styles\.css$/,
+      find: /^@starmate\/ui\/styles\.css$/,
       replacement: path.join(designSystemUiSourceDirectory, 'styles/layers.css'),
     },
     {
-      find: /^@openbitfun\/ui$/,
+      find: /^@starmate\/ui$/,
       replacement: path.join(designSystemUiSourceDirectory, 'index.ts'),
     },
   ];
@@ -249,9 +249,9 @@ export default defineConfig(({ mode, command }) => {
   optimizeDeps: {
     // Exclude dependencies that need to be dynamically loaded
     exclude: [
-      '@openbitfun/design-tokens',
-      '@openbitfun/theme-openbitfun',
-      '@openbitfun/ui',
+      '@starmate/design-tokens',
+      '@starmate/theme-openbitfun',
+      '@starmate/ui',
     ],
     // Force pre-building dependencies
     // Resolve Vite 7 and React 18 compatibility issues

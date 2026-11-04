@@ -1,11 +1,11 @@
 import {
   tokenCatalog as systemTokenCatalog,
   type SystemTokenMode,
-} from "@openbitfun/design-tokens";
+} from "@starmate/design-tokens";
 import {
   themeTokenCatalog,
   type ThemeDataName,
-} from "@openbitfun/theme-openbitfun";
+} from "@starmate/theme-openbitfun";
 
 export type TokenCollection = "system" | "theme";
 export type EditableTokenMode = SystemTokenMode | ThemeDataName;

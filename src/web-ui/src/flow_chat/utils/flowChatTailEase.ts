@@ -1,1 +1,1 @@
-export * from '@openbitfun/flow-chat-presentation/scroll';
+export * from '@starmate/flow-chat-presentation/scroll';

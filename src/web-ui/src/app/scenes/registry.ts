@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Icon, type IconName } from '@openbitfun/ui';
+import { Icon, type IconName } from '@starmate/ui';
 import {
   CircleUserRound,
   House,

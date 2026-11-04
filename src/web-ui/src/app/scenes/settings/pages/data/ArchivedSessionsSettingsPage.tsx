@@ -26,7 +26,7 @@ import { notificationService } from '@/shared/notification-system';
 import type { SessionMetadata } from '@/shared/types/session-history';
 import { externalHistoryFromMetadata } from '@/flow_chat/utils/externalHistory';
 import { createLogger } from '@/shared/utils/logger';
-import { Button, Empty, Icon, OverflowText } from '@openbitfun/ui';
+import { Button, Empty, Icon, OverflowText } from '@starmate/ui';
 import { Inbox, RotateCcw } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

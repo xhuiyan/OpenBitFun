@@ -1,5 +1,5 @@
 import './ImageGenerationSection.scss';
-import { Button, Capsule, Card, CardFooter, CardHeader, Combobox, Icon, IconButton, OverflowText, StatusPill, Tooltip } from '@openbitfun/ui';
+import { Button, Capsule, Card, CardFooter, CardHeader, Combobox, Icon, IconButton, OverflowText, StatusPill, Tooltip } from '@starmate/ui';
 import { ConfigPageRow, ConfigRetryState } from '../common';
 import { useI18n } from '@/infrastructure/i18n';
 import type { ReactNode } from 'react';

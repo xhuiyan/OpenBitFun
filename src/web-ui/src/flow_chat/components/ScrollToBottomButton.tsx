@@ -7,7 +7,7 @@ import { ChevronDown as LucideChevronDown } from 'lucide-react';
 import React, { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RetainedMountBoundary } from '@/shared/presence';
-import { Tooltip } from '@openbitfun/ui';
+import { Tooltip } from '@starmate/ui';
 import './ScrollToBottomButton.scss';
 
 interface ScrollToBottomButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {

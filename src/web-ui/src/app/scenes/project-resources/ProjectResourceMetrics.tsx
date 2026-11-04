@@ -1,4 +1,4 @@
-import { Button, OverflowText } from '@openbitfun/ui';
+import { Button, OverflowText } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { useProjectResources } from './useProjectResources';
 import { changedProjectFileCount } from './projectResourceStats';

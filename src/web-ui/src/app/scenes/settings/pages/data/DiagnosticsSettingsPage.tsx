@@ -10,7 +10,7 @@ import type {
 } from '@/infrastructure/config/types';
 import { peerHostRefusalMessage } from '@/infrastructure/peer-device/peerHostRefusal';
 import { createLogger } from '@/shared/utils/logger';
-import { Alert, Button, ConfirmDialog, IconButton, Input, Select, Switch, Tooltip } from '@openbitfun/ui';
+import { Alert, Button, ConfirmDialog, IconButton, Input, Select, Switch, Tooltip } from '@starmate/ui';
 import { Archive, FolderOpen } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

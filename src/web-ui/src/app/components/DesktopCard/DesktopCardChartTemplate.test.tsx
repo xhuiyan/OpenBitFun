@@ -8,7 +8,7 @@ import type { DesktopCardFormatters } from './desktopCardModel';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Button: () => null,
   Checkbox: () => null,
   StatusPill: () => null,

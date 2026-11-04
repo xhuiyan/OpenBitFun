@@ -32,7 +32,7 @@ import {
   Tooltip,
   type ComboboxOption,
   type SelectOption
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SettingsPage } from '../shared/SettingsPage';

@@ -13,11 +13,11 @@ describe('design-system Vite integration', () => {
 
     expect(serveAliases).toHaveLength(5);
     expect(serveAliases.map(alias => String(alias.find))).toEqual([
-      '/^@openbitfun\\/ui\\/brand$/',
-      '/^@openbitfun\\/ui\\/flow-chat$/',
-      '/^@openbitfun\\/ui\\/registry$/',
-      '/^@openbitfun\\/ui\\/styles\\.css$/',
-      '/^@openbitfun\\/ui$/',
+      '/^@starmate\\/ui\\/brand$/',
+      '/^@starmate\\/ui\\/flow-chat$/',
+      '/^@starmate\\/ui\\/registry$/',
+      '/^@starmate\\/ui\\/styles\\.css$/',
+      '/^@starmate\\/ui$/',
     ]);
     expect(path.normalize(serveAliases[1].replacement)).toContain(
       path.normalize('design-system/packages/ui/src/flow-chat.ts'),
@@ -80,7 +80,7 @@ describe('design-system Vite integration', () => {
     );
 
     const layerPreludeIndex = mainSource.indexOf(
-      'import "@openbitfun/ui/styles.css"',
+      'import "@starmate/ui/styles.css"',
     );
     const productGraphImports = [
       'import AppErrorBoundary from "./app/components/AppErrorBoundary"',
@@ -88,8 +88,8 @@ describe('design-system Vite integration', () => {
       "import('./app/components/AgentCompanionDesktopPet/AgentCompanionDesktopPet')",
     ];
 
-    expect(themeEntry).toContain('@import "@openbitfun/theme-openbitfun/default.css";');
-    expect(mainSource).not.toContain('import "@openbitfun/theme-openbitfun/default.css"');
+    expect(themeEntry).toContain('@import "@starmate/theme-openbitfun/default.css";');
+    expect(mainSource).not.toContain('import "@starmate/theme-openbitfun/default.css"');
     expect(layerPreludeIndex).toBeGreaterThanOrEqual(0);
     for (const productImport of productGraphImports) {
       expect(mainSource.indexOf(productImport)).toBeGreaterThan(layerPreludeIndex);

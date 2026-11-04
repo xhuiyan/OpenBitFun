@@ -1,7 +1,7 @@
 import { lazyWithRecovery } from '@/shared/utils/lazyWithRecovery';
 import { captureContentScope } from '@/shared/services/workbenchContentService';
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Icon, IconButton } from '@openbitfun/ui';
+import { Icon, IconButton } from '@starmate/ui';
 import { AlertTriangle, Code2, Loader2, MousePointer2 } from 'lucide-react';
 import path from 'path-browserify';
 import { flowChatStore } from '@/flow_chat/store/FlowChatStore';
@@ -23,7 +23,7 @@ import {
 } from '@/infrastructure/peer-device/peerModeFlag';
 import './OpenBitFunCanvasPanel.scss';
 
-const log = createLogger('OpenBitFunCanvasPanel');
+const log = createLogger('StarMateCanvasPanel');
 
 const CanvasSourceCodeEditor = lazyWithRecovery(() =>
   import('@/tools/editor/components/CodeEditor').then(module => ({
@@ -31,7 +31,7 @@ const CanvasSourceCodeEditor = lazyWithRecovery(() =>
   })),
 );
 
-export interface OpenBitFunCanvasDiagnostic {
+export interface StarMateCanvasDiagnostic {
   severity?: string;
   category?: string;
   message?: string;
@@ -40,13 +40,13 @@ export interface OpenBitFunCanvasDiagnostic {
   column?: number;
 }
 
-export interface OpenBitFunCanvasPanelProps {
+export interface StarMateCanvasPanelProps {
   title?: string;
   artifactReference?: string;
   html?: string;
   source?: string;
   status?: string;
-  diagnostics?: OpenBitFunCanvasDiagnostic[];
+  diagnostics?: StarMateCanvasDiagnostic[];
   workspaceId?: string;
   workspacePath?: string;
   remoteConnectionId?: string;
@@ -194,7 +194,7 @@ function canvasSnapshotSignature(canvas: CanvasSnapshotValue | null | undefined)
   ].join('\u0000');
 }
 
-export const OpenBitFunCanvasPanel: React.FC<OpenBitFunCanvasPanelProps> = ({
+export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
   title,
   artifactReference,
   html,
@@ -894,7 +894,7 @@ export const OpenBitFunCanvasPanel: React.FC<OpenBitFunCanvasPanelProps> = ({
                 {
                   context: createCanvasElementContext(message.reference, artifactReference, resolvedTitle),
                 },
-                'OpenBitFunCanvasPanel',
+                'StarMateCanvasPanel',
               );
             }
             break;
@@ -1082,4 +1082,4 @@ export const OpenBitFunCanvasPanel: React.FC<OpenBitFunCanvasPanelProps> = ({
   );
 };
 
-export default OpenBitFunCanvasPanel;
+export default StarMateCanvasPanel;

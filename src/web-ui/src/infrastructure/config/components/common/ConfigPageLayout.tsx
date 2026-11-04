@@ -5,7 +5,7 @@ import {
   ScrollArea,
   type FieldGroupFieldSurface,
   type FormSectionProps,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useId } from 'react';
 import { formatStandaloneUiCopy } from './standaloneUiCopy';
 import './ConfigPageLayout.scss';

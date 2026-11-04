@@ -147,7 +147,7 @@ test('theme CSS var contract registry is explicit and non-overlapping', () => {
     'independent package CSS variable contracts must not overlap',
   );
   for (const contract of PACKAGE_CSS_VAR_DEFINITION_CONTRACTS) {
-    assert.match(contract.packageName, /^@openbitfun\/[a-z0-9-]+$/);
+    assert.match(contract.packageName, /^@starmate\/[a-z0-9-]+$/);
     assert.ok(contract.owner.startsWith('design-system/packages/'));
     assert.ok(contract.variables.length > 0, `${contract.packageName} must expose variables`);
     assert.equal(
@@ -443,7 +443,7 @@ test('theme color audit reports static contract token external consumption', (t)
 
 test('theme color audit resolves canonical variables from imported package CSS contracts', (t) => {
   const { dir, sourceRoot } = createFixture({
-    'main.tsx': "import '@openbitfun/theme-openbitfun/default.css';\n",
+    'main.tsx': "import '@starmate/theme-openbitfun/default.css';\n",
     'app/App.scss': [
       '.app {',
       '  color: var(--openbitfun-color-content-primary);',
@@ -460,8 +460,8 @@ test('theme color audit resolves canonical variables from imported package CSS c
 
   const report = JSON.parse(result.stdout);
   assert.deepEqual(report.packageCssContracts.importedPackages, [
-    '@openbitfun/design-tokens',
-    '@openbitfun/theme-openbitfun',
+    '@starmate/design-tokens',
+    '@starmate/theme-openbitfun',
   ]);
   assert.equal(report.cssVarDefinitions.unresolvedUnique, 0);
   assert.equal(report.cssVarDefinitions.unresolvedRequiredUnique, 0);
@@ -469,7 +469,7 @@ test('theme color audit resolves canonical variables from imported package CSS c
 
 test('theme color audit does not require a widget payload on surfaces without that contract', (t) => {
   const { dir, sourceRoot } = createFixture({
-    'main.tsx': "import '@openbitfun/theme-openbitfun/default.css';\n",
+    'main.tsx': "import '@starmate/theme-openbitfun/default.css';\n",
     'app/App.scss': '.app { color: var(--openbitfun-color-content-primary); }\n',
   });
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
@@ -708,8 +708,8 @@ test('theme color audit can resolve peer-owned public package variables explicit
 
   const result = runAudit([
     '--root', sourceRoot,
-    '--package-contract', '@openbitfun/design-tokens',
-    '--package-contract', '@openbitfun/theme-openbitfun',
+    '--package-contract', '@starmate/design-tokens',
+    '--package-contract', '@starmate/theme-openbitfun',
     '--json',
     '--no-baseline',
   ]);
@@ -719,7 +719,7 @@ test('theme color audit can resolve peer-owned public package variables explicit
   assert.equal(report.cssVarDefinitions.unresolvedUnique, 0);
   assert.deepEqual(
     report.packageCssContracts.importedPackages,
-    ['@openbitfun/design-tokens', '@openbitfun/theme-openbitfun'],
+    ['@starmate/design-tokens', '@starmate/theme-openbitfun'],
   );
 });
 
@@ -1162,7 +1162,7 @@ test('theme color audit excludes only explicitly named root-relative paths', (t)
   const result = runAudit([
     '--root', sourceRoot,
     '--exclude', 'generated',
-    '--package-contract', '@openbitfun/theme-openbitfun',
+    '--package-contract', '@starmate/theme-openbitfun',
     '--json',
     '--no-baseline',
   ]);

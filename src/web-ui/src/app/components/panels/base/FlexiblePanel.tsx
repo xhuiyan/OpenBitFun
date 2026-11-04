@@ -1,6 +1,6 @@
 import { lazyWithRecovery } from '@/shared/utils/lazyWithRecovery';
 import React, { useCallback, memo } from 'react';
-import { OverflowText, Icon, IconButton, Tooltip } from '@openbitfun/ui';
+import { OverflowText, Icon, IconButton, Tooltip } from '@starmate/ui';
 import { AlertCircle } from 'lucide-react';
 
 import { MarkdownRenderer } from '@/infrastructure/markdown';
@@ -120,7 +120,7 @@ const GenerativeWidgetPanel = lazyWithRecovery(() =>
   import('@/tools/generative-widget/GenerativeWidgetPanel')
 );
 
-const OpenBitFunCanvasPanel = lazyWithRecovery(() =>
+const StarMateCanvasPanel = lazyWithRecovery(() =>
   import('@/tools/openbitfun-canvas/OpenBitFunCanvasPanel')
 );
 
@@ -1055,7 +1055,7 @@ const FlexiblePanel: React.FC<ExtendedFlexiblePanelProps> = memo(({
       case 'openbitfun-canvas':
         return (
           <React.Suspense fallback={<div className="openbitfun-flexible-panel__loading" data-openbitfun-component="flexible-panel" data-openbitfun-part="loading" data-openbitfun-state="loading">Loading Canvas preview...</div>}>
-            <OpenBitFunCanvasPanel
+            <StarMateCanvasPanel
               title={content.title}
               artifactReference={content.data?.artifactReference}
               html={content.data?.html}

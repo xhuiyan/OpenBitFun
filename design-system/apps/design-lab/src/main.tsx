@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@openbitfun/theme-openbitfun/default.css";
-import "@openbitfun/ui/styles.css";
-import "@openbitfun/ui/mobile.css";
+import "@starmate/theme-openbitfun/default.css";
+import "@starmate/ui/styles.css";
+import "@starmate/ui/mobile.css";
 import { App } from "./App";
 import { I18nProvider } from "./i18n";
 import "./styles.css";

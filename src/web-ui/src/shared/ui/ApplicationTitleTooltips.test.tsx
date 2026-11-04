@@ -2,8 +2,8 @@
 import React, { act, useRef } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { DesignSystemProvider, IconButton, OverflowText, Portal, Tooltip } from '@openbitfun/ui';
-import { AgentControlToolCard } from '@openbitfun/ui/flow-chat';
+import { DesignSystemProvider, IconButton, OverflowText, Portal, Tooltip } from '@starmate/ui';
+import { AgentControlToolCard } from '@starmate/ui/flow-chat';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 

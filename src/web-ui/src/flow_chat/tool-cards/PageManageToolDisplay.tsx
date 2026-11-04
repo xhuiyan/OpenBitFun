@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Icon, IconButton } from '@openbitfun/ui';
-import { PagePublishToolCard } from '@openbitfun/ui/flow-chat';
+import { Icon, IconButton } from '@starmate/ui';
+import { PagePublishToolCard } from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import type { ToolCardProps } from '../types/flow-chat';
 import { useToolCardDisclosure } from '../timeline/readerState';

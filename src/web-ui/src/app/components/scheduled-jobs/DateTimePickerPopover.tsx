@@ -11,7 +11,7 @@
  * and the text field already accepts it.
  */
 
-import { useDismissibleLayer, createOverlayPortal, Button, Icon, IconButton } from '@openbitfun/ui';
+import { useDismissibleLayer, createOverlayPortal, Button, Icon, IconButton } from '@starmate/ui';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';

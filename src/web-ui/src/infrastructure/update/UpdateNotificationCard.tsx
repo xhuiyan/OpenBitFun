@@ -1,5 +1,5 @@
-import { OpenBitFunMark } from '@openbitfun/ui/brand';
-import { ActionItem, Button, Card, CardBody, CardFooter, CardHeader, Icon, IconButton, OverlayLayer, OverflowText, useHasModalOverlay } from '@openbitfun/ui';
+import { StarMateMark } from '@starmate/ui/brand';
+import { ActionItem, Button, Card, CardBody, CardFooter, CardHeader, Icon, IconButton, OverlayLayer, OverflowText, useHasModalOverlay } from '@starmate/ui';
 import { useEffect, useMemo, useRef, type MouseEvent } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { getVersionInfo } from '@/shared/utils/version';
@@ -101,7 +101,7 @@ function UpdateNoticeCard({ notice }: { notice: UpdateNotice }) {
             <div className="openbitfun-update-notice__empty-introduction" aria-hidden="true"
               data-testid="app-update-release-artwork"
               data-openbitfun-component="update" data-openbitfun-part="releaseArtwork">
-              <OpenBitFunMark className="openbitfun-update-notice__brand-mark" />
+              <StarMateMark className="openbitfun-update-notice__brand-mark" />
             </div>
           )}
           {notice === 'error' && <div className="openbitfun-update-notice__feedback">

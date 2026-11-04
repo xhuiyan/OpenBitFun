@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { VoiceParticleAudioReader } from '@openbitfun/ui';
+import type { VoiceParticleAudioReader } from '@starmate/ui';
 import { useTranslation } from 'react-i18next';
 import {
   DEFAULT_REALTIME_OUTPUT_SAMPLE_RATE,

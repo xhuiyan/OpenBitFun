@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDismissibleLayer } from '@openbitfun/ui';
+import { useDismissibleLayer } from '@starmate/ui';
 
 /** Expand the existing tree so drafts, disclosure and portal ownership survive. */
 export function useFlowChatFullscreen() {

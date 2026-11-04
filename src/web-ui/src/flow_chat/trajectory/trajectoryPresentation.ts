@@ -1,4 +1,4 @@
-import type { StatusPillTone } from '@openbitfun/ui';
+import type { StatusPillTone } from '@starmate/ui';
 export function trajectoryStatus(status: string, t: (key: string) => string): { label: string; tone: StatusPillTone } {
   if (status === 'completed') return { label: t('shared:statuses.done'), tone: 'success' };
   if (status === 'error') return { label: t('shared:statuses.failed'), tone: 'danger' };

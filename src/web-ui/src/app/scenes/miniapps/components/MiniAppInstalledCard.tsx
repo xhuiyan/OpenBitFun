@@ -1,4 +1,4 @@
-import { ActionCard, Icon, MenuPopover, OverflowText, StatusPill } from '@openbitfun/ui';
+import { ActionCard, Icon, MenuPopover, OverflowText, StatusPill } from '@starmate/ui';
 import { MonitorDown, Play } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import type { MiniAppMeta } from '@/infrastructure/api/service-api/MiniAppAPI';

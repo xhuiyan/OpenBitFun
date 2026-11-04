@@ -3,7 +3,7 @@ import type { SubscriptionQuotaMeter } from '@/infrastructure/api/service-api/AI
 import type { SubscriptionProvider } from '@/infrastructure/config/types';
 import { useSubscriptionQuota } from '@/infrastructure/config/hooks/useSubscriptionQuota';
 import { i18nService, useI18n } from '@/infrastructure/i18n';
-import { Button, Card, Icon, IconButton, StatusPill, Tooltip } from '@openbitfun/ui';
+import { Button, Card, Icon, IconButton, StatusPill, Tooltip } from '@starmate/ui';
 import { finiteQuota, quotaIsStale, quotaMeters, remainingPercent } from './subscriptionQuotaPresentation';
 import styles from './SubscriptionQuotaPanel.module.scss';
 import { systemAPI } from '@/infrastructure/api/service-api/SystemAPI';

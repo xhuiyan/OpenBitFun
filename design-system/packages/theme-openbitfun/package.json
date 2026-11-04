@@ -1,5 +1,5 @@
 {
-  "name": "@openbitfun/theme-openbitfun",
+  "name": "@starmate/theme-openbitfun",
   "version": "0.1.0",
   "description": "Replaceable OpenBitFun light, dark, and high-contrast theme package",
   "license": "MIT",
@@ -32,10 +32,10 @@
     "prepack": "pnpm run build"
   },
   "dependencies": {
-    "@openbitfun/design-tokens": "workspace:^"
+    "@starmate/design-tokens": "workspace:^"
   },
   "devDependencies": {
-    "@openbitfun/token-engine": "workspace:*"
+    "@starmate/token-engine": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

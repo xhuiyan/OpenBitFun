@@ -2,7 +2,7 @@ import { resolveAssistantName } from '@/shared/utils/assistantName';
 import React from 'react';
 import { WorkspaceIcon } from '@/app/components/WorkspaceIcon/WorkspaceIcon';
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';
-import { createOverlayPortal, OverflowText, Icon, Menu, MenuItem, Tooltip } from '@openbitfun/ui';
+import { createOverlayPortal, OverflowText, Icon, Menu, MenuItem, Tooltip } from '@starmate/ui';
 import { WorkspaceKind, type WorkspaceInfo } from '@/shared/types';
 
 interface ShellNavWorkspaceSwitcherProps {

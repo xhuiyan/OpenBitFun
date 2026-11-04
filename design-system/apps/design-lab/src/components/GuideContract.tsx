@@ -1,4 +1,4 @@
-import { Icon as CatalogIcon, type IconName } from "@openbitfun/ui";
+import { Icon as CatalogIcon, type IconName } from "@starmate/ui";
 import { Blocks, FileCode2, Layers3 } from "lucide-react";
 import { useI18n, type MessageKey } from "../i18n";
 
@@ -28,9 +28,9 @@ const steps: readonly {
   },
 ];
 
-const snippet = `import "@openbitfun/theme-openbitfun/default.css";
-import "@openbitfun/ui/styles.css";
-import { Button, ThemeRoot } from "@openbitfun/ui";
+const snippet = `import "@starmate/theme-openbitfun/default.css";
+import "@starmate/ui/styles.css";
+import { Button, ThemeRoot } from "@starmate/ui";
 
 export function App() {
   return (

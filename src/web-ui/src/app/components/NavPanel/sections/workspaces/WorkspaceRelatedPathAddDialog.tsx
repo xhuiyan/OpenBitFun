@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { Alert, Button, Dialog, DialogBody, DialogClose, DialogDescription, DialogFooter, DialogHeader,
-  DialogHeading, DialogTitle, Field, Icon, Input, Textarea } from '@openbitfun/ui';
+  DialogHeading, DialogTitle, Field, Icon, Input, Textarea } from '@starmate/ui';
 import { FolderOpen } from 'lucide-react';
 import { useWorkspaceContext } from '@/infrastructure/contexts/WorkspaceContext';
 import { useI18n } from '@/infrastructure/i18n';

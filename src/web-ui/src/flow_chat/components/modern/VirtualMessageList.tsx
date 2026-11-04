@@ -16,10 +16,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { requestDeferredContentItem } from '@openbitfun/flow-chat-presentation/deferred-content';
+import { requestDeferredContentItem } from '@starmate/flow-chat-presentation/deferred-content';
 import { findFlowChatFocusElement } from './flowChatFocusTarget';
 import { useActiveSessionState } from '../../hooks/useActiveSessionState';
 import { useSessionReadOnOpen } from '../../hooks/useSessionReadOnOpen';
@@ -85,7 +85,7 @@ import {
 } from './flowChatHistoryBoundary';
 import { VirtualItemRenderer } from './VirtualItemRenderer';
 import { FlowChatPrependSnapshot } from './FlowChatPrependSnapshot';
-import { revealContainedRange } from '@openbitfun/flow-chat-presentation/scroll';
+import { revealContainedRange } from '@starmate/flow-chat-presentation/scroll';
 import { FlowChatOpeningBoundary } from './FlowChatOpeningBoundary';
 import { useFlowChatVolatileContext } from './FlowChatContext';
 import {
@@ -106,7 +106,7 @@ import type { ConversationExcerptContext } from '@/shared/types/context';
 import { findExcerptSource, resolveExcerptRange } from '../../selection/flowChatSelection';
 import { highlightExcerptRange } from '../../selection/locateConversationExcerpt';
 import './VirtualMessageList.scss';
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { isSubmittedMessageScrollIntentPending, type SubmittedMessageScrollIntent } from '../../services/submittedMessageScrollIntent';
 
 const SEARCH_NAVIGATION_MAX_ATTEMPTS = 24;

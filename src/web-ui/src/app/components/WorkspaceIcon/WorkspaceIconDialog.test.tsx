@@ -22,9 +22,9 @@ vi.mock('@/infrastructure/workspace-icons/workspaceIcons', () => ({
 vi.mock('./prepareWorkspaceIcon', () => ({ prepareWorkspaceIcon: mocks.prepare }));
 const workspace = { id: 'project', name: 'Project', workspaceKind: 'normal' } as WorkspaceInfo;
 
-vi.mock('@openbitfun/ui', async (importOriginal) => {
+vi.mock('@starmate/ui', async (importOriginal) => {
   const Wrapper = ({ children }: React.PropsWithChildren) => <div>{children}</div>;
-  return { ...await importOriginal<typeof import('@openbitfun/ui')>(),
+  return { ...await importOriginal<typeof import('@starmate/ui')>(),
     Dialog: Wrapper, DialogBody: Wrapper, DialogFooter: Wrapper, DialogHeader: Wrapper,
     DialogHeading: Wrapper, DialogTitle: Wrapper, DialogClose: () => null };
 });

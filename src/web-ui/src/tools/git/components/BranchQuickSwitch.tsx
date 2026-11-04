@@ -28,7 +28,7 @@ import { createOverlayPortal, OverflowText,
   DialogTitle,
   useDismissibleLayer,
   usePresence,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { Loader2 } from 'lucide-react';
 
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';

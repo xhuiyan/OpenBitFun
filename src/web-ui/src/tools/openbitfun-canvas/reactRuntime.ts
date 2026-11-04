@@ -144,10 +144,10 @@ function wrapUserCanvasScript(componentCode: string, revision: string): string {
   return `
 (function () {
   try {
-    window.OpenBitFunCanvasRuntime.moduleStarted();
+    window.StarMateCanvasRuntime.moduleStarted();
 ${componentCode}
   } catch (error) {
-    window.OpenBitFunCanvasRuntime.reportRuntimeError(error);
+    window.StarMateCanvasRuntime.reportRuntimeError(error);
   }
 })();
 //# sourceURL=openbitfun-canvas-${revision || 'unknown'}.js

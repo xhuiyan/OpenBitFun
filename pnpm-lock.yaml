@@ -59,10 +59,10 @@ importers:
 
   OpenBitFun-Installer:
     dependencies:
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../design-system/packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../design-system/packages/ui
       '@tauri-apps/api':
@@ -119,16 +119,16 @@ importers:
 
   design-system/apps/design-lab:
     dependencies:
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../../packages/design-tokens
-      '@openbitfun/flow-chat-presentation':
+      '@starmate/flow-chat-presentation':
         specifier: workspace:*
         version: link:../../../packages/flow-chat-presentation
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../../packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../packages/ui
       lucide-react:
@@ -141,7 +141,7 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@openbitfun/token-engine':
+      '@starmate/token-engine':
         specifier: workspace:*
         version: link:../../tooling/token-engine
       '@types/node':
@@ -165,23 +165,23 @@ importers:
 
   design-system/packages/design-tokens:
     devDependencies:
-      '@openbitfun/token-engine':
+      '@starmate/token-engine':
         specifier: workspace:*
         version: link:../../tooling/token-engine
 
   design-system/packages/theme-openbitfun:
     dependencies:
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../design-tokens
     devDependencies:
-      '@openbitfun/token-engine':
+      '@starmate/token-engine':
         specifier: workspace:*
         version: link:../../tooling/token-engine
 
   design-system/packages/ui:
     dependencies:
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../design-tokens
       lucide-react:
@@ -219,10 +219,10 @@ importers:
 
   packages/flow-chat-presentation:
     dependencies:
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../../design-system/packages/design-tokens
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../design-system/packages/ui
       '@xterm/addon-fit':
@@ -265,10 +265,10 @@ importers:
 
   src/miniapp-market-web:
     dependencies:
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../../design-system/packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../design-system/packages/ui
       '@phosphor-icons/react':
@@ -314,10 +314,10 @@ importers:
       '@noble/hashes':
         specifier: ^2.0.1
         version: 2.0.1
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../../design-system/packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../design-system/packages/ui
       '@xterm/addon-fit':
@@ -390,10 +390,10 @@ importers:
 
   src/skin-market-web:
     dependencies:
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../../design-system/packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../design-system/packages/ui
       '@phosphor-icons/react':
@@ -433,16 +433,16 @@ importers:
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.7.0(monaco-editor@0.52.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../../design-system/packages/design-tokens
-      '@openbitfun/flow-chat-presentation':
+      '@starmate/flow-chat-presentation':
         specifier: workspace:*
         version: link:../../packages/flow-chat-presentation
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../../design-system/packages/theme-openbitfun
-      '@openbitfun/ui':
+      '@starmate/ui':
         specifier: workspace:^
         version: link:../../design-system/packages/ui
       '@tanstack/react-virtual':
@@ -734,10 +734,10 @@ importers:
 
   website:
     dependencies:
-      '@openbitfun/design-tokens':
+      '@starmate/design-tokens':
         specifier: workspace:^
         version: link:../design-system/packages/design-tokens
-      '@openbitfun/theme-openbitfun':
+      '@starmate/theme-openbitfun':
         specifier: workspace:^
         version: link:../design-system/packages/theme-openbitfun
 

@@ -3,7 +3,7 @@ import React, { act, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Input, Textarea } from '@openbitfun/ui';
+import { Input, Textarea } from '@starmate/ui';
 import { installTextInputGuard, stripKeyboardControlCharacters } from '../../../../shared/text-input/textInputGuard';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;

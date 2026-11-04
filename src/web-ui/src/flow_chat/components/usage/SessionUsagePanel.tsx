@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { MarkdownRenderer } from '@/infrastructure/markdown';
-import { Empty, Icon, IconButton, LoadingState, PageHeader, ScrollArea, Tooltip } from '@openbitfun/ui';
+import { Empty, Icon, IconButton, LoadingState, PageHeader, ScrollArea, Tooltip } from '@starmate/ui';
 import type { SessionUsageReport } from '@/infrastructure/api/service-api/SessionAPI';
 import {
   buildSessionUsageExportMarkdown,

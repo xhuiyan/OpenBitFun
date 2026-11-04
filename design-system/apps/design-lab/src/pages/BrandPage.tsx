@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Code2, Pause, Play } from "lucide-react";
-import { SegmentedControl, Icon, IconButton, ThemeRoot } from "@openbitfun/ui";
+import { SegmentedControl, Icon, IconButton, ThemeRoot } from "@starmate/ui";
 import {
-  OpenBitFunAppIcon,
-  OpenBitFunBrandMotion,
-  OpenBitFunMark,
-  OpenBitFunSolidMark,
+  StarMateAppIcon,
+  StarMateBrandMotion,
+  StarMateMark,
+  StarMateSolidMark,
   SubagentHatch,
   VoiceParticleLogo,
   type SubagentHatchPhase,
-} from "@openbitfun/ui/brand";
+} from "@starmate/ui/brand";
 import { useI18n, type MessageKey } from "../i18n";
 import { SUBAGENT_AVATAR_CATALOG } from "../assets/subagentAvatars";
 import silverUrl from "../../../../packages/ui/src/brand/assets/openbitfun-app-mark.png?url";
@@ -31,12 +31,12 @@ type BrandResource = {
 
 export const brandResources: readonly BrandResource[] = [
   {
-    name: "OpenBitFunSolidMark", label: "design.silverMark",
+    name: "StarMateSolidMark", label: "design.silverMark",
     description: "brandAssets.silverDescription", specification: "PNG · 512 × 512",
     downloads: [{ label: "PNG", url: silverUrl, filename: "openbitfun-silver-mark.png" }],
   },
   {
-    name: "OpenBitFunAppIcon", label: "design.appIcon",
+    name: "StarMateAppIcon", label: "design.appIcon",
     description: "brandAssets.appDescription", specification: "PNG · 512 × 512 / ICO / ICNS",
     downloads: [
       { label: "PNG", url: appPngUrl, filename: "openbitfun-app-icon-512.png" },
@@ -45,7 +45,7 @@ export const brandResources: readonly BrandResource[] = [
     ],
   },
   {
-    name: "OpenBitFunMark", label: "design.lineMark", motion: true,
+    name: "StarMateMark", label: "design.lineMark", motion: true,
     description: "brandAssets.outlineDescription", specification: "SVG",
     downloads: [{ label: "SVG", url: outlineUrl, filename: "openbitfun-mark.svg" }],
   },
@@ -55,7 +55,7 @@ export const brandResources: readonly BrandResource[] = [
     downloads: [{ label: "PNG", url: wordmarkUrl, filename: "openbitfun-wordmark.png" }],
   },
   {
-    name: "OpenBitFunBrandMotion", label: "design.aboutMotion", motion: true,
+    name: "StarMateBrandMotion", label: "design.aboutMotion", motion: true,
     description: "brandAssets.aboutDescription",
   },
   {
@@ -69,8 +69,8 @@ export const brandResources: readonly BrandResource[] = [
    away, because they are the brand's own vectors rather than product artwork. */
 const motionScenes = [
   { name: "SubagentHatch", label: "brandAssets.characterMotion" },
-  { name: "OpenBitFunMark", label: "brandAssets.breathe" },
-  { name: "OpenBitFunBrandMotion", label: "brandAssets.flow" },
+  { name: "StarMateMark", label: "brandAssets.breathe" },
+  { name: "StarMateBrandMotion", label: "brandAssets.flow" },
   { name: "VoiceParticleLogo", label: "brandAssets.particles" },
 ] as const;
 
@@ -119,8 +119,8 @@ function AssetActions({ resource, onOpenComponent }: { resource: BrandResource; 
 
 function IdentityTile({ resource, onOpenComponent }: { resource: BrandResource; onOpenComponent: OpenComponent }) {
   const { t } = useI18n();
-  const silver = resource.name === "OpenBitFunSolidMark";
-  const app = resource.name === "OpenBitFunAppIcon";
+  const silver = resource.name === "StarMateSolidMark";
+  const app = resource.name === "StarMateAppIcon";
   const [background, setBackground] = useState<Background>(silver ? "dark" : "light");
   const kind = silver ? "silver" : app ? "app" : "outline";
   return (
@@ -130,9 +130,9 @@ function IdentityTile({ resource, onOpenComponent }: { resource: BrandResource; 
         <BackgroundPicker value={background} onChange={setBackground} asset={t(resource.label)} />
       </div>}
       <div className="brand-gallery-tile-art">
-        {silver ? <div className="brand-gallery-silver-art"><OpenBitFunSolidMark size={440} /></div>
-          : app ? <OpenBitFunAppIcon size={144} />
-          : <OpenBitFunMark size={112} />}
+        {silver ? <div className="brand-gallery-silver-art"><StarMateSolidMark size={440} /></div>
+          : app ? <StarMateAppIcon size={144} />
+          : <StarMateMark size={112} />}
       </div>
       <div className="brand-gallery-tile-footer">
         <h2 id={`brand-asset-${resource.name}`}>{t(resource.label)}</h2>
@@ -188,9 +188,9 @@ function BrandMotionShowcase({ onOpenComponent }: { onOpenComponent: OpenCompone
               size prop would put an inline size on the mark and win over the frame. */}
           {!voice && !character && (
             <div className="brand-gallery-motion-texture" aria-hidden="true">
-              {selected.name === "OpenBitFunMark"
-                ? <OpenBitFunMark motion="breathe" active={false} />
-                : <OpenBitFunBrandMotion active={false} />}
+              {selected.name === "StarMateMark"
+                ? <StarMateMark motion="breathe" active={false} />
+                : <StarMateBrandMotion active={false} />}
             </div>
           )}
           {character && (
@@ -198,8 +198,8 @@ function BrandMotionShowcase({ onOpenComponent }: { onOpenComponent: OpenCompone
               <img src={bannerCharacter.src} alt="" draggable={false} width={bannerCharacterSize} height={bannerCharacterSize} />
             </SubagentHatch>
           )}
-          {selected.name === "OpenBitFunMark" && <OpenBitFunMark size={216} motion="breathe" active={playing} />}
-          {selected.name === "OpenBitFunBrandMotion" && <OpenBitFunBrandMotion size={320} active={playing} />}
+          {selected.name === "StarMateMark" && <StarMateMark size={216} motion="breathe" active={playing} />}
+          {selected.name === "StarMateBrandMotion" && <StarMateBrandMotion size={320} active={playing} />}
           {voice && <div className="brand-gallery-voice"><VoiceParticleLogo active={playing} /></div>}
         </div>
         <div className="brand-gallery-motion-controls">
@@ -269,10 +269,10 @@ export function BrandPage({ onOpenComponent }: { onOpenComponent: OpenComponent 
               <h3>{t(resource.label)}</h3>
               <p>{t(resource.description)}</p>
               {resource.specification && <span>{resource.specification}</span>}
-              {resource.name === "OpenBitFunAppIcon" && (
+              {resource.name === "StarMateAppIcon" && (
                 <div className="brand-gallery-size-list" role="group" aria-label={t("design.actualSize")}>
                   {[16, 24, 32, 48, 64].map(size => (
-                    <figure key={size}><OpenBitFunAppIcon size={size} /><figcaption>{size} px</figcaption></figure>
+                    <figure key={size}><StarMateAppIcon size={size} /><figcaption>{size} px</figcaption></figure>
                   ))}
                 </div>
               )}

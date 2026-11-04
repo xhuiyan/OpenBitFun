@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Loader2 } from 'lucide-react';
-import { Icon, MenuItem } from '@openbitfun/ui';
+import { Icon, MenuItem } from '@starmate/ui';
 
 import type { AcpClientInfo } from '@/infrastructure/api/service-api/ACPClientAPI';
 import { useI18n } from '@/infrastructure/i18n';

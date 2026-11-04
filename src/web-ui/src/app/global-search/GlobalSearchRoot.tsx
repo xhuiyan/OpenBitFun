@@ -20,7 +20,7 @@ import { OverflowText,
   Dialog,
   DialogBody,
   Portal,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { AlertCircle, BarChart3, Blocks, CheckSquare2, FileText, Keyboard, MessageSquareText, MessagesSquare, Network, Users } from 'lucide-react';
 import { useShortcut } from '@/infrastructure/hooks/useShortcut';
 import { useI18n } from '@/infrastructure/i18n';

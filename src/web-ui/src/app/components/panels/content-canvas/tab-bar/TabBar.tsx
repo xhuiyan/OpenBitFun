@@ -14,7 +14,7 @@ import { TabOverflowMenu } from './TabOverflowMenu';
 import type { CanvasTab, EditorGroupId, TabDragPayload } from '../types';
 import { createLogger } from '@/shared/utils/logger';
 import './TabBar.scss';
-import { Icon, IconButton, TabGroup, Toolbar, Tooltip, type TabGroupItem } from '@openbitfun/ui';
+import { Icon, IconButton, TabGroup, Toolbar, Tooltip, type TabGroupItem } from '@starmate/ui';
 
 const log = createLogger('TabBar');
 const TAB_REORDER_DURATION_MS = 160;

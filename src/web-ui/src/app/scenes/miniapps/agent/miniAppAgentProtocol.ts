@@ -1,7 +1,7 @@
 /**
  * Wire contract for driving a MiniApp surface from the Agent.
  *
- * Mirrors `openbitfun_product_domains::miniapp::web_surface`. The Rust side owns
+ * Mirrors `starmate_product_domains::miniapp::web_surface`. The Rust side owns
  * the authoritative limits and error taxonomy; this module only re-declares the
  * subset the Web UI must honor, so the surface runtime cannot drift silently.
  *

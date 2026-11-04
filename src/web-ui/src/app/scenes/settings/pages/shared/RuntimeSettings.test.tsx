@@ -42,8 +42,8 @@ vi.mock('../ai/SessionTitleSection', () => ({ default: () => null }));
 vi.mock('../ai/DefaultHarnessSection', () => ({ default: () => <div>default-harness-config</div> }));
 vi.mock('../ai/ReviewCapacitySection', () => ({ default: () => null }));
 vi.mock('../ai/ToolJsonRepairSection', () => ({ default: () => null }));
-vi.mock('@openbitfun/ui', async (original) => ({
-  ...await original<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async (original) => ({
+  ...await original<typeof import('@starmate/ui')>(),
   Select: ({ value, options, disabled, onValueChange }: { value: string; options: Array<{ value: string; label: string }>; disabled: boolean; onValueChange?: (value: string) => void }) => (
     <select value={value} disabled={disabled} onChange={event => onValueChange?.(event.target.value)}>{options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select>
   ),

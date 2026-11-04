@@ -5,7 +5,7 @@
  * job list at top, inline editor expands below the selected job.
  */
 
-import { Alert, OverflowText, Icon, Button, Combobox, Switch, IconButton, Input, Select, StatusPill, Textarea, Tooltip, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeading, DialogTitle, Field } from '@openbitfun/ui';
+import { Alert, OverflowText, Icon, Button, Combobox, Switch, IconButton, Input, Select, StatusPill, Textarea, Tooltip, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeading, DialogTitle, Field } from '@starmate/ui';
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { usePeerDeviceModeOptional } from '@/infrastructure/peer-device/peerDeviceContextState';
 import { getActiveSurfaceScope } from '@/infrastructure/peer-device/deviceSurface';

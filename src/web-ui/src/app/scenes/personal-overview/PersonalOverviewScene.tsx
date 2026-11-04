@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Button, Icon, ScrollArea, Spinner } from '@openbitfun/ui';
-import { useSubagentAvatarMotion } from '@openbitfun/ui/brand';
+import { Button, Icon, ScrollArea, Spinner } from '@starmate/ui';
+import { useSubagentAvatarMotion } from '@starmate/ui/brand';
 import { useAccountIdentity } from '@/infrastructure/account-identity/useAccountIdentity';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { useWorkspaceContext } from '@/infrastructure/contexts/WorkspaceContext';

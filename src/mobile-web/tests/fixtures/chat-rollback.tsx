@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '../../src/styles/reset.scss';
-import '@openbitfun/theme-openbitfun/default.css';
-import '@openbitfun/ui/mobile.css';
+import '@starmate/theme-openbitfun/default.css';
+import '@starmate/ui/mobile.css';
 import '../../src/styles/index.scss';
 import ChatPage from '../../src/pages/ChatPage';
 import { useWideLayout } from '../../src/hooks/useWideLayout';

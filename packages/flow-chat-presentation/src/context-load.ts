@@ -1,4 +1,4 @@
-import type { ContextLoadGroupProps } from '@openbitfun/ui/flow-chat';
+import type { ContextLoadGroupProps } from '@starmate/ui/flow-chat';
 import type { PresentationTranslate } from './exec/contracts';
 
 /** Counts describe calls, including repeat loads, rather than distinct resources. */

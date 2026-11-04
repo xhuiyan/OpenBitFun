@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode, type RefObject } from 'react';
-import { Textarea } from '@openbitfun/ui';
+import { Textarea } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { ConversationExcerptContext } from '@/shared/types/context';
 import { excerptText } from '@/shared/utils/conversationExcerpt';

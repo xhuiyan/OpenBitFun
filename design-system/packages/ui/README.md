@@ -1,11 +1,11 @@
-# @openbitfun/ui
+# @starmate/ui
 
 Theme-independent React primitives and components.
 
 ```tsx
-import "@openbitfun/theme-openbitfun/default.css";
-import "@openbitfun/ui/styles.css";
-import { Button, ThemeRoot } from "@openbitfun/ui";
+import "@starmate/theme-openbitfun/default.css";
+import "@starmate/ui/styles.css";
+import { Button, ThemeRoot } from "@starmate/ui";
 
 export function Example() {
   return (
@@ -30,7 +30,7 @@ visible mark is approximately 16–18 px beside its text, allowing for the logo'
 internal padding. Its leading slot follows the indicator's intrinsic width.
 
 ```tsx
-import { Spinner } from "@openbitfun/ui";
+import { Spinner } from "@starmate/ui";
 
 <Spinner size="sm" aria-label="Loading" />
 ```
@@ -239,7 +239,7 @@ The same component can sit inside a `Dialog` or an inline card. Its container
 query stacks the guide above the form when the available width is narrow.
 
 ```tsx
-import { Button, Dialog, DialogClose, SetupWizard } from "@openbitfun/ui";
+import { Button, Dialog, DialogClose, SetupWizard } from "@starmate/ui";
 import { useId } from "react";
 
 const titleId = useId();
@@ -310,7 +310,7 @@ Standard button, menu, navigation, card, selection, and disclosure text slots
 already use this primitive; consumers should not wrap those slots a second time.
 
 ```tsx
-import { OverflowText } from "@openbitfun/ui";
+import { OverflowText } from "@starmate/ui";
 
 // The surrounding layout owns the available width.
 <OverflowText>{description}</OverflowText>
@@ -391,7 +391,7 @@ updates immediately, without a live region. The outgoing visual copy is hidden
 from assistive technology.
 
 ```tsx
-import { RollingText, TabGroup } from "@openbitfun/ui";
+import { RollingText, TabGroup } from "@starmate/ui";
 
 <RollingText transitionKey={record.id}>{record.title}</RollingText>
 
@@ -459,7 +459,7 @@ surfaces do not inherit desktop component geometry or ship desktop component
 styles:
 
 ```tsx
-import "@openbitfun/ui/mobile.css";
+import "@starmate/ui/mobile.css";
 import {
   MobileActionSheet,
   MobileBadge,
@@ -484,7 +484,7 @@ import {
   MobileStatus,
   MobileTextField,
   MobileTextarea,
-} from "@openbitfun/ui/mobile";
+} from "@starmate/ui/mobile";
 ```
 
 These components own mobile touch targets, pressed/focus/disabled states,
@@ -623,7 +623,7 @@ overview retains its original device/server SVGs and MacBook image in the Web UI
 Use a semantic `name` when available, or import the required Lucide glyph:
 
 ```tsx
-import { Icon } from "@openbitfun/ui";
+import { Icon } from "@starmate/ui";
 import { Network } from "lucide-react";
 
 <Icon name="search" size="sm" />
@@ -830,7 +830,7 @@ import {
   ReadFileToolCard,
   ToolCardCopyButton,
   ToolCardChangeSummary,
-} from "@openbitfun/ui/flow-chat";
+} from "@starmate/ui/flow-chat";
 ```
 
 `ChatComposer` owns the reusable 32px context band and the compact/expanded

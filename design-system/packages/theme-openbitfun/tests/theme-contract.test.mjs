@@ -7,7 +7,7 @@ import {
   collectTokenDefinitions,
   mergeTokenDocuments,
   resolveTokens,
-} from "@openbitfun/token-engine";
+} from "@starmate/token-engine";
 import {
   referenceColorCatalog,
   referenceColorScales,

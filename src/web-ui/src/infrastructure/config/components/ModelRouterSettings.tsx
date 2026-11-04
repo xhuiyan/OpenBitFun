@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Combobox, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeading, DialogTitle, Field, Input, Select } from '@openbitfun/ui';
+import { Button, Combobox, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeading, DialogTitle, Field, Input, Select } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { agentAPI, type ModelRoutingStatus } from '@/infrastructure/api/service-api/AgentAPI';
 import { aiApi, type ConnectionTestResult } from '@/infrastructure/api/service-api/AIApi';

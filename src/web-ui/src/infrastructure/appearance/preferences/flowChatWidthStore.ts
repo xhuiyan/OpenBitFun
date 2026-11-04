@@ -1,4 +1,4 @@
-import { tokens } from '@openbitfun/design-tokens';
+import { tokens } from '@starmate/design-tokens';
 import { createStore } from 'zustand/vanilla';
 
 export const DEFAULT_FLOW_CHAT_WIDTH = Number.parseFloat(String(tokens['control.flowChat.transcriptMaxWidth']));

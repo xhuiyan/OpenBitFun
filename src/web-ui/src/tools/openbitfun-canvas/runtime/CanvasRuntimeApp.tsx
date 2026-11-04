@@ -7,14 +7,14 @@ import {
 type CanvasRuntimeRecord = Record<string, any>;
 
 type CanvasRuntimeWindow = Window & {
-  OpenBitFunCanvasSDK?: CanvasRuntimeRecord;
-  OpenBitFunCanvasSDKAdapters?: CanvasRuntimeRecord;
-  OpenBitFunCanvasRuntime?: CanvasRuntimeRecord;
-  OpenBitFunCanvasContract?: {
+  StarMateCanvasSDK?: CanvasRuntimeRecord;
+  StarMateCanvasSDKAdapters?: CanvasRuntimeRecord;
+  StarMateCanvasRuntime?: CanvasRuntimeRecord;
+  StarMateCanvasContract?: {
     runtimeVersion?: string;
     sdkVersion?: string;
   };
-  OpenBitFunCanvasRuntimeHooks?: {
+  StarMateCanvasRuntimeHooks?: {
     whenStateReady?: (callback: () => void) => (() => void);
   };
   ReactDOM?: {
@@ -41,7 +41,7 @@ function currentRevision(): string {
 
 function postCanvasMessage(type: string, payload: CanvasRuntimeRecord = {}) {
   const revision = currentRevision();
-  const contract = runtimeWindow().OpenBitFunCanvasContract;
+  const contract = runtimeWindow().StarMateCanvasContract;
   const enrichedPayload = {
     sourceRevisionSeen: revision,
     runtimeVersion: contract?.runtimeVersion,
@@ -82,10 +82,10 @@ function postRuntimeError(error: unknown, componentStack?: string): void {
 
 function installSdkAdapters(): void {
   const target = runtimeWindow();
-  if (!target.OpenBitFunCanvasSDK || !target.OpenBitFunCanvasSDKAdapters) return;
-  target.OpenBitFunCanvasSDK = {
-    ...target.OpenBitFunCanvasSDK,
-    ...target.OpenBitFunCanvasSDKAdapters,
+  if (!target.StarMateCanvasSDK || !target.StarMateCanvasSDKAdapters) return;
+  target.StarMateCanvasSDK = {
+    ...target.StarMateCanvasSDK,
+    ...target.StarMateCanvasSDKAdapters,
   };
 }
 
@@ -136,9 +136,9 @@ function reportRuntimeError(error: unknown): void {
 export function installOpenBitFunCanvasRuntimeApp(): void {
   rootElement = document.getElementById('openbitfun-canvas-root');
   const target = runtimeWindow();
-  const previousRuntime = target.OpenBitFunCanvasRuntime || {};
+  const previousRuntime = target.StarMateCanvasRuntime || {};
 
-  target.OpenBitFunCanvasRuntime = {
+  target.StarMateCanvasRuntime = {
     ...previousRuntime,
     h: React.createElement,
     Fragment: React.Fragment,
@@ -149,7 +149,7 @@ export function installOpenBitFunCanvasRuntimeApp(): void {
     reportRuntimeError,
     mount(component: React.ComponentType) {
       renderComponent = component;
-      const whenStateReady = target.OpenBitFunCanvasRuntimeHooks?.whenStateReady;
+      const whenStateReady = target.StarMateCanvasRuntimeHooks?.whenStateReady;
       if (whenStateReady) {
         whenStateReady(renderRuntimeRoot);
       } else {

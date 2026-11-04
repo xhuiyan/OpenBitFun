@@ -12,7 +12,7 @@ import {
   type AskUserQuestion,
   type AskUserState,
   type AskUserWaitTiming,
-} from '@openbitfun/ui/flow-chat';
+} from '@starmate/ui/flow-chat';
 import React, {
   useCallback,
   useEffect,

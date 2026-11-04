@@ -1,4 +1,4 @@
-import { OverflowText } from '@openbitfun/ui';
+import { OverflowText } from '@starmate/ui';
 import { commonStyle, sizeValue, toneColor, weightValue } from './style';
 import type {
   CanvasCodeProps,

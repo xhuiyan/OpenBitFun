@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { Tooltip } from '@openbitfun/ui';
+import { Tooltip } from '@starmate/ui';
 import styles from './MiniAppActionTooltip.module.css';
 
 /** Top-bar hints remain discoverable when the native button is disabled. */

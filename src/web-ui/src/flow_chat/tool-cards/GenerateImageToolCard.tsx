@@ -7,7 +7,7 @@ import {
   ToolCardText,
   type SemanticToolCardProps,
   type ToolCardField,
-} from '@openbitfun/ui/flow-chat';
+} from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import { useToolCardDisclosure } from '../timeline/readerState';
 import type { ToolCardProps } from '../types/flow-chat';

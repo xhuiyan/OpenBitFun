@@ -37,7 +37,7 @@ import {
   MobileSegmentedControl,
   MobileStatus,
   MobileTextField,
-} from '@openbitfun/ui/mobile';
+} from '@starmate/ui/mobile';
 import LanguageToggleButton from '../components/LanguageToggleButton';
 import SessionOverlays from '../components/SessionOverlays';
 import CompactSettingsSheet from '../components/CompactSettingsSheet';

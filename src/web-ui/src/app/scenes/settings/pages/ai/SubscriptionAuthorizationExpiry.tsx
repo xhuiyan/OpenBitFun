@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Tooltip } from '@openbitfun/ui';
+import { Tooltip } from '@starmate/ui';
 import { i18nService, useI18n } from '@/infrastructure/i18n';
 import { formatDuration } from '@/shared/utils/format';
 

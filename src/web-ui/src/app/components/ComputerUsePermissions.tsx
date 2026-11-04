@@ -1,5 +1,5 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
-import { Button, OverflowText, StatusPill } from '@openbitfun/ui';
+import { Button, OverflowText, StatusPill } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';
 import { computerUseControlAPI, type ComputerUseGrant, type ComputerUsePermissionKind, type ComputerUsePermissionReceipt,

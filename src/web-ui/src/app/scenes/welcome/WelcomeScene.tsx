@@ -6,7 +6,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { isReducedMotionPreferred } from '@/shared/utils/motionPreference';
-import { OpenBitFunMark } from '@openbitfun/ui/brand';
+import { StarMateMark } from '@starmate/ui/brand';
 import { isStartupOverlayPresent } from '@/app/startup/startupOverlay';
 import { STARTUP_OVERLAY_HIDDEN_EVENT } from '@/app/startup/startupSignals';
 import './WelcomeScene.scss';
@@ -134,7 +134,7 @@ const WelcomeScene: React.FC = () => {
               data-startup-logo-target=""
               aria-hidden="true"
             >
-              <OpenBitFunMark style={{ width: '100%', height: '100%' }} />
+              <StarMateMark style={{ width: '100%', height: '100%' }} />
             </span>
             <span className="welcome-scene__brand-name" data-startup-reveal="">
               OpenBitFun{t('welcomeScene.space.separator')}

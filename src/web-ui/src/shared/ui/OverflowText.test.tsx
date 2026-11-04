@@ -3,8 +3,8 @@
 import React, { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ListboxOption, OverflowText, Select, Tooltip } from '@openbitfun/ui';
-import { CommandToolCard } from '@openbitfun/ui/flow-chat';
+import { ListboxOption, OverflowText, Select, Tooltip } from '@starmate/ui';
+import { CommandToolCard } from '@starmate/ui/flow-chat';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 

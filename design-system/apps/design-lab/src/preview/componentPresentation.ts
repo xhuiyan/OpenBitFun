@@ -1,4 +1,4 @@
-import type { ComponentMeta } from "@openbitfun/ui/registry";
+import type { ComponentMeta } from "@starmate/ui/registry";
 
 export type ComponentPresentation =
   | "matrix" | "compact" | "fields" | "cards" | "stack" | "icons"

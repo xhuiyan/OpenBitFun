@@ -1,4 +1,4 @@
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import React from 'react';
 
 import { ConfigMessage } from './ConfigMessage';

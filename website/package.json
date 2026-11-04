@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@openbitfun/design-tokens": "workspace:^",
-    "@openbitfun/theme-openbitfun": "workspace:^"
+    "@starmate/design-tokens": "workspace:^",
+    "@starmate/theme-openbitfun": "workspace:^"
   },
   "scripts": {
     "build": "node scripts/build.mjs",

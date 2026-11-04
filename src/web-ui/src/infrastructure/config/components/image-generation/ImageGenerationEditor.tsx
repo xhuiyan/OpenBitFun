@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Combobox, ConfirmDialog, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeaderActions, DialogHeading, DialogTitle, FieldRow, Input } from '@openbitfun/ui';
+import { Button, Combobox, ConfirmDialog, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeaderActions, DialogHeading, DialogTitle, FieldRow, Input } from '@starmate/ui';
 import { ConfigPageRow, ConfigPageSection } from '../common';
 import { mediaAPI, type ImageServiceTestOutcome } from '@/infrastructure/api/service-api/MediaApi';
 import { useI18n } from '@/infrastructure/i18n';

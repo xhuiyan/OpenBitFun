@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
 // Register the design-system layer order before any product module can import
 // component CSS. CSS layers keep their first-seen order for the document.
-import "@openbitfun/ui/styles.css";
+import "@starmate/ui/styles.css";
 import AppErrorBoundary from "./app/components/AppErrorBoundary";
 import { STARTUP_OVERLAY_HIDDEN_EVENT } from "./app/startup/startupSignals";
 import { I18nProvider } from "./infrastructure/i18n/providers/I18nProvider";
-import { OpenBitFunDesignSystemProvider } from "./infrastructure/design-system";
+import { StarMateDesignSystemProvider } from "./infrastructure/design-system";
 import "./app/styles/index.scss";
 
 // The build-selected font profile is linked from index.html before first paint.
@@ -363,9 +363,9 @@ async function startApplication(): Promise<void> {
     ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <AppErrorBoundary>
         <I18nProvider>
-          <OpenBitFunDesignSystemProvider>
+          <StarMateDesignSystemProvider>
             <WindowContent />
-          </OpenBitFunDesignSystemProvider>
+          </StarMateDesignSystemProvider>
         </I18nProvider>
       </AppErrorBoundary>
     );
@@ -385,9 +385,9 @@ async function startApplication(): Promise<void> {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <AppErrorBoundary>
       <I18nProvider>
-        <OpenBitFunDesignSystemProvider>
+        <StarMateDesignSystemProvider>
           <WindowContent />
-        </OpenBitFunDesignSystemProvider>
+        </StarMateDesignSystemProvider>
       </I18nProvider>
     </AppErrorBoundary>
   );

@@ -3,7 +3,7 @@ import {
   type ColorScheme,
   type ContrastMode,
   type DensityMode,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import {
   useEffect,
   useLayoutEffect,
@@ -43,7 +43,7 @@ function useHighContrastPreference(): boolean {
  * locale copy and the document-level portal host enter the independent design
  * system.
  */
-export function OpenBitFunDesignSystemProvider({ children }: PropsWithChildren) {
+export function StarMateDesignSystemProvider({ children }: PropsWithChildren) {
   const colorScheme: ColorScheme = useAppearance().current?.mode ?? 'light';
   const contrast: ContrastMode = useHighContrastPreference() ? 'high' : 'standard';
   const { currentLanguage, t } = useI18n('components');

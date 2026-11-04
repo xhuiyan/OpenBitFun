@@ -18,7 +18,7 @@ export const subagentHatchMeta = {
 
 export const openBitFunSolidMarkMeta = {
   category: "brand",
-  name: "OpenBitFunSolidMark",
+  name: "StarMateSolidMark",
   description: "The original silver OpenBitFun mark on a transparent canvas, preserving its material and shading.",
   maturity: "stable",
   props: [
@@ -31,7 +31,7 @@ export const openBitFunSolidMarkMeta = {
 
 export const openBitFunAppIconMeta = {
   category: "brand",
-  name: "OpenBitFunAppIcon",
+  name: "StarMateAppIcon",
   description: "The installed application icon: the silver mark on its authored black rounded-square tile, with resolution-aware assets.",
   maturity: "stable",
   props: [
@@ -44,7 +44,7 @@ export const openBitFunAppIconMeta = {
 
 export const openBitFunMarkMeta = {
   category: "brand",
-  name: "OpenBitFunMark",
+  name: "StarMateMark",
   description: "The authored OpenBitFun mark with inherited color and an optional startup breathing motion.",
   maturity: "stable",
   props: [
@@ -59,7 +59,7 @@ export const openBitFunMarkMeta = {
 
 export const openBitFunBrandMotionMeta = {
   category: "brand",
-  name: "OpenBitFunBrandMotion",
+  name: "StarMateBrandMotion",
   description: "OpenBitFun motion: circulating highlights, counter-rotating hexagons, or a compact engineering drawing that forms the original mark.",
   maturity: "stable",
   props: [

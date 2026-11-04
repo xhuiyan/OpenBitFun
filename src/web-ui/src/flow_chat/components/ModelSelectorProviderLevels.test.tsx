@@ -99,8 +99,8 @@ vi.mock('react-i18next', () => {
   return { initReactI18next: { type: '3rdParty', init: vi.fn() }, useTranslation: () => ({ t }) };
 });
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Tooltip: ({ children, content, disabled }: {
     children: React.ReactElement<{ 'data-tooltip'?: string }>;
     content?: React.ReactNode;

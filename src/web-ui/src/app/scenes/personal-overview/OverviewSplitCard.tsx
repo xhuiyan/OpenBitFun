@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { Card, OverflowText } from '@openbitfun/ui';
+import { Card, OverflowText } from '@starmate/ui';
 import './OverviewSplitCard.scss';
 
 interface PaneContentProps {

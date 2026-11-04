@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { observeElementResize } from '@/shared/utils/sharedResizeObserver';
 import styles from './SubscriptionCapsuleList.module.scss';
 

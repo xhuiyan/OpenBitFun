@@ -12,7 +12,7 @@ import { useI18n } from '@/infrastructure/i18n';
 import { useNotification } from '@/shared/notification-system';
 import { createLogger } from '@/shared/utils/logger';
 import { copyTextToClipboard } from '@/shared/utils/textSelection';
-import { Button, Icon, IconButton, Input, Select, type SelectOption, Tooltip } from '@openbitfun/ui';
+import { Button, Icon, IconButton, Input, Select, type SelectOption, Tooltip } from '@starmate/ui';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const log = createLogger('WebSearchSettings');
@@ -24,15 +24,15 @@ interface CredentialProviderConfig extends Record<string, unknown> {
   credentialId: string;
 }
 
-interface OpenBitFunHttpAuthConfig extends Record<string, unknown> {
+interface StarMateHttpAuthConfig extends Record<string, unknown> {
   mode: string;
   credentialId: string;
   headerName: string;
 }
 
-interface OpenBitFunHttpConfig extends Record<string, unknown> {
+interface StarMateHttpConfig extends Record<string, unknown> {
   endpoint: string;
-  auth: OpenBitFunHttpAuthConfig;
+  auth: StarMateHttpAuthConfig;
 }
 
 interface WebSearchConfig extends Record<string, unknown> {
@@ -41,7 +41,7 @@ interface WebSearchConfig extends Record<string, unknown> {
     exa_search_api: CredentialProviderConfig;
     tavily: CredentialProviderConfig;
     deepseek: CredentialProviderConfig;
-    openbitfun_search_http: OpenBitFunHttpConfig;
+    openbitfun_search_http: StarMateHttpConfig;
     [key: string]: unknown;
   };
 }
@@ -119,13 +119,13 @@ function normalizeConfig(value: unknown): WebSearchConfig {
     ? rawProviders.tavily as Partial<CredentialProviderConfig>
     : {};
   const rawHttp = rawProviders.openbitfun_search_http && typeof rawProviders.openbitfun_search_http === 'object'
-    ? rawProviders.openbitfun_search_http as Partial<OpenBitFunHttpConfig>
+    ? rawProviders.openbitfun_search_http as Partial<StarMateHttpConfig>
     : {};
   const rawDeepSeek = rawProviders.deepseek && typeof rawProviders.deepseek === 'object'
     ? rawProviders.deepseek as Partial<CredentialProviderConfig>
     : {};
   const rawAuth = rawHttp.auth && typeof rawHttp.auth === 'object'
-    ? rawHttp.auth as Partial<OpenBitFunHttpAuthConfig>
+    ? rawHttp.auth as Partial<StarMateHttpAuthConfig>
     : {};
   return {
     ...DEFAULT_CONFIG,

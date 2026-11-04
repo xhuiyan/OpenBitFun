@@ -13,7 +13,7 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { IconButton, Input, Tooltip } from '@openbitfun/ui';
+import { IconButton, Input, Tooltip } from '@starmate/ui';
 import { CalendarDays } from 'lucide-react';
 
 import { useI18n } from '@/infrastructure/i18n';

@@ -1,6 +1,6 @@
 import { useMemo, useSyncExternalStore } from 'react';
-import { Button, ScrollArea } from '@openbitfun/ui';
-import { useContainedTailFollow } from '@openbitfun/flow-chat-presentation/scroll';
+import { Button, ScrollArea } from '@starmate/ui';
+import { useContainedTailFollow } from '@starmate/flow-chat-presentation/scroll';
 import { useI18n } from '@/infrastructure/i18n';
 import { ThinkingMarkdownRenderer } from '@/infrastructure/markdown';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';

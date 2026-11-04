@@ -16,7 +16,7 @@ import {
   OverflowText,
   ScrollArea,
   SearchField,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { useNotificationState } from '../hooks/useNotificationState';
 import { notificationService } from '../services/NotificationService';

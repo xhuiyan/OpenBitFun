@@ -11,8 +11,8 @@ vi.mock('@/infrastructure/i18n', () => ({ useI18n: () => ({ t: (key: string) => 
 vi.mock('@/infrastructure/config/services/ProjectDefaultsService', () => ({ readProjectDefaults: mocks.read, saveProjectDefault: mocks.save }));
 vi.mock('@/infrastructure/api/service-api/ConfigAPI', () => ({ configAPI: { getConfig: mocks.models } }));
 vi.mock('@/infrastructure/api/service-api/AgentAPI', () => ({ agentAPI: { getAvailableModes: mocks.modes } }));
-vi.mock('@openbitfun/ui', async original => {
-  const ui = await original<typeof import('@openbitfun/ui')>();
+vi.mock('@starmate/ui', async original => {
+  const ui = await original<typeof import('@starmate/ui')>();
   const Picker = ({ value, options, disabled, onValueChange, 'aria-label': label }: any) => <select aria-label={label}
     value={value} disabled={disabled} onChange={event => onValueChange(event.target.value)}>
     {options.map((option: any) => <option key={option.value} value={option.value} disabled={option.disabled}>{option.label}</option>)}

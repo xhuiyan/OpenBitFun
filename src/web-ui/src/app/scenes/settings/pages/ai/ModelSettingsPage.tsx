@@ -157,7 +157,7 @@ import {
   ToolbarGroup,
   Tooltip,
   type ComboboxOption,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { AlertTriangle, EyeOff, FolderOpen, Loader, Undo2, Wifi } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 

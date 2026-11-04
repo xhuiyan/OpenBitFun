@@ -10,7 +10,7 @@ import {
   X as LucideX,
   type LucideIcon,
 } from 'lucide-react';
-import { OverflowText, Menu, MenuItem, ScrollArea } from '@openbitfun/ui';
+import { OverflowText, Menu, MenuItem, ScrollArea } from '@starmate/ui';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { emit, listen } from '@tauri-apps/api/event';

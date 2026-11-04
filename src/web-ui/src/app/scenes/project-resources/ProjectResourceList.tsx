@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { Icon, OverflowText, Tooltip } from '@openbitfun/ui';
+import { Icon, OverflowText, Tooltip } from '@starmate/ui';
 import './ProjectResourceList.scss';
 
 export interface ProjectResourceListItem {

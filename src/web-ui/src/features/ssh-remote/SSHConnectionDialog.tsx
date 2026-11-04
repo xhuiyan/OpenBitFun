@@ -28,7 +28,7 @@ import { OverflowText,
   DialogHeader,
   DialogHeading,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useState, useEffect, useCallback, useRef, useId, useSyncExternalStore } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { usePeerDeviceModeOptional } from '@/infrastructure/peer-device/peerDeviceContextState';

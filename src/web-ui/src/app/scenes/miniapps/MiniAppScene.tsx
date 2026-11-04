@@ -2,7 +2,7 @@
  * MiniAppScene — standalone scene tab for a single MiniApp.
  * Mounts MiniAppRunner; transfers keep work, closing the final view stops the app.
  */
-import { Button, ConfirmDialog, Icon, IconButton, Tooltip } from '@openbitfun/ui';
+import { Button, ConfirmDialog, Icon, IconButton, Tooltip } from '@starmate/ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Loader2, AlertTriangle, SquareArrowOutUpRight, MessageSquare } from 'lucide-react';
 import { miniAppAPI } from '@/infrastructure/api/service-api/MiniAppAPI';

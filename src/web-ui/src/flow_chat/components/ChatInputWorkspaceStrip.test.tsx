@@ -69,8 +69,8 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   // Forwards the rest of the props so state carried on data attributes stays
   // observable; `variant`/`size` are the library's own and have no DOM meaning.
   IconButton: ({

@@ -1,4 +1,4 @@
-import { Icon, NavigationPanelItem, Tooltip } from '@openbitfun/ui';
+import { Icon, NavigationPanelItem, Tooltip } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { useSidebarNavigation } from '@/app/navigation/useSidebarNavigation';
 import { notificationService } from '@/shared/notification-system';

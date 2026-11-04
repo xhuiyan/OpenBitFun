@@ -17,7 +17,7 @@ import { OverflowText,
   Select,
   StatusPill,
   Textarea,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { open } from '@tauri-apps/plugin-dialog';
 import { AlertTriangle, Camera, Loader2 } from 'lucide-react';

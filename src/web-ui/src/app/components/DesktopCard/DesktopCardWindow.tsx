@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Ellipsis, RefreshCw, X } from 'lucide-react';
-import { Button, Icon, IconButton, MenuPopover, OverflowText, Spinner, type MenuEntry } from '@openbitfun/ui';
+import { Button, Icon, IconButton, MenuPopover, OverflowText, Spinner, type MenuEntry } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { desktopCardAPI, hasDesktopPinFailure, isDesktopPinned, type DesktopCardRecord } from '@/infrastructure/api/service-api/DesktopCardAPI';
 import { systemAPI } from '@/infrastructure/api/service-api/SystemAPI';

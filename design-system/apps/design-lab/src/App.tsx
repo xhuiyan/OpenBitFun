@@ -8,8 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
-import type { SystemTokenMode } from "@openbitfun/design-tokens";
-import type { ThemeDataName } from "@openbitfun/theme-openbitfun";
+import type { SystemTokenMode } from "@starmate/design-tokens";
+import type { ThemeDataName } from "@starmate/theme-openbitfun";
 import { AppWindow, Blocks, BookOpen, Bot, Braces, FileText, House, Languages, Menu, MessageSquare, Moon, MousePointerClick, PanelTop, PanelsTopLeft, Smartphone, SquareTerminal, Sun, ToggleLeft, type LucideIcon } from "lucide-react";
 import { Button, Dialog, DialogBody, DialogClose, DialogDescription, DialogHeader, DialogHeading, DialogTitle, IconButton, KeyHint, Listbox, ListboxEmpty, ListboxOption, SearchField, Select, Sheet, Icon as CatalogIcon,
   DesignSystemProvider,
@@ -18,10 +18,10 @@ import { Button, Dialog, DialogBody, DialogClose, DialogDescription, DialogHeade
   type ContrastMode,
   type DensityMode,
   type IconName,
-} from "@openbitfun/ui";
-import { OpenBitFunSolidMark } from "@openbitfun/ui/brand";
+} from "@starmate/ui";
+import { StarMateSolidMark } from "@starmate/ui/brand";
 import { BrandPage } from "./pages/BrandPage";
-import { componentRegistry } from "@openbitfun/ui/registry";
+import { componentRegistry } from "@starmate/ui/registry";
 import {
   useI18n,
   type DesignLabLocale,
@@ -443,7 +443,7 @@ export function App() {
           }}>
             {/* The product site's header lockup: the app mark next to the wordmark. The name is
                 visible now, and the link's accessible label still says which site it leads to. */}
-            <OpenBitFunSolidMark className="design-app-mark" size={28} />
+            <StarMateSolidMark className="design-app-mark" size={28} />
             <span className="design-wordmark-name">OpenBitFun</span>
           </a>
           <LabNavigation page={route.page} componentName={activeComponent?.name}

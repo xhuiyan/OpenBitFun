@@ -23,7 +23,7 @@ import { getSceneViewId } from '../components/SceneBar/types';
 import { useSceneManager } from '../hooks/useSceneManager';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { useDialogCompletionNotify } from '../hooks/useDialogCompletionNotify';
-import { Spinner, SplitViewSurface } from '@openbitfun/ui';
+import { Spinner, SplitViewSurface } from '@starmate/ui';
 import { selectedScene, tabPane } from '../workbench/scenePaneModel';
 import { useSceneStore } from '../stores/sceneStore';
 import { useSessionPaneLayout } from './session/sessionPaneLayoutStore';

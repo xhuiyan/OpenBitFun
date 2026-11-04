@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Button, Card, Dialog, DialogBody, DialogClose, DialogHeader, DialogHeading, DialogTitle,
-  Icon, IconButton, ScrollArea, Spinner, Tooltip } from '@openbitfun/ui';
+  Icon, IconButton, ScrollArea, Spinner, Tooltip } from '@starmate/ui';
 import { Bot, FolderOpen, Settings2 } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import { useWorkspaceContext } from '@/infrastructure/contexts/WorkspaceContext';

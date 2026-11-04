@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { ConfigPageRow } from '@/infrastructure/config/components/common';
 import type { AIModelConfig } from '@/infrastructure/config/types';
 import { isOpenCodeApiKeyConfig, isOpenCodeZenApiKeyConfig, openCodeApiKey } from '@/infrastructure/config/components/openCodeApiKeyRouting';

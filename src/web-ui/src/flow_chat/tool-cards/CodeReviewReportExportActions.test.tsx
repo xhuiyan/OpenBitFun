@@ -17,8 +17,8 @@ function Icon({ name }: { name: string }) {
   return <svg data-icon={name} />;
 }
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  IconButton: (await importOriginal<typeof import('@openbitfun/ui')>()).IconButton,
+vi.mock('@starmate/ui', async importOriginal => ({
+  IconButton: (await importOriginal<typeof import('@starmate/ui')>()).IconButton,
   Button: ({
     children,
     leadingIcon,

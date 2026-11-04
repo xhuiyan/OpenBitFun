@@ -17,7 +17,7 @@ import {
   Textarea,
   ToolbarGroup,
   ToolbarSeparator,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { ConfigPageSection, ConfigPageSectionStack } from '@/infrastructure/config/components/common';

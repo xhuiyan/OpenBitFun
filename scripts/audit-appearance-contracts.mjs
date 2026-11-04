@@ -725,7 +725,7 @@ if (!flowChatToolCardSource.includes('data-openbitfun-component="flow-chat-tool-
   || !flowChatToolCardSource.includes('data-openbitfun-part="summary"')
   || !flowChatToolCardSource.includes('part: "error" | "expanded"')
   || !flowChatToolCardSource.includes('data-openbitfun-part={part}')) {
-  failures.push('@openbitfun/ui FlowChat tool cards must project the shared multi-part Appearance contract');
+  failures.push('@starmate/ui FlowChat tool cards must project the shared multi-part Appearance contract');
 }
 const configPageLayoutSource = sources.get(path.join(sourceRoot, 'infrastructure', 'config', 'components', 'common', 'ConfigPageLayout.tsx')) ?? '';
 if (!configPageLayoutSource.includes('...props')

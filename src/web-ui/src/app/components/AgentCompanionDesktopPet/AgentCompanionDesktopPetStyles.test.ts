@@ -89,7 +89,7 @@ describe('AgentCompanionDesktopPet styles', () => {
     const pressed = extractBlock(actionItemStyles,
       '.root:not([data-disabled="true"]):has(.trigger:active),\n  .root:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="active"])');
 
-    expect(source).toContain('import { OverflowText, Menu, MenuItem, ScrollArea } from \'@openbitfun/ui\'');
+    expect(source).toContain('import { OverflowText, Menu, MenuItem, ScrollArea } from \'@starmate/ui\'');
     expect(source).not.toContain('triggerClassName');
     expect(overlay).not.toMatch(/\b(?:color|background|border|box-shadow|backdrop-filter)\s*:/);
     expect(menuItem).toBe('');

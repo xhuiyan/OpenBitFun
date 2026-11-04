@@ -1,4 +1,4 @@
-import { Button, Checkbox, DialogBody, DialogClose, Icon, IconButton, Input, PageHeader, ScrollArea, SetupWizard, Switch, Tooltip, type IconSource } from '@openbitfun/ui';
+import { Button, Checkbox, DialogBody, DialogClose, Icon, IconButton, Input, PageHeader, ScrollArea, SetupWizard, Switch, Tooltip, type IconSource } from '@starmate/ui';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FileText,

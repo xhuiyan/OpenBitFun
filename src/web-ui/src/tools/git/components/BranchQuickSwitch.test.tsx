@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { OverflowText, Tooltip } from '@openbitfun/ui';
+import { OverflowText, Tooltip } from '@starmate/ui';
 
 import { BranchQuickSwitch } from './BranchQuickSwitch';
 

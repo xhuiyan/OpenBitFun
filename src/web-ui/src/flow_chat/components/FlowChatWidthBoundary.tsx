@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { useStore } from 'zustand';
-import { tokens } from '@openbitfun/design-tokens';
+import { tokens } from '@starmate/design-tokens';
 import { useI18n } from '@/infrastructure/i18n';
 import { DEFAULT_FLOW_CHAT_WIDTH, flowChatWidthStore, MIN_FLOW_CHAT_WIDTH } from '@/infrastructure/appearance/preferences/flowChatWidthStore';
 import './FlowChatWidthBoundary.scss';

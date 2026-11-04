@@ -43,11 +43,11 @@ vi.mock('@/infrastructure/config/services/AIExperienceConfigService', () => ({ a
 vi.mock('@/infrastructure/api/service-api/AIApi', () => ({ aiApi: { listSubscriptionAccounts: mocks.getAccounts } }));
 vi.mock('@/infrastructure/api/service-api/InstructionSourcesAPI', () => ({ instructionSourcesAPI: { getCatalog: mocks.getInstructions } }));
 vi.mock('@/infrastructure/api/service-api/MCPAPI', () => ({ MCPAPI: { loadMCPJsonConfig: mocks.loadMcp, saveMCPJsonConfig: mocks.saveMcp } }));
-vi.mock('@openbitfun/ui', async (importOriginal) => {
+vi.mock('@starmate/ui', async (importOriginal) => {
   const Wrapper = ({ children }: React.PropsWithChildren) => <div>{children}</div>;
   return {
-    Alert: (await importOriginal<typeof import('@openbitfun/ui')>()).Alert,
-    FieldGroup: (await importOriginal<typeof import('@openbitfun/ui')>()).FieldGroup,
+    Alert: (await importOriginal<typeof import('@starmate/ui')>()).Alert,
+    FieldGroup: (await importOriginal<typeof import('@starmate/ui')>()).FieldGroup,
     Input: ({ size: _size, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
     Switch: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input type="checkbox" role="switch" {...props} />,
     Checkbox: ({ size: _size, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => <input type="checkbox" {...props} />,

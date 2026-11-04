@@ -1,4 +1,4 @@
-import { Button, Icon, IconButton, MenuPopover, Tooltip } from '@openbitfun/ui';
+import { Button, Icon, IconButton, MenuPopover, Tooltip } from '@starmate/ui';
 import { MoreHorizontal } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { MiniAppMeta } from '@/infrastructure/api/service-api/MiniAppAPI';

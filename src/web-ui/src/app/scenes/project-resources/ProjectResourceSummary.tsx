@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Card, OverflowText } from '@openbitfun/ui';
+import { Card, OverflowText } from '@starmate/ui';
 import './ProjectResourceSummary.scss';
 
 export function ProjectResourceSummary({ title, value, description, listTitle, boundedList = false, onOpen, children }: {

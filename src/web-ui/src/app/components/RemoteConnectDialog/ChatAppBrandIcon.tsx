@@ -1,4 +1,4 @@
-import type { IconSize } from '@openbitfun/ui';
+import type { IconSize } from '@starmate/ui';
 
 export type ChatAppBrand = 'telegram' | 'feishu' | 'weixin';
 

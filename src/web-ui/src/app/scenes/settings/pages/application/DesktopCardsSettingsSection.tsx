@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Switch } from '@openbitfun/ui';
+import { Switch } from '@starmate/ui';
 import { ConfigLoadingState, ConfigPageRow, ConfigPageSection, ConfigRetryState } from '@/infrastructure/config/components/common';
 import { aiExperienceConfigService } from '@/infrastructure/config/services/AIExperienceConfigService';
 import {

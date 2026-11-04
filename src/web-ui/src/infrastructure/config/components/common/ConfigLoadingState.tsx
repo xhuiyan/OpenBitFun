@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LoadingState } from '@openbitfun/ui';
+import { LoadingState } from '@starmate/ui';
 import './ConfigPageState.scss';
 
 /**

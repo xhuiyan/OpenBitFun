@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useToolCardDisclosure } from '../timeline/readerState';
-import { subscribeOverlayInteraction, Tooltip, Icon, IconButton } from '@openbitfun/ui';
+import { subscribeOverlayInteraction, Tooltip, Icon, IconButton } from '@starmate/ui';
 import type { ToolCardProps } from '../types/flow-chat';
-import { ProminentToolCard, ProminentToolCardSummary, ToolProcessingDots } from '@openbitfun/ui/flow-chat';
+import { ProminentToolCard, ProminentToolCardSummary, ToolProcessingDots } from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import GenerativeWidgetFrame, {
   type WidgetContextMenuMessage,

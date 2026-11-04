@@ -9,10 +9,10 @@ type CanvasStateRuntimeOptions<T> = {
 type RuntimeWindow = Window & {
   React?: unknown;
   ReactDOM?: unknown;
-  OpenBitFunCanvasSDK?: CanvasRuntimeRecord;
-  OpenBitFunCanvasSDKAdapters?: CanvasRuntimeRecord;
-  OpenBitFunCanvasRuntimeHooks?: Record<string, unknown>;
-  OpenBitFunCanvasRuntime?: CanvasRuntimeRecord;
+  StarMateCanvasSDK?: CanvasRuntimeRecord;
+  StarMateCanvasSDKAdapters?: CanvasRuntimeRecord;
+  StarMateCanvasRuntimeHooks?: Record<string, unknown>;
+  StarMateCanvasRuntime?: CanvasRuntimeRecord;
 };
 
 export function buildCanvasRuntimeInstallerScript(revision: string): string {
@@ -546,14 +546,14 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
   document.addEventListener('click', handleDesignClick, true);
 
   function installSdkAdapters(): void {
-    if (!runtimeWindow.OpenBitFunCanvasSDK || !runtimeWindow.OpenBitFunCanvasSDKAdapters) return;
-    runtimeWindow.OpenBitFunCanvasSDK = {
-      ...runtimeWindow.OpenBitFunCanvasSDK,
-      ...runtimeWindow.OpenBitFunCanvasSDKAdapters,
+    if (!runtimeWindow.StarMateCanvasSDK || !runtimeWindow.StarMateCanvasSDKAdapters) return;
+    runtimeWindow.StarMateCanvasSDK = {
+      ...runtimeWindow.StarMateCanvasSDK,
+      ...runtimeWindow.StarMateCanvasSDKAdapters,
     };
   }
 
-  runtimeWindow.OpenBitFunCanvasRuntimeHooks = {
+  runtimeWindow.StarMateCanvasRuntimeHooks = {
     useHostAppearance,
     useCanvasState<T>(key: string, defaultValue: T, options?: CanvasStateRuntimeOptions<T>) {
       return useCanvasState(key, defaultValue, options);
@@ -567,11 +567,11 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     whenStateReady,
   };
 
-  runtimeWindow.OpenBitFunCanvasSDK = {
-    ...runtimeWindow.OpenBitFunCanvasRuntimeHooks,
+  runtimeWindow.StarMateCanvasSDK = {
+    ...runtimeWindow.StarMateCanvasRuntimeHooks,
   };
 
-  runtimeWindow.OpenBitFunCanvasRuntime = {
+  runtimeWindow.StarMateCanvasRuntime = {
     h: React.createElement,
     Fragment: React.Fragment,
     moduleStarted() {

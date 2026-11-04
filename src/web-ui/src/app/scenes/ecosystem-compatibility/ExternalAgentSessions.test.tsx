@@ -15,7 +15,7 @@ vi.mock('@/infrastructure/peer-device/deviceSurface', () => ({ getActiveSurfaceS
   const epoch = mocks.epoch;
   return { isCurrent: () => epoch === mocks.epoch };
 } }));
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Switch: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} type="checkbox" />,
   Alert: ({ message }: { message: React.ReactNode }) => <div role="alert">{message}</div>,
 }));

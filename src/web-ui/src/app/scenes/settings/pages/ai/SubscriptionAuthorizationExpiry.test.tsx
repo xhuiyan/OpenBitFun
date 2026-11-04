@@ -5,7 +5,7 @@ import { afterEach, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import { i18nService } from '@/infrastructure/i18n';
 import { SubscriptionAuthorizationExpiry } from './SubscriptionAuthorizationExpiry';
 
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Tooltip: ({ children, content }: { children: React.ReactNode; content: string }) => <span data-tooltip={content}>{children}</span>,
 }));
 

@@ -1,6 +1,6 @@
 /**
  * SSH connection id grammar shared with the Rust owner
- * (`openbitfun_services_core::workspace_identity`).
+ * (`starmate_services_core::workspace_identity`).
  *
  * - `ssh-user@host`: default-port and legacy profiles.
  * - `ssh-user@host:port`: pre-#710 alias of `ssh-user@host`.

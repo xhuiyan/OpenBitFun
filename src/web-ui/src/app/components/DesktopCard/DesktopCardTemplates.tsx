@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Checkbox, StatusPill, type StatusPillTone } from '@openbitfun/ui';
+import { Button, Checkbox, StatusPill, type StatusPillTone } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { cronAPI, type CronJob } from '@/infrastructure/api/service-api/CronAPI';
 import type {

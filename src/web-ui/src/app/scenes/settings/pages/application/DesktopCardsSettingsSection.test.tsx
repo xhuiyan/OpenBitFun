@@ -20,7 +20,7 @@ const mocks = vi.hoisted(() => ({
   notifySuccess: vi.fn(),
 }));
 
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Switch: ({ checked, disabled, onChange, 'aria-label': label }: {
     checked: boolean;
     disabled?: boolean;

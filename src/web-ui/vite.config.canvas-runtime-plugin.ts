@@ -57,7 +57,7 @@ export function openbitfunCanvasRuntimeBundlePlugin(): Plugin {
         sourcemap: 'inline',
         lib: {
           entry,
-          name: 'OpenBitFunCanvasRuntimeAdapters',
+          name: 'StarMateCanvasRuntimeAdapters',
           formats: ['iife'],
         },
         rollupOptions: {

@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import {
   Button, Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogHeading,
   DialogTitle, Icon, ScrollArea, SearchField,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { AIModelConfig } from '@/infrastructure/config/types';
 import { useModelSelectPresentation } from '@/infrastructure/config/components/ModelSelectPresentation';

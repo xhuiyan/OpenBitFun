@@ -1,5 +1,5 @@
 import { createContext, forwardRef, useContext, useLayoutEffect, useMemo, useRef, type RefObject } from 'react';
-import { Menu, MenuList, MenuPopover, OverflowText, type MenuEntry } from '@openbitfun/ui';
+import { Menu, MenuList, MenuPopover, OverflowText, type MenuEntry } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { getActiveSurfaceScope } from '@/infrastructure/peer-device/deviceSurface';
 import { SessionTitleNumber } from '@/flow_chat/components/SessionTitleNumber';

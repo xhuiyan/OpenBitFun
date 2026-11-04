@@ -1,4 +1,4 @@
-import { Button, Icon, IconButton } from '@openbitfun/ui';
+import { Button, Icon, IconButton } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { skillPageNumbers } from '../hooks/useSkillsPagination';
 

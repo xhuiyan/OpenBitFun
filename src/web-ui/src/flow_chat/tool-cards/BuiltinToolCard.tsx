@@ -6,7 +6,7 @@ import {
   FrontendWorkbenchToolCard, MiniAppFinalizeToolCard, MarketplacePublishToolCard, PlaybookToolCard,
   DesktopCardToolCard,
   type SemanticToolCardAction, type SemanticToolCardProps, type SemanticToolCardRecord,
-} from '@openbitfun/ui/flow-chat';
+} from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import { systemAPI } from '@/infrastructure/api/service-api/SystemAPI';
 import { useSceneStore } from '@/app/stores/sceneStore';

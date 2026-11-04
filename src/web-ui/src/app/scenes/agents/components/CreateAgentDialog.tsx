@@ -1,4 +1,4 @@
-import { Dialog } from '@openbitfun/ui';
+import { Dialog } from '@starmate/ui';
 import { useId, useSyncExternalStore } from 'react';
 import { useCurrentWorkspace } from '@/infrastructure/contexts/WorkspaceContext';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';

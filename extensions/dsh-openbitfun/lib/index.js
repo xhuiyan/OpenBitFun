@@ -46,7 +46,7 @@ function positiveInteger(value, fallback) {
 class HostError extends Error {
   constructor(message, code, cause, rpcData) {
     super(message, cause === undefined ? undefined : { cause });
-    this.name = 'OpenBitFunHostError';
+    this.name = 'StarMateHostError';
     this.code = code;
     this.rpcData = rpcData;
   }

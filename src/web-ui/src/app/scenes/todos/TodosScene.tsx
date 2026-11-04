@@ -19,7 +19,7 @@ import {
   DialogBody,
   DialogClose,
   DialogHeader,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, {
   useCallback,
   useEffect,

@@ -1,4 +1,4 @@
-import { OpenBitFunBrandMotion } from "../../brand/OpenBitFunBrandMotion";
+import { StarMateBrandMotion } from "../../brand/OpenBitFunBrandMotion";
 import { classNames } from "../../internal/classNames";
 import styles from "./ToolProcessingDots.module.css";
 
@@ -23,7 +23,7 @@ export function ToolProcessingDots({
       data-size={size}
       role="presentation"
     >
-      <OpenBitFunBrandMotion variant="construction" size={size} />
+      <StarMateBrandMotion variant="construction" size={size} />
     </span>
   );
 }

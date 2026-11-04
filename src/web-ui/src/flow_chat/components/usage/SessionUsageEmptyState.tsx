@@ -1,4 +1,4 @@
-import { Empty, Icon } from '@openbitfun/ui';
+import { Empty, Icon } from '@starmate/ui';
 import { ChartPie } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 

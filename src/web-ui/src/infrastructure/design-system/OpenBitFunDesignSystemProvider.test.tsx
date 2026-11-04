@@ -3,7 +3,7 @@
 import React, { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { OpenBitFunDesignSystemProvider } from './OpenBitFunDesignSystemProvider';
+import { StarMateDesignSystemProvider } from './OpenBitFunDesignSystemProvider';
 
 const appearanceState = vi.hoisted(() => ({ mode: 'dark' as 'dark' | 'light' }));
 
@@ -22,7 +22,7 @@ vi.mock('@/infrastructure/i18n', () => ({
   }),
 }));
 
-describe('OpenBitFunDesignSystemProvider', () => {
+describe('StarMateDesignSystemProvider', () => {
   let container: HTMLDivElement;
   let root: Root;
 
@@ -44,9 +44,9 @@ describe('OpenBitFunDesignSystemProvider', () => {
   it('maps product appearance and desktop density onto the global package token root', () => {
     act(() => {
       root.render(
-        <OpenBitFunDesignSystemProvider>
+        <StarMateDesignSystemProvider>
           <span>content</span>
-        </OpenBitFunDesignSystemProvider>,
+        </StarMateDesignSystemProvider>,
       );
     });
 
@@ -58,9 +58,9 @@ describe('OpenBitFunDesignSystemProvider', () => {
     appearanceState.mode = 'light';
     act(() => {
       root.render(
-        <OpenBitFunDesignSystemProvider>
+        <StarMateDesignSystemProvider>
           <span>content</span>
-        </OpenBitFunDesignSystemProvider>,
+        </StarMateDesignSystemProvider>,
       );
     });
 
@@ -82,9 +82,9 @@ describe('OpenBitFunDesignSystemProvider', () => {
 
     act(() => {
       root.render(
-        <OpenBitFunDesignSystemProvider>
+        <StarMateDesignSystemProvider>
           <span>content</span>
-        </OpenBitFunDesignSystemProvider>,
+        </StarMateDesignSystemProvider>,
       );
     });
     expect(document.documentElement.getAttribute('data-contrast')).toBe('high');

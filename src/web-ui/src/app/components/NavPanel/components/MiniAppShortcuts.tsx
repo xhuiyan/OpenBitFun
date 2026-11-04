@@ -1,4 +1,4 @@
-import { ConfirmDialog, Icon, IconButton, NavigationPanelItem, Tooltip } from '@openbitfun/ui';
+import { ConfirmDialog, Icon, IconButton, NavigationPanelItem, Tooltip } from '@starmate/ui';
 import { useCurrentWorkspace } from '@/infrastructure/contexts/WorkspaceContext';
 import { useI18n } from '@/infrastructure/i18n';
 import { isRemoteWorkspace } from '@/shared/types';

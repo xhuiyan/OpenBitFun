@@ -1,4 +1,4 @@
-import { Icon as CatalogIcon, type IconName } from "@openbitfun/ui";
+import { Icon as CatalogIcon, type IconName } from "@starmate/ui";
 import { BookOpen, Boxes, FileCode2, FileText, ShieldCheck } from "lucide-react";
 import { useI18n, type MessageKey } from "../i18n";
 

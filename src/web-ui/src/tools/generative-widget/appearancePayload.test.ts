@@ -3,8 +3,8 @@ import { createHash } from 'node:crypto';
 import {
   cssVariables as systemCssVariables,
   tokens as systemTokens,
-} from '@openbitfun/design-tokens';
-import { themeCssVariables } from '@openbitfun/theme-openbitfun';
+} from '@starmate/design-tokens';
+import { themeCssVariables } from '@starmate/theme-openbitfun';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { widgetAppearanceAdapter } from '@/infrastructure/appearance/adapters/WidgetAppearanceAdapter';

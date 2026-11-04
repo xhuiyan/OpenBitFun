@@ -15,7 +15,7 @@ import { OverflowText,
   ToolbarGroup,
   Tooltip,
   type StatusPillTone,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import { peerHostRefusalMessage } from '@/infrastructure/peer-device/peerHostRefusal';

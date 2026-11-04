@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { getActiveSurfaceScope, isSurfaceChangedError } from '@/infrastructure/peer-device/deviceSurface';
 import { flowChatStore } from '@/flow_chat/store/FlowChatStore';

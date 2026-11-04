@@ -1,7 +1,7 @@
 import React from 'react';
 import { Minus } from 'lucide-react';
 import { CodeReviewReportExportActions } from '../../tool-cards/CodeReviewReportExportActions';
-import { Icon, type IconSource } from '@openbitfun/ui';
+import { Icon, type IconSource } from '@starmate/ui';
 
 type ExportableReviewData = React.ComponentProps<typeof CodeReviewReportExportActions>['reviewData'];
 

@@ -1,4 +1,4 @@
-import type { IconName } from '@openbitfun/ui';
+import type { IconName } from '@starmate/ui';
 import type { SceneTabId } from '@/app/components/SceneBar/types';
 
 /** Bootstrap labels keep sidebar rendering independent of feature chunks. */

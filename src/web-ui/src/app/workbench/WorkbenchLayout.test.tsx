@@ -12,8 +12,8 @@ import { useWindowResizeLayout } from '../layout/windowResizeScheduler';
 
 const mocks = vi.hoisted(() => ({ selectLayout: null as null | ((value: string) => void), terminalPosition: 'right' }));
 
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Select: ({ value, onValueChange }: { value: string; onValueChange: (value: string) => void }) => {
     mocks.selectLayout = onValueChange;
     return <output data-testid="layout-preference">{value}</output>;

@@ -1,5 +1,5 @@
 import { useStore } from 'zustand';
-import { Button, NumberInput } from '@openbitfun/ui';
+import { Button, NumberInput } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { ConfigPageRow, ConfigPageSection } from '@/infrastructure/config/components/common';
 import { DEFAULT_FLOW_CHAT_WIDTH, MIN_FLOW_CHAT_WIDTH, flowChatWidthStore } from '@/infrastructure/appearance/preferences/flowChatWidthStore';

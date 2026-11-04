@@ -1,4 +1,4 @@
-import { themeCssVariables, themes, type ThemeTokenName } from '@openbitfun/theme-openbitfun';
+import { themeCssVariables, themes, type ThemeTokenName } from '@starmate/theme-openbitfun';
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import avatarPalette from '../../../flow_chat/assets/subagent-avatars/palette.json';

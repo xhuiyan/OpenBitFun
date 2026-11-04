@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
-import { Icon, MenuItem } from '@openbitfun/ui';
+import { Icon, MenuItem } from '@starmate/ui';
 import type { Session } from '@/flow_chat/types/flow-chat';
 import { flowChatManager } from '@/flow_chat/services/FlowChatManager';
 import { flowChatStore } from '@/flow_chat/store/FlowChatStore';

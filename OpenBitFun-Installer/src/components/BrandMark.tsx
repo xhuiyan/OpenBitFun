@@ -1,4 +1,4 @@
-import { OpenBitFunMark } from '@openbitfun/ui/brand';
+import { StarMateMark } from '@starmate/ui/brand';
 
 interface BrandMarkProps {
   size?: 'medium' | 'hero';
@@ -7,5 +7,5 @@ interface BrandMarkProps {
 
 /** The canonical fine-line vector is painted with the active surface's text color. */
 export function BrandMark({ size = 'medium', working = false }: BrandMarkProps) {
-  return <OpenBitFunMark className="brand-mark" data-size={size} motion="breathe" active={working} />;
+  return <StarMateMark className="brand-mark" data-size={size} motion="breathe" active={working} />;
 }

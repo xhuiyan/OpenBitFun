@@ -1,4 +1,4 @@
-import type { ExploreGroupProps } from '@openbitfun/ui/flow-chat';
+import type { ExploreGroupProps } from '@starmate/ui/flow-chat';
 import type { PresentationTranslate } from './exec/contracts';
 
 interface ExploreStats { readCount: number; searchCount: number; commandCount: number }

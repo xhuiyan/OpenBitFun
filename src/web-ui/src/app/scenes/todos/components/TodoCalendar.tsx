@@ -7,7 +7,7 @@
  * Jobs with nothing left to run are the only ones left out.
  */
 
-import { Button, Icon, IconButton, OverflowText, Tooltip } from '@openbitfun/ui';
+import { Button, Icon, IconButton, OverflowText, Tooltip } from '@starmate/ui';
 import { CalendarDays } from 'lucide-react';
 import React, { useMemo } from 'react';
 import { useI18n } from '@/infrastructure/i18n';

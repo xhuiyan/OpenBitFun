@@ -1,4 +1,4 @@
-import { Button, Icon } from '@openbitfun/ui';
+import { Button, Icon } from '@starmate/ui';
 import React, { useLayoutEffect, useRef } from 'react';
 import { useI18n } from '@/infrastructure/i18n';
 import './MiniAppDetailPage.scss';

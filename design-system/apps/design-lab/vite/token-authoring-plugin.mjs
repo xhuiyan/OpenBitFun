@@ -5,7 +5,7 @@ import { promisify } from "node:util";
 import {
   collectTokenDefinitions,
   mergeTokenDocuments,
-} from "@openbitfun/token-engine";
+} from "@starmate/token-engine";
 
 const execFileAsync = promisify(execFile);
 const ENDPOINT = "/__openbitfun-design-lab/token-source";
@@ -14,37 +14,37 @@ const MAX_BODY_BYTES = 128 * 1024;
 const targetDefinitions = {
   "system:comfortable": {
     allowedSources: ["system"],
-    packageName: "@openbitfun/design-tokens",
+    packageName: "@starmate/design-tokens",
     targetSource: "system",
   },
   "system:compact": {
     allowedSources: ["system", "compact"],
-    packageName: "@openbitfun/design-tokens",
+    packageName: "@starmate/design-tokens",
     targetSource: "compact",
   },
   "system:touch": {
     allowedSources: ["system", "touch"],
-    packageName: "@openbitfun/design-tokens",
+    packageName: "@starmate/design-tokens",
     targetSource: "touch",
   },
   "theme:light": {
     allowedSources: ["reference", "light"],
-    packageName: "@openbitfun/theme-openbitfun",
+    packageName: "@starmate/theme-openbitfun",
     targetSource: "light",
   },
   "theme:dark": {
     allowedSources: ["reference", "dark"],
-    packageName: "@openbitfun/theme-openbitfun",
+    packageName: "@starmate/theme-openbitfun",
     targetSource: "dark",
   },
   "theme:highContrastLight": {
     allowedSources: ["reference", "light", "highContrastLight"],
-    packageName: "@openbitfun/theme-openbitfun",
+    packageName: "@starmate/theme-openbitfun",
     targetSource: "highContrastLight",
   },
   "theme:highContrastDark": {
     allowedSources: ["reference", "dark", "highContrastDark"],
-    packageName: "@openbitfun/theme-openbitfun",
+    packageName: "@starmate/theme-openbitfun",
     targetSource: "highContrastDark",
   },
 };

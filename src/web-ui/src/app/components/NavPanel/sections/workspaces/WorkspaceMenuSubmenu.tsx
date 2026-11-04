@@ -10,7 +10,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { createOverlayPortal, Icon, Menu, MenuItem, subscribeOverlayInteraction } from '@openbitfun/ui';
+import { createOverlayPortal, Icon, Menu, MenuItem, subscribeOverlayInteraction } from '@starmate/ui';
 
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';
 

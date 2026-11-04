@@ -26,8 +26,8 @@ vi.mock('@/infrastructure/services/business/workspaceManager', () => ({
   workspaceManager: { getState: () => ({ currentWorkspace: null }) },
 }));
 vi.mock('@/shared/utils/tabUtils', () => ({ openFileInBestTarget: vi.fn() }));
-vi.mock('@openbitfun/ui', async importOriginal => ({
-  ...await importOriginal<typeof import('@openbitfun/ui')>(),
+vi.mock('@starmate/ui', async importOriginal => ({
+  ...await importOriginal<typeof import('@starmate/ui')>(),
   Tooltip: ({ children }: { children: React.ReactNode }) => children,
 }));
 

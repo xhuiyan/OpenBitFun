@@ -1,4 +1,4 @@
-import { Icon, OverflowText } from '@openbitfun/ui';
+import { Icon, OverflowText } from '@starmate/ui';
 import type { ReactNode } from 'react';
 import './ProjectFolderList.scss';
 

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Dialog, DialogBody, DialogClose, DialogHeader, DialogHeaderActions, DialogTitle, ScrollArea } from '@openbitfun/ui';
+import { Dialog, DialogBody, DialogClose, DialogHeader, DialogHeaderActions, DialogTitle, ScrollArea } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { lazyWithRecovery } from '@/shared/utils/lazyWithRecovery';
 import { AccountIdentityControls } from '@/features/market-account';

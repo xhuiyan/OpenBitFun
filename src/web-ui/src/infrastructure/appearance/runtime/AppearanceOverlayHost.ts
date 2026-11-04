@@ -7,7 +7,7 @@
  * subtree it portaled out of. See AppearanceOverlayHost.scss.
  */
 
-import { getOverlayHost } from '@openbitfun/ui';
+import { getOverlayHost } from '@starmate/ui';
 import './AppearanceOverlayHost.scss';
 
 const OVERLAY_HOST_ID = 'openbitfun-appearance-overlay-host';

@@ -5,7 +5,7 @@
 
 import { createLogger } from '@/shared/utils/logger';
 import { isMcpToolName } from '@/infrastructure/mcp/toolName';
-import type { CompatibilityToolNameForOwner, ToolNameForOwner } from '@openbitfun/flow-chat-presentation/registry';
+import type { CompatibilityToolNameForOwner, ToolNameForOwner } from '@starmate/flow-chat-presentation/registry';
 import type { JSXElementConstructor } from 'react';
 import type { ToolCardProps } from '../types/flow-chat';
 
@@ -84,7 +84,7 @@ import { BuiltinToolCard } from './BuiltinToolCard';
 import { GenerateImageToolCard } from './GenerateImageToolCard';
 
 /**
- * Standard tool adapters backed by concrete `@openbitfun/ui/flow-chat` views.
+ * Standard tool adapters backed by concrete `@starmate/ui/flow-chat` views.
  *
  * These components may translate product data, localization, host callbacks,
  * and heavyweight renderer slots, but they must not own a second card anatomy.

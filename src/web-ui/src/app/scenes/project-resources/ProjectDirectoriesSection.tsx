@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { ActionCard, Button, Icon, OverflowText, StatusPill, type ActionCardAction } from '@openbitfun/ui';
+import { ActionCard, Button, Icon, OverflowText, StatusPill, type ActionCardAction } from '@starmate/ui';
 import { FolderCog, FolderOpen } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import { isRemoteWorkspace, type WorkspaceInfo } from '@/shared/types';

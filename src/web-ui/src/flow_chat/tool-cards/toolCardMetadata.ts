@@ -1,4 +1,4 @@
-import { dedicatedToolNames } from '@openbitfun/flow-chat-presentation/registry';
+import { dedicatedToolNames } from '@starmate/flow-chat-presentation/registry';
 /**
  * Tool-card metadata and lightweight helpers.
  *

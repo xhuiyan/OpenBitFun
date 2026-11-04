@@ -1,7 +1,7 @@
 import styles from './SubscriptionServiceGroup.module.scss';
 import type { ManagedSubscriptionAccount } from './subscriptionServices';
 import type { ReactNode } from 'react';
-import { CardHeader } from '@openbitfun/ui';
+import { CardHeader } from '@starmate/ui';
 
 /** One product heading followed by independent account rows. */
 export function SubscriptionServiceGroup({ title, description, actions, children, testId = 'settings-subscription-service' }: {

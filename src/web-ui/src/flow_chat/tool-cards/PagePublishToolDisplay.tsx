@@ -3,11 +3,11 @@ import { useToolCardDisclosure } from '../timeline/readerState';
  * PagePublish tool card — shows publish slug / version / URLs.
  */
 import React, { useCallback, useMemo } from 'react';
-import { IconButton, Icon } from '@openbitfun/ui';
+import { IconButton, Icon } from '@starmate/ui';
 import { useTranslation } from 'react-i18next';
 
 import type { ToolCardProps } from '../types/flow-chat';
-import { PagePublishToolCard } from '@openbitfun/ui/flow-chat';
+import { PagePublishToolCard } from '@starmate/ui/flow-chat';
 import { useToolCardHeightContract } from './useToolCardHeightContract';
 import { usePageToolOpen } from './usePageToolOpen';
 

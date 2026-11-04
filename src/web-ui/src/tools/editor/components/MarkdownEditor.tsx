@@ -5,7 +5,7 @@
  * @module components/MarkdownEditor
  */
 
-import { Button, Empty, Icon, IconButton, SegmentedControl, Toolbar, ToolbarGroup } from '@openbitfun/ui';
+import { Button, Empty, Icon, IconButton, SegmentedControl, Toolbar, ToolbarGroup } from '@starmate/ui';
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { MEditor } from '../meditor';
 import { resourcePathKey } from '@/shared/utils/resourcePath';
@@ -18,7 +18,7 @@ import { elapsedMs, nowMs } from '@/shared/utils/timing';
 import { globalEventBus } from '@/infrastructure/event-bus';
 import { isSamePath } from '@/shared/utils/pathUtils';
 import { startEditorFileSyncPolling } from '../utils/fileSyncPolling';
-import { LoadingState } from '@openbitfun/ui';
+import { LoadingState } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import {
   diskVersionFromMetadata,

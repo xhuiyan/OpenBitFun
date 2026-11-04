@@ -19,7 +19,7 @@ import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer
 import { createLogger } from '@/shared/utils/logger';
 import { isMacOSDesktopRuntime, startNativeWindowDragging, supportsNativeWindowDragging } from '@/infrastructure/runtime';
 import './NavBar.scss';
-import { Icon, OverflowText, Tooltip } from '@openbitfun/ui';
+import { Icon, OverflowText, Tooltip } from '@starmate/ui';
 
 const log = createLogger('NavBar');
 

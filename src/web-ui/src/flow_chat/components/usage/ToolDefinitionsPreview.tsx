@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, Disclosure, Empty, FieldGroup, FieldRow, FormSection, Icon, NumberBadge, PageHeader, ScrollArea, SearchField, Stack, StatusPill } from '@openbitfun/ui';
+import { Alert, Disclosure, Empty, FieldGroup, FieldRow, FormSection, Icon, NumberBadge, PageHeader, ScrollArea, SearchField, Stack, StatusPill } from '@starmate/ui';
 import { Search, Wrench } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import { MarkdownRenderer } from '@/infrastructure/markdown';

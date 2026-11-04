@@ -5,7 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, createElement, createRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Portal } from '@openbitfun/ui';
+import { Portal } from '@starmate/ui';
 import { CANVAS_OVERVIEW_SHORTCUT, EDITOR_SHORTCUTS } from '@/shared/constants/shortcuts';
 import { buildStoredKeybindings, getReservedShortcutReason, parseStoredKeybindings, shortcutManager } from './ShortcutManager';
 

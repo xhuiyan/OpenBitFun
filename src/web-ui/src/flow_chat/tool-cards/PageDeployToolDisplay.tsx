@@ -3,11 +3,11 @@ import { useToolCardDisclosure } from '../timeline/readerState';
  * PageDeploy tool card — shows deploy slug / version result.
  */
 import React, { useCallback, useMemo } from 'react';
-import { IconButton, Icon } from '@openbitfun/ui';
+import { IconButton, Icon } from '@starmate/ui';
 import { useTranslation } from 'react-i18next';
 
 import type { ToolCardProps } from '../types/flow-chat';
-import { PageDeployToolCard } from '@openbitfun/ui/flow-chat';
+import { PageDeployToolCard } from '@starmate/ui/flow-chat';
 import { useToolCardHeightContract } from './useToolCardHeightContract';
 import { usePageToolOpen } from './usePageToolOpen';
 

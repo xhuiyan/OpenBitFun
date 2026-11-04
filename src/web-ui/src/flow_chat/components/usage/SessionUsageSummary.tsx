@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useUsageSeriesHighlight } from './useUsageSeriesHighlight';
-import { Empty, Icon, IconButton, OverflowText, PageHeader, Tooltip } from '@openbitfun/ui';
+import { Empty, Icon, IconButton, OverflowText, PageHeader, Tooltip } from '@starmate/ui';
 import { ChartPie, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import type { SessionUsageReport, UsageContextBreakdown, UsageContextCategory } from '@/infrastructure/api/service-api/SessionAPI';

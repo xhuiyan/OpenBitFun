@@ -19,7 +19,7 @@ import {
   NavigationPanelHeader,
   NavigationPanelItem,
   Tooltip,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import { FolderPlus, House } from 'lucide-react';
 // import { PanelsTopLeft } from 'lucide-react'; // temporarily hidden: Pages nav entry
 import { useSceneManager } from '../../hooks/useSceneManager';

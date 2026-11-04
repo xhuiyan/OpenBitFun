@@ -1,5 +1,5 @@
 {
-  "name": "@openbitfun/web-ui",
+  "name": "@starmate/web-ui",
   "version": "1.0.8",
   "private": true,
   "description": "OpenBitFun Web UI - 支持 Desktop 和 Server 两种部署方式",
@@ -32,10 +32,10 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
-    "@openbitfun/design-tokens": "workspace:^",
-    "@openbitfun/flow-chat-presentation": "workspace:*",
-    "@openbitfun/theme-openbitfun": "workspace:^",
-    "@openbitfun/ui": "workspace:^",
+    "@starmate/design-tokens": "workspace:^",
+    "@starmate/flow-chat-presentation": "workspace:*",
+    "@starmate/theme-openbitfun": "workspace:^",
+    "@starmate/ui": "workspace:^",
     "@tanstack/react-virtual": "^3.13.23",
     "@tauri-apps/api": "^2.10.1",
     "@tauri-apps/plugin-autostart": "^2.0.0",

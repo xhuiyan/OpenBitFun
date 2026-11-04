@@ -9,7 +9,7 @@ const api = vi.hoisted(() => ({ listRemoved: vi.fn(), restoreRemoved: vi.fn(), r
 vi.mock('@/infrastructure/api/service-api/ExternalSessionImportAPI', () => ({ externalSessionImportAPI: api }));
 vi.mock('@/flow_chat/services/FlowChatManager', () => ({ flowChatManager: api }));
 vi.mock('@/infrastructure/i18n', () => ({ useI18n: () => ({ t: (key: string) => key }) }));
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Button: ({ children, loading: _loading, variant: _variant, size: _size, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean; variant?: string; size?: string }) => <button {...props}>{children}</button>,
   Alert: ({ message }: { message: ReactNode }) => <div role="alert">{message}</div>,
   LoadingState: () => <div role="status">Loading</div>,

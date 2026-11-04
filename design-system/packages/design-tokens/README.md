@@ -1,8 +1,8 @@
-# @openbitfun/design-tokens
+# @starmate/design-tokens
 
 Framework-neutral token contract and system scales for OpenBitFun UI packages.
 
-This package intentionally contains no concrete brand palette. Install a theme package such as `@openbitfun/theme-openbitfun` alongside it.
+This package intentionally contains no concrete brand palette. Install a theme package such as `@starmate/theme-openbitfun` alongside it.
 
 ```ts
 import {
@@ -10,8 +10,8 @@ import {
   tokenCatalog,
   tokenModes,
   tokens,
-} from "@openbitfun/design-tokens";
-import "@openbitfun/design-tokens/tokens.css";
+} from "@starmate/design-tokens";
+import "@starmate/design-tokens/tokens.css";
 ```
 
 Only semantic and system token names are public API. Density modes reuse the same names and override values through a scoped `data-density` attribute.

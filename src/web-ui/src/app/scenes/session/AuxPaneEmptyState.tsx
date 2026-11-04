@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { Button, Empty, Icon, OverflowText } from '@openbitfun/ui';
+import { Button, Empty, Icon, OverflowText } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { useCurrentWorkspace } from '@/infrastructure/contexts/WorkspaceContext';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';

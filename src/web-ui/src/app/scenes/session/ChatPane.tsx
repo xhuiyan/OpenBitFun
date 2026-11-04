@@ -6,7 +6,7 @@
  */
 
 import React, { useCallback, memo, useRef, useState, useMemo, useContext } from 'react';
-import { SplitViewPrimaryDock } from '@openbitfun/ui';
+import { SplitViewPrimaryDock } from '@starmate/ui';
 import { useStore } from 'zustand';
 import { flowChatWidthStore } from '@/infrastructure/appearance/preferences/flowChatWidthStore';
 import { ChatFileDropOverlay } from './ChatFileDropOverlay';

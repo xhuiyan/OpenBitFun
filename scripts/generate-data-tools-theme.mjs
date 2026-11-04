@@ -24,7 +24,7 @@ export async function generateDataToolsTheme({ check = false } = {}) {
   // never make a source change appear current in the generated-output check.
   await import('../design-system/packages/design-tokens/scripts/build.mjs');
   await import('../design-system/packages/theme-openbitfun/scripts/build.mjs');
-  const css = bundleStylesheet(themeRequire.resolve('@openbitfun/theme-openbitfun/default.css'));
+  const css = bundleStylesheet(themeRequire.resolve('@starmate/theme-openbitfun/default.css'));
   if (/@import\b|url\(/i.test(css)) {
     throw new Error('Data Tools design-system CSS must have no external asset dependencies.');
   }

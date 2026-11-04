@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { Alert, Switch } from '@openbitfun/ui';
+import { Alert, Switch } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { configAPI } from '@/infrastructure/api/service-api/ConfigAPI';
 import { configManager } from '@/infrastructure/config/services/ConfigManager';

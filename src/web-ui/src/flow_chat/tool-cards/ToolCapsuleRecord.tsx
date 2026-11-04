@@ -1,4 +1,4 @@
-import { ToolCapsuleDetails } from '@openbitfun/ui/flow-chat';
+import { ToolCapsuleDetails } from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import type { FlowToolItem } from '../types/flow-chat';
 

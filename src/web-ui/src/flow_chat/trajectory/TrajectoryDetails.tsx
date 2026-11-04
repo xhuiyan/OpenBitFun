@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
-import { Alert, Button, Disclosure, Empty, FieldGroup, FieldRow, Icon, LoadingState, OverflowText, PageHeader, ScrollArea, Stack, StatusPill } from '@openbitfun/ui';
+import { Alert, Button, Disclosure, Empty, FieldGroup, FieldRow, Icon, LoadingState, OverflowText, PageHeader, ScrollArea, Stack, StatusPill } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';
 import { flowChatStore } from '../store/FlowChatStore';

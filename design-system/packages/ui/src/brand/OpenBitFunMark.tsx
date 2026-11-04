@@ -3,7 +3,7 @@ import { classNames } from "../internal/classNames";
 import { startBrandPlayback } from "./brandPlayback";
 import styles from "./brand.module.css";
 
-export interface OpenBitFunMarkProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+export interface StarMateMarkProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
   /** Omit when adjacent text already names the product. */
   label?: string;
   size?: CSSProperties["width"];
@@ -12,7 +12,7 @@ export interface OpenBitFunMarkProps extends Omit<HTMLAttributes<HTMLSpanElement
 }
 
 /** The authored transparent mark; currentColor follows the consuming surface. */
-export function OpenBitFunMark({ label, size, motion = "none", active = true, className, style, ...props }: OpenBitFunMarkProps) {
+export function StarMateMark({ label, size, motion = "none", active = true, className, style, ...props }: StarMateMarkProps) {
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const element = ref.current;

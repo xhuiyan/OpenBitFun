@@ -4,8 +4,8 @@ import ChatTranscript from '../../src/components/ChatTranscript';
 import { I18nProvider } from '../../src/i18n';
 import type { ChatMessage, ChatMessageItem, RemoteToolStatus } from '../../src/services/RemoteSessionManager';
 import '../../src/styles/reset.scss';
-import '@openbitfun/theme-openbitfun/default.css';
-import '@openbitfun/ui/mobile.css';
+import '@starmate/theme-openbitfun/default.css';
+import '@starmate/ui/mobile.css';
 import '../../src/styles/index.scss';
 
 let root: ReturnType<typeof createRoot>;

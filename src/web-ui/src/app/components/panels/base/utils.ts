@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { 
   Code, 
   FileText, 

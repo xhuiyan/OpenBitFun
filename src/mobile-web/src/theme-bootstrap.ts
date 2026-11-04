@@ -1,4 +1,4 @@
-import { themes } from '@openbitfun/theme-openbitfun';
+import { themes } from '@starmate/theme-openbitfun';
 
 // Apply the saved theme before React and the main stylesheet load, avoiding a
 // light/dark flash without requiring an inline script under the mobile CSP.

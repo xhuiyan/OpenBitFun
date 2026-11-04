@@ -6,8 +6,8 @@ import {
   FrontendWorkbenchToolCard, MiniAppFinalizeToolCard, MarketplacePublishToolCard, PlaybookToolCard,
   DesktopCardToolCard,
   type SemanticToolCardProps,
-} from '@openbitfun/ui/flow-chat';
-import { toolsForComponent } from '@openbitfun/flow-chat-presentation/registry';
+} from '@starmate/ui/flow-chat';
+import { toolsForComponent } from '@starmate/flow-chat-presentation/registry';
 import { useI18n, type MessageKey } from '../i18n';
 import type { FlowChatPreviewDefinition } from './FlowChatPreviewRegistry';
 

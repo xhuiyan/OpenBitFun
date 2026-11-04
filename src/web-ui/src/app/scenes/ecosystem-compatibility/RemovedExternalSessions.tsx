@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
-import { Alert, Button, LoadingState, OverflowText, ScrollArea } from '@openbitfun/ui';
+import { Alert, Button, LoadingState, OverflowText, ScrollArea } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { externalSessionImportAPI, type ExternalSessionEcosystem, type RemovedExternalSession } from '@/infrastructure/api/service-api/ExternalSessionImportAPI';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';

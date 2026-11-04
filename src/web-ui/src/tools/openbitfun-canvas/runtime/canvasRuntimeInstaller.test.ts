@@ -30,7 +30,7 @@ describe('Canvas runtime installer', () => {
     for (const name of iframeFallbackVars) {
       expect(runtimeCss).toContain(`${name}:`);
     }
-    expect(runtimeEntry).toContain("import '@openbitfun/design-tokens/tokens.css';");
+    expect(runtimeEntry).toContain("import '@starmate/design-tokens/tokens.css';");
     expect(runtimeCss).not.toMatch(/^\s*--openbitfun-(?:font|letter-spacing|line-height|type)-/m);
   });
 
@@ -38,8 +38,8 @@ describe('Canvas runtime installer', () => {
     const script = buildCanvasRuntimeInstallerScript('rev_test');
 
     expect(script).toContain('function installSdkAdapters()');
-    expect(script).toContain('...runtimeWindow.OpenBitFunCanvasSDKAdapters');
-    expect(script).toContain('runtimeWindow.OpenBitFunCanvasRuntimeHooks');
+    expect(script).toContain('...runtimeWindow.StarMateCanvasSDKAdapters');
+    expect(script).toContain('runtimeWindow.StarMateCanvasRuntimeHooks');
     expect(script.indexOf('installSdkAdapters();')).toBeLessThan(
       script.indexOf('openbitfun-canvas-module-started'),
     );
@@ -48,8 +48,8 @@ describe('Canvas runtime installer', () => {
   it('keeps fallback SDK scoped to runtime hooks while bundled adapters own components', () => {
     const script = buildCanvasRuntimeInstallerScript('rev_test');
 
-    expect(script).toContain('runtimeWindow.OpenBitFunCanvasSDK = {');
-    expect(script).toContain('...runtimeWindow.OpenBitFunCanvasRuntimeHooks');
+    expect(script).toContain('runtimeWindow.StarMateCanvasSDK = {');
+    expect(script).toContain('...runtimeWindow.StarMateCanvasRuntimeHooks');
     expect(script).not.toContain('function Stack');
     expect(script).not.toContain('function BarChart');
     expect(script).not.toContain('function DependencyGraph');

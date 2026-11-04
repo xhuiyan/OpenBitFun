@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesignSystemProvider, ThemeRoot } from '@openbitfun/ui';
+import { DesignSystemProvider, ThemeRoot } from '@starmate/ui';
 
 function errorText(error: unknown): string {
   if (error && typeof error === 'object') {

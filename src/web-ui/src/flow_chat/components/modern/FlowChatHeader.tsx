@@ -6,7 +6,7 @@
 
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback, useSyncExternalStore } from 'react';
 import { Keyboard, Square } from 'lucide-react';
-import { subscribeOverlayInteraction, createOverlayPortal, OverflowText, Icon, IconButton, Menu, MenuItem, SearchField, Switch, ToolbarSeparator, Tooltip } from '@openbitfun/ui';
+import { subscribeOverlayInteraction, createOverlayPortal, OverflowText, Icon, IconButton, Menu, MenuItem, SearchField, Switch, ToolbarSeparator, Tooltip } from '@starmate/ui';
 import { SceneChromeContribution } from '@/app/components/SceneTopBar/SceneChrome';
 import { useSceneChromeContext } from '@/app/components/SceneTopBar/sceneChromeContext';
 import { useTranslation } from 'react-i18next';

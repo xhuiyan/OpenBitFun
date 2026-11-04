@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { Card, Empty, Icon, IconButton, OverflowText, Tooltip, createOverlayPortal, useDismissibleLayer } from '@openbitfun/ui';
+import { Card, Empty, Icon, IconButton, OverflowText, Tooltip, createOverlayPortal, useDismissibleLayer } from '@starmate/ui';
 import { ChartPie, ExternalLink, Minus } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n';
 import { getAppearanceOverlayHost } from '@/infrastructure/appearance/runtime/AppearanceOverlayHost';

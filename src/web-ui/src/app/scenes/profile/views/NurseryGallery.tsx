@@ -1,5 +1,5 @@
 import { resolveAssistantName } from '@/shared/utils/assistantName';
-import { Button, Icon, NumberBadge, PageHeader } from '@openbitfun/ui';
+import { Button, Icon, NumberBadge, PageHeader } from '@starmate/ui';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';
 import { CircleAlert, LoaderCircle } from 'lucide-react';

@@ -25,7 +25,7 @@ vi.mock('../sessions/SessionsSection', () => ({
     <button data-open-session onClick={onSessionOpened}>Open</button>
   </>,
 }));
-vi.mock('@openbitfun/ui', () => {
+vi.mock('@starmate/ui', () => {
   return {
     Button: ({ children, disabled, onClick }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
       <button disabled={disabled} onClick={onClick}>{children}</button>

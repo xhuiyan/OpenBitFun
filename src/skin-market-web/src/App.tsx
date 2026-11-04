@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@openbitfun/ui';
+import { Button, IconButton } from '@starmate/ui';
 import {
   LogIn,
   RefreshCw as ArrowClockwise,

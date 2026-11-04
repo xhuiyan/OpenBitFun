@@ -139,7 +139,7 @@ import {
 import { sessionOwningWorkspaceId } from '../utils/sessionOrdering';
 import { findWorkspaceForSession } from '../utils/workspaceScope';
 import { isLinuxDesktopRuntime, isTauriRuntime, isWindowsDesktopRuntime } from '@/infrastructure/runtime';
-import { subscribeOverlayInteraction, createOverlayPortal, OverflowText, Tooltip } from '@openbitfun/ui';
+import { subscribeOverlayInteraction, createOverlayPortal, OverflowText, Tooltip } from '@starmate/ui';
 import { useShortcut } from '@/infrastructure/hooks/useShortcut';
 import { confirmDanger, confirmWarning } from '@/infrastructure/confirm-dialog';
 import { PendingQueuePanel } from './PendingQueuePanel';
@@ -296,14 +296,14 @@ import {
 } from './chatPopupState';
 import { useChatInputTargets } from '../hooks/useChatInputTargets';
 import type { BtwSessionPanelData } from '../services/btwSessionPane';
-import { Menu, MenuItem, MenuSeparator, Icon } from '@openbitfun/ui';
+import { Menu, MenuItem, MenuSeparator, Icon } from '@starmate/ui';
 import {
   ChatComposer,
   ChatComposerActionButton,
   ChatComposerContent,
   ChatComposerEndActions,
   ChatComposerStartActions,
-} from '@openbitfun/ui/flow-chat';
+} from '@starmate/ui/flow-chat';
 
 const log = createLogger('ChatInput');
 

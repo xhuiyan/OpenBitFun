@@ -1,7 +1,7 @@
-import { Button, Icon } from '@openbitfun/ui';
+import { Button, Icon } from '@starmate/ui';
 import { AlertTriangle } from 'lucide-react';
 import { Component, type ReactNode } from 'react';
-import { AmbientToolCard, AmbientToolCardHeader } from '@openbitfun/ui/flow-chat';
+import { AmbientToolCard, AmbientToolCardHeader } from '@starmate/ui/flow-chat';
 import type { FlowToolItem } from '../types/flow-chat';
 import { createLogger } from '@/shared/utils/logger';
 import {

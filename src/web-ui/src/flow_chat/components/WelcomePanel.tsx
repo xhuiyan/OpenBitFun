@@ -5,7 +5,7 @@
 
 import React, { useState, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Button, Icon, MenuPopover, PageHeader, type MenuEntry } from '@openbitfun/ui';
+import { Button, Icon, MenuPopover, PageHeader, type MenuEntry } from '@starmate/ui';
 import { createLogger } from '@/shared/utils/logger';
 import { useWorkspaceContext } from '@/infrastructure/contexts/WorkspaceContext';
 import { WorkspaceKind, type WorkspaceInfo } from '@/shared/types';

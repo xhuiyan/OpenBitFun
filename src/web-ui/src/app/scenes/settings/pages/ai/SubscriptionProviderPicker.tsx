@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Button, Capsule, Card, CardBody, CardFooter, OverflowText, Select, Spinner } from '@openbitfun/ui';
+import { Button, Capsule, Card, CardBody, CardFooter, OverflowText, Select, Spinner } from '@starmate/ui';
 import type { SubscriptionProvider } from '@/infrastructure/config/types';
 import { useI18n } from '@/infrastructure/i18n';
 import { ProductBrandIcon } from '@/shared/ui/ProductBrandIcon';

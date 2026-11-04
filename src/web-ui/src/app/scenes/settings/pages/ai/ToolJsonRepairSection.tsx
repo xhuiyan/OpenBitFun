@@ -2,7 +2,7 @@ import { ConfigPageRow, ConfigPageSection } from '@/infrastructure/config/compon
 import { configManager } from '@/infrastructure/config/services/ConfigManager';
 import { useNotification } from '@/shared/notification-system';
 import { createLogger } from '@/shared/utils/logger';
-import { Switch } from '@openbitfun/ui';
+import { Switch } from '@starmate/ui';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

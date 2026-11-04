@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  Button as OpenBitFunButton,
-  Card as OpenBitFunCard,
-  CardBody as OpenBitFunCardBody,
-  CardHeader as OpenBitFunCardHeader,
-  Empty as OpenBitFunEmpty,
+  Button as StarMateButton,
+  Card as StarMateCard,
+  CardBody as StarMateCardBody,
+  CardHeader as StarMateCardHeader,
+  Empty as StarMateEmpty,
   Field as DesignField,
   Input as DesignInput,
   StatusPill as DesignStatusPill,
   TabGroup as DesignTabGroup,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import type {
   CanvasButtonProps,
   CanvasCardBodyProps,
@@ -23,20 +23,20 @@ import type {
 } from './types';
 import { canvasArrayProp } from './runtimeValidation';
 
-function cardAppearance(variant: CanvasCardProps['variant']): React.ComponentProps<typeof OpenBitFunCard>['appearance'] {
+function cardAppearance(variant: CanvasCardProps['variant']): React.ComponentProps<typeof StarMateCard>['appearance'] {
   if (variant === 'borderless') return 'subtle';
   if (variant === 'elevated' || variant === 'accent') return 'raised';
   if (variant === 'default') return 'neutral';
   return 'subtle';
 }
 
-function cardPadding(padding: CanvasCardProps['padding']): React.ComponentProps<typeof OpenBitFunCard>['padding'] {
+function cardPadding(padding: CanvasCardProps['padding']): React.ComponentProps<typeof StarMateCard>['padding'] {
   if (padding === 'small') return 'sm';
   if (padding === 'medium' || padding === 'large') return 'md';
   return 'none';
 }
 
-function cardRadius(radius: CanvasCardProps['radius']): React.ComponentProps<typeof OpenBitFunCard>['radius'] {
+function cardRadius(radius: CanvasCardProps['radius']): React.ComponentProps<typeof StarMateCard>['radius'] {
   if (radius === 'small') return 'sm';
   if (radius === 'large') return 'lg';
   return 'md';
@@ -44,7 +44,7 @@ function cardRadius(radius: CanvasCardProps['radius']): React.ComponentProps<typ
 
 export function Card({ variant, padding = 'medium', radius = 'small', style, ...props }: CanvasCardProps) {
   return (
-    <OpenBitFunCard
+    <StarMateCard
       {...props}
       appearance={cardAppearance(variant)}
       padding={variant === 'borderless' ? 'none' : cardPadding(padding)}
@@ -59,7 +59,7 @@ export function Card({ variant, padding = 'medium', radius = 'small', style, ...
 
 export function CardHeader({ children, title, subtitle, trailing, ...props }: CanvasCardHeaderProps) {
   return (
-    <OpenBitFunCardHeader
+    <StarMateCardHeader
       {...props}
       title={title ?? children}
       description={subtitle}
@@ -69,10 +69,10 @@ export function CardHeader({ children, title, subtitle, trailing, ...props }: Ca
 }
 
 export function CardBody(props: CanvasCardBodyProps) {
-  return <OpenBitFunCardBody {...props} />;
+  return <StarMateCardBody {...props} />;
 }
 
-function buttonSize(size: CanvasButtonProps['size']): React.ComponentProps<typeof OpenBitFunButton>['size'] {
+function buttonSize(size: CanvasButtonProps['size']): React.ComponentProps<typeof StarMateButton>['size'] {
   if (size === 'sm' || size === 'small') return 'sm';
   if (size === 'lg' || size === 'large') return 'lg';
   return 'md';
@@ -80,7 +80,7 @@ function buttonSize(size: CanvasButtonProps['size']): React.ComponentProps<typeo
 
 function buttonVariant(
   variant: CanvasButtonProps['variant'],
-): React.ComponentProps<typeof OpenBitFunButton>['variant'] {
+): React.ComponentProps<typeof StarMateButton>['variant'] {
   if (variant === 'primary') return 'primary';
   if (variant === 'secondary' || variant === 'ghost') return 'outline';
   return 'fill';
@@ -88,13 +88,13 @@ function buttonVariant(
 
 export function Button({ children, variant = 'secondary', size, ...props }: CanvasButtonProps) {
   return (
-    <OpenBitFunButton
+    <StarMateButton
       {...props}
       variant={buttonVariant(variant)}
       size={buttonSize(size)}
     >
       {children}
-    </OpenBitFunButton>
+    </StarMateButton>
   );
 }
 
@@ -227,7 +227,7 @@ export function Input({
   );
 }
 
-function emptyMediaSize(size: CanvasEmptyProps['imageSize']): React.ComponentProps<typeof OpenBitFunEmpty>['imageSize'] {
+function emptyMediaSize(size: CanvasEmptyProps['imageSize']): React.ComponentProps<typeof StarMateEmpty>['imageSize'] {
   if (size === 'small' || (typeof size === 'number' && size <= 32)) return 'sm';
   if (size === 'large' || (typeof size === 'number' && size >= 48)) return 'lg';
   return size === undefined ? undefined : 'md';
@@ -235,7 +235,7 @@ function emptyMediaSize(size: CanvasEmptyProps['imageSize']): React.ComponentPro
 
 export function Empty({ imageSize, ...props }: CanvasEmptyProps) {
   return (
-    <OpenBitFunEmpty
+    <StarMateEmpty
       {...props}
       description={props.description ?? 'No data'}
       imageSize={emptyMediaSize(imageSize)}

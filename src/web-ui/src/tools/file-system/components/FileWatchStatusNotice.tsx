@@ -1,4 +1,4 @@
-import { Button } from '@openbitfun/ui';
+import { Button } from '@starmate/ui';
 import { useTranslation } from 'react-i18next';
 import type { FileWatchStatus } from '@/infrastructure/api/service-api/tauri-commands';
 

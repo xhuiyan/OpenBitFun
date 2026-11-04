@@ -461,7 +461,7 @@ describe('startup performance contract', () => {
     expect(backgroundCommandOutputPanelSource).toContain("await import('./backgroundTerminalReplay')");
     expect(backgroundCommandOutputPanelSource).not.toMatch(/from\s+['"]@xterm\//);
     expect(backgroundCommandOutputPanelSource).not.toMatch(/import\s+\{[^}]*BackgroundTerminalReplay[^}]*\}\s+from/);
-    expect(lazyTerminalOutputSource).toContain("from '@openbitfun/flow-chat-presentation/terminal'");
+    expect(lazyTerminalOutputSource).toContain("from '@starmate/flow-chat-presentation/terminal'");
     const sharedLazyOutputSource = readSource('../../../../../packages/flow-chat-presentation/src/terminal/LazyTerminalOutputRenderer.tsx');
     expect(sharedLazyOutputSource).toContain("import('./TerminalOutputRenderer')");
   });

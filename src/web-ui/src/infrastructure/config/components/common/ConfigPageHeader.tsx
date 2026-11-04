@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader } from '@openbitfun/ui';
+import { PageHeader } from '@starmate/ui';
 import { formatStandaloneUiText } from './standaloneUiCopy';
 import './ConfigPageHeader.scss';
 

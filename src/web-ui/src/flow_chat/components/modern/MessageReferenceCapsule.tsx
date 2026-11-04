@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverflowText } from '@openbitfun/ui';
+import { OverflowText } from '@starmate/ui';
 import { messageContextIcon, messageInlineTokenIcon } from './messageReferenceIcons';
 import './MessageReferenceCapsule.scss';
 

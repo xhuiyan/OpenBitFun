@@ -2,7 +2,7 @@
  * WorkingCopyView — Git working copy: commit bar + file list + diff area (ContentCanvas mode=git).
  */
 
-import { OverflowText, Button, Empty, Icon, IconButton, SearchField, Textarea, Tooltip } from '@openbitfun/ui';
+import { OverflowText, Button, Empty, Icon, IconButton, SearchField, Textarea, Tooltip } from '@starmate/ui';
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Minus, RotateCcw, Square, FileCode2 } from 'lucide-react';
 import { useI18n } from '@/infrastructure/i18n/hooks/useI18n';

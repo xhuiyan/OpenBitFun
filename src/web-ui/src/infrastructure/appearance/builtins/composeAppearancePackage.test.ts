@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { themes } from '@openbitfun/theme-openbitfun';
+import { themes } from '@starmate/theme-openbitfun';
 import type { AppearancePackage } from '../types';
 import { APPEARANCE_THEME_TOKEN_NAMES, getBuiltinAppearanceThemeTokens } from './catalog';
 import { composeAppearancePackage } from './composeAppearancePackage';

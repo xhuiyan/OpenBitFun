@@ -1,19 +1,19 @@
 import { useMemo, useRef, useState } from 'react';
-import { Button, Select } from '@openbitfun/ui';
+import { Button, Select } from '@starmate/ui';
 import {
   FlowGroup, FileOperationToolCard, ContextLoadGroup, ExploreGroup, FlowChatRuntimeStatus, GetToolSpecToolCard, ReadFileToolCard, SkillToolCard, ThinkingBlock, ToolDuration,
   ToolCardActions, ToolCardCopyButton,
-} from '@openbitfun/ui/flow-chat';
-import { themes, themeCssVariables, type ThemeTokenName } from '@openbitfun/theme-openbitfun';
+} from '@starmate/ui/flow-chat';
+import { themes, themeCssVariables, type ThemeTokenName } from '@starmate/theme-openbitfun';
 import {
   buildExecCommandCardModel, buildExecControlCardModel, buildWriteStdinCardModel,
   ExecProcessPresentation, type ExecToolSnapshot, type PresentationClock,
-} from '@openbitfun/flow-chat-presentation/exec';
-import { LazyTerminalOutputRenderer, type TerminalOutputHost } from '@openbitfun/flow-chat-presentation/terminal';
-import { createScenarioClock, execScenarios, SCENARIO_EPOCH, type ExecScenario } from '@openbitfun/flow-chat-presentation/scenarios';
-import { useThinkingDisclosure } from '@openbitfun/flow-chat-presentation/thinking';
-import { buildExploreSummary } from '@openbitfun/flow-chat-presentation/explore';
-import { buildContextLoadSummary } from '@openbitfun/flow-chat-presentation/context-load';
+} from '@starmate/flow-chat-presentation/exec';
+import { LazyTerminalOutputRenderer, type TerminalOutputHost } from '@starmate/flow-chat-presentation/terminal';
+import { createScenarioClock, execScenarios, SCENARIO_EPOCH, type ExecScenario } from '@starmate/flow-chat-presentation/scenarios';
+import { useThinkingDisclosure } from '@starmate/flow-chat-presentation/thinking';
+import { buildExploreSummary } from '@starmate/flow-chat-presentation/explore';
+import { buildContextLoadSummary } from '@starmate/flow-chat-presentation/context-load';
 import { useI18n } from '../i18n';
 import { usePresentationFormatNumber, usePresentationTranslate } from './flowChatTranslation';
 

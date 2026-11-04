@@ -9,7 +9,7 @@ import {
   mergeTokenDocuments,
   renderCss,
   resolveTokens,
-} from "@openbitfun/token-engine";
+} from "@starmate/token-engine";
 
 const packageDirectory = fileURLToPath(new URL("../", import.meta.url));
 const sourceDirectory = path.join(packageDirectory, "src");

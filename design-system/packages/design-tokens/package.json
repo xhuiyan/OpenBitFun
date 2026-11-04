@@ -1,5 +1,5 @@
 {
-  "name": "@openbitfun/design-tokens",
+  "name": "@starmate/design-tokens",
   "version": "0.1.0",
   "description": "Framework-neutral design token contract and system scales for OpenBitFun UI packages",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "prepack": "pnpm run build"
   },
   "devDependencies": {
-    "@openbitfun/token-engine": "workspace:*"
+    "@starmate/token-engine": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

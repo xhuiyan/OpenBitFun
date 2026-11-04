@@ -1,4 +1,4 @@
-import { Button, Checkbox, FieldGroup, FieldRow, FormSection, Icon, OverflowText, StatusPill, Toolbar } from '@openbitfun/ui';
+import { Button, Checkbox, FieldGroup, FieldRow, FormSection, Icon, OverflowText, StatusPill, Toolbar } from '@starmate/ui';
 import React, { useMemo } from 'react';
 import { useI18n, type UseI18nReturn } from '@/infrastructure/i18n/hooks/useI18n';
 import type { UserSkillGroup } from '@/infrastructure/config/types';

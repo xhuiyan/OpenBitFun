@@ -1,4 +1,4 @@
-import { Icon, IconButton } from '@openbitfun/ui';
+import { Icon, IconButton } from '@starmate/ui';
 import { Download, Save, Search, Settings, RefreshCw, Plus, Play, Square, Check, Share2, CircleHelp } from 'lucide-react';
 import type { MiniAppChromeAction } from '@/infrastructure/api/service-api/MiniAppAPI';
 import { actionLabel } from '../../../../../../shared/miniapp-chrome/titlebar';

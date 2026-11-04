@@ -3,10 +3,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { installOpenBitFunCanvasRuntimeApp } from './CanvasRuntimeApp';
 
 type TestWindow = Window & {
-  OpenBitFunCanvasSDK?: Record<string, unknown>;
-  OpenBitFunCanvasSDKAdapters?: Record<string, unknown>;
-  OpenBitFunCanvasRuntime?: Record<string, any>;
-  OpenBitFunCanvasContract?: { runtimeVersion: string; sdkVersion: string };
+  StarMateCanvasSDK?: Record<string, unknown>;
+  StarMateCanvasSDKAdapters?: Record<string, unknown>;
+  StarMateCanvasRuntime?: Record<string, any>;
+  StarMateCanvasContract?: { runtimeVersion: string; sdkVersion: string };
   ReactDOM?: {
     createRoot: (element: HTMLElement) => { render: (node: unknown) => void };
   };
@@ -31,10 +31,10 @@ function installTestDom() {
     parent: { postMessage },
     setTimeout: vi.fn(),
     clearTimeout: vi.fn(),
-    OpenBitFunCanvasSDK: { Fallback: true },
-    OpenBitFunCanvasSDKAdapters: { Adapter: true },
-    OpenBitFunCanvasRuntime: { fallback: true },
-    OpenBitFunCanvasContract: { runtimeVersion: 'runtime_test', sdkVersion: 'sdk_test' },
+    StarMateCanvasSDK: { Fallback: true },
+    StarMateCanvasSDKAdapters: { Adapter: true },
+    StarMateCanvasRuntime: { fallback: true },
+    StarMateCanvasContract: { runtimeVersion: 'runtime_test', sdkVersion: 'sdk_test' },
     ReactDOM: {
       createRoot: vi.fn(() => ({ render })),
     },
@@ -56,18 +56,18 @@ describe('CanvasRuntimeApp', () => {
 
     installOpenBitFunCanvasRuntimeApp();
 
-    expect(testWindow.OpenBitFunCanvasRuntime?.fallback).toBe(true);
-    expect(testWindow.OpenBitFunCanvasRuntime?.h).toBeTypeOf('function');
-    expect(testWindow.OpenBitFunCanvasRuntime?.Fragment).toBeTruthy();
+    expect(testWindow.StarMateCanvasRuntime?.fallback).toBe(true);
+    expect(testWindow.StarMateCanvasRuntime?.h).toBeTypeOf('function');
+    expect(testWindow.StarMateCanvasRuntime?.Fragment).toBeTruthy();
   });
 
   it('merges SDK adapters on module start and posts startup event', () => {
     const { postMessage, testWindow } = installTestDom();
 
     installOpenBitFunCanvasRuntimeApp();
-    testWindow.OpenBitFunCanvasRuntime?.moduleStarted();
+    testWindow.StarMateCanvasRuntime?.moduleStarted();
 
-    expect(testWindow.OpenBitFunCanvasSDK).toMatchObject({ Fallback: true, Adapter: true });
+    expect(testWindow.StarMateCanvasSDK).toMatchObject({ Fallback: true, Adapter: true });
     expect(postMessage).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'openbitfun-canvas-module-started',
@@ -84,7 +84,7 @@ describe('CanvasRuntimeApp', () => {
     }
 
     installOpenBitFunCanvasRuntimeApp();
-    testWindow.OpenBitFunCanvasRuntime?.mount(Canvas);
+    testWindow.StarMateCanvasRuntime?.mount(Canvas);
 
     expect(testWindow.ReactDOM?.createRoot).toHaveBeenCalled();
     expect(render).toHaveBeenCalled();

@@ -38,7 +38,7 @@ vi.mock('@/infrastructure/i18n/hooks/useI18n', () => ({
 }));
 vi.mock('@/shared/notification-system', () => ({ useNotification: () => ({ error: mocks.error, success: mocks.success }) }));
 vi.mock('@/shared/utils/logger', () => ({ createLogger: () => ({ error: vi.fn(), warn: vi.fn(), debug: vi.fn() }) }));
-vi.mock('@openbitfun/ui/brand', () => ({ useSubagentAvatarMotion: () => undefined }));
+vi.mock('@starmate/ui/brand', () => ({ useSubagentAvatarMotion: () => undefined }));
 vi.mock('./OverviewAccountButton', () => ({ OverviewAccountButton: () => null }));
 vi.mock('@/infrastructure/config/components/UsageActivityGrid', () => ({ UsageActivityGrid: () => null }));
 vi.mock('@/infrastructure/api/service-api/RemoteConnectAPI', async original => ({

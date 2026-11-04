@@ -1,5 +1,5 @@
 import { useEffect, useId, type ReactNode } from 'react';
-import { Button, OverflowText, SegmentedControl } from '@openbitfun/ui';
+import { Button, OverflowText, SegmentedControl } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import { usePeerDeviceModeOptional } from '@/infrastructure/peer-device/peerDeviceContextState';
 import { DeviceSystemGlyph } from '@/app/components/NavPanel/components/DeviceSystemGlyph';

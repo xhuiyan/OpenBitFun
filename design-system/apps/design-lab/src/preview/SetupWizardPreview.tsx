@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from "react";
-import { Button, Field, Input, SetupWizard, Switch } from "@openbitfun/ui";
+import { Button, Field, Input, SetupWizard, Switch } from "@starmate/ui";
 import { useI18n } from "../i18n";
 import "./SetupWizardPreview.css";
 

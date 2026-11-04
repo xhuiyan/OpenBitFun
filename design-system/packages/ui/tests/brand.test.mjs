@@ -9,16 +9,16 @@ import * as ui from "../dist/index.js";
 import { componentRegistry } from "../dist/registry.js";
 
 test("brand exports expose the real artwork while preserving the existing voice entry", () => {
-  for (const name of ["OpenBitFunSolidMark", "OpenBitFunAppIcon", "OpenBitFunMark", "OpenBitFunBrandMotion", "SubagentHatch", "VoiceParticleLogo"]) {
+  for (const name of ["StarMateSolidMark", "StarMateAppIcon", "StarMateMark", "StarMateBrandMotion", "SubagentHatch", "VoiceParticleLogo"]) {
     assert.equal(typeof brand[name], "function");
     assert.equal(componentRegistry.find(component => component.name === name)?.category, "brand");
   }
   assert.equal(ui.VoiceParticleLogo, brand.VoiceParticleLogo);
-  assert.equal(ui.OpenBitFunMark, undefined, "new brand APIs belong to the opt-in entry");
+  assert.equal(ui.StarMateMark, undefined, "new brand APIs belong to the opt-in entry");
 });
 
 test("brand marks are decorative by default and expose supplied accessible names", () => {
-  for (const name of ["OpenBitFunMark", "OpenBitFunBrandMotion"]) {
+  for (const name of ["StarMateMark", "StarMateBrandMotion"]) {
     const decorative = renderToStaticMarkup(createElement(brand[name], { active: false }));
     assert.match(decorative, /aria-hidden="true"/);
     assert.doesNotMatch(decorative, /role="img"/);
@@ -27,13 +27,13 @@ test("brand marks are decorative by default and expose supplied accessible names
     assert.match(named, /aria-label="OpenBitFun"/);
     assert.doesNotMatch(named, /aria-hidden="true"/);
   }
-  for (const name of ["OpenBitFunSolidMark", "OpenBitFunAppIcon"]) {
+  for (const name of ["StarMateSolidMark", "StarMateAppIcon"]) {
     assert.match(renderToStaticMarkup(createElement(brand[name])), /alt=""/);
     const named = renderToStaticMarkup(createElement(brand[name], { label: "OpenBitFun", size: 16 }));
     assert.match(named, /alt="OpenBitFun"/);
     assert.match(named, /width:16px/);
     assert.match(named, /src="data:image\/png;base64,/);
-    if (name === "OpenBitFunAppIcon") {
+    if (name === "StarMateAppIcon") {
       assert.match(named, /srcSet=/);
       assert.match(named, /sizes="16px"/);
     }
@@ -42,9 +42,9 @@ test("brand marks are decorative by default and expose supplied accessible names
 
 test("published artwork embeds the same bytes as the application icon generator", async () => {
   const source = new URL("../src/brand/assets/", import.meta.url);
-  const solid = renderToStaticMarkup(createElement(brand.OpenBitFunSolidMark));
+  const solid = renderToStaticMarkup(createElement(brand.StarMateSolidMark));
   assert.ok(solid.includes((await readFile(new URL("openbitfun-app-mark.png", source))).toString("base64")));
-  const app = renderToStaticMarkup(createElement(brand.OpenBitFunAppIcon));
+  const app = renderToStaticMarkup(createElement(brand.StarMateAppIcon));
   for (const size of [16, 32, 128, 256, 512]) {
     assert.ok(app.includes((await readFile(new URL(`openbitfun-app-icon-${size}.png`, source))).toString("base64")));
   }

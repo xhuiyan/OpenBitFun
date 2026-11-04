@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LAYOUT_CONFIG, clampSplitRatio } from '../types';
 import './SplitHandle.scss';
-import { Tooltip } from '@openbitfun/ui';
+import { Tooltip } from '@starmate/ui';
 
 export interface SplitHandleProps {
   /** Split direction */

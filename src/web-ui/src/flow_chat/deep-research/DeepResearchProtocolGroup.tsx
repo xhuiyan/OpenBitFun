@@ -1,8 +1,8 @@
 import React from 'react';
-import { Icon } from '@openbitfun/ui';
+import { Icon } from '@starmate/ui';
 import { BookOpenCheck, Compass, Gavel, ListTree, Scale, SearchCheck, ShieldCheck, Swords, UsersRound } from 'lucide-react';
-import { StatusPill, type StatusPillTone } from '@openbitfun/ui';
-import { AmbientToolCard, AmbientToolCardHeader } from '@openbitfun/ui/flow-chat';
+import { StatusPill, type StatusPillTone } from '@starmate/ui';
+import { AmbientToolCard, AmbientToolCardHeader } from '@starmate/ui/flow-chat';
 import { useI18n } from '@/infrastructure/i18n';
 import type {
   DeepResearchPhaseId,

@@ -1,6 +1,6 @@
 import type React from 'react';
 import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Button, Spinner, Stack, StatusPill, Tooltip } from '@openbitfun/ui';
+import { Button, Spinner, Stack, StatusPill, Tooltip } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import type { Session } from '../types/flow-chat';
 import { useTrajectory } from './useTrajectory';

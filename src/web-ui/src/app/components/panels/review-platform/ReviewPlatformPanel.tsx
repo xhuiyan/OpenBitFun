@@ -40,7 +40,7 @@ import {
   DialogHeader,
   DialogHeading,
   DialogTitle,
-} from '@openbitfun/ui';
+} from '@starmate/ui';
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GitPullRequest, GitPullRequestClosed, KeyRound, MessageSquareText, MoreHorizontal } from 'lucide-react';
 import { MarkdownRenderer } from '@/infrastructure/markdown';

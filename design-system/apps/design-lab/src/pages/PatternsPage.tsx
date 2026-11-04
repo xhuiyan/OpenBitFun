@@ -35,7 +35,7 @@ import {
   type DensityMode,
   type IconName,
   type TokenOverrides,
-} from "@openbitfun/ui";
+} from "@starmate/ui";
 import { useI18n, type MessageKey } from "../i18n";
 import { FileActivityPattern, IndicatorsPattern, FormTypographyPattern, NestedMenuPattern, ProviderConfigurationPattern, SceneToolbarPattern, WorkspaceConfigurationPattern } from "./ReferencePatterns";
 

@@ -70,7 +70,7 @@ const LEGACY_APPLICATION_ASSETS = [
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/layered_image.json',
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/startIcon.png',
   'src/apps/mobile/ios/OpenBitFun/Resources.xcassets/AppIcon.appiconset/openbitfun_icon.png',
-  'src/apps/mobile/ios/OpenBitFun/Resources.xcassets/OpenBitFunLogo.imageset',
+  'src/apps/mobile/ios/OpenBitFun/Resources.xcassets/StarMateLogo.imageset',
   'src/apps/relay-server/static/assets/Logo-ICON-BOaKcXgO.png',
 ];
 
@@ -365,7 +365,7 @@ async function generateBrandAssets() {
     await sharp(applicationIconLarge).flatten({ background: '#000000' }).png().toBuffer(),
   );
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'OpenBitFunMark.imageset', 'openbitfun-mark-light.png'),
+    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'StarMateMark.imageset', 'openbitfun-mark-light.png'),
     lightMark,
   );
 

@@ -16,7 +16,7 @@ vi.mock('@/infrastructure/i18n', () => ({
   } }),
   i18nService: { formatNumber: (value: number, options?: { style?: string }) => options?.style === 'percent' ? `${Math.round(value * 1000) / 10}%` : String(value), formatDate: (value: Date) => value.toISOString() },
 }));
-vi.mock('@openbitfun/ui', () => ({
+vi.mock('@starmate/ui', () => ({
   Card: ({ children }: React.PropsWithChildren) => <div data-openbitfun-component="card">{children}</div>,
   Button: ({ children, onClick, disabled }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button onClick={onClick} disabled={disabled}>{children}</button>,
   IconButton: ({ icon, loading: _loading, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { icon: React.ReactNode; loading?: boolean }) => <button {...props}>{icon}</button>,

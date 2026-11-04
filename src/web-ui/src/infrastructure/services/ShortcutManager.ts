@@ -1,5 +1,5 @@
 
-import { hasOverlayLayers } from '@openbitfun/ui';
+import { hasOverlayLayers } from '@starmate/ui';
 import type { ShortcutConfig, ShortcutScope } from '@/shared/types/shortcut';
 import { compareShortcutScope } from '@/shared/constants/shortcuts';
 import { createLogger } from '@/shared/utils/logger';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, IconButton } from '@openbitfun/ui';
+import { Icon, IconButton } from '@starmate/ui';
 
 import { useI18n } from '@/infrastructure/i18n';
 import { MiniAppActionTooltip } from '../components/MiniAppActionTooltip';

@@ -8,7 +8,7 @@ import { activateSurface } from '@/infrastructure/peer-device/deviceSurface';
 const mocks = vi.hoisted(() => ({ create: vi.fn(), release: vi.fn() }));
 vi.mock('@/infrastructure/api/htmlPreviewApi', () => ({ htmlPreviewApi: mocks }));
 vi.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key }) }));
-vi.mock('@openbitfun/ui', () => ({ LoadingState: ({ children }: React.PropsWithChildren) => <span>{children}</span> }));
+vi.mock('@starmate/ui', () => ({ LoadingState: ({ children }: React.PropsWithChildren) => <span>{children}</span> }));
 vi.mock('./BrowserPanel', () => ({ default: ({ initialUrl }: { initialUrl: string }) => <div data-preview-url={initialUrl} /> }));
 
 let root: Root;

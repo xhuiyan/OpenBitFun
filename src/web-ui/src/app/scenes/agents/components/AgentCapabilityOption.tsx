@@ -1,4 +1,4 @@
-import { Checkbox, OverflowText } from '@openbitfun/ui';
+import { Checkbox, OverflowText } from '@starmate/ui';
 import { forwardRef, type HTMLAttributes } from 'react';
 import './AgentCapabilityOption.scss';
 

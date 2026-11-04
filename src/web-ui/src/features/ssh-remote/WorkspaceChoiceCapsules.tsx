@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Button, Capsule, Icon, IconButton, Tooltip } from '@openbitfun/ui';
+import { Button, Capsule, Icon, IconButton, Tooltip } from '@starmate/ui';
 import { useI18n } from '@/infrastructure/i18n';
 import './WorkspaceChoiceCapsules.scss';
 

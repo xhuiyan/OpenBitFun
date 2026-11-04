@@ -14,7 +14,7 @@ import {
 import ChatToolDetails from './ChatToolDetails';
 import { backgroundDeliveryFromMetadata, readBackgroundDelivery, suppressesBackgroundPresentation } from '../../../shared/background-delivery';
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { MobileButton, MobileCard, MobileDisclosure, MobileMessage } from '@openbitfun/ui/mobile';
+import { MobileButton, MobileCard, MobileDisclosure, MobileMessage } from '@starmate/ui/mobile';
 import { useI18n } from '../i18n';
 import { messageTimestamp } from '../i18n/messageTime';
 import type { ActiveTurnSnapshot, ChatMessage, ChatMessageItem, RemoteToolStatus } from '../services/RemoteSessionManager';

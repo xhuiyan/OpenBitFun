@@ -16,7 +16,7 @@ import { AgentControlToolCard } from './AgentControlToolCard';
 import { AgentInteractionToolCard } from './AgentInteractionToolCard';
 import { OpenBitFunControlToolCard } from './OpenBitFunControlToolCard';
 import { DefaultToolCard } from './DefaultToolCard';
-import { compatibilityToolPresentationOwners, genericToolNames } from '@openbitfun/flow-chat-presentation/registry';
+import { compatibilityToolPresentationOwners, genericToolNames } from '@starmate/flow-chat-presentation/registry';
 import { GenerateImageToolCard } from './GenerateImageToolCard';
 
 // These cards remain available for rendering historical or explicitly

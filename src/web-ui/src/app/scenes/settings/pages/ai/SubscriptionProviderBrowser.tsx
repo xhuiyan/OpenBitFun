@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from 'react';
-import { SegmentedControl } from '@openbitfun/ui';
+import { SegmentedControl } from '@starmate/ui';
 import type { SubscriptionProvider } from '@/infrastructure/config/types';
 import { useI18n } from '@/infrastructure/i18n';
 import styles from './SubscriptionProviderBrowser.module.scss';

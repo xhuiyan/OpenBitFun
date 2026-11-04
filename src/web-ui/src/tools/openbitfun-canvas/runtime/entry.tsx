@@ -1,4 +1,4 @@
-import '@openbitfun/design-tokens/tokens.css';
+import '@starmate/design-tokens/tokens.css';
 import './styles/canvas-runtime.scss';
 import * as sdkAdapters from './sdk';
 import { installOpenBitFunCanvasRuntimeApp } from './CanvasRuntimeApp';
@@ -10,8 +10,8 @@ import {
 
 declare global {
   interface Window {
-    OpenBitFunCanvasSDKAdapters?: typeof sdkAdapters;
-    OpenBitFunCanvasContract?: {
+    StarMateCanvasSDKAdapters?: typeof sdkAdapters;
+    StarMateCanvasContract?: {
       runtimeVersion: string;
       sdkVersion: string;
     };
@@ -23,9 +23,9 @@ if (missingExports.length > 0) {
   throw new Error(`Canvas SDK runtime contract is incomplete: ${missingExports.join(', ')}`);
 }
 
-window.OpenBitFunCanvasContract = {
+window.StarMateCanvasContract = {
   runtimeVersion: CANVAS_RUNTIME_VERSION,
   sdkVersion: CANVAS_SDK_VERSION,
 };
-window.OpenBitFunCanvasSDKAdapters = sdkAdapters;
+window.StarMateCanvasSDKAdapters = sdkAdapters;
 installOpenBitFunCanvasRuntimeApp();

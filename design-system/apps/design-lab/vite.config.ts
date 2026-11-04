@@ -28,27 +28,27 @@ export default defineConfig(({ command }) => ({
       command === "serve"
         ? [
             {
-              find: /^@openbitfun\/ui\/brand$/,
+              find: /^@starmate\/ui\/brand$/,
               replacement: path.join(uiSourceDirectory, "brand.ts"),
             },
             {
-              find: /^@openbitfun\/ui\/flow-chat$/,
+              find: /^@starmate\/ui\/flow-chat$/,
               replacement: path.join(uiSourceDirectory, "flow-chat.ts"),
             },
             {
-              find: /^@openbitfun\/ui\/mobile$/,
+              find: /^@starmate\/ui\/mobile$/,
               replacement: path.join(uiSourceDirectory, "mobile.ts"),
             },
             {
-              find: /^@openbitfun\/ui\/registry$/,
+              find: /^@starmate\/ui\/registry$/,
               replacement: path.join(uiSourceDirectory, "registry.ts"),
             },
             {
-              find: /^@openbitfun\/ui\/styles\.css$/,
+              find: /^@starmate\/ui\/styles\.css$/,
               replacement: path.join(uiSourceDirectory, "styles/layers.css"),
             },
             {
-              find: /^@openbitfun\/ui$/,
+              find: /^@starmate\/ui$/,
               replacement: path.join(uiSourceDirectory, "index.ts"),
             },
           ]
@@ -56,9 +56,9 @@ export default defineConfig(({ command }) => ({
   },
   optimizeDeps: {
     exclude: [
-      "@openbitfun/design-tokens",
-      "@openbitfun/theme-openbitfun",
-      "@openbitfun/ui",
+      "@starmate/design-tokens",
+      "@starmate/theme-openbitfun",
+      "@starmate/ui",
     ],
   },
   server: {

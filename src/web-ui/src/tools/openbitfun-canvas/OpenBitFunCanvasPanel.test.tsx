@@ -6,7 +6,7 @@ import React from 'react';
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { OpenBitFunCanvasPanel } from './OpenBitFunCanvasPanel';
+import { StarMateCanvasPanel } from './OpenBitFunCanvasPanel';
 import { canvasAppearanceAdapter } from '@/infrastructure/appearance/adapters/CanvasAppearanceAdapter';
 
 const canvasApiMock = vi.hoisted(() => ({
@@ -76,7 +76,7 @@ vi.mock('@/tools/editor/components/CodeEditor', () => ({
   default: () => null,
 }));
 
-describe('OpenBitFunCanvasPanel message boundary', () => {
+describe('StarMateCanvasPanel message boundary', () => {
   let container: HTMLDivElement;
   let root: Root;
 
@@ -115,7 +115,7 @@ describe('OpenBitFunCanvasPanel message boundary', () => {
   it('renders Canvas HTML through an opaque-origin srcdoc iframe', async () => {
     await act(async () => {
       root.render(
-        <OpenBitFunCanvasPanel
+        <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
           artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
           html="<!doctype html><html><body>Canvas</body></html>"
@@ -137,7 +137,7 @@ describe('OpenBitFunCanvasPanel message boundary', () => {
   it('ignores Canvas host actions from non-iframe message sources', async () => {
     await act(async () => {
       root.render(
-        <OpenBitFunCanvasPanel
+        <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
           artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
           html="<!doctype html><html><body>Canvas</body></html>"
@@ -174,10 +174,10 @@ describe('OpenBitFunCanvasPanel message boundary', () => {
 
     await act(async () => {
       root.render(
-        <OpenBitFunCanvasPanel
+        <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
           artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
-          html={`<!doctype html><html><body><script data-revision="rev_1">window.OpenBitFunCanvasRuntime.mount(Canvas);</script></body></html>`}
+          html={`<!doctype html><html><body><script data-revision="rev_1">window.StarMateCanvasRuntime.mount(Canvas);</script></body></html>`}
           workspacePath="/repo"
         />,
       );
