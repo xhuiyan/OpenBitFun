@@ -22,58 +22,58 @@
 
   .root,
   .popover {
-    --_combobox-height: var(--openbitfun-control-height-md);
+    --_combobox-height: var(--starmate-control-height-md);
   }
 
   .root {
     --_combobox-trailing-width: calc(
-      var(--openbitfun-control-select-trailing-inset)
-      + var(--openbitfun-control-select-indicator-size)
-      + var(--openbitfun-control-select-content-gap)
+      var(--starmate-control-select-trailing-inset)
+      + var(--starmate-control-select-indicator-size)
+      + var(--starmate-control-select-content-gap)
     );
     position: relative;
     display: flex;
     inline-size: 100%;
     min-inline-size: 0;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
-    color: var(--openbitfun-color-content-primary);
+    gap: var(--starmate-space-1);
+    color: var(--starmate-color-content-primary);
   }
 
   .root[data-show-indicator="false"] {
-    --_combobox-trailing-width: var(--openbitfun-control-select-padding-inline);
+    --_combobox-trailing-width: var(--starmate-control-select-padding-inline);
   }
 
   .root[data-show-indicator="false"][data-variant="pill"] {
-    --_combobox-trailing-width: var(--openbitfun-control-status-pill-padding-inline);
+    --_combobox-trailing-width: var(--starmate-control-status-pill-padding-inline);
   }
 
   .root[data-size="sm"],
   .popover[data-size="sm"] {
-    --_combobox-height: var(--openbitfun-control-height-sm);
+    --_combobox-height: var(--starmate-control-height-sm);
   }
 
   .root[data-size="lg"],
   .popover[data-size="lg"] {
-    --_combobox-height: var(--openbitfun-control-height-lg);
+    --_combobox-height: var(--starmate-control-height-lg);
   }
 
   .visibleLabel {
-    color: var(--openbitfun-color-content-secondary);
-    font-family: var(--openbitfun-type-label-md-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-md-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+    color: var(--starmate-color-content-secondary);
+    font-family: var(--starmate-type-label-md-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-md-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
   }
 
   .error {
-    color: var(--openbitfun-color-status-danger-content);
-    font-family: var(--openbitfun-type-support-font-family);
-    font-size: var(--openbitfun-type-support-font-size);
-    font-weight: var(--openbitfun-type-support-font-weight);
-    line-height: var(--openbitfun-type-support-line-height);
-    letter-spacing: var(--openbitfun-type-support-letter-spacing);
+    color: var(--starmate-color-status-danger-content);
+    font-family: var(--starmate-type-support-font-family);
+    font-size: var(--starmate-type-support-font-size);
+    font-weight: var(--starmate-type-support-font-weight);
+    line-height: var(--starmate-type-support-line-height);
+    letter-spacing: var(--starmate-type-support-letter-spacing);
   }
 
   .control {
@@ -95,39 +95,39 @@
     min-block-size: 0;
     margin: 0;
     padding-block: 0;
-    padding-inline-start: var(--openbitfun-control-select-padding-inline);
+    padding-inline-start: var(--starmate-control-select-padding-inline);
     padding-inline-end: var(--_combobox-trailing-width);
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-field-border);
-    border-radius: var(--openbitfun-control-select-radius);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-field-border);
+    border-radius: var(--starmate-control-select-radius);
     outline: 0;
     color: inherit;
-    background: var(--openbitfun-color-field-background);
-    font-family: var(--openbitfun-type-label-md-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-md-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+    background: var(--starmate-color-field-background);
+    font-family: var(--starmate-type-label-md-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-md-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
     text-align: start;
     cursor: pointer;
     transition:
-      background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      box-shadow var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .root[data-variant="pill"] .trigger {
-    padding-inline-start: var(--openbitfun-control-status-pill-padding-inline);
-    border-radius: var(--openbitfun-control-status-pill-radius);
-    background: var(--openbitfun-color-action-neutral-surface);
-    font-family: var(--openbitfun-type-meta-font-family);
-    font-size: var(--openbitfun-type-meta-font-size);
-    font-weight: var(--openbitfun-type-meta-font-weight);
-    line-height: var(--openbitfun-type-status-pill-line-height);
-    letter-spacing: var(--openbitfun-type-meta-letter-spacing);
+    padding-inline-start: var(--starmate-control-status-pill-padding-inline);
+    border-radius: var(--starmate-control-status-pill-radius);
+    background: var(--starmate-color-action-neutral-surface);
+    font-family: var(--starmate-type-meta-font-family);
+    font-size: var(--starmate-type-meta-font-size);
+    font-weight: var(--starmate-type-meta-font-weight);
+    line-height: var(--starmate-type-status-pill-line-height);
+    letter-spacing: var(--starmate-type-meta-letter-spacing);
   }
 
   .root:has(.clear) .trigger {
-    padding-inline-end: calc(var(--_combobox-trailing-width) + var(--openbitfun-control-height-sm));
+    padding-inline-end: calc(var(--_combobox-trailing-width) + var(--starmate-control-height-sm));
   }
 
   .root[data-bordered="false"] .trigger {
@@ -145,18 +145,18 @@
   .root[data-hit-area="expanded"]:not([data-open="true"]) .trigger::after {
     content: "";
     position: absolute;
-    inset-block: calc(-1 * var(--openbitfun-space-1));
-    inset-inline: calc(-1 * var(--openbitfun-space-2));
+    inset-block: calc(-1 * var(--starmate-space-1));
+    inset-inline: calc(-1 * var(--starmate-space-2));
     border-radius: inherit;
   }
 
   .trigger:not(:disabled):hover {
-    border-color: var(--openbitfun-color-field-border-hover);
-    background: var(--openbitfun-color-field-background-hover);
+    border-color: var(--starmate-color-field-border-hover);
+    background: var(--starmate-color-field-background-hover);
   }
 
   .root[data-variant="pill"] .trigger:not(:disabled):hover {
-    background: var(--openbitfun-color-action-neutral-surface-hover);
+    background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .root[data-field-surface="ambient"] .trigger,
@@ -165,8 +165,8 @@
   }
 
   .trigger:focus-visible {
-    border-color: var(--openbitfun-color-field-border-focus);
-    box-shadow: 0 0 0 var(--openbitfun-focus-width) var(--openbitfun-color-focus-ring);
+    border-color: var(--starmate-color-field-border-focus);
+    box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring);
   }
 
   .root[data-open="true"] .control {
@@ -175,12 +175,12 @@
   }
 
   .root[data-invalid="true"] .trigger {
-    border-color: var(--openbitfun-color-status-danger-border);
+    border-color: var(--starmate-color-status-danger-border);
   }
 
   .root[data-disabled="true"] {
-    color: var(--openbitfun-color-content-disabled);
-    opacity: var(--openbitfun-opacity-disabled);
+    color: var(--starmate-color-content-disabled);
+    opacity: var(--starmate-opacity-disabled);
   }
 
   .trigger:disabled {
@@ -198,15 +198,15 @@
   }
 
   .singleValue {
-    gap: var(--openbitfun-control-select-content-gap);
+    gap: var(--starmate-control-select-content-gap);
   }
 
   .root[data-has-value-prefix="true"] .value {
-    gap: var(--openbitfun-control-select-content-gap);
+    gap: var(--starmate-control-select-content-gap);
   }
 
   .root[data-has-value-prefix="true"][data-variant="pill"] .value {
-    gap: var(--openbitfun-control-status-pill-gap);
+    gap: var(--starmate-control-status-pill-gap);
   }
 
   .root[data-has-value-prefix="true"] .singleValue {
@@ -220,9 +220,9 @@
 
   .valueLeading {
     display: inline-flex;
-    flex: 0 0 var(--openbitfun-control-select-indicator-size);
-    inline-size: var(--openbitfun-control-select-indicator-size);
-    block-size: var(--openbitfun-control-select-indicator-size);
+    flex: 0 0 var(--starmate-control-select-indicator-size);
+    inline-size: var(--starmate-control-select-indicator-size);
+    block-size: var(--starmate-control-select-indicator-size);
   }
 
   .valueLeading > :where(svg, img),
@@ -238,37 +238,37 @@
   }
 
   .placeholder {
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
   }
 
   .tags {
-    gap: var(--openbitfun-space-1);
-    font-family: var(--openbitfun-type-label-md-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-md-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+    gap: var(--starmate-space-1);
+    font-family: var(--starmate-type-label-md-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-md-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
   }
 
   .control[data-tags="true"] .tags {
     z-index: 2;
     grid-area: 1 / 1;
     align-self: center;
-    margin-inline-start: var(--openbitfun-control-select-padding-inline);
+    margin-inline-start: var(--starmate-control-select-padding-inline);
     margin-inline-end: calc(
-      var(--openbitfun-control-select-trailing-inset)
-      + var(--openbitfun-control-select-indicator-size)
-      + var(--openbitfun-control-select-content-gap)
+      var(--starmate-control-select-trailing-inset)
+      + var(--starmate-control-select-indicator-size)
+      + var(--starmate-control-select-content-gap)
     );
     pointer-events: none;
   }
 
   .root:has(.clear) .control[data-tags="true"] .tags {
     margin-inline-end: calc(
-      var(--openbitfun-control-select-trailing-inset)
-      + var(--openbitfun-control-select-indicator-size)
-      + var(--openbitfun-control-select-content-gap)
-      + var(--openbitfun-control-height-sm)
+      var(--starmate-control-select-trailing-inset)
+      + var(--starmate-control-select-indicator-size)
+      + var(--starmate-control-select-content-gap)
+      + var(--starmate-control-height-sm)
     );
   }
 
@@ -281,13 +281,13 @@
     overflow: hidden;
     align-items: center;
     max-inline-size: 10rem;
-    block-size: var(--openbitfun-control-button-xs-height);
-    gap: var(--openbitfun-space-1);
-    padding-inline: var(--openbitfun-space-2);
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-pill);
-    color: var(--openbitfun-color-content-primary);
-    background: var(--openbitfun-color-surface-tertiary);
+    block-size: var(--starmate-control-button-xs-height);
+    gap: var(--starmate-space-1);
+    padding-inline: var(--starmate-space-2);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-pill);
+    color: var(--starmate-color-content-primary);
+    background: var(--starmate-color-surface-tertiary);
     pointer-events: auto;
     white-space: nowrap;
   }
@@ -312,12 +312,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: var(--openbitfun-control-select-indicator-size);
-    block-size: var(--openbitfun-control-select-indicator-size);
-    margin-inline-end: var(--openbitfun-control-select-trailing-inset);
-    color: var(--openbitfun-color-content-muted);
+    inline-size: var(--starmate-control-select-indicator-size);
+    block-size: var(--starmate-control-select-indicator-size);
+    margin-inline-end: var(--starmate-control-select-trailing-inset);
+    color: var(--starmate-color-content-muted);
     pointer-events: none;
-    transition: transform var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .indicator > svg,
@@ -332,20 +332,20 @@
 
   .popover {
     position: fixed;
-    z-index: var(--openbitfun-layer-popover);
+    z-index: var(--starmate-layer-popover);
     display: flex;
     min-inline-size: 0;
-    max-inline-size: calc(100vw - var(--openbitfun-space-4));
+    max-inline-size: calc(100vw - var(--starmate-space-4));
     min-block-size: 0;
     flex-direction: column;
     overflow: hidden;
     padding: 0;
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-overlay-menu-surface-radius);
-    color: var(--openbitfun-color-action-neutral-content);
-    background: var(--openbitfun-color-surface-panel);
-    box-shadow: var(--openbitfun-shadow-menu);
-    animation: openbitfun-combobox-in var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-enter);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-overlay-menu-surface-radius);
+    color: var(--starmate-color-action-neutral-content);
+    background: var(--starmate-color-surface-panel);
+    box-shadow: var(--starmate-shadow-menu);
+    animation: openbitfun-combobox-in var(--starmate-motion-duration-fast) var(--starmate-motion-easing-enter);
   }
 
   .popover[data-placement="top"] {
@@ -357,32 +357,32 @@
   }
 
   .popover:focus-within {
-    border-color: var(--openbitfun-color-border-default);
+    border-color: var(--starmate-color-border-default);
   }
 
   .popover[data-invalid="true"] {
-    border-color: var(--openbitfun-color-status-danger-border);
+    border-color: var(--starmate-color-status-danger-border);
   }
 
   .search {
     display: flex;
     flex: 0 0 calc(
       var(--_combobox-height)
-      - var(--openbitfun-border-width-default)
-      - var(--openbitfun-border-width-default)
+      - var(--starmate-border-width-default)
+      - var(--starmate-border-width-default)
     );
     block-size: calc(
       var(--_combobox-height)
-      - var(--openbitfun-border-width-default)
-      - var(--openbitfun-border-width-default)
+      - var(--starmate-border-width-default)
+      - var(--starmate-border-width-default)
     );
     align-items: center;
     min-inline-size: 0;
-    gap: var(--openbitfun-control-select-content-gap);
-    padding-inline-start: var(--openbitfun-control-select-padding-inline);
+    gap: var(--starmate-control-select-content-gap);
+    padding-inline-start: var(--starmate-control-select-padding-inline);
     padding-inline-end: calc(
-      var(--openbitfun-control-select-trailing-inset)
-      - (var(--openbitfun-control-icon-button-xs-size) - var(--openbitfun-control-select-indicator-size)) / 2
+      var(--starmate-control-select-trailing-inset)
+      - (var(--starmate-control-icon-button-xs-size) - var(--starmate-control-select-indicator-size)) / 2
     );
   }
 
@@ -398,9 +398,9 @@
   }
 
   .divider {
-    flex: 0 0 var(--openbitfun-border-width-default);
-    block-size: var(--openbitfun-border-width-default);
-    background: var(--openbitfun-color-border-subtle);
+    flex: 0 0 var(--starmate-border-width-default);
+    block-size: var(--starmate-border-width-default);
+    background: var(--starmate-color-border-subtle);
   }
 
   .options {
@@ -409,7 +409,7 @@
     overflow: hidden;
     min-inline-size: 0;
     min-block-size: 0;
-    padding: var(--openbitfun-overlay-menu-surface-padding);
+    padding: var(--starmate-overlay-menu-surface-padding);
   }
 
   .listbox {
@@ -419,24 +419,24 @@
   }
 
   .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="label"] {
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
+    font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
   .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
-    color: var(--openbitfun-color-control-highlight-background);
+    color: var(--starmate-color-control-highlight-background);
   }
 
   .message {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .spinner {
-    inline-size: var(--openbitfun-overlay-menu-item-icon-size);
-    block-size: var(--openbitfun-overlay-menu-item-icon-size);
-    animation: openbitfun-combobox-spin var(--openbitfun-motion-duration-loop) linear infinite;
+    inline-size: var(--starmate-overlay-menu-item-icon-size);
+    block-size: var(--starmate-overlay-menu-item-icon-size);
+    animation: openbitfun-combobox-spin var(--starmate-motion-duration-loop) linear infinite;
   }
 
   @keyframes openbitfun-combobox-spin {
@@ -468,7 +468,7 @@
     .trigger:focus-visible,
     .popover:focus-within {
       border-color: Highlight;
-      box-shadow: 0 0 0 var(--openbitfun-focus-width) Highlight;
+      box-shadow: 0 0 0 var(--starmate-focus-width) Highlight;
     }
 
     .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
@@ -483,10 +483,10 @@
 
   /* Filled fields keep standard borders over the grouped-field background. */
   .root[data-field-surface="filled"] .trigger {
-    background: var(--openbitfun-color-field-group-background);
+    background: var(--starmate-color-field-group-background);
   }
 
   .root[data-field-surface="filled"] .trigger:hover:not(:disabled) {
-    background: var(--openbitfun-color-field-background-hover);
+    background: var(--starmate-color-field-background-hover);
   }
 }

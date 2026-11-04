@@ -622,7 +622,12 @@ function createAuditContent(content, relativePath) {
   const withoutComments = stripCommentsForAudit(content, {
     stripLineComments: !relativePath.endsWith('.css'),
   });
-  return withoutComments.replace(/&#(?:x[0-9a-f]+|\d+);/gi, match => ' '.repeat(match.length));
+  // StarMate prefix compatibility: generated theme CSS aliases every
+  // --starmate-* token to its canonical --openbitfun-* declaration, so the
+  // audit resolves new-prefix usage against the same token contract.
+  return withoutComments
+    .replace(/&#(?:x[0-9a-f]+|\d+);/gi, match => ' '.repeat(match.length))
+    .replace(/--starmate-/g, '--openbitfun-');
 }
 
 function parseColor(color) {

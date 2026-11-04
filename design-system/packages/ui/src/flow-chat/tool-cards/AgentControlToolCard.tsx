@@ -39,7 +39,7 @@ export interface AgentControlToolCardProps
 export function AgentControlToolCard({
   agentName,
   action,
-  accentColor = 'var(--openbitfun-color-content-primary)',
+  accentColor = 'var(--starmate-color-content-primary)',
   avatar,
   className,
   isFailed = false,

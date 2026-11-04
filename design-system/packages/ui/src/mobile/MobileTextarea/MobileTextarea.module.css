@@ -1,9 +1,9 @@
 @layer openbitfun.components {
-  .root { display: flex; box-sizing: border-box; inline-size: 100%; min-block-size: 88px; align-items: flex-start; gap: var(--openbitfun-space-2); padding: var(--openbitfun-space-3) var(--openbitfun-space-4); border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-field-border); border-radius: var(--openbitfun-radius-xl); color: var(--openbitfun-color-content-primary); background: var(--openbitfun-color-field-background); box-shadow: var(--openbitfun-shadow-xs); }
-  .root:focus-within { border-color: var(--openbitfun-color-field-border-focus); box-shadow: 0 0 0 var(--openbitfun-focus-width) var(--openbitfun-color-focus-ring); }
-  .root[data-invalid="true"] { border-color: var(--openbitfun-color-status-danger-border); }
-  .root[data-disabled="true"] { color: var(--openbitfun-color-content-disabled); }
-  .input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: 62px; resize: none; margin: 0; padding: 0; border: 0; outline: 0; color: inherit; background: transparent; caret-color: var(--openbitfun-color-accent-default); font: inherit; font-size: var(--openbitfun-type-body-md-font-size); line-height: var(--openbitfun-type-body-md-line-height); }
-  .input::placeholder { color: var(--openbitfun-color-content-muted); opacity: 1; }
+  .root { display: flex; box-sizing: border-box; inline-size: 100%; min-block-size: 88px; align-items: flex-start; gap: var(--starmate-space-2); padding: var(--starmate-space-3) var(--starmate-space-4); border: var(--starmate-border-width-default) solid var(--starmate-color-field-border); border-radius: var(--starmate-radius-xl); color: var(--starmate-color-content-primary); background: var(--starmate-color-field-background); box-shadow: var(--starmate-shadow-xs); }
+  .root:focus-within { border-color: var(--starmate-color-field-border-focus); box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring); }
+  .root[data-invalid="true"] { border-color: var(--starmate-color-status-danger-border); }
+  .root[data-disabled="true"] { color: var(--starmate-color-content-disabled); }
+  .input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: 62px; resize: none; margin: 0; padding: 0; border: 0; outline: 0; color: inherit; background: transparent; caret-color: var(--starmate-color-accent-default); font: inherit; font-size: var(--starmate-type-body-md-font-size); line-height: var(--starmate-type-body-md-line-height); }
+  .input::placeholder { color: var(--starmate-color-content-muted); opacity: 1; }
   .slot { display: grid; inline-size: 20px; block-size: 20px; flex: 0 0 20px; place-items: center; }
 }

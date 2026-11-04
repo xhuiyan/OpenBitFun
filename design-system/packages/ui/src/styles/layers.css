@@ -19,12 +19,12 @@
 @layer openbitfun.base {
   [data-openbitfun-design-system-root] select option,
   [data-openbitfun-design-system-root] select optgroup {
-    color: var(--openbitfun-color-content-primary);
-    background-color: var(--openbitfun-color-surface-panel);
+    color: var(--starmate-color-content-primary);
+    background-color: var(--starmate-color-surface-panel);
   }
 
   [data-openbitfun-design-system-root] select option:disabled {
-    color: var(--openbitfun-color-content-disabled);
+    color: var(--starmate-color-content-disabled);
   }
 
   @media (forced-colors: active) {
@@ -44,6 +44,6 @@
    */
   [data-openbitfun-icon-slot="true"] > :where(svg.lucide[stroke-width="2"]) {
     color: inherit;
-    stroke-width: var(--openbitfun-control-icon-stroke-width);
+    stroke-width: var(--starmate-control-icon-stroke-width);
   }
 }

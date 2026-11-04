@@ -53,17 +53,17 @@ test("Dialog geometry and typography use public design tokens", async () => {
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
   for (const token of [
-    "--openbitfun-overlay-dialog-viewport-gutter",
-    "--openbitfun-overlay-dialog-backdrop-blur",
-    "--openbitfun-overlay-dialog-surface-radius",
-    "--openbitfun-overlay-dialog-header-padding-inline",
-    "--openbitfun-overlay-dialog-footer-padding-inline",
-    "--openbitfun-overlay-dialog-max-inline-size-xxlarge",
-    "--openbitfun-type-heading-dialog-font-size",
-    "--openbitfun-type-heading-dialog-font-weight",
-    "--openbitfun-color-overlay-scrim",
-    "--openbitfun-color-surface-raised",
-    "--openbitfun-shadow-overlay",
+    "--starmate-overlay-dialog-viewport-gutter",
+    "--starmate-overlay-dialog-backdrop-blur",
+    "--starmate-overlay-dialog-surface-radius",
+    "--starmate-overlay-dialog-header-padding-inline",
+    "--starmate-overlay-dialog-footer-padding-inline",
+    "--starmate-overlay-dialog-max-inline-size-xxlarge",
+    "--starmate-type-heading-dialog-font-size",
+    "--starmate-type-heading-dialog-font-weight",
+    "--starmate-color-overlay-scrim",
+    "--starmate-color-surface-raised",
+    "--starmate-shadow-overlay",
   ]) {
     assert.match(styles, new RegExp(token));
   }
@@ -85,9 +85,9 @@ test("DialogFooter exposes a centered frosted floating action layer", async () =
   assert.match(styles, /\[data-appearance=floating\]\{[^}]*position:absolute/);
   assert.match(styles, /\[data-appearance=floating\]\{[^}]*justify-content:center/);
   assert.match(styles, /\[data-appearance=floating\]:before\{[^}]*background:linear-gradient/);
-  assert.match(styles, /\[data-appearance=floating\]:before\{[^}]*backdrop-filter:var\(--openbitfun-overlay-dialog-footer-blur\)/);
+  assert.match(styles, /\[data-appearance=floating\]:before\{[^}]*backdrop-filter:var\(--starmate-overlay-dialog-footer-blur\)/);
   assert.match(styles, /\[data-appearance=floating\]\{[^}]*pointer-events:auto/);
-  assert.match(styles, /--openbitfun-overlay-dialog-footer-action-min-width/);
+  assert.match(styles, /--starmate-overlay-dialog-footer-action-min-width/);
 });
 
 test("Panel Dialog publishes fixed viewport-safe geometry and centered header spacing", async () => {
@@ -95,13 +95,13 @@ test("Panel Dialog publishes fixed viewport-safe geometry and centered header sp
   const panelRules = styles.match(/\[data-preset=panel\][^{}]*\{[^}]*\}/g)?.join("\n") ?? "";
 
   assert.match(panelRules, /\[data-preset=panel\]\{[^}]*grid-template-rows:auto minmax\(0,max-content\) auto;align-content:center/);
-  assert.match(panelRules, /--_dialog-panel-title-gap:\s*calc\(var\(--openbitfun-overlay-dialog-header-padding-block-start\) \+ var\(--openbitfun-space-4\)\)/);
-  assert.match(panelRules, /\[data-preset=panel\]\{[^}]*padding-block:var\(--_dialog-panel-title-gap\);block-size:min\(var\(--openbitfun-overlay-dialog-panel-block-size\),calc\(100dvh/);
+  assert.match(panelRules, /--_dialog-panel-title-gap:\s*calc\(var\(--starmate-overlay-dialog-header-padding-block-start\) \+ var\(--starmate-space-4\)\)/);
+  assert.match(panelRules, /\[data-preset=panel\]\{[^}]*padding-block:var\(--_dialog-panel-title-gap\);block-size:min\(var\(--starmate-overlay-dialog-panel-block-size\),calc\(100dvh/);
   assert.match(panelRules, /\[data-preset=panel\]>[^{}]+\{padding-block-start:0;padding-block-end:var\(--_dialog-panel-title-gap\)/);
-  assert.match(panelRules, /\[data-preset=panel\]>[^{}]+\{[^}]*min-block-size:var\(--openbitfun-control-height-sm\);[^}]*text-align:center/);
-  assert.match(panelRules, /padding-block-end:max\([^}]*var\(--openbitfun-overlay-dialog-footer-height\)/);
-  assert.doesNotMatch(panelRules, /--openbitfun-overlay-dialog-footer-content-inset/);
-  assert.match(panelRules, /\[data-preset=panel\]>[^{}]+\{[^}]*padding-inline:max\(var\(--openbitfun-overlay-dialog-content-padding-lg\),calc\(\(100% - var\(--openbitfun-overlay-dialog-max-inline-size-large\)\)\s*\/\s*2\)\)/);
+  assert.match(panelRules, /\[data-preset=panel\]>[^{}]+\{[^}]*min-block-size:var\(--starmate-control-height-sm\);[^}]*text-align:center/);
+  assert.match(panelRules, /padding-block-end:max\([^}]*var\(--starmate-overlay-dialog-footer-height\)/);
+  assert.doesNotMatch(panelRules, /--starmate-overlay-dialog-footer-content-inset/);
+  assert.match(panelRules, /\[data-preset=panel\]>[^{}]+\{[^}]*padding-inline:max\(var\(--starmate-overlay-dialog-content-padding-lg\),calc\(\(100% - var\(--starmate-overlay-dialog-max-inline-size-large\)\)\s*\/\s*2\)\)/);
 });
 
 test("dialog separators are explicit and do not leak native attributes", () => {

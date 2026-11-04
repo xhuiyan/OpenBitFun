@@ -42,8 +42,8 @@ test("Disclosure uses public geometry tokens and honors reduced motion", async (
     "utf8",
   );
 
-  assert.match(styles, /--openbitfun-layout-disclosure-trigger-min-block-size/);
-  assert.match(styles, /--openbitfun-layout-disclosure-content-padding-inline/);
+  assert.match(styles, /--starmate-layout-disclosure-trigger-min-block-size/);
+  assert.match(styles, /--starmate-layout-disclosure-content-padding-inline/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
   assert.doesNotMatch(styles, /#[0-9a-f]{3,8}/i);
 });

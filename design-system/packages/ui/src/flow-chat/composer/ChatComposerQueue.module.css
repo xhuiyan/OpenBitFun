@@ -5,38 +5,38 @@
     min-inline-size: 0;
     inline-size: 100%;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
-    padding-block: var(--openbitfun-space-3);
-    padding-inline: var(--openbitfun-space-4);
-    border-radius: var(--openbitfun-radius-lg);
-    color: var(--openbitfun-color-content-primary);
-    background: var(--openbitfun-color-surface-subtle);
-    font-family:var(--openbitfun-type-body-md-font-family);
+    gap: var(--starmate-space-2);
+    padding-block: var(--starmate-space-3);
+    padding-inline: var(--starmate-space-4);
+    border-radius: var(--starmate-radius-lg);
+    color: var(--starmate-color-content-primary);
+    background: var(--starmate-color-surface-subtle);
+    font-family:var(--starmate-type-body-md-font-family);
   }
 
   .header {
     display: flex;
     min-inline-size: 0;
     align-items: center;
-    gap: var(--openbitfun-space-1);
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-body-md-font-weight);
-    line-height: var(--openbitfun-type-body-md-line-height);
+    gap: var(--starmate-space-1);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-body-md-font-weight);
+    line-height: var(--starmate-type-body-md-line-height);
   }
 
   .header > :where(svg, img) {
-    inline-size: var(--openbitfun-font-size-base);
-    block-size: var(--openbitfun-font-size-base);
+    inline-size: var(--starmate-font-size-base);
+    block-size: var(--starmate-font-size-base);
     flex: 0 0 auto;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
   }
 
   .title {
     display: inline-flex;
     min-inline-size: 0;
     align-items: baseline;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .titleLabel {
@@ -46,7 +46,7 @@
 
   .totalCount {
     flex: 0 0 auto;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     font-variant-numeric: tabular-nums;
   }
 
@@ -55,16 +55,16 @@
     min-inline-size: 0;
     /* Four standard message rows plus the three gaps between them. */
     max-block-size: calc(
-      var(--openbitfun-control-chat-composer-control-height) +
-      var(--openbitfun-control-chat-composer-control-height) +
-      var(--openbitfun-control-chat-composer-control-height) +
-      var(--openbitfun-control-chat-composer-control-height) +
-      var(--openbitfun-space-1) +
-      var(--openbitfun-space-1) +
-      var(--openbitfun-space-1)
+      var(--starmate-control-chat-composer-control-height) +
+      var(--starmate-control-chat-composer-control-height) +
+      var(--starmate-control-chat-composer-control-height) +
+      var(--starmate-control-chat-composer-control-height) +
+      var(--starmate-space-1) +
+      var(--starmate-space-1) +
+      var(--starmate-space-1)
     );
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     margin: 0;
     overflow-x: hidden;
     overflow-y: auto;
@@ -77,57 +77,57 @@
     box-sizing: border-box;
     display: grid;
     min-inline-size: 0;
-    min-block-size: var(--openbitfun-control-chat-composer-control-height);
+    min-block-size: var(--starmate-control-chat-composer-control-height);
     grid-template-columns: minmax(0, 1fr) auto auto;
     align-items: center;
-    gap: var(--openbitfun-space-2);
-    color: var(--openbitfun-color-content-primary);
+    gap: var(--starmate-space-2);
+    color: var(--starmate-color-content-primary);
   }
 
   .item[data-openbitfun-state="sending"] {
-    opacity: var(--openbitfun-opacity-disabled);
+    opacity: var(--starmate-opacity-disabled);
   }
 
   .content {
     display: flex;
     min-inline-size: 0;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-md-font-size);
-    font-weight: var(--openbitfun-type-body-md-font-weight);
-    line-height: var(--openbitfun-type-body-md-line-height);
-    transition: color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    gap: var(--starmate-space-1);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-md-font-size);
+    font-weight: var(--starmate-type-body-md-font-weight);
+    line-height: var(--starmate-type-body-md-line-height);
+    transition: color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .item:hover .content,
   .item:focus-within .content {
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
   }
 
   .attachmentBadge {
     box-sizing: border-box;
     display: inline-flex;
-    min-inline-size: var(--openbitfun-control-chat-composer-control-height);
-    block-size: var(--openbitfun-control-chat-composer-control-height);
+    min-inline-size: var(--starmate-control-chat-composer-control-height);
+    block-size: var(--starmate-control-chat-composer-control-height);
     align-items: center;
     justify-content: center;
-    padding-inline: var(--openbitfun-space-2);
-    border-radius: var(--openbitfun-radius-pill);
-    color: var(--openbitfun-color-content-secondary);
-    background: var(--openbitfun-color-surface-raised);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-label-lg-font-weight);
+    padding-inline: var(--starmate-space-2);
+    border-radius: var(--starmate-radius-pill);
+    color: var(--starmate-color-content-secondary);
+    background: var(--starmate-color-surface-raised);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-label-lg-font-weight);
     font-variant-numeric: tabular-nums;
-    line-height: var(--openbitfun-type-modifier-leading-none-line-height);
+    line-height: var(--starmate-type-modifier-leading-none-line-height);
   }
 
   .actions {
     display: inline-flex;
     min-inline-size: 0;
     align-items: center;
-    gap: var(--openbitfun-space-1);
-    transition: opacity var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    gap: var(--starmate-space-1);
+    transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -153,7 +153,7 @@
   @media (forced-colors: active) {
     .root,
     .attachmentBadge {
-      border: var(--openbitfun-border-width-default) solid CanvasText;
+      border: var(--starmate-border-width-default) solid CanvasText;
     }
   }
 }

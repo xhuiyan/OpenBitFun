@@ -10,8 +10,8 @@
  */
 @layer openbitfun.base {
   :where([data-openbitfun-design-system-root], [data-openbitfun-design-system-root] *, [data-openbitfun-scrollbar-visibility])::-webkit-scrollbar {
-    width: var(--openbitfun-scrollbar-width);
-    height: var(--openbitfun-scrollbar-width);
+    width: var(--starmate-scrollbar-width);
+    height: var(--starmate-scrollbar-width);
     background: transparent;
   }
 
@@ -25,13 +25,13 @@
   }
 
   :where([data-openbitfun-design-system-root], [data-openbitfun-design-system-root] *, [data-openbitfun-scrollbar-visibility])::-webkit-scrollbar-thumb {
-    background: var(--openbitfun-color-scrollbar-thumb);
-    border-radius: var(--openbitfun-scrollbar-radius);
+    background: var(--starmate-color-scrollbar-thumb);
+    border-radius: var(--starmate-scrollbar-radius);
   }
 
   :where([data-openbitfun-design-system-root], [data-openbitfun-design-system-root] *, [data-openbitfun-scrollbar-visibility])::-webkit-scrollbar-thumb:hover,
   :where([data-openbitfun-design-system-root], [data-openbitfun-design-system-root] *, [data-openbitfun-scrollbar-visibility])::-webkit-scrollbar-thumb:active {
-    background: var(--openbitfun-color-scrollbar-thumb-hover);
+    background: var(--starmate-color-scrollbar-thumb-hover);
   }
 
   /*
@@ -41,7 +41,7 @@
   @supports (scrollbar-color: transparent transparent) {
     :where([data-openbitfun-design-system-root], [data-openbitfun-design-system-root] *, [data-openbitfun-scrollbar-visibility]) {
       scrollbar-width: thin;
-      scrollbar-color: var(--openbitfun-color-scrollbar-thumb) transparent;
+      scrollbar-color: var(--starmate-color-scrollbar-thumb) transparent;
     }
   }
 

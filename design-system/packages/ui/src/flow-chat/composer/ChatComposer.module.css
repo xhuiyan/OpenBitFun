@@ -4,24 +4,24 @@
     min-inline-size: 0;
     inline-size: 100%;
     flex-direction: column;
-    border-radius: var(--openbitfun-control-composer-surface-radius);
-    color: var(--openbitfun-color-content-primary);
+    border-radius: var(--starmate-control-composer-surface-radius);
+    color: var(--starmate-color-content-primary);
     background: transparent;
-    font-family:var(--openbitfun-type-body-md-font-family);
+    font-family:var(--starmate-type-body-md-font-family);
   }
 
   .root[data-has-context="true"] {
-    background: var(--openbitfun-color-composer-context-background);
-    backdrop-filter: blur(var(--openbitfun-control-composer-context-blur));
-    -webkit-backdrop-filter: blur(var(--openbitfun-control-composer-context-blur));
+    background: var(--starmate-color-composer-context-background);
+    backdrop-filter: blur(var(--starmate-control-composer-context-blur));
+    -webkit-backdrop-filter: blur(var(--starmate-control-composer-context-blur));
   }
 
   .context {
     display: flex;
     min-inline-size: 0;
-    min-block-size: var(--openbitfun-space-8);
+    min-block-size: var(--starmate-space-8);
     align-items: center;
-    padding-inline: var(--openbitfun-space-2);
+    padding-inline: var(--starmate-space-2);
   }
 
   .body {
@@ -29,7 +29,7 @@
     min-inline-size: 0;
     inline-size: 100%;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .queue {
@@ -43,33 +43,33 @@
     display: grid;
     min-inline-size: 0;
     inline-size: 100%;
-    min-block-size: var(--openbitfun-control-height-md);
+    min-block-size: var(--starmate-control-height-md);
     box-sizing: border-box;
     align-items: center;
-    gap: var(--openbitfun-control-composer-surface-gap);
-    padding: var(--openbitfun-control-composer-surface-padding);
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-composer-border);
-    border-radius: var(--openbitfun-control-composer-surface-radius);
-    color: var(--openbitfun-color-content-primary);
-    background: var(--openbitfun-color-surface-raised);
-    box-shadow: var(--openbitfun-shadow-composer);
+    gap: var(--starmate-control-composer-surface-gap);
+    padding: var(--starmate-control-composer-surface-padding);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-composer-border);
+    border-radius: var(--starmate-control-composer-surface-radius);
+    color: var(--starmate-color-content-primary);
+    background: var(--starmate-color-surface-raised);
+    box-shadow: var(--starmate-shadow-composer);
     transition:
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      box-shadow var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .surface[data-openbitfun-layout="compact"] {
-    block-size: var(--openbitfun-control-chat-composer-compact-height);
-    gap: var(--openbitfun-control-chat-composer-compact-gap);
+    block-size: var(--starmate-control-chat-composer-compact-height);
+    gap: var(--starmate-control-chat-composer-compact-gap);
     grid-template-areas: "start content end";
     grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-rows: var(--openbitfun-control-chat-composer-compact-track-height);
-    min-block-size: var(--openbitfun-control-chat-composer-compact-height);
+    grid-template-rows: var(--starmate-control-chat-composer-compact-track-height);
+    min-block-size: var(--starmate-control-chat-composer-compact-height);
     align-content: center;
     align-items: center;
-    padding-block: var(--openbitfun-control-chat-composer-compact-padding-block);
-    padding-inline: var(--openbitfun-control-chat-composer-compact-padding-inline);
-    border-radius: var(--openbitfun-control-composer-surface-radius);
+    padding-block: var(--starmate-control-chat-composer-compact-padding-block);
+    padding-inline: var(--starmate-control-chat-composer-compact-padding-inline);
+    border-radius: var(--starmate-control-composer-surface-radius);
   }
 
   .surface[data-openbitfun-layout="expanded"] {
@@ -77,17 +77,17 @@
       "content content"
       "start end";
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: minmax(var(--openbitfun-space-12), 1fr) auto;
+    grid-template-rows: minmax(var(--starmate-space-12), 1fr) auto;
     min-block-size: calc(
-      var(--openbitfun-control-height-md) +
-      var(--openbitfun-control-height-md) +
-      var(--openbitfun-control-height-md)
+      var(--starmate-control-height-md) +
+      var(--starmate-control-height-md) +
+      var(--starmate-control-height-md)
     );
     align-items: end;
   }
 
   .surface:focus-within {
-    border-color: var(--openbitfun-color-border-default);
+    border-color: var(--starmate-color-border-default);
   }
 
   .content {
@@ -97,10 +97,10 @@
     min-inline-size: 0;
     align-self: stretch;
     align-items: center;
-    padding: var(--openbitfun-space-1);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-body-md-font-weight);
-    line-height: var(--openbitfun-type-body-md-line-height);
+    padding: var(--starmate-space-1);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-body-md-font-weight);
+    line-height: var(--starmate-type-body-md-line-height);
   }
 
   .surface[data-openbitfun-layout="expanded"] .content {
@@ -108,7 +108,7 @@
   }
 
   .surface[data-openbitfun-layout="compact"] .content {
-    block-size: var(--openbitfun-control-chat-composer-compact-track-height);
+    block-size: var(--starmate-control-chat-composer-compact-track-height);
     align-self: center;
     padding: 0;
   }
@@ -118,49 +118,49 @@
     box-sizing: border-box;
     display: inline-flex;
     min-inline-size: 0;
-    min-block-size: var(--openbitfun-control-chat-composer-control-height);
+    min-block-size: var(--starmate-control-chat-composer-control-height);
     align-items: center;
   }
 
   .startActions {
     grid-area: start;
     justify-self: start;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .endActions {
     grid-area: end;
     justify-self: end;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .actionButton[data-openbitfun-component="icon-button"] {
-    inline-size: var(--openbitfun-control-chat-composer-control-height);
-    block-size: var(--openbitfun-control-chat-composer-control-height);
-    min-inline-size: var(--openbitfun-control-chat-composer-control-height);
-    min-block-size: var(--openbitfun-control-chat-composer-control-height);
-    border-radius: var(--openbitfun-radius-pill);
+    inline-size: var(--starmate-control-chat-composer-control-height);
+    block-size: var(--starmate-control-chat-composer-control-height);
+    min-inline-size: var(--starmate-control-chat-composer-control-height);
+    min-block-size: var(--starmate-control-chat-composer-control-height);
+    border-radius: var(--starmate-radius-pill);
   }
 
   .actionButton[data-openbitfun-component="icon-button"] [data-openbitfun-part="icon"] {
-    inline-size: var(--openbitfun-control-chat-composer-action-icon-size);
-    block-size: var(--openbitfun-control-chat-composer-action-icon-size);
+    inline-size: var(--starmate-control-chat-composer-action-icon-size);
+    block-size: var(--starmate-control-chat-composer-action-icon-size);
   }
 
   .actionButton[data-openbitfun-variant="fill"][aria-expanded="true"] {
-    background: var(--openbitfun-color-action-neutral-surface-hover);
+    background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .surface[data-openbitfun-layout="compact"] .startActions,
   .surface[data-openbitfun-layout="compact"] .endActions {
-    block-size: var(--openbitfun-control-chat-composer-compact-track-height);
+    block-size: var(--starmate-control-chat-composer-compact-track-height);
     min-block-size: 0;
     align-self: center;
   }
 
   .root[data-openbitfun-state~="disabled"] .surface {
     cursor: not-allowed;
-    opacity: var(--openbitfun-opacity-disabled);
+    opacity: var(--starmate-opacity-disabled);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -171,7 +171,7 @@
 
   @media (prefers-reduced-transparency: reduce) {
     .root[data-has-context="true"] {
-      background: var(--openbitfun-color-surface-panel);
+      background: var(--starmate-color-surface-panel);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }

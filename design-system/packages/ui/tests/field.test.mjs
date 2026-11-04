@@ -97,15 +97,15 @@ test("Field keeps label and control adornments outside the associated control", 
 test("Field styles consume shared content and typography tokens", async () => {
   const styles = await readFile(new URL("../src/components/Field/Field.module.css", import.meta.url), "utf8");
 
-  assert.match(styles, /--openbitfun-color-content-primary/);
-  assert.match(styles, /--openbitfun-color-content-secondary/);
-  assert.match(styles, /--openbitfun-color-content-required-indicator/);
-  assert.doesNotMatch(styles, /--openbitfun-color-status-danger-content[^\n]*required/);
-  assert.match(styles, /--openbitfun-type-label-selected-font-size/);
-  assert.match(styles, /--openbitfun-type-support-font-size/);
-  assert.match(styles, /--openbitfun-layout-field-root-gap/);
-  assert.match(styles, /--openbitfun-layout-field-label-action-gap/);
-  assert.match(styles, /--openbitfun-layout-field-control-gap/);
-  assert.match(styles, /--openbitfun-layout-field-horizontal-gap-wide/);
-  assert.match(styles, /--openbitfun-layout-field-label-width-md/);
+  assert.match(styles, /--starmate-color-content-primary/);
+  assert.match(styles, /--starmate-color-content-secondary/);
+  assert.match(styles, /--starmate-color-content-required-indicator/);
+  assert.doesNotMatch(styles, /--starmate-color-status-danger-content[^\n]*required/);
+  assert.match(styles, /--starmate-type-label-selected-font-size/);
+  assert.match(styles, /--starmate-type-support-font-size/);
+  assert.match(styles, /--starmate-layout-field-root-gap/);
+  assert.match(styles, /--starmate-layout-field-label-action-gap/);
+  assert.match(styles, /--starmate-layout-field-control-gap/);
+  assert.match(styles, /--starmate-layout-field-horizontal-gap-wide/);
+  assert.match(styles, /--starmate-layout-field-label-width-md/);
 });

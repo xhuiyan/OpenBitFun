@@ -5,16 +5,16 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    min-inline-size: var(--openbitfun-space-6);
-    min-block-size: var(--openbitfun-space-6);
+    min-inline-size: var(--starmate-space-6);
+    min-block-size: var(--starmate-space-6);
     padding: 0;
     vertical-align: middle;
-    color: var(--openbitfun-color-action-neutral-content);
-    font-family: var(--openbitfun-type-meta-font-family);
-    font-size: var(--openbitfun-type-meta-font-size);
-    font-weight: var(--openbitfun-type-meta-font-weight);
-    line-height: var(--openbitfun-type-meta-line-height);
-    letter-spacing: var(--openbitfun-type-meta-letter-spacing);
+    color: var(--starmate-color-action-neutral-content);
+    font-family: var(--starmate-type-meta-font-family);
+    font-size: var(--starmate-type-meta-font-size);
+    font-weight: var(--starmate-type-meta-font-weight);
+    line-height: var(--starmate-type-meta-line-height);
+    letter-spacing: var(--starmate-type-meta-letter-spacing);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
@@ -24,16 +24,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-inline-size: var(--openbitfun-space-6);
-    min-block-size: var(--openbitfun-space-6);
-    padding-inline: calc(var(--openbitfun-space-1) / 2);
-    border-radius: var(--openbitfun-radius-pill);
-    background: var(--openbitfun-color-number-badge-background);
+    min-inline-size: var(--starmate-space-6);
+    min-block-size: var(--starmate-space-6);
+    padding-inline: calc(var(--starmate-space-1) / 2);
+    border-radius: var(--starmate-radius-pill);
+    background: var(--starmate-color-number-badge-background);
   }
 
   @media (forced-colors: active) {
     .value {
-      outline: var(--openbitfun-border-width-default) solid CanvasText;
+      outline: var(--starmate-border-width-default) solid CanvasText;
       color: CanvasText;
       background: Canvas;
     }

@@ -93,8 +93,8 @@ describe('AgentCompanionDesktopPet styles', () => {
     expect(source).not.toContain('triggerClassName');
     expect(overlay).not.toMatch(/\b(?:color|background|border|box-shadow|backdrop-filter)\s*:/);
     expect(menuItem).toBe('');
-    expect(actionItemStyles).toContain('color: var(--openbitfun-color-action-neutral-content);');
-    expect(hover).toContain('background: var(--openbitfun-color-action-neutral-surface-hover);');
-    expect(pressed).toContain('background: var(--openbitfun-color-action-neutral-surface-hover);');
+    expect(actionItemStyles).toContain('color: var(--starmate-color-action-neutral-content);');
+    expect(hover).toContain('background: var(--starmate-color-action-neutral-surface-hover);');
+    expect(pressed).toContain('background: var(--starmate-color-action-neutral-surface-hover);');
   });
 });

@@ -159,13 +159,13 @@ test("AskUser keeps a wait affordance in the header for running and unbounded wa
 test("AskUser styles use public semantic and component geometry tokens", async () => {
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /--openbitfun-control-activity-item-surface-height/);
-  assert.match(styles, /--openbitfun-control-ask-user-option-padding-block/);
-  assert.match(styles, /--openbitfun-control-ask-user-question-options-gap/);
-  assert.match(styles, /--openbitfun-color-surface-subtle/);
-  assert.match(styles, /--openbitfun-color-action-neutral-content/);
-  assert.match(styles, /--openbitfun-color-content-muted/);
-  assert.match(styles, /--openbitfun-color-status-success-content/);
-  assert.match(styles, /--openbitfun-type-heading-page-line-height/);
+  assert.match(styles, /--starmate-control-activity-item-surface-height/);
+  assert.match(styles, /--starmate-control-ask-user-option-padding-block/);
+  assert.match(styles, /--starmate-control-ask-user-question-options-gap/);
+  assert.match(styles, /--starmate-color-surface-subtle/);
+  assert.match(styles, /--starmate-color-action-neutral-content/);
+  assert.match(styles, /--starmate-color-content-muted/);
+  assert.match(styles, /--starmate-color-status-success-content/);
+  assert.match(styles, /--starmate-type-heading-page-line-height/);
   assert.doesNotMatch(styles, /#[0-9a-f]{3,8}\b|rgba?\(/i);
 });

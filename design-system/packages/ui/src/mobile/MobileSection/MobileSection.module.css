@@ -1,8 +1,8 @@
 @layer openbitfun.components {
   .root { box-sizing: border-box; min-inline-size: 0; }
-  .header { display: flex; align-items: end; justify-content: space-between; gap: var(--openbitfun-space-3); margin-block-end: var(--openbitfun-space-2); padding-inline: var(--openbitfun-space-1); }
+  .header { display: flex; align-items: end; justify-content: space-between; gap: var(--starmate-space-3); margin-block-end: var(--starmate-space-2); padding-inline: var(--starmate-space-1); }
   .copy, .body { min-inline-size: 0; }
-  .title { margin: 0; color: var(--openbitfun-color-content-primary); font-size: var(--openbitfun-type-heading-section-font-size); font-weight: var(--openbitfun-type-heading-section-font-weight); }
-  .description { margin: var(--openbitfun-space-1) 0 0; color: var(--openbitfun-color-content-muted); font-size: var(--openbitfun-type-body-sm-font-size); }
+  .title { margin: 0; color: var(--starmate-color-content-primary); font-size: var(--starmate-type-heading-section-font-size); font-weight: var(--starmate-type-heading-section-font-weight); }
+  .description { margin: var(--starmate-space-1) 0 0; color: var(--starmate-color-content-muted); font-size: var(--starmate-type-body-sm-font-size); }
   .action { flex: 0 0 auto; }
 }

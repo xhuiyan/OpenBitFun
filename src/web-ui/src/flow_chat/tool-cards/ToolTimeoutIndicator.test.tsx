@@ -101,7 +101,7 @@ describe('ToolTimeoutIndicator', () => {
     expect(durationRule).toContain('font-variant-numeric: proportional-nums;');
     expect(timeoutIndicatorStyles).not.toContain('tabular-nums');
     expect(timeoutIndicatorStyles).toMatch(
-      /\.duration-text--completed-success\s*\{\s*color:\s*var\(--openbitfun-color-code-change-added\);/,
+      /\.duration-text--completed-success\s*\{\s*color:\s*var\(--starmate-color-code-change-added\);/,
     );
     expect(taskToolStyles).not.toMatch(/\.duration-text(?:--[\w-]+)?\s*\{/);
   });

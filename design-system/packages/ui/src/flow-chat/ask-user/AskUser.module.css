@@ -2,18 +2,18 @@
   .answerMessage {
     box-sizing: border-box;
     inline-size: fit-content;
-    max-inline-size: var(--openbitfun-control-flow-chat-user-message-max-width);
+    max-inline-size: var(--starmate-control-flow-chat-user-message-max-width);
     min-inline-size: 0;
     margin-inline: auto 0;
-    padding-block: var(--openbitfun-control-flow-chat-user-message-padding-block);
-    padding-inline: var(--openbitfun-control-flow-chat-user-message-radius);
-    border-radius: var(--openbitfun-control-flow-chat-user-message-radius);
-    background: var(--openbitfun-color-action-quiet-hover);
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-flow-control-font-family);
-    font-size: var(--openbitfun-type-flow-control-font-size);
-    font-weight: var(--openbitfun-type-flow-control-font-weight);
-    line-height: var(--openbitfun-type-flow-body-line-height);
+    padding-block: var(--starmate-control-flow-chat-user-message-padding-block);
+    padding-inline: var(--starmate-control-flow-chat-user-message-radius);
+    border-radius: var(--starmate-control-flow-chat-user-message-radius);
+    background: var(--starmate-color-action-quiet-hover);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-flow-control-font-family);
+    font-size: var(--starmate-type-flow-control-font-size);
+    font-weight: var(--starmate-type-flow-control-font-weight);
+    line-height: var(--starmate-type-flow-body-line-height);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
   }
@@ -27,24 +27,24 @@
   }
 
   .answerList {
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   .answerPair {
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .answeredQuestion {
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
   }
 
   .answer {
     margin: 0;
-    color: var(--openbitfun-color-content-secondary);
-    font-family: var(--openbitfun-type-flow-meta-font-family);
-    font-size: var(--openbitfun-type-flow-meta-font-size);
-    font-weight: var(--openbitfun-type-flow-meta-font-weight);
-    line-height: var(--openbitfun-type-flow-meta-line-height);
+    color: var(--starmate-color-content-secondary);
+    font-family: var(--starmate-type-flow-meta-font-family);
+    font-size: var(--starmate-type-flow-meta-font-size);
+    font-weight: var(--starmate-type-flow-meta-font-weight);
+    line-height: var(--starmate-type-flow-meta-line-height);
   }
 
   .root {
@@ -53,23 +53,23 @@
     inline-size: 100%;
     min-inline-size: 0;
     overflow: hidden;
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-lg);
-    background: var(--openbitfun-color-surface-panel);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-lg);
+    background: var(--starmate-color-surface-panel);
     box-shadow: none;
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-body-sm-font-family);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-body-sm-font-family);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   .header,
   .summaryButton {
     box-sizing: border-box;
-    min-block-size: calc(var(--openbitfun-control-activity-item-surface-height) - 2 * var(--openbitfun-border-width-default));
+    min-block-size: calc(var(--starmate-control-activity-item-surface-height) - 2 * var(--starmate-border-width-default));
     border: 0;
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
     background: transparent;
     font: inherit;
   }
@@ -78,12 +78,12 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     padding-block: 0;
-    padding-inline: var(--openbitfun-control-flow-chat-card-padding-inline);
-    box-shadow: inset 0 calc(-1 * var(--openbitfun-border-width-default)) var(--openbitfun-color-border-subtle);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-label-lg-font-weight);
+    padding-inline: var(--starmate-control-flow-chat-card-padding-inline);
+    box-shadow: inset 0 calc(-1 * var(--starmate-border-width-default)) var(--starmate-color-border-subtle);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-label-lg-font-weight);
   }
 
   .headerLeading {
@@ -91,7 +91,7 @@
     min-inline-size: 0;
     flex: 1 1 auto;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .headerToggle {
@@ -116,8 +116,8 @@
   }
 
   .headerToggle:focus-visible {
-    outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring);
-    outline-offset: calc(-1 * var(--openbitfun-focus-width));
+    outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
+    outline-offset: calc(-1 * var(--starmate-focus-width));
   }
 
   .headerIcon,
@@ -130,7 +130,7 @@
   }
 
   .skippedIcon {
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   .questionCount {
@@ -141,17 +141,17 @@
   .headerSubject {
     flex: 1 1 auto;
     min-inline-size: 0;
-    padding-inline-start: var(--openbitfun-space-2);
-    border-inline-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    color: var(--openbitfun-color-content-secondary);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
+    padding-inline-start: var(--starmate-space-2);
+    border-inline-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    color: var(--starmate-color-content-secondary);
+    font-weight: var(--starmate-type-body-sm-font-weight);
   }
 
   .headerTrailing {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin-inline-start: auto;
     min-inline-size: 0;
     max-inline-size: 50%;
@@ -168,18 +168,18 @@
     min-inline-size: 0;
     flex: 0 0 auto;
     align-items: center;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .waitSettled {
     display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
-    color: var(--openbitfun-color-content-muted);
-    font-family: var(--openbitfun-type-flow-meta-font-family);
-    font-size: var(--openbitfun-type-flow-meta-font-size);
-    font-weight: var(--openbitfun-type-flow-meta-font-weight);
-    line-height: var(--openbitfun-type-flow-meta-line-height);
+    color: var(--starmate-color-content-muted);
+    font-family: var(--starmate-type-flow-meta-font-family);
+    font-size: var(--starmate-type-flow-meta-font-size);
+    font-weight: var(--starmate-type-flow-meta-font-weight);
+    line-height: var(--starmate-type-flow-meta-line-height);
     white-space: nowrap;
   }
 
@@ -188,10 +188,10 @@
   }
 
   .counter {
-    color: var(--openbitfun-color-content-muted);
-    font-family: var(--openbitfun-type-code-sm-font-family);
-    font-size: var(--openbitfun-type-body-xs-font-size);
-    font-weight: var(--openbitfun-type-body-md-font-weight);
+    color: var(--starmate-color-content-muted);
+    font-family: var(--starmate-type-code-sm-font-family);
+    font-size: var(--starmate-type-body-xs-font-size);
+    font-weight: var(--starmate-type-body-md-font-weight);
     font-variant-numeric: tabular-nums;
   }
 
@@ -202,50 +202,50 @@
     display: block;
     appearance: none;
     inline-size: 100%;
-    block-size: var(--openbitfun-border-width-default);
+    block-size: var(--starmate-border-width-default);
     margin: 0;
     overflow: hidden;
     border: 0;
     border-radius: 0;
-    background: var(--openbitfun-color-surface-subtle);
-    color: var(--openbitfun-color-content-secondary);
+    background: var(--starmate-color-surface-subtle);
+    color: var(--starmate-color-content-secondary);
   }
 
   .progress::-webkit-progress-bar {
     border-radius: inherit;
-    background: var(--openbitfun-color-surface-subtle);
+    background: var(--starmate-color-surface-subtle);
   }
 
   .progress::-webkit-progress-value {
-    background: var(--openbitfun-color-content-secondary);
+    background: var(--starmate-color-content-secondary);
   }
 
   .progress::-moz-progress-bar {
-    background: var(--openbitfun-color-content-secondary);
+    background: var(--starmate-color-content-secondary);
   }
 
   .summaryButton {
     box-sizing: border-box;
     display: flex;
     inline-size: 100%;
-    min-block-size: calc(var(--openbitfun-control-activity-item-surface-height) - 2 * var(--openbitfun-border-width-default));
+    min-block-size: calc(var(--starmate-control-activity-item-surface-height) - 2 * var(--starmate-border-width-default));
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
-    padding-block: var(--openbitfun-control-activity-item-surface-padding-block);
-    padding-inline: var(--openbitfun-control-flow-chat-card-padding-inline);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    gap: var(--starmate-space-2);
+    padding-block: var(--starmate-control-activity-item-surface-padding-block);
+    padding-inline: var(--starmate-control-flow-chat-card-padding-inline);
+    line-height: var(--starmate-type-body-sm-line-height);
     text-align: start;
     cursor: pointer;
   }
 
   .root[data-openbitfun-expanded="true"] .summaryButton {
-    border-block-end: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    border-block-end: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   .summaryButton:focus-visible {
-    outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring);
-    outline-offset: calc(-1 * var(--openbitfun-focus-width));
+    outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
+    outline-offset: calc(-1 * var(--starmate-focus-width));
   }
 
   .summaryLeading,
@@ -257,29 +257,29 @@
 
   .summaryLeading {
     flex: 1 1 auto;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .summaryCopy {
     flex: 1 1 auto;
-    gap: var(--openbitfun-space-1);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    gap: var(--starmate-space-1);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   .summaryIcon,
   .statusIcon {
     display: inline-flex;
     flex: 0 0 auto;
-    inline-size: var(--openbitfun-control-icon-size-md);
-    block-size: var(--openbitfun-control-icon-size-md);
+    inline-size: var(--starmate-control-icon-size-md);
+    block-size: var(--starmate-control-icon-size-md);
     align-items: center;
     justify-content: center;
   }
 
   .summaryIcon {
-    color: var(--openbitfun-color-status-success-content);
+    color: var(--starmate-color-status-success-content);
   }
 
   .summaryIcon > [data-openbitfun-component="icon"],
@@ -299,7 +299,7 @@
   }
 
   .summaryLabel {
-    font-weight: var(--openbitfun-type-label-lg-font-weight);
+    font-weight: var(--starmate-type-label-lg-font-weight);
   }
 
   .summaryDetail {
@@ -313,13 +313,13 @@
     box-sizing: border-box;
     display: inline-flex;
     flex: 0 0 auto;
-    inline-size: var(--openbitfun-space-5);
-    block-size: var(--openbitfun-space-5);
+    inline-size: var(--starmate-space-5);
+    block-size: var(--starmate-space-5);
     align-items: center;
     justify-content: center;
-    padding: var(--openbitfun-space-1);
-    border-radius: var(--openbitfun-radius-xs);
-    color: var(--openbitfun-color-content-muted);
+    padding: var(--starmate-space-1);
+    border-radius: var(--starmate-radius-xs);
+    color: var(--starmate-color-content-muted);
     opacity: 0;
   }
 
@@ -351,7 +351,7 @@
    */
   .root[data-openbitfun-has-summary="true"][data-openbitfun-expanded="false"] .details {
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-standard);
+    transition: grid-template-rows var(--starmate-motion-duration-base) var(--starmate-motion-easing-standard);
   }
 
   .root[data-openbitfun-has-summary="true"][data-openbitfun-expanded="false"] .detailsInner {
@@ -361,9 +361,9 @@
   .body {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-control-ask-user-body-gap);
-    padding-block: var(--openbitfun-control-ask-user-body-padding);
-    padding-inline: var(--openbitfun-control-flow-chat-card-padding-inline);
+    gap: var(--starmate-control-ask-user-body-gap);
+    padding-block: var(--starmate-control-ask-user-body-padding);
+    padding-inline: var(--starmate-control-flow-chat-card-padding-inline);
   }
 
   .question {
@@ -377,8 +377,8 @@
   }
 
   .question + .question {
-    padding-block-start: var(--openbitfun-control-ask-user-body-gap);
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    padding-block-start: var(--starmate-control-ask-user-body-gap);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   .prompt {
@@ -387,24 +387,24 @@
     inline-size: 100%;
     padding-block: 0;
     padding-inline: 0;
-    color: var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-label-lg-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-label-lg-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   .prompt:focus-visible {
-    outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring);
-    outline-offset: var(--openbitfun-focus-offset);
-    border-radius: var(--openbitfun-radius-xs);
+    outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
+    outline-offset: var(--starmate-focus-offset);
+    border-radius: var(--starmate-radius-xs);
   }
 
   .questionDescription {
-    margin-block-start: var(--openbitfun-space-1);
+    margin-block-start: var(--starmate-space-1);
     margin-inline: 0;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-body-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
     overflow-wrap: anywhere;
   }
 
@@ -412,8 +412,8 @@
     display: flex;
     min-inline-size: 0;
     flex-direction: column;
-    gap: var(--openbitfun-control-ask-user-option-gap);
-    margin-block-start: var(--openbitfun-control-ask-user-question-options-gap);
+    gap: var(--starmate-control-ask-user-option-gap);
+    margin-block-start: var(--starmate-control-ask-user-question-options-gap);
   }
 
   .option {
@@ -422,14 +422,14 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    border-radius: var(--openbitfun-radius-lg);
-    background: var(--openbitfun-color-surface-subtle);
-    transition: background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    border-radius: var(--starmate-radius-lg);
+    background: var(--starmate-color-surface-subtle);
+    transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .option:hover:has(.optionSelector[data-disabled="false"][data-readonly="false"]),
   .option:has([data-openbitfun-preview-state="hover"]) {
-    background: var(--openbitfun-color-action-neutral-surface-hover);
+    background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .option .optionSelector {
@@ -437,16 +437,16 @@
     display: flex;
     flex: 1 1 auto;
     min-inline-size: 0;
-    min-block-size: var(--openbitfun-control-height-sm);
+    min-block-size: var(--starmate-control-height-sm);
     align-items: flex-start;
-    gap: var(--openbitfun-space-2);
-    padding-block: var(--openbitfun-control-ask-user-option-padding-block);
-    padding-inline: var(--openbitfun-control-ask-user-option-padding-inline);
+    gap: var(--starmate-space-2);
+    padding-block: var(--starmate-control-ask-user-option-padding-block);
+    padding-inline: var(--starmate-control-ask-user-option-padding-inline);
     font: inherit;
   }
 
   .optionSelector > :global([data-openbitfun-part="control"]) {
-    margin-block-start: max(0px, calc((1lh - var(--openbitfun-control-icon-size-md)) / 2));
+    margin-block-start: max(0px, calc((1lh - var(--starmate-control-icon-size-md)) / 2));
   }
 
   .optionSelector > :global([data-openbitfun-part="content"]) {
@@ -459,29 +459,29 @@
     min-inline-size: 0;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--openbitfun-control-ask-user-option-content-gap);
+    gap: var(--starmate-control-ask-user-option-content-gap);
   }
 
   .optionLabel,
   .optionDescription {
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    font-size: var(--starmate-type-body-sm-font-size);
   }
 
   .optionLabel {
     display: block;
     min-inline-size: 0;
-    color: var(--openbitfun-color-content-primary);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-primary);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
     overflow-wrap: anywhere;
   }
 
   .optionDescription {
     display: block;
     min-inline-size: 0;
-    color: var(--openbitfun-color-content-muted);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-muted);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
     text-align: start;
     white-space: normal;
     overflow-wrap: anywhere;
@@ -489,9 +489,9 @@
 
   .customInput {
     min-inline-size: 0;
-    padding-block-end: var(--openbitfun-control-ask-user-option-padding-block);
-    margin-inline-start: calc(var(--openbitfun-control-ask-user-option-padding-inline) + var(--openbitfun-control-icon-size-md) + var(--openbitfun-space-2));
-    margin-inline-end: var(--openbitfun-control-ask-user-option-padding-inline);
+    padding-block-end: var(--starmate-control-ask-user-option-padding-block);
+    margin-inline-start: calc(var(--starmate-control-ask-user-option-padding-inline) + var(--starmate-control-icon-size-md) + var(--starmate-space-2));
+    margin-inline-end: var(--starmate-control-ask-user-option-padding-inline);
   }
 
   .customInput > :global([data-openbitfun-component="input"]) {
@@ -500,16 +500,16 @@
 
   .option[data-selected="false"]:has(.optionSelector[data-disabled="true"]) .optionLabel,
   .option[data-selected="false"]:has(.optionSelector[data-disabled="true"]) .optionDescription {
-    color: var(--openbitfun-color-content-disabled);
+    color: var(--starmate-color-content-disabled);
   }
 
   .footer {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--openbitfun-space-3);
-    padding-block: 0 var(--openbitfun-control-ask-user-body-padding);
-    padding-inline: var(--openbitfun-control-flow-chat-card-padding-inline);
+    gap: var(--starmate-space-3);
+    padding-block: 0 var(--starmate-control-ask-user-body-padding);
+    padding-inline: var(--starmate-control-flow-chat-card-padding-inline);
   }
 
   .submit {
@@ -528,67 +528,67 @@
   .status {
     min-inline-size: 0;
     flex: 1 1 auto;
-    gap: var(--openbitfun-space-2);
-    color: var(--openbitfun-color-content-muted);
+    gap: var(--starmate-space-2);
+    color: var(--starmate-color-content-muted);
   }
 
   .statusText {
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    font-size: var(--starmate-type-body-sm-font-size);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   .root[data-openbitfun-state="asking"] .statusIcon {
-    color: var(--openbitfun-color-status-warning-content);
+    color: var(--starmate-color-status-warning-content);
   }
 
   .root[data-openbitfun-state="submitted"] .statusIcon,
   .root[data-openbitfun-state="completed"] .statusIcon {
-    color: var(--openbitfun-color-status-success-content);
+    color: var(--starmate-color-status-success-content);
   }
 
   .root[data-openbitfun-state="error"] .statusIcon {
-    color: var(--openbitfun-color-status-danger-content);
+    color: var(--starmate-color-status-danger-content);
   }
 
   .root[data-openbitfun-state="loading"] .statusIcon,
   .root[data-openbitfun-state="timeout"] .statusIcon,
   .root[data-openbitfun-state="submitting"] .statusIcon {
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   .root[data-openbitfun-state="loading"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]),
   .root[data-openbitfun-state="submitting"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]) {
-    animation: openbitfun-ask-user-spin var(--openbitfun-motion-duration-loop) linear infinite;
+    animation: openbitfun-ask-user-spin var(--starmate-motion-duration-loop) linear infinite;
   }
 
   .statusOnly {
-    min-block-size: var(--openbitfun-control-activity-item-surface-height);
-    gap: var(--openbitfun-space-2);
-    padding-block: var(--openbitfun-control-activity-item-surface-padding-block);
-    padding-inline: calc(var(--openbitfun-control-flow-chat-card-padding-inline) + var(--openbitfun-control-ask-user-option-padding-inline)) calc(var(--openbitfun-control-flow-chat-card-padding-inline) + var(--openbitfun-control-ask-user-option-padding-inline));
+    min-block-size: var(--starmate-control-activity-item-surface-height);
+    gap: var(--starmate-space-2);
+    padding-block: var(--starmate-control-activity-item-surface-padding-block);
+    padding-inline: calc(var(--starmate-control-flow-chat-card-padding-inline) + var(--starmate-control-ask-user-option-padding-inline)) calc(var(--starmate-control-flow-chat-card-padding-inline) + var(--starmate-control-ask-user-option-padding-inline));
   }
 
   .feedback {
-    gap: var(--openbitfun-space-2);
-    margin-block-end: var(--openbitfun-control-ask-user-body-padding);
-    margin-inline: var(--openbitfun-control-flow-chat-card-padding-inline);
-    padding-block: var(--openbitfun-space-2);
-    padding-inline: var(--openbitfun-space-3);
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-status-warning-border);
-    border-radius: var(--openbitfun-radius-base);
-    color: var(--openbitfun-color-status-warning-content);
-    background: var(--openbitfun-color-status-warning-surface);
+    gap: var(--starmate-space-2);
+    margin-block-end: var(--starmate-control-ask-user-body-padding);
+    margin-inline: var(--starmate-control-flow-chat-card-padding-inline);
+    padding-block: var(--starmate-space-2);
+    padding-inline: var(--starmate-space-3);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-status-warning-border);
+    border-radius: var(--starmate-radius-base);
+    color: var(--starmate-color-status-warning-content);
+    background: var(--starmate-color-status-warning-surface);
   }
 
   .root[data-openbitfun-state="error"] .feedback {
-    border-color: var(--openbitfun-color-status-danger-border);
-    color: var(--openbitfun-color-status-danger-content);
-    background: var(--openbitfun-color-status-danger-surface);
+    border-color: var(--starmate-color-status-danger-border);
+    color: var(--starmate-color-status-danger-content);
+    background: var(--starmate-color-status-danger-surface);
   }
 
   :global([data-density="touch"]) .optionSelector {
-    min-block-size: var(--openbitfun-control-hit-target);
+    min-block-size: var(--starmate-control-hit-target);
   }
 
   @container ask-user (max-width: 24rem) {
@@ -615,7 +615,7 @@
     .root,
     .option,
     .feedback {
-      border: var(--openbitfun-border-width-default) solid CanvasText;
+      border: var(--starmate-border-width-default) solid CanvasText;
       outline: 0;
       box-shadow: none;
     }

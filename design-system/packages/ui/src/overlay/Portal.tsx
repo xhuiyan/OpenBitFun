@@ -23,7 +23,7 @@ export function getOverlayHost(ownerDocument: Document): HTMLDivElement {
   const host = ownerDocument.createElement("div");
   host.setAttribute("data-openbitfun-overlay-host", "true");
   Object.assign(host.style, {
-    position: "fixed", inset: "0", zIndex: "var(--openbitfun-layer-overlay-host)", pointerEvents: "none",
+    position: "fixed", inset: "0", zIndex: "var(--starmate-layer-overlay-host)", pointerEvents: "none",
   });
   ownerDocument.body.appendChild(host);
   return host;

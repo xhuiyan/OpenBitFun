@@ -3,7 +3,7 @@
     display: flex;
     min-inline-size: 0;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   .sessionList {
@@ -17,31 +17,31 @@
     display: grid;
     min-inline-size: 0;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--openbitfun-space-1) var(--openbitfun-space-3);
-    padding-block: var(--openbitfun-space-2);
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    gap: var(--starmate-space-1) var(--starmate-space-3);
+    padding-block: var(--starmate-space-2);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
   }
 
-  .record { padding-block: var(--openbitfun-space-2); }
+  .record { padding-block: var(--starmate-space-2); }
 
   .record [data-openbitfun-part="sectionLabel"] {
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
   }
 
   .record + .record,
   .session + .session {
-    border-block-start: 1px solid var(--openbitfun-color-border-subtle);
+    border-block-start: 1px solid var(--starmate-color-border-subtle);
   }
 
   .sessionId {
     grid-column: 1;
     overflow-wrap: anywhere;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
   }
 
   .sessionName {
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
     min-inline-size: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -51,24 +51,24 @@
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: center;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     white-space: nowrap;
   }
 
   .empty {
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-body-sm-font-size);
   }
 
   .status {
     min-inline-size: 0;
     color: inherit;
-    font-size: var(--openbitfun-type-meta-font-size);
+    font-size: var(--starmate-type-meta-font-size);
   }
 
   .error {
-    color: var(--openbitfun-color-status-danger-content);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    color: var(--starmate-color-status-danger-content);
+    font-size: var(--starmate-type-body-sm-font-size);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
   }

@@ -11,34 +11,34 @@
 
   .root {
     display: flex;
-    inline-size: var(--openbitfun-overlay-menu-inline-size);
+    inline-size: var(--starmate-overlay-menu-inline-size);
     max-inline-size: 100%;
-    max-block-size: var(--openbitfun-overlay-menu-max-block-size);
-    padding-block: var(--openbitfun-overlay-menu-surface-padding);
-    padding-inline: var(--openbitfun-overlay-menu-surface-padding) 0;
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-overlay-menu-surface-radius);
-    color: var(--openbitfun-color-action-neutral-content);
-    background: var(--openbitfun-color-surface-panel);
-    box-shadow: var(--openbitfun-shadow-menu);
+    max-block-size: var(--starmate-overlay-menu-max-block-size);
+    padding-block: var(--starmate-overlay-menu-surface-padding);
+    padding-inline: var(--starmate-overlay-menu-surface-padding) 0;
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-overlay-menu-surface-radius);
+    color: var(--starmate-color-action-neutral-content);
+    background: var(--starmate-color-surface-panel);
+    box-shadow: var(--starmate-shadow-menu);
   }
 
   /* Content-driven menus hug their widest row; the fixed token stays the upper bound. */
   .root[data-openbitfun-inline-size="content"] {
     inline-size: max-content;
-    min-inline-size: var(--openbitfun-overlay-menu-min-inline-size);
-    max-inline-size: min(var(--openbitfun-overlay-menu-inline-size), 100%);
+    min-inline-size: var(--starmate-overlay-menu-min-inline-size);
+    max-inline-size: min(var(--starmate-overlay-menu-inline-size), 100%);
   }
 
   .viewport {
     flex: 1 1 auto;
     min-inline-size: 0;
     max-block-size: calc(
-      var(--openbitfun-overlay-menu-max-block-size)
-      - var(--openbitfun-overlay-menu-surface-padding)
-      - var(--openbitfun-overlay-menu-surface-padding)
+      var(--starmate-overlay-menu-max-block-size)
+      - var(--starmate-overlay-menu-surface-padding)
+      - var(--starmate-overlay-menu-surface-padding)
     );
-    padding-inline-end: var(--openbitfun-overlay-menu-scrollbar-gap);
+    padding-inline-end: var(--starmate-overlay-menu-scrollbar-gap);
     /* Do not reserve an invisible one-sided track in menus that do not scroll. */
     scrollbar-gutter: auto;
   }
@@ -47,8 +47,8 @@
     padding: 0;
     /* Balance the end inset with the start inset after the viewport scrollbar gap. */
     padding-inline-end: calc(
-      var(--openbitfun-overlay-menu-surface-padding)
-      - var(--openbitfun-overlay-menu-scrollbar-gap)
+      var(--starmate-overlay-menu-surface-padding)
+      - var(--starmate-overlay-menu-scrollbar-gap)
     );
   }
 
@@ -65,32 +65,32 @@
   }
 
   .section + .section {
-    margin-block-start: max(0px, calc(var(--openbitfun-overlay-menu-section-gap) - var(--openbitfun-overlay-menu-row-gap)));
+    margin-block-start: max(0px, calc(var(--starmate-overlay-menu-section-gap) - var(--starmate-overlay-menu-row-gap)));
   }
 
   .items {
-    gap: var(--openbitfun-overlay-menu-row-gap);
+    gap: var(--starmate-overlay-menu-row-gap);
   }
 
   .heading {
     display: flex;
     align-items: center;
     min-inline-size: 0;
-    min-block-size: var(--openbitfun-overlay-menu-heading-height);
-    gap: var(--openbitfun-overlay-menu-heading-gap);
-    padding-inline: var(--openbitfun-overlay-menu-heading-padding-inline);
+    min-block-size: var(--starmate-overlay-menu-heading-height);
+    gap: var(--starmate-overlay-menu-heading-gap);
+    padding-inline: var(--starmate-overlay-menu-heading-padding-inline);
   }
 
   .headingLabel {
     overflow: hidden;
     flex: 1 1 auto;
     min-inline-size: 0;
-    color: var(--openbitfun-color-content-caption);
-    font-family: var(--openbitfun-type-meta-font-family);
-    font-size: var(--openbitfun-type-meta-font-size);
-    font-weight: var(--openbitfun-type-label-xs-font-weight);
-    line-height: var(--openbitfun-type-label-xs-line-height);
-    letter-spacing: var(--openbitfun-type-meta-letter-spacing);
+    color: var(--starmate-color-content-caption);
+    font-family: var(--starmate-type-meta-font-family);
+    font-size: var(--starmate-type-meta-font-size);
+    font-weight: var(--starmate-type-label-xs-font-weight);
+    line-height: var(--starmate-type-label-xs-line-height);
+    letter-spacing: var(--starmate-type-meta-letter-spacing);
     white-space: nowrap;
   }
 
@@ -101,58 +101,58 @@
   }
 
   .headingAction.headingAction {
-    inline-size: var(--openbitfun-overlay-menu-heading-action-size);
-    block-size: var(--openbitfun-overlay-menu-heading-action-size);
-    border-radius: var(--openbitfun-radius-xs);
+    inline-size: var(--starmate-overlay-menu-heading-action-size);
+    block-size: var(--starmate-overlay-menu-heading-action-size);
+    border-radius: var(--starmate-radius-xs);
   }
 
   .item {
     inline-size: 100%;
-    min-block-size: var(--openbitfun-overlay-menu-item-height);
-    padding-inline: var(--openbitfun-overlay-menu-item-padding-inline);
-    border-radius: var(--openbitfun-overlay-menu-item-radius);
+    min-block-size: var(--starmate-overlay-menu-item-height);
+    padding-inline: var(--starmate-overlay-menu-item-padding-inline);
+    border-radius: var(--starmate-overlay-menu-item-radius);
   }
 
   .item > [data-openbitfun-part="trigger"] {
-    gap: var(--openbitfun-overlay-menu-item-gap);
+    gap: var(--starmate-overlay-menu-item-gap);
   }
 
   .item:has(> [data-openbitfun-part="trigger"]:focus-visible) {
     /* Keep the entire focus indicator within a scrolled or clipped item. */
-    box-shadow: inset 0 0 0 var(--openbitfun-focus-width) var(--openbitfun-color-focus-ring);
+    box-shadow: inset 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring);
   }
 
   .item:has(> [data-openbitfun-part="trigger"][aria-checked="true"]),
   .item:has(> [data-openbitfun-part="trigger"][aria-expanded="true"]) {
-    color: var(--openbitfun-color-action-neutral-content);
-    background: var(--openbitfun-color-selection-surface);
+    color: var(--starmate-color-action-neutral-content);
+    background: var(--starmate-color-selection-surface);
   }
 
   .item [data-openbitfun-part="leading"] {
-    inline-size: var(--openbitfun-overlay-menu-item-icon-size);
-    block-size: var(--openbitfun-overlay-menu-item-icon-size);
+    inline-size: var(--starmate-overlay-menu-item-icon-size);
+    block-size: var(--starmate-overlay-menu-item-icon-size);
   }
 
   .separator {
     flex: 0 0 auto;
     inline-size: 100%;
-    block-size: var(--openbitfun-border-width-default);
-    margin-block: var(--openbitfun-overlay-menu-section-gap);
-    background: var(--openbitfun-color-border-subtle);
+    block-size: var(--starmate-border-width-default);
+    margin-block: var(--starmate-overlay-menu-section-gap);
+    background: var(--starmate-color-border-subtle);
   }
 
   /* A separator owns the total section spacing, including the list's gap. */
   .items > .separator:not(:first-child) {
-    margin-block-start: max(0px, calc(var(--openbitfun-overlay-menu-section-gap) - var(--openbitfun-overlay-menu-row-gap)));
+    margin-block-start: max(0px, calc(var(--starmate-overlay-menu-section-gap) - var(--starmate-overlay-menu-row-gap)));
   }
 
   .items > .separator:not(:last-child) {
-    margin-block-end: max(0px, calc(var(--openbitfun-overlay-menu-section-gap) - var(--openbitfun-overlay-menu-row-gap)));
+    margin-block-end: max(0px, calc(var(--starmate-overlay-menu-section-gap) - var(--starmate-overlay-menu-row-gap)));
   }
 
   @media (prefers-contrast: more) {
     .headingLabel {
-      color: var(--openbitfun-color-content-muted);
+      color: var(--starmate-color-content-muted);
     }
   }
 
@@ -162,7 +162,7 @@
     }
 
     .item:has(> [data-openbitfun-part="trigger"]:focus-visible) {
-      box-shadow: inset 0 0 0 var(--openbitfun-focus-width) Highlight;
+      box-shadow: inset 0 0 0 var(--starmate-focus-width) Highlight;
     }
 
     .root {

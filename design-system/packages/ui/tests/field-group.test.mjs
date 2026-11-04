@@ -79,11 +79,11 @@ test("inline summaries preserve separate headings, descriptions, and actions", (
 test("form grouping styles consume only shared public composition tokens", async () => {
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /--openbitfun-layout-form-section-gap/);
-  assert.match(styles, /--openbitfun-layout-field-group-radius/);
-  assert.match(styles, /--openbitfun-layout-field-group-row-padding-block/);
-  assert.match(styles, /--openbitfun-color-field-group-background/);
-  assert.match(styles, /--openbitfun-color-border-subtle/);
+  assert.match(styles, /--starmate-layout-form-section-gap/);
+  assert.match(styles, /--starmate-layout-field-group-radius/);
+  assert.match(styles, /--starmate-layout-field-group-row-padding-block/);
+  assert.match(styles, /--starmate-color-field-group-background/);
+  assert.match(styles, /--starmate-color-border-subtle/);
 });
 
 test("field surface context reaches canonical field shells and resets for nested groups", () => {
@@ -129,6 +129,6 @@ test("ambient field groups preserve opaque overlays while field shells reuse the
     assert.match(styles, /data-field-surface="ambient"/);
     assert.match(styles, /background:\s*transparent/);
   });
-  assert.match(componentStyles[2], /\.popover\s*\{[\s\S]*?background:\s*var\(--openbitfun-color-surface-panel\)/);
+  assert.match(componentStyles[2], /\.popover\s*\{[\s\S]*?background:\s*var\(--starmate-color-surface-panel\)/);
   assert.match(portalSource, /<FieldSurfaceContext\.Provider value="default">/);
 });

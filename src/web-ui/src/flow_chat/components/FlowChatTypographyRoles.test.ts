@@ -148,12 +148,12 @@ describe('FlowChat semantic typography roles', () => {
     expect(extractBlock(model, '&__option-name {')).not.toMatch(/\bfont(?:-[\w-]+)?\s*:/);
     const label = extractBlock(actionItem, '\n  .label {');
     for (const property of ['font-family', 'font-size', 'font-weight', 'letter-spacing']) {
-      expect(label).toContain(`${property}: var(--openbitfun-type-label-md-${property});`);
+      expect(label).toContain(`${property}: var(--starmate-type-label-md-${property});`);
       expect(extractBlock(model, '&__dropdown {')).toContain(
         `${property}: var(--openbitfun-type-label-md-${property});`,
       );
     }
-    expect(label).toContain('line-height: var(--openbitfun-type-action-row-line-height);');
+    expect(label).toContain('line-height: var(--starmate-type-action-row-line-height);');
     expectRole(reasoning, '&__title {', 'control');
     expectRole(reasoning, '&__option-label {', 'control');
   });
@@ -202,7 +202,7 @@ describe('FlowChat semantic typography roles', () => {
     expect(extractBlock(metricStyles, '.metric {')).toContain('font: inherit;');
     for (const property of ['font-family', 'font-size', 'font-weight', 'line-height']) {
       expect(extractBlock(metricStyles, '.root {')).toContain(
-        `${property}: var(--openbitfun-type-flow-meta-${property});`,
+        `${property}: var(--starmate-type-flow-meta-${property});`,
       );
     }
     expect(meta).toContain('gap: var(--openbitfun-space-2);');

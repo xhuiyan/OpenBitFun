@@ -11,49 +11,49 @@
   .overlay {
     position: fixed;
     inset: 0;
-    z-index: var(--openbitfun-layer-modal);
+    z-index: var(--starmate-layer-modal);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--openbitfun-overlay-dialog-viewport-gutter);
-    background: var(--openbitfun-color-overlay-scrim);
-    -webkit-backdrop-filter: var(--openbitfun-overlay-dialog-backdrop-blur);
-    backdrop-filter: var(--openbitfun-overlay-dialog-backdrop-blur);
-    animation: openbitfun-dialog-overlay-enter var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-enter) both;
+    padding: var(--starmate-overlay-dialog-viewport-gutter);
+    background: var(--starmate-color-overlay-scrim);
+    -webkit-backdrop-filter: var(--starmate-overlay-dialog-backdrop-blur);
+    backdrop-filter: var(--starmate-overlay-dialog-backdrop-blur);
+    animation: openbitfun-dialog-overlay-enter var(--starmate-motion-duration-base) var(--starmate-motion-easing-enter) both;
   }
 
   .surface {
     position: relative;
     display: flex;
     min-inline-size: 0;
-    max-block-size: calc(100vh - 2 * var(--openbitfun-overlay-dialog-viewport-gutter));
+    max-block-size: calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter));
     flex-direction: column;
     inline-size: 100%;
     overflow: hidden;
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-overlay-dialog-surface-radius);
-    color: var(--openbitfun-color-content-secondary);
-    background: var(--openbitfun-color-surface-raised);
-    box-shadow: var(--openbitfun-shadow-overlay);
-    animation: openbitfun-dialog-surface-enter var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-enter) both;
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-overlay-dialog-surface-radius);
+    color: var(--starmate-color-content-secondary);
+    background: var(--starmate-color-surface-raised);
+    box-shadow: var(--starmate-shadow-overlay);
+    animation: openbitfun-dialog-surface-enter var(--starmate-motion-duration-base) var(--starmate-motion-easing-enter) both;
   }
 
-  .surface[data-size="sm"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-small); }
-  .surface[data-size="md"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-medium); }
-  .surface[data-size="lg"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-large); }
-  .surface[data-size="xl"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-xlarge); }
-  .surface[data-size="2xl"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-xxlarge); }
+  .surface[data-size="sm"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-small); }
+  .surface[data-size="md"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-medium); }
+  .surface[data-size="lg"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-large); }
+  .surface[data-size="xl"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-xlarge); }
+  .surface[data-size="2xl"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-xxlarge); }
 
   .surface[data-preset="panel"] {
-    --_dialog-panel-title-gap: calc(var(--openbitfun-overlay-dialog-header-padding-block-start) + var(--openbitfun-space-4));
+    --_dialog-panel-title-gap: calc(var(--starmate-overlay-dialog-header-padding-block-start) + var(--starmate-space-4));
 
     display: grid;
     grid-template-rows: auto minmax(0, max-content) auto;
     align-content: center;
     padding-block: var(--_dialog-panel-title-gap);
     block-size: min(
-      var(--openbitfun-overlay-dialog-panel-block-size),
-      calc(100dvh - 2 * var(--openbitfun-overlay-dialog-viewport-gutter))
+      var(--starmate-overlay-dialog-panel-block-size),
+      calc(100dvh - 2 * var(--starmate-overlay-dialog-viewport-gutter))
     );
   }
 
@@ -64,8 +64,8 @@
 
   .surface[data-preset="panel"] > .header > .heading {
     justify-content: center;
-    min-block-size: var(--openbitfun-control-height-sm);
-    max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-large);
+    min-block-size: var(--starmate-control-height-sm);
+    max-inline-size: var(--starmate-overlay-dialog-max-inline-size-large);
     margin-inline: auto;
     text-align: center;
   }
@@ -74,38 +74,38 @@
   .surface[data-preset="panel"] > .header > .headerActions,
   .surface[data-preset="panel"] > .header > .close {
     position: absolute;
-    inset-block-start: var(--openbitfun-overlay-dialog-header-padding-block-start);
-    inset-inline-end: var(--openbitfun-overlay-dialog-header-padding-inline);
+    inset-block-start: var(--starmate-overlay-dialog-header-padding-block-start);
+    inset-inline-end: var(--starmate-overlay-dialog-header-padding-inline);
   }
 
   .surface[data-preset="panel"] > .header > .headerLeading {
-    inset-inline-start: var(--openbitfun-overlay-dialog-header-padding-inline);
+    inset-inline-start: var(--starmate-overlay-dialog-header-padding-inline);
     inset-inline-end: auto;
   }
 
   .surface[data-preset="panel"] > .body {
     padding-block: 0;
     padding-inline: max(
-      var(--openbitfun-overlay-dialog-content-padding-lg),
-      calc((100% - var(--openbitfun-overlay-dialog-max-inline-size-large)) / 2)
+      var(--starmate-overlay-dialog-content-padding-lg),
+      calc((100% - var(--starmate-overlay-dialog-max-inline-size-large)) / 2)
     );
   }
 
   .surface[data-preset="panel"] > .footer[data-appearance="attached"] {
     justify-content: center;
-    padding-block: var(--openbitfun-overlay-dialog-header-padding-block-end) 0;
+    padding-block: var(--starmate-overlay-dialog-header-padding-block-end) 0;
   }
 
   .surface[data-preset="panel"]:has(> .footer[data-appearance="floating"]) {
     padding-block-end: max(
       var(--_dialog-panel-title-gap),
-      var(--openbitfun-overlay-dialog-footer-height)
+      var(--starmate-overlay-dialog-footer-height)
     );
   }
 
   .surface[data-preset="panel"]:has(> .footer[data-appearance="floating"]) > .body {
-    padding-block-end: var(--openbitfun-overlay-dialog-footer-fade-extent);
-    scroll-padding-block-end: var(--openbitfun-overlay-dialog-footer-fade-extent);
+    padding-block-end: var(--starmate-overlay-dialog-footer-fade-extent);
+    scroll-padding-block-end: var(--starmate-overlay-dialog-footer-fade-extent);
   }
 
   .overlay[data-openbitfun-component="sheet"] {
@@ -125,25 +125,25 @@
   .surface[data-openbitfun-component="sheet"][data-placement="bottom"] {
     block-size: auto;
     max-inline-size: none;
-    border-start-start-radius: var(--openbitfun-overlay-dialog-surface-radius);
-    border-start-end-radius: var(--openbitfun-overlay-dialog-surface-radius);
+    border-start-start-radius: var(--starmate-overlay-dialog-surface-radius);
+    border-start-end-radius: var(--starmate-overlay-dialog-surface-radius);
   }
 
-  .surface[data-openbitfun-component="sheet"][data-size="sm"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-small); }
-  .surface[data-openbitfun-component="sheet"][data-size="md"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-medium); }
-  .surface[data-openbitfun-component="sheet"][data-size="lg"] { max-inline-size: var(--openbitfun-overlay-dialog-max-inline-size-large); }
+  .surface[data-openbitfun-component="sheet"][data-size="sm"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-small); }
+  .surface[data-openbitfun-component="sheet"][data-size="md"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-medium); }
+  .surface[data-openbitfun-component="sheet"][data-size="lg"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-large); }
 
   .header {
     display: flex;
     flex: 0 0 auto;
     align-items: flex-start;
-    gap: var(--openbitfun-space-3);
-    padding-block: var(--openbitfun-overlay-dialog-header-padding-block-start) var(--openbitfun-overlay-dialog-header-padding-block-end);
-    padding-inline: var(--openbitfun-overlay-dialog-header-padding-inline);
+    gap: var(--starmate-space-3);
+    padding-block: var(--starmate-overlay-dialog-header-padding-block-start) var(--starmate-overlay-dialog-header-padding-block-end);
+    padding-inline: var(--starmate-overlay-dialog-header-padding-inline);
   }
 
   .header[data-separator="true"] {
-    border-block-end: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    border-block-end: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   .heading {
@@ -151,30 +151,30 @@
     min-inline-size: 0;
     flex: 1;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .title {
     min-inline-size: 0;
     margin: 0;
     overflow: hidden;
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-heading-dialog-font-family);
-    font-size: var(--openbitfun-type-heading-dialog-font-size);
-    font-weight: var(--openbitfun-type-heading-dialog-font-weight);
-    line-height: var(--openbitfun-type-heading-dialog-line-height);
-    letter-spacing: var(--openbitfun-type-heading-dialog-letter-spacing);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-heading-dialog-font-family);
+    font-size: var(--starmate-type-heading-dialog-font-size);
+    font-weight: var(--starmate-type-heading-dialog-font-weight);
+    line-height: var(--starmate-type-heading-dialog-line-height);
+    letter-spacing: var(--starmate-type-heading-dialog-letter-spacing);
     white-space: nowrap;
   }
 
   .description {
     margin: 0;
-    color: var(--openbitfun-color-content-muted);
-    font-family: var(--openbitfun-type-support-font-family);
-    font-size: var(--openbitfun-type-support-font-size);
-    font-weight: var(--openbitfun-type-support-font-weight);
-    line-height: var(--openbitfun-type-support-line-height);
-    letter-spacing: var(--openbitfun-type-support-letter-spacing);
+    color: var(--starmate-color-content-muted);
+    font-family: var(--starmate-type-support-font-family);
+    font-size: var(--starmate-type-support-font-size);
+    font-weight: var(--starmate-type-support-font-weight);
+    line-height: var(--starmate-type-support-line-height);
+    letter-spacing: var(--starmate-type-support-letter-spacing);
   }
 
   .headerLeading,
@@ -182,7 +182,7 @@
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   .close {
@@ -198,7 +198,7 @@
   }
 
   .body[data-inset="standard"] {
-    padding: var(--openbitfun-overlay-dialog-content-padding-lg);
+    padding: var(--starmate-overlay-dialog-content-padding-lg);
   }
 
   .header + .body[data-inset="standard"] {
@@ -206,8 +206,8 @@
   }
 
   .surface:has(> .footer[data-appearance="floating"]) > .body {
-    padding-block-end: var(--openbitfun-overlay-dialog-footer-content-inset);
-    scroll-padding-block-end: var(--openbitfun-overlay-dialog-footer-content-inset);
+    padding-block-end: var(--starmate-overlay-dialog-footer-content-inset);
+    scroll-padding-block-end: var(--starmate-overlay-dialog-footer-content-inset);
   }
 
   .footer {
@@ -215,21 +215,21 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
-    padding-block: var(--openbitfun-overlay-dialog-footer-padding-block-start) var(--openbitfun-overlay-dialog-footer-padding-block-end);
-    padding-inline: var(--openbitfun-overlay-dialog-footer-padding-inline);
+    gap: var(--starmate-space-2);
+    padding-block: var(--starmate-overlay-dialog-footer-padding-block-start) var(--starmate-overlay-dialog-footer-padding-block-end);
+    padding-inline: var(--starmate-overlay-dialog-footer-padding-inline);
   }
 
   .footer[data-separator="true"] {
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   .footer[data-appearance="floating"] {
     position: absolute;
-    z-index: var(--openbitfun-layer-content);
+    z-index: var(--starmate-layer-content);
     inset-inline: 0;
     inset-block-end: 0;
-    min-block-size: var(--openbitfun-overlay-dialog-footer-height);
+    min-block-size: var(--starmate-overlay-dialog-footer-height);
     justify-content: center;
     isolation: isolate;
     background: transparent;
@@ -240,33 +240,33 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    inset-block-start: calc(-1 * var(--openbitfun-overlay-dialog-footer-fade-extent));
-    background: linear-gradient(to bottom, transparent, var(--openbitfun-color-surface-raised));
-    -webkit-backdrop-filter: var(--openbitfun-overlay-dialog-footer-blur);
-    backdrop-filter: var(--openbitfun-overlay-dialog-footer-blur);
-    mask-image: linear-gradient(to bottom, transparent, var(--openbitfun-color-surface-raised) var(--openbitfun-overlay-dialog-footer-fade-extent));
+    inset-block-start: calc(-1 * var(--starmate-overlay-dialog-footer-fade-extent));
+    background: linear-gradient(to bottom, transparent, var(--starmate-color-surface-raised));
+    -webkit-backdrop-filter: var(--starmate-overlay-dialog-footer-blur);
+    backdrop-filter: var(--starmate-overlay-dialog-footer-blur);
+    mask-image: linear-gradient(to bottom, transparent, var(--starmate-color-surface-raised) var(--starmate-overlay-dialog-footer-fade-extent));
     content: "";
     pointer-events: none;
   }
 
   .footer[data-appearance="floating"] > * {
-    min-inline-size: var(--openbitfun-overlay-dialog-footer-action-min-width);
+    min-inline-size: var(--starmate-overlay-dialog-footer-action-min-width);
     pointer-events: auto;
   }
 
   .overlay[data-state="exiting"] {
     pointer-events: none;
-    animation: openbitfun-dialog-overlay-exit var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-exit) both;
+    animation: openbitfun-dialog-overlay-exit var(--starmate-motion-duration-base) var(--starmate-motion-easing-exit) both;
   }
 
   .surface[data-state="exiting"] {
-    animation: openbitfun-dialog-surface-exit var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-exit) both;
+    animation: openbitfun-dialog-surface-exit var(--starmate-motion-duration-base) var(--starmate-motion-easing-exit) both;
   }
 
   @keyframes openbitfun-dialog-overlay-enter { from { opacity: 0; } to { opacity: 1; } }
   @keyframes openbitfun-dialog-overlay-exit { from { opacity: 1; } to { opacity: 0; } }
-  @keyframes openbitfun-dialog-surface-enter { from { opacity: 0; transform: translateY(var(--openbitfun-motion-distance-sm)) scale(0.98); } to { opacity: 1; transform: none; } }
-  @keyframes openbitfun-dialog-surface-exit { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(var(--openbitfun-motion-distance-sm)) scale(0.98); } }
+  @keyframes openbitfun-dialog-surface-enter { from { opacity: 0; transform: translateY(var(--starmate-motion-distance-sm)) scale(0.98); } to { opacity: 1; transform: none; } }
+  @keyframes openbitfun-dialog-surface-exit { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(var(--starmate-motion-distance-sm)) scale(0.98); } }
 
   @media (prefers-reduced-motion: reduce) {
     .overlay,
@@ -278,7 +278,7 @@
   @media (forced-colors: active), (prefers-reduced-transparency: reduce) {
     .footer[data-appearance="floating"]::before {
       inset-block-start: 0;
-      background: var(--openbitfun-color-surface-raised);
+      background: var(--starmate-color-surface-raised);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
       mask-image: none;

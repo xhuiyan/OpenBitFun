@@ -176,8 +176,8 @@ test("end actions grow the capsule outside the centered content before appearing
   assert.match(styles, /\.tab\s*\{[^}]*padding-inline:\s*var\(--_tab-group-item-padding-inline\);/s);
   assert.match(styles, /\.tab::before\s*\{[^}]*inset:\s*0;/s);
   assert.match(styles, /\.item\[data-has-end-action="true"\]\s*\{\s*padding-inline-end:\s*0;/);
-  assert.match(styles, /transition:\s*padding-inline-end\s+var\(--openbitfun-motion-duration-fast\)/);
-  assert.match(styles, /\.item:hover > \.endAction,[^{]*\{[^}]*visibility:\s*visible;[^}]*transition-delay:\s*var\(--openbitfun-motion-duration-fast\);/s);
+  assert.match(styles, /transition:\s*padding-inline-end\s+var\(--starmate-motion-duration-fast\)/);
+  assert.match(styles, /\.item:hover > \.endAction,[^{]*\{[^}]*visibility:\s*visible;[^}]*transition-delay:\s*var\(--starmate-motion-duration-fast\);/s);
   assert.doesNotMatch(styles, /clip-path|mask-image/);
   assert.doesNotMatch(styles, /translateX/);
 });
@@ -185,22 +185,22 @@ test("end actions grow the capsule outside the centered content before appearing
 test("TabGroup styling uses its geometry contract and Button semantic colors", async () => {
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /--openbitfun-control-tab-group-gap/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-gap/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-height/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-height-sm/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-icon-size/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-padding-inline/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-padding-block-sm/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-padding-inline-sm/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-action-size/);
-  assert.match(styles, /--openbitfun-control-tab-group-item-radius/);
-  assert.match(styles, /--openbitfun-color-action-neutral-border/);
-  assert.match(styles, /--openbitfun-color-action-neutral-content/);
-  assert.match(styles, /--openbitfun-color-content-primary/);
-  assert.match(styles, /--openbitfun-color-action-neutral-surface/);
-  assert.match(styles, /--openbitfun-type-label-md-font-weight/);
-  assert.match(styles, /--openbitfun-type-label-selected-font-weight/);
+  assert.match(styles, /--starmate-control-tab-group-gap/);
+  assert.match(styles, /--starmate-control-tab-group-item-gap/);
+  assert.match(styles, /--starmate-control-tab-group-item-height/);
+  assert.match(styles, /--starmate-control-tab-group-item-height-sm/);
+  assert.match(styles, /--starmate-control-tab-group-item-icon-size/);
+  assert.match(styles, /--starmate-control-tab-group-item-padding-inline/);
+  assert.match(styles, /--starmate-control-tab-group-item-padding-block-sm/);
+  assert.match(styles, /--starmate-control-tab-group-item-padding-inline-sm/);
+  assert.match(styles, /--starmate-control-tab-group-item-action-size/);
+  assert.match(styles, /--starmate-control-tab-group-item-radius/);
+  assert.match(styles, /--starmate-color-action-neutral-border/);
+  assert.match(styles, /--starmate-color-action-neutral-content/);
+  assert.match(styles, /--starmate-color-content-primary/);
+  assert.match(styles, /--starmate-color-action-neutral-surface/);
+  assert.match(styles, /--starmate-type-label-md-font-weight/);
+  assert.match(styles, /--starmate-type-label-selected-font-weight/);
   assert.doesNotMatch(styles, /#[0-9a-f]{3,8}/i);
 });
 
@@ -212,7 +212,7 @@ test("tab labels and icons keep primary content across selection states", async 
 
   assert.match(
     styles,
-    /\.tab\s*\{[^}]*--_tab-content:\s*var\(--openbitfun-color-content-primary\);/s,
+    /\.tab\s*\{[^}]*--_tab-content:\s*var\(--starmate-color-content-primary\);/s,
   );
   assert.doesNotMatch(
     styles,
@@ -220,7 +220,7 @@ test("tab labels and icons keep primary content across selection states", async 
   );
   assert.match(
     styles,
-    /\.label\s*\{[^}]*line-height:\s*var\(--openbitfun-type-label-md-line-height\);/s,
+    /\.label\s*\{[^}]*line-height:\s*var\(--starmate-type-label-md-line-height\);/s,
   );
 });
 

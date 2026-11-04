@@ -6,18 +6,18 @@
     justify-content: center;
     min-inline-size: 0;
     margin: 0;
-    gap: calc(var(--openbitfun-space-1) / 2);
-    padding-block: calc(var(--openbitfun-space-1) / 2);
-    padding-inline: var(--openbitfun-space-1);
+    gap: calc(var(--starmate-space-1) / 2);
+    padding-block: calc(var(--starmate-space-1) / 2);
+    padding-inline: var(--starmate-space-1);
     border: 0;
-    border-radius: var(--openbitfun-radius-xs);
-    color: var(--openbitfun-color-key-hint-content);
-    background: var(--openbitfun-color-key-hint-background);
-    font-family: var(--openbitfun-type-micro-font-family);
-    font-size: var(--openbitfun-type-micro-font-size);
-    font-weight: var(--openbitfun-type-micro-font-weight);
-    letter-spacing: var(--openbitfun-type-micro-letter-spacing);
-    line-height: var(--openbitfun-type-modifier-leading-none-line-height);
+    border-radius: var(--starmate-radius-xs);
+    color: var(--starmate-color-key-hint-content);
+    background: var(--starmate-color-key-hint-background);
+    font-family: var(--starmate-type-micro-font-family);
+    font-size: var(--starmate-type-micro-font-size);
+    font-weight: var(--starmate-type-micro-font-weight);
+    letter-spacing: var(--starmate-type-micro-letter-spacing);
+    line-height: var(--starmate-type-modifier-leading-none-line-height);
     text-decoration: none;
     vertical-align: middle;
     white-space: nowrap;
@@ -45,7 +45,7 @@
 
   @media (forced-colors: active) {
     .root {
-      border: var(--openbitfun-border-width-default) solid ButtonText;
+      border: var(--starmate-border-width-default) solid ButtonText;
       color: ButtonText;
       background: Canvas;
     }

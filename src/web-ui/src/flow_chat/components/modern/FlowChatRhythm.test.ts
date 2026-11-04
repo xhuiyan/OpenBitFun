@@ -82,7 +82,7 @@ describe('FlowChat transcript rhythm', () => {
       'margin: 0 0 var(--openbitfun-control-flow-chat-card-gap) 0;',
     );
     expect(sharedRhythm).toMatch(
-      /data-openbitfun-attention='ambient'[\s\S]*?data-openbitfun-expanded-shell='false'[\s\S]*?:has\([\s\S]*?\+ \.flowchat-flow-item[\s\S]*?margin-bottom: var\(--openbitfun-control-flow-chat-paragraph-gap\);/,
+      /data-openbitfun-attention='ambient'[\s\S]*?data-openbitfun-expanded-shell='false'[\s\S]*?:has\([\s\S]*?\+ \.flowchat-flow-item[\s\S]*?margin-bottom: var\(--starmate-control-flow-chat-paragraph-gap\);/,
     );
     expect(toolStyles).not.toContain(
       "> [data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-part='root'][data-openbitfun-expanded-shell='false']",
@@ -96,7 +96,7 @@ describe('FlowChat transcript rhythm', () => {
     }
     const sharedExplore = readSource('../../../../../../design-system/packages/ui/src/flow-chat/conversation/ConversationBlocks.css');
     expect(sharedExplore).toContain("@import './FlowItemRhythm.css';");
-    expect(sharedExplore).toContain('margin: 0 0 var(--openbitfun-control-flow-chat-flow-item-gap) 0;');
+    expect(sharedExplore).toContain('margin: 0 0 var(--starmate-control-flow-chat-flow-item-gap) 0;');
     for (const leaf of ['../FlowToolCard.scss', '../FlowTextBlock.scss', '../../tool-cards/ModelThinkingDisplay.scss']) {
       expect(readSource(leaf)).not.toContain('margin: 0 0 var(--openbitfun-control-flow-chat-flow-item-gap) 0;');
     }

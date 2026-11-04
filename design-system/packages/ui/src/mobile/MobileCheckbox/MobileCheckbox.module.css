@@ -1,28 +1,28 @@
 @layer openbitfun.components {
-  .root { --_box-size: 20px; display: flex; box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: 52px; align-items: center; gap: var(--openbitfun-space-3); margin: 0; padding: var(--openbitfun-space-2) var(--openbitfun-space-3); border: var(--openbitfun-border-width-default) solid transparent; border-radius: var(--openbitfun-radius-md); color: var(--openbitfun-color-content-primary); background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard); }
-  .root[data-appearance="surface"] { min-block-size: 64px; border-color: var(--openbitfun-color-border-subtle); background: var(--openbitfun-color-surface-panel); box-shadow: var(--openbitfun-shadow-xs); }
-  .root[data-disabled="true"] { color: var(--openbitfun-color-content-disabled); cursor: not-allowed; }
+  .root { --_box-size: 20px; display: flex; box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: 52px; align-items: center; gap: var(--starmate-space-3); margin: 0; padding: var(--starmate-space-2) var(--starmate-space-3); border: var(--starmate-border-width-default) solid transparent; border-radius: var(--starmate-radius-md); color: var(--starmate-color-content-primary); background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard); }
+  .root[data-appearance="surface"] { min-block-size: 64px; border-color: var(--starmate-color-border-subtle); background: var(--starmate-color-surface-panel); box-shadow: var(--starmate-shadow-xs); }
+  .root[data-disabled="true"] { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 
   @media (hover: hover) and (pointer: fine) {
-    .root:is(:hover, [data-openbitfun-preview-state="hover"]):not([data-disabled="true"]) { background: var(--openbitfun-color-action-neutral-surface-hover); }
+    .root:is(:hover, [data-openbitfun-preview-state="hover"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .root:is(:active, [data-openbitfun-preview-state="active"]):not([data-disabled="true"]) { background: var(--openbitfun-color-action-neutral-surface-pressed); }
-  .root:is(:has(.input:focus-visible), [data-openbitfun-preview-state="focus-visible"]) { outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring); outline-offset: var(--openbitfun-focus-offset); }
+  .root:is(:active, [data-openbitfun-preview-state="active"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .root:is(:has(.input:focus-visible), [data-openbitfun-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
 
   /* The box is the web Checkbox at touch scale: same tokens, 20px instead of 14px, so it can carry
      the row's weight without a second visual language. */
   .control { position: relative; display: inline-flex; inline-size: var(--_box-size); block-size: var(--_box-size); flex: 0 0 auto; }
-  .input { position: absolute; z-index: var(--openbitfun-layer-content); inset: 0; inline-size: 100%; block-size: 100%; margin: 0; opacity: 0; cursor: inherit; }
-  .box { display: inline-flex; inline-size: 100%; block-size: 100%; align-items: center; justify-content: center; border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-field-border); border-radius: var(--openbitfun-radius-sm); color: var(--openbitfun-color-control-switch-thumb); background: var(--openbitfun-color-field-background); transition: background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard), border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard); }
-  .root[data-checked="true"] .box, .root[data-indeterminate="true"] .box { border-color: var(--openbitfun-color-control-highlight-background); background: var(--openbitfun-color-control-highlight-background); }
-  .root[data-invalid="true"] .box { border-color: var(--openbitfun-color-status-danger-border); }
-  .root[data-disabled="true"] .box { color: var(--openbitfun-color-content-disabled); background: var(--openbitfun-color-field-background); }
+  .input { position: absolute; z-index: var(--starmate-layer-content); inset: 0; inline-size: 100%; block-size: 100%; margin: 0; opacity: 0; cursor: inherit; }
+  .box { display: inline-flex; inline-size: 100%; block-size: 100%; align-items: center; justify-content: center; border: var(--starmate-border-width-default) solid var(--starmate-color-field-border); border-radius: var(--starmate-radius-sm); color: var(--starmate-color-control-switch-thumb); background: var(--starmate-color-field-background); transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard), border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard); }
+  .root[data-checked="true"] .box, .root[data-indeterminate="true"] .box { border-color: var(--starmate-color-control-highlight-background); background: var(--starmate-color-control-highlight-background); }
+  .root[data-invalid="true"] .box { border-color: var(--starmate-color-status-danger-border); }
+  .root[data-disabled="true"] .box { color: var(--starmate-color-content-disabled); background: var(--starmate-color-field-background); }
   .icon { inline-size: 14px; block-size: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5; opacity: 0; }
   .root[data-checked="true"] .icon, .root[data-indeterminate="true"] .icon { opacity: 1; }
 
-  .copy { display: flex; box-sizing: border-box; min-inline-size: 0; flex: 1 1 auto; flex-direction: column; gap: var(--openbitfun-space-1); }
-  .label { color: var(--openbitfun-color-content-primary); font-size: var(--openbitfun-type-body-md-font-size); font-weight: var(--openbitfun-type-label-lg-font-weight); }
-  .description { color: var(--openbitfun-color-content-muted); font-size: var(--openbitfun-type-body-xs-font-size); }
+  .copy { display: flex; box-sizing: border-box; min-inline-size: 0; flex: 1 1 auto; flex-direction: column; gap: var(--starmate-space-1); }
+  .label { color: var(--starmate-color-content-primary); font-size: var(--starmate-type-body-md-font-size); font-weight: var(--starmate-type-label-lg-font-weight); }
+  .description { color: var(--starmate-color-content-muted); font-size: var(--starmate-type-body-xs-font-size); }
   .root[data-disabled="true"] .label, .root[data-disabled="true"] .description { color: inherit; }
 
   @media (prefers-reduced-motion: reduce) { .root, .box { transition: none; } }

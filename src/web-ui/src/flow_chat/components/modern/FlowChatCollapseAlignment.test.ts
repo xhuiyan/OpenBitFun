@@ -42,10 +42,10 @@ describe('FlowChat collapse spacing', () => {
     const inlineExplore = extractBlock(exploreStyles, ".explore-region[data-placement='inline']");
     const thinkingContent = extractBlock(thinkingStyles, '.thinking-content');
 
-    expect(exploreContent).toContain('padding: var(--openbitfun-space-2) 0 0;');
+    expect(exploreContent).toContain('padding: var(--starmate-space-2) 0 0;');
     expect(inlineExplore).toContain('padding-inline: 0;');
     expect(thinkingContent).toMatch(
-      /padding:\s*var\(--openbitfun-control-flow-chat-card-expanded-padding-block\)\s*var\(--openbitfun-control-flow-chat-card-expanded-padding-inline\)\s*0\s*0;/,
+      /padding:\s*var\(--starmate-control-flow-chat-card-expanded-padding-block\)\s*var\(--starmate-control-flow-chat-card-expanded-padding-inline\)\s*0\s*0;/,
     );
   });
 
@@ -77,7 +77,7 @@ describe('FlowChat collapse spacing', () => {
     const subagentProjectionStyles = readSource('../subagent/SubagentProjectionView.scss');
 
     expect(publicToolCardStyles).toMatch(
-      /\.expanded,\s*\.error\s*\{[\s\S]*?padding:\s*var\(--openbitfun-space-3\) var\(--openbitfun-control-flow-chat-card-padding-inline\);/,
+      /\.expanded,\s*\.error\s*\{[\s\S]*?padding:\s*var\(--starmate-space-3\) var\(--starmate-control-flow-chat-card-padding-inline\);/,
     );
     expect(extractBlock(flowToolCardStyles, '.flow-tool-card-note')).toContain(
       'margin-inline-start: 0;',

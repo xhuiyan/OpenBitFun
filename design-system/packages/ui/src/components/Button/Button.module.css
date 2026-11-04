@@ -1,18 +1,18 @@
 @layer openbitfun.components {
   .button {
     --_button-background: transparent;
-    --_button-background-hover: var(--openbitfun-component-button-fill-background);
-    --_button-background-active: var(--openbitfun-component-button-fill-background);
-    --_button-border: var(--openbitfun-component-button-outline-border);
-    --_button-border-hover: var(--openbitfun-component-button-outline-border-interactive);
-    --_button-border-active: var(--openbitfun-component-button-outline-border-interactive);
-    --_button-content: var(--openbitfun-component-button-content);
-    --_button-content-disabled: var(--openbitfun-color-action-neutral-content-disabled);
-    --_button-font-size: var(--openbitfun-type-label-md-font-size);
-    --_button-height: var(--openbitfun-control-height-md);
+    --_button-background-hover: var(--starmate-component-button-fill-background);
+    --_button-background-active: var(--starmate-component-button-fill-background);
+    --_button-border: var(--starmate-component-button-outline-border);
+    --_button-border-hover: var(--starmate-component-button-outline-border-interactive);
+    --_button-border-active: var(--starmate-component-button-outline-border-interactive);
+    --_button-content: var(--starmate-component-button-content);
+    --_button-content-disabled: var(--starmate-color-action-neutral-content-disabled);
+    --_button-font-size: var(--starmate-type-label-md-font-size);
+    --_button-height: var(--starmate-control-height-md);
     --_button-leading-icon-size: 16px;
-    --_button-padding-block: var(--openbitfun-space-component-block);
-    --_button-padding-inline: var(--openbitfun-space-5);
+    --_button-padding-block: var(--starmate-space-component-block);
+    --_button-padding-inline: var(--starmate-space-5);
     --_button-trailing-icon-size: 14px;
 
     position: relative;
@@ -26,21 +26,21 @@
     block-size: var(--_button-height);
     padding-block: var(--_button-padding-block);
     padding-inline: var(--_button-padding-inline);
-    border: var(--openbitfun-border-width-default) solid var(--_button-border);
-    border-radius: var(--openbitfun-radius-pill);
+    border: var(--starmate-border-width-default) solid var(--_button-border);
+    border-radius: var(--starmate-radius-pill);
     color: var(--_button-content);
     background: transparent;
-    font-family: var(--openbitfun-type-label-md-font-family);
+    font-family: var(--starmate-type-label-md-font-family);
     font-size: var(--_button-font-size);
-    font-weight: var(--openbitfun-type-label-md-font-weight);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
-    line-height: var(--openbitfun-type-label-md-line-height);
+    font-weight: var(--starmate-type-label-md-font-weight);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
+    line-height: var(--starmate-type-label-md-line-height);
     white-space: nowrap;
     cursor: pointer;
     isolation: isolate;
     transition:
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .button::before {
@@ -51,7 +51,7 @@
     background: var(--_button-background);
     content: "";
     pointer-events: none;
-    transition: background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .button:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled)::before {
@@ -68,12 +68,12 @@
 
   .button:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) {
     border-color: var(--_button-border-active);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
+    font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
   .button:focus-visible {
-    outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring);
-    outline-offset: var(--openbitfun-focus-offset);
+    outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
+    outline-offset: var(--starmate-focus-offset);
   }
 
   .button:disabled {
@@ -82,9 +82,9 @@
   }
 
   .button[data-openbitfun-variant="fill"] {
-    --_button-background: var(--openbitfun-component-button-fill-background);
-    --_button-background-hover: var(--openbitfun-component-button-fill-background-hover);
-    --_button-background-active: var(--openbitfun-component-button-fill-background-pressed);
+    --_button-background: var(--starmate-component-button-fill-background);
+    --_button-background-hover: var(--starmate-component-button-fill-background-hover);
+    --_button-background-active: var(--starmate-component-button-fill-background-pressed);
     --_button-border: transparent;
     --_button-border-hover: transparent;
     --_button-border-active: transparent;
@@ -102,33 +102,33 @@
   }
 
   .button[data-openbitfun-variant="primary"] {
-    --_button-background: var(--openbitfun-component-button-primary-background);
-    --_button-background-hover: var(--openbitfun-component-button-primary-background-hover);
-    --_button-background-active: var(--openbitfun-component-button-primary-background-pressed);
+    --_button-background: var(--starmate-component-button-primary-background);
+    --_button-background-hover: var(--starmate-component-button-primary-background-hover);
+    --_button-background-active: var(--starmate-component-button-primary-background-pressed);
     --_button-border: transparent;
     --_button-border-hover: transparent;
     --_button-border-active: transparent;
-    --_button-content: var(--openbitfun-color-action-primary-content);
-    --_button-content-disabled: var(--openbitfun-component-button-primary-content-disabled);
+    --_button-content: var(--starmate-color-action-primary-content);
+    --_button-content-disabled: var(--starmate-component-button-primary-content-disabled);
   }
 
   .button[data-openbitfun-variant="secondary"] {
-    --_button-background: var(--openbitfun-color-surface-tertiary);
-    --_button-background-hover: var(--openbitfun-color-surface-tertiary);
-    --_button-background-active: var(--openbitfun-color-surface-tertiary);
+    --_button-background: var(--starmate-color-surface-tertiary);
+    --_button-background-hover: var(--starmate-color-surface-tertiary);
+    --_button-background-active: var(--starmate-color-surface-tertiary);
     --_button-border: transparent;
-    --_button-border-hover: var(--openbitfun-color-border-default);
-    --_button-border-active: var(--openbitfun-color-border-strong);
-    --_button-content: var(--openbitfun-color-action-neutral-content);
+    --_button-border-hover: var(--starmate-color-border-default);
+    --_button-border-active: var(--starmate-color-border-strong);
+    --_button-content: var(--starmate-color-action-neutral-content);
   }
 
   .button[data-openbitfun-variant="primary"]:disabled {
-    --_button-background: var(--openbitfun-component-button-fill-background);
+    --_button-background: var(--starmate-component-button-fill-background);
   }
 
   .button[data-openbitfun-variant="secondary"]:disabled {
-    --_button-background: var(--openbitfun-color-surface-tertiary);
-    --_button-content: var(--openbitfun-color-action-neutral-content-disabled);
+    --_button-background: var(--starmate-color-surface-tertiary);
+    --_button-content: var(--starmate-color-action-neutral-content-disabled);
   }
 
   .button[data-openbitfun-variant="text"] {
@@ -138,8 +138,8 @@
     --_button-border: transparent;
     --_button-border-hover: transparent;
     --_button-border-active: transparent;
-    --_button-content: var(--openbitfun-component-button-text-content);
-    --_button-content-disabled: var(--openbitfun-component-button-text-content-disabled);
+    --_button-content: var(--starmate-component-button-text-content);
+    --_button-content-disabled: var(--starmate-component-button-text-content-disabled);
 
     border-radius: 0;
   }
@@ -149,103 +149,103 @@
     --_button-background-hover: transparent;
     --_button-background-active: transparent;
     --_button-border: transparent;
-    --_button-border-hover: var(--openbitfun-color-border-default);
-    --_button-border-active: var(--openbitfun-color-border-default);
-    --_button-content: var(--openbitfun-color-content-secondary);
+    --_button-border-hover: var(--starmate-color-border-default);
+    --_button-border-active: var(--starmate-color-border-default);
+    --_button-content: var(--starmate-color-content-secondary);
 
-    padding-inline: var(--openbitfun-space-3);
-    border-radius: var(--openbitfun-radius-base);
+    padding-inline: var(--starmate-space-3);
+    border-radius: var(--starmate-radius-base);
   }
 
   .button[data-openbitfun-tone="neutral"][data-openbitfun-variant="quiet"]:is(:hover, :active, [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="active"]):not(:disabled) {
-    --_button-content: var(--openbitfun-color-content-primary);
+    --_button-content: var(--starmate-color-content-primary);
   }
 
   .button[data-openbitfun-variant="text"]:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
-    --_button-content: var(--openbitfun-component-button-text-content-hover);
+    --_button-content: var(--starmate-component-button-text-content-hover);
 
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
   .button[data-openbitfun-variant="text"]:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) {
-    --_button-content: var(--openbitfun-component-button-text-content);
+    --_button-content: var(--starmate-component-button-text-content);
 
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
   .button[data-openbitfun-variant="fill"]:disabled {
-    --_button-background: var(--openbitfun-component-button-fill-background);
+    --_button-background: var(--starmate-component-button-fill-background);
   }
 
   .button[data-openbitfun-tone="danger"] {
-    --_button-background-hover: var(--openbitfun-color-status-danger-surface);
-    --_button-background-active: var(--openbitfun-color-status-danger-surface);
-    --_button-border: var(--openbitfun-color-status-danger-border);
+    --_button-background-hover: var(--starmate-color-status-danger-surface);
+    --_button-background-active: var(--starmate-color-status-danger-surface);
+    --_button-border: var(--starmate-color-status-danger-border);
     --_button-border-hover: var(--_button-border);
     --_button-border-active: var(--_button-border);
-    --_button-content: var(--openbitfun-color-status-danger-content);
-    --_button-content-disabled: var(--openbitfun-color-action-neutral-content-disabled);
+    --_button-content: var(--starmate-color-status-danger-content);
+    --_button-content-disabled: var(--starmate-color-action-neutral-content-disabled);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="fill"] {
-    --_button-background: var(--openbitfun-color-status-danger-surface);
-    --_button-border: var(--openbitfun-color-status-danger-border);
+    --_button-background: var(--starmate-color-status-danger-surface);
+    --_button-border: var(--starmate-color-status-danger-border);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="primary"] {
-    --_button-background: var(--openbitfun-color-status-danger-content);
-    --_button-background-hover: var(--openbitfun-color-status-danger-content);
-    --_button-background-active: var(--openbitfun-color-status-danger-content);
+    --_button-background: var(--starmate-color-status-danger-content);
+    --_button-background-hover: var(--starmate-color-status-danger-content);
+    --_button-background-active: var(--starmate-color-status-danger-content);
     --_button-border: transparent;
-    --_button-content: var(--openbitfun-color-content-inverse);
+    --_button-content: var(--starmate-color-content-inverse);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="secondary"] {
-    --_button-background: var(--openbitfun-color-status-danger-surface);
-    --_button-background-hover: var(--openbitfun-color-status-danger-surface);
-    --_button-background-active: var(--openbitfun-color-status-danger-surface);
-    --_button-border: var(--openbitfun-color-status-danger-border);
+    --_button-background: var(--starmate-color-status-danger-surface);
+    --_button-background-hover: var(--starmate-color-status-danger-surface);
+    --_button-background-active: var(--starmate-color-status-danger-surface);
+    --_button-border: var(--starmate-color-status-danger-border);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="text"] {
-    --_button-content: var(--openbitfun-color-status-danger-content);
+    --_button-content: var(--starmate-color-status-danger-content);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="quiet"] {
     --_button-border: transparent;
-    --_button-border-hover: var(--openbitfun-color-status-danger-border);
-    --_button-border-active: var(--openbitfun-color-status-danger-border);
+    --_button-border-hover: var(--starmate-color-status-danger-border);
+    --_button-border-active: var(--starmate-color-status-danger-border);
   }
 
   .button[data-openbitfun-tone="danger"][data-openbitfun-variant="fill"]:disabled {
-    --_button-background: var(--openbitfun-color-status-danger-surface);
+    --_button-background: var(--starmate-color-status-danger-surface);
   }
 
   .button[data-size="xs"] {
-    --_button-font-size: var(--openbitfun-type-meta-font-size);
-    --_button-height: var(--openbitfun-control-button-xs-height);
-    --_button-leading-icon-size: var(--openbitfun-control-button-xs-leading-icon-size);
-    --_button-padding-block: var(--openbitfun-space-1);
-    --_button-padding-inline: var(--openbitfun-control-button-xs-padding-inline);
-    --_button-trailing-icon-size: var(--openbitfun-control-button-xs-trailing-icon-size);
+    --_button-font-size: var(--starmate-type-meta-font-size);
+    --_button-height: var(--starmate-control-button-xs-height);
+    --_button-leading-icon-size: var(--starmate-control-button-xs-leading-icon-size);
+    --_button-padding-block: var(--starmate-space-1);
+    --_button-padding-inline: var(--starmate-control-button-xs-padding-inline);
+    --_button-trailing-icon-size: var(--starmate-control-button-xs-trailing-icon-size);
   }
 
   .button[data-size="sm"] {
-    --_button-font-size: var(--openbitfun-type-label-sm-font-size);
-    --_button-height: var(--openbitfun-control-height-sm);
+    --_button-font-size: var(--starmate-type-label-sm-font-size);
+    --_button-height: var(--starmate-control-height-sm);
     --_button-leading-icon-size: 12px;
-    --_button-padding-block: var(--openbitfun-space-1);
-    --_button-padding-inline: var(--openbitfun-space-4);
+    --_button-padding-block: var(--starmate-space-1);
+    --_button-padding-inline: var(--starmate-space-4);
     --_button-trailing-icon-size: 10px;
   }
 
   .button[data-size="lg"] {
-    --_button-font-size: var(--openbitfun-type-label-lg-font-size);
-    --_button-height: var(--openbitfun-control-height-lg);
+    --_button-font-size: var(--starmate-type-label-lg-font-size);
+    --_button-height: var(--starmate-control-height-lg);
     --_button-leading-icon-size: 20px;
-    --_button-padding-inline: var(--openbitfun-space-6);
+    --_button-padding-inline: var(--starmate-space-6);
     --_button-trailing-icon-size: 16px;
   }
 
@@ -255,15 +255,15 @@
     display: inline-flex;
     align-items: center;
     min-inline-size: 0;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   .label {
     display: inline-flex;
     align-items: center;
     min-inline-size: 0;
-    gap: var(--openbitfun-space-1);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    gap: var(--starmate-space-1);
+    line-height: var(--starmate-type-body-sm-line-height);
     overflow: hidden;
   }
 
@@ -327,7 +327,7 @@
 
   .button[data-loading="true"] .progress {
     opacity: 1;
-    animation: openbitfun-button-progress var(--openbitfun-motion-duration-loop) linear infinite;
+    animation: openbitfun-button-progress var(--starmate-motion-duration-loop) linear infinite;
   }
 
   @keyframes openbitfun-button-progress {

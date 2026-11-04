@@ -1,7 +1,7 @@
 @layer openbitfun.components {
   .root {
-    --_capsule-height: var(--openbitfun-control-height-sm);
-    --_capsule-padding-inline: var(--openbitfun-space-4);
+    --_capsule-height: var(--starmate-control-height-sm);
+    --_capsule-padding-inline: var(--starmate-space-4);
     --_capsule-inline-direction: 1;
     --_floating-action-host-height: var(--_capsule-height);
     display: inline-flex;
@@ -12,18 +12,18 @@
   }
 
   .root[data-size="xs"] {
-    --_capsule-height: var(--openbitfun-control-button-xs-height);
-    --_capsule-padding-inline: var(--openbitfun-control-button-xs-padding-inline);
+    --_capsule-height: var(--starmate-control-button-xs-height);
+    --_capsule-padding-inline: var(--starmate-control-button-xs-padding-inline);
   }
 
   .root[data-size="md"] {
-    --_capsule-height: var(--openbitfun-control-height-md);
-    --_capsule-padding-inline: var(--openbitfun-space-5);
+    --_capsule-height: var(--starmate-control-height-md);
+    --_capsule-padding-inline: var(--starmate-space-5);
   }
 
   .root[data-size="lg"] {
-    --_capsule-height: var(--openbitfun-control-height-lg);
-    --_capsule-padding-inline: var(--openbitfun-space-6);
+    --_capsule-height: var(--starmate-control-height-lg);
+    --_capsule-padding-inline: var(--starmate-space-6);
   }
 
   .root:dir(rtl) { --_capsule-inline-direction: -1; }
@@ -74,8 +74,8 @@
   /* Reserve space inside the Button's surface, leaving inter-capsule gaps intact. */
   .root[data-action-placement="reserved"] {
     --_capsule-action-padding: calc(
-      (var(--_capsule-height) + var(--openbitfun-control-icon-button-xs-size)) / 2
-      + var(--openbitfun-space-1)
+      (var(--_capsule-height) + var(--starmate-control-icon-button-xs-size)) / 2
+      + var(--starmate-space-1)
     );
   }
 
@@ -90,7 +90,7 @@
         (var(--_capsule-action-padding) - var(--_capsule-padding-inline)) / 2
         * var(--_capsule-inline-direction)
       ));
-      transition: transform var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      transition: transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
     }
 
     .root[data-action-placement="reserved"]:is(:hover, :focus-visible, :has(:focus-visible), [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="focus-visible"]) > [data-openbitfun-component="button"] > [data-openbitfun-part="content"] {

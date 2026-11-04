@@ -2,7 +2,7 @@
   .root {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) var(--openbitfun-border-width-default) minmax(0, var(--_split-view-right-size));
+    grid-template-columns: minmax(0, 1fr) var(--starmate-border-width-default) minmax(0, var(--_split-view-right-size));
     grid-template-areas: "primary divider secondary";
     min-inline-size: 0;
     min-block-size: 0;
@@ -37,12 +37,12 @@
 
   .root[data-layout="overlay"][data-mode="split"] > .primary .primaryDock,
   .root[data-layout="overlay"][data-mode="split"] .surface.primary .primaryDock {
-    inline-size: max(0px, calc(100% - var(--_split-view-right-size) - var(--openbitfun-border-width-default)));
+    inline-size: max(0px, calc(100% - var(--_split-view-right-size) - var(--starmate-border-width-default)));
   }
 
   .root[data-layout="overlay"][data-mode="split"][data-secondary-side="left"] > .primary .primaryDock,
   .root[data-layout="overlay"][data-mode="split"][data-secondary-side="left"] .surface.primary .primaryDock {
-    inset-inline-start: calc(var(--_split-view-right-size) + var(--openbitfun-border-width-default));
+    inset-inline-start: calc(var(--_split-view-right-size) + var(--starmate-border-width-default));
   }
 
   .root[data-layout="overlay"][data-mode="split"] .secondary {
@@ -52,8 +52,8 @@
     inset-inline-end: 0;
     inline-size: var(--_split-view-right-size);
     isolation: isolate;
-    background: var(--openbitfun-color-surface-raised);
-    box-shadow: var(--openbitfun-shadow-overlay);
+    background: var(--starmate-color-surface-raised);
+    box-shadow: var(--starmate-shadow-overlay);
   }
 
   .root[data-layout="overlay"][data-mode="split"] .divider {
@@ -61,7 +61,7 @@
     position: absolute;
     inset-block: 0;
     inset-inline-end: var(--_split-view-right-size);
-    inline-size: var(--openbitfun-border-width-default);
+    inline-size: var(--starmate-border-width-default);
   }
 
   .root[data-layout="overlay"][data-secondary-side="left"] .secondary {
@@ -75,12 +75,12 @@
   }
 
   .root .header > .headerColumns {
-    grid-template-columns: minmax(0, 1fr) var(--openbitfun-border-width-default) minmax(0, var(--_split-view-right-size));
+    grid-template-columns: minmax(0, 1fr) var(--starmate-border-width-default) minmax(0, var(--_split-view-right-size));
   }
   .root[data-layout="overlay"][data-secondary-side="left"][data-mode="split"] .headerColumns {
-    grid-template-columns: minmax(0, var(--_split-view-right-size)) var(--openbitfun-border-width-default) minmax(0, 1fr);
+    grid-template-columns: minmax(0, var(--_split-view-right-size)) var(--starmate-border-width-default) minmax(0, 1fr);
   }
-  .header { grid-area: header; min-inline-size: 0; z-index: var(--openbitfun-layer-sticky); }
+  .header { grid-area: header; min-inline-size: 0; z-index: var(--starmate-layer-sticky); }
   .root[data-has-header] {
     grid-template-rows: auto minmax(0, 1fr);
     grid-template-areas: "header header header" "primary divider secondary";
@@ -112,14 +112,14 @@
   .divider {
     grid-area: divider;
     position: relative;
-    background: var(--openbitfun-color-border-subtle);
-    z-index: var(--openbitfun-layer-sticky);
+    background: var(--starmate-color-border-subtle);
+    z-index: var(--starmate-layer-sticky);
   }
 
   .resizeHandle {
     position: absolute;
     inset-block: 0;
-    inset-inline: calc(-1 * var(--openbitfun-space-2));
+    inset-inline: calc(-1 * var(--starmate-space-2));
     cursor: col-resize;
     touch-action: none;
     outline: none;
@@ -130,18 +130,18 @@
     position: absolute;
     inset-block: 0;
     inset-inline-start: 50%;
-    inline-size: var(--openbitfun-border-width-default);
+    inline-size: var(--starmate-border-width-default);
     transform: translateX(-50%);
-    background: var(--openbitfun-color-accent-default);
+    background: var(--starmate-color-accent-default);
     opacity: 0;
-    transition: opacity var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .resizeHandle:hover::after,
   .resizeHandle:focus-visible::after,
   .root[data-resizing] .resizeHandle::after { opacity: 1; }
 
-  .resizeHandle:focus-visible::after { background: var(--openbitfun-color-focus-ring); }
+  .resizeHandle:focus-visible::after { background: var(--starmate-color-focus-ring); }
 
   .actions {
     position: absolute;
@@ -150,14 +150,14 @@
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-1);
-    padding: var(--openbitfun-space-1);
-    background: var(--openbitfun-color-surface-raised);
-    border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-lg);
+    gap: var(--starmate-space-1);
+    padding: var(--starmate-space-1);
+    background: var(--starmate-color-surface-raised);
+    border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-lg);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   .divider:hover .actions, .divider:has(:focus-visible) .actions { opacity: 1; pointer-events: auto; }
@@ -169,6 +169,6 @@
 
   @media (hover: none) {
     .actions { opacity: 1; pointer-events: auto; }
-    .resizeHandle { inset-inline: calc(-1 * var(--openbitfun-space-3)); }
+    .resizeHandle { inset-inline: calc(-1 * var(--starmate-space-3)); }
   }
 }

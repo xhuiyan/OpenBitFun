@@ -21,10 +21,10 @@ describe('Settings content typography', () => {
     expect(headerComponent).toContain('size="md"');
 
     expect(headerStyles).not.toMatch(/(?:^|[;{])\s*(?:font(?:-[\w-]+)?|line-height|letter-spacing)\s*:/m);
-    expect(pageHeaderStyles).toContain('font-size: var(--openbitfun-type-heading-page-font-size);');
-    expect(pageHeaderStyles).toContain('font-weight: var(--openbitfun-type-heading-page-font-weight);');
-    expect(pageHeaderStyles).toContain('font-size: var(--openbitfun-type-body-lg-font-size);');
-    expect(pageHeaderStyles).toContain('font-weight: var(--openbitfun-type-body-lg-font-weight);');
+    expect(pageHeaderStyles).toContain('font-size: var(--starmate-type-heading-page-font-size);');
+    expect(pageHeaderStyles).toContain('font-weight: var(--starmate-type-heading-page-font-weight);');
+    expect(pageHeaderStyles).toContain('font-size: var(--starmate-type-body-lg-font-size);');
+    expect(pageHeaderStyles).toContain('font-weight: var(--starmate-type-body-lg-font-weight);');
 
     expect(layoutStyles).toContain('font-size: var(--openbitfun-type-heading-section-font-size);');
     expect(layoutStyles).toContain('font-weight: var(--openbitfun-type-heading-section-font-weight);');
