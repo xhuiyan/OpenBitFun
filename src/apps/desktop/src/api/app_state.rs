@@ -100,16 +100,16 @@ pub struct AppState {
 impl AppState {
     pub async fn new_async(
         token_usage_service: Arc<token_usage::TokenUsageService>,
-    ) -> OpenBitFunResult<Self> {
+    ) -> StarMateResult<Self> {
         let start_time = std::time::Instant::now();
 
         let config_service = config::get_global_config_service().await.map_err(|e| {
-            OpenBitFunError::config(format!("Failed to get global config service: {}", e))
+            StarMateError::config(format!("Failed to get global config service: {}", e))
         })?;
 
         let ai_client = Arc::new(RwLock::new(None));
         let ai_client_factory = AIClientFactory::get_global().await.map_err(|e| {
-            OpenBitFunError::service(format!("Failed to get global AIClientFactory: {}", e))
+            StarMateError::service(format!("Failed to get global AIClientFactory: {}", e))
         })?;
         let side_question_runtime = Arc::new(SideQuestionRuntime::new());
 
@@ -146,7 +146,7 @@ impl AppState {
         let acp_client_service = Some(
             starmate_acp::AcpClientService::new(config_service.clone(), path_manager.clone())
                 .map_err(|e| {
-                    OpenBitFunError::service(format!(
+                    StarMateError::service(format!(
                         "Failed to initialize ACP client service: {}",
                         e
                     ))

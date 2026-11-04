@@ -208,7 +208,7 @@ impl HistoryCache {
 
 static HISTORIES: LazyLock<tokio::sync::Mutex<HistoryCache>> = LazyLock::new(Default::default);
 
-async fn revision(path: &Path) -> OpenBitFunResult<JsonFileRevision> {
+async fn revision(path: &Path) -> StarMateResult<JsonFileRevision> {
     match JsonFileStore.revision(path).await.map_err(index_error)? {
         Some(revision) => Ok(revision),
         None => {
@@ -224,7 +224,7 @@ pub(super) async fn read(
     root: &Path,
     entry: &Reference,
     version: &str,
-) -> OpenBitFunResult<HistorySnapshot> {
+) -> StarMateResult<HistorySnapshot> {
     let path = snapshot_path(root, &entry.metadata.session_id, version)?;
     let current = revision(&path).await?;
     if let Some(history) = HISTORIES.lock().await.get(&path, &current) {
@@ -277,7 +277,7 @@ pub(super) async fn remember(
     entry: &Reference,
     version: &str,
     bundle: OfflineSessionBundle,
-) -> OpenBitFunResult<HistorySnapshot> {
+) -> StarMateResult<HistorySnapshot> {
     let path = snapshot_path(root, &entry.metadata.session_id, version)?;
     let current = revision(&path).await?;
     if let Some(history) = HISTORIES.lock().await.get(&path, &current) {

@@ -183,7 +183,7 @@ async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
     )
     .unwrap();
     official_service
-        .prepare_relay(&ConnectionMethod::OpenBitFunServer)
+        .prepare_relay(&ConnectionMethod::StarMateServer)
         .await
         .unwrap();
     let lan_method = ConnectionMethod::Lan {

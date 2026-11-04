@@ -5,7 +5,7 @@ use crate::service::config::{
     get_global_config_service,
     types::{AIConfig, AIModelConfig},
 };
-use crate::util::{errors::OpenBitFunResult, types::ConnectionTestResult};
+use crate::util::{errors::StarMateResult, types::ConnectionTestResult};
 use std::time::Instant;
 
 /// Returns `None` for ordinary models so each host keeps its existing chat and
@@ -13,7 +13,7 @@ use std::time::Instant;
 /// while the connection itself uses the supplied model draft without persisting it.
 pub async fn test_configured_router_connection(
     candidate: &AIModelConfig,
-) -> OpenBitFunResult<Option<ConnectionTestResult>> {
+) -> StarMateResult<Option<ConnectionTestResult>> {
     if candidate.id.is_empty() {
         return Ok(None);
     }
@@ -37,7 +37,7 @@ async fn probe_for_config(
     let started = Instant::now();
     let result = async {
         if !released {
-            return Err(crate::util::errors::OpenBitFunError::Validation(
+            return Err(crate::util::errors::StarMateError::Validation(
                 SMART_MODE_UNAVAILABLE.into(),
             ));
         }
@@ -51,7 +51,7 @@ async fn probe_for_config(
             .predict("Task: inspect a file and explain its purpose", None)
             .await?;
         if prediction.simple_probability.is_none() {
-            return Err(crate::util::errors::OpenBitFunError::Configuration(
+            return Err(crate::util::errors::StarMateError::Configuration(
                 "Router protocol mismatch: valid classifier probabilities are required".into(),
             ));
         }

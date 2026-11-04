@@ -13,7 +13,7 @@ use crate::agentic::tools::openbitfun_control_host::{
 };
 #[cfg(test)]
 use crate::service::config::ConfigService;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_product_domains::product_control::{
     capability as product_capability, discover as discover_product_capabilities,
@@ -62,18 +62,18 @@ impl OpenBitFunControlTool {
         serde_json::to_string(result).unwrap_or_else(|_| result.to_string())
     }
 
-    async fn inspect_shared_capability(&self, capability_id: &str) -> OpenBitFunResult<Value> {
+    async fn inspect_shared_capability(&self, capability_id: &str) -> StarMateResult<Value> {
         match self.shared_executor().await {
             Ok(executor) => executor
                 .inspect(capability_id, ProductControlDeliveryProfile::Cli)
                 .await
-                .map_err(OpenBitFunError::tool),
+                .map_err(StarMateError::tool),
             Err(error) => {
                 let mut result =
                     starmate_product_domains::product_control::inspect_contract(capability_id)
-                        .map_err(OpenBitFunError::tool)?;
+                        .map_err(StarMateError::tool)?;
                 let object = result.as_object_mut().ok_or_else(|| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "Product-control inspection was not an object".to_string(),
                     )
                 })?;
@@ -94,13 +94,13 @@ impl OpenBitFunControlTool {
     async fn configure_shared_option(
         &self,
         request: &OpenBitFunControlHostRequest,
-    ) -> OpenBitFunResult<Value> {
+    ) -> StarMateResult<Value> {
         self.shared_executor()
             .await
-            .map_err(OpenBitFunError::tool)?
+            .map_err(StarMateError::tool)?
             .configure(request)
             .await
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
 
     fn action(input: &Value) -> Option<&str> {
@@ -308,7 +308,7 @@ impl Tool for OpenBitFunControlTool {
         "OpenBitFunControl"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(
             "Control OpenBitFun features and settings, including MCP servers, Remote Connect bots/Mobile Web, and same-account devices with Detached Dispatch to other hosts. Prefer this tool over ComputerUse. Use the two-step flow: `list` or `search`, then `get` the matching capability and follow its schema and availability to `configure`, `execute`, or `open`. Open a root with capability_id only. destination.actionId is presentation metadata, never an item_id or operation_id. The catalog loads on demand; never guess IDs or values."
                 .to_string(),
@@ -441,7 +441,7 @@ impl Tool for OpenBitFunControlTool {
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let action = Self::action(input).unwrap_or("<missing-action>");
         if matches!(action, "list" | "search" | "get") {
             return Ok(Vec::new());
@@ -648,18 +648,18 @@ impl Tool for OpenBitFunControlTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
-        Self::validate_input_aliases(input).map_err(OpenBitFunError::tool)?;
+    ) -> StarMateResult<Vec<ToolResult>> {
+        Self::validate_input_aliases(input).map_err(StarMateError::tool)?;
         let action = Self::action(input)
-            .ok_or_else(|| OpenBitFunError::tool("action is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("action is required".to_string()))?;
         let typed_action = Self::typed_action(action).ok_or_else(|| {
-            OpenBitFunError::tool(format!("Unsupported OpenBitFunControl action: {action}"))
+            StarMateError::tool(format!("Unsupported OpenBitFunControl action: {action}"))
         })?;
-        Self::validate_operation_scope(input, context).map_err(OpenBitFunError::tool)?;
+        Self::validate_operation_scope(input, context).map_err(StarMateError::tool)?;
         let mutating_control = matches!(action, "open" | "configure")
             || (action == "execute" && !Self::operation_is_readonly(input));
         if mutating_control && Self::agent_is_readonly(context) {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "This read-only agent may discover OpenBitFun features and settings but cannot control them"
                     .to_string(),
             ));
@@ -687,7 +687,7 @@ impl Tool for OpenBitFunControlTool {
                 .map(str::to_string),
             arguments: input.get("arguments").cloned(),
             value: if typed_action == ProductControlAction::Configure {
-                Self::configure_value(input).map_err(OpenBitFunError::tool)?
+                Self::configure_value(input).map_err(StarMateError::tool)?
             } else {
                 None
             },
@@ -704,11 +704,11 @@ impl Tool for OpenBitFunControlTool {
 
         let result = match typed_action {
             ProductControlAction::List | ProductControlAction::Search => {
-                discover_product_capabilities(&request).map_err(OpenBitFunError::tool)?
+                discover_product_capabilities(&request).map_err(StarMateError::tool)?
             }
             ProductControlAction::Get => {
                 let capability_id = request.capability_id.as_deref().ok_or_else(|| {
-                    OpenBitFunError::tool("capability_id is required".to_string())
+                    StarMateError::tool("capability_id is required".to_string())
                 })?;
                 let mut result = if openbitfun_control_host_available() {
                     match invoke_openbitfun_control(request.clone()).await {
@@ -732,7 +732,7 @@ impl Tool for OpenBitFunControlTool {
                 };
                 if let Some(object) = result.as_object_mut() {
                     let capability =
-                        product_capability(capability_id).map_err(OpenBitFunError::tool)?;
+                        product_capability(capability_id).map_err(StarMateError::tool)?;
                     object.insert(
                         "toolInput".to_string(),
                         json!({ "capability_id": capability_id }),
@@ -779,18 +779,18 @@ impl Tool for OpenBitFunControlTool {
                 if openbitfun_control_host_available() {
                     invoke_openbitfun_control(request)
                         .await
-                        .map_err(OpenBitFunError::tool)?
+                        .map_err(StarMateError::tool)?
                 } else {
                     self.configure_shared_option(&request).await?
                 }
             }
             ProductControlAction::Open | ProductControlAction::Execute => {
                 if !openbitfun_control_host_available() {
-                    return Err(OpenBitFunError::tool(Self::headless_unsupported(&request)));
+                    return Err(StarMateError::tool(Self::headless_unsupported(&request)));
                 }
                 invoke_openbitfun_control(request)
                     .await
-                    .map_err(OpenBitFunError::tool)?
+                    .map_err(StarMateError::tool)?
             }
         };
 

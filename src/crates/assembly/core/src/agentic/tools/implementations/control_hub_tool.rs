@@ -28,7 +28,7 @@ use crate::agentic::tools::browser_control::session_registry::{
 use crate::agentic::tools::framework::{
     Tool, ToolExposure, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use crate::util::types::ToolImageAttachment;
 use async_trait::async_trait;
 use starmate_services_core::system::{truncate_with_marker, LocalSystemProvider};
@@ -255,7 +255,7 @@ impl ControlHubTool {
         })
     }
 
-    fn builtin_open_error(error: OpenBitFunError) -> ControlHubError {
+    fn builtin_open_error(error: StarMateError) -> ControlHubError {
         let message = error.to_string();
         let code = if message.contains("did not become ready") {
             ErrorCode::Timeout
@@ -290,7 +290,7 @@ impl ControlHubTool {
             .with_hint("Public pages can use target='builtin'. Isolated project tests can explicitly attach an already-running disposable browser with mode='headless'.")
     }
 
-    async fn browser_version(port: u16) -> OpenBitFunResult<CdpVersionInfo> {
+    async fn browser_version(port: u16) -> StarMateResult<CdpVersionInfo> {
         if let Some(connection) = CdpClient::browser_connection(port).await {
             connection.client.browser_version().await
         } else {
@@ -298,7 +298,7 @@ impl ControlHubTool {
         }
     }
 
-    async fn browser_pages(port: u16) -> OpenBitFunResult<Vec<CdpPageInfo>> {
+    async fn browser_pages(port: u16) -> StarMateResult<Vec<CdpPageInfo>> {
         if let Some(connection) = CdpClient::browser_connection(port).await {
             connection.client.browser_pages().await
         } else {
@@ -315,7 +315,7 @@ impl ControlHubTool {
         port: u16,
         url: Option<&str>,
         activate: bool,
-    ) -> OpenBitFunResult<CdpPageInfo> {
+    ) -> StarMateResult<CdpPageInfo> {
         if let Some(connection) = CdpClient::browser_connection(port).await {
             connection.client.create_browser_page(url, !activate).await
         } else if activate {
@@ -338,12 +338,12 @@ impl ControlHubTool {
             .unwrap_or(false)
     }
 
-    async fn connect_page(port: u16, page: &CdpPageInfo) -> OpenBitFunResult<CdpClient> {
+    async fn connect_page(port: u16, page: &CdpPageInfo) -> StarMateResult<CdpClient> {
         if let Some(connection) = CdpClient::browser_connection(port).await {
             connection.client.attach_to_page(&page.id).await
         } else {
             let ws_url = page.web_socket_debugger_url.as_ref().ok_or_else(|| {
-                OpenBitFunError::tool("Page has no WebSocket debugger URL".to_string())
+                StarMateError::tool("Page has no WebSocket debugger URL".to_string())
             })?;
             CdpClient::connect(ws_url).await
         }
@@ -545,7 +545,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         match domain {
             "desktop" => {
                 let hint = if context.is_remote() {
@@ -624,7 +624,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         match action {
             "capabilities" => {
                 // CLI and Desktop register terminal and GUI providers separately.
@@ -779,7 +779,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     .get("intent")
                     .and_then(|v| v.as_str())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool("route_hint requires 'intent' (string)".to_string())
+                        StarMateError::tool("route_hint requires 'intent' (string)".to_string())
                     })?;
                 let lower = intent.to_lowercase();
 
@@ -990,7 +990,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     }),
                 )])
             }
-            other => Err(OpenBitFunError::tool(format!(
+            other => Err(StarMateError::tool(format!(
                 "Unknown meta action: '{}'. Valid actions: capabilities, route_hint",
                 other
             ))),
@@ -1027,13 +1027,13 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
     ///
     /// The sleep races the turn's cancellation token: a 30-minute pace wait
     /// that ignored it would leave the user unable to stop the agent for half
-    /// an hour. Cancellation surfaces as `OpenBitFunError::Cancelled`, which the
+    /// an hour. Cancellation surfaces as `StarMateError::Cancelled`, which the
     /// pipeline already records as a terminal cancelled state rather than a
     /// tool failure.
     async fn wait_for_duration(
         requested_ms: u64,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let waited_ms = requested_ms.min(MAX_WAIT_MS);
         let sleep = tokio::time::sleep(std::time::Duration::from_millis(waited_ms));
 
@@ -1041,7 +1041,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
             tokio::select! {
                 _ = sleep => {}
                 _ = token.cancelled() => {
-                    return Err(OpenBitFunError::Cancelled(format!(
+                    return Err(StarMateError::Cancelled(format!(
                         "browser.wait cancelled before the {} pause elapsed",
                         format_duration_ms(waited_ms)
                     )));
@@ -1094,7 +1094,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if !SHARED_BROWSER_ACTIONS.contains(&action)
             && !EXTERNAL_CDP_EXTENSIONS.contains(&action)
             && !matches!(
@@ -1258,7 +1258,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         params: &Value,
         kind: BrowserTargetKind,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let raw_url = params
             .get("url")
             .and_then(Value::as_str)
@@ -1392,7 +1392,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     return Ok(connected);
                 }
                 let Some(id) = data.get("session_id").and_then(Value::as_str) else {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "Browser connection returned no session_id".to_string(),
                     ));
                 };
@@ -1538,7 +1538,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         // A duration wait is a pure pause: it touches no page, so it must not
         // require (or even resolve) a CDP session — agents pace themselves with
         // this long before they open a browser. Condition waits fall through to
@@ -1948,7 +1948,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     })
                     .or_else(|| pages.first())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool("No browser pages found via CDP".to_string())
+                        StarMateError::tool("No browser pages found via CDP".to_string())
                     })?;
                 let client = Self::connect_page(port, page).await?;
                 let session = BrowserSession {
@@ -2344,7 +2344,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     .get("page_id")
                     .and_then(|v| v.as_str())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool("switch_page requires 'page_id'".to_string())
+                        StarMateError::tool("switch_page requires 'page_id'".to_string())
                     })?;
                 if browser_target_kind == BrowserTargetKind::BuiltIn {
                     let client = match connect_builtin_browser_for_session(
@@ -2396,7 +2396,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                 } else {
                     let pages = Self::browser_pages(port).await?;
                     let page = pages.iter().find(|p| p.id == page_id).ok_or_else(|| {
-                        OpenBitFunError::tool(format!("Page '{}' not found", page_id))
+                        StarMateError::tool(format!("Page '{}' not found", page_id))
                     })?;
                     let client = Self::connect_page(port, page).await?;
                     let session = BrowserSession {
@@ -2775,7 +2775,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("value")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("fill requires 'value'".to_string())
+                                StarMateError::tool("fill requires 'value'".to_string())
                             })?;
                         let result = actions.fill(selector, value).await?;
                         Ok(vec![ToolResult::ok(
@@ -2788,7 +2788,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("text")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("type requires 'text'".to_string())
+                                StarMateError::tool("type requires 'text'".to_string())
                             })?;
                         let result = actions.type_text(text).await?;
                         Ok(vec![ToolResult::ok(result, Some("Typed text".to_string()))])
@@ -2804,7 +2804,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("option_text")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("select requires 'option_text'".to_string())
+                                StarMateError::tool("select requires 'option_text'".to_string())
                             })?;
                         let result = actions.select(selector, option_text).await?;
                         // Phase 3: the underlying JS returns `{ error, available }`
@@ -2851,7 +2851,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("key")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("press_key requires 'key'".to_string())
+                                StarMateError::tool("press_key requires 'key'".to_string())
                             })?;
                         let result = actions.press_key(key).await?;
                         Ok(vec![ToolResult::ok(
@@ -2983,7 +2983,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                         // `data`, flood the context window.
                         let (mime_type, data_base64) = {
                             let obj = result.as_object_mut().ok_or_else(|| {
-                                OpenBitFunError::tool(
+                                StarMateError::tool(
                                     "screenshot returned a non-object result".to_string(),
                                 )
                             })?;
@@ -3022,7 +3022,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("expression")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("evaluate requires 'expression'".to_string())
+                                StarMateError::tool("evaluate requires 'expression'".to_string())
                             })?;
                         let await_promise = params
                             .get("await_promise")
@@ -3186,7 +3186,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("url")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("fetch requires 'url'".to_string())
+                                StarMateError::tool("fetch requires 'url'".to_string())
                             })?;
                         let method = params
                             .get("method")
@@ -3259,7 +3259,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("cookies")
                             .and_then(|v| v.as_array())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("set_cookies requires 'cookies' array".to_string())
+                                StarMateError::tool("set_cookies requires 'cookies' array".to_string())
                             })?;
                         let result = actions.set_cookies(cookies).await?;
                         let set = result.get("set").and_then(|v| v.as_u64()).unwrap_or(0);
@@ -3277,7 +3277,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("files")
                             .and_then(|v| v.as_array())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("set_file_input_files requires 'files' array".to_string())
+                                StarMateError::tool("set_file_input_files requires 'files' array".to_string())
                             })?
                             .iter()
                             .filter_map(|v| v.as_str().map(str::to_string))
@@ -3293,7 +3293,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             .get("method")
                             .and_then(|v| v.as_str())
                             .ok_or_else(|| {
-                                OpenBitFunError::tool("cdp requires 'method'".to_string())
+                                StarMateError::tool("cdp requires 'method'".to_string())
                             })?;
                         if !Self::is_allowed_browser_cdp_method(method) {
                             return Ok(err_response(
@@ -3361,7 +3361,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                         }
                         Ok(vec![ToolResult::ok(result, Some("Page closed".to_string()))])
                     }
-                    other => Err(OpenBitFunError::tool(format!(
+                    other => Err(StarMateError::tool(format!(
                         "Unknown browser action: '{}'. Valid: connect, tab_new, navigate, back, forward, reload, snapshot, click, hover, fill, type, check, uncheck, select, press_key, scroll, auto_scroll, wait, get, get_text, get_url, get_title, get_html, screenshot, evaluate, fetch, cookies, set_cookies, set_file_input_files, cdp, network, console, errors, trace, dialog, read_article, close, list_pages, tab_query, switch_page, list_sessions",
                         other
                     ))),
@@ -3382,17 +3382,17 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         action: &str,
         params: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         // Phase 4: enumerate live terminal sessions so the model can resolve
         // a `terminal_session_id` *before* attempting `kill` / `interrupt`.
         // Previously this required digging through earlier command results.
         if action == "list_sessions" {
             let api = crate::service::terminal::api::TerminalApi::from_singleton()
-                .map_err(|e| OpenBitFunError::tool(format!("TerminalApi unavailable: {}", e)))?;
+                .map_err(|e| StarMateError::tool(format!("TerminalApi unavailable: {}", e)))?;
             let sessions = api
                 .list_sessions()
                 .await
-                .map_err(|e| OpenBitFunError::tool(format!("list_sessions failed: {}", e)))?;
+                .map_err(|e| StarMateError::tool(format!("list_sessions failed: {}", e)))?;
             let summary: Vec<Value> = sessions
                 .iter()
                 .map(|s| {
@@ -3422,12 +3422,12 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
             None => {
                 let api =
                     crate::service::terminal::api::TerminalApi::from_singleton().map_err(|e| {
-                        OpenBitFunError::tool(format!("TerminalApi unavailable: {}", e))
+                        StarMateError::tool(format!("TerminalApi unavailable: {}", e))
                     })?;
                 let sessions = api
                     .list_sessions()
                     .await
-                    .map_err(|e| OpenBitFunError::tool(format!("list_sessions failed: {}", e)))?;
+                    .map_err(|e| StarMateError::tool(format!("list_sessions failed: {}", e)))?;
                 let live: Vec<_> = sessions
                     .iter()
                     .filter(|s| {
@@ -3470,7 +3470,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
         };
 
         let terminal_api = crate::service::terminal::TerminalApi::from_singleton()
-            .map_err(|error| OpenBitFunError::tool(format!("Terminal not initialized: {error}")))?;
+            .map_err(|error| StarMateError::tool(format!("Terminal not initialized: {error}")))?;
 
         match action {
             "interrupt" => {
@@ -3481,7 +3481,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     })
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::tool(format!(
+                        StarMateError::tool(format!(
                             "Failed to interrupt terminal session: {error}"
                         ))
                     })?;
@@ -3504,7 +3504,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
 
                 if is_primary {
                     binding.remove(&resolved_id).await.map_err(|error| {
-                        OpenBitFunError::tool(format!("Failed to close terminal session: {error}"))
+                        StarMateError::tool(format!("Failed to close terminal session: {error}"))
                     })?;
                 } else {
                     terminal_api
@@ -3514,7 +3514,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                         })
                         .await
                         .map_err(|error| {
-                            OpenBitFunError::tool(format!(
+                            StarMateError::tool(format!(
                                 "Failed to close terminal session: {error}"
                             ))
                         })?;
@@ -3529,14 +3529,14 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                     Some("Closed the terminal session.".to_string()),
                 )])
             }
-            _ => Err(OpenBitFunError::tool(format!(
+            _ => Err(StarMateError::tool(format!(
                 "Unknown terminal action: '{action}'. Must be 'kill' or 'interrupt'."
             ))),
         }
     }
 }
 
-fn parse_browser_kind(browser: &str) -> OpenBitFunResult<BrowserKind> {
+fn parse_browser_kind(browser: &str) -> StarMateResult<BrowserKind> {
     match BrowserLauncher::browser_kind_from_config(browser) {
         Some(kind) => Ok(kind),
         None => BrowserLauncher::detect_default_browser(),
@@ -3593,7 +3593,7 @@ impl Tool for ControlHubTool {
         "ControlHub"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(Self::description_text())
     }
 
@@ -3609,7 +3609,7 @@ impl Tool for ControlHubTool {
     async fn description_with_context(
         &self,
         context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let mut base = Self::description_text();
         if !context.is_some_and(ToolUseContext::is_remote) {
             if let Some(kind) = CdpClient::authorized_browser_kind(DEFAULT_CDP_PORT).await {
@@ -3746,7 +3746,7 @@ impl Tool for ControlHubTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let domain = input.get("domain").and_then(|v| v.as_str()).unwrap_or("");
         let action = input.get("action").and_then(|v| v.as_str()).unwrap_or("");
 
@@ -3777,7 +3777,7 @@ impl Tool for ControlHubTool {
             // failure. Folding it into an `ok: false` envelope would both hide
             // the user's stop from the pipeline and invite the model to
             // "recover" from a turn that is already being torn down.
-            Err(err @ OpenBitFunError::Cancelled(_)) => Err(err),
+            Err(err @ StarMateError::Cancelled(_)) => Err(err),
             Err(err) => Ok(err_response(
                 domain,
                 action,
@@ -4083,16 +4083,16 @@ fn envelope_wrap_results(domain: &str, action: &str, results: Vec<ToolResult>) -
         .collect()
 }
 
-/// Best-effort classification of a legacy `OpenBitFunError` into a structured
+/// Best-effort classification of a legacy `StarMateError` into a structured
 /// ControlHub error. Domain handlers should be migrated to return structured
 /// envelopes directly; this is the safety net for the transition.
-fn map_dispatch_error(domain: &str, _action: &str, err: OpenBitFunError) -> ControlHubError {
+fn map_dispatch_error(domain: &str, _action: &str, err: StarMateError) -> ControlHubError {
     let msg = err.to_string();
 
     // Frontend bridges may send back `[CODE] message\nHints: a | b` strings —
     // parse that prefix back into a structured ControlHubError so the model
     // sees the *actual* error code and hints instead of an INTERNAL fallback.
-    // `OpenBitFunError::Tool` wraps the message with `"Tool error: "`, so we try
+    // `StarMateError::Tool` wraps the message with `"Tool error: "`, so we try
     // both the raw form and the form after stripping that wrapper.
     let strip_candidate = msg
         .strip_prefix("Tool error: ")
@@ -4425,7 +4425,7 @@ mod control_hub_tests {
         // Without this, stopping the agent could not take effect until the
         // pause elapsed — ten minutes of an unstoppable turn.
         assert!(
-            matches!(outcome, Err(OpenBitFunError::Cancelled(_))),
+            matches!(outcome, Err(StarMateError::Cancelled(_))),
             "a long pace wait must stay interruptible"
         );
         assert!(started.elapsed() < std::time::Duration::from_secs(30));
@@ -4609,7 +4609,7 @@ mod control_hub_tests {
         let err = map_dispatch_error(
             "desktop",
             "click",
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "[AMBIGUOUS] 3 matches for text 'Save'\nHints: pass index | use selector"
                     .to_string(),
             ),
@@ -4623,7 +4623,7 @@ mod control_hub_tests {
         let err = map_dispatch_error(
             "desktop",
             "x",
-            OpenBitFunError::tool("[WAT_IS_THIS] ouch".to_string()),
+            StarMateError::tool("[WAT_IS_THIS] ouch".to_string()),
         );
         assert!(matches!(err.code, ErrorCode::FrontendError));
     }
@@ -4633,7 +4633,7 @@ mod control_hub_tests {
         let err = map_dispatch_error(
             "browser",
             "click",
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "Browser session 'AB' is no longer connected (the tab was likely closed)."
                     .to_string(),
             ),
@@ -4643,7 +4643,7 @@ mod control_hub_tests {
 
     #[test]
     fn map_dispatch_error_classifies_known_phrases() {
-        let mk = |s: &str| OpenBitFunError::tool(s.to_string());
+        let mk = |s: &str| StarMateError::tool(s.to_string());
         assert!(matches!(
             map_dispatch_error("browser", "select", mk("element not found")).code,
             ErrorCode::NotFound
@@ -4697,7 +4697,7 @@ mod control_hub_tests {
         let err = map_dispatch_error(
             "browser",
             "snapshot",
-            actions::classify_transport_error(OpenBitFunError::tool(
+            actions::classify_transport_error(StarMateError::tool(
                 "CDP send failed: broken pipe".to_string(),
             )),
         );

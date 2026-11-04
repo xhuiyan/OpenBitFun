@@ -42,7 +42,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
                         .into_iter()
                         .map(wire::model_config)
                         .collect::<Result<Vec<_>, _>>()
-                        .map_err(starmate_core::OpenBitFunError::from)
+                        .map_err(starmate_core::StarMateError::from)
                 }
                 .await
                 .map(|models| GetModelConfigsResponse { models })
@@ -196,7 +196,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
                 let result = async {
                     let service = starmate_core::service::config::get_global_config_service().await?;
                     let validation = service.validate_config().await?;
-                    serde_json::to_value(validation).map_err(starmate_core::OpenBitFunError::from)
+                    serde_json::to_value(validation).map_err(starmate_core::StarMateError::from)
                 }
                 .await
                 .map(ValidateConfigResponse)

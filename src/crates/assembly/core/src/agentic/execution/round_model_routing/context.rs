@@ -6,7 +6,7 @@ use crate::agentic::core::{
     InternalReminderKind, Message, MessageContent, MessageRole, MessageSemanticKind,
 };
 use crate::service::config::types::AIConfig;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 #[cfg(test)]
 use crate::util::types::Message as AIMessage;
 use log::warn;
@@ -74,7 +74,7 @@ impl Default for RouterContextConfig {
 }
 
 impl RouterContextConfig {
-    pub(super) fn from_env() -> OpenBitFunResult<Self> {
+    pub(super) fn from_env() -> StarMateResult<Self> {
         let summary_max_tokens =
             parse_env_usize("OPENBITFUN_ROUND_ROUTER_SUMMARY_MAX_TOKENS", 16_384)?;
         let config = Self {
@@ -87,7 +87,7 @@ impl RouterContextConfig {
                 Ok("0" | "false") => false,
                 Ok("1" | "true") | Err(_) => true,
                 _ => {
-                    return Err(OpenBitFunError::Configuration(
+                    return Err(StarMateError::Configuration(
                         "OPENBITFUN_ROUND_ROUTER_SUMMARY_ENABLED must be true/false or 1/0".into(),
                     ))
                 }
@@ -116,7 +116,7 @@ impl RouterContextConfig {
         Ok(config)
     }
 
-    fn validate(&self) -> OpenBitFunResult<()> {
+    fn validate(&self) -> StarMateResult<()> {
         if self.max_input_tokens < 512
             || self.summary_trigger_tokens == 0
             || self.summary_max_tokens == 0
@@ -125,7 +125,7 @@ impl RouterContextConfig {
             || self.summary_target_tokens > self.summary_max_tokens
             || self.summary_timeout.is_zero()
         {
-            return Err(OpenBitFunError::Configuration("Router context requires at least 512 input tokens, a positive u32 summary generation limit, a positive summary target no larger than that limit, and a positive timeout".into()));
+            return Err(StarMateError::Configuration("Router context requires at least 512 input tokens, a positive u32 summary generation limit, a positive summary target no larger than that limit, and a positive timeout".into()));
         }
         Ok(())
     }
@@ -244,13 +244,13 @@ impl SummaryResult {
 fn summary_request_client(
     shared: &AIClient,
     config: &RouterContextConfig,
-) -> OpenBitFunResult<AIClient> {
+) -> StarMateResult<AIClient> {
     config.validate()?;
     if let Some(requested) = &config.summary_reasoning_preset {
         if shared.selected_reasoning_preset().map(|preset| &preset.id) != Some(requested) {
             // The general session selector may fall back to Auto. This explicit
             // auxiliary policy must fail visibly instead of inheriting expensive reasoning.
-            return Err(OpenBitFunError::Configuration(format!(
+            return Err(StarMateError::Configuration(format!(
                 "Router summary reasoning preset '{requested}' is unavailable for the fast model"
             )));
         }
@@ -259,7 +259,7 @@ fn summary_request_client(
     if let Some(preset) = client.selected_reasoning_preset() {
         client
             .validate_reasoning_preset(preset)
-            .map_err(|error| OpenBitFunError::Configuration(error.to_string()))?;
+            .map_err(|error| StarMateError::Configuration(error.to_string()))?;
     }
     Ok(client)
 }
@@ -293,7 +293,7 @@ impl SummarySnapshot {
 
 #[async_trait::async_trait]
 trait SummaryProvider: Send + Sync {
-    async fn input_budget(&self, config: &RouterContextConfig) -> OpenBitFunResult<usize> {
+    async fn input_budget(&self, config: &RouterContextConfig) -> StarMateResult<usize> {
         Ok(config.max_input_tokens)
     }
 
@@ -301,12 +301,12 @@ trait SummaryProvider: Send + Sync {
         &self,
         prompt: String,
         config: &RouterContextConfig,
-    ) -> OpenBitFunResult<SummaryResult>;
+    ) -> StarMateResult<SummaryResult>;
 }
 
 struct ConfiguredSummaryProvider;
 
-pub(super) fn configured_summary_model(config: &AIConfig) -> OpenBitFunResult<String> {
+pub(super) fn configured_summary_model(config: &AIConfig) -> StarMateResult<String> {
     // The general `fast` selector deliberately falls back to primary. Auxiliary
     // Router summaries must not use that selector's fallback semantics.
     config
@@ -315,7 +315,7 @@ pub(super) fn configured_summary_model(config: &AIConfig) -> OpenBitFunResult<St
         .as_deref()
         .and_then(|reference| config.resolve_model_reference(reference))
         .ok_or_else(|| {
-            OpenBitFunError::Configuration(
+            StarMateError::Configuration(
                 "Router summary requires an explicitly configured, enabled fast model".into(),
             )
         })
@@ -323,7 +323,7 @@ pub(super) fn configured_summary_model(config: &AIConfig) -> OpenBitFunResult<St
 
 #[async_trait::async_trait]
 impl SummaryProvider for ConfiguredSummaryProvider {
-    async fn input_budget(&self, config: &RouterContextConfig) -> OpenBitFunResult<usize> {
+    async fn input_budget(&self, config: &RouterContextConfig) -> StarMateResult<usize> {
         let (_, client) = summary_client::configured_client(config).await?;
         summary_client::input_budget(&client, config)
     }
@@ -332,7 +332,7 @@ impl SummaryProvider for ConfiguredSummaryProvider {
         &self,
         prompt: String,
         summary_config: &RouterContextConfig,
-    ) -> OpenBitFunResult<SummaryResult> {
+    ) -> StarMateResult<SummaryResult> {
         let (model_id, client) = summary_client::configured_client(summary_config).await?;
         let response = summary_client::send_request(&client, summary_config, prompt).await?;
         Ok(SummaryResult::from_response(response, model_id, &client))
@@ -357,7 +357,7 @@ impl RouterContextFactory {
         system_prompt: &str,
         trace_path: Option<PathBuf>,
         tokenizer_path: Option<&std::path::Path>,
-    ) -> OpenBitFunResult<Self> {
+    ) -> StarMateResult<Self> {
         let counter: Arc<dyn RouterTokenCounter> =
             match tokenizer_path.map(LocalTokenizer::from_file) {
                 Some(Ok(tokenizer)) => Arc::new(TokenizerCounter {
@@ -382,10 +382,10 @@ impl RouterContextFactory {
         system_prompt: &str,
         trace_path: Option<PathBuf>,
         counter: Arc<dyn RouterTokenCounter>,
-    ) -> OpenBitFunResult<Self> {
+    ) -> StarMateResult<Self> {
         config.validate()?;
         if recent_rounds == 0 {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "Router context needs a positive recent window".into(),
             ));
         }
@@ -399,7 +399,7 @@ impl RouterContextFactory {
         )
         .user_budget();
         if input_budget_tokens < 512 {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "Router context window leaves fewer than 512 tokens for the user prompt".into(),
             ));
         }
@@ -471,7 +471,7 @@ pub struct RoundRouterContext {
     checkpoint_sender: Option<watch::Sender<Option<Arc<RouterContextState>>>>,
     checkpoint_writer: Option<JoinHandle<()>>,
     checkpoint_revision: Option<(u64, u64, usize)>,
-    pending_summary: Option<JoinHandle<(RouterSummaryWork, OpenBitFunResult<SummaryResult>, u64)>>,
+    pending_summary: Option<JoinHandle<(RouterSummaryWork, StarMateResult<SummaryResult>, u64)>>,
     active_summary: Option<SummarySnapshot>,
     summary_update: Option<RouterSummaryUpdate<RouterSummaryWork>>,
     last_attempt_round: Option<u64>,
@@ -929,7 +929,7 @@ impl RoundRouterContext {
             let Some((work, _permit)) = ticket.start().await else {
                 return (
                     work,
-                    Err(OpenBitFunError::AIClient(
+                    Err(StarMateError::AIClient(
                         "Router summary superseded".into(),
                     )),
                     0,
@@ -976,7 +976,7 @@ impl RoundRouterContext {
                 ),
             )
             .await
-            .unwrap_or_else(|_| Err(OpenBitFunError::AIClient("Router summary timed out".into())));
+            .unwrap_or_else(|_| Err(StarMateError::AIClient("Router summary timed out".into())));
             let (model_id, model_name, usage, error) = match &result {
                 Ok(result) => (
                     Some(result.model_id.as_str()),
@@ -1163,21 +1163,21 @@ impl RoundRouterContext {
 async fn write_checkpoint(
     path: &std::path::Path,
     snapshot: &RouterContextState,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _lock = JsonFileStore
         .acquire_cross_process_lock(path)
         .await
-        .map_err(|error| OpenBitFunError::Session(error.to_string()))?;
+        .map_err(|error| StarMateError::Session(error.to_string()))?;
     if let Some(current) = JsonFileStore
         .read_optional::<RouterContextState>(path)
         .await
-        .map_err(|error| OpenBitFunError::Session(error.to_string()))?
+        .map_err(|error| StarMateError::Session(error.to_string()))?
     {
         if current.version != 1
             || current.session_id != snapshot.session_id
             || current.dialog_turn_id != snapshot.dialog_turn_id
         {
-            return Err(OpenBitFunError::Session(
+            return Err(StarMateError::Session(
                 "Incompatible router checkpoint; refusing to overwrite it".into(),
             ));
         }
@@ -1193,7 +1193,7 @@ async fn write_checkpoint(
     JsonFileStore
         .write_atomic_strict(path, snapshot)
         .await
-        .map_err(|error| OpenBitFunError::Session(error.to_string()))
+        .map_err(|error| StarMateError::Session(error.to_string()))
 }
 
 #[cfg(test)]

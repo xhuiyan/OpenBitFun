@@ -22,7 +22,7 @@ impl PersistenceManager {
         workspace_id: &str,
         ecosystem_id: &str,
         id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(id)?;
         let _session_write = self.lock_session_write_operation(workspace, id)?;
         let persistence_lock = self.get_session_persistence_lock(workspace, id).await;
@@ -41,7 +41,7 @@ impl PersistenceManager {
         &self,
         workspace: &Path,
         id: &str,
-    ) -> OpenBitFunResult<bool> {
+    ) -> StarMateResult<bool> {
         let Some(native) = self
             .session_metadata_store(workspace)
             .load_metadata(id)
@@ -71,14 +71,14 @@ impl PersistenceManager {
         &self,
         workspace: &Path,
         id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if self
             .load_session_metadata(workspace, id)
             .await?
             .as_ref()
             .is_some_and(tracking::is_followed)
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Following external source history through Relay is not supported. Open it on its owning host or use a native OpenBitFun branch.".into(),
             ));
         }
@@ -89,14 +89,14 @@ impl PersistenceManager {
         &self,
         workspace: &Path,
         id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if self
             .load_session_metadata(workspace, id)
             .await?
             .as_ref()
             .is_some_and(tracking::is_followed)
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "This session follows an external source and is read-only. Fork the viewed history in OpenBitFun before continuing or editing it. This client must support session forks.".into(),
             ));
         }
@@ -108,7 +108,7 @@ impl PersistenceManager {
         workspace: &Path,
         id: &str,
         refresh: bool,
-    ) -> OpenBitFunResult<Option<tracking::HistorySnapshot>> {
+    ) -> StarMateResult<Option<tracking::HistorySnapshot>> {
         if self.has_independent_native_history(workspace, id).await? {
             return Ok(None);
         }
@@ -127,7 +127,7 @@ impl PersistenceManager {
         workspace: &Path,
         id: &str,
         turns: &[DialogTurnData],
-    ) -> OpenBitFunResult<Option<tracking::HistorySnapshot>> {
+    ) -> StarMateResult<Option<tracking::HistorySnapshot>> {
         if self.has_independent_native_history(workspace, id).await? {
             return Ok(None);
         }
@@ -148,7 +148,7 @@ impl PersistenceManager {
         workspace: &Path,
         id: &str,
         tail: Option<usize>,
-    ) -> OpenBitFunResult<Option<(Session, Vec<DialogTurnData>, usize, SessionTurnLoadTiming)>>
+    ) -> StarMateResult<Option<(Session, Vec<DialogTurnData>, usize, SessionTurnLoadTiming)>>
     {
         let started = Instant::now();
         let Some(bundle) = self.external_history_snapshot(workspace, id, true).await? else {
@@ -177,7 +177,7 @@ impl PersistenceManager {
     pub(super) async fn external_history_window(
         &self,
         request: &SessionTurnWindowRequest,
-    ) -> OpenBitFunResult<Option<SessionTurnWindowResponse>> {
+    ) -> StarMateResult<Option<SessionTurnWindowResponse>> {
         if self
             .has_independent_native_history(&request.workspace_path, &request.session_id)
             .await?
@@ -231,7 +231,7 @@ impl PersistenceManager {
         workspace: &Path,
         id: &str,
         turn_id: Option<&str>,
-    ) -> OpenBitFunResult<Option<TransientSessionBranchSource>> {
+    ) -> StarMateResult<Option<TransientSessionBranchSource>> {
         if self.has_independent_native_history(workspace, id).await? {
             return Ok(None);
         }
@@ -247,7 +247,7 @@ impl PersistenceManager {
             Some(turn) => tracking::snapshot_at_turn(&root, id, turn).await?,
             None => tracking::snapshot(&root, id, false).await?,
         }
-        .ok_or_else(|| OpenBitFunError::NotFound("External source view is unavailable".into()))?;
+        .ok_or_else(|| StarMateError::NotFound("External source view is unavailable".into()))?;
         let session =
             Self::build_session_from_persisted_parts(bundle.metadata.clone(), None, &bundle.turns)
                 .await?;

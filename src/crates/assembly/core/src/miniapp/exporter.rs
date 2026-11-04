@@ -4,7 +4,7 @@ pub use starmate_product_domains::miniapp::exporter::{
     build_export_check_result, ExportCheckResult, ExportOptions, ExportResult, ExportTarget,
 };
 
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -28,7 +28,7 @@ impl MiniAppExporter {
     }
 
     /// Check if export is possible (runtime, electron-builder, etc.).
-    pub async fn check(&self, _app_id: &str) -> OpenBitFunResult<ExportCheckResult> {
+    pub async fn check(&self, _app_id: &str) -> StarMateResult<ExportCheckResult> {
         let runtime = crate::miniapp::runtime_detect::detect_runtime();
         Ok(build_export_check_result(
             runtime.as_ref().map(|runtime| &runtime.kind),
@@ -40,8 +40,8 @@ impl MiniAppExporter {
         &self,
         _app_id: &str,
         _options: ExportOptions,
-    ) -> OpenBitFunResult<ExportResult> {
-        Err(OpenBitFunError::validation(
+    ) -> StarMateResult<ExportResult> {
+        Err(StarMateError::validation(
             "Export not yet implemented (skeleton)".to_string(),
         ))
     }

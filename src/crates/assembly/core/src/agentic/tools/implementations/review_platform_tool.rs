@@ -13,7 +13,7 @@ use crate::service::review_platform::{
     ReviewPlatformResolveThreadRequest, ReviewPlatformService, ReviewPlatformSubmitReviewRequest,
     ReviewRepositoryLocator, ReviewSubmitEvent,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
@@ -54,7 +54,7 @@ impl ReviewPlatformTool {
         Self
     }
 
-    fn repository_path(input: &Value, context: &ToolUseContext) -> OpenBitFunResult<String> {
+    fn repository_path(input: &Value, context: &ToolUseContext) -> StarMateResult<String> {
         let requested = input
             .get("repository_path")
             .and_then(Value::as_str)
@@ -69,17 +69,17 @@ impl ReviewPlatformTool {
             .workspace
             .as_ref()
             .map(|workspace| workspace.root_path_string())
-            .ok_or_else(|| OpenBitFunError::tool("repository_path is required".to_string()))
+            .ok_or_else(|| StarMateError::tool("repository_path is required".to_string()))
     }
 
-    fn string_field(input: &Value, key: &str) -> OpenBitFunResult<String> {
+    fn string_field(input: &Value, key: &str) -> StarMateResult<String> {
         input
             .get(key)
             .and_then(Value::as_str)
             .map(str::trim)
             .filter(|value| !value.is_empty())
             .map(str::to_string)
-            .ok_or_else(|| OpenBitFunError::tool(format!("{} is required", key)))
+            .ok_or_else(|| StarMateError::tool(format!("{} is required", key)))
     }
 
     fn optional_string_field(input: &Value, key: &str) -> Option<String> {
@@ -91,7 +91,7 @@ impl ReviewPlatformTool {
             .map(str::to_string)
     }
 
-    fn submit_event(input: &Value) -> OpenBitFunResult<ReviewSubmitEvent> {
+    fn submit_event(input: &Value) -> StarMateResult<ReviewSubmitEvent> {
         match input
             .get("event")
             .and_then(Value::as_str)
@@ -100,14 +100,14 @@ impl ReviewPlatformTool {
             "comment" => Ok(ReviewSubmitEvent::Comment),
             "approve" => Ok(ReviewSubmitEvent::Approve),
             "request_changes" => Ok(ReviewSubmitEvent::RequestChanges),
-            other => Err(OpenBitFunError::tool(format!(
+            other => Err(StarMateError::tool(format!(
                 "Unsupported review event: {}",
                 other
             ))),
         }
     }
 
-    fn detail_section(input: &Value) -> OpenBitFunResult<ReviewPlatformDetailSection> {
+    fn detail_section(input: &Value) -> StarMateResult<ReviewPlatformDetailSection> {
         match input
             .get("section")
             .and_then(Value::as_str)
@@ -118,32 +118,32 @@ impl ReviewPlatformTool {
             "files" => Ok(ReviewPlatformDetailSection::Files),
             "commits" => Ok(ReviewPlatformDetailSection::Commits),
             "reviews" => Ok(ReviewPlatformDetailSection::Reviews),
-            other => Err(OpenBitFunError::tool(format!(
+            other => Err(StarMateError::tool(format!(
                 "Unsupported pull request detail section: {}",
                 other
             ))),
         }
     }
 
-    fn platform_kind(input: &Value) -> OpenBitFunResult<ReviewPlatformKind> {
+    fn platform_kind(input: &Value) -> StarMateResult<ReviewPlatformKind> {
         match Self::string_field(input, "platform")?.as_str() {
             "github" => Ok(ReviewPlatformKind::Github),
             "gitlab" => Ok(ReviewPlatformKind::Gitlab),
             "gitcode" => Ok(ReviewPlatformKind::Gitcode),
             "gitee" => Ok(ReviewPlatformKind::Gitee),
             "unknown" => Ok(ReviewPlatformKind::Unknown),
-            other => Err(OpenBitFunError::tool(format!(
+            other => Err(StarMateError::tool(format!(
                 "Unsupported review platform kind: {}",
                 other
             ))),
         }
     }
 
-    fn list_state(input: &Value) -> OpenBitFunResult<ReviewPlatformListState> {
+    fn list_state(input: &Value) -> StarMateResult<ReviewPlatformListState> {
         match input.get("state") {
             None | Some(Value::Null) => Ok(ReviewPlatformListState::All),
             Some(state) => serde_json::from_value(state.clone()).map_err(|error| {
-                OpenBitFunError::tool(format!("Invalid pull request state filter: {error}"))
+                StarMateError::tool(format!("Invalid pull request state filter: {error}"))
             }),
         }
     }
@@ -152,7 +152,7 @@ impl ReviewPlatformTool {
         action: &str,
         repository: &ReviewRepositoryLocator,
         input: &Value,
-    ) -> OpenBitFunResult<Result<String, Value>> {
+    ) -> StarMateResult<Result<String, Value>> {
         if let Some(remote_id) = Self::optional_string_field(input, "remote_id") {
             return Ok(Ok(remote_id));
         }
@@ -160,10 +160,10 @@ impl ReviewPlatformTool {
         let repository_path = repository.repository_path.as_str();
         let remotes = ReviewPlatformService::discover_remotes(repository)
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+            .map_err(|error| StarMateError::tool(error.to_string()))?;
         let supported = canonical_supported_remotes(&remotes);
         match supported.as_slice() {
-            [] => Err(OpenBitFunError::tool(
+            [] => Err(StarMateError::tool(
                 "No supported review platform remote found".to_string(),
             )),
             [remote] => Ok(Ok(remote.id.clone())),
@@ -248,7 +248,7 @@ impl Tool for ReviewPlatformTool {
         "ReviewPlatform"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Read and operate on hosted pull requests / merge requests.
 
 Use this for remote review-platform operations such as discovering remotes, loading the workspace PR snapshot, counting pull requests, listing pull requests, opening full or paginated pull request detail, loading CI logs, creating a pull request, replying to review threads, submitting a comment review, approving, revoking approval, requesting changes, or resolving a review thread. Use ExecCommand for local repository state and branch/commit/push operations.
@@ -779,7 +779,7 @@ When returning pull request results to the user, include the provider web URL so
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let action = Self::string_field(input, "action")?;
         let repository_path = match action.as_str() {
             ACTION_UPDATE_AUTH_TOKEN | ACTION_CLEAR_AUTH_TOKEN => {
@@ -825,7 +825,7 @@ When returning pull request results to the user, include the provider web URL so
             ACTION_LIST_REMOTES => {
                 let remotes = ReviewPlatformService::discover_remotes(&repository)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({
                     "action": action,
                     "repositoryPath": repository_path,
@@ -850,7 +850,7 @@ When returning pull request results to the user, include the provider web URL so
                     Self::list_state(input)?,
                 )
                 .await
-                .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                .map_err(|error| StarMateError::tool(error.to_string()))?;
                 let status = if snapshot.auth_challenge.is_some() {
                     "needs_auth"
                 } else {
@@ -889,7 +889,7 @@ When returning pull request results to the user, include the provider web URL so
                     Self::list_state(input)?,
                 )
                 .await
-                .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                .map_err(|error| StarMateError::tool(error.to_string()))?;
                 if snapshot.auth_challenge.is_some() {
                     json!({
                         "action": action,
@@ -934,7 +934,7 @@ When returning pull request results to the user, include the provider web URL so
                     Self::list_state(input)?,
                 )
                 .await
-                .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                .map_err(|error| StarMateError::tool(error.to_string()))?;
                 if snapshot.auth_challenge.is_some() {
                     json!({
                         "action": action,
@@ -990,7 +990,7 @@ When returning pull request results to the user, include the provider web URL so
                         ) {
                             result
                         } else {
-                            return Err(OpenBitFunError::tool(error.to_string()));
+                            return Err(StarMateError::tool(error.to_string()));
                         }
                     }
                 }
@@ -1048,7 +1048,7 @@ When returning pull request results to the user, include the provider web URL so
                         ) {
                             result
                         } else {
-                            return Err(OpenBitFunError::tool(error.to_string()));
+                            return Err(StarMateError::tool(error.to_string()));
                         }
                     }
                 }
@@ -1088,7 +1088,7 @@ When returning pull request results to the user, include the provider web URL so
                         ) {
                             result
                         } else {
-                            return Err(OpenBitFunError::tool(error.to_string()));
+                            return Err(StarMateError::tool(error.to_string()));
                         }
                     }
                 }
@@ -1109,7 +1109,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::create_pull_request(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_REPLY => {
@@ -1126,7 +1126,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::reply_to_thread(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_SUBMIT_REVIEW => {
@@ -1143,7 +1143,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::submit_review(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_APPROVE => {
@@ -1159,7 +1159,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::approve_pull_request(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_REVOKE_APPROVAL => {
@@ -1175,7 +1175,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::revoke_approval(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_REQUEST_CHANGES => {
@@ -1191,7 +1191,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::request_changes(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_RESOLVE => {
@@ -1211,7 +1211,7 @@ When returning pull request results to the user, include the provider web URL so
                 };
                 let result = ReviewPlatformService::resolve_thread(request)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({ "action": action, "result": result })
             }
             ACTION_UPDATE_AUTH_TOKEN => {
@@ -1220,7 +1220,7 @@ When returning pull request results to the user, include the provider web URL so
                 let token = Self::string_field(input, "token")?;
                 ReviewPlatformService::update_auth_token(platform, &host, &token)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({
                     "action": action,
                     "repositoryPath": repository_path,
@@ -1234,7 +1234,7 @@ When returning pull request results to the user, include the provider web URL so
                 let host = Self::string_field(input, "host")?;
                 ReviewPlatformService::clear_auth_token(platform, &host)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+                    .map_err(|error| StarMateError::tool(error.to_string()))?;
                 json!({
                     "action": action,
                     "repositoryPath": repository_path,
@@ -1244,7 +1244,7 @@ When returning pull request results to the user, include the provider web URL so
                 })
             }
             _ => {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "Unsupported action: {}",
                     action
                 )))

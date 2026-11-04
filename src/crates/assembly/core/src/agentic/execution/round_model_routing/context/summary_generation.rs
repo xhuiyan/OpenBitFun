@@ -29,7 +29,7 @@ pub(super) async fn summarize_bounded(
     prompt: String,
     config: &RouterContextConfig,
     trace: Option<SummaryAttemptTrace<'_>>,
-) -> OpenBitFunResult<SummaryResult> {
+) -> StarMateResult<SummaryResult> {
     config.validate()?;
     let budget = RouterSummaryBudget::new(config.summary_target_tokens).unwrap();
     // Models routinely overshoot their requested length. Ask for less than the
@@ -87,7 +87,7 @@ async fn attempt(
     budget: &RouterSummaryBudget,
     attempts: &mut Vec<SummaryAttemptDiagnostics>,
     trace: Option<&SummaryAttemptTrace<'_>>,
-) -> OpenBitFunResult<SummaryResult> {
+) -> StarMateResult<SummaryResult> {
     let input_tokens = EstimatedRouterTokens.count(&prompt);
     let started = Instant::now();
     let result = provider.summarize(prompt, config).await;

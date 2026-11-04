@@ -4,7 +4,7 @@
 //! a new turn may inherit only its exact immediate predecessor. A generation lease
 //! prevents an older asynchronous writer from publishing after same-turn recovery.
 
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use log::warn;
 use starmate_agent_runtime::router_context::RouterContextState;
 use starmate_services_core::json_store::JsonFileStore;
@@ -64,7 +64,7 @@ impl SessionRouterCheckpoint {
         task: &str,
         visible_turn_ids: &[String],
         retained_message_ids: Option<&HashSet<String>>,
-    ) -> OpenBitFunResult<(Self, Option<RouterContextState>)> {
+    ) -> StarMateResult<(Self, Option<RouterContextState>)> {
         let active = Arc::new(AtomicBool::new(true));
         let _guard = OpenGuard(active.clone());
         let snapshot_dir = snapshot_dir.to_path_buf();
@@ -101,7 +101,7 @@ impl SessionRouterCheckpoint {
         visible_turn_ids: &[String],
         retained_message_ids: Option<&HashSet<String>>,
         active: &AtomicBool,
-    ) -> OpenBitFunResult<(Self, Option<RouterContextState>)> {
+    ) -> StarMateResult<(Self, Option<RouterContextState>)> {
         if session_id.is_empty()
             || dialog_turn_id.is_empty()
             || visible_turn_ids.last().map(String::as_str) != Some(dialog_turn_id)
@@ -198,7 +198,7 @@ impl SessionRouterCheckpoint {
 
     /// Publish the newest queued snapshot synchronously before handing it to the
     /// disk writer, so a successor turn cannot permanently miss compacted facts.
-    pub(super) fn stage(&self, state: &RouterContextState) -> OpenBitFunResult<()> {
+    pub(super) fn stage(&self, state: &RouterContextState) -> StarMateResult<()> {
         validate_state(state, &self.session_id, &self.visible_turn_ids)?;
         let mut staged = self
             .staged
@@ -216,7 +216,7 @@ impl SessionRouterCheckpoint {
     }
 
     /// Called by the context's coalescing writer. Replaced generations are no-ops.
-    pub(super) async fn save(&self, state: &RouterContextState) -> OpenBitFunResult<()> {
+    pub(super) async fn save(&self, state: &RouterContextState) -> StarMateResult<()> {
         self.stage(state)?;
         let _lock = JsonFileStore
             .acquire_cross_process_lock(&self.path)
@@ -314,7 +314,7 @@ fn validate_record(
     record: &CheckpointRecord,
     session_id: &str,
     visible_turn_ids: &[String],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if !matches!(record.version, 1 | 2)
         || record.session_id != session_id
         || record.visible_turn_ids != visible_turn_ids
@@ -334,7 +334,7 @@ fn validate_state(
     state: &RouterContextState,
     session_id: &str,
     visible_turn_ids: &[String],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if state.version != 1
         || state.session_id != session_id
         || visible_turn_ids.last().map(String::as_str) != Some(state.dialog_turn_id.as_str())
@@ -347,8 +347,8 @@ fn validate_state(
     Ok(())
 }
 
-fn incompatible(message: &str) -> OpenBitFunError {
-    OpenBitFunError::Session(message.to_string())
+fn incompatible(message: &str) -> StarMateError {
+    StarMateError::Session(message.to_string())
 }
 
 #[cfg(test)]

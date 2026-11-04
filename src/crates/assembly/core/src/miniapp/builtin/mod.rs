@@ -6,7 +6,7 @@
 //! The user's `storage.json` is preserved across upgrades.
 
 use crate::miniapp::manager::MiniAppManager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use chrono::Utc;
 use starmate_product_domains::miniapp::builtin::{
     seed_builtin_miniapps_with_host, BuiltinInstallMarker, BuiltinMiniAppSeedBundleRequest,
@@ -27,7 +27,7 @@ use std::sync::Arc;
 /// whose on-disk marker hash matches the bundled content. User's `storage.json`
 /// is preserved across reseeds; source files & meta.json (without timestamps) are
 /// overwritten.
-pub async fn seed_builtin_miniapps(manager: &Arc<MiniAppManager>) -> OpenBitFunResult<()> {
+pub async fn seed_builtin_miniapps(manager: &Arc<MiniAppManager>) -> StarMateResult<()> {
     let host = CoreBuiltinMiniAppSeedHost {
         manager: Arc::clone(manager),
     };
@@ -119,7 +119,7 @@ impl BuiltinMiniAppSeedHost for CoreBuiltinMiniAppSeedHost {
 async fn prepare_builtin_seed_bundle(
     manager: &Arc<MiniAppManager>,
     request: BuiltinMiniAppSeedBundleRequest,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let app_dir = manager.path_manager().miniapp_dir(request.app.id);
     miniapp_builtin_io::prepare_builtin_seed_bundle_files(
         &app_dir,
@@ -175,7 +175,7 @@ fn log_builtin_seed_report(report: BuiltinMiniAppSeedReport) {
 
 async fn read_builtin_install_marker(
     path: &Path,
-) -> OpenBitFunResult<Option<BuiltinInstallMarker>> {
+) -> StarMateResult<Option<BuiltinInstallMarker>> {
     miniapp_builtin_io::read_builtin_install_marker(path)
         .await
         .map_err(map_builtin_io_error)
@@ -184,42 +184,42 @@ async fn read_builtin_install_marker(
 async fn write_builtin_install_marker(
     path: &Path,
     marker: &BuiltinInstallMarker,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     miniapp_builtin_io::write_builtin_install_marker(path, marker)
         .await
         .map_err(map_builtin_io_error)
 }
 
-fn map_builtin_io_error(err: miniapp_builtin_io::MiniAppBuiltinIoError) -> OpenBitFunError {
+fn map_builtin_io_error(err: miniapp_builtin_io::MiniAppBuiltinIoError) -> StarMateError {
     match err {
         err @ miniapp_builtin_io::MiniAppBuiltinIoError::Io { .. } => {
-            OpenBitFunError::io(err.to_string())
+            StarMateError::io(err.to_string())
         }
         miniapp_builtin_io::MiniAppBuiltinIoError::InvalidBundledMeta(source) => {
-            OpenBitFunError::parse(format!("invalid bundled meta.json: {}", source))
+            StarMateError::parse(format!("invalid bundled meta.json: {}", source))
         }
         miniapp_builtin_io::MiniAppBuiltinIoError::MarkerSerialization(source)
         | miniapp_builtin_io::MiniAppBuiltinIoError::MetaSerialization(source)
         | miniapp_builtin_io::MiniAppBuiltinIoError::PackageSerialization(source) => {
-            OpenBitFunError::from(source)
+            StarMateError::from(source)
         }
     }
 }
 
-fn map_openbitfun_error_to_miniapp_port_error(error: OpenBitFunError) -> MiniAppPortError {
+fn map_openbitfun_error_to_miniapp_port_error(error: StarMateError) -> MiniAppPortError {
     let kind = match &error {
-        OpenBitFunError::NotFound(_) => MiniAppPortErrorKind::NotFound,
-        OpenBitFunError::Validation(_) => MiniAppPortErrorKind::InvalidInput,
-        OpenBitFunError::Deserialization(_) | OpenBitFunError::Serialization(_) => {
+        StarMateError::NotFound(_) => MiniAppPortErrorKind::NotFound,
+        StarMateError::Validation(_) => MiniAppPortErrorKind::InvalidInput,
+        StarMateError::Deserialization(_) | StarMateError::Serialization(_) => {
             MiniAppPortErrorKind::Deserialization
         }
-        OpenBitFunError::Io(io_error)
+        StarMateError::Io(io_error)
             if io_error.kind() == std::io::ErrorKind::PermissionDenied =>
         {
             MiniAppPortErrorKind::PermissionDenied
         }
-        OpenBitFunError::Io(_) => MiniAppPortErrorKind::Io,
-        OpenBitFunError::ProcessError(_) | OpenBitFunError::Timeout(_) => {
+        StarMateError::Io(_) => MiniAppPortErrorKind::Io,
+        StarMateError::ProcessError(_) | StarMateError::Timeout(_) => {
             MiniAppPortErrorKind::RuntimeUnavailable
         }
         _ => MiniAppPortErrorKind::Backend,

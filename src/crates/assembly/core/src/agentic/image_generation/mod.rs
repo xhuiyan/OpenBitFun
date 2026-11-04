@@ -10,7 +10,7 @@ use crate::service::config::get_global_config_service;
 use crate::service::config::types::{
     AIConfig as ServiceAIConfig, AuthConfig, ImageServiceConfig, MediaConfig, SubscriptionProvider,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_ai_adapters::client::image_generation::{
     generate, GeneratedImage, ImageGenerationError, ImageGenerationErrorKind,
     ImageGenerationRequest, ImageGenerationTarget,
@@ -53,8 +53,8 @@ pub struct ResolvedImageService {
     pub proxy: Option<ProxyConfig>,
 }
 
-fn no_service_error() -> OpenBitFunError {
-    OpenBitFunError::tool(
+fn no_service_error() -> StarMateError {
+    StarMateError::tool(
         "No image generation service is configured. Add one in Settings > Models > Image generation."
             .to_string(),
     )
@@ -68,9 +68,9 @@ fn no_service_error() -> OpenBitFunError {
 /// request.
 pub async fn resolve_credentials(
     service: &ImageServiceConfig,
-) -> OpenBitFunResult<ImageServiceCredentials> {
+) -> StarMateResult<ImageServiceCredentials> {
     if matches!(service.auth, AuthConfig::SubscriptionPool { .. }) {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "Image generation does not support subscription account pools; select a single account",
         ));
     }
@@ -82,7 +82,7 @@ pub async fn resolve_credentials(
     apply_subscription_auth(&service.auth, &mut ai_config)
         .await
         .map_err(|err| {
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "Image service '{}' uses a subscription login that could not be resolved: {err}",
                 service.name.trim()
             ))
@@ -160,10 +160,10 @@ pub fn resolve_from_media(
     media: &MediaConfig,
     proxy: Option<ProxyConfig>,
     requested: Option<&str>,
-) -> OpenBitFunResult<ResolvedImageService> {
+) -> StarMateResult<ResolvedImageService> {
     let service = match requested.map(str::trim).filter(|id| !id.is_empty()) {
         Some(id) => media.enabled_image_service(id).ok_or_else(|| {
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "Image generation service '{id}' is not configured or is disabled."
             ))
         })?,
@@ -175,7 +175,7 @@ pub fn resolve_from_media(
                     .filter(|service| service.enabled)
                     .count();
                 if enabled > 1 {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "Multiple image generation services are enabled but no default is selected. Set one in Settings > Models > Image generation."
                             .to_string(),
                     ));
@@ -199,13 +199,13 @@ pub fn resolve_from_media(
 /// Resolve the service the `generate_image` tool should call.
 pub async fn resolve_image_service(
     requested: Option<&str>,
-) -> OpenBitFunResult<ResolvedImageService> {
+) -> StarMateResult<ResolvedImageService> {
     let config_service = get_global_config_service().await?;
     let media: MediaConfig = config_service
         .get_config(Some("media"))
         .await
         .map_err(|err| {
-            OpenBitFunError::service(format!("Failed to read image generation config: {err}"))
+            StarMateError::service(format!("Failed to read image generation config: {err}"))
         })?;
 
     // Media services inherit the global proxy; a per-service proxy is not a

@@ -9,7 +9,7 @@
 //! Sunset: remove after supported persisted data has migrated and all supported
 //! peers negotiate ID-based workspace references. Do not add new path callers.
 use super::{WorkspaceInfo, WorkspaceKind, WorkspaceService};
-use crate::{OpenBitFunError, OpenBitFunResult};
+use crate::{StarMateError, StarMateResult};
 
 pub(crate) fn resolve_legacy_workspace_reference(
     records: &[WorkspaceInfo],
@@ -17,7 +17,7 @@ pub(crate) fn resolve_legacy_workspace_reference(
     path: &str,
     connection_id: Option<&str>,
     ssh_host: Option<&str>,
-) -> OpenBitFunResult<Option<WorkspaceInfo>> {
+) -> StarMateResult<Option<WorkspaceInfo>> {
     let text = |value: Option<&str>| {
         value
             .map(str::trim)
@@ -46,7 +46,7 @@ pub(crate) fn resolve_legacy_workspace_reference(
             .cloned()
             .map(Some)
             .ok_or_else(|| {
-                OpenBitFunError::service(format!("Workspace ID is unavailable on this host: {id}"))
+                StarMateError::service(format!("Workspace ID is unavailable on this host: {id}"))
             });
     }
     let mut candidates: Vec<_> = records.iter().filter(path_matches).collect();
@@ -82,7 +82,7 @@ pub(crate) fn resolve_legacy_workspace_reference(
     match candidates.as_slice() {
         [] => Ok(None),
         [record] => Ok(Some((*record).clone())),
-        _ => Err(OpenBitFunError::service(
+        _ => Err(StarMateError::service(
             "Workspace path is ambiguous; select a workspace by its ID or saved SSH connection",
         )),
     }
@@ -123,7 +123,7 @@ impl WorkspaceService {
         path: &str,
         connection_id: Option<&str>,
         ssh_host: Option<&str>,
-    ) -> OpenBitFunResult<Option<WorkspaceInfo>> {
+    ) -> StarMateResult<Option<WorkspaceInfo>> {
         resolve_legacy_workspace_reference(
             &self.list_workspace_infos().await,
             workspace_id,
@@ -146,7 +146,7 @@ impl WorkspaceService {
         path: PathBuf,
         preferred_connection_id: Option<&str>,
         preferred_ssh_host: Option<&str>,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let path_str = path.to_string_lossy().to_string();
         let known = self
             .resolve_legacy_workspace_open(&path_str, preferred_connection_id, preferred_ssh_host)
@@ -158,7 +158,7 @@ impl WorkspaceService {
         &self,
         path: PathBuf,
         known_remote: Option<WorkspaceInfo>,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let path_str = path.to_string_lossy().to_string();
         if let Some(known) = known_remote {
             return if known.workspace_kind == WorkspaceKind::Remote {
@@ -172,7 +172,7 @@ impl WorkspaceService {
             Err(error) => {
                 let message = error.to_string();
                 if message.contains("Workspace path does not exist") {
-                    Err(OpenBitFunError::service(format!(
+                    Err(StarMateError::service(format!(
                         "Workspace path does not exist locally and is not a known remote SSH \
                          workspace: {path_str}. Open it once from the desktop SSH remote UI so \
                          OpenBitFun can remember the connection, then try again."
@@ -191,14 +191,14 @@ impl WorkspaceService {
         path: &str,
         connection_id: Option<&str>,
         ssh_host: Option<&str>,
-    ) -> OpenBitFunResult<Option<WorkspaceInfo>> {
+    ) -> StarMateResult<Option<WorkspaceInfo>> {
         let known = self
             .resolve_legacy_workspace_reference(None, path, connection_id, ssh_host)
             .await?;
         if let Some(record) = known.as_ref() {
             return if record.workspace_kind == WorkspaceKind::Remote {
                 if record.remote_ssh_connection_id().is_none() {
-                    Err(OpenBitFunError::service(
+                    Err(StarMateError::service(
                         "Remote workspace record is missing its saved SSH connection ID",
                     ))
                 } else {
@@ -214,7 +214,7 @@ impl WorkspaceService {
             return Ok(known);
         }
         let connection_id = connection_id.ok_or_else(|| {
-            OpenBitFunError::service(
+            StarMateError::service(
                 "Opening a remote workspace requires its saved SSH connection ID",
             )
         })?;
@@ -235,7 +235,7 @@ impl crate::agentic::coordination::ConversationCoordinator {
         remote_connection_id: Option<&str>,
         remote_ssh_host: Option<&str>,
         snapshot_log_context: &str,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let known_remote = workspace_service
             .resolve_legacy_workspace_open(
                 &path.to_string_lossy(),
@@ -244,7 +244,7 @@ impl crate::agentic::coordination::ConversationCoordinator {
             )
             .await?;
         if known_remote.is_none() && !path.exists() {
-            return Err(OpenBitFunError::service(format!(
+            return Err(StarMateError::service(format!(
                 "Workspace path does not exist locally and is not a known remote SSH workspace: {}. Open it once from the desktop SSH remote UI so OpenBitFun can remember the connection, then try again.",
                 path.display()
             )));
@@ -1101,13 +1101,13 @@ mod external_policy_upgrade_tests {
 pub(crate) async fn upgrade_session_workspace_reference(
     config: &mut crate::agentic::core::SessionConfig,
     service: &WorkspaceService,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if config.workspace_id.is_none() {
         let path = config
             .workspace_path
             .as_deref()
             .or(config.project_workspace_path.as_deref())
-            .ok_or_else(|| OpenBitFunError::service("Session has no workspace reference"))?;
+            .ok_or_else(|| StarMateError::service("Session has no workspace reference"))?;
         let record = service
             .resolve_legacy_workspace_reference(
                 None,
@@ -1117,7 +1117,7 @@ pub(crate) async fn upgrade_session_workspace_reference(
             )
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::service(
+                StarMateError::service(
                     "Legacy session workspace is unavailable; restore its workspace record",
                 )
             })?;
@@ -1130,7 +1130,7 @@ pub(crate) async fn upgrade_session_workspace_reference(
         config.project_workspace_id = Some(
             record
                 .project_workspace_id()
-                .map_err(OpenBitFunError::service)?
+                .map_err(StarMateError::service)?
                 .to_owned(),
         );
     }
@@ -1144,7 +1144,7 @@ impl WorkspaceService {
     pub async fn upgrade_legacy_session_binding(
         &self,
         binding: starmate_runtime_ports::AgentSessionWorkspaceBinding,
-    ) -> OpenBitFunResult<starmate_runtime_ports::AgentSessionWorkspaceBinding> {
+    ) -> StarMateResult<starmate_runtime_ports::AgentSessionWorkspaceBinding> {
         let mut config = crate::agentic::core::SessionConfig {
             tool_presentation_mode: Default::default(),
             workspace_id: binding.workspace_id,
@@ -1173,7 +1173,7 @@ impl WorkspaceService {
             || project.workspace_kind == WorkspaceKind::Remote)
             && record.id != project.id
         {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Remote workspace cannot use another project workspace",
             ));
         }
@@ -1201,7 +1201,7 @@ impl WorkspaceService {
         path: &str,
         legacy_workspace_path: Option<&str>,
         connection_id: Option<&str>,
-    ) -> OpenBitFunResult<Option<String>> {
+    ) -> StarMateResult<Option<String>> {
         if let Some(root) = legacy_workspace_path.filter(|value| !value.is_empty()) {
             let record = self
                 .resolve_legacy_workspace_reference(
@@ -1212,14 +1212,14 @@ impl WorkspaceService {
                 )
                 .await?
                 .ok_or_else(|| {
-                    OpenBitFunError::service(
+                    StarMateError::service(
                         "Legacy filesystem workspace cannot be resolved; select its ID",
                     )
                 })?;
             return record
                 .filesystem_connection_id()
                 .map(|id| id.map(str::to_owned))
-                .map_err(OpenBitFunError::service);
+                .map_err(StarMateError::service);
         }
         if let Some(id) = connection_id {
             return Ok((!id.is_empty()).then(|| id.to_owned()));
@@ -1247,13 +1247,13 @@ impl WorkspaceService {
                 providers.insert(
                     record
                         .filesystem_connection_id()
-                        .map_err(OpenBitFunError::service)?
+                        .map_err(StarMateError::service)?
                         .map(str::to_owned),
                 );
             }
         }
         if providers.len() > 1 {
-            return Err(OpenBitFunError::service("Legacy filesystem path matches multiple workspace providers; select the workspace ID"));
+            return Err(StarMateError::service("Legacy filesystem path matches multiple workspace providers; select the workspace ID"));
         }
         Ok(providers.into_iter().next().flatten())
     }
@@ -1361,10 +1361,10 @@ pub async fn remote_io_for_legacy_or_id(
     workspace_id: Option<&str>,
     controller_local: bool,
     legacy_path: &str,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     if let Some(id) = workspace_id {
         let service = super::get_global_workspace_service()
-            .ok_or_else(|| OpenBitFunError::service("Workspace service is unavailable"))?;
+            .ok_or_else(|| StarMateError::service("Workspace service is unavailable"))?;
         return Ok(service.require_workspace(id).await?.workspace_kind == WorkspaceKind::Remote);
     }
     if controller_local {
@@ -1386,7 +1386,7 @@ pub async fn remote_io_for_legacy_or_id(
 #[cfg(all(feature = "agent-runtime", feature = "scheduled-jobs"))]
 pub(crate) async fn upgrade_legacy_cron_target(
     mut target: crate::service::cron::CronJobTarget,
-) -> OpenBitFunResult<crate::service::cron::CronJobTarget> {
+) -> StarMateResult<crate::service::cron::CronJobTarget> {
     use crate::service::cron::CronJobTarget;
     let workspace = match &mut target {
         CronJobTarget::Session { workspace, .. } | CronJobTarget::Workspace { workspace, .. } => {
@@ -1395,7 +1395,7 @@ pub(crate) async fn upgrade_legacy_cron_target(
     };
     if workspace.workspace_id.is_none() {
         let service = super::get_global_workspace_service()
-            .ok_or_else(|| OpenBitFunError::service("Workspace service is unavailable"))?;
+            .ok_or_else(|| StarMateError::service("Workspace service is unavailable"))?;
         let record = service
             .resolve_legacy_workspace_reference(
                 None,
@@ -1405,7 +1405,7 @@ pub(crate) async fn upgrade_legacy_cron_target(
             )
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::service(
+                StarMateError::service(
                     "Scheduled job workspace is unavailable; select its workspace by ID",
                 )
             })?;
@@ -1427,7 +1427,7 @@ impl WorkspaceService {
         connection: Option<&str>,
         host: Option<&str>,
         source_session_id: &str,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         if let Some(record) = self
             .resolve_legacy_workspace_reference(None, path, connection, host)
             .await?
@@ -1446,7 +1446,7 @@ impl WorkspaceService {
                     )
                     .resolve_workspace_storage(id)
                     .await
-                    .map_err(|e| OpenBitFunError::service(e.to_string()))?;
+                    .map_err(|e| StarMateError::service(e.to_string()))?;
                     let input = std::path::Path::new(path);
                     if input == storage.effective_storage_path
                         || dunce::canonicalize(input)
@@ -1457,7 +1457,7 @@ impl WorkspaceService {
                 }
             }
         }
-        Err(OpenBitFunError::service(
+        Err(StarMateError::service(
             "Legacy fork workspace reference is unavailable; select its workspace ID",
         ))
     }

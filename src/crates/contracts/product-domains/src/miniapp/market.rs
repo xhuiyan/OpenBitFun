@@ -71,7 +71,7 @@ pub struct MarketListingSummary {
     pub tags: Vec<String>,
     pub owner: MarketUserSummary,
     pub latest_release: u32,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub permissions: MiniAppPermissions,
     pub screenshot_urls: Vec<String>,
@@ -106,7 +106,7 @@ pub struct MarketRelease {
     pub release_id: String,
     pub listing_id: String,
     pub release_number: u32,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub changelog: String,
     pub package_sha256: String,
@@ -151,7 +151,7 @@ pub struct MarketSubmission {
     pub icon: String,
     pub category: String,
     pub tags: Vec<String>,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub changelog: String,
     pub license: MarketLicense,
@@ -183,7 +183,7 @@ pub struct MarketSubmissionDraftRequest {
     pub category: String,
     #[serde(default)]
     pub tags: Vec<String>,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub changelog: String,
     pub license: MarketLicense,
@@ -356,7 +356,7 @@ mod tests {
         let value = listing
             .as_object_mut()
             .unwrap()
-            .remove("minOpenBitFunVersion")
+            .remove("minStarMateVersion")
             .unwrap();
         let retired_field = ["min", "Bit", "fun", "Version"].concat();
         listing
@@ -365,6 +365,6 @@ mod tests {
             .insert(retired_field, value);
 
         let error = serde_json::from_value::<MarketListingDetail>(listing).unwrap_err();
-        assert!(error.to_string().contains("minOpenBitFunVersion"));
+        assert!(error.to_string().contains("minStarMateVersion"));
     }
 }

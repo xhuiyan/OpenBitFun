@@ -7,7 +7,7 @@ use crate::agentic::tools::framework::{
 };
 use crate::agentic::tools::workspace_paths::posix_style_path_is_absolute;
 use crate::service_agent_runtime::CoreServiceAgentRuntime;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_core_types::SessionExecutionTarget;
 use starmate_runtime_ports::{
@@ -67,17 +67,17 @@ impl SessionMessageTool {
         &self,
         workspace: &str,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let workspace = workspace.trim();
         if workspace.is_empty() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "workspace is required and cannot be empty".to_string(),
             ));
         }
 
         if context.is_remote() {
             if !posix_style_path_is_absolute(workspace) {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "workspace must be an absolute POSIX path on the remote host".to_string(),
                 ));
             }
@@ -86,7 +86,7 @@ impl SessionMessageTool {
 
         let path = Path::new(workspace);
         if !path.is_absolute() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "workspace must be an absolute path".to_string(),
             ));
         }
@@ -94,13 +94,13 @@ impl SessionMessageTool {
         let resolved = normalize_path(workspace);
         let path = Path::new(&resolved);
         if !path.exists() {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "Workspace does not exist: {}",
                 resolved
             )));
         }
         if !path.is_dir() {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "Workspace is not a directory: {}",
                 resolved
             )));
@@ -154,24 +154,24 @@ impl SessionMessageTool {
         ValidationResult::default()
     }
 
-    fn sender_session_id<'a>(&self, context: &'a ToolUseContext) -> OpenBitFunResult<&'a str> {
+    fn sender_session_id<'a>(&self, context: &'a ToolUseContext) -> StarMateResult<&'a str> {
         context.session_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::tool("SessionMessage requires a source session".to_string())
+            StarMateError::tool("SessionMessage requires a source session".to_string())
         })
     }
 
-    fn sender_workspace(&self, context: &ToolUseContext) -> OpenBitFunResult<String> {
+    fn sender_workspace(&self, context: &ToolUseContext) -> StarMateResult<String> {
         context
             .workspace_root()
             .map(|path| path.to_string_lossy().to_string())
             .ok_or_else(|| {
-                OpenBitFunError::tool("SessionMessage requires a source workspace".to_string())
+                StarMateError::tool("SessionMessage requires a source workspace".to_string())
             })
     }
 
-    fn creator_session_marker(&self, context: &ToolUseContext) -> OpenBitFunResult<String> {
+    fn creator_session_marker(&self, context: &ToolUseContext) -> StarMateResult<String> {
         let creator_session_id = context.session_id.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool("SessionMessage requires a source session".to_string())
+            StarMateError::tool("SessionMessage requires a source session".to_string())
         })?;
         Ok(format!("session-{}", creator_session_id))
     }
@@ -318,7 +318,7 @@ impl Tool for SessionMessageTool {
         "SessionMessage"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(
             r#"Asynchronously send a message to another agent session. When the target session finishes, its result is automatically sent back to you as a follow-up message.
 
@@ -558,9 +558,9 @@ Allowed agent types when creating a session:
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let params: SessionMessageInput = serde_json::from_value(input.clone())
-            .map_err(|e| OpenBitFunError::tool(format!("Invalid input: {}", e)))?;
+            .map_err(|e| StarMateError::tool(format!("Invalid input: {}", e)))?;
         let source_session_id = self.sender_session_id(context)?.to_string();
         let source_workspace = self.sender_workspace(context)?;
         let source_remote_connection_id = context
@@ -575,19 +575,19 @@ Allowed agent types when creating a session:
             .filter(|value| !value.trim().is_empty());
 
         let coordinator = get_global_coordinator()
-            .ok_or_else(|| OpenBitFunError::tool("coordinator not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("coordinator not initialized".to_string()))?;
         let scheduler = get_global_scheduler()
-            .ok_or_else(|| OpenBitFunError::tool("scheduler not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("scheduler not initialized".to_string()))?;
         let runtime = CoreServiceAgentRuntime::agent_runtime_with_dialog_turns(
             coordinator.clone(),
             scheduler,
         )
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
 
         let (target_session_id, target_agent_type, created_session_id, workspace_target) =
             if let Some(target_session_id) = params.session_id.clone() {
                 if source_session_id == target_session_id {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "SessionMessage cannot send a message to the same session".to_string(),
                     ));
                 }
@@ -598,10 +598,10 @@ Allowed agent types when creating a session:
                     })
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
+                        StarMateError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
                     })?;
                 let workspace_target = workspace_target.ok_or_else(|| {
-                    OpenBitFunError::NotFound(format!(
+                    StarMateError::NotFound(format!(
                         "Workspace for session '{}' could not be resolved",
                         target_session_id
                     ))
@@ -613,7 +613,7 @@ Allowed agent types when creating a session:
                     let requested_target =
                         self.workspace_target_from_context(requested_workspace.clone(), context);
                     if !Self::same_workspace_identity(&requested_target, &workspace_target) {
-                        return Err(OpenBitFunError::NotFound(format!(
+                        return Err(StarMateError::NotFound(format!(
                             "Session '{}' not found in workspace '{}'",
                             target_session_id, requested_target.workspace_path
                         )));
@@ -629,7 +629,7 @@ Allowed agent types when creating a session:
                     })
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
+                        StarMateError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
                     })?;
                 let listed_agent_type =
                     Self::target_agent_type_from_sessions(&visible_sessions, &target_session_id);
@@ -639,7 +639,7 @@ Allowed agent types when creating a session:
                             .resolve_session_agent_type(&target_session_id)
                             .await
                             .map_err(|error| {
-                                OpenBitFunError::tool(
+                                StarMateError::tool(
                                     CoreServiceAgentRuntime::runtime_error_message(error),
                                 )
                             })?,
@@ -649,7 +649,7 @@ Allowed agent types when creating a session:
                 };
                 let target_agent_type =
                     listed_agent_type.or(resolved_agent_type).ok_or_else(|| {
-                        OpenBitFunError::NotFound(format!(
+                        StarMateError::NotFound(format!(
                             "Session '{}' not found",
                             target_session_id
                         ))
@@ -659,7 +659,7 @@ Allowed agent types when creating a session:
             } else {
                 let workspace = self.resolve_workspace(
                     params.workspace.as_deref().ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "workspace is required when session_id is omitted".to_string(),
                         )
                     })?,
@@ -671,7 +671,7 @@ Allowed agent types when creating a session:
                     .clone()
                     .filter(|value| !value.trim().is_empty())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "session_name is required when session_id is omitted".to_string(),
                         )
                     })?;
@@ -679,7 +679,7 @@ Allowed agent types when creating a session:
                     .agent_type
                     .as_ref()
                     .ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "agent_type is required when session_id is omitted".to_string(),
                         )
                     })?
@@ -706,7 +706,7 @@ Allowed agent types when creating a session:
                     })
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
+                        StarMateError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
                     })?;
 
                 (
@@ -746,7 +746,7 @@ Allowed agent types when creating a session:
             })
             .await
             .map_err(|error| {
-                OpenBitFunError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
+                StarMateError::tool(CoreServiceAgentRuntime::runtime_error_message(error))
             })?;
 
         Ok(vec![ToolResult::Result {

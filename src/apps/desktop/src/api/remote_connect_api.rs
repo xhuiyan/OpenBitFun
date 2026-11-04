@@ -2022,7 +2022,7 @@ pub async fn remote_connect_get_methods() -> Result<Vec<ConnectionMethodInfo>, S
                 available: true,
                 description: "Same local network".into(),
             },
-            ConnectionMethod::OpenBitFunServer => ConnectionMethodInfo {
+            ConnectionMethod::StarMateServer => ConnectionMethodInfo {
                 id: "starmate_server".into(),
                 name: "StarMate Server".into(),
                 available: true,
@@ -2060,7 +2060,7 @@ fn parse_connection_method(
         "lan" => Ok(ConnectionMethod::Lan {
             ip: lan_ip.filter(|s| !s.is_empty()),
         }),
-        "starmate_server" => Ok(ConnectionMethod::OpenBitFunServer),
+        "starmate_server" => Ok(ConnectionMethod::StarMateServer),
         "bot_feishu" => Ok(ConnectionMethod::BotFeishu),
         "bot_telegram" => Ok(ConnectionMethod::BotTelegram),
         "bot_weixin" => Ok(ConnectionMethod::BotWeixin),

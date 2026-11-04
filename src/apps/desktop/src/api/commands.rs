@@ -2385,7 +2385,7 @@ pub async fn scan_workspace_info(
             .await
             .and_then(|record| {
                 record.ok_or_else(|| {
-                    starmate_core::OpenBitFunError::service(
+                    starmate_core::StarMateError::service(
                         "Workspace ID is required for scanning",
                     )
                 })
@@ -5176,8 +5176,8 @@ pub async fn search_filenames(
                 progress_sink: None,
             })
             .await
-            .map_err(starmate_core::util::errors::OpenBitFunError::service),
-            Err(error) => Err(starmate_core::util::errors::OpenBitFunError::service(
+            .map_err(starmate_core::util::errors::StarMateError::service),
+            Err(error) => Err(starmate_core::util::errors::StarMateError::service(
                 format!("Remote file service not available: {}", error),
             )),
         },
@@ -5187,7 +5187,7 @@ pub async fn search_filenames(
                 .search_file_names(&request.root_path, &request.pattern, options, cancel_flag)
                 .await
         }
-        Err(error) => Err(starmate_core::util::errors::OpenBitFunError::service(
+        Err(error) => Err(starmate_core::util::errors::StarMateError::service(
             error,
         )),
     };
@@ -5428,7 +5428,7 @@ pub async fn start_search_filenames_stream(
                 progress_sink: Some(progress_sink),
             })
             .await
-            .map_err(starmate_core::util::errors::OpenBitFunError::service)
+            .map_err(starmate_core::util::errors::StarMateError::service)
         } else {
             filesystem_service
                 .search_file_names_with_progress(
@@ -5595,7 +5595,7 @@ pub async fn start_search_file_contents_stream(
                 }
             }
             result.map(|outcome| (outcome, None)).map_err(|error| {
-                starmate_core::util::errors::OpenBitFunError::service(
+                starmate_core::util::errors::StarMateError::service(
                     remote_content_search_refusal_message(
                         "start_search_file_contents_stream",
                         &root_path,
@@ -5638,7 +5638,7 @@ pub async fn start_search_file_contents_stream(
                 }
             }
             result.map_err(|error| {
-                starmate_core::util::errors::OpenBitFunError::service(format!(
+                starmate_core::util::errors::StarMateError::service(format!(
                     "Failed to search file contents via workspace search: {}",
                     error
                 ))

@@ -5,7 +5,7 @@ use crate::agentic::coordination::{
 use crate::agentic::tools::framework::{
     PermissionIntent, Tool, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 use std::collections::HashSet;
@@ -36,9 +36,9 @@ impl AgentWaitTool {
         Self
     }
 
-    fn parse_request(input: &Value) -> OpenBitFunResult<AgentWaitRequest> {
+    fn parse_request(input: &Value) -> StarMateResult<AgentWaitRequest> {
         let object = input.as_object().ok_or_else(|| {
-            OpenBitFunError::tool("AgentWait input must be an object".to_string())
+            StarMateError::tool("AgentWait input must be an object".to_string())
         })?;
 
         let task_ids = object
@@ -163,7 +163,7 @@ impl Tool for AgentWaitTool {
         true
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok("Wait for selected background agent results. The tool also returns when `timeout_seconds` has elapsed.".to_string())
     }
 
@@ -227,7 +227,7 @@ impl Tool for AgentWaitTool {
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         Ok(Vec::new())
     }
 
@@ -264,16 +264,16 @@ impl Tool for AgentWaitTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let request = Self::parse_request(input)?;
         let session_id = context.session_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::tool("session_id is required in context".to_string())
+            StarMateError::tool("session_id is required in context".to_string())
         })?;
         let dialog_turn_id = context.dialog_turn_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::tool("dialog_turn_id is required in context".to_string())
+            StarMateError::tool("dialog_turn_id is required in context".to_string())
         })?;
         let coordinator = get_global_coordinator()
-            .ok_or_else(|| OpenBitFunError::tool("coordinator not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("coordinator not initialized".to_string()))?;
         let result = coordinator
             .wait_for_background_subagent_outcomes_with_selection(
                 session_id,

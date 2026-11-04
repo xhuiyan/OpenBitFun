@@ -1,7 +1,7 @@
 //! Post-input repaint settling on the bound window stream. Waiting never sends
 //! input, activates a window or substitutes another capture source.
 use super::NativeComputerUseHost;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{
     AppInputSettle, AppInputSettlePolicy, AppSelector,
 };
@@ -32,7 +32,7 @@ impl NativeComputerUseHost {
         &self,
         app: AppSelector,
         policy: AppInputSettlePolicy,
-    ) -> OpenBitFunResult<AppInputSettle> {
+    ) -> StarMateResult<AppInputSettle> {
         #[cfg(target_os = "macos")]
         {
             let (pid, window) = match bound_window(&app) {
@@ -40,7 +40,7 @@ impl NativeComputerUseHost {
                 Err(unavailable) => return Ok(unavailable),
             };
             let window = u32::try_from(window).map_err(|_| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "[INVALID_PARAMS] window_id exceeds the macOS window ID range",
                 )
             })?;
@@ -48,8 +48,8 @@ impl NativeComputerUseHost {
                 crate::computer_use::macos_capture::wait_settled(pid, window, policy)
             })
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))?
-            .map_err(OpenBitFunError::tool)
+            .map_err(|error| StarMateError::tool(error.to_string()))?
+            .map_err(StarMateError::tool)
         }
         #[cfg(target_os = "windows")]
         {
@@ -58,7 +58,7 @@ impl NativeComputerUseHost {
                 Err(unavailable) => return Ok(unavailable),
             };
             let window = isize::try_from(window).map_err(|_| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "[INVALID_PARAMS] window_id exceeds the native window handle range",
                 )
             })?;
@@ -69,7 +69,7 @@ impl NativeComputerUseHost {
                 )
             })
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))?
+            .map_err(|error| StarMateError::tool(error.to_string()))?
         }
         #[cfg(target_os = "linux")]
         {
@@ -78,7 +78,7 @@ impl NativeComputerUseHost {
                 Some(session) => session
                     .wait_settled(policy)
                     .await
-                    .map_err(OpenBitFunError::tool),
+                    .map_err(StarMateError::tool),
                 None => Ok(AppInputSettle::unavailable(
                     "Accessibility-only observation has no frame stream; the observation was taken without waiting for repaint",
                 )),

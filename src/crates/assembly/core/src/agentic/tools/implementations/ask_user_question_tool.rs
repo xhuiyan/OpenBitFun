@@ -18,7 +18,7 @@ use uuid::Uuid;
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
 use crate::agentic::tools::user_input_manager::get_user_input_manager;
 use crate::infrastructure::events::event_system::{get_global_event_system, BackendEvent};
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 
 /// AskUserQuestion tool
 pub struct AskUserQuestionTool;
@@ -117,7 +117,7 @@ impl Tool for AskUserQuestionTool {
         "AskUserQuestion"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Use this tool when you need to ask the user questions during execution. This allows you to:
 1. Gather user preferences or requirements
 2. Clarify ambiguous instructions
@@ -276,7 +276,7 @@ Usage notes:
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let service = crate::service::config::global::GlobalConfigManager::get_service().await?;
         let ai_config: crate::service::config::types::AIConfig =
             service.get_config(Some("ai")).await?;
@@ -294,9 +294,9 @@ impl AskUserQuestionTool {
         input: &Value,
         context: &ToolUseContext,
         timeout: Option<std::time::Duration>,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if !Self::is_available_for_tool_context(Some(context)) {
-            return Err(crate::util::errors::OpenBitFunError::tool(
+            return Err(crate::util::errors::StarMateError::tool(
                 "AskUserQuestion is unavailable because this execution surface cannot accept interactive user input",
             ));
         }
@@ -304,7 +304,7 @@ impl AskUserQuestionTool {
         // 1. Parse input parameters
         let tool_input: AskUserQuestionInput =
             serde_json::from_value(input.clone()).map_err(|e| {
-                crate::util::errors::OpenBitFunError::Validation(format!(
+                crate::util::errors::StarMateError::Validation(format!(
                     "Failed to parse input parameters: {}",
                     e
                 ))
@@ -312,7 +312,7 @@ impl AskUserQuestionTool {
 
         // 2. Validate question format
         if let Err(error) = validate_ask_user_question_input(&tool_input) {
-            return Err(crate::util::errors::OpenBitFunError::Validation(error));
+            return Err(crate::util::errors::StarMateError::Validation(error));
         }
 
         let question_count = tool_input.questions.len();

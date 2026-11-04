@@ -10,7 +10,7 @@ async fn open_document(
     workspace: &WorkspaceInfo,
     entry: &Reference,
     document: ExternalSessionDocument,
-) -> OpenBitFunResult<Option<OfflineSessionBundle>> {
+) -> StarMateResult<Option<OfflineSessionBundle>> {
     let refreshed = refresh_reference(
         root,
         entry.clone(),

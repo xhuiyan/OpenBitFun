@@ -141,7 +141,7 @@ async fn child_delegation_policy(
     coordinator: &crate::agentic::coordination::ConversationCoordinator,
     subagent_type: Option<&str>,
     target_session_id: Option<&str>,
-) -> OpenBitFunResult<starmate_runtime_ports::DelegationPolicy> {
+) -> StarMateResult<starmate_runtime_ports::DelegationPolicy> {
     let target_type = target_session_id
         .and_then(|session_id| coordinator.get_session_manager().get_session(session_id))
         .map(|session| session.agent_type);
@@ -153,7 +153,7 @@ async fn child_delegation_policy(
                 .await;
         }
         if is_swarm_delegate_agent_type(target_type) {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Swarm agent session is missing its persisted tree node".to_string(),
             ));
         }
@@ -184,7 +184,7 @@ async fn child_delegation_policy(
 impl AgentExecutionTool {
     async fn derive_parent_permission_runtime_ceiling(
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<PermissionRuntimeCeiling> {
+    ) -> StarMateResult<PermissionRuntimeCeiling> {
         crate::agentic::permission_policy::load_parent_permission_runtime_ceiling(
             context.agent_type.as_deref(),
             context.workspace_id(),
@@ -219,7 +219,7 @@ impl AgentExecutionTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         self.call_task_impl_with_deep_review_mode(input, context, false)
             .await
     }
@@ -228,7 +228,7 @@ impl AgentExecutionTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         self.call_task_impl_with_deep_review_mode(input, context, true)
             .await
     }
@@ -238,12 +238,12 @@ impl AgentExecutionTool {
         input: &Value,
         context: &ToolUseContext,
         is_deep_review_parent: bool,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let start_time = std::time::Instant::now();
         let invocation = Self::parse_invocation(input, is_deep_review_parent)?;
 
         let session_id = context.session_id.clone().ok_or_else(|| {
-            OpenBitFunError::tool("session_id is required in context".to_string())
+            StarMateError::tool("session_id is required in context".to_string())
         })?;
 
         if invocation.action == TaskAction::Cancel {
@@ -257,12 +257,12 @@ impl AgentExecutionTool {
     async fn cancel_background_runs(
         parent_session_id: &str,
         invocation: TaskInvocation,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let agent_id = invocation.target_agent_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::tool("agent_id is required when action is cancel".to_string())
+            StarMateError::tool("agent_id is required when action is cancel".to_string())
         })?;
         let coordinator = get_global_coordinator()
-            .ok_or_else(|| OpenBitFunError::tool("coordinator not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("coordinator not initialized".to_string()))?;
         let target_session_id = coordinator
             .resolve_agent_id(parent_session_id, agent_id)
             .await?;
@@ -297,15 +297,15 @@ impl AgentExecutionTool {
         invocation: TaskInvocation,
         start_time: Instant,
         session_id: String,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         Self::ensure_delegation_allowed(context)?;
         let coordinator = get_global_coordinator()
-            .ok_or_else(|| OpenBitFunError::tool("coordinator not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("coordinator not initialized".to_string()))?;
 
         let description = invocation.description.clone();
         let requested_agent_id = invocation.requested_agent_id.clone();
         let mut prompt = invocation.prompt.clone().ok_or_else(|| {
-            OpenBitFunError::tool("Required parameter missing: prompt".to_string())
+            StarMateError::tool("Required parameter missing: prompt".to_string())
         })?;
         let context_mode = invocation.context_mode;
         let target_session_id = match invocation.target_agent_id.as_deref() {
@@ -317,7 +317,7 @@ impl AgentExecutionTool {
         if let Some(requested_type) = invocation.subagent_type.as_deref() {
             let requested_is_swarm = is_swarm_delegate_agent_type(requested_type);
             if !parent_is_swarm && requested_is_swarm {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "agent_type {requested_type} is available only inside an Ultra Swarm"
                 )));
             }
@@ -341,7 +341,7 @@ impl AgentExecutionTool {
                 .is_some()
                 || is_swarm_delegate_agent_type(&target_agent_type);
             if !parent_is_swarm && target_is_swarm {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "The target agent is outside the current delegation scope".to_string(),
                 ));
             }
@@ -366,14 +366,14 @@ impl AgentExecutionTool {
                     None
                 } else {
                     let subagent_type = invocation.subagent_type.clone().ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "subagent_type is required when fork_context is false or omitted and agent_id is not provided"
                                 .to_string(),
                         )
                     })?;
                     let all_agent_types = self.get_agents_types(Some(context)).await;
                     if !requested_subagent_type_is_allowed(&all_agent_types, &subagent_type) {
-                        return Err(OpenBitFunError::tool(format!(
+                        return Err(StarMateError::tool(format!(
                             "subagent_type {} is not valid, must be one of: {}",
                             subagent_type,
                             all_agent_types.join(", ")
@@ -386,7 +386,7 @@ impl AgentExecutionTool {
                             !parent_is_swarm && !context.is_remote(),
                         )
                         .ok_or_else(|| {
-                            OpenBitFunError::tool(format!(
+                            StarMateError::tool(format!(
                                 "candidate_unavailable: subagent_type {} changed before the invocation could start",
                                 subagent_type
                             ))
@@ -403,7 +403,7 @@ impl AgentExecutionTool {
                         &binding.logical_id,
                         &binding.runtime_agent_key,
                     ) {
-                        return Err(OpenBitFunError::tool(format!(
+                        return Err(StarMateError::tool(format!(
                             "subagent_type {} is not valid, must be one of: {}",
                             subagent_type,
                             all_agent_types.join(", ")
@@ -416,7 +416,7 @@ impl AgentExecutionTool {
                             inherit_parent_model,
                         )
                     {
-                        return Err(OpenBitFunError::tool(
+                        return Err(StarMateError::tool(
                             "external_subagent_model_override_unsupported: external subagents use the approved model binding"
                                 .to_string(),
                         ));
@@ -444,7 +444,7 @@ impl AgentExecutionTool {
             .map(|path| path.to_string_lossy().into_owned());
         let effective_workspace_path = if subagent_type.is_some() {
             Some(current_workspace_path.clone().ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "current workspace is required when creating a fresh subagent session"
                         .to_string(),
                 )
@@ -454,10 +454,10 @@ impl AgentExecutionTool {
         };
 
         let tool_call_id = context.tool_call_id.clone().ok_or_else(|| {
-            OpenBitFunError::tool("tool_call_id is required in context".to_string())
+            StarMateError::tool("tool_call_id is required in context".to_string())
         })?;
         let dialog_turn_id = context.dialog_turn_id.clone().ok_or_else(|| {
-            OpenBitFunError::tool("dialog_turn_id is required in context".to_string())
+            StarMateError::tool("dialog_turn_id is required in context".to_string())
         })?;
         let mut deep_review_effective_policy: Option<DeepReviewExecutionPolicy> = None;
         let mut deep_review_active_guard: Option<DeepReviewActiveReviewerGuard<'static>> = None;
@@ -470,12 +470,12 @@ impl AgentExecutionTool {
         let mut deep_review_run_manifest: Option<Value> = None;
         if is_deep_review_parent {
             let subagent_type = subagent_type.as_deref().ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "subagent_type is required for DeepReview AgentSpawn calls".to_string(),
                 )
             })?;
             let base_policy = load_default_deep_review_policy().await.map_err(|error| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "Failed to load DeepReview execution policy: {}",
                     error
                 ))
@@ -518,7 +518,7 @@ impl AgentExecutionTool {
                 .map(FocusedReviewAssignment::from_manifest)
                 .transpose()
                 .map_err(|violation| {
-                    OpenBitFunError::tool(format!(
+                    StarMateError::tool(format!(
                         "DeepReview AgentSpawn policy violation: {}",
                         violation.to_tool_error_message()
                     ))
@@ -528,14 +528,14 @@ impl AgentExecutionTool {
             let role = policy
                 .classify_subagent(subagent_type)
                 .map_err(|violation| {
-                    OpenBitFunError::tool(format!(
+                    StarMateError::tool(format!(
                         "DeepReview AgentSpawn policy violation: {}",
                         violation.to_tool_error_message()
                     ))
                 })?;
             deep_review_subagent_role = Some(role);
             if requested_auto_retry && !is_retry {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "auto_retry requires retry=true for DeepReview AgentSpawn calls".to_string(),
                 ));
             }
@@ -544,7 +544,7 @@ impl AgentExecutionTool {
                 .and_then(DeepReviewRunManifestGate::from_value)
             {
                 gate.ensure_active(subagent_type).map_err(|violation| {
-                    OpenBitFunError::tool(format!(
+                    StarMateError::tool(format!(
                         "DeepReview AgentSpawn policy violation: {}",
                         violation.to_tool_error_message()
                     ))
@@ -571,7 +571,7 @@ impl AgentExecutionTool {
                                     ),
                                 );
                             }
-                            return Err(OpenBitFunError::tool(format!(
+                            return Err(StarMateError::tool(format!(
                                 "DeepReview AgentSpawn policy violation: {}",
                                 violation.to_tool_error_message()
                             )));
@@ -588,7 +588,7 @@ impl AgentExecutionTool {
                             &dialog_turn_id,
                             LaunchReviewAgentTool::auto_retry_suppression_reason(violation.code),
                         );
-                        OpenBitFunError::tool(format!(
+                        StarMateError::tool(format!(
                             "DeepReview AgentSpawn policy violation: {}",
                             violation.to_tool_error_message()
                         ))
@@ -599,7 +599,7 @@ impl AgentExecutionTool {
                 .get_subagent_is_readonly(subagent_type)
                 .unwrap_or(false);
             if !is_readonly {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "DeepReview AgentSpawn policy violation: {}",
                     json!({
                         "code": "deep_review_subagent_not_readonly",
@@ -614,7 +614,7 @@ impl AgentExecutionTool {
                 .get_subagent_is_review(subagent_type)
                 .unwrap_or(false);
             if !is_review {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "DeepReview AgentSpawn policy violation: {}",
                     json!({
                         "code": "deep_review_subagent_not_review",
@@ -708,7 +708,7 @@ impl AgentExecutionTool {
                             }
                         },
                         Err(violation) => {
-                            return Err(OpenBitFunError::tool(format!(
+                            return Err(StarMateError::tool(format!(
                                 "DeepReview AgentSpawn policy violation: {}",
                                 violation.to_tool_error_message()
                             )));
@@ -721,7 +721,7 @@ impl AgentExecutionTool {
                     conc_policy
                         .check_launch_allowed(active_reviewers, role, judge_pending)
                         .map_err(|violation| {
-                            OpenBitFunError::tool(format!(
+                            StarMateError::tool(format!(
                                 "DeepReview concurrency policy violation: {}",
                                 violation.to_tool_error_message()
                             ))
@@ -756,7 +756,7 @@ impl AgentExecutionTool {
                         LaunchReviewAgentTool::auto_retry_suppression_reason(violation.code),
                     );
                 }
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "DeepReview AgentSpawn policy violation: {}",
                     violation.to_tool_error_message()
                 ))
@@ -879,7 +879,7 @@ impl AgentExecutionTool {
 
     async fn start_background_task(
         request: BackgroundTaskStartRequest<'_>,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let BackgroundTaskStartRequest {
             coordinator,
             context,
@@ -943,7 +943,7 @@ impl AgentExecutionTool {
         })
         .await
         .map_err(|error| {
-            OpenBitFunError::tool(format!("Background subagent task failed to join: {error}"))
+            StarMateError::tool(format!("Background subagent task failed to join: {error}"))
         })??;
 
         Ok(vec![ToolResult::Result {
@@ -995,7 +995,7 @@ impl AgentExecutionTool {
         start_time: Instant,
         supports_follow_up: bool,
         external_generation_lease: Option<crate::agentic::agents::ExternalSubagentGenerationLease>,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let mut deep_review_active_guard = deep_review_active_guard;
         let mut provider_capacity_retry =
             deep_review_task_adapter::DeepReviewProviderCapacityRetryRuntime::default();
@@ -1053,7 +1053,7 @@ impl AgentExecutionTool {
             })
             .await
             .map_err(|error| {
-                OpenBitFunError::tool(format!("Foreground subagent task failed to join: {error}"))
+                StarMateError::tool(format!("Foreground subagent task failed to join: {error}"))
             })?;
 
             match execution_result {
@@ -1092,14 +1092,14 @@ impl AgentExecutionTool {
                     if matches!(
                         deep_review_subagent_role,
                         Some(DeepReviewSubagentRole::Reviewer)
-                    ) && matches!(error, OpenBitFunError::Cancelled(_))
+                    ) && matches!(error, StarMateError::Cancelled(_))
                         && !context
                             .cancellation_token()
                             .as_ref()
                             .is_some_and(|token| token.is_cancelled())
                     {
                         let reason = match &error {
-                            OpenBitFunError::Cancelled(reason) => reason.as_str(),
+                            StarMateError::Cancelled(reason) => reason.as_str(),
                             _ => "",
                         };
                         return Ok(vec![
@@ -1237,7 +1237,7 @@ impl AgentExecutionTool {
                                                     }
                                                 }
                                                 Err(violation) => {
-                                                    return Err(OpenBitFunError::tool(format!(
+                                                    return Err(StarMateError::tool(format!(
                                                         "DeepReview AgentSpawn policy violation: {}",
                                                         violation.to_tool_error_message()
                                                     )));

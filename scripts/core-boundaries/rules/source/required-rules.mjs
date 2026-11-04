@@ -3204,7 +3204,7 @@ export const requiredContentRules = [
   {
     path: 'src/crates/assembly/core/src/service/filesystem/service.rs',
     reason:
-      'core filesystem service may keep remote-workspace overlay and OpenBitFunError compatibility, but local filesystem owner must remain services-core',
+      'core filesystem service may keep remote-workspace overlay and StarMateError compatibility, but local filesystem owner must remain services-core',
     patterns: [
       {
         regex: /let connection_id = explicit_connection_id\?/,
@@ -3351,7 +3351,7 @@ export const requiredContentRules = [
         message: 'missing agent-tools MiniApp headless restriction re-export',
       },
       {
-        regex: /\bimpl From<ToolRestrictionError> for OpenBitFunError\b/,
+        regex: /\bimpl From<ToolRestrictionError> for StarMateError\b/,
         message: 'missing core error mapping adapter',
       },
       {

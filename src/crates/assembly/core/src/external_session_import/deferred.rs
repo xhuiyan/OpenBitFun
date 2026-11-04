@@ -9,7 +9,7 @@ pub(crate) use legacy::has_native_view;
 
 use super::*;
 use crate::service::workspace::{WorkspaceInfo, WorkspaceKind};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_services_core::{json_store::JsonFileStore, session::SessionMetadataStore};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -92,18 +92,18 @@ type Stamp = starmate_services_core::json_store::JsonFileRevision;
 type IndexCache = HashMap<PathBuf, (Stamp, Arc<Index>)>;
 static CACHE: LazyLock<tokio::sync::Mutex<IndexCache>> = LazyLock::new(Default::default);
 
-pub(crate) async fn catalog_revision(root: &Path) -> OpenBitFunResult<Option<Stamp>> {
+pub(crate) async fn catalog_revision(root: &Path) -> StarMateResult<Option<Stamp>> {
     JsonFileStore
         .revision(&root.join(INDEX_FILE))
         .await
         .map_err(index_error)
 }
 
-fn index_error(error: impl std::fmt::Display) -> OpenBitFunError {
-    OpenBitFunError::io(format!("External session index is unavailable: {error}"))
+fn index_error(error: impl std::fmt::Display) -> StarMateError {
+    StarMateError::io(format!("External session index is unavailable: {error}"))
 }
 
-async fn read_index(root: &Path) -> OpenBitFunResult<Arc<Index>> {
+async fn read_index(root: &Path) -> StarMateResult<Arc<Index>> {
     let path = root.join(INDEX_FILE);
     let Some(stamp) = catalog_revision(root).await? else {
         CACHE.lock().await.remove(&path);
@@ -137,7 +137,7 @@ async fn read_index(root: &Path) -> OpenBitFunResult<Arc<Index>> {
 async fn update_index<T>(
     root: &Path,
     update: impl FnOnce(&mut Index) -> (T, bool),
-) -> OpenBitFunResult<T> {
+) -> StarMateResult<T> {
     let path = root.join(INDEX_FILE);
     let _lock = JsonFileStore
         .acquire_cross_process_lock(&path)
@@ -297,7 +297,7 @@ pub(crate) async fn register(
     workspace: &WorkspaceInfo,
     project: &WorkspaceInfo,
     candidates: Vec<ExternalSessionCandidate>,
-) -> OpenBitFunResult<usize> {
+) -> StarMateResult<usize> {
     if candidates.is_empty() {
         return Ok(0);
     }
@@ -493,7 +493,7 @@ pub(crate) async fn register(
 pub(crate) async fn merge_metadata(
     root: &Path,
     mut native: Vec<SessionMetadata>,
-) -> OpenBitFunResult<Vec<SessionMetadata>> {
+) -> StarMateResult<Vec<SessionMetadata>> {
     for metadata in &mut native {
         tracking::project_native_metadata(metadata);
     }
@@ -544,7 +544,7 @@ pub(crate) async fn merge_metadata(
     Ok(native)
 }
 
-pub(crate) async fn has_references(root: &Path) -> OpenBitFunResult<bool> {
+pub(crate) async fn has_references(root: &Path) -> StarMateResult<bool> {
     Ok(read_index(root).await?.entries.values().any(|entry| {
         !entry.dismissed
             && (is_deferred(&entry.metadata)
@@ -553,7 +553,7 @@ pub(crate) async fn has_references(root: &Path) -> OpenBitFunResult<bool> {
     }))
 }
 
-pub(crate) async fn metadata(root: &Path, id: &str) -> OpenBitFunResult<Option<SessionMetadata>> {
+pub(crate) async fn metadata(root: &Path, id: &str) -> StarMateResult<Option<SessionMetadata>> {
     Ok(read_index(root)
         .await?
         .entries
@@ -568,7 +568,7 @@ pub(crate) async fn metadata(root: &Path, id: &str) -> OpenBitFunResult<Option<S
 pub(crate) async fn save_metadata(
     root: &Path,
     metadata: &SessionMetadata,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     if (!is_deferred(metadata) && !tracking::is_followed(metadata))
         || (!legacy::follows_native(metadata)
             && tokio::fs::try_exists(root.join(&metadata.session_id).join("metadata.json"))
@@ -627,7 +627,7 @@ pub(crate) async fn save_metadata(
     .await
 }
 
-pub(crate) async fn dismiss(root: &Path, id: &str) -> OpenBitFunResult<()> {
+pub(crate) async fn dismiss(root: &Path, id: &str) -> StarMateResult<()> {
     let native = SessionMetadataStore::new(root)
         .load_metadata(id)
         .await
@@ -695,7 +695,7 @@ pub(crate) async fn removed_metadata(
     root: &Path,
     workspace_id: &str,
     ecosystem_id: &str,
-) -> OpenBitFunResult<Vec<SessionMetadata>> {
+) -> StarMateResult<Vec<SessionMetadata>> {
     Ok(read_index(root)
         .await?
         .entries
@@ -716,7 +716,7 @@ pub(crate) async fn restore_reference(
     workspace_id: &str,
     ecosystem_id: &str,
     id: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     update_index(root, |index| {
         let Some(entry) = index.entries.get_mut(id).filter(|entry| {
             entry.metadata.workspace_id.as_deref() == Some(workspace_id)
@@ -725,7 +725,7 @@ pub(crate) async fn restore_reference(
                 && (is_deferred(&entry.metadata) || tracking::is_followed(&entry.metadata))
         }) else {
             return (
-                Err(OpenBitFunError::NotFound(
+                Err(StarMateError::NotFound(
                     "Removed source session was not found in this workspace".into(),
                 )),
                 false,
@@ -765,7 +765,7 @@ pub(crate) async fn restore_reference(
 /// Caller holds the existing Session write and persistence locks. An unopened
 /// reference is kept on failure, so source loss never masquerades as an empty
 /// native conversation and can be retried after the source is restored.
-pub(crate) async fn materialize(root: &Path, id: &str) -> OpenBitFunResult<()> {
+pub(crate) async fn materialize(root: &Path, id: &str) -> StarMateResult<()> {
     // A prepared repair survives process interruption and source loss.
     if OfflineSessionImportStore::new(root)
         .resume_bundle_repair(id)
@@ -821,7 +821,7 @@ async fn materialize_reference(
     project: WorkspaceInfo,
     workspaces: Vec<WorkspaceInfo>,
     read: impl FnOnce(ImportSource, &str) -> Result<ExternalSessionDocument, String> + Send + 'static,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     // Kept only for legacy fixed imports and the guarded v1 history repair.
     // New source views never publish a native Session merely by being opened.
     if tracking::is_followed(&entry.metadata) {

@@ -1,5 +1,5 @@
 use log::{info, warn};
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 use std::fs;
 use std::io::Write;
@@ -76,7 +76,7 @@ pub(super) use starmate_agent_tools::computer_use_host::OcrTextMatch;
 
 /// Read the best recognized text for every visible region. No search query,
 /// candidate ranking, or debug pixel persistence is involved.
-pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+pub(super) fn read_text(shot: &ComputerScreenshot) -> StarMateResult<Vec<OcrTextMatch>> {
     #[cfg(target_os = "macos")]
     {
         return macos::read_text(shot);
@@ -92,7 +92,7 @@ pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTe
     #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
     {
         let _ = shot;
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "[OCR_READ_UNSUPPORTED] Text reading is not available on this platform.",
         ))
     }
@@ -101,7 +101,7 @@ pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTe
 pub(super) fn find_text_matches(
     shot: &ComputerScreenshot,
     text_query: &str,
-) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+) -> StarMateResult<Vec<OcrTextMatch>> {
     let query = normalize_query(text_query)?;
     save_ocr_debug_jpeg(shot, &query);
 
@@ -121,7 +121,7 @@ pub(super) fn find_text_matches(
     }
 
     #[allow(unreachable_code)]
-    Err(OpenBitFunError::tool(
+    Err(StarMateError::tool(
         "move_to_text OCR is not supported on this platform.".to_string(),
     ))
 }
@@ -226,10 +226,10 @@ fn save_ocr_debug_jpeg(shot: &ComputerScreenshot, text_query: &str) {
     }
 }
 
-fn normalize_query(text_query: &str) -> OpenBitFunResult<String> {
+fn normalize_query(text_query: &str) -> StarMateResult<String> {
     let q = text_query.trim();
     if q.is_empty() {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "move_to_text requires a non-empty text_query.".to_string(),
         ));
     }
@@ -256,16 +256,16 @@ mod macos {
         VNRecognizeTextRequestRevision3, VNRecognizedTextObservation, VNRequest,
         VNRequestTextRecognitionLevel,
     };
-    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
     use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 
     /// Top-N candidates per observation; Chinese matches often appear below rank 1.
     const TOP_CANDIDATES_MAX: usize = 10;
 
-    pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    pub(super) fn read_text(shot: &ComputerScreenshot) -> StarMateResult<Vec<OcrTextMatch>> {
         let (_, _, width, height) = image_content_rect_or_full(shot);
         if width == 0 || height == 0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Screenshot content rect is empty; cannot run macOS Vision OCR.",
             ));
         }
@@ -299,11 +299,11 @@ mod macos {
     pub(super) fn find_text_matches(
         shot: &ComputerScreenshot,
         text_query: &str,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         let (_content_left, _content_top, content_width, content_height) =
             image_content_rect_or_full(shot);
         if content_width == 0 || content_height == 0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Screenshot content rect is empty; cannot run macOS Vision OCR.".to_string(),
             ));
         }
@@ -318,7 +318,7 @@ mod macos {
 
         let ranked = filter_and_rank(text_query, raw_matches);
         if ranked.is_empty() {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "No OCR text matched {:?} on screen (macOS Vision found {} text regions total). \
                  Matching strips whitespace between glyphs and allows small edit distance for OCR errors. \
                  If the UI is Chinese, try a shorter substring or ensure the text is visible in the capture.",
@@ -331,7 +331,7 @@ mod macos {
 
     fn recognize_text_observations(
         jpeg_bytes: &[u8],
-    ) -> OpenBitFunResult<Vec<Retained<VNRecognizedTextObservation>>> {
+    ) -> StarMateResult<Vec<Retained<VNRecognizedTextObservation>>> {
         // Create NSData from the raw JPEG bytes.
         let ns_data = NSData::with_bytes(jpeg_bytes);
 
@@ -383,9 +383,9 @@ mod macos {
         Ok(results.to_vec())
     }
 
-    fn ns_error_to_openbitfun(err: Retained<NSError>) -> OpenBitFunError {
+    fn ns_error_to_openbitfun(err: Retained<NSError>) -> StarMateError {
         let desc = err.localizedDescription().to_string();
-        OpenBitFunError::tool(format!("macOS Vision OCR failed: {}", desc))
+        StarMateError::tool(format!("macOS Vision OCR failed: {}", desc))
     }
 
     fn observation_to_match(
@@ -478,7 +478,7 @@ mod windows_backend {
         filter_and_rank, fuzzy_text_matches_query, image_box_to_global_match,
         image_content_rect_or_full, normalize_for_match, OcrTextMatch,
     };
-    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
     use starmate_agent_tools::computer_use_host::ComputerScreenshot;
     use windows::core::HSTRING;
     use windows::Graphics::Imaging::BitmapDecoder;
@@ -489,29 +489,29 @@ mod windows_backend {
         COINIT_APARTMENTTHREADED, COINIT_DISABLE_OLE1DDE,
     };
 
-    fn w<T>(r: windows::core::Result<T>) -> OpenBitFunResult<T> {
-        r.map_err(|e| OpenBitFunError::tool(format!("Windows OCR: {}", e)))
+    fn w<T>(r: windows::core::Result<T>) -> StarMateResult<T> {
+        r.map_err(|e| StarMateError::tool(format!("Windows OCR: {}", e)))
     }
 
-    pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    pub(super) fn read_text(shot: &ComputerScreenshot) -> StarMateResult<Vec<OcrTextMatch>> {
         recognize(shot, None)
     }
 
     pub(super) fn find_text_matches(
         shot: &ComputerScreenshot,
         text_query: &str,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         recognize(shot, Some(text_query))
     }
 
     fn recognize(
         shot: &ComputerScreenshot,
         query: Option<&str>,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         let (content_left, content_top, content_width, content_height) =
             image_content_rect_or_full(shot);
         if content_width == 0 || content_height == 0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Screenshot content rect is empty; cannot run Windows OCR.".to_string(),
             ));
         }
@@ -525,7 +525,7 @@ mod windows_backend {
             let hr =
                 unsafe { CoInitializeEx(None, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE) };
             if hr.is_err() {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "Windows OCR COM initialization failed: {:?}",
                     hr
                 )));
@@ -533,7 +533,7 @@ mod windows_backend {
             co_init = Some(());
         }
 
-        let result = (|| -> OpenBitFunResult<Vec<OcrTextMatch>> {
+        let result = (|| -> StarMateResult<Vec<OcrTextMatch>> {
             // 1. Write JPEG bytes to in-memory stream
             let stream = w(InMemoryRandomAccessStream::new())?;
             let writer = w(DataWriter::CreateDataWriter(&stream))?;
@@ -555,7 +555,7 @@ mod windows_backend {
                         &HSTRING::from("en-US"),
                     ))?;
                     if !w(OcrEngine::IsLanguageSupported(&lang))? {
-                        return Err(OpenBitFunError::tool(
+                        return Err(StarMateError::tool(
                             "Windows OCR: No supported language packs installed.".to_string(),
                         ));
                     }
@@ -631,7 +631,7 @@ mod windows_backend {
 
             let ranked = filter_and_rank(text_query, raw_matches);
             if ranked.is_empty() {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "No OCR text matched {:?} on screen (Windows OCR found {} text regions total).",
                     text_query, line_count
                 )));
@@ -688,34 +688,34 @@ mod linux_backend {
         filter_and_rank, fuzzy_text_matches_query, image_box_to_global_match,
         image_content_rect_or_full, normalize_for_match, tesseract_lines_from_tsv, OcrTextMatch,
     };
-    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
     use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 
-    pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    pub(super) fn read_text(shot: &ComputerScreenshot) -> StarMateResult<Vec<OcrTextMatch>> {
         recognize(shot, None)
     }
 
     pub(super) fn find_text_matches(
         shot: &ComputerScreenshot,
         text_query: &str,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         recognize(shot, Some(text_query))
     }
 
     fn recognize(
         shot: &ComputerScreenshot,
         query: Option<&str>,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         let (content_left, content_top, content_width, content_height) =
             image_content_rect_or_full(shot);
         if content_width == 0 || content_height == 0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Screenshot content rect is empty; cannot run Linux Tesseract OCR.".to_string(),
             ));
         }
 
         let recognition = super::super::linux_native::recognize(&shot.bytes, query.is_some())
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let Some(text_query) = query else {
             return Ok(tesseract_lines_from_tsv(shot, &recognition.tsv));
         };
@@ -742,7 +742,7 @@ mod linux_backend {
 
         let ranked = filter_and_rank(text_query, raw_matches);
         if ranked.is_empty() {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "No OCR text matched {:?} on screen (Tesseract found {} word regions total).",
                 text_query, word_region_count
             )));

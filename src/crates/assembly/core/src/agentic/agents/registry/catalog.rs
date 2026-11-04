@@ -3,7 +3,7 @@ use super::visibility::SubagentVisibilityPolicy;
 use crate::agentic::agents::{
     Agent, ClawMode, CodeReviewAgent, ComputerUseMode, CoworkMode, CreativeHarness,
     DeepResearchMode, DeepReviewAgent, ExploreAgent, GeneralPurposeAgent, MinimalHarness,
-    OpenBitFunAgent, ResearchSpecialistAgent, ReviewFixerAgent, ReviewJudgeAgent,
+    StarMateAgent, ResearchSpecialistAgent, ReviewFixerAgent, ReviewJudgeAgent,
     ReviewWorkerAgent, StandardHarness, SwarmPlannerAgent, SwarmReviewerAgent, SwarmWorkerAgent,
     UltimateHarness,
 };
@@ -45,7 +45,7 @@ pub(crate) fn builtin_agent_specs_for_ids<'a>(
 
 fn builtin_agent_factory(id: &str) -> fn() -> Arc<dyn Agent> {
     match id {
-        "OpenBitFun" => || Arc::new(OpenBitFunAgent),
+        "OpenBitFun" => || Arc::new(StarMateAgent),
         "Minimal" => || Arc::new(MinimalHarness::new()),
         "Standard" => || Arc::new(StandardHarness::new()),
         "Cowork" => || Arc::new(CoworkMode::new()),

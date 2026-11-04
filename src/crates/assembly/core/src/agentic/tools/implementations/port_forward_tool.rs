@@ -16,7 +16,7 @@ use crate::service::remote_ssh::{
     global_port_forward_manager, list_remote_listening_ports, PortForwardRequest, SSHAuthMethod,
     SSHConnectionConfig, SSHConnectionManager, SSHConnectionOptions,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde::Deserialize;
 use serde_json::{json, Value};
@@ -131,10 +131,10 @@ impl PortForwardTool {
         manager: &SSHConnectionManager,
         target: Option<&str>,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let Some(target) = target else {
             return Self::workspace_connection_id(context).ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "This session is not bound to a remote SSH workspace. Pass `target` with a \
                      saved connection, an ~/.ssh/config host, or [user@]host[:port]. Use \
                      operation \"targets\" to see what is available."
@@ -161,7 +161,7 @@ impl PortForwardTool {
             manager
                 .ensure_connected(&found.id)
                 .await
-                .map_err(|error| OpenBitFunError::tool(format!("{error:#}")))?;
+                .map_err(|error| StarMateError::tool(format!("{error:#}")))?;
             return Ok(found.id.clone());
         }
 
@@ -177,9 +177,9 @@ impl PortForwardTool {
     async fn connect_ad_hoc(
         manager: &SSHConnectionManager,
         target: &str,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let endpoint = parse_endpoint(target).ok_or_else(|| {
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "'{target}' is not a saved connection, an ~/.ssh/config host, or [user@]host[:port]"
             ))
         })?;
@@ -243,10 +243,10 @@ impl PortForwardTool {
                 options: SSHConnectionOptions::default(),
             })
             .await
-            .map_err(|error| OpenBitFunError::tool(format!("{error:#}")))?;
+            .map_err(|error| StarMateError::tool(format!("{error:#}")))?;
 
         if !result.success {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "Could not connect to '{target}': {}. Key or agent authentication is required; \
                  a target that needs a password must be saved in OpenBitFun's SSH connections first.",
                 result.error.unwrap_or_else(|| "unknown error".to_string())
@@ -255,21 +255,21 @@ impl PortForwardTool {
         Ok(connection_id)
     }
 
-    fn require_remote_port(input: &PortForwardToolInput) -> OpenBitFunResult<u16> {
+    fn require_remote_port(input: &PortForwardToolInput) -> StarMateResult<u16> {
         input
             .remote_port
             .filter(|port| *port != 0)
-            .ok_or_else(|| OpenBitFunError::tool("start requires remote_port".to_string()))
+            .ok_or_else(|| StarMateError::tool("start requires remote_port".to_string()))
     }
 
-    fn require_forward_id(input: &PortForwardToolInput) -> OpenBitFunResult<String> {
+    fn require_forward_id(input: &PortForwardToolInput) -> StarMateResult<String> {
         input
             .forward_id
             .as_deref()
             .map(str::trim)
             .filter(|id| !id.is_empty())
             .map(str::to_string)
-            .ok_or_else(|| OpenBitFunError::tool("stop requires forward_id".to_string()))
+            .ok_or_else(|| StarMateError::tool("stop requires forward_id".to_string()))
     }
 }
 
@@ -285,7 +285,7 @@ impl Tool for PortForwardTool {
         "PortForward"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Make a port listening on an SSH host reachable from the user's machine, so they can open it in a browser.
 
 Operations:
@@ -396,9 +396,9 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let input: PortForwardToolInput = serde_json::from_value(input.clone())
-            .map_err(|error| OpenBitFunError::validation(format!("Invalid input: {error}")))?;
+            .map_err(|error| StarMateError::validation(format!("Invalid input: {error}")))?;
         let target = input.trimmed_target().unwrap_or("workspace").to_string();
         let intent = match input.operation {
             // Reading what exists changes nothing on either machine.
@@ -485,8 +485,8 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<Vec<ToolResult>> {
+        Err(StarMateError::tool(
             "This build has no remote SSH support, so ports cannot be forwarded".to_string(),
         ))
     }
@@ -496,9 +496,9 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let input: PortForwardToolInput = serde_json::from_value(input.clone())
-            .map_err(|error| OpenBitFunError::tool(format!("Invalid input: {error}")))?;
+            .map_err(|error| StarMateError::tool(format!("Invalid input: {error}")))?;
         let ssh_manager = resolve_ssh_manager().await?;
         let forwards = global_port_forward_manager();
 
@@ -548,7 +548,7 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
                     Self::resolve_target(&ssh_manager, input.trimmed_target(), context).await?;
                 let ports = list_remote_listening_ports(&ssh_manager, &connection_id)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(format!("{error:#}")))?;
+                    .map_err(|error| StarMateError::tool(format!("{error:#}")))?;
                 json!({
                     "success": true,
                     "operation": "detect",
@@ -571,7 +571,7 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
                         label: input.label.clone(),
                     })
                     .await
-                    .map_err(|error| OpenBitFunError::tool(format!("{error:#}")))?;
+                    .map_err(|error| StarMateError::tool(format!("{error:#}")))?;
                 let moved = forward.requested_local_port.is_some();
                 json!({
                     "success": true,
@@ -605,7 +605,7 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
                 forwards
                     .stop_forward(&forward_id)
                     .await
-                    .map_err(|error| OpenBitFunError::tool(format!("{error:#}")))?;
+                    .map_err(|error| StarMateError::tool(format!("{error:#}")))?;
                 json!({
                     "success": true,
                     "operation": "stop",
@@ -624,15 +624,15 @@ Forwards bind 127.0.0.1 and last until stopped or the connection drops. Set expo
 
 /// Reach the SSH manager that owns this process's connections.
 #[cfg(feature = "remote-workspace")]
-async fn resolve_ssh_manager() -> OpenBitFunResult<SSHConnectionManager> {
+async fn resolve_ssh_manager() -> StarMateResult<SSHConnectionManager> {
     let manager = crate::service::remote_ssh::workspace_state::get_remote_workspace_manager()
         .ok_or_else(|| {
-            OpenBitFunError::tool("Remote SSH services are not initialized".to_string())
+            StarMateError::tool("Remote SSH services are not initialized".to_string())
         })?;
     manager
         .get_ssh_manager()
         .await
-        .ok_or_else(|| OpenBitFunError::tool("SSH manager is not available".to_string()))
+        .ok_or_else(|| StarMateError::tool("SSH manager is not available".to_string()))
 }
 
 #[cfg(test)]

@@ -11,7 +11,7 @@ use crate::agentic::tools::desktop_card_host::{
 use crate::agentic::tools::framework::{PermissionIntent, Tool, ToolResult, ToolUseContext};
 use crate::agentic::tools::implementations::ExecCommandTool;
 use crate::service::config::global::GlobalConfigManager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use chrono::DateTime;
 use starmate_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
@@ -483,14 +483,14 @@ fn command_source(input: &Value) -> Option<&str> {
     )
 }
 
-fn required_card_id(input: &Value) -> OpenBitFunResult<String> {
+fn required_card_id(input: &Value) -> StarMateResult<String> {
     input
         .get("cardId")
         .and_then(Value::as_str)
         .map(str::trim)
         .filter(|id| !id.is_empty())
         .map(str::to_string)
-        .ok_or_else(|| OpenBitFunError::validation("cardId is required for this action"))
+        .ok_or_else(|| StarMateError::validation("cardId is required for this action"))
 }
 
 fn presets() -> Value {
@@ -844,7 +844,7 @@ impl Tool for DesktopCardTool {
         "DesktopCard"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(format!(
             r#"Show small persistent cards on the user's desktop, outside the OpenBitFun window (like OS widgets). Cards survive app restarts, keep their position, and can be dragged, hidden, or deleted by the user.
 
@@ -1084,7 +1084,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let Some(command) = command_source(input) else {
             return Ok(Vec::new());
         };
@@ -1111,9 +1111,9 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if is_remote_control_context(context) {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "DesktopCard cannot run from a remote mobile or bot controller because cards appear only on the host desktop, which that user cannot see. Tell the user in the reply instead, or schedule a Cron job for reminders."
                     .to_string(),
             ));
@@ -1121,7 +1121,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
         let action = input
             .get("action")
             .and_then(Value::as_str)
-            .ok_or_else(|| OpenBitFunError::validation("Missing required field: action"))?;
+            .ok_or_else(|| StarMateError::validation("Missing required field: action"))?;
 
         if action == "presets" {
             return Ok(vec![ToolResult::Result {
@@ -1138,7 +1138,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
         let request = match action {
             "create" => {
                 let mut draft = parse_draft(input.get("card").unwrap_or(&Value::Null), now)
-                    .map_err(OpenBitFunError::validation)?;
+                    .map_err(StarMateError::validation)?;
                 self.prepare_command_source(&mut draft.data_source, context)?;
                 DesktopCardHostRequest::Create {
                     draft,
@@ -1155,7 +1155,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
             "update" => {
                 let card_id = required_card_id(input)?;
                 let mut patch = parse_patch(input.get("patch").unwrap_or(&Value::Null), now)
-                    .map_err(OpenBitFunError::validation)?;
+                    .map_err(StarMateError::validation)?;
                 if let Some(source) = patch.data_source.as_mut() {
                     self.prepare_command_source(source, context)?;
                 }
@@ -1178,7 +1178,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
                 card_id: required_card_id(input)?,
             },
             other => {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "Unsupported DesktopCard action: {other}"
                 )))
             }
@@ -1186,7 +1186,7 @@ Cards are shown only on this desktop. They are unavailable for remote mobile or 
 
         let result = invoke_desktop_card_host(request)
             .await
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let assistant = render_result_for_assistant(action, &result);
         Ok(vec![ToolResult::Result {
             data: result,
@@ -1201,12 +1201,12 @@ impl DesktopCardTool {
         &self,
         source: &mut Option<DesktopCardDataSourceKind>,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let Some(DesktopCardDataSourceKind::Command { cwd, .. }) = source.as_mut() else {
             return Ok(());
         };
         if context.is_remote() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Command data sources run on this computer, not on the remote workspace host, so they are not allowed for remote workspaces. Use an http data source, static data updated by you, or a Cron job instead."
                     .to_string(),
             ));

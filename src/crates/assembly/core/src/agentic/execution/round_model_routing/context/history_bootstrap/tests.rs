@@ -25,17 +25,17 @@ impl MemoryHistory {
 
 #[async_trait::async_trait]
 impl RouterHistorySource for MemoryHistory {
-    async fn observations(&self, turn_id: &str) -> OpenBitFunResult<Vec<HistoryObservation>> {
+    async fn observations(&self, turn_id: &str) -> StarMateResult<Vec<HistoryObservation>> {
         self.calls.lock().unwrap().push(turn_id.into());
         if self.fail {
-            return Err(OpenBitFunError::Session(
+            return Err(StarMateError::Session(
                 "Historical turn is unavailable".into(),
             ));
         }
         let count = self
             .turns
             .get(turn_id)
-            .ok_or_else(|| OpenBitFunError::Session("Unknown historical turn".into()))?;
+            .ok_or_else(|| StarMateError::Session("Unknown historical turn".into()))?;
         Ok((0..*count).map(|index| HistoryObservation {
             source_id: format!("{turn_id}/observation/{index}"),
             kind: self.kind,
@@ -76,7 +76,7 @@ impl RecordingSummary {
 
 #[async_trait::async_trait]
 impl SummaryProvider for RecordingSummary {
-    async fn input_budget(&self, _: &RouterContextConfig) -> OpenBitFunResult<usize> {
+    async fn input_budget(&self, _: &RouterContextConfig) -> StarMateResult<usize> {
         Ok(self.budget)
     }
 
@@ -84,7 +84,7 @@ impl SummaryProvider for RecordingSummary {
         &self,
         prompt: String,
         config: &RouterContextConfig,
-    ) -> OpenBitFunResult<SummaryResult> {
+    ) -> StarMateResult<SummaryResult> {
         assert!(EstimatedRouterTokens.count(&prompt) <= self.budget);
         self.prompts.lock().unwrap().push(prompt);
         self.targets
@@ -93,7 +93,7 @@ impl SummaryProvider for RecordingSummary {
             .push(config.summary_target_tokens);
         let call = self.calls.fetch_add(1, Ordering::SeqCst) + 1;
         if self.fail_call == Some(call) {
-            return Err(OpenBitFunError::AIClient(
+            return Err(StarMateError::AIClient(
                 "Synthetic auxiliary failure".into(),
             ));
         }

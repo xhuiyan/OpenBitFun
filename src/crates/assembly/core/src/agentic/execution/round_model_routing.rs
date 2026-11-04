@@ -11,7 +11,7 @@ pub(super) mod session_checkpoint;
 pub use admission::RouterAdmissionLimits;
 
 use crate::agentic::core::{Message, MessageContent};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use admission::RouterAdmission;
 use context::{RoundRouterContext, RouterContextConfig, RouterContextFactory};
 use log::{debug, info, warn};
@@ -83,7 +83,7 @@ pub trait RoundModelRouter: Send + Sync {
     async fn select_model(
         &self,
         request: RoundModelRouteRequest,
-    ) -> OpenBitFunResult<RoundModelRoute>;
+    ) -> StarMateResult<RoundModelRoute>;
 
     /// Record the concrete execution model selected after resolving a route.
     fn record_execution_model(&self, _record: RoundModelExecutionRecord) {}
@@ -125,7 +125,7 @@ impl HttpRoundModelRouterConfig {
     /// Build opt-in configuration from process environment.
     ///
     /// Routing remains disabled unless `OPENBITFUN_ROUND_ROUTER_URL` is set.
-    pub fn from_env() -> OpenBitFunResult<Option<Self>> {
+    pub fn from_env() -> StarMateResult<Option<Self>> {
         let Some(endpoint) = std::env::var("OPENBITFUN_ROUND_ROUTER_URL")
             .ok()
             .map(|value| value.trim().to_string())
@@ -134,7 +134,7 @@ impl HttpRoundModelRouterConfig {
             return Ok(None);
         };
         if !endpoint.starts_with("http://") && !endpoint.starts_with("https://") {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "OPENBITFUN_ROUND_ROUTER_URL must be an http(s) URL".to_string(),
             ));
         }
@@ -142,13 +142,13 @@ impl HttpRoundModelRouterConfig {
         let prompt_path = std::env::var("OPENBITFUN_ROUND_ROUTER_PROMPT")
             .map(PathBuf::from)
             .map_err(|_| {
-                OpenBitFunError::Configuration(
+                StarMateError::Configuration(
                     "OPENBITFUN_ROUND_ROUTER_PROMPT is required when routing is enabled"
                         .to_string(),
                 )
             })?;
         let system_prompt = std::fs::read_to_string(&prompt_path).map_err(|error| {
-            OpenBitFunError::Configuration(format!(
+            StarMateError::Configuration(format!(
                 "Failed to read Router system prompt {}: {}",
                 prompt_path.display(),
                 error
@@ -158,12 +158,12 @@ impl HttpRoundModelRouterConfig {
         let recent_rounds = parse_env_usize("OPENBITFUN_ROUND_ROUTER_RECENT_ROUNDS", 3)?;
         let simple_threshold = parse_env_f64("OPENBITFUN_ROUND_ROUTER_SIMPLE_THRESHOLD", 0.75)?;
         if recent_rounds == 0 {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "OPENBITFUN_ROUND_ROUTER_RECENT_ROUNDS must be positive".to_string(),
             ));
         }
         if !(0.0..=1.0).contains(&simple_threshold) {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "OPENBITFUN_ROUND_ROUTER_SIMPLE_THRESHOLD must be between 0 and 1".to_string(),
             ));
         }
@@ -197,25 +197,25 @@ impl HttpRoundModelRouterConfig {
     }
 }
 
-fn parse_env_usize(name: &str, default: usize) -> OpenBitFunResult<usize> {
+fn parse_env_usize(name: &str, default: usize) -> StarMateResult<usize> {
     std::env::var(name)
         .ok()
         .map(|value| {
             value
                 .parse::<usize>()
-                .map_err(|error| OpenBitFunError::Configuration(format!("Invalid {name}: {error}")))
+                .map_err(|error| StarMateError::Configuration(format!("Invalid {name}: {error}")))
         })
         .transpose()
         .map(|value| value.unwrap_or(default))
 }
 
-fn parse_env_f64(name: &str, default: f64) -> OpenBitFunResult<f64> {
+fn parse_env_f64(name: &str, default: f64) -> StarMateResult<f64> {
     std::env::var(name)
         .ok()
         .map(|value| {
             value
                 .parse::<f64>()
-                .map_err(|error| OpenBitFunError::Configuration(format!("Invalid {name}: {error}")))
+                .map_err(|error| StarMateError::Configuration(format!("Invalid {name}: {error}")))
         })
         .transpose()
         .map(|value| value.unwrap_or(default))
@@ -229,7 +229,7 @@ pub struct HttpRoundModelRouter {
 }
 
 impl HttpRoundModelRouter {
-    pub fn new(config: HttpRoundModelRouterConfig) -> OpenBitFunResult<Self> {
+    pub fn new(config: HttpRoundModelRouterConfig) -> StarMateResult<Self> {
         let client = RouterHttpClient::with_transport_and_protocol(
             config.endpoint.clone(),
             config.model.clone(),
@@ -264,7 +264,7 @@ impl HttpRoundModelRouter {
         &self,
         input: &str,
         trace: Option<&mut RouterTraceGuard>,
-    ) -> OpenBitFunResult<RouterPrediction> {
+    ) -> StarMateResult<RouterPrediction> {
         self.predict_for("router-connection-probe", input, trace, None)
             .await
     }
@@ -275,10 +275,10 @@ impl HttpRoundModelRouter {
         input: &str,
         mut trace: Option<&mut RouterTraceGuard>,
         prepared: Option<&PreparedRouterContext>,
-    ) -> OpenBitFunResult<RouterPrediction> {
+    ) -> StarMateResult<RouterPrediction> {
         if let Some(prepared) = prepared {
             if self.config.context.summary_enabled && prepared.history_truncated {
-                return Err(OpenBitFunError::Configuration(
+                return Err(StarMateError::Configuration(
                     "Router history does not fit without truncation; using the primary model until a complete context is available".into(),
                 ));
             }
@@ -287,7 +287,7 @@ impl HttpRoundModelRouter {
                 .as_ref()
                 .is_some_and(|budget| prepared.input_tokens > budget.user_budget())
             {
-                return Err(OpenBitFunError::Configuration(
+                return Err(StarMateError::Configuration(
                     "Router input exceeds the calibrated budget; using the primary model".into(),
                 ));
             }
@@ -296,7 +296,7 @@ impl HttpRoundModelRouter {
         let deadline = tokio::time::Instant::now()
             .checked_add(self.config.timeout)
             .ok_or_else(|| {
-                OpenBitFunError::Configuration(
+                StarMateError::Configuration(
                     "Router timeout exceeds the runtime clock range".into(),
                 )
             })?;
@@ -311,7 +311,7 @@ impl HttpRoundModelRouter {
         let result = tokio::time::timeout_at(deadline, self.client.predict(input))
             .await
             .map_err(|_| {
-                OpenBitFunError::Http(
+                StarMateError::Http(
                     "Router deadline expired during classification after queue admission".into(),
                 )
             })?;
@@ -351,7 +351,7 @@ impl RoundModelRouter for HttpRoundModelRouter {
     async fn select_model(
         &self,
         request: RoundModelRouteRequest,
-    ) -> OpenBitFunResult<RoundModelRoute> {
+    ) -> StarMateResult<RoundModelRoute> {
         let prepared = if let Some(prepared) = request.prepared_context.as_ref() {
             prepared.clone()
         } else {
@@ -403,7 +403,7 @@ impl RoundModelRouter for HttpRoundModelRouter {
                     RoundModelRoute::Primary
                 };
                 if prediction.simple_probability.is_none() {
-                    return Err(OpenBitFunError::Configuration(
+                    return Err(StarMateError::Configuration(
                         "Router response lacks classifier token logprobs".into(),
                     ));
                 }
@@ -516,11 +516,11 @@ impl RoundModelRouter for HttpRoundModelRouter {
     }
 }
 
-fn map_router_error(error: RouterClientError) -> OpenBitFunError {
+fn map_router_error(error: RouterClientError) -> StarMateError {
     match error {
-        RouterClientError::Http(message) => OpenBitFunError::Http(message),
-        RouterClientError::ContextOverflow(message) => OpenBitFunError::Http(message),
-        RouterClientError::Deserialization(message) => OpenBitFunError::Deserialization(message),
+        RouterClientError::Http(message) => StarMateError::Http(message),
+        RouterClientError::ContextOverflow(message) => StarMateError::Http(message),
+        RouterClientError::Deserialization(message) => StarMateError::Deserialization(message),
     }
 }
 

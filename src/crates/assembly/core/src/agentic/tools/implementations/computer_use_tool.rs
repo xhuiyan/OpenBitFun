@@ -11,7 +11,7 @@ use crate::agentic::tools::framework::{
     PermissionIntent, Tool, ToolExposure, ToolResult, ToolUseContext,
 };
 use crate::service::config::global::GlobalConfigManager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use crate::util::types::ToolImageAttachment;
 use async_trait::async_trait;
 use base64::{engine::general_purpose::STANDARD as B64, Engine as _};
@@ -784,7 +784,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         text_query: &str,
         ocr_region_native: Option<OcrRegionNative>,
         matches: &[ScreenOcrTextMatch],
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         Self::require_multimodal_tool_output_for_screenshot(context)?;
         let take = matches.len().min(Self::MOVE_TO_TEXT_DISAMBIGUATION_MAX);
         let mut attachments: Vec<ToolImageAttachment> = Vec::with_capacity(take);
@@ -867,7 +867,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         text_query: &str,
         ocr_region_native: Option<OcrRegionNative>,
         matches: &[ScreenOcrTextMatch],
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let take = matches.len().min(Self::MOVE_TO_TEXT_DISAMBIGUATION_MAX);
         let mut candidates: Vec<Value> = Vec::with_capacity(take);
         for (i, m) in matches.iter().take(take).enumerate() {
@@ -932,12 +932,12 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         host: &dyn ComputerUseHost,
         input: &Value,
         text_only: bool,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let include_image = match input.get("include_image") {
             None => false,
             Some(Value::Bool(value)) => *value && !text_only,
             Some(_) => {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[INVALID_PARAMS] include_image must be a boolean",
                 ))
             }
@@ -949,7 +949,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         let selector = if let Some(app) = input.get("app").filter(|v| v.is_object()) {
             Some(
                 serde_json::from_value::<AppSelector>(app.clone())
-                    .map_err(|e| OpenBitFunError::tool(format!("Invalid app selector: {e}")))?,
+                    .map_err(|e| StarMateError::tool(format!("Invalid app selector: {e}")))?,
             )
         } else if host.control_snapshot().supported {
             Some(AppSelector::default())
@@ -1081,16 +1081,16 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
 
     /// Screenshot tool results attach JPEGs via `tool_image_attachments`; only providers whose
     /// request converters emit multimodal tool output are supported.
-    fn require_multimodal_tool_output_for_screenshot(ctx: &ToolUseContext) -> OpenBitFunResult<()> {
+    fn require_multimodal_tool_output_for_screenshot(ctx: &ToolUseContext) -> StarMateResult<()> {
         if !ctx.primary_model_supports_image_understanding() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "The primary model does not accept images; do not use ComputerUse action `screenshot` or other image-producing steps. Use get_app_state/describe_screen and observed node_idx or ocr_text app-scoped targets.".to_string(),
             ));
         }
         if ctx.primary_model_facts().multimodal_tool_output_supported() {
             return Ok(());
         }
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "Screenshot results include images in tool results; set the primary model to an image-capable model using Anthropic, OpenAI Chat/Responses, or Gemini API format.".to_string(),
         ))
     }
@@ -1100,7 +1100,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         input: &Value,
         x: i32,
         y: i32,
-    ) -> OpenBitFunResult<(f64, f64)> {
+    ) -> StarMateResult<(f64, f64)> {
         if use_screen_coordinates(input) {
             return Ok((x as f64, y as f64));
         }
@@ -1114,19 +1114,19 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
     }
 
     /// `click` must not carry coordinate fields — use `mouse_move` (or `move_to_text`, etc.) separately.
-    fn ensure_click_has_no_coordinate_fields(input: &Value) -> OpenBitFunResult<()> {
+    fn ensure_click_has_no_coordinate_fields(input: &Value) -> StarMateResult<()> {
         if input.get("x").is_some() || input.get("y").is_some() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "click does not accept x or y. Position with move_to_text, click_element, or `mouse_move` with use_screen_coordinates: true (globals from tool results), then `click` with only button and num_clicks.".to_string(),
             ));
         }
         if input.get("coordinate_mode").is_some() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "click does not accept coordinate_mode. Use `mouse_move` with use_screen_coordinates: true, then `click`.".to_string(),
             ));
         }
         if input.get("use_screen_coordinates").is_some() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "click does not accept use_screen_coordinates. Use `mouse_move` with use_screen_coordinates, then `click`.".to_string(),
             ));
         }
@@ -1156,7 +1156,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         host_ref: &dyn crate::agentic::tools::computer_use_host::ComputerUseHost,
         text_query: &str,
         region_native: Option<crate::agentic::tools::computer_use_host::OcrRegionNative>,
-    ) -> OpenBitFunResult<Vec<ScreenOcrTextMatch>> {
+    ) -> StarMateResult<Vec<ScreenOcrTextMatch>> {
         let matches = host_ref
             .ocr_find_text_matches(text_query, region_native)
             .await?;
@@ -1215,7 +1215,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
     async fn resolve_target_point(
         host_ref: &dyn crate::agentic::tools::computer_use_host::ComputerUseHost,
         input: &Value,
-    ) -> OpenBitFunResult<ResolvedDesktopTarget> {
+    ) -> StarMateResult<ResolvedDesktopTarget> {
         let mut query = parse_locate_query(input);
         if query.text_contains.is_none() {
             if let Some(target_text) = input
@@ -1272,7 +1272,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
                 let selected = match requested_index {
                     Some(idx) if idx >= 1 && idx <= matches.len() => idx - 1,
                     Some(idx) => {
-                        return Err(OpenBitFunError::tool(format!(
+                        return Err(StarMateError::tool(format!(
                             "target_match_index/move_to_text_match_index must be between 1 and {} (got {}).",
                             matches.len(),
                             idx
@@ -1333,7 +1333,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
             });
         }
 
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "move_to_target/click_target requires a target: node_idx, target_text/text_query/text_contains/title_contains, role_substring, identifier_contains, or x/y with use_screen_coordinates: true.".to_string(),
         ))
     }
@@ -1412,7 +1412,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         shot: &ComputerScreenshot,
         debug_rel: Option<String>,
         input: &Value,
-    ) -> OpenBitFunResult<(Value, ToolImageAttachment, String)> {
+    ) -> StarMateResult<(Value, ToolImageAttachment, String)> {
         let b64 = B64.encode(&shot.bytes);
         let ignored: Vec<&str> = [
             "screenshot_crop_center_x",
@@ -1463,7 +1463,7 @@ pub(crate) async fn ensure_global_xy_on_display(
     host: &dyn crate::agentic::tools::computer_use_host::ComputerUseHost,
     gx: f64,
     gy: f64,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let displays = host.list_displays().await.unwrap_or_default();
     if displays.is_empty() {
         // Host can't enumerate displays (non-desktop runtime) — skip the guard.
@@ -1541,7 +1541,7 @@ fn parse_locate_query(input: &Value) -> UiElementLocateQuery {
 
 fn parse_ocr_region_native(
     input: &Value,
-) -> OpenBitFunResult<Option<crate::agentic::tools::computer_use_host::OcrRegionNative>> {
+) -> StarMateResult<Option<crate::agentic::tools::computer_use_host::OcrRegionNative>> {
     let v = input
         .get("ocr_region_native")
         .or_else(|| input.get("ocr_region"));
@@ -1552,27 +1552,27 @@ fn parse_ocr_region_native(
         return Ok(None);
     }
     let o = val.as_object().ok_or_else(|| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "ocr_region_native must be an object { x0, y0, width, height } in global native pixels."
                 .to_string(),
         )
     })?;
     let x0 = o.get("x0").and_then(|x| x.as_i64()).ok_or_else(|| {
-        OpenBitFunError::tool("ocr_region_native.x0 (integer) is required.".to_string())
+        StarMateError::tool("ocr_region_native.x0 (integer) is required.".to_string())
     })? as i32;
     let y0 = o.get("y0").and_then(|x| x.as_i64()).ok_or_else(|| {
-        OpenBitFunError::tool("ocr_region_native.y0 (integer) is required.".to_string())
+        StarMateError::tool("ocr_region_native.y0 (integer) is required.".to_string())
     })? as i32;
     let width = o.get("width").and_then(|x| x.as_u64()).ok_or_else(|| {
-        OpenBitFunError::tool("ocr_region_native.width (positive integer) is required.".to_string())
+        StarMateError::tool("ocr_region_native.width (positive integer) is required.".to_string())
     })? as u32;
     let height = o.get("height").and_then(|x| x.as_u64()).ok_or_else(|| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "ocr_region_native.height (positive integer) is required.".to_string(),
         )
     })? as u32;
     if width == 0 || height == 0 {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "ocr_region_native width and height must be greater than zero.".to_string(),
         ));
     }
@@ -1592,7 +1592,7 @@ impl Tool for ComputerUseTool {
         "ComputerUse"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         let os = Self::host_os_label();
         let keys = Self::key_chord_os_hint();
         Ok(format!(
@@ -1620,7 +1620,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
     async fn description_with_context(
         &self,
         context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let vision = context
             .map(|c| c.primary_model_supports_image_understanding())
             .unwrap_or(true);
@@ -1720,7 +1720,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         Ok(vec![PermissionIntent::new(
             "computer_use",
             vec![computer_use_permission_resource(input)],
@@ -1753,7 +1753,7 @@ Use ExecCommand for genuine shell work, never ad hoc GUI capture, clipboard or i
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let mut results = self.call_with_control(input, context).await?;
         super::computer_use_presentation::complete_model_results(&mut results);
         Ok(results)
@@ -1778,8 +1778,8 @@ enum SurfaceRecovery {
 impl ComputerUseTool {
     /// Native adapters expose a leading machine code (`[CODE] ...` or
     /// `CODE: ...`), not a prose classifier. Only tool errors carry one.
-    fn native_error_code(error: &OpenBitFunError) -> Option<&str> {
-        let OpenBitFunError::Tool(message) = error else {
+    fn native_error_code(error: &StarMateError) -> Option<&str> {
+        let StarMateError::Tool(message) = error else {
             return None;
         };
         if let Some(rest) = message.strip_prefix('[') {
@@ -1791,14 +1791,14 @@ impl ComputerUseTool {
 
     /// The selected window exists but has no live surface right now; a
     /// foreground restore can bring it back.
-    fn surface_unavailable(error: &OpenBitFunError) -> bool {
+    fn surface_unavailable(error: &StarMateError) -> bool {
         matches!(
             Self::native_error_code(error),
             Some("TARGET_SURFACE_UNAVAILABLE" | "TARGET_APP_HIDDEN")
         )
     }
 
-    fn capture_failure_allows_ax_observation(error: &OpenBitFunError) -> bool {
+    fn capture_failure_allows_ax_observation(error: &StarMateError) -> bool {
         // Unknown errors and control/authorization revocations stay fail-closed
         // even when their human text mentions an unavailable frame.
         matches!(
@@ -1821,9 +1821,9 @@ impl ComputerUseTool {
     async fn restore_and_prepare(
         host: &crate::agentic::tools::computer_use_host::ComputerUseHostRef,
         app: &AppSelector,
-        error: OpenBitFunError,
+        error: StarMateError,
         context: &ToolUseContext,
-    ) -> Result<bool, (OpenBitFunError, SurfaceRecovery)> {
+    ) -> Result<bool, (StarMateError, SurfaceRecovery)> {
         if !Self::surface_unavailable(&error)
             || host.control_snapshot().mode
                 != crate::agentic::tools::computer_use_host::ControlMode::Foreground
@@ -1833,20 +1833,20 @@ impl ComputerUseTool {
         match host
             .restore_window(app.clone())
             .await
-            .map_err(OpenBitFunError::from)
+            .map_err(StarMateError::from)
         {
             Ok(true) => {}
             Ok(false) => return Err((error, SurfaceRecovery::NothingToRestore)),
             Err(restore_error) => {
-                let OpenBitFunError::Tool(message) = error else {
+                let StarMateError::Tool(message) = error else {
                     return Err((error, SurfaceRecovery::RestoreFailed));
                 };
                 let restore_error = match restore_error {
-                    OpenBitFunError::Tool(detail) => detail,
+                    StarMateError::Tool(detail) => detail,
                     other => other.to_string(),
                 };
                 return Err((
-                    OpenBitFunError::Tool(format!(
+                    StarMateError::Tool(format!(
                         "{}. Restoring the window failed: {}",
                         message.trim_end_matches('.'),
                         restore_error.trim_end_matches('.')
@@ -1866,12 +1866,12 @@ impl ComputerUseTool {
                         None => std::future::pending().await,
                     }
                 } => return Err((
-                    OpenBitFunError::tool("[CANCELLED] Cancelled while restoring the window; no input was sent"),
+                    StarMateError::tool("[CANCELLED] Cancelled while restoring the window; no input was sent"),
                     SurfaceRecovery::NotAttempted,
                 )),
                 _ = tokio::time::sleep(std::time::Duration::from_millis(150)) => {}
             }
-            match host.prepare_control_target(app.clone()).await.map_err(OpenBitFunError::from) {
+            match host.prepare_control_target(app.clone()).await.map_err(StarMateError::from) {
                 Ok(()) => return Ok(true),
                 Err(error)
                     if Self::surface_unavailable(&error)
@@ -1879,9 +1879,9 @@ impl ComputerUseTool {
                 Err(error) if Self::surface_unavailable(&error) => {
                     return Err((error, SurfaceRecovery::StillUnavailable))
                 }
-                Err(OpenBitFunError::Tool(message)) => {
+                Err(StarMateError::Tool(message)) => {
                     return Err((
-                        OpenBitFunError::Tool(format!(
+                        StarMateError::Tool(format!(
                             "{}. The window was already restored (unhidden or un-minimized) before this failure",
                             message.trim_end_matches('.')
                         )),
@@ -1914,9 +1914,9 @@ impl ComputerUseTool {
     async fn explain_unavailable_target(
         host: &crate::agentic::tools::computer_use_host::ComputerUseHostRef,
         app: &AppSelector,
-        error: OpenBitFunError,
+        error: StarMateError,
         recovery: SurfaceRecovery,
-    ) -> OpenBitFunError {
+    ) -> StarMateError {
         let surface = Self::surface_unavailable(&error);
         if !(surface || Self::native_error_code(&error) == Some("TARGET_WINDOW_UNAVAILABLE")) {
             return error;
@@ -1933,7 +1933,7 @@ impl ComputerUseTool {
         } else {
             app
         };
-        let OpenBitFunError::Tool(message) = &error else {
+        let StarMateError::Tool(message) = &error else {
             return error;
         };
         let mut notes = Vec::new();
@@ -1984,7 +1984,7 @@ impl ComputerUseTool {
                 (true, SurfaceRecovery::StillUnavailable) => format!("The window was restored but showed no live surface within {} seconds. Observe it again with get_app_state; if it still has none, select an on-screen window or ask the user.", RESTORED_SURFACE_DEADLINE.as_secs()),
             });
         }
-        OpenBitFunError::Tool(format!(
+        StarMateError::Tool(format!(
             "{}. {}",
             message.trim_end_matches('.'),
             notes.join(" ")
@@ -1995,25 +1995,25 @@ impl ComputerUseTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if context.is_remote() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "ComputerUse cannot run while the session workspace is remote (SSH).",
             ));
         }
         let action = input
             .get("action")
             .and_then(Value::as_str)
-            .ok_or_else(|| OpenBitFunError::tool("action is required"))?;
+            .ok_or_else(|| StarMateError::tool("action is required"))?;
         let policy =
             starmate_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
                 .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "[CONTROL_ACTION_INVALID] Unknown ComputerUse action: {action}"
                 ))
             })?;
         let host = context.computer_use_host.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool("Native Computer Use provider unavailable on the executing host")
+            StarMateError::tool("Native Computer Use provider unavailable on the executing host")
         })?;
         if action == "activate_app"
             && !host
@@ -2022,13 +2022,13 @@ impl ComputerUseTool {
                 .iter()
                 .any(|cap| cap == "activate-app-v1")
         {
-            return Err(OpenBitFunError::tool("[ACTIVATION_UNSUPPORTED] Host does not advertise activate-app-v1. No activation was attempted. Linux uses the consented portal surface; do not infer its identity from an AT-SPI PID."));
+            return Err(StarMateError::tool("[ACTIVATION_UNSUPPORTED] Host does not advertise activate-app-v1. No activation was attempted. Linux uses the consented portal surface; do not infer its identity from an AT-SPI PID."));
         }
         if let Some(app) = input.get("app").filter(|app| app.is_object()) {
             let app: AppSelector = serde_json::from_value(app.clone())
-                .map_err(|e| OpenBitFunError::tool(format!("Invalid app selector: {e}")))?;
+                .map_err(|e| StarMateError::tool(format!("Invalid app selector: {e}")))?;
             app.validate_window_target()
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             if app.window_id.is_some()
                 && !host
                     .control_snapshot()
@@ -2036,14 +2036,14 @@ impl ComputerUseTool {
                     .iter()
                     .any(|cap| cap == "window-target-v1")
             {
-                return Err(OpenBitFunError::tool("[WINDOW_TARGET_UNSUPPORTED] This host does not advertise window-target-v1; the exact window selector was not ignored. Use a compatible host or supported app observations."));
+                return Err(StarMateError::tool("[WINDOW_TARGET_UNSUPPORTED] This host does not advertise window-target-v1; the exact window selector was not ignored. Use a compatible host or supported app observations."));
             }
         }
         let owner = match context.session_id.as_deref() {
             Some(owner) => owner,
             None if !host.control_snapshot().supported => "legacy-local-tool-context",
             None => {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[CONTROL_OWNER_REQUIRED] Desktop control requires a runtime session",
                 ))
             }
@@ -2065,7 +2065,7 @@ impl ComputerUseTool {
                 let request = serde_json::from_value::<
                     crate::agentic::tools::computer_use_host::ControlStartRequest,
                 >(input.clone())
-                .map_err(|e| OpenBitFunError::tool(format!("Invalid control request: {e}")))?;
+                .map_err(|e| StarMateError::tool(format!("Invalid control request: {e}")))?;
                 let snapshot = host.start_control(owner, request).await?;
                 Self::watch_control_cancellation(host.clone(), context, snapshot.generation);
                 return Ok(vec![ToolResult::ok(serde_json::to_value(snapshot)?, None)]);
@@ -2089,12 +2089,12 @@ impl ComputerUseTool {
             if policy.target || observed_wait {
                 let app: crate::agentic::tools::computer_use_host::AppSelector = match input.get("app").filter(|v| v.is_object()) {
                     Some(app) => serde_json::from_value(app.clone())
-                        .map_err(|e| OpenBitFunError::tool(format!("Invalid app selector: {e}")))?,
+                        .map_err(|e| StarMateError::tool(format!("Invalid app selector: {e}")))?,
                     None => crate::agentic::tools::computer_use_host::AppSelector::default(),
                 };
                 let explicit_target = !app.is_empty();
                 let exact_window = app.window_id.is_some();
-                let prepared = match host.prepare_control_target(app.clone()).await.map_err(OpenBitFunError::from) {
+                let prepared = match host.prepare_control_target(app.clone()).await.map_err(StarMateError::from) {
                     Err(error) if action == "activate_app" => {
                         Self::restore_and_prepare(host, &app, error, context).await
                     }
@@ -2141,7 +2141,7 @@ impl ComputerUseTool {
             }
             if !policy.observation {
                 if let Some(value) = input.get("observation_id") {
-                    let id = value.as_str().filter(|id| !id.is_empty()).ok_or_else(|| OpenBitFunError::tool("[INVALID_PARAMS] observation_id must be a nonempty string"))?;
+                    let id = value.as_str().filter(|id| !id.is_empty()).ok_or_else(|| StarMateError::tool("[INVALID_PARAMS] observation_id must be a nonempty string"))?;
                     host.validate_observation(id)?;
                 }
             }
@@ -2150,7 +2150,7 @@ impl ComputerUseTool {
             if policy.observation && policy.lease
                 && !super::computer_use_program::same_active_control(&observation_scope, &host.control_snapshot())
             {
-                return Err(OpenBitFunError::tool("[CONTROL_STALE] Observation discarded because control stopped or changed target"));
+                return Err(StarMateError::tool("[CONTROL_STALE] Observation discarded because control stopped or changed target"));
             }
             if restored_window {
                 for result in &mut results {
@@ -2215,11 +2215,11 @@ impl ComputerUseTool {
         input: &Value,
         context: &ToolUseContext,
         preparation_error: Option<String>,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let ms = input
             .get("ms")
             .and_then(|v| v.as_u64())
-            .ok_or_else(|| OpenBitFunError::tool("ms is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("ms is required".to_string()))?;
         host_ref.wait_ms(ms).await?;
         let observe = input.get("app").is_some_and(Value::is_object)
             || host_ref.control_snapshot().target.is_some();
@@ -2264,9 +2264,9 @@ impl ComputerUseTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if context.is_remote() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "ComputerUse cannot run while the session workspace is remote (SSH).".to_string(),
             ));
         }
@@ -2274,7 +2274,7 @@ impl ComputerUseTool {
         let action = input
             .get("action")
             .and_then(|v| v.as_str())
-            .ok_or_else(|| OpenBitFunError::tool("action is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("action is required".to_string()))?;
 
         // Browser process identity does not determine input authority. The
         // session owner, selected target and host control scope govern input;
@@ -2296,7 +2296,7 @@ impl ComputerUseTool {
         }
 
         let host = context.computer_use_host.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "Computer Use requires a native provider on the executing host.".to_string(),
             )
         })?;
@@ -2461,7 +2461,7 @@ impl ComputerUseTool {
                     && query.identifier_contains.is_none()
                     && query.node_idx.is_none()
                 {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "click_element requires at least one of text_contains, title_contains, role_substring, identifier_contains, or node_idx.".to_string(),
                     ));
                 }
@@ -2558,7 +2558,7 @@ impl ComputerUseTool {
                     .map(str::trim)
                     .filter(|s| !s.is_empty())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "move_to_text requires non-empty string field `text_query`."
                                 .to_string(),
                         )
@@ -2574,7 +2574,7 @@ impl ComputerUseTool {
                         Self::find_text_on_screen(host_ref, text_query, ocr_region_native.clone())
                             .await?;
                     if matches.is_empty() {
-                        return Err(OpenBitFunError::tool(format!(
+                        return Err(StarMateError::tool(format!(
                             "move_to_text found no visible OCR match for {:?}. Take a fresh screenshot and try a shorter or more distinctive substring, or use click_element.",
                             text_query
                         )));
@@ -2605,7 +2605,7 @@ impl ComputerUseTool {
                         None => 0,
                         Some(idx) => {
                             if idx < 1 || idx > n as u32 {
-                                return Err(OpenBitFunError::tool(format!(
+                                return Err(StarMateError::tool(format!(
                                     "move_to_text_match_index must be between 1 and {} ({} OCR matches for {:?}).",
                                     n, n, text_query
                                 )));
@@ -2769,7 +2769,7 @@ impl ComputerUseTool {
                 let dx = input.get("delta_x").and_then(|v| v.as_i64()).unwrap_or(0) as i32;
                 let dy = input.get("delta_y").and_then(|v| v.as_i64()).unwrap_or(0) as i32;
                 if dx == 0 && dy == 0 {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "scroll requires non-zero delta_x and/or delta_y".to_string(),
                     ));
                 }
@@ -2866,7 +2866,7 @@ impl ComputerUseTool {
                         .as_deref()
                         .is_none_or(|target| target.trim().is_empty())
                 {
-                    return Err(OpenBitFunError::tool("CAPTURE_REQUIRED: Screenshot requires an authorized capture target. Select an application through the control session; display, crop and navigation hints do not grant capture authority."));
+                    return Err(StarMateError::tool("CAPTURE_REQUIRED: Screenshot requires an authorized capture target. Select an application through the control session; display, crop and navigation hints do not grant capture authority."));
                 }
                 // The host owns capture authority and the exact pixel/coordinate
                 // basis. Presentation neither navigates displays nor fabricates crops.
@@ -2901,7 +2901,7 @@ impl ComputerUseTool {
                     .and_then(|v| v.as_i64())
                     .unwrap_or(0) as i32;
                 if dx == 0 && dy == 0 {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "pointer_move_rel requires a non-zero delta. Accepts `delta_x`|`dx` and `delta_y`|`dy` (screen pixels); at least one must be non-zero.".to_string(),
                     ));
                 }
@@ -2979,7 +2979,7 @@ impl ComputerUseTool {
                 let text = input
                     .get("text")
                     .and_then(|v| v.as_str())
-                    .ok_or_else(|| OpenBitFunError::tool("text is required".to_string()))?;
+                    .ok_or_else(|| StarMateError::tool("text is required".to_string()))?;
                 host_ref.type_text(text).await?;
                 let input_coords =
                     json!({ "kind": "type_text", "char_count": text.chars().count() });
@@ -3001,7 +3001,7 @@ impl ComputerUseTool {
                     .get("app_name")
                     .and_then(|v| v.as_str())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool("open_app requires `app_name` parameter.".to_string())
+                        StarMateError::tool("open_app requires `app_name` parameter.".to_string())
                     })?;
                 let result = host_ref.open_app(app_name).await?;
                 // A launcher's empty window list does not establish whether
@@ -3095,14 +3095,14 @@ Do not send screen-coordinate clicks without an observed window or report launch
                     .get("script")
                     .and_then(|v| v.as_str())
                     .ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "run_apple_script requires `script` parameter.".to_string(),
                         )
                     })?;
                 #[cfg(not(target_os = "macos"))]
                 {
                     let _ = script;
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "run_apple_script is only available on macOS.".to_string(),
                     ));
                 }
@@ -3115,8 +3115,8 @@ Do not send screen-coordinate clicks without an observed window or report launch
                             .output()
                     })
                     .await
-                    .map_err(|e| OpenBitFunError::tool(format!("spawn: {}", e)))?
-                    .map_err(|e| OpenBitFunError::tool(format!("osascript: {}", e)))?;
+                    .map_err(|e| StarMateError::tool(format!("spawn: {}", e)))?
+                    .map_err(|e| StarMateError::tool(format!("osascript: {}", e)))?;
 
                     let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
                     let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
@@ -3155,7 +3155,7 @@ Do not send screen-coordinate clicks without an observed window or report launch
                 }
             }
 
-            _ => Err(OpenBitFunError::tool(format!("Unknown action: {}", action))),
+            _ => Err(StarMateError::tool(format!("Unknown action: {}", action))),
         }
     }
 }
@@ -3186,12 +3186,12 @@ struct ScreenOcrTextMatch {
     bounds_height: f64,
 }
 
-fn req_i32(input: &Value, key: &str) -> OpenBitFunResult<i32> {
+fn req_i32(input: &Value, key: &str) -> StarMateResult<i32> {
     input
         .get(key)
         .and_then(|v| v.as_i64())
         .map(|v| v as i32)
-        .ok_or_else(|| OpenBitFunError::tool(format!("{} is required (integer)", key)))
+        .ok_or_else(|| StarMateError::tool(format!("{} is required (integer)", key)))
 }
 
 #[cfg(test)]
@@ -3205,7 +3205,7 @@ mod tests {
         ComputerUsePermissionSnapshot, ComputerUseScreenshotParams, ComputerUseSessionSnapshot,
     };
     use crate::agentic::tools::framework::{Tool, ToolExposure, ToolResult, ToolUseContext};
-    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
     use serde_json::{json, Value};
 
     #[test]
@@ -3714,58 +3714,58 @@ mod tests {
     #[derive(Debug)]
     struct ChromeForegroundHost;
 
-    fn not_expected<T>() -> OpenBitFunResult<T> {
-        Err(OpenBitFunError::tool(
+    fn not_expected<T>() -> StarMateResult<T> {
+        Err(StarMateError::tool(
             "not expected to be called in this test".to_string(),
         ))
     }
 
     #[async_trait::async_trait]
     impl ComputerUseHost for ChromeForegroundHost {
-        async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot> {
+        async fn permission_snapshot(&self) -> StarMateResult<ComputerUsePermissionSnapshot> {
             not_expected()
         }
-        async fn request_accessibility_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_accessibility_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
-        async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_screen_capture_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
         async fn screenshot_display(
             &self,
             _params: ComputerUseScreenshotParams,
-        ) -> OpenBitFunResult<ComputerScreenshot> {
+        ) -> StarMateResult<ComputerScreenshot> {
             not_expected()
         }
-        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> OpenBitFunResult<(i32, i32)> {
+        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
         fn map_normalized_coords_to_pointer(
             &self,
             _x: i32,
             _y: i32,
-        ) -> OpenBitFunResult<(i32, i32)> {
+        ) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
-        async fn mouse_move(&self, _x: i32, _y: i32) -> OpenBitFunResult<()> {
+        async fn mouse_move(&self, _x: i32, _y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> OpenBitFunResult<()> {
+        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn mouse_click(&self, _button: &str) -> OpenBitFunResult<()> {
+        async fn mouse_click(&self, _button: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> OpenBitFunResult<()> {
+        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn key_chord(&self, _keys: Vec<String>) -> OpenBitFunResult<()> {
+        async fn key_chord(&self, _keys: Vec<String>) -> StarMateResult<()> {
             not_expected()
         }
-        async fn type_text(&self, _text: &str) -> OpenBitFunResult<()> {
+        async fn type_text(&self, _text: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn wait_ms(&self, _ms: u64) -> OpenBitFunResult<()> {
+        async fn wait_ms(&self, _ms: u64) -> StarMateResult<()> {
             not_expected()
         }
         async fn computer_use_session_snapshot(&self) -> ComputerUseSessionSnapshot {
@@ -3796,50 +3796,50 @@ mod tests {
 
     #[async_trait::async_trait]
     impl ComputerUseHost for GuardRecordingHost {
-        async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot> {
+        async fn permission_snapshot(&self) -> StarMateResult<ComputerUsePermissionSnapshot> {
             not_expected()
         }
-        async fn request_accessibility_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_accessibility_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
-        async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_screen_capture_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
         async fn screenshot_display(
             &self,
             _params: ComputerUseScreenshotParams,
-        ) -> OpenBitFunResult<ComputerScreenshot> {
+        ) -> StarMateResult<ComputerScreenshot> {
             not_expected()
         }
-        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> OpenBitFunResult<(i32, i32)> {
+        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
         fn map_normalized_coords_to_pointer(
             &self,
             _x: i32,
             _y: i32,
-        ) -> OpenBitFunResult<(i32, i32)> {
+        ) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
-        async fn mouse_move(&self, _x: i32, _y: i32) -> OpenBitFunResult<()> {
+        async fn mouse_move(&self, _x: i32, _y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> OpenBitFunResult<()> {
+        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn mouse_click(&self, _button: &str) -> OpenBitFunResult<()> {
+        async fn mouse_click(&self, _button: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> OpenBitFunResult<()> {
+        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn key_chord(&self, _keys: Vec<String>) -> OpenBitFunResult<()> {
+        async fn key_chord(&self, _keys: Vec<String>) -> StarMateResult<()> {
             not_expected()
         }
-        async fn type_text(&self, _text: &str) -> OpenBitFunResult<()> {
+        async fn type_text(&self, _text: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn wait_ms(&self, _ms: u64) -> OpenBitFunResult<()> {
+        async fn wait_ms(&self, _ms: u64) -> StarMateResult<()> {
             not_expected()
         }
         fn control_snapshot(&self) -> crate::agentic::tools::computer_use_host::ControlSnapshot {
@@ -3873,7 +3873,7 @@ mod tests {
             app: crate::agentic::tools::computer_use_host::AppSelector,
             _max_depth: u32,
             _focus_window_only: bool,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::AppStateSnapshot> {
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::AppStateSnapshot> {
             self.observed_selectors.lock().unwrap().push(app);
             if !self.observing {
                 return not_expected();
@@ -3888,7 +3888,7 @@ mod tests {
         }
         async fn read_screen_text(
             &self,
-        ) -> OpenBitFunResult<Vec<crate::agentic::tools::computer_use_host::OcrTextMatch>> {
+        ) -> StarMateResult<Vec<crate::agentic::tools::computer_use_host::OcrTextMatch>> {
             if !self.observing {
                 return not_expected();
             }
@@ -4304,7 +4304,7 @@ mod tests {
     }
     #[async_trait::async_trait]
     impl ComputerUseHost for ControlRecordingHost {
-        async fn activate_app(&self, app: AppSelector) -> OpenBitFunResult<()> {
+        async fn activate_app(&self, app: AppSelector) -> StarMateResult<()> {
             self.events
                 .lock()
                 .unwrap()
@@ -4314,7 +4314,7 @@ mod tests {
         async fn open_app(
             &self,
             name: &str,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::OpenAppResult> {
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::OpenAppResult> {
             self.events.lock().unwrap().push(format!("launch:{name}"));
             Ok(crate::agentic::tools::computer_use_host::OpenAppResult {
                 app_name: name.into(),
@@ -4331,7 +4331,7 @@ mod tests {
             &self,
             app: AppSelector,
             _policy: crate::agentic::tools::computer_use_host::AppInputSettlePolicy,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::AppInputSettle> {
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::AppInputSettle> {
             let Some(settle) = self.settle.clone() else {
                 return Ok(
                     crate::agentic::tools::computer_use_host::AppInputSettle::unavailable(
@@ -4345,12 +4345,12 @@ mod tests {
                 .push(format!("settle:{:?}", app.pid));
             Ok(settle)
         }
-        fn validate_observation(&self, id: &str) -> OpenBitFunResult<()> {
+        fn validate_observation(&self, id: &str) -> StarMateResult<()> {
             self.events.lock().unwrap().push(format!("validate:{id}"));
             if id == "fixture-current" {
                 Ok(())
             } else {
-                Err(OpenBitFunError::tool("[STALE_OBSERVATION] Read again"))
+                Err(StarMateError::tool("[STALE_OBSERVATION] Read again"))
             }
         }
 
@@ -4358,7 +4358,7 @@ mod tests {
             &self,
             app: crate::agentic::tools::computer_use_host::AppSelector,
             action: crate::agentic::tools::computer_use_host::AppInputAction,
-        ) -> OpenBitFunResult<()> {
+        ) -> StarMateResult<()> {
             assert!(
                 app.pid == Some(421)
                     || (app.is_empty() && self.state.lock().unwrap().target.is_some()),
@@ -4377,7 +4377,7 @@ mod tests {
             }
             if matches!(action, crate::agentic::tools::computer_use_host::AppInputAction::TypeText {ref text, ..} if text == "fixture-failure")
             {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "FIXTURE_INPUT_FAILURE: target rejected input",
                 ));
             }
@@ -4386,19 +4386,19 @@ mod tests {
         async fn prepare_control_target(
             &self,
             app: crate::agentic::tools::computer_use_host::AppSelector,
-        ) -> OpenBitFunResult<()> {
+        ) -> StarMateResult<()> {
             if let Some(error) = self
                 .error_after_restore
                 .filter(|_| self.restored.load(std::sync::atomic::Ordering::SeqCst))
             {
-                return Err(OpenBitFunError::tool(error));
+                return Err(StarMateError::tool(error));
             }
             if self.fail_capture && !self.restored.load(std::sync::atomic::Ordering::SeqCst) {
                 self.events
                     .lock()
                     .unwrap()
                     .push(format!("prepare:{:?}", app.pid));
-                return Err(OpenBitFunError::tool(self.capture_error));
+                return Err(StarMateError::tool(self.capture_error));
             }
             Ok(())
         }
@@ -4406,7 +4406,7 @@ mod tests {
             &self,
             app: AppSelector,
             region: crate::agentic::tools::computer_use_host::ComputerUseZoomRegion,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::ComputerScreenshot>
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::ComputerScreenshot>
         {
             self.events.lock().unwrap().push(format!(
                 "zoom:{:?}:{}:{},{},{}x{}",
@@ -4426,13 +4426,13 @@ mod tests {
             }))
             .expect("valid fixture"))
         }
-        async fn restore_window(&self, app: AppSelector) -> OpenBitFunResult<bool> {
+        async fn restore_window(&self, app: AppSelector) -> StarMateResult<bool> {
             self.events
                 .lock()
                 .unwrap()
                 .push(format!("restore:{:?}:{:?}", app.pid, app.window_id));
             if let Some(error) = self.restore_error {
-                return Err(OpenBitFunError::tool(error));
+                return Err(StarMateError::tool(error));
             }
             if self.restorable {
                 self.restored
@@ -4445,7 +4445,7 @@ mod tests {
             app: crate::agentic::tools::computer_use_host::AppSelector,
             _max_depth: u32,
             _focus_window_only: bool,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::AppStateSnapshot> {
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::AppStateSnapshot> {
             self.events
                 .lock()
                 .unwrap()
@@ -4456,7 +4456,7 @@ mod tests {
                 "observation must name the fixture or follow a bound window: {app:?}"
             );
             if self.fail_observation {
-                return Err(OpenBitFunError::tool("FIXTURE_OBSERVATION_FAILURE"));
+                return Err(StarMateError::tool("FIXTURE_OBSERVATION_FAILURE"));
             }
             if let Some(replacement) = &self.replace_control_during_observation {
                 *self.state.lock().unwrap() = replacement.clone();
@@ -4483,7 +4483,7 @@ mod tests {
         async fn get_app_shortcuts(
             &self,
             app: crate::agentic::tools::computer_use_host::AppSelector,
-        ) -> OpenBitFunResult<crate::agentic::tools::computer_use_host::AppShortcutsSnapshot>
+        ) -> StarMateResult<crate::agentic::tools::computer_use_host::AppShortcutsSnapshot>
         {
             self.events
                 .lock()
@@ -4502,10 +4502,10 @@ mod tests {
         async fn list_windows(
             &self,
             app: Option<AppSelector>,
-        ) -> OpenBitFunResult<Vec<crate::agentic::tools::computer_use_host::AppWindowInfo>>
+        ) -> StarMateResult<Vec<crate::agentic::tools::computer_use_host::AppWindowInfo>>
         {
             let Some(windows) = self.windows.lock().unwrap().clone() else {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[WINDOW_DISCOVERY_UNSUPPORTED] fixture host",
                 ));
             };
@@ -4524,7 +4524,7 @@ mod tests {
             &self,
             owner: &str,
             request: ControlStartRequest,
-        ) -> OpenBitFunResult<ControlSnapshot> {
+        ) -> StarMateResult<ControlSnapshot> {
             self.events
                 .lock()
                 .unwrap()
@@ -4536,7 +4536,7 @@ mod tests {
             state.state = "active".into();
             Ok(state.clone())
         }
-        async fn stop_control(&self, owner: &str) -> OpenBitFunResult<ControlSnapshot> {
+        async fn stop_control(&self, owner: &str) -> StarMateResult<ControlSnapshot> {
             self.events.lock().unwrap().push(format!("stop:{owner}"));
             let mut state = self.state.lock().unwrap();
             state.generation += 1;
@@ -4547,7 +4547,7 @@ mod tests {
             &self,
             owner: &str,
             generation: u64,
-        ) -> OpenBitFunResult<ControlSnapshot> {
+        ) -> StarMateResult<ControlSnapshot> {
             let snapshot = {
                 let mut state = self.state.lock().unwrap();
                 if state.generation != generation {
@@ -4564,7 +4564,7 @@ mod tests {
             &self,
             owner: &str,
             action: &str,
-        ) -> OpenBitFunResult<Option<Box<dyn ComputerUseActionLease>>> {
+        ) -> StarMateResult<Option<Box<dyn ComputerUseActionLease>>> {
             self.events
                 .lock()
                 .unwrap()
@@ -4575,7 +4575,7 @@ mod tests {
                     state.generation += 1;
                     state.owner = Some(owner.into());
                     state.state = "awaiting_share".into();
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "[SHARE_REQUIRED] Select an application",
                     ));
                 }
@@ -4589,50 +4589,50 @@ mod tests {
                 complete: false,
             })))
         }
-        async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot> {
+        async fn permission_snapshot(&self) -> StarMateResult<ComputerUsePermissionSnapshot> {
             not_expected()
         }
-        async fn request_accessibility_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_accessibility_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
-        async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_screen_capture_permission(&self) -> StarMateResult<()> {
             not_expected()
         }
         async fn screenshot_display(
             &self,
             _params: ComputerUseScreenshotParams,
-        ) -> OpenBitFunResult<ComputerScreenshot> {
+        ) -> StarMateResult<ComputerScreenshot> {
             not_expected()
         }
-        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> OpenBitFunResult<(i32, i32)> {
+        fn map_image_coords_to_pointer(&self, _x: i32, _y: i32) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
         fn map_normalized_coords_to_pointer(
             &self,
             _x: i32,
             _y: i32,
-        ) -> OpenBitFunResult<(i32, i32)> {
+        ) -> StarMateResult<(i32, i32)> {
             not_expected()
         }
-        async fn mouse_move(&self, _x: i32, _y: i32) -> OpenBitFunResult<()> {
+        async fn mouse_move(&self, _x: i32, _y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> OpenBitFunResult<()> {
+        async fn pointer_move_relative(&self, _dx: i32, _dy: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn mouse_click(&self, _button: &str) -> OpenBitFunResult<()> {
+        async fn mouse_click(&self, _button: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> OpenBitFunResult<()> {
+        async fn scroll(&self, _delta_x: i32, _delta_y: i32) -> StarMateResult<()> {
             not_expected()
         }
-        async fn key_chord(&self, _keys: Vec<String>) -> OpenBitFunResult<()> {
+        async fn key_chord(&self, _keys: Vec<String>) -> StarMateResult<()> {
             not_expected()
         }
-        async fn type_text(&self, _text: &str) -> OpenBitFunResult<()> {
+        async fn type_text(&self, _text: &str) -> StarMateResult<()> {
             not_expected()
         }
-        async fn wait_ms(&self, ms: u64) -> OpenBitFunResult<()> {
+        async fn wait_ms(&self, ms: u64) -> StarMateResult<()> {
             self.events.lock().unwrap().push("wait".into());
             self.wait_started.notify_one();
             if ms > 0 {
@@ -5710,11 +5710,11 @@ mod tests {
             "SCREEN_CAPTURE_PERMISSION_REQUIRED",
         ] {
             assert!(ComputerUseTool::capture_failure_allows_ax_observation(
-                &crate::util::errors::OpenBitFunError::tool(format!("{code}: details"))
+                &crate::util::errors::StarMateError::tool(format!("{code}: details"))
             ));
         }
         assert!(!ComputerUseTool::capture_failure_allows_ax_observation(
-            &crate::util::errors::OpenBitFunError::tool(
+            &crate::util::errors::StarMateError::tool(
                 "LOCAL_AUTHORIZATION_REQUIRED: approve access"
             )
         ));

@@ -178,21 +178,21 @@ fn assistant_descriptor_in_root(
 }
 
 impl WorkspaceService {
-    fn normalize_workspace_name(name: String) -> OpenBitFunResult<String> {
+    fn normalize_workspace_name(name: String) -> StarMateResult<String> {
         let name = name.trim();
 
         if name.is_empty() {
-            return Err(OpenBitFunError::service("Workspace name cannot be empty"));
+            return Err(StarMateError::service("Workspace name cannot be empty"));
         }
 
         if name.chars().any(char::is_control) {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Workspace name cannot contain control characters",
             ));
         }
 
         if name.chars().count() > MAX_WORKSPACE_NAME_CHARS {
-            return Err(OpenBitFunError::service(format!(
+            return Err(StarMateError::service(format!(
                 "Workspace name cannot exceed {MAX_WORKSPACE_NAME_CHARS} characters"
             )));
         }
@@ -307,13 +307,13 @@ impl WorkspaceService {
     }
 
     /// Creates a new workspace service.
-    pub async fn new() -> OpenBitFunResult<Self> {
+    pub async fn new() -> StarMateResult<Self> {
         let config = WorkspaceManagerConfig::default();
         Self::with_config(config).await
     }
 
     /// Creates a workspace service with a custom configuration.
-    pub async fn with_config(config: WorkspaceManagerConfig) -> OpenBitFunResult<Self> {
+    pub async fn with_config(config: WorkspaceManagerConfig) -> StarMateResult<Self> {
         let path_manager = try_get_path_manager_arc()?;
         let runtime_service = try_get_workspace_runtime_service_arc()?;
 
@@ -323,7 +323,7 @@ impl WorkspaceService {
             PersistenceService::new_user_level(path_manager.clone())
                 .await
                 .map_err(|e| {
-                    OpenBitFunError::service(format!("Failed to create persistence service: {}", e))
+                    StarMateError::service(format!("Failed to create persistence service: {}", e))
                 })?,
         );
 
@@ -408,7 +408,7 @@ impl WorkspaceService {
     }
 
     /// Opens a workspace.
-    pub async fn open_workspace(&self, path: PathBuf) -> OpenBitFunResult<WorkspaceInfo> {
+    pub async fn open_workspace(&self, path: PathBuf) -> StarMateResult<WorkspaceInfo> {
         self.open_workspace_with_options(path, WorkspaceCreateOptions::default())
             .await
     }
@@ -427,7 +427,7 @@ impl WorkspaceService {
     pub async fn register_local_workspace_record(
         &self,
         path: PathBuf,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         self.track_workspace_activity(
             path,
             WorkspaceCreateOptions {
@@ -443,7 +443,7 @@ impl WorkspaceService {
     async fn register_worktree_project(
         &self,
         mut tree: Option<WorkspaceWorktreeInfo>,
-    ) -> OpenBitFunResult<Option<WorkspaceWorktreeInfo>> {
+    ) -> StarMateResult<Option<WorkspaceWorktreeInfo>> {
         if let Some(tree) = tree.as_mut().filter(|tree| !tree.is_main) {
             let parent = self
                 .manager
@@ -469,11 +469,11 @@ impl WorkspaceService {
         &self,
         path: PathBuf,
         options: WorkspaceCreateOptions,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let options = self.normalize_workspace_options_for_path(&path, options);
         #[cfg(not(feature = "remote-workspace"))]
         if options.workspace_kind == WorkspaceKind::Remote {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Remote workspace support is not compiled into this product profile",
             ));
         }
@@ -522,59 +522,59 @@ impl WorkspaceService {
         path: &str,
         connection_id: &str,
         ssh_host: Option<&str>,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         #[cfg(feature = "ssh-remote")]
         {
             if !path.starts_with('/') || path.contains('\0') {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "Remote workspace path must be an absolute POSIX path",
                 ));
             }
             let manager =
                 crate::service::remote_ssh::workspace_state::ensure_saved_connection_services()
                     .await
-                    .map_err(OpenBitFunError::service)?;
+                    .map_err(StarMateError::service)?;
             let ssh = manager
                 .get_ssh_manager()
                 .await
-                .ok_or_else(|| OpenBitFunError::service("SSH connection manager is unavailable"))?;
+                .ok_or_else(|| StarMateError::service("SSH connection manager is unavailable"))?;
             if !ssh
                 .get_saved_connections()
                 .await
                 .iter()
                 .any(|profile| profile.id == connection_id)
             {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "Remote workspace connection is not saved on this host",
                 ));
             }
             ssh.ensure_connected(connection_id)
                 .await
-                .map_err(|e| OpenBitFunError::service(e.to_string()))?;
+                .map_err(|e| StarMateError::service(e.to_string()))?;
             let config = ssh
                 .get_connection_config(connection_id)
                 .await
-                .ok_or_else(|| OpenBitFunError::service("SSH connection is unavailable"))?;
+                .ok_or_else(|| StarMateError::service("SSH connection is unavailable"))?;
             let host = ssh
                 .get_saved_host_for_connection_id(connection_id)
                 .await
                 .unwrap_or(config.host);
             if ssh_host.is_some_and(|requested| requested != host) {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "SSH host identity does not match the selected connection",
                 ));
             }
             let fs = manager
                 .get_file_service()
                 .await
-                .ok_or_else(|| OpenBitFunError::service("Remote file service is unavailable"))?;
+                .ok_or_else(|| StarMateError::service("Remote file service is unavailable"))?;
             let path = normalize_remote_workspace_path(path);
             if !fs
                 .is_dir(connection_id, &path)
                 .await
-                .map_err(|e| OpenBitFunError::service(e.to_string()))?
+                .map_err(|e| StarMateError::service(e.to_string()))?
             {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "Remote workspace path is not a directory",
                 ));
             }
@@ -599,7 +599,7 @@ impl WorkspaceService {
         #[cfg(not(feature = "ssh-remote"))]
         {
             let _ = (path, connection_id, ssh_host);
-            Err(OpenBitFunError::service(
+            Err(StarMateError::service(
                 "Opening a new remote workspace requires SSH support on this host",
             ))
         }
@@ -677,7 +677,7 @@ impl WorkspaceService {
     pub(crate) async fn open_known_remote_workspace(
         &self,
         known: &WorkspaceInfo,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         self.open_known_remote_workspace_with_rebind(known, RemoteConnectionRebind::Reject)
             .await
     }
@@ -686,9 +686,9 @@ impl WorkspaceService {
         &self,
         known: &WorkspaceInfo,
         remote_connection_rebind: RemoteConnectionRebind,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let connection_id = known.remote_ssh_connection_id().ok_or_else(|| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Remote workspace is missing connectionId metadata: {}",
                 known.id
             ))
@@ -700,7 +700,7 @@ impl WorkspaceService {
             .map(str::trim)
             .filter(|value| !value.is_empty())
             .ok_or_else(|| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "Remote workspace is missing sshHost metadata: {}",
                     known.id
                 ))
@@ -791,7 +791,7 @@ impl WorkspaceService {
         &self,
         workspace_id: &str,
         mode: WorkspaceActivityMode,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let workspace = self.require_workspace(workspace_id).await?;
         let refresh_worktree = match mode {
             WorkspaceActivityMode::TouchOnly => None,
@@ -838,7 +838,7 @@ impl WorkspaceService {
         path: PathBuf,
         options: WorkspaceCreateOptions,
         mode: WorkspaceActivityMode,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let mut options = self.normalize_workspace_options_for_path(&path, options);
         options.auto_set_current = false;
         let refresh_worktree = match mode {
@@ -931,7 +931,7 @@ impl WorkspaceService {
     }
 
     /// Quickly opens a workspace (using default options).
-    pub async fn quick_open(&self, path: &str) -> OpenBitFunResult<WorkspaceInfo> {
+    pub async fn quick_open(&self, path: &str) -> StarMateResult<WorkspaceInfo> {
         let path_buf = PathBuf::from(path);
         self.open_workspace(path_buf).await
     }
@@ -941,10 +941,10 @@ impl WorkspaceService {
         &self,
         path: PathBuf,
         options: WorkspaceCreateOptions,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         if !path.exists() {
             tokio::fs::create_dir_all(&path).await.map_err(|e| {
-                OpenBitFunError::service(format!("Failed to create workspace directory: {}", e))
+                StarMateError::service(format!("Failed to create workspace directory: {}", e))
             })?;
         }
 
@@ -974,7 +974,7 @@ impl WorkspaceService {
     pub async fn create_assistant_workspace(
         &self,
         assistant_id: Option<String>,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let assistant_id = match assistant_id {
             Some(id) if !id.trim().is_empty() => id.trim().to_string(),
             _ => self.generate_assistant_workspace_id().await?,
@@ -994,7 +994,7 @@ impl WorkspaceService {
 
         if !path.exists() {
             fs::create_dir_all(&path).await.map_err(|e| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "Failed to create assistant workspace directory '{}': {}",
                     path.display(),
                     e
@@ -1018,7 +1018,7 @@ impl WorkspaceService {
     }
 
     /// Closes the current workspace.
-    pub async fn close_current_workspace(&self) -> OpenBitFunResult<()> {
+    pub async fn close_current_workspace(&self) -> StarMateResult<()> {
         let result = {
             let mut manager = self.manager.write().await;
             manager.close_current_workspace()
@@ -1034,7 +1034,7 @@ impl WorkspaceService {
     }
 
     /// Closes the specified workspace.
-    pub async fn close_workspace(&self, workspace_id: &str) -> OpenBitFunResult<()> {
+    pub async fn close_workspace(&self, workspace_id: &str) -> StarMateResult<()> {
         let result = {
             let mut manager = self.manager.write().await;
             manager.close_workspace(workspace_id)
@@ -1050,7 +1050,7 @@ impl WorkspaceService {
     }
 
     /// Sets the active workspace from the opened workspace list.
-    pub async fn set_active_workspace(&self, workspace_id: &str) -> OpenBitFunResult<()> {
+    pub async fn set_active_workspace(&self, workspace_id: &str) -> StarMateResult<()> {
         let result = {
             let mut manager = self.manager.write().await;
             manager.set_active_workspace(workspace_id)
@@ -1079,14 +1079,14 @@ impl WorkspaceService {
     pub async fn reorder_opened_workspaces(
         &self,
         workspace_ids: Vec<String>,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let current_ids = {
             let manager = self.manager.read().await;
             manager.get_opened_workspace_ids().clone()
         };
 
         if workspace_ids.len() != current_ids.len() {
-            return Err(OpenBitFunError::service(format!(
+            return Err(StarMateError::service(format!(
                 "Opened workspace count mismatch: expected {}, got {}",
                 current_ids.len(),
                 workspace_ids.len()
@@ -1095,14 +1095,14 @@ impl WorkspaceService {
 
         let requested_ids = workspace_ids.iter().cloned().collect::<HashSet<_>>();
         if requested_ids.len() != workspace_ids.len() {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Opened workspace order contains duplicate ids".to_string(),
             ));
         }
 
         let current_id_set = current_ids.iter().cloned().collect::<HashSet<_>>();
         if requested_ids != current_id_set {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Opened workspace order must contain exactly the currently opened workspace ids"
                     .to_string(),
             ));
@@ -1123,7 +1123,7 @@ impl WorkspaceService {
     }
 
     /// Switches to the specified workspace.
-    pub async fn switch_to_workspace(&self, workspace_id: &str) -> OpenBitFunResult<()> {
+    pub async fn switch_to_workspace(&self, workspace_id: &str) -> StarMateResult<()> {
         self.set_active_workspace(workspace_id).await
     }
 
@@ -1146,16 +1146,16 @@ impl WorkspaceService {
     pub async fn open_workspace_by_id(
         &self,
         workspace_id: &str,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let workspace = self.require_workspace(workspace_id).await?;
         #[cfg(not(feature = "remote-workspace"))]
         if workspace.workspace_kind == WorkspaceKind::Remote {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Remote workspace support is not compiled into this product profile",
             ));
         }
         if workspace.workspace_kind != WorkspaceKind::Remote && !workspace.root_path.is_dir() {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "The selected local workspace directory is unavailable",
             ));
         }
@@ -1180,12 +1180,12 @@ impl WorkspaceService {
     }
 
     /// Resolve an identity on this host. Paths and SSH hints cannot redirect it.
-    pub async fn require_workspace(&self, workspace_id: &str) -> OpenBitFunResult<WorkspaceInfo> {
+    pub async fn require_workspace(&self, workspace_id: &str) -> StarMateResult<WorkspaceInfo> {
         if workspace_id.trim().is_empty() {
-            return Err(OpenBitFunError::service("Workspace ID is required"));
+            return Err(StarMateError::service("Workspace ID is required"));
         }
         self.get_workspace(workspace_id).await.ok_or_else(|| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Workspace ID is unavailable on this host: {workspace_id}"
             ))
         })
@@ -1232,14 +1232,14 @@ impl WorkspaceService {
     pub async fn set_primary_assistant_workspace(
         &self,
         workspace_id: &str,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let (workspace, previous_key) = {
             let mut manager = self.manager.write().await;
             let workspace = manager
                 .get_workspace(workspace_id)
                 .cloned()
                 .ok_or_else(|| {
-                    OpenBitFunError::service(format!("Workspace not found: {}", workspace_id))
+                    StarMateError::service(format!("Workspace not found: {}", workspace_id))
                 })?;
             let previous_key = manager.set_primary_assistant_workspace(workspace_id)?;
             (workspace, previous_key)
@@ -1324,7 +1324,7 @@ impl WorkspaceService {
     }
 
     /// Drops a workspace from recent lists only (workspace record and open state unchanged).
-    pub async fn remove_workspace_from_recent(&self, workspace_id: &str) -> OpenBitFunResult<()> {
+    pub async fn remove_workspace_from_recent(&self, workspace_id: &str) -> StarMateResult<()> {
         let changed = {
             let mut manager = self.manager.write().await;
             manager.remove_from_recent_workspaces_only(workspace_id)
@@ -1342,7 +1342,7 @@ impl WorkspaceService {
     }
 
     /// Removes a workspace.
-    pub async fn remove_workspace(&self, workspace_id: &str) -> OpenBitFunResult<()> {
+    pub async fn remove_workspace(&self, workspace_id: &str) -> StarMateResult<()> {
         let (_removed_workspace, result) = {
             let mut manager = self.manager.write().await;
             let workspace = manager.get_workspace(workspace_id).cloned();
@@ -1375,7 +1375,7 @@ impl WorkspaceService {
     pub async fn batch_remove_workspaces(
         &self,
         workspace_ids: Vec<String>,
-    ) -> OpenBitFunResult<BatchRemoveResult> {
+    ) -> StarMateResult<BatchRemoveResult> {
         let mut result = BatchRemoveResult {
             successful: Vec::new(),
             failed: Vec::new(),
@@ -1393,13 +1393,13 @@ impl WorkspaceService {
     }
 
     /// Rescans a workspace.
-    pub async fn rescan_workspace(&self, workspace_id: &str) -> OpenBitFunResult<WorkspaceInfo> {
+    pub async fn rescan_workspace(&self, workspace_id: &str) -> StarMateResult<WorkspaceInfo> {
         let workspace_path = {
             let manager = self.manager.read().await;
             if let Some(workspace) = manager.get_workspace(workspace_id) {
                 workspace.root_path.clone()
             } else {
-                return Err(OpenBitFunError::service(format!(
+                return Err(StarMateError::service(format!(
                     "Workspace not found: {}",
                     workspace_id
                 )));
@@ -1411,7 +1411,7 @@ impl WorkspaceService {
             manager.get_workspace(workspace_id).cloned()
         };
         let Some(existing_workspace) = existing_workspace else {
-            return Err(OpenBitFunError::service(format!(
+            return Err(StarMateError::service(format!(
                 "Workspace not found: {}",
                 workspace_id
             )));
@@ -1494,13 +1494,13 @@ impl WorkspaceService {
     pub async fn refresh_workspace_identity(
         &self,
         workspace_id: &str,
-    ) -> OpenBitFunResult<Option<WorkspaceIdentityChangedEvent>> {
+    ) -> StarMateResult<Option<WorkspaceIdentityChangedEvent>> {
         let workspace = {
             let manager = self.manager.read().await;
             manager.get_workspace(workspace_id).cloned()
         }
         .ok_or_else(|| {
-            OpenBitFunError::service(format!("Workspace not found: {}", workspace_id))
+            StarMateError::service(format!("Workspace not found: {}", workspace_id))
         })?;
 
         if workspace.workspace_kind != WorkspaceKind::Assistant {
@@ -1552,7 +1552,7 @@ impl WorkspaceService {
                 .get_workspaces_mut()
                 .get_mut(workspace_id)
                 .ok_or_else(|| {
-                    OpenBitFunError::service(format!("Workspace not found: {}", workspace_id))
+                    StarMateError::service(format!("Workspace not found: {}", workspace_id))
                 })?;
 
             workspace.identity = updated_identity.clone();
@@ -1582,7 +1582,7 @@ impl WorkspaceService {
         &self,
         workspace_id: &str,
         updates: WorkspaceInfoUpdates,
-    ) -> OpenBitFunResult<WorkspaceInfo> {
+    ) -> StarMateResult<WorkspaceInfo> {
         let WorkspaceInfoUpdates {
             name,
             description,
@@ -1602,7 +1602,7 @@ impl WorkspaceService {
                 .get(workspace_id)
                 .cloned()
                 .ok_or_else(|| {
-                    OpenBitFunError::service(format!("Workspace not found: {}", workspace_id))
+                    StarMateError::service(format!("Workspace not found: {}", workspace_id))
                 })?
         };
 
@@ -1620,7 +1620,7 @@ impl WorkspaceService {
                 .get_workspaces_mut()
                 .get_mut(workspace_id)
                 .ok_or_else(|| {
-                    OpenBitFunError::service(format!("Workspace not found: {}", workspace_id))
+                    StarMateError::service(format!("Workspace not found: {}", workspace_id))
                 })?;
 
             if let Some(name) = normalized_name {
@@ -1657,7 +1657,7 @@ impl WorkspaceService {
         &self,
         workspace: &WorkspaceInfo,
         related_paths: Vec<RelatedPath>,
-    ) -> OpenBitFunResult<Vec<RelatedPath>> {
+    ) -> StarMateResult<Vec<RelatedPath>> {
         let mut normalized = Vec::with_capacity(related_paths.len());
         let mut seen_paths = HashSet::new();
 
@@ -1667,20 +1667,20 @@ impl WorkspaceService {
                 let connection_id = workspace
                     .remote_ssh_connection_id()
                     .ok_or_else(|| {
-                        OpenBitFunError::service(format!(
+                        StarMateError::service(format!(
                             "Remote workspace is missing connectionId metadata: {}",
                             workspace.id
                         ))
                     })?
                     .to_string();
                 let remote_manager = get_remote_workspace_manager().ok_or_else(|| {
-                    OpenBitFunError::service(
+                    StarMateError::service(
                         "Remote workspace manager is unavailable for related path validation"
                             .to_string(),
                     )
                 })?;
                 let file_service = remote_manager.get_file_service().await.ok_or_else(|| {
-                    OpenBitFunError::service(
+                    StarMateError::service(
                         "Remote file service is unavailable for related path validation"
                             .to_string(),
                     )
@@ -1691,7 +1691,7 @@ impl WorkspaceService {
                         Self::normalize_related_path_description(related_path.description);
                     let path = normalize_remote_workspace_path(related_path.path.trim());
                     if path.is_empty() {
-                        return Err(OpenBitFunError::service(
+                        return Err(StarMateError::service(
                             "Related directory path cannot be empty".to_string(),
                         ));
                     }
@@ -1703,13 +1703,13 @@ impl WorkspaceService {
                         .exists(&connection_id, &path)
                         .await
                         .map_err(|error| {
-                            OpenBitFunError::service(format!(
+                            StarMateError::service(format!(
                                 "Failed to validate remote related directory '{}': {}",
                                 path, error
                             ))
                         })?
                     {
-                        return Err(OpenBitFunError::service(format!(
+                        return Err(StarMateError::service(format!(
                             "Remote related directory does not exist: {}",
                             path
                         )));
@@ -1719,13 +1719,13 @@ impl WorkspaceService {
                         .is_dir(&connection_id, &path)
                         .await
                         .map_err(|error| {
-                            OpenBitFunError::service(format!(
+                            StarMateError::service(format!(
                                 "Failed to inspect remote related directory '{}': {}",
                                 path, error
                             ))
                         })?
                     {
-                        return Err(OpenBitFunError::service(format!(
+                        return Err(StarMateError::service(format!(
                             "Remote related path is not a directory: {}",
                             path
                         )));
@@ -1736,7 +1736,7 @@ impl WorkspaceService {
             }
             #[cfg(not(feature = "remote-workspace"))]
             WorkspaceKind::Remote => {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "Remote workspace related paths require the remote-workspace feature",
                 ));
             }
@@ -1746,7 +1746,7 @@ impl WorkspaceService {
                         Self::normalize_related_path_description(related_path.description);
                     let raw_path = related_path.path.trim();
                     if raw_path.is_empty() {
-                        return Err(OpenBitFunError::service(
+                        return Err(StarMateError::service(
                             "Related directory path cannot be empty".to_string(),
                         ));
                     }
@@ -1754,12 +1754,12 @@ impl WorkspaceService {
                     let path_buf = PathBuf::from(raw_path);
                     let (canonical_path, normalized_key) =
                         canonicalize_local_workspace_root(&path_buf)
-                            .map_err(OpenBitFunError::service)?;
+                            .map_err(StarMateError::service)?;
 
                     let metadata = tokio::fs::metadata(&canonical_path)
                         .await
                         .map_err(|error| {
-                            OpenBitFunError::service(format!(
+                            StarMateError::service(format!(
                                 "Failed to inspect related directory '{}': {}",
                                 canonical_path.display(),
                                 error
@@ -1767,7 +1767,7 @@ impl WorkspaceService {
                         })?;
 
                     if !metadata.is_dir() {
-                        return Err(OpenBitFunError::service(format!(
+                        return Err(StarMateError::service(format!(
                             "Related path is not a directory: {}",
                             canonical_path.display()
                         )));
@@ -1803,7 +1803,7 @@ impl WorkspaceService {
     pub async fn batch_import_workspaces(
         &self,
         paths: Vec<String>,
-    ) -> OpenBitFunResult<BatchImportResult> {
+    ) -> StarMateResult<BatchImportResult> {
         let mut result = BatchImportResult {
             successful: Vec::new(),
             failed: Vec::new(),
@@ -1856,7 +1856,7 @@ impl WorkspaceService {
     }
 
     /// Cleans up invalid workspaces.
-    pub async fn cleanup_invalid_workspaces(&self) -> OpenBitFunResult<usize> {
+    pub async fn cleanup_invalid_workspaces(&self) -> StarMateResult<usize> {
         let removed_count = {
             let mut manager = self.manager.write().await;
             manager.cleanup_invalid_workspaces().await
@@ -1884,7 +1884,7 @@ impl WorkspaceService {
     }
 
     /// Runs a health check.
-    pub async fn health_check(&self) -> OpenBitFunResult<WorkspaceHealthStatus> {
+    pub async fn health_check(&self) -> StarMateResult<WorkspaceHealthStatus> {
         let stats = self.get_statistics().await;
 
         let mut warnings = Vec::new();
@@ -1931,7 +1931,7 @@ impl WorkspaceService {
     }
 
     /// Exports workspace configuration.
-    pub async fn export_workspaces(&self) -> OpenBitFunResult<WorkspaceExport> {
+    pub async fn export_workspaces(&self) -> StarMateResult<WorkspaceExport> {
         let manager = self.manager.read().await;
         let workspaces: Vec<WorkspaceInfo> = manager.get_workspaces().values().cloned().collect();
         let current_workspace_id = manager.get_current_workspace().map(|w| w.id.clone());
@@ -1961,7 +1961,7 @@ impl WorkspaceService {
         &self,
         export: WorkspaceExport,
         overwrite: bool,
-    ) -> OpenBitFunResult<WorkspaceImportResult> {
+    ) -> StarMateResult<WorkspaceImportResult> {
         let imported_primary_key = export.primary_assistant_key.clone();
         let mut result = WorkspaceImportResult {
             imported_workspaces: 0,
@@ -2054,7 +2054,7 @@ impl WorkspaceService {
         workspace_catalog_revision().subscribe()
     }
 
-    async fn save_workspace_data(&self) -> OpenBitFunResult<()> {
+    async fn save_workspace_data(&self) -> StarMateResult<()> {
         let manager = self.manager.read().await;
 
         let workspace_data = WorkspacePersistenceData {
@@ -2074,20 +2074,20 @@ impl WorkspaceService {
             .save_json("workspace_data", &workspace_data, StorageOptions::default())
             .await
             .map_err(|e| {
-                OpenBitFunError::service(format!("Failed to save workspace data: {}", e))
+                StarMateError::service(format!("Failed to save workspace data: {}", e))
             })?;
         workspace_catalog_revision().send_modify(|revision| *revision = revision.wrapping_add(1));
         Ok(())
     }
 
     /// Loads workspace history only without restoring the current workspace (used on startup).
-    async fn load_workspace_history_only(&self) -> OpenBitFunResult<()> {
+    async fn load_workspace_history_only(&self) -> StarMateResult<()> {
         let workspace_data: Option<WorkspacePersistenceData> = self
             .persistence
             .load_json("workspace_data")
             .await
             .map_err(|e| {
-                OpenBitFunError::service(format!("Failed to load workspace data: {}", e))
+                StarMateError::service(format!("Failed to load workspace data: {}", e))
             })?;
 
         if let Some(mut data) = workspace_data {
@@ -2159,7 +2159,7 @@ impl WorkspaceService {
         super::assistant_naming::legacy_default_name(assistant_id)
     }
 
-    async fn generate_assistant_workspace_id(&self) -> OpenBitFunResult<String> {
+    async fn generate_assistant_workspace_id(&self) -> StarMateResult<String> {
         for _ in 0..32 {
             let assistant_id = uuid::Uuid::new_v4()
                 .simple()
@@ -2172,7 +2172,7 @@ impl WorkspaceService {
                 .assistant_workspace_dir(&assistant_id, None);
 
             if fs::try_exists(&path).await.map_err(|e| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "Failed to check assistant workspace path '{}': {}",
                     path.display(),
                     e
@@ -2191,7 +2191,7 @@ impl WorkspaceService {
             }
         }
 
-        Err(OpenBitFunError::service(
+        Err(StarMateError::service(
             "Failed to allocate a unique assistant workspace id".to_string(),
         ))
     }
@@ -2258,10 +2258,10 @@ impl WorkspaceService {
 
     async fn discover_assistant_workspaces(
         &self,
-    ) -> OpenBitFunResult<Vec<AssistantWorkspaceDescriptor>> {
+    ) -> StarMateResult<Vec<AssistantWorkspaceDescriptor>> {
         let assistant_root = self.path_manager.assistant_workspace_base_dir(None);
         fs::create_dir_all(&assistant_root).await.map_err(|e| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Failed to create assistant workspace root '{}': {}",
                 assistant_root.display(),
                 e
@@ -2271,7 +2271,7 @@ impl WorkspaceService {
         let default_workspace = self.path_manager.default_assistant_workspace_dir(None);
         let mut descriptors = Vec::new();
         if fs::try_exists(&default_workspace).await.map_err(|e| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Failed to inspect default assistant workspace '{}': {}",
                 default_workspace.display(),
                 e
@@ -2285,7 +2285,7 @@ impl WorkspaceService {
         }
 
         let mut entries = fs::read_dir(&assistant_root).await.map_err(|e| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Failed to read assistant workspace root '{}': {}",
                 assistant_root.display(),
                 e
@@ -2293,14 +2293,14 @@ impl WorkspaceService {
         })?;
 
         while let Some(entry) = entries.next_entry().await.map_err(|e| {
-            OpenBitFunError::service(format!(
+            StarMateError::service(format!(
                 "Failed to iterate assistant workspace root '{}': {}",
                 assistant_root.display(),
                 e
             ))
         })? {
             let file_type = entry.file_type().await.map_err(|e| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "Failed to inspect assistant workspace entry '{}': {}",
                     entry.path().display(),
                     e
@@ -2330,7 +2330,7 @@ impl WorkspaceService {
         // workspace must not cause it to reappear on the next launch.
         if descriptors.is_empty() {
             fs::create_dir_all(&default_workspace).await.map_err(|e| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "Failed to create default assistant workspace '{}': {}",
                     default_workspace.display(),
                     e
@@ -2354,7 +2354,7 @@ impl WorkspaceService {
         Ok(descriptors)
     }
 
-    async fn ensure_assistant_workspaces(&self) -> OpenBitFunResult<()> {
+    async fn ensure_assistant_workspaces(&self) -> StarMateResult<()> {
         let descriptors = self.discover_assistant_workspaces().await?;
         let known_assistants = self.get_assistant_workspaces().await;
         let has_current_workspace = self.get_current_workspace().await.is_some();
@@ -2424,7 +2424,7 @@ impl WorkspaceService {
     }
 
     /// Saves workspace data manually (public API).
-    pub async fn manual_save(&self) -> OpenBitFunResult<()> {
+    pub async fn manual_save(&self) -> StarMateResult<()> {
         self.save_workspace_data().await
     }
 
@@ -2449,12 +2449,12 @@ impl WorkspaceService {
     }
 
     /// Clears all persisted data.
-    pub async fn clear_persistent_data(&self) -> OpenBitFunResult<()> {
+    pub async fn clear_persistent_data(&self) -> StarMateResult<()> {
         self.persistence
             .delete("workspace_data")
             .await
             .map_err(|e| {
-                OpenBitFunError::service(format!("Failed to clear workspace data: {}", e))
+                StarMateError::service(format!("Failed to clear workspace data: {}", e))
             })?;
 
         Ok(())

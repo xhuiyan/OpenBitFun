@@ -1,6 +1,6 @@
 //! Explicit foreground recovery. Activation never runs inside an input retry.
 use super::NativeComputerUseHost;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 
 pub(super) fn parse_native_target(target: &str) -> Option<(i32, u64)> {
     let (pid, window) = target.strip_prefix("pid:")?.split_once("/window:")?;
@@ -10,14 +10,14 @@ pub(super) fn parse_native_target(target: &str) -> Option<(i32, u64)> {
 }
 
 impl NativeComputerUseHost {
-    pub(super) fn ensure_foreground_target() -> OpenBitFunResult<()> {
+    pub(super) fn ensure_foreground_target() -> StarMateResult<()> {
         crate::computer_use::control_session::foreground_allowed()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         #[cfg(any(target_os = "macos", target_os = "windows"))]
         {
             let target = crate::computer_use::control_session::snapshot().target;
             let (pid, window) = target.as_deref().and_then(parse_native_target).ok_or_else(|| {
-                OpenBitFunError::tool("[FOREGROUND_TARGET_REQUIRED] Observe and activate the intended window before global input")
+                StarMateError::tool("[FOREGROUND_TARGET_REQUIRED] Observe and activate the intended window before global input")
             })?;
             #[cfg(target_os = "windows")]
             let matches = unsafe {
@@ -39,7 +39,7 @@ impl NativeComputerUseHost {
                 )
             })?;
             if !matches {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[FOREGROUND_TARGET_MISMATCH] The actual foreground window differs from the observed target. No input was submitted. Use activate_app for the intended window, then observe again before global input.",
                 ));
             }
@@ -48,14 +48,14 @@ impl NativeComputerUseHost {
         Ok(())
     }
 
-    pub(super) fn activate_prepared_window() -> OpenBitFunResult<()> {
+    pub(super) fn activate_prepared_window() -> StarMateResult<()> {
         crate::computer_use::control_session::foreground_allowed()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         #[cfg(any(target_os = "macos", target_os = "windows"))]
         {
             let target = crate::computer_use::control_session::snapshot().target;
             let (pid, window) = target.as_deref().and_then(parse_native_target).ok_or_else(|| {
-                OpenBitFunError::tool("[FOREGROUND_TARGET_REQUIRED] Select the intended native window before activation")
+                StarMateError::tool("[FOREGROUND_TARGET_REQUIRED] Select the intended native window before activation")
             })?;
             #[cfg(target_os = "windows")]
             unsafe {
@@ -67,21 +67,21 @@ impl NativeComputerUseHost {
                 let mut owner = 0;
                 GetWindowThreadProcessId(hwnd, Some(&mut owner));
                 if !IsWindow(Some(hwnd)).as_bool() || owner != pid as u32 {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "[AX_STALE_TARGET] The selected window closed or changed owner",
                     ));
                 }
                 if !SetForegroundWindow(hwnd).as_bool() {
-                    return Err(OpenBitFunError::tool("[FOREGROUND_ACTIVATION_DENIED] Windows did not grant foreground focus; no keyboard or pointer input was sent"));
+                    return Err(StarMateError::tool("[FOREGROUND_ACTIVATION_DENIED] Windows did not grant foreground focus; no keyboard or pointer input was sent"));
                 }
             }
             #[cfg(target_os = "macos")]
             super::macos::run_on_main_for_enigo(move || {
                 let window = u32::try_from(window).map_err(|_| {
-                    OpenBitFunError::tool("[INVALID_PARAMS] Invalid macOS window ID")
+                    StarMateError::tool("[INVALID_PARAMS] Invalid macOS window ID")
                 })?;
                 if !crate::computer_use::macos_bg_input::activate_pid_macos(pid)? {
-                    return Err(OpenBitFunError::tool("[FOREGROUND_ACTIVATION_DENIED] macOS did not activate the selected application"));
+                    return Err(StarMateError::tool("[FOREGROUND_ACTIVATION_DENIED] macOS did not activate the selected application"));
                 }
                 crate::computer_use::macos_ax_ui::raise_window(pid, window)
             })?;
@@ -93,7 +93,7 @@ impl NativeComputerUseHost {
                     break;
                 }
                 crate::computer_use::control_session::foreground_allowed()
-                    .map_err(OpenBitFunError::tool)?;
+                    .map_err(StarMateError::tool)?;
                 std::thread::sleep(std::time::Duration::from_millis(50));
                 activated = Self::ensure_foreground_target();
             }
@@ -106,7 +106,7 @@ impl NativeComputerUseHost {
             activated
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "[ACTIVATION_UNSUPPORTED] Native-window activation is unavailable. Use the consented Linux portal surface, observe it, and verify focus before seat input; AT-SPI PID selection is separate.",
         ))
     }

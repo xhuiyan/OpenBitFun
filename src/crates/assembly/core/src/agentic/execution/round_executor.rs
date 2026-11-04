@@ -34,7 +34,7 @@ use crate::service::config::types::AgentProfileConfig;
 use crate::service::config::types::SubagentBatchExecutionPolicy as ConfigSubagentBatchExecutionPolicy;
 use crate::service::config::GlobalConfigManager;
 use crate::util::elapsed_ms_u64;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use crate::util::types::Message as AIMessage;
 use crate::util::types::ToolDefinition;
 use log::{debug, error, info, warn};
@@ -127,15 +127,15 @@ impl ModelRoundLifecycle {
         self.safe_to_switch_model &= !self.observed_effective_output;
     }
 
-    pub(super) fn allows_pool_failover(&self, error: &OpenBitFunError) -> bool {
+    pub(super) fn allows_pool_failover(&self, error: &StarMateError) -> bool {
         // Cancellation and local runtime failures also classify as Unknown.
         // Only failures from the model request may enter pool recovery.
         self.safe_to_switch_model
             && matches!(
                 error,
-                OpenBitFunError::AIProvider(_)
-                    | OpenBitFunError::AIClient(_)
-                    | OpenBitFunError::Timeout(_)
+                StarMateError::AIProvider(_)
+                    | StarMateError::AIClient(_)
+                    | StarMateError::Timeout(_)
             )
     }
 
@@ -165,7 +165,7 @@ impl RoundExecutor {
         excluded_accounts: &mut Vec<String>,
         excluded_channels: &mut Vec<String>,
         cancel: &CancellationToken,
-    ) -> OpenBitFunResult<
+    ) -> StarMateResult<
         Option<(
             crate::infrastructure::ai::channel_client_source::PreparedChannel,
             &'static str,
@@ -234,7 +234,7 @@ impl RoundExecutor {
         remaining_attempts: usize,
         excluded: &mut Vec<String>,
         cancel: &CancellationToken,
-    ) -> OpenBitFunResult<Option<crate::infrastructure::ai::channel_client_source::PreparedChannel>>
+    ) -> StarMateResult<Option<crate::infrastructure::ai::channel_client_source::PreparedChannel>>
     {
         let Some(source) = &context.channel_client_source else {
             return Ok(None);
@@ -258,15 +258,15 @@ impl RoundExecutor {
             fallback_delay_ms,
         );
         tokio::select! {
-            _ = cancel.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+            _ = cancel.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
             _ = source.failed(&context.model_config_id, until) => {},
         }
         if !excluded.contains(&context.model_config_id) {
             excluded.push(context.model_config_id.clone());
         }
         tokio::select! {
-            _ = cancel.cancelled() => Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
-            result = source.resolve(excluded, None, context.model_request_context.prompt_cache_route_key.as_deref(), None) => result.map_err(|error| OpenBitFunError::AIClient(error.to_string())),
+            _ = cancel.cancelled() => Err(StarMateError::Cancelled("Execution cancelled".into())),
+            result = source.resolve(excluded, None, context.model_request_context.prompt_cache_route_key.as_deref(), None) => result.map_err(|error| StarMateError::AIClient(error.to_string())),
         }
     }
 
@@ -296,17 +296,17 @@ impl RoundExecutor {
         message: String,
         attempts: usize,
         pool_selected: bool,
-    ) -> OpenBitFunError {
+    ) -> StarMateError {
         let message = format!("Stream retry budget exhausted after {attempts} attempts: {message}");
         if pool_selected {
             // Malformed model output is not an invalid user request. Allow the
             // outer pool to exclude this member without poisoning global health.
-            OpenBitFunError::AIProvider(AiProviderError::classified(
+            StarMateError::AIProvider(AiProviderError::classified(
                 message,
                 ErrorCategory::ModelError,
             ))
         } else {
-            OpenBitFunError::AIClient(message)
+            StarMateError::AIClient(message)
         }
     }
 
@@ -327,7 +327,7 @@ impl RoundExecutor {
         effective_output: bool,
         remaining_attempts: usize,
         cancel: &CancellationToken,
-    ) -> OpenBitFunResult<Option<crate::infrastructure::ai::account_client_source::AccountClient>>
+    ) -> StarMateResult<Option<crate::infrastructure::ai::account_client_source::AccountClient>>
     {
         use starmate_agent_runtime::account_routing::{admit_account_switch, SwitchBoundary};
         let (Some(source), Some(current)) = (source, current) else {
@@ -344,7 +344,7 @@ impl RoundExecutor {
                 ),
             ) {
                 tokio::select! {
-                    _ = cancel.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                    _ = cancel.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                     result = source.failed(current,revision,until) => if let Err(error) = result {
                         warn!("Failed to persist subscription account cooldown: {error}");
                     },
@@ -358,12 +358,12 @@ impl RoundExecutor {
             && authentication_recovery_attempted.insert(current.account_id.clone())
         {
             let recovered = tokio::select! {
-                _ = cancel.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                _ = cancel.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                 result = source.recover_authentication(current, rejected) => result,
             };
             match recovered {
                 Ok(Some(recovered)) if recovered.origin == *current => return Ok(Some(recovered)),
-                Ok(Some(_)) => return Err(OpenBitFunError::AIClient("Authentication recovery changed the selected account identity".into())),
+                Ok(Some(_)) => return Err(StarMateError::AIClient("Authentication recovery changed the selected account identity".into())),
                 Ok(None) => {},
                 Err(_) => warn!("Subscription authentication recovery failed; checking the remaining declared account policy"),
             }
@@ -386,7 +386,7 @@ impl RoundExecutor {
             excluded.push(current.account_id.clone());
         }
         tokio::select! {
-            _ = cancel.cancelled() => Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+            _ = cancel.cancelled() => Err(StarMateError::Cancelled("Execution cancelled".into())),
             result = source.resolve_for_request(excluded, None, cache_lineage) => match result {
                 Ok(selected) => Ok(selected),
                 Err(error) if error.downcast_ref::<crate::infrastructure::ai::client_factory::AccountPoolUnavailable>().is_some()
@@ -394,7 +394,7 @@ impl RoundExecutor {
                     warn!("No alternate subscription account is ready; retaining the current account's existing retry policy: {error}");
                     Ok(None)
                 }
-                Err(error) => Err(OpenBitFunError::AIClient(error.to_string())),
+                Err(error) => Err(StarMateError::AIClient(error.to_string())),
             },
         }
     }
@@ -407,10 +407,10 @@ impl RoundExecutor {
             || error.downcast_ref::<crate::infrastructure::ai::client_factory::AccountCredentialPreparationError>().is_some()
     }
 
-    fn account_resolution_error(error: anyhow::Error, replay_bound: bool) -> OpenBitFunError {
+    fn account_resolution_error(error: anyhow::Error, replay_bound: bool) -> StarMateError {
         let unavailable = error.downcast_ref::<crate::infrastructure::ai::client_factory::AccountPoolUnavailable>().is_some()
             || error.downcast_ref::<crate::infrastructure::ai::client_factory::AccountCredentialPreparationError>().is_some();
-        let error = OpenBitFunError::AIClient(error.to_string());
+        let error = StarMateError::AIClient(error.to_string());
         if replay_bound && unavailable {
             error.with_account_bound_replay()
         } else {
@@ -419,11 +419,11 @@ impl RoundExecutor {
     }
 
     fn explain_replay_account_boundary(
-        error: OpenBitFunError,
+        error: StarMateError,
         ordered: bool,
         replay_pinned: bool,
         channel_pinned: bool,
-    ) -> OpenBitFunError {
+    ) -> StarMateError {
         if channel_pinned
             && starmate_agent_runtime::channel_routing::may_switch_channel(
                 &error.error_category(),
@@ -453,7 +453,7 @@ impl RoundExecutor {
         error
     }
 
-    fn terminal_request_error(error: &anyhow::Error, attempts: u32) -> OpenBitFunError {
+    fn terminal_request_error(error: &anyhow::Error, attempts: u32) -> StarMateError {
         let mut provider_error = error
             .downcast_ref::<AiProviderError>()
             .cloned()
@@ -463,9 +463,9 @@ impl RoundExecutor {
             provider_error.message
         );
         if provider_error.category == ErrorCategory::ContextOverflow {
-            OpenBitFunError::RecoverableContextOverflow(provider_error)
+            StarMateError::RecoverableContextOverflow(provider_error)
         } else {
-            OpenBitFunError::AIProvider(provider_error)
+            StarMateError::AIProvider(provider_error)
         }
     }
 
@@ -655,9 +655,9 @@ impl RoundExecutor {
     async fn sleep_with_cancellation(
         delay_ms: u64,
         cancel_token: &CancellationToken,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         tokio::select! {
-            _ = cancel_token.cancelled() => Err(OpenBitFunError::Cancelled("Execution cancelled".to_string())),
+            _ = cancel_token.cancelled() => Err(StarMateError::Cancelled("Execution cancelled".to_string())),
             _ = tokio::time::sleep(Duration::from_millis(delay_ms)) => Ok(()),
         }
     }
@@ -690,7 +690,7 @@ impl RoundExecutor {
         ai_messages: Vec<AIMessage>,
         tool_definitions: Option<Vec<ToolDefinition>>,
         context_window: Option<usize>,
-    ) -> OpenBitFunResult<RoundResult> {
+    ) -> StarMateResult<RoundResult> {
         let mut lifecycle = ModelRoundLifecycle::new();
         self.execute_round_with_lifecycle(
             ai_client,
@@ -718,7 +718,7 @@ impl RoundExecutor {
         session_manager: Option<&'a SessionManager>,
         pool_attempt: Option<&'a super::model_pool::PoolAttempt>,
     ) -> std::pin::Pin<
-        Box<dyn std::future::Future<Output = OpenBitFunResult<RoundResult>> + Send + 'a>,
+        Box<dyn std::future::Future<Output = StarMateResult<RoundResult>> + Send + 'a>,
     > {
         Box::pin(self.execute_round_with_lifecycle_inner(
             ai_client,
@@ -742,7 +742,7 @@ impl RoundExecutor {
         lifecycle: &mut ModelRoundLifecycle,
         session_manager: Option<&SessionManager>,
         pool_attempt: Option<&super::model_pool::PoolAttempt>,
-    ) -> OpenBitFunResult<RoundResult> {
+    ) -> StarMateResult<RoundResult> {
         lifecycle.safe_to_switch_model =
             pool_attempt.is_some() && !lifecycle.observed_effective_output;
         let round_started_at = lifecycle.started_at;
@@ -792,10 +792,10 @@ impl RoundExecutor {
         let mut has_opaque_replay = crate::infrastructure::ai::channel_client_source::ChannelClientSource::has_nonportable_history(&ai_messages);
         if let Some(channels) = &channels {
             tokio::select! {
-                _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                 result = channels.validate() => result,
-            }.map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
-            let required = crate::infrastructure::ai::channel_client_source::ChannelClientSource::replay_channel(&ai_messages).map_err(|error| OpenBitFunError::AIClient(error.to_string()).with_channel_bound_replay())?;
+            }.map_err(|error| StarMateError::AIClient(error.to_string()))?;
+            let required = crate::infrastructure::ai::channel_client_source::ChannelClientSource::replay_channel(&ai_messages).map_err(|error| StarMateError::AIClient(error.to_string()).with_channel_bound_replay())?;
             let required_account = replay_origin
                 .as_ref()
                 .ok()
@@ -810,7 +810,7 @@ impl RoundExecutor {
                         .is_some_and(|origin| prepared.origin.as_ref() != Some(origin))
             }) {
                 let pinned = tokio::select! {
-                    _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                    _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                     result = channels.resolve(&[], required.as_deref(), lineage.as_deref(), required_account.as_ref()) => result,
                 };
                 let pinned = match pinned {
@@ -821,7 +821,7 @@ impl RoundExecutor {
                 };
                 prepared = Some(match pinned {
                     Ok(prepared) => prepared,
-                    Err(Some(error)) => return Err(OpenBitFunError::AIClient(error.to_string())),
+                    Err(Some(error)) => return Err(StarMateError::AIClient(error.to_string())),
                     Err(None) => {
                         // The producer of the signed history is unavailable:
                         // continue on any route member with portable history.
@@ -829,10 +829,10 @@ impl RoundExecutor {
                         replay_origin = Ok(None);
                         has_opaque_replay = false;
                         tokio::select! {
-                            _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                            _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                             result = channels.resolve(&[], None, lineage.as_deref(), None) => result,
-                        }.map_err(|error| OpenBitFunError::AIClient(error.to_string()))?
-                            .ok_or_else(|| OpenBitFunError::AIClient("No eligible channel in the configured route".into()))?
+                        }.map_err(|error| StarMateError::AIClient(error.to_string()))?
+                            .ok_or_else(|| StarMateError::AIClient("No eligible channel in the configured route".into()))?
                     }
                 });
             }
@@ -894,7 +894,7 @@ impl RoundExecutor {
                     .is_some_and(|origin| selected_origin.as_ref() != Some(origin))
         }) {
             let mut resolved = tokio::select! {
-                _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                 result = source.resolve_for_request(&excluded_accounts, replay_origin.as_ref(), cache_lineage) => result,
             };
             if ordered
@@ -909,7 +909,7 @@ impl RoundExecutor {
                 replay_origin = None;
                 has_opaque_replay = false;
                 resolved = tokio::select! {
-                    _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                    _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                     result = source.resolve_for_request(&excluded_accounts, None, cache_lineage) => result,
                 };
             }
@@ -918,7 +918,7 @@ impl RoundExecutor {
                     Self::account_resolution_error(error, ordered && replay_origin.is_some())
                 })?
                 .ok_or_else(|| {
-                    let error = OpenBitFunError::AIClient(
+                    let error = StarMateError::AIClient(
                         "No eligible subscription account for this model round".into(),
                     );
                     if ordered && replay_origin.is_some() {
@@ -958,7 +958,7 @@ impl RoundExecutor {
                     "Cancel token detected before AI request, stopping execution: session_id={}",
                     context.session_id
                 );
-                return Err(OpenBitFunError::Cancelled(
+                return Err(StarMateError::Cancelled(
                     "Execution cancelled".to_string(),
                 ));
             }
@@ -971,12 +971,12 @@ impl RoundExecutor {
                     channels
                         .validate()
                         .await
-                        .map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
+                        .map_err(|error| StarMateError::AIClient(error.to_string()))?;
                     if source.is_none() {
                         ai_client = tokio::select! {
-                            _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                            _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                             result = channels.revalidate_plain_channel(&context.model_config_id, lineage.as_deref()) => result,
-                        }.map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
+                        }.map_err(|error| StarMateError::AIClient(error.to_string()))?;
                         trace_config =
                             prepare_model_exchange_trace(&context, &round_id, ai_client.as_ref())
                                 .await;
@@ -984,11 +984,11 @@ impl RoundExecutor {
                 }
                 if let (Some(source), Some(origin)) = (source, selected_origin.as_ref()) {
                     let resolved = tokio::select! {
-                        _ = cancel_token.cancelled() => return Err(OpenBitFunError::Cancelled("Execution cancelled".into())),
+                        _ = cancel_token.cancelled() => return Err(StarMateError::Cancelled("Execution cancelled".into())),
                         result = source.revalidate_for_retry(origin) => result,
                     }.map_err(|error| Self::account_resolution_error(error, ordered && replay_origin.is_some()))?
                         .ok_or_else(|| {
-                            let error = OpenBitFunError::AIClient("Selected subscription account is no longer eligible".into());
+                            let error = StarMateError::AIClient("Selected subscription account is no longer eligible".into());
                             if ordered && replay_origin.is_some() { error.with_account_bound_replay() } else { error }
                         })?;
                     ai_client = resolved.client;
@@ -1018,7 +1018,7 @@ impl RoundExecutor {
                 info!("Projected incompatible model history: session_id={}, model_config_id={}, stripped_messages={}, reason=unproven_or_changed_replay_identity", context.session_id, context.model_config_id, stripped);
             }
             crate::infrastructure::ai::channel_client_source::ChannelClientSource::validate_replay_binding(&ai_messages, &context.model_config_id, &ai_client, channels.is_some())
-                .map_err(|error| OpenBitFunError::AIClient(error.to_string()).with_channel_bound_replay())?;
+                .map_err(|error| StarMateError::AIClient(error.to_string()).with_channel_bound_replay())?;
             let mut usage_context =
                 starmate_services_core::token_usage::types::ModelRequestUsageContext {
                     context_composition: context.context_composition.clone(),
@@ -1097,7 +1097,7 @@ impl RoundExecutor {
             let send_result = tokio::select! {
                 _ = cancel_token.cancelled() => {
                     self.record_attempt_usage(&context, &usage_context, None, starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled, context_window, is_subagent).await;
-                    return Err(OpenBitFunError::Cancelled("Execution cancelled".to_string()));
+                    return Err(StarMateError::Cancelled("Execution cancelled".to_string()));
                 }
                 result = send_future => result,
             };
@@ -1276,7 +1276,7 @@ impl RoundExecutor {
                     "Cancel token detected after AI stream opened, stopping execution: session_id={}",
                     context.session_id
                 );
-                return Err(OpenBitFunError::Cancelled(
+                return Err(StarMateError::Cancelled(
                     "Execution cancelled".to_string(),
                 ));
             }
@@ -1593,8 +1593,8 @@ impl RoundExecutor {
                 Err(stream_err) => {
                     lifecycle.observe_output(stream_err.has_effective_output);
                     usage_context.response_model = stream_err.response_model.clone();
-                    self.record_attempt_usage(&context, &usage_context, stream_err.usage.as_ref(), if matches!(&stream_err.error, OpenBitFunError::Cancelled(_)) { starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled } else { starmate_services_core::token_usage::types::ModelRequestOutcome::Failed }, context_window, is_subagent).await;
-                    if matches!(&stream_err.error, OpenBitFunError::Cancelled(_)) {
+                    self.record_attempt_usage(&context, &usage_context, stream_err.usage.as_ref(), if matches!(&stream_err.error, StarMateError::Cancelled(_)) { starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled } else { starmate_services_core::token_usage::types::ModelRequestOutcome::Failed }, context_window, is_subagent).await;
+                    if matches!(&stream_err.error, StarMateError::Cancelled(_)) {
                         Self::complete_model_exchange_trace(
                             trace_config.as_ref(),
                             trace_handle.as_ref(),
@@ -1612,8 +1612,8 @@ impl RoundExecutor {
                     let stream_error_category = stream_err.error.error_category();
                     let retryable = Self::should_retry_provider_error(&stream_error_category);
                     let provider_error = match &stream_err.error {
-                        OpenBitFunError::AIProvider(error)
-                        | OpenBitFunError::RecoverableContextOverflow(error) => Some(error),
+                        StarMateError::AIProvider(error)
+                        | StarMateError::RecoverableContextOverflow(error) => Some(error),
                         _ => None,
                     };
                     Self::complete_model_exchange_trace(
@@ -1732,13 +1732,13 @@ impl RoundExecutor {
                     );
                     if stream_error_category == ErrorCategory::ContextOverflow {
                         let provider_error = match stream_err.error {
-                            OpenBitFunError::AIProvider(error)
-                            | OpenBitFunError::RecoverableContextOverflow(error) => error,
+                            StarMateError::AIProvider(error)
+                            | StarMateError::RecoverableContextOverflow(error) => error,
                             _ => {
                                 AiProviderError::classified(err_msg, ErrorCategory::ContextOverflow)
                             }
                         };
-                        return Err(OpenBitFunError::RecoverableContextOverflow(provider_error));
+                        return Err(StarMateError::RecoverableContextOverflow(provider_error));
                     }
                     return Err(Self::explain_replay_account_boundary(
                         stream_err.error,
@@ -1839,7 +1839,7 @@ impl RoundExecutor {
                 "Cancel token detected after stream processing, stopping execution: session_id={}",
                 context.session_id
             );
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Execution cancelled".to_string(),
             ));
         }
@@ -2031,7 +2031,7 @@ impl RoundExecutor {
                 "Cancel token detected before tool execution, stopping execution: session_id={}",
                 context.session_id
             );
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Execution cancelled".to_string(),
             ));
         }
@@ -2307,7 +2307,7 @@ impl RoundExecutor {
     }
 
     /// Cancel dialog turn (using dialog_turn_id)
-    pub async fn cancel_dialog_turn(&self, dialog_turn_id: &str) -> OpenBitFunResult<()> {
+    pub async fn cancel_dialog_turn(&self, dialog_turn_id: &str) -> StarMateResult<()> {
         debug!("Cancelling dialog turn: dialog_turn_id={}", dialog_turn_id);
 
         if self.cancellation_tokens.cancel(dialog_turn_id) {
@@ -2632,7 +2632,7 @@ pub(super) mod tests {
     use crate::agentic::execution::types::RoundContext;
     use crate::agentic::tools::ToolRuntimeRestrictions;
     use crate::service::config::types::{AgentProfileConfig, GlobalConfig};
-    use crate::util::errors::OpenBitFunError;
+    use crate::util::errors::StarMateError;
     use crate::util::types::ai::GeminiUsage;
     use starmate_agent_runtime::permission::{
         AUTO_APPROVE_ASK_CONTEXT_KEY, PERMISSION_MODE_CONTEXT_KEY,
@@ -2678,17 +2678,17 @@ pub(super) mod tests {
         let mut lifecycle = ModelRoundLifecycle::new();
         lifecycle.safe_to_switch_model = true;
         for error in [
-            OpenBitFunError::Cancelled("cancelled during retry backoff".into()),
-            OpenBitFunError::service("runtime unavailable"),
-            OpenBitFunError::validation("invalid runtime request"),
-            OpenBitFunError::RecoverableContextOverflow(AiProviderError::classified(
+            StarMateError::Cancelled("cancelled during retry backoff".into()),
+            StarMateError::service("runtime unavailable"),
+            StarMateError::validation("invalid runtime request"),
+            StarMateError::RecoverableContextOverflow(AiProviderError::classified(
                 "needs compression".into(),
                 ErrorCategory::ContextOverflow,
             )),
         ] {
             assert!(!lifecycle.allows_pool_failover(&error), "{error}");
         }
-        let error = OpenBitFunError::AIProvider(AiProviderError::classified(
+        let error = StarMateError::AIProvider(AiProviderError::classified(
             "response recovery exhausted".into(),
             ErrorCategory::Unknown,
         ));
@@ -5287,7 +5287,7 @@ pub(super) mod tests {
                 })
                 .await
                 .expect("cancellation must stop an open account stream");
-                assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+                assert!(matches!(result, Err(StarMateError::Cancelled(_))));
                 assert_eq!(lifecycle.attempts_started(), 1);
                 events.extend(executor.event_queue.dequeue_batch(100).await);
                 assert!(!events.iter().any(|event| matches!(
@@ -6426,7 +6426,7 @@ pub(super) mod tests {
         })
         .await
         .unwrap();
-        assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+        assert!(matches!(result, Err(StarMateError::Cancelled(_))));
         assert_eq!(primary.requests.lock().unwrap().len(), 1);
         assert!(backup.requests.lock().unwrap().is_empty());
         assert_eq!(*source.recoveries.lock().unwrap(), vec!["account-0"]);
@@ -7346,7 +7346,7 @@ pub(super) mod tests {
         })
         .await
         .unwrap();
-        assert!(matches!(result, Err(super::OpenBitFunError::Cancelled(_))));
+        assert!(matches!(result, Err(super::StarMateError::Cancelled(_))));
         assert_eq!(primary.requests.lock().unwrap().len(), 1);
         assert!(backup.requests.lock().unwrap().is_empty());
     }
@@ -7371,7 +7371,7 @@ pub(super) mod tests {
                 "AcceptanceRead"
             }
         }
-        async fn description(&self) -> super::OpenBitFunResult<String> {
+        async fn description(&self) -> super::StarMateResult<String> {
             Ok(self.short_description())
         }
         fn short_description(&self) -> String {
@@ -7399,7 +7399,7 @@ pub(super) mod tests {
             &self,
             _: &serde_json::Value,
             _: &crate::agentic::tools::framework::ToolUseContext,
-        ) -> super::OpenBitFunResult<Vec<crate::agentic::tools::framework::ToolResult>> {
+        ) -> super::StarMateResult<Vec<crate::agentic::tools::framework::ToolResult>> {
             use std::io::Write;
             // The real round/pipeline must commit the semantic response with
             // the actual producing account before a mutation becomes possible.
@@ -7450,7 +7450,7 @@ pub(super) mod tests {
         fn name(&self) -> &str {
             "SemanticCommitTest"
         }
-        async fn description(&self) -> super::OpenBitFunResult<String> {
+        async fn description(&self) -> super::StarMateResult<String> {
             Ok("semantic commit test".into())
         }
         fn short_description(&self) -> String {
@@ -7478,7 +7478,7 @@ pub(super) mod tests {
             &self,
             _: &serde_json::Value,
             _: &crate::agentic::tools::framework::ToolUseContext,
-        ) -> super::OpenBitFunResult<Vec<crate::agentic::tools::framework::ToolResult>> {
+        ) -> super::StarMateResult<Vec<crate::agentic::tools::framework::ToolResult>> {
             self.entered.notify_one();
             self.release.notified().await;
             Ok(vec![crate::agentic::tools::framework::ToolResult::Result {
@@ -7664,7 +7664,7 @@ pub(super) mod tests {
         })
         .await
         .expect("live stream should be cancelled after its first output");
-        assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+        assert!(matches!(result, Err(StarMateError::Cancelled(_))));
         events.extend(executor.event_queue.dequeue_batch(100).await);
         assert!(!events.iter().any(|event| matches!(
             event.event,
@@ -7730,7 +7730,7 @@ pub(super) mod tests {
             let result = tokio::time::timeout(Duration::from_secs(5), execution)
                 .await
                 .expect("cancelled round must stop");
-            assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+            assert!(matches!(result, Err(StarMateError::Cancelled(_))));
             let records = tokio::time::timeout(Duration::from_secs(5), async {
                 loop {
                     let records = ledger
@@ -8076,7 +8076,7 @@ pub(super) mod tests {
         token.cancel();
 
         let result = waiter.await.expect("sleep task should join");
-        assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+        assert!(matches!(result, Err(StarMateError::Cancelled(_))));
     }
 
     #[tokio::test]
@@ -8320,7 +8320,7 @@ pub(super) mod tests {
             .provider_message
             .unwrap()
             .contains("after 10 attempts"));
-        let OpenBitFunError::AIProvider(provider) = error else {
+        let StarMateError::AIProvider(provider) = error else {
             panic!("expected provider error")
         };
         let encoded = serde_json::to_value(&provider).unwrap();
@@ -8343,7 +8343,7 @@ pub(super) mod tests {
         ));
         assert!(matches!(
             RoundExecutor::terminal_request_error(&source, 10),
-            OpenBitFunError::RecoverableContextOverflow(_)
+            StarMateError::RecoverableContextOverflow(_)
         ));
     }
 
@@ -8434,7 +8434,7 @@ pub(super) mod tests {
         };
         assert!(lifecycle.safe_to_switch_model);
         let provider = match failure {
-            OpenBitFunError::AIProvider(error) => error,
+            StarMateError::AIProvider(error) => error,
             error => starmate_core_types::errors::AiProviderError::classified(
                 error.to_string(),
                 error.error_category(),
@@ -8542,7 +8542,7 @@ pub(super) mod tests {
         assert_eq!(error.error_category(), ErrorCategory::Network);
         assert!(lifecycle.safe_to_switch_model);
         assert_eq!(lifecycle.attempts_started(), 1);
-        let OpenBitFunError::AIProvider(provider) = error else {
+        let StarMateError::AIProvider(provider) = error else {
             panic!("connection refusal must preserve the provider error");
         };
         assert!(retry.fail(&provider, 60_000).await);
@@ -8690,7 +8690,7 @@ pub(super) mod tests {
         assert_eq!(server.requests.lock().unwrap().len(), 10);
         assert_eq!(lifecycle.attempts_started(), 10);
         assert!(lifecycle.safe_to_switch_model);
-        let OpenBitFunError::AIProvider(provider) = error else {
+        let StarMateError::AIProvider(provider) = error else {
             panic!("expected provider error");
         };
         assert_eq!(provider.category, ErrorCategory::ModelError);
@@ -8902,7 +8902,7 @@ pub(super) mod tests {
             tokio::time::timeout(Duration::from_secs(5), async { tokio::join!(run, cancel) })
                 .await
                 .unwrap();
-        assert!(matches!(result, Err(OpenBitFunError::Cancelled(_))));
+        assert!(matches!(result, Err(StarMateError::Cancelled(_))));
         assert!(!lifecycle.safe_to_switch_model);
         assert_eq!(server.requests.lock().unwrap().len(), 1);
         drop(attempt);

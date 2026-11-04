@@ -32,7 +32,7 @@ use starmate_core::service::session::{
 use starmate_core::service::session_usage::SessionUsageReport;
 use starmate_core::service::token_usage::TokenUsageService;
 use starmate_core::service::workspace::WorkspaceService;
-use starmate_core::util::errors::OpenBitFunError;
+use starmate_core::util::errors::StarMateError;
 use starmate_product_domains::product_search::SessionContentSearchResponse;
 use starmate_runtime_ports::{AgentContextReloadRequest, SessionTurnWindowRequest};
 use serde::{Deserialize, Serialize};
@@ -76,14 +76,14 @@ pub(crate) enum DesktopSessionApplicationError {
 
 pub(crate) type DesktopSessionApplicationResult<T> = Result<T, DesktopSessionApplicationError>;
 
-fn desktop_core_session_error(error: OpenBitFunError) -> DesktopSessionApplicationError {
+fn desktop_core_session_error(error: StarMateError) -> DesktopSessionApplicationError {
     match error {
-        OpenBitFunError::SessionInUse { session_id } => {
+        StarMateError::SessionInUse { session_id } => {
             DesktopSessionApplicationError::SessionInUse(format!(
                 "Session is already open for writing: {session_id}"
             ))
         }
-        OpenBitFunError::OutcomeUnknown(message) => {
+        StarMateError::OutcomeUnknown(message) => {
             DesktopSessionApplicationError::OutcomeUnknown(message)
         }
         error => DesktopSessionApplicationError::Core(error.to_string()),
@@ -191,7 +191,7 @@ impl DesktopSessionScopeResolver {
                 )
                 .await
                 .and_then(|record| {
-                    record.ok_or_else(|| OpenBitFunError::service("Workspace ID is unavailable"))
+                    record.ok_or_else(|| StarMateError::service("Workspace ID is unavailable"))
                 })
         }
         .map_err(desktop_core_session_error)?;
@@ -1045,7 +1045,7 @@ mod tests {
     #[test]
     fn session_writer_conflict_keeps_a_stable_desktop_transport_code() {
         let error = desktop_core_session_error(
-            starmate_core::util::errors::OpenBitFunError::SessionInUse {
+            starmate_core::util::errors::StarMateError::SessionInUse {
                 session_id: "session-1".to_string(),
             },
         );
@@ -1079,7 +1079,7 @@ mod tests {
 
     #[test]
     fn compatibility_rename_unknown_outcomes_keep_the_same_transport_code() {
-        let error = desktop_core_session_error(OpenBitFunError::OutcomeUnknown(
+        let error = desktop_core_session_error(StarMateError::OutcomeUnknown(
             "inspect authoritative state".to_string(),
         ));
 

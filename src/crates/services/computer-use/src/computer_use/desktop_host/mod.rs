@@ -20,7 +20,7 @@ use crate::computer_use::displays::Screen;
 use async_trait::async_trait;
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 use log::debug;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{
     ActionRecord, AppInfo, AppSelector, AppShortcutsSnapshot, AppStateSnapshot, AppWaitPredicate,
     AppWindowInfo, ComputerScreenshot, ComputerUseDisplayInfo, ComputerUseHost,
@@ -377,11 +377,11 @@ impl NativeComputerUseHost {
     fn state_for_scope(
         &self,
         scope: &starmate_agent_tools::computer_use_control::ObservationScope,
-    ) -> OpenBitFunResult<std::sync::MutexGuard<'_, ComputerUseSessionMutableState>> {
+    ) -> StarMateResult<std::sync::MutexGuard<'_, ComputerUseSessionMutableState>> {
         crate::computer_use::control_session::validate_observation_scope(scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let mut state = self.state.lock().map_err(|_| {
-            OpenBitFunError::tool("[CONTROL_FAILED] Observation cache lock poisoned")
+            StarMateError::tool("[CONTROL_FAILED] Observation cache lock poisoned")
         })?;
         state.synchronize(scope);
         Ok(state)
@@ -456,7 +456,7 @@ impl NativeComputerUseHost {
     fn open_app_macos(
         name: String,
         background: bool,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
         use crate::computer_use::macos_bg_input::{
             pid_for_bundle_id_macos, running_app_identity_macos,
         };
@@ -511,7 +511,7 @@ impl NativeComputerUseHost {
                 })
         });
 
-        crate::computer_use::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
+        crate::computer_use::control_session::input_allowed().map_err(StarMateError::tool)?;
         let opened = if background {
             let mut command =
                 starmate_services_core::process_manager::create_command("/usr/bin/open");
@@ -545,7 +545,7 @@ Inspect its process and current application state before choosing another operat
                     OSASCRIPT_TIMEOUT_MS / 1000
                 )));
             }
-            Err(e) => return Err(OpenBitFunError::tool(format!("open_app osascript: {}", e))),
+            Err(e) => return Err(StarMateError::tool(format!("open_app osascript: {}", e))),
         };
         if !activate.status.success() {
             return Ok(failure(
@@ -570,7 +570,7 @@ Inspect its process and current application state before choosing another operat
         if window_count == Some(0) {
             if let Some(bid) = bundle_id.as_deref() {
                 crate::computer_use::control_session::input_allowed()
-                    .map_err(OpenBitFunError::tool)?;
+                    .map_err(StarMateError::tool)?;
                 let mut command =
                     starmate_services_core::process_manager::create_command("/usr/bin/open");
                 if background {
@@ -772,7 +772,7 @@ Inspect its process and current application state before choosing another operat
             use enigo::Mouse;
             match Self::run_enigo_job(|e| {
                 e.location()
-                    .map_err(|err| OpenBitFunError::tool(format!("pointer location: {}", err)))
+                    .map_err(|err| StarMateError::tool(format!("pointer location: {}", err)))
             }) {
                 Ok((x, y)) => (x as f64, y as f64),
                 Err(_) => (0.0, 0.0),
@@ -803,7 +803,7 @@ impl NativeComputerUseHost {
     pub(crate) async fn get_app_shortcuts_inner(
         &self,
         app: AppSelector,
-    ) -> OpenBitFunResult<AppShortcutsSnapshot> {
+    ) -> StarMateResult<AppShortcutsSnapshot> {
         #[cfg(target_os = "macos")]
         {
             // Same `[PERMISSION_DENIED]` contract as `get_app_state_inner`
@@ -819,7 +819,7 @@ impl NativeComputerUseHost {
                     })
                 })
                 .await
-                .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+                .map_err(|e| StarMateError::tool(e.to_string()))??;
 
             let captured_at_ms = std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
@@ -839,7 +839,7 @@ impl NativeComputerUseHost {
                 crate::computer_use::windows_list_apps::find_default_window_for_pid(pid)
                     .map(|h| h.0 as isize)
                     .ok_or_else(|| {
-                        OpenBitFunError::tool(format!(
+                        StarMateError::tool(format!(
                             "APP_NOT_FOUND: no visible top-level window for pid={} (app={:?})",
                             pid, app
                         ))
@@ -852,7 +852,7 @@ impl NativeComputerUseHost {
                     crate::computer_use::windows_ax_shortcuts::get_app_menu_shortcuts(hwnd)
                 })
                 .await
-                .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+                .map_err(|e| StarMateError::tool(e.to_string()))??;
 
             let captured_at_ms = std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
@@ -868,7 +868,7 @@ impl NativeComputerUseHost {
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
             let _ = app;
-            Err(OpenBitFunError::tool(
+            Err(StarMateError::tool(
                 LINUX_LEGACY_AX_UNAVAILABLE.to_string(),
             ))
         }
@@ -876,11 +876,11 @@ impl NativeComputerUseHost {
 }
 
 #[cfg(target_os = "macos")]
-fn require_macos_background_input() -> OpenBitFunResult<()> {
+fn require_macos_background_input() -> StarMateResult<()> {
     if crate::computer_use::macos_bg_input::supports_background_input() {
         return Ok(());
     }
-    Err(OpenBitFunError::tool(
+    Err(StarMateError::tool(
         "[BACKGROUND_INPUT_UNAVAILABLE] macOS Accessibility permission is required for background app input. Grant OpenBitFun in System Settings -> Privacy & Security -> Accessibility, then retry desktop.meta/capabilities or desktop.get_app_state.".to_string(),
     ))
 }
@@ -891,7 +891,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         action: starmate_agent_tools::computer_use_host::AppInputAction,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.dispatch_app_input_impl(app, action).await
     }
 
@@ -899,7 +899,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
         self.settle_after_input_impl(app, policy).await
     }
 
@@ -914,9 +914,9 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    fn validate_observation(&self, id: &str) -> OpenBitFunResult<()> {
+    fn validate_observation(&self, id: &str) -> StarMateResult<()> {
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let pid = scope
             .target
             .as_deref()
@@ -928,19 +928,19 @@ impl ComputerUseHost for NativeComputerUseHost {
             .and_then(|target| target.split('/').next())
             .and_then(|pid| pid.parse::<i32>().ok())
             .ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "[OBSERVATION_TARGET_REQUIRED] Prepare the observed application before input",
                 )
             })?;
         self.state_for_scope(&scope)?
             .observations
             .validate_application(pid, id)
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
 
-    async fn prepare_control_target(&self, mut app: AppSelector) -> OpenBitFunResult<()> {
+    async fn prepare_control_target(&self, mut app: AppSelector) -> StarMateResult<()> {
         app.validate_window_target()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         if app.is_empty() {
             if let Some(pid) = crate::computer_use::control_session::snapshot()
                 .target
@@ -978,7 +978,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 .map(u32::try_from)
                 .transpose()
                 .map_err(|_| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "[INVALID_PARAMS] window_id exceeds the macOS window ID range",
                     )
                 })?;
@@ -986,8 +986,8 @@ impl ComputerUseHost for NativeComputerUseHost {
                 crate::computer_use::macos_capture::ensure_capture(pid, window_id)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?
+            .map_err(StarMateError::tool)?;
         }
         #[cfg(target_os = "windows")]
         {
@@ -996,33 +996,33 @@ impl ComputerUseHost for NativeComputerUseHost {
                 crate::computer_use::control_session::bind_target(format!(
                     "pid:{pid}/window:{window}"
                 ))
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
                 crate::computer_use::windows_wgc_capture::ensure_window_capture(
                     windows::Win32::Foundation::HWND(window as *mut _),
                 )
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
         }
         #[cfg(target_os = "linux")]
         {
             if app.window_id.is_some() {
-                return Err(OpenBitFunError::tool("[WINDOW_TARGET_UNSUPPORTED] This host uses AT-SPI app selectors and portal-selected capture, not native window IDs"));
+                return Err(StarMateError::tool("[WINDOW_TARGET_UNSUPPORTED] This host uses AT-SPI app selectors and portal-selected capture, not native window IDs"));
             }
             if !app.is_empty() {
                 crate::computer_use::linux_control_ax::bind_app_selector(&app).await?;
             }
         }
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         drop(self.state_for_scope(&scope)?);
         Ok(())
     }
 
-    async fn activate_app(&self, _app: AppSelector) -> OpenBitFunResult<()> {
+    async fn activate_app(&self, _app: AppSelector) -> StarMateResult<()> {
         crate::computer_use::control_session::spawn_blocking(Self::activate_prepared_window)
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
     }
 
     #[cfg(any(target_os = "macos", target_os = "windows"))]
@@ -1030,13 +1030,13 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         region: starmate_agent_tools::computer_use_host::ComputerUseZoomRegion,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         self.zoom_observation_impl(app, region).await
     }
 
-    async fn restore_window(&self, app: AppSelector) -> OpenBitFunResult<bool> {
+    async fn restore_window(&self, app: AppSelector) -> StarMateResult<bool> {
         app.validate_window_target()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         #[cfg(any(target_os = "macos", target_os = "windows"))]
         let bound_window = |pid: i32| {
             app.window_id.or_else(|| {
@@ -1055,7 +1055,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 .map(u32::try_from)
                 .transpose()
                 .map_err(|_| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "[INVALID_PARAMS] window_id exceeds the macOS window ID range",
                     )
                 })?;
@@ -1065,12 +1065,12 @@ impl ComputerUseHost for NativeComputerUseHost {
                 let window = match window {
                     Some(window) => window,
                     None => crate::computer_use::macos_capture::default_window(pid)
-                        .map_err(OpenBitFunError::tool)?,
+                        .map_err(StarMateError::tool)?,
                 };
                 crate::computer_use::macos_ax_ui::restore_window(pid, window)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
         }
         #[cfg(target_os = "windows")]
         {
@@ -1079,7 +1079,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 .map(usize::try_from)
                 .transpose()
                 .map_err(|_| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "[INVALID_PARAMS] window_id exceeds the native window handle range",
                     )
                 })?;
@@ -1087,7 +1087,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 crate::computer_use::windows_list_apps::restore_window(pid as u32, window)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
@@ -1099,9 +1099,9 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         owner: &str,
         request: starmate_agent_tools::computer_use_host::ControlStartRequest,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         let snapshot = crate::computer_use::control_session::start(owner, request.mode)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let scope =
             starmate_agent_tools::computer_use_control::ObservationScope::from_control(&snapshot);
         drop(self.state_for_scope(&scope)?);
@@ -1120,7 +1120,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                     Some(snapshot.generation),
                     &error,
                 );
-                return Err(OpenBitFunError::tool(error));
+                return Err(StarMateError::tool(error));
             }
         }
         Ok(crate::computer_use::control_session::snapshot())
@@ -1132,33 +1132,33 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn stop_control(
         &self,
         owner: &str,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         crate::computer_use::control_session::stop(Some(owner), "agent_stopped")
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
     async fn stop_control_generation(
         &self,
         owner: &str,
         generation: u64,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         crate::computer_use::control_session::stop_checked(
             Some(owner),
             Some(generation),
             "task_cancelled",
         )
-        .map_err(OpenBitFunError::tool)
+        .map_err(StarMateError::tool)
     }
     async fn acquire_control_action(
         &self,
         owner: &str,
         action: &str,
-    ) -> OpenBitFunResult<
+    ) -> StarMateResult<
         Option<Box<dyn starmate_agent_tools::computer_use_host::ComputerUseActionLease>>,
     > {
         let policy =
             starmate_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
                 .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "[CONTROL_ACTION_INVALID] Unknown ComputerUse action: {action}"
                 ))
             })?;
@@ -1167,10 +1167,10 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
         crate::computer_use::control_session::acquire(owner, action)
             .map(Some)
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
 
-    async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot> {
+    async fn permission_snapshot(&self) -> StarMateResult<ComputerUsePermissionSnapshot> {
         use starmate_agent_tools::computer_use_permissions::ComputerPermissionKind as Kind;
         let status = crate::computer_use::permissions::status().await;
         Ok(ComputerUsePermissionSnapshot {
@@ -1240,24 +1240,24 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    async fn request_accessibility_permission(&self) -> OpenBitFunResult<()> {
+    async fn request_accessibility_permission(&self) -> StarMateResult<()> {
         #[cfg(target_os = "macos")]
         {
             crate::computer_use::control_session::spawn_blocking(macos::request_ax_prompt)
                 .await
-                .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+                .map_err(|e| StarMateError::tool(e.to_string()))?;
         }
         Ok(())
     }
 
-    async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()> {
+    async fn request_screen_capture_permission(&self) -> StarMateResult<()> {
         #[cfg(target_os = "macos")]
         {
             crate::computer_use::control_session::spawn_blocking(|| {
                 let _ = macos::request_screen_capture();
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
         }
         Ok(())
     }
@@ -1265,17 +1265,17 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn screenshot_display(
         &self,
         params: ComputerUseScreenshotParams,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         self.screenshot_display_impl(params).await
     }
 
-    async fn screenshot_peek_full_display(&self) -> OpenBitFunResult<ComputerScreenshot> {
+    async fn screenshot_peek_full_display(&self) -> StarMateResult<ComputerScreenshot> {
         self.screenshot_peek_full_display_impl().await
     }
 
     async fn read_screen_text(
         &self,
-    ) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
+    ) -> StarMateResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
         self.read_screen_text_impl().await
     }
 
@@ -1283,7 +1283,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         text_query: &str,
         region_native: Option<starmate_agent_tools::computer_use_host::OcrRegionNative>,
-    ) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
+    ) -> StarMateResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
         self.ocr_find_text_matches_impl(text_query, region_native)
             .await
     }
@@ -1292,7 +1292,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         gx: f64,
         gy: f64,
-    ) -> OpenBitFunResult<Option<starmate_agent_tools::computer_use_host::OcrAccessibilityHit>>
+    ) -> StarMateResult<Option<starmate_agent_tools::computer_use_host::OcrAccessibilityHit>>
     {
         #[cfg(target_os = "macos")]
         {
@@ -1303,7 +1303,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 )
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
             return Ok(hit);
         }
         #[cfg(target_os = "windows")]
@@ -1315,7 +1315,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 )
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
         }
         #[cfg(target_os = "linux")]
         {
@@ -1334,7 +1334,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         gx: f64,
         gy: f64,
         half_extent_native: u32,
-    ) -> OpenBitFunResult<Vec<u8>> {
+    ) -> StarMateResult<Vec<u8>> {
         self.ocr_preview_crop_jpeg_impl(gx, gy, half_extent_native)
             .await
     }
@@ -1346,7 +1346,7 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn locate_ui_element_screen_center(
         &self,
         query: UiElementLocateQuery,
-    ) -> OpenBitFunResult<UiElementLocateResult> {
+    ) -> StarMateResult<UiElementLocateResult> {
         #[cfg(target_os = "macos")]
         {
             macos::require_ax_trust_for(
@@ -1357,7 +1357,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 crate::computer_use::macos_ax_ui::locate_ui_element_center_for_pid(pid, &query)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
         }
         #[cfg(target_os = "windows")]
         {
@@ -1368,7 +1368,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 )
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
         }
         #[cfg(target_os = "linux")]
         {
@@ -1376,7 +1376,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
         {
-            Err(OpenBitFunError::tool(
+            Err(StarMateError::tool(
                 "Native UI element (accessibility) lookup is not available on this platform."
                     .to_string(),
             ))
@@ -1419,95 +1419,95 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn open_app(
         &self,
         app_name: &str,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
         #[cfg(any(target_os = "macos", target_os = "windows"))]
         use starmate_agent_tools::computer_use_host::OpenAppResult;
         let name = app_name.to_string();
-        crate::computer_use::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
+        crate::computer_use::control_session::input_allowed().map_err(StarMateError::tool)?;
         let background = crate::computer_use::control_session::snapshot().mode
             == starmate_agent_tools::computer_use_control::ControlMode::Background;
 
         #[cfg(target_os = "macos")]
         {
             let result = crate::computer_use::control_session::spawn_blocking(
-                move || -> OpenBitFunResult<OpenAppResult> {
+                move || -> StarMateResult<OpenAppResult> {
                     Self::open_app_macos(name, background)
                 },
             )
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
             return Ok(result);
         }
 
         #[cfg(target_os = "windows")]
         {
             let result = crate::computer_use::control_session::spawn_blocking(
-                move || -> OpenBitFunResult<OpenAppResult> {
+                move || -> StarMateResult<OpenAppResult> {
                     windows_launch::open(name, background)
                 },
             )
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
             return Ok(result);
         }
 
         #[cfg(target_os = "linux")]
         {
             if background {
-                return Err(OpenBitFunError::tool("[BACKGROUND_LAUNCH_UNSUPPORTED] This Linux host cannot request application launch without compositor activation. Already-running applications remain available through list_apps and AT-SPI."));
+                return Err(StarMateError::tool("[BACKGROUND_LAUNCH_UNSUPPORTED] This Linux host cannot request application launch without compositor activation. Already-running applications remain available through list_apps and AT-SPI."));
             }
             return linux_launch::open(&name).await;
         }
 
         #[allow(unreachable_code)]
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "open_app is not supported on this platform.".to_string(),
         ))
     }
 
-    fn map_image_coords_to_pointer_f64(&self, x: i32, y: i32) -> OpenBitFunResult<(f64, f64)> {
+    fn map_image_coords_to_pointer_f64(&self, x: i32, y: i32) -> StarMateResult<(f64, f64)> {
         self.map_image_coords_to_pointer_f64_impl(x, y)
     }
 
-    fn map_image_coords_to_pointer(&self, x: i32, y: i32) -> OpenBitFunResult<(i32, i32)> {
+    fn map_image_coords_to_pointer(&self, x: i32, y: i32) -> StarMateResult<(i32, i32)> {
         let (gx, gy) = self.map_image_coords_to_pointer_f64(x, y)?;
         Ok((gx.round() as i32, gy.round() as i32))
     }
 
-    fn map_normalized_coords_to_pointer_f64(&self, x: i32, y: i32) -> OpenBitFunResult<(f64, f64)> {
+    fn map_normalized_coords_to_pointer_f64(&self, x: i32, y: i32) -> StarMateResult<(f64, f64)> {
         self.map_normalized_coords_to_pointer_f64_impl(x, y)
     }
 
-    fn map_normalized_coords_to_pointer(&self, x: i32, y: i32) -> OpenBitFunResult<(i32, i32)> {
+    fn map_normalized_coords_to_pointer(&self, x: i32, y: i32) -> StarMateResult<(i32, i32)> {
         let (gx, gy) = self.map_normalized_coords_to_pointer_f64(x, y)?;
         Ok((gx.round() as i32, gy.round() as i32))
     }
 
-    async fn mouse_move_global_f64(&self, gx: f64, gy: f64) -> OpenBitFunResult<()> {
+    async fn mouse_move_global_f64(&self, gx: f64, gy: f64) -> StarMateResult<()> {
         self.mouse_move_global_f64_impl(gx, gy).await
     }
 
-    async fn mouse_move(&self, x: i32, y: i32) -> OpenBitFunResult<()> {
+    async fn mouse_move(&self, x: i32, y: i32) -> StarMateResult<()> {
         self.mouse_move_global_f64(x as f64, y as f64).await
     }
 
-    async fn pointer_move_relative(&self, dx: i32, dy: i32) -> OpenBitFunResult<()> {
+    async fn pointer_move_relative(&self, dx: i32, dy: i32) -> StarMateResult<()> {
         self.pointer_move_relative_impl(dx, dy).await
     }
 
-    async fn mouse_click(&self, button: &str) -> OpenBitFunResult<()> {
+    async fn mouse_click(&self, button: &str) -> StarMateResult<()> {
         self.mouse_click_impl(button).await
     }
 
-    async fn mouse_click_authoritative(&self, button: &str) -> OpenBitFunResult<()> {
+    async fn mouse_click_authoritative(&self, button: &str) -> StarMateResult<()> {
         self.mouse_click_authoritative_impl(button).await
     }
 
-    async fn mouse_down(&self, button: &str) -> OpenBitFunResult<()> {
+    async fn mouse_down(&self, button: &str) -> StarMateResult<()> {
         self.mouse_down_impl(button).await
     }
 
-    async fn mouse_up(&self, button: &str) -> OpenBitFunResult<()> {
+    async fn mouse_up(&self, button: &str) -> StarMateResult<()> {
         self.mouse_up_impl(button).await
     }
 
@@ -1522,26 +1522,26 @@ impl ComputerUseHost for NativeComputerUseHost {
         to: (f64, f64),
         button: &str,
         duration_ms: u64,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.drag_impl(from, to, button, duration_ms).await
     }
 
-    async fn scroll(&self, delta_x: i32, delta_y: i32) -> OpenBitFunResult<()> {
+    async fn scroll(&self, delta_x: i32, delta_y: i32) -> StarMateResult<()> {
         self.scroll_impl(delta_x, delta_y).await
     }
 
-    async fn key_chord(&self, keys: Vec<String>) -> OpenBitFunResult<()> {
+    async fn key_chord(&self, keys: Vec<String>) -> StarMateResult<()> {
         self.key_chord_impl(keys).await
     }
 
-    async fn type_text(&self, text: &str) -> OpenBitFunResult<()> {
+    async fn type_text(&self, text: &str) -> StarMateResult<()> {
         self.type_text_impl(text).await
     }
 
-    async fn wait_ms(&self, ms: u64) -> OpenBitFunResult<()> {
+    async fn wait_ms(&self, ms: u64) -> StarMateResult<()> {
         crate::computer_use::control_session::wait(ms)
             .await
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         ComputerUseHost::computer_use_record_mutation(self, ComputerUseLastMutationKind::Wait);
         Ok(())
     }
@@ -1605,20 +1605,20 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    fn computer_use_guard_click_allowed(&self) -> OpenBitFunResult<()> {
+    fn computer_use_guard_click_allowed(&self) -> StarMateResult<()> {
         let s = self
             .state
             .lock()
-            .map_err(|e| OpenBitFunError::tool(format!("lock: {}", e)))?;
+            .map_err(|e| StarMateError::tool(format!("lock: {}", e)))?;
         if s.click_needs_fresh_screenshot {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 STALE_CAPTURE_TOOL_MESSAGE.to_string(),
             ));
         }
         Ok(())
     }
 
-    fn computer_use_guard_click_allowed_relaxed(&self) -> OpenBitFunResult<()> {
+    fn computer_use_guard_click_allowed_relaxed(&self) -> StarMateResult<()> {
         // For AX-based click_element: we only require that no pointer mutation
         // happened since the last known state (i.e. we moved the pointer ourselves
         // inside click_element, so the flag is not set). No fine-screenshot needed.
@@ -1660,13 +1660,13 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    async fn list_displays(&self) -> OpenBitFunResult<Vec<ComputerUseDisplayInfo>> {
+    async fn list_displays(&self) -> StarMateResult<Vec<ComputerUseDisplayInfo>> {
         let preferred = self.state.lock().ok().and_then(|s| s.preferred_display_id);
         let (mx, my) = Self::current_mouse_position();
         Ok(Self::enumerate_displays(preferred, mx, my))
     }
 
-    async fn focus_display(&self, display_id: Option<u32>) -> OpenBitFunResult<()> {
+    async fn focus_display(&self, display_id: Option<u32>) -> StarMateResult<()> {
         if let Some(id) = display_id {
             // Validate against the actual list of attached screens; rejecting
             // unknown ids early gives the model a clean error to recover from
@@ -1675,7 +1675,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 .map(|all| all.iter().any(|s| s.display_info.id == id))
                 .unwrap_or(false);
             if !known {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "focus_display: unknown display_id {} (call desktop.list_displays first)",
                     id
                 )));
@@ -1739,12 +1739,12 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    async fn list_windows(&self, app: Option<AppSelector>) -> OpenBitFunResult<Vec<AppWindowInfo>> {
+    async fn list_windows(&self, app: Option<AppSelector>) -> StarMateResult<Vec<AppWindowInfo>> {
         #[cfg(any(target_os = "macos", target_os = "windows"))]
         {
             let filter = if let Some(app) = app.filter(|app| !app.is_empty()) {
                 app.validate_window_target()
-                    .map_err(OpenBitFunError::tool)?;
+                    .map_err(StarMateError::tool)?;
                 Some((resolve_pid(self, &app).await?, app.window_id))
             } else {
                 None
@@ -1756,11 +1756,11 @@ impl ComputerUseHost for NativeComputerUseHost {
                 }
                 #[cfg(target_os = "windows")]
                 {
-                    Ok::<_, OpenBitFunError>(crate::computer_use::windows_list_apps::list_windows())
+                    Ok::<_, StarMateError>(crate::computer_use::windows_list_apps::list_windows())
                 }
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
             Ok(windows
                 .into_iter()
                 .filter(|window| {
@@ -1773,18 +1773,18 @@ impl ComputerUseHost for NativeComputerUseHost {
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
             let _ = app;
-            Err(OpenBitFunError::tool("[WINDOW_DISCOVERY_UNSUPPORTED] This host exposes AT-SPI applications and portal-selected surfaces; use list_apps and get_app_state"))
+            Err(StarMateError::tool("[WINDOW_DISCOVERY_UNSUPPORTED] This host exposes AT-SPI applications and portal-selected surfaces; use list_apps and get_app_state"))
         }
     }
 
-    async fn list_apps(&self, include_hidden: bool) -> OpenBitFunResult<Vec<AppInfo>> {
+    async fn list_apps(&self, include_hidden: bool) -> StarMateResult<Vec<AppInfo>> {
         #[cfg(target_os = "macos")]
         {
             crate::computer_use::control_session::spawn_blocking(move || {
                 crate::computer_use::macos_list_apps::list_running_apps(include_hidden)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
         }
         #[cfg(target_os = "windows")]
         {
@@ -1792,7 +1792,7 @@ impl ComputerUseHost for NativeComputerUseHost {
                 crate::computer_use::windows_list_apps::list_running_apps(include_hidden)
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
         }
         #[cfg(target_os = "linux")]
         {
@@ -1802,7 +1802,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
         {
             let _ = include_hidden;
-            Err(OpenBitFunError::tool(
+            Err(StarMateError::tool(
                 "[CONTROL_UNSUPPORTED] No application enumeration provider",
             ))
         }
@@ -1813,7 +1813,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         app: AppSelector,
         max_depth: u32,
         focus_window_only: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         // Preserve image-bearing observations for existing callers.
         self.get_app_state_inner(app, max_depth, focus_window_only, true)
             .await
@@ -1825,7 +1825,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         max_depth: u32,
         focus_window_only: bool,
         include_image: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         self.get_app_state_inner(app, max_depth, focus_window_only, include_image)
             .await
     }
@@ -1841,7 +1841,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         }
     }
 
-    async fn get_app_shortcuts(&self, app: AppSelector) -> OpenBitFunResult<AppShortcutsSnapshot> {
+    async fn get_app_shortcuts(&self, app: AppSelector) -> StarMateResult<AppShortcutsSnapshot> {
         self.get_app_shortcuts_inner(app).await
     }
 
@@ -1851,7 +1851,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         pred: AppWaitPredicate,
         timeout_ms: u32,
         poll_ms: u32,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         self.app_wait_for_impl(app, pred, timeout_ms, poll_ms).await
     }
 
@@ -1867,7 +1867,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         opts: InteractiveViewOpts,
-    ) -> OpenBitFunResult<InteractiveView> {
+    ) -> StarMateResult<InteractiveView> {
         self.build_interactive_view_impl(app, opts).await
     }
 
@@ -1875,7 +1875,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         params: InteractiveClickParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
+    ) -> StarMateResult<InteractiveActionResult> {
         self.interactive_click_impl(app, params).await
     }
 
@@ -1883,7 +1883,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         opts: VisualMarkViewOpts,
-    ) -> OpenBitFunResult<VisualMarkView> {
+    ) -> StarMateResult<VisualMarkView> {
         self.build_visual_mark_view_impl(app, opts).await
     }
 
@@ -1891,7 +1891,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         params: VisualClickParams,
-    ) -> OpenBitFunResult<VisualActionResult> {
+    ) -> StarMateResult<VisualActionResult> {
         self.visual_click_impl(app, params).await
     }
 
@@ -1899,7 +1899,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         params: InteractiveTypeTextParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
+    ) -> StarMateResult<InteractiveActionResult> {
         self.interactive_type_text_impl(app, params).await
     }
 
@@ -1907,7 +1907,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         app: AppSelector,
         params: InteractiveScrollParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
+    ) -> StarMateResult<InteractiveActionResult> {
         self.interactive_scroll_impl(app, params).await
     }
 }
@@ -1938,7 +1938,7 @@ fn control_target_pid() -> Option<i32> {
 /// macOS: `pid > bundle_id > name`. Windows: `pid > name` (exact, then
 /// substring); empty selector resolves to the foreground window's pid.
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-async fn resolve_pid(host: &NativeComputerUseHost, app: &AppSelector) -> OpenBitFunResult<i32> {
+async fn resolve_pid(host: &NativeComputerUseHost, app: &AppSelector) -> StarMateResult<i32> {
     #[cfg(target_os = "macos")]
     {
         resolve_pid_macos(host, app).await
@@ -1972,7 +1972,7 @@ async fn resolve_pid(host: &NativeComputerUseHost, app: &AppSelector) -> OpenBit
                 return Ok(p);
             }
         }
-        Err(OpenBitFunError::tool(format!("APP_NOT_FOUND: {:?}", app)))
+        Err(StarMateError::tool(format!("APP_NOT_FOUND: {:?}", app)))
     }
 }
 
@@ -1982,7 +1982,7 @@ async fn resolve_pid(host: &NativeComputerUseHost, app: &AppSelector) -> OpenBit
 async fn resolve_pid_macos(
     host: &NativeComputerUseHost,
     app: &AppSelector,
-) -> OpenBitFunResult<i32> {
+) -> StarMateResult<i32> {
     if let Some(pid) = app.pid {
         return Ok(pid);
     }
@@ -1990,7 +1990,7 @@ async fn resolve_pid_macos(
         return control_target_pid()
             .or_else(crate::computer_use::macos_bg_input::frontmost_pid_macos)
             .ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "[TARGET_REQUIRED] No current application; select one from list_apps",
                 )
             });
@@ -2057,7 +2057,7 @@ async fn resolve_pid_macos(
             return Ok(p);
         }
     }
-    Err(OpenBitFunError::tool(format!("APP_NOT_FOUND: {:?}", app)))
+    Err(StarMateError::tool(format!("APP_NOT_FOUND: {:?}", app)))
 }
 
 /// Best-effort `AppInfo` for `pid`, looked up from `list_apps`. Falls

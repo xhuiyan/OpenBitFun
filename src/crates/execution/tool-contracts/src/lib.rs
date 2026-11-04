@@ -85,7 +85,7 @@ pub use framework::{
     DeferredToolUsageError, DynamicMcpToolInfo, DynamicToolInfo, GetToolSpecCatalogProvider,
     GetToolSpecDeferredToolSummary, GetToolSpecDetail, GetToolSpecExecutionError,
     GetToolSpecExecutionPlan, GetToolSpecLoadObservation, GetToolSpecRuntime,
-    LoadedDeferredToolSpec, ParsedOpenBitFunCurrentSessionUri, ParsedOpenBitFunRuntimeUri,
+    LoadedDeferredToolSpec, ParsedStarMateCurrentSessionUri, ParsedStarMateRuntimeUri,
     PortableToolContextProvider, PromptVisibleToolManifestItem, SnapshotToolDecorator,
     SnapshotToolWrapper, SnapshotToolWrapperRef, StaticToolMaterializationError,
     StaticToolProvider, StaticToolProviderFactory, StaticToolProviderGroup, StaticToolProviderPlan,

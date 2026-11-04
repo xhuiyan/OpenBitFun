@@ -112,10 +112,10 @@ pub(super) fn try_ax_set_value(target: AxRef, value: &str) -> AxWriteOutcome {
 pub(super) fn insert_selected_text(
     target: AxRef,
     text: &str,
-) -> starmate_agent_tools::computer_use_host::error::OpenBitFunResult<bool> {
-    use starmate_agent_tools::computer_use_host::error::OpenBitFunError;
+) -> starmate_agent_tools::computer_use_host::error::StarMateResult<bool> {
+    use starmate_agent_tools::computer_use_host::error::StarMateError;
     if !can_write(target) {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[CONTROL_TARGET_CHANGED] Text target is outside the active capture",
         ));
     }
@@ -126,12 +126,12 @@ pub(super) fn insert_selected_text(
     let mut presenter = 0;
     let status = unsafe { AXUIElementGetPid(target.0, &mut presenter) };
     if status != 0 {
-        return Err(OpenBitFunError::tool(format!(
+        return Err(StarMateError::tool(format!(
             "[AX_TEXT_PREFLIGHT_FAILED] Cannot resolve the text target process (status={status}); no text was submitted"
         )));
     }
     let serving = unsafe { super::macos_ax_dispatch::actual_pid(target.0) }.map_err(|status| {
-        OpenBitFunError::tool(format!(
+        StarMateError::tool(format!(
             "[AX_TEXT_PREFLIGHT_FAILED] Cannot resolve the text provider process (status={status}); no text was submitted"
         ))
     })?;
@@ -147,10 +147,10 @@ pub(super) fn insert_selected_text(
         return Ok(false);
     }
     if status != 0 {
-        return Err(OpenBitFunError::tool(format!("[AX_TEXT_PREFLIGHT_FAILED] Cannot inspect selected-text support (status={status}); no text was submitted")));
+        return Err(StarMateError::tool(format!("[AX_TEXT_PREFLIGHT_FAILED] Cannot inspect selected-text support (status={status}); no text was submitted")));
     }
     if !can_write(target) {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[CONTROL_TARGET_CHANGED] Text target changed before insertion",
         ));
     }
@@ -164,7 +164,7 @@ pub(super) fn insert_selected_text(
     };
     note_dispatched_input(target);
     if status != 0 {
-        return Err(OpenBitFunError::tool(format!("[INPUT_OUTCOME_UNKNOWN] AXSelectedText returned {status}; do not repeat the insertion or send fallback keys")));
+        return Err(StarMateError::tool(format!("[INPUT_OUTCOME_UNKNOWN] AXSelectedText returned {status}; do not repeat the insertion or send fallback keys")));
     }
     Ok(true)
 }

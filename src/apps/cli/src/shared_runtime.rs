@@ -1452,13 +1452,13 @@ fn runtime_ipc_error(error: RuntimeError) -> RuntimeIpcError {
     }
 }
 
-fn core_ipc_error(error: starmate_core::util::errors::OpenBitFunError) -> RuntimeIpcError {
+fn core_ipc_error(error: starmate_core::util::errors::StarMateError) -> RuntimeIpcError {
     let code = match &error {
-        starmate_core::util::errors::OpenBitFunError::Validation(_)
-        | starmate_core::util::errors::OpenBitFunError::NotFound(_) => {
+        starmate_core::util::errors::StarMateError::Validation(_)
+        | starmate_core::util::errors::StarMateError::NotFound(_) => {
             RuntimeIpcErrorCode::InvalidRequest
         }
-        starmate_core::util::errors::OpenBitFunError::SessionInUse { .. } => {
+        starmate_core::util::errors::StarMateError::SessionInUse { .. } => {
             RuntimeIpcErrorCode::SessionInUse
         }
         _ => RuntimeIpcErrorCode::Unavailable,

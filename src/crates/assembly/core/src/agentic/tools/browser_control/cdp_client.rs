@@ -1,6 +1,6 @@
 //! Lightweight CDP (Chrome DevTools Protocol) client over WebSocket.
 
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use futures::stream::{SplitSink, SplitStream};
 use futures::{SinkExt, StreamExt};
 use log::{debug, info, warn};
@@ -44,13 +44,13 @@ const USER_PROFILE_FAST_RESET_WINDOW: Duration = Duration::from_secs(1);
 pub enum UserProfileConnectError {
     /// The endpoint answered the WebSocket upgrade with HTTP 404. An inferred
     /// endpoint may fall back to setup; authentication/permission refusals may not.
-    NotABrowserEndpoint(OpenBitFunError),
+    NotABrowserEndpoint(StarMateError),
     /// Any other failure: timeout, denial, transport error, product mismatch.
-    Failed(OpenBitFunError),
+    Failed(StarMateError),
 }
 
 impl UserProfileConnectError {
-    pub fn into_error(self) -> OpenBitFunError {
+    pub fn into_error(self) -> StarMateError {
         match self {
             Self::NotABrowserEndpoint(error) | Self::Failed(error) => error,
         }
@@ -119,24 +119,24 @@ fn suppressed_browser_connections() -> &'static RwLock<HashSet<u16>> {
 
 impl CdpClient {
     /// Discover browser version on a legacy fixed debug port.
-    pub async fn get_version(port: u16) -> OpenBitFunResult<CdpVersionInfo> {
+    pub async fn get_version(port: u16) -> StarMateResult<CdpVersionInfo> {
         CdpEndpointProvider::get_version(port)
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))
+            .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
     /// List all pages/tabs on a legacy fixed debug port.
-    pub async fn list_pages(port: u16) -> OpenBitFunResult<Vec<CdpPageInfo>> {
+    pub async fn list_pages(port: u16) -> StarMateResult<Vec<CdpPageInfo>> {
         CdpEndpointProvider::list_pages(port)
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))
+            .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
     /// Create a new page/tab on a legacy fixed debug port.
-    pub async fn create_page(port: u16, url: Option<&str>) -> OpenBitFunResult<CdpPageInfo> {
+    pub async fn create_page(port: u16, url: Option<&str>) -> StarMateResult<CdpPageInfo> {
         CdpEndpointProvider::create_page(port, url)
             .await
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))
+            .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
     /// Create a new page/tab on a legacy fixed debug port without raising the
@@ -149,7 +149,7 @@ impl CdpClient {
     pub async fn create_page_in_background(
         port: u16,
         url: Option<&str>,
-    ) -> OpenBitFunResult<CdpPageInfo> {
+    ) -> StarMateResult<CdpPageInfo> {
         let Some(ws_url) = Self::get_version(port)
             .await
             .ok()
@@ -178,14 +178,14 @@ impl CdpClient {
             tokio::time::sleep(Duration::from_millis(50)).await;
         }
 
-        Err(OpenBitFunError::tool(format!(
+        Err(StarMateError::tool(format!(
             "Created tab {} but its page WebSocket never appeared on port {}. Connect to that page by id instead of creating another tab.",
             page.id, port
         )))
     }
 
     /// Connect to a specific page by its legacy WebSocket debugger URL.
-    pub async fn connect(ws_url: &str) -> OpenBitFunResult<Self> {
+    pub async fn connect(ws_url: &str) -> StarMateResult<Self> {
         info!("CDP connecting to page WebSocket");
         Self::connect_with_timeout(ws_url, PAGE_CDP_CONNECT_TIMEOUT).await
     }
@@ -198,7 +198,7 @@ impl CdpClient {
         actual_port: u16,
         browser_kind: &BrowserKind,
         ws_url: &str,
-    ) -> OpenBitFunResult<CdpBrowserConnection> {
+    ) -> StarMateResult<CdpBrowserConnection> {
         Self::connect_user_profile_browser_checked(logical_port, actual_port, browser_kind, ws_url)
             .await
             .map_err(UserProfileConnectError::into_error)
@@ -234,7 +234,7 @@ impl CdpClient {
         approval_budget: Duration,
     ) -> Result<CdpBrowserConnection, UserProfileConnectError> {
         if Self::browser_connection_suppressed(logical_port).await {
-            return Err(UserProfileConnectError::Failed(OpenBitFunError::tool(
+            return Err(UserProfileConnectError::Failed(StarMateError::tool(
                 "Browser control was disconnected in Settings. Reconnect it there before attaching again."
                     .to_string(),
             )));
@@ -249,8 +249,8 @@ impl CdpClient {
             "Requesting user-approved browser profile connection on port {}",
             actual_port
         );
-        let wrap = |error: OpenBitFunError| {
-            OpenBitFunError::tool(format!(
+        let wrap = |error: StarMateError| {
+            StarMateError::tool(format!(
                 "Could not connect to the current browser profile. Approve OpenBitFun's remote debugging request in the browser, then try again: {}",
                 error
             ))
@@ -281,7 +281,7 @@ impl CdpClient {
         actual_port: u16,
         browser_kind: &BrowserKind,
         client: Arc<CdpClient>,
-    ) -> OpenBitFunResult<CdpBrowserConnection> {
+    ) -> StarMateResult<CdpBrowserConnection> {
         // Validate that this is a browser-level CDP endpoint before retaining
         // it. This also fails quickly if the DevToolsActivePort file was stale.
         let version = match client.browser_version().await {
@@ -296,14 +296,14 @@ impl CdpClient {
         // connection to the other browser's profile under this selection.
         if let Some(detected) = Self::guarded_product_mismatch(browser_kind, &version) {
             client.disconnect().await;
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "The browser on port {} is {}, not the selected {}. Select {} in Settings > Browser control, or turn off remote debugging in it and connect {} instead.",
                 actual_port, detected, browser_kind, detected, browser_kind
             )));
         }
         if Self::browser_connection_suppressed(logical_port).await {
             client.disconnect().await;
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Browser Control was disconnected while approval was pending",
             ));
         }
@@ -319,7 +319,7 @@ impl CdpClient {
             .insert(logical_port, connection.clone());
         if Self::browser_connection_suppressed(logical_port).await {
             Self::disconnect_browser_connection(logical_port).await;
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Browser Control was disconnected while approval was pending",
             ));
         }
@@ -546,15 +546,15 @@ impl CdpClient {
         }
     }
 
-    fn websocket_timeout_error() -> OpenBitFunError {
-        OpenBitFunError::tool("Timed out waiting for the CDP WebSocket connection".to_string())
+    fn websocket_timeout_error() -> StarMateError {
+        StarMateError::tool("Timed out waiting for the CDP WebSocket connection".to_string())
     }
 
-    fn websocket_failed_error(error: &tokio_tungstenite::tungstenite::Error) -> OpenBitFunError {
-        OpenBitFunError::tool(format!("CDP WebSocket connect failed: {}", error))
+    fn websocket_failed_error(error: &tokio_tungstenite::tungstenite::Error) -> StarMateError {
+        StarMateError::tool(format!("CDP WebSocket connect failed: {}", error))
     }
 
-    async fn connect_with_timeout(ws_url: &str, timeout: Duration) -> OpenBitFunResult<Self> {
+    async fn connect_with_timeout(ws_url: &str, timeout: Duration) -> StarMateResult<Self> {
         Self::open_websocket(ws_url, timeout)
             .await
             .map_err(|error| match error {
@@ -657,7 +657,7 @@ impl CdpClient {
     }
 
     /// Connect to the first available page on a legacy debug port.
-    pub async fn connect_to_first_page(port: u16) -> OpenBitFunResult<Self> {
+    pub async fn connect_to_first_page(port: u16) -> StarMateResult<Self> {
         let pages = Self::list_pages(port).await?;
         let page = pages
             .iter()
@@ -665,17 +665,17 @@ impl CdpClient {
                 page.page_type.as_deref() == Some("page") && page.web_socket_debugger_url.is_some()
             })
             .or_else(|| pages.first())
-            .ok_or_else(|| OpenBitFunError::tool("No browser pages found via CDP".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("No browser pages found via CDP".to_string()))?;
 
         let ws_url = page.web_socket_debugger_url.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool("Page has no WebSocket debugger URL".to_string())
+            StarMateError::tool("Page has no WebSocket debugger URL".to_string())
         })?;
 
         Self::connect(ws_url).await
     }
 
     /// Query version metadata from a browser-level CDP connection.
-    pub async fn browser_version(&self) -> OpenBitFunResult<CdpVersionInfo> {
+    pub async fn browser_version(&self) -> StarMateResult<CdpVersionInfo> {
         self.require_browser_connection()?;
         let result = self.send("Browser.getVersion", None).await?;
         Ok(CdpVersionInfo {
@@ -697,7 +697,7 @@ impl CdpClient {
 
     /// List targets through the browser WebSocket. This replaces `/json` for
     /// an approval-only real-profile endpoint.
-    pub async fn browser_pages(&self) -> OpenBitFunResult<Vec<CdpPageInfo>> {
+    pub async fn browser_pages(&self) -> StarMateResult<Vec<CdpPageInfo>> {
         self.require_browser_connection()?;
         let result = self.send("Target.getTargets", None).await?;
         Ok(Self::page_infos_from_target_result(&result))
@@ -714,7 +714,7 @@ impl CdpClient {
         &self,
         url: Option<&str>,
         background: bool,
-    ) -> OpenBitFunResult<CdpPageInfo> {
+    ) -> StarMateResult<CdpPageInfo> {
         self.require_browser_connection()?;
         let target_url = url.unwrap_or("about:blank");
         let mut request = json!({ "url": target_url });
@@ -726,7 +726,7 @@ impl CdpClient {
             .get("targetId")
             .and_then(Value::as_str)
             .ok_or_else(|| {
-                OpenBitFunError::tool("Target.createTarget returned no target id".to_string())
+                StarMateError::tool("Target.createTarget returned no target id".to_string())
             })?
             .to_string();
 
@@ -754,7 +754,7 @@ impl CdpClient {
     /// Attach to one target using a flattened CDP session carried over the
     /// retained browser WebSocket. All subsequent page commands are tagged with
     /// the returned `sessionId`, while events are routed to this client only.
-    pub async fn attach_to_page(&self, target_id: &str) -> OpenBitFunResult<Self> {
+    pub async fn attach_to_page(&self, target_id: &str) -> StarMateResult<Self> {
         self.require_browser_connection()?;
         let result = self
             .send(
@@ -766,7 +766,7 @@ impl CdpClient {
             .get("sessionId")
             .and_then(Value::as_str)
             .ok_or_else(|| {
-                OpenBitFunError::tool("Target.attachToTarget returned no session id".to_string())
+                StarMateError::tool("Target.attachToTarget returned no session id".to_string())
             })?
             .to_string();
 
@@ -791,9 +791,9 @@ impl CdpClient {
         })
     }
 
-    fn require_browser_connection(&self) -> OpenBitFunResult<()> {
+    fn require_browser_connection(&self) -> StarMateResult<()> {
         if self.session_id.is_some() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "This CDP operation requires the browser-level connection".to_string(),
             ));
         }
@@ -831,9 +831,9 @@ impl CdpClient {
     }
 
     /// Send a CDP method call and wait for the response.
-    pub async fn send(&self, method: &str, params: Option<Value>) -> OpenBitFunResult<Value> {
+    pub async fn send(&self, method: &str, params: Option<Value>) -> StarMateResult<Value> {
         if !self.is_connected() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "CDP response channel closed".to_string(),
             ));
         }
@@ -857,19 +857,19 @@ impl CdpClient {
         };
         if let Err(error) = send_result {
             self.transport.pending.write().await.remove(&id);
-            return Err(OpenBitFunError::tool(format!("CDP send failed: {}", error)));
+            return Err(StarMateError::tool(format!("CDP send failed: {}", error)));
         }
 
         let result = match tokio::time::timeout(Duration::from_secs(30), rx).await {
             Ok(Ok(result)) => result,
             Ok(Err(_)) => {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "CDP response channel closed".to_string(),
                 ))
             }
             Err(_) => {
                 self.transport.pending.write().await.remove(&id);
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "CDP timeout for method {}",
                     method
                 )));
@@ -877,7 +877,7 @@ impl CdpClient {
         };
 
         if let Some(error) = result.get("error") {
-            return Err(OpenBitFunError::tool(format!("CDP error: {}", error)));
+            return Err(StarMateError::tool(format!("CDP error: {}", error)));
         }
 
         Ok(result.get("result").cloned().unwrap_or(json!({})))
@@ -968,7 +968,7 @@ impl CdpClient {
 
 #[async_trait::async_trait]
 impl BrowserAutomationClient for CdpClient {
-    async fn send(&self, method: &str, params: Option<Value>) -> OpenBitFunResult<Value> {
+    async fn send(&self, method: &str, params: Option<Value>) -> StarMateResult<Value> {
         CdpClient::send(self, method, params).await
     }
 

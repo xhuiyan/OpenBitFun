@@ -8,42 +8,42 @@ use crate::agentic::tools::framework::{ToolResult, ToolUseContext};
 use crate::agentic::tools::implementations::computer_use_tool::computer_use_augment_result_json;
 use crate::agentic::tools::parse_u64_value;
 use crate::service::config::global::GlobalConfigManager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use serde_json::{json, Value};
 
 /// Runs native UI locate (AX / UIA / AT-SPI) for the foreground app -- `ComputerUse` `action: "locate"`.
 pub(crate) async fn execute_computer_use_locate(
     input: &Value,
     context: &ToolUseContext,
-) -> OpenBitFunResult<Vec<ToolResult>> {
+) -> StarMateResult<Vec<ToolResult>> {
     if context.is_remote() {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "ComputerUse action locate cannot run while the session workspace is remote (SSH)."
                 .to_string(),
         ));
     }
     if !computer_use_host_available() {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "Computer use is not available on this host.".to_string(),
         ));
     }
     let Ok(service) = GlobalConfigManager::get_service().await else {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "Computer use configuration is unavailable.".to_string(),
         ));
     };
     let enabled = service
         .get_config::<bool>(Some("ai.computer_use_enabled"))
         .await
-        .map_err(|_| OpenBitFunError::tool("Computer use configuration is unavailable."))?;
+        .map_err(|_| StarMateError::tool("Computer use configuration is unavailable."))?;
     if !enabled {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "Computer use is disabled in OpenBitFun settings.".to_string(),
         ));
     }
 
     let host = context.computer_use_host.as_ref().ok_or_else(|| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "Computer Use requires a native provider on the executing host.".to_string(),
         )
     })?;

@@ -76,7 +76,7 @@ pub struct AppearanceMarketListingSummary {
     pub mode: AppearancePackageMode,
     pub package_version: String,
     pub latest_release: u32,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub required_capabilities: Vec<String>,
     pub owner: AppearanceMarketUserSummary,
@@ -104,7 +104,7 @@ pub struct AppearanceMarketRelease {
     pub listing_id: String,
     pub release_number: u32,
     pub package_version: String,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub package_sha256: String,
     pub package_size: u64,
@@ -154,7 +154,7 @@ pub struct AppearanceMarketSubmission {
     pub mode: Option<AppearancePackageMode>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub package_version: Option<String>,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub required_capabilities: Vec<String>,
     pub changelog: String,
@@ -183,7 +183,7 @@ pub struct AppearanceMarketSubmissionDraftRequest {
     pub listing_id: Option<String>,
     pub slug: String,
     pub release_number: u32,
-    #[serde(rename = "minOpenBitFunVersion")]
+    #[serde(rename = "minStarMateVersion")]
     pub min_openbitfun_version: String,
     pub changelog: String,
     pub license: AppearanceMarketLicense,
@@ -346,7 +346,7 @@ mod tests {
         let value = listing
             .as_object_mut()
             .unwrap()
-            .remove("minOpenBitFunVersion")
+            .remove("minStarMateVersion")
             .unwrap();
         let retired_field = ["min", "Bit", "fun", "Version"].concat();
         listing
@@ -355,6 +355,6 @@ mod tests {
             .insert(retired_field, value);
 
         let error = serde_json::from_value::<AppearanceMarketListingDetail>(listing).unwrap_err();
-        assert!(error.to_string().contains("minOpenBitFunVersion"));
+        assert!(error.to_string().contains("minStarMateVersion"));
     }
 }

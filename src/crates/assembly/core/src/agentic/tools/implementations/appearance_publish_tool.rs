@@ -3,7 +3,7 @@
 
 use crate::agentic::tools::framework::{PermissionIntent, Tool, ToolResult, ToolUseContext};
 use crate::infrastructure::events::{emit_global_event, BackendEvent};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_product_domains::appearance_market::{
     validate_appearance_market_slug, AppearanceMarketLicense,
@@ -38,7 +38,7 @@ impl Tool for PublishAppearanceTool {
         "PublishAppearance"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Submit a local `.openbitfun-appearance` package to the OpenBitFun Skin market for human review.
 
 The product calls catalog entries "Skins", but package/runtime identifiers always remain Appearance: `appearance.json`, schema `openbitfun.appearance`, and extension `.openbitfun-appearance`. Pass an absolute local path to a completed archive. The package itself supplies the public name, description, author, version, mode and preview; the tool derives the marketplace slug and next release number from submission history.
@@ -118,7 +118,7 @@ This is an outward-facing publication action. Use it only when the user explicit
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let package_path = input
             .get("package_path")
             .and_then(Value::as_str)
@@ -203,7 +203,7 @@ This is an outward-facing publication action. Use it only when the user explicit
             Value::String(repository.to_string()),
         );
         intent.display_metadata.insert(
-            "appearanceMinOpenBitFunVersion".to_string(),
+            "appearanceMinStarMateVersion".to_string(),
             Value::String(min_version.to_string()),
         );
         intent.display_metadata.insert(
@@ -217,9 +217,9 @@ This is an outward-facing publication action. Use it only when the user explicit
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if context.is_remote() {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "PublishAppearance reads a package from the local desktop host and cannot use a remote SSH workspace path. Export the .openbitfun-appearance package to the local device, switch to a local workspace, and call the tool again.",
             ));
         }
@@ -241,20 +241,20 @@ This is an outward-facing publication action. Use it only when the user explicit
             .map(str::to_string)
             .unwrap_or_else(|| suggest_appearance_slug(fallback_name, fallback_seed));
         if !validate_appearance_market_slug(&slug) {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "slug must contain 3-63 lowercase ASCII letters, digits, or hyphens and cannot start with a hyphen.",
             ));
         }
 
         let mut client = AppearanceMarketClient::from_environment()
             .await
-            .map_err(|error| OpenBitFunError::tool(format!("Skin market unavailable: {error}")))?;
+            .map_err(|error| StarMateError::tool(format!("Skin market unavailable: {error}")))?;
         let me = client.me().await.map_err(|error| {
-            OpenBitFunError::tool(format!("Skin market sign-in check failed: {error}"))
+            StarMateError::tool(format!("Skin market sign-in check failed: {error}"))
         })?;
         let Some(me) = me else {
             let start = client.start_desktop_auth().await.map_err(|error| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "Could not start Skin market GitHub sign-in: {error}"
                 ))
             })?;
@@ -296,7 +296,7 @@ This is an outward-facing publication action. Use it only when the user explicit
         };
 
         let submissions = client.list_submissions().await.map_err(|error| {
-            OpenBitFunError::tool(format!("Could not load Skin submission history: {error}"))
+            StarMateError::tool(format!("Could not load Skin submission history: {error}"))
         })?;
         let (listing_id, release_number) = match resolve_appearance_release_target(
             &submissions,
@@ -339,7 +339,7 @@ This is an outward-facing publication action. Use it only when the user explicit
                 }
             });
         if changelog.len() > 2_000 {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "changelog must be no longer than 2,000 bytes.",
             ));
         }
@@ -351,7 +351,7 @@ This is an outward-facing publication action. Use it only when the user explicit
             .unwrap_or(crate::VERSION)
             .to_string();
         semver::Version::parse(&min_openbitfun_version).map_err(|_| {
-            OpenBitFunError::validation("min_openbitfun_version must use semantic version syntax.")
+            StarMateError::validation("min_openbitfun_version must use semantic version syntax.")
         })?;
         let draft = AppearanceMarketSubmissionDraftRequest {
             listing_id,
@@ -397,7 +397,7 @@ This is an outward-facing publication action. Use it only when the user explicit
                 }
                 _ => "",
             };
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "Publishing Skin failed ({}): {}{hint}",
                 error.code, error
             ))
@@ -424,21 +424,21 @@ This is an outward-facing publication action. Use it only when the user explicit
     }
 }
 
-fn required_local_package_path(input: &Value) -> OpenBitFunResult<PathBuf> {
+fn required_local_package_path(input: &Value) -> StarMateResult<PathBuf> {
     let raw = input
         .get("package_path")
         .and_then(Value::as_str)
         .map(str::trim)
         .filter(|value| !value.is_empty())
-        .ok_or_else(|| OpenBitFunError::validation("package_path is required."))?;
+        .ok_or_else(|| StarMateError::validation("package_path is required."))?;
     let path = Path::new(raw);
     if !path.is_absolute() {
-        return Err(OpenBitFunError::validation(
+        return Err(StarMateError::validation(
             "package_path must be an absolute local path.",
         ));
     }
     if !raw.to_ascii_lowercase().ends_with(".openbitfun-appearance") {
-        return Err(OpenBitFunError::validation(
+        return Err(StarMateError::validation(
             "package_path must end in .openbitfun-appearance.",
         ));
     }
@@ -447,11 +447,11 @@ fn required_local_package_path(input: &Value) -> OpenBitFunResult<PathBuf> {
 
 fn publication_metadata(
     input: &Value,
-) -> OpenBitFunResult<(AppearanceMarketLicense, Option<String>)> {
+) -> StarMateResult<(AppearanceMarketLicense, Option<String>)> {
     let spdx = optional_text(input, "license_spdx");
     let custom_url = optional_https_url(input, "custom_license_url")?;
     if spdx.is_none() == custom_url.is_none() {
-        return Err(OpenBitFunError::validation(
+        return Err(StarMateError::validation(
             "Provide exactly one of license_spdx or custom_license_url, confirmed by the user.",
         ));
     }
@@ -462,7 +462,7 @@ fn publication_metadata(
                     || matches!(character, '-' | '.' | '+' | '(' | ')' | ' ' | ':')
             })
     }) {
-        return Err(OpenBitFunError::validation(
+        return Err(StarMateError::validation(
             "license_spdx is not a supported SPDX expression shape.",
         ));
     }
@@ -485,14 +485,14 @@ fn optional_text(input: &Value, field: &str) -> Option<String> {
         .map(str::to_string)
 }
 
-fn optional_https_url(input: &Value, field: &str) -> OpenBitFunResult<Option<String>> {
+fn optional_https_url(input: &Value, field: &str) -> StarMateResult<Option<String>> {
     let Some(value) = optional_text(input, field) else {
         return Ok(None);
     };
     let parsed = reqwest::Url::parse(&value)
-        .map_err(|_| OpenBitFunError::validation(format!("{field} must be a valid HTTPS URL.")))?;
+        .map_err(|_| StarMateError::validation(format!("{field} must be a valid HTTPS URL.")))?;
     if parsed.scheme() != "https" || parsed.host_str().is_none() {
-        return Err(OpenBitFunError::validation(format!(
+        return Err(StarMateError::validation(format!(
             "{field} must be a valid HTTPS URL."
         )));
     }

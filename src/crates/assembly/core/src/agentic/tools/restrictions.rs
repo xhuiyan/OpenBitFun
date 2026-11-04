@@ -1,4 +1,4 @@
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 pub use starmate_agent_tools::{
     is_miniapp_headless_agent_run, is_miniapp_market_strict_agent_run,
     is_remote_posix_path_within_root, miniapp_agent_run_tool_restrictions,
@@ -8,22 +8,22 @@ pub use starmate_agent_tools::{
 };
 use std::path::{Path, PathBuf};
 
-impl From<ToolRestrictionError> for OpenBitFunError {
+impl From<ToolRestrictionError> for StarMateError {
     fn from(error: ToolRestrictionError) -> Self {
-        OpenBitFunError::tool(error.to_string())
+        StarMateError::tool(error.to_string())
     }
 }
 
-pub fn is_local_path_within_root(path: &Path, root: &Path) -> OpenBitFunResult<bool> {
+pub fn is_local_path_within_root(path: &Path, root: &Path) -> StarMateResult<bool> {
     let canonical_path = canonicalize_local_path_best_effort(path)?;
     let canonical_root = canonicalize_local_path_best_effort(root)?;
     Ok(canonical_path == canonical_root || canonical_path.starts_with(&canonical_root))
 }
 
-pub(crate) fn canonicalize_local_path_best_effort(path: &Path) -> OpenBitFunResult<PathBuf> {
+pub(crate) fn canonicalize_local_path_best_effort(path: &Path) -> StarMateResult<PathBuf> {
     if path.exists() {
         return dunce::canonicalize(path).map_err(|err| {
-            OpenBitFunError::validation(format!(
+            StarMateError::validation(format!(
                 "Failed to canonicalize path '{}': {}",
                 path.display(),
                 err
@@ -37,7 +37,7 @@ pub(crate) fn canonicalize_local_path_best_effort(path: &Path) -> OpenBitFunResu
     loop {
         if current.exists() {
             let mut canonical = dunce::canonicalize(current).map_err(|err| {
-                OpenBitFunError::validation(format!(
+                StarMateError::validation(format!(
                     "Failed to canonicalize path '{}': {}",
                     current.display(),
                     err
@@ -52,7 +52,7 @@ pub(crate) fn canonicalize_local_path_best_effort(path: &Path) -> OpenBitFunResu
         }
 
         let file_name = current.file_name().ok_or_else(|| {
-            OpenBitFunError::validation(format!(
+            StarMateError::validation(format!(
                 "Path '{}' cannot be normalized for restriction checks",
                 path.display()
             ))
@@ -60,7 +60,7 @@ pub(crate) fn canonicalize_local_path_best_effort(path: &Path) -> OpenBitFunResu
         missing_tail.push(PathBuf::from(file_name));
 
         current = current.parent().ok_or_else(|| {
-            OpenBitFunError::validation(format!(
+            StarMateError::validation(format!(
                 "Path '{}' cannot be normalized for restriction checks",
                 path.display()
             ))
@@ -74,7 +74,7 @@ mod tests {
 
     #[test]
     fn tool_restriction_errors_map_to_tool_errors() {
-        let error: OpenBitFunError = ToolRestrictionError::Denied {
+        let error: StarMateError = ToolRestrictionError::Denied {
             tool_name: "AgentSpawn".to_string(),
             message: Some(
                 "Recursive subagent delegation is blocked. Use direct tools instead.".to_string(),
@@ -83,7 +83,7 @@ mod tests {
         .into();
 
         match error {
-            OpenBitFunError::Tool(message) => {
+            StarMateError::Tool(message) => {
                 assert_eq!(
                     message,
                     "Recursive subagent delegation is blocked. Use direct tools instead."

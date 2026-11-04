@@ -4,7 +4,7 @@ use crate::agentic::tools::framework::{
 };
 use crate::agentic::tools::workspace_paths::is_openbitfun_tool_uri;
 use crate::agentic::tools::ToolPathOperation;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 use std::path::Path;
@@ -35,7 +35,7 @@ impl Tool for DeleteFileTool {
         "Delete"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Deletes a file or directory from the filesystem. This operation records a lightweight checkpoint before deletion, but rollback is not automatic.
 
 Usage guidelines:
@@ -132,11 +132,11 @@ Important notes:
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let path = input
             .get("path")
             .and_then(Value::as_str)
-            .ok_or_else(|| OpenBitFunError::validation("path parameter is required".to_string()))?;
+            .ok_or_else(|| StarMateError::validation("path parameter is required".to_string()))?;
         file_permission_intents("edit", [path], context)
     }
 
@@ -332,11 +332,11 @@ Important notes:
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let path_str = input
             .get("path")
             .and_then(|v| v.as_str())
-            .ok_or_else(|| OpenBitFunError::tool("path is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("path is required".to_string()))?;
 
         let recursive = input
             .get("recursive")
@@ -361,7 +361,7 @@ Important notes:
             recursive,
         )
         .await
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
 
         let result_data = json!({
             "success": true,

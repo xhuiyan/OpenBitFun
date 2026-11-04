@@ -10,7 +10,7 @@ use crate::service::search::{
     workspace_search_feature_enabled, workspace_search_runtime_available, ContentSearchOutputMode,
     ContentSearchRequest, WorkspaceSearchHit, WorkspaceSearchLine,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 use std::collections::HashSet;
@@ -129,7 +129,7 @@ impl GrepTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let resolved =
             context.resolve_tool_path(input.get("path").and_then(Value::as_str).unwrap_or("."))?;
         let fs = context.file_system_for_path(&resolved)?;
@@ -142,11 +142,11 @@ impl GrepTool {
         )
         .await
         .map_err(|_| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "Workspace search timed out after 30000ms; narrow the search path".to_string(),
             )
         })?
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
         let result = search.result;
         let mut assistant_text = result.result_text.clone();
         if !search.used_rg_candidates && !search.used_grep_candidates {
@@ -182,11 +182,11 @@ impl GrepTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<GrepOptions> {
+    ) -> StarMateResult<GrepOptions> {
         let pattern = input
             .get("pattern")
             .and_then(|v| v.as_str())
-            .ok_or_else(|| OpenBitFunError::tool("pattern is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("pattern is required".to_string()))?;
 
         let search_path = input.get("path").and_then(|v| v.as_str()).unwrap_or(".");
         let resolved = context.resolve_tool_path(search_path)?;
@@ -202,7 +202,7 @@ impl GrepTool {
             .and_then(|v| v.as_str())
             .unwrap_or("files_with_matches");
         let output_mode = OutputMode::from_str(output_mode_str)
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?;
+            .map_err(|e| StarMateError::tool(e.to_string()))?;
         let show_line_numbers = input
             .get("-n")
             .and_then(|v| v.as_bool())
@@ -283,17 +283,17 @@ impl GrepTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<(ContentSearchRequest, String, bool, usize, Option<usize>)> {
+    ) -> StarMateResult<(ContentSearchRequest, String, bool, usize, Option<usize>)> {
         let workspace_root = context
             .workspace
             .as_ref()
             .map(|workspace| PathBuf::from(workspace.root_path_string()))
-            .ok_or_else(|| OpenBitFunError::tool("Workspace is required for Grep".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("Workspace is required for Grep".to_string()))?;
 
         let pattern = input
             .get("pattern")
             .and_then(|v| v.as_str())
-            .ok_or_else(|| OpenBitFunError::tool("pattern is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("pattern is required".to_string()))?;
         let search_path = input.get("path").and_then(|v| v.as_str()).unwrap_or(".");
         let resolved_path = context.resolve_workspace_tool_path(search_path)?;
         let resolved_path_buf = PathBuf::from(&resolved_path);
@@ -489,7 +489,7 @@ impl Tool for GrepTool {
         "Grep"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Search file contents in the active workspace with OpenBitFun's built-in structured search.
 
 Usage:
@@ -616,7 +616,7 @@ Usage:
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         // Resolve and authorize the workspace path before selecting IO.
         let search_path = input.get("path").and_then(|v| v.as_str()).unwrap_or(".");
         let resolved = context.resolve_tool_path(search_path)?;
@@ -624,7 +624,7 @@ Usage:
         #[cfg(feature = "tools-miniapp")]
         if is_virtual_context_path(context, &resolved) {
             let files = virtual_context_files_for_search(context, &resolved).ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "MiniApp context path is unavailable: {}",
                     resolved.logical_path
                 ))
@@ -637,9 +637,9 @@ Usage:
                 tokio::task::spawn_blocking(move || grep_search_virtual_files(options, &files))
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::tool(format!("virtual grep task failed: {error}"))
+                        StarMateError::tool(format!("virtual grep task failed: {error}"))
                     })?
-                    .map_err(OpenBitFunError::tool)?;
+                    .map_err(StarMateError::tool)?;
             return Ok(vec![ToolResult::Result {
                 data: json!({
                     "pattern": pattern,
@@ -660,7 +660,7 @@ Usage:
         }
         #[cfg(feature = "tools-miniapp")]
         if requires_virtual_context_path(context) {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "MiniApp context path is unavailable: {}",
                 resolved.logical_path
             )));
@@ -689,14 +689,14 @@ Usage:
                         .unwrap_or_else(|| request.repo_root.to_string_lossy().to_string());
                     let workspace_id = context.workspace.as_ref()
                         .and_then(|workspace| workspace.workspace_id.as_deref())
-                        .ok_or_else(|| OpenBitFunError::tool("Remote search requires a workspace ID"))?;
+                        .ok_or_else(|| StarMateError::tool("Remote search requires a workspace ID"))?;
                     let search_service = remote_workspace_search_service_for_workspace(workspace_id)
-                        .await.map_err(OpenBitFunError::tool)?;
+                        .await.map_err(StarMateError::tool)?;
                     let search_started_at = Instant::now();
                     let search_result = search_service
                         .search_content(request)
                         .await
-                        .map_err(OpenBitFunError::tool)?;
+                        .map_err(StarMateError::tool)?;
                     let display_base = Self::display_base(context);
                     let (result_text, file_count, total_matches) =
                         self.format_workspace_search_output(
@@ -728,7 +728,7 @@ Usage:
                         workspace_search_elapsed_ms,
                     );
 
-                    Ok::<Vec<ToolResult>, OpenBitFunError>(vec![ToolResult::Result {
+                    Ok::<Vec<ToolResult>, StarMateError>(vec![ToolResult::Result {
                         data: json!({
                             "pattern": pattern,
                             "path": path,
@@ -916,8 +916,8 @@ Usage:
             cancelled: _,
         } = match search_result {
             Ok(Ok(result)) => result,
-            Ok(Err(e)) => return Err(OpenBitFunError::tool(e)),
-            Err(e) => return Err(OpenBitFunError::tool(format!("grep search failed: {}", e))),
+            Ok(Err(e)) => return Err(StarMateError::tool(e)),
+            Err(e) => return Err(StarMateError::tool(format!("grep search failed: {}", e))),
         };
 
         Ok(vec![ToolResult::Result {

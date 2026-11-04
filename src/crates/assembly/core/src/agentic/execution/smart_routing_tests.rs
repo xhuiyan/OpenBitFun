@@ -244,7 +244,7 @@ async fn smart_slot_overflow_reentry_keeps_the_economy_source_and_attempt_lifecy
         if attempt == 0 {
             assert!(matches!(
                 result,
-                Err(crate::util::errors::OpenBitFunError::RecoverableContextOverflow(_))
+                Err(crate::util::errors::StarMateError::RecoverableContextOverflow(_))
             ));
         } else {
             assert_eq!(

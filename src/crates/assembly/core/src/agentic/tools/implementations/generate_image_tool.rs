@@ -5,7 +5,7 @@ use crate::agentic::tools::framework::{
     Tool, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
 use crate::service::config::types::{ImageGenerationParams, ImageServiceConfig};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_ai_adapters::client::image_generation::{
     generate, GeneratedImage, ImageGenerationRequest,
@@ -38,26 +38,26 @@ impl GenerateImageTool {
         Self
     }
 
-    fn prompt_from_input(input: &Value) -> OpenBitFunResult<&str> {
+    fn prompt_from_input(input: &Value) -> StarMateResult<&str> {
         input
             .get("prompt")
             .and_then(Value::as_str)
             .map(str::trim)
             .filter(|prompt| !prompt.is_empty())
-            .ok_or_else(|| OpenBitFunError::tool("prompt is required".to_string()))
+            .ok_or_else(|| StarMateError::tool("prompt is required".to_string()))
     }
 
-    fn requested_count(input: &Value) -> OpenBitFunResult<Option<u32>> {
+    fn requested_count(input: &Value) -> StarMateResult<Option<u32>> {
         match input.get("n") {
             None | Some(Value::Null) => Ok(None),
             Some(value) => {
                 let Some(count) = value.as_u64() else {
-                    return Err(OpenBitFunError::tool(
+                    return Err(StarMateError::tool(
                         "n must be a positive integer".to_string(),
                     ));
                 };
                 if count == 0 || count > u64::from(MAX_IMAGES_PER_GENERATION_REQUEST) {
-                    return Err(OpenBitFunError::tool(format!(
+                    return Err(StarMateError::tool(format!(
                         "n must be between 1 and {MAX_IMAGES_PER_GENERATION_REQUEST}"
                     )));
                 }
@@ -70,7 +70,7 @@ impl GenerateImageTool {
     fn build_request(
         service: &ImageServiceConfig,
         input: &Value,
-    ) -> OpenBitFunResult<ImageGenerationRequest> {
+    ) -> StarMateResult<ImageGenerationRequest> {
         let params: &ImageGenerationParams = &service.params;
         let size = input
             .get("size")
@@ -116,12 +116,12 @@ impl GenerateImageTool {
     async fn persist_one(
         context: &ToolUseContext,
         image: &GeneratedImage,
-    ) -> OpenBitFunResult<PersistedImage> {
+    ) -> StarMateResult<PersistedImage> {
         let file_name = Self::file_name(&image.mime);
 
         if context.is_remote() {
             let fs = context.ws_fs().ok_or_else(|| {
-                OpenBitFunError::tool(
+                StarMateError::tool(
                     "generate_image cannot write to the remote workspace because workspace filesystem services are unavailable"
                         .to_string(),
                 )
@@ -130,20 +130,20 @@ impl GenerateImageTool {
                 .workspace_root()
                 .map(|root| root.to_string_lossy().into_owned())
                 .ok_or_else(|| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "generate_image requires a workspace to store the generated image"
                             .to_string(),
                     )
                 })?;
             let directory = fs.join_path(&root, &OUTPUT_DIR_COMPONENTS);
             fs.create_dir_all(&directory).await.map_err(|err| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "unable to create the remote image directory {directory}: {err}"
                 ))
             })?;
             let path = fs.join_path(&directory, &[file_name.as_str()]);
             fs.write_file(&path, &image.bytes).await.map_err(|err| {
-                OpenBitFunError::tool(format!("unable to write the generated image {path}: {err}"))
+                StarMateError::tool(format!("unable to write the generated image {path}: {err}"))
             })?;
             return Ok(PersistedImage {
                 path,
@@ -157,14 +157,14 @@ impl GenerateImageTool {
             None => std::env::temp_dir(),
         };
         fs::create_dir_all(&directory).await.map_err(|err| {
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "unable to create the image directory {}: {err}",
                 directory.display()
             ))
         })?;
         let path = directory.join(&file_name);
         fs::write(&path, &image.bytes).await.map_err(|err| {
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "unable to write the generated image {}: {err}",
                 path.display()
             ))
@@ -210,7 +210,7 @@ impl Tool for GenerateImageTool {
         "generate_image"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(
             "Generate images from a text prompt using the image service selected in Settings > Image Generation. Use this whenever the user asks for a picture, illustration, icon, poster or any other generated image. Returns the saved file paths."
                 .to_string(),
@@ -335,7 +335,7 @@ impl Tool for GenerateImageTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let service_id = input
             .get("service_id")
             .and_then(Value::as_str)
@@ -347,14 +347,14 @@ impl Tool for GenerateImageTool {
         let target = adapter_target(&resolved);
         let response = generate(&target, request)
             .await
-            .map_err(|err| OpenBitFunError::tool(format!("Image generation failed: {err}")))?;
+            .map_err(|err| StarMateError::tool(format!("Image generation failed: {err}")))?;
 
         let mut persisted = Vec::with_capacity(response.images.len());
         for image in &response.images {
             persisted.push(Self::persist_one(context, image).await?);
         }
         if persisted.is_empty() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "Image generation returned no images".to_string(),
             ));
         }

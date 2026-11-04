@@ -4,7 +4,7 @@
 use crate::agentic::tools::framework::{PermissionIntent, Tool, ToolResult, ToolUseContext};
 use crate::infrastructure::events::{emit_global_event, BackendEvent};
 use crate::miniapp::try_get_global_miniapp_manager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_product_domains::miniapp::market::{
     MarketLicense, MarketSubmissionDraftRequest, MARKET_CATEGORIES, MARKET_MAX_SCREENSHOTS,
@@ -33,12 +33,12 @@ fn read_string_paths(input: &Value, key: &str) -> Option<Vec<String>> {
     })
 }
 
-fn listing_image_paths(input: &Value) -> OpenBitFunResult<Vec<String>> {
+fn listing_image_paths(input: &Value) -> StarMateResult<Vec<String>> {
     let current = read_string_paths(input, "listing_image_paths");
     let legacy = read_string_paths(input, "screenshot_paths");
     match (current, legacy) {
         (Some(current), Some(legacy)) if current == legacy => Ok(current),
-        (Some(_), Some(_)) => Err(OpenBitFunError::validation(
+        (Some(_), Some(_)) => Err(StarMateError::validation(
             "listing_image_paths and its deprecated screenshot_paths compatibility alias must not disagree.",
         )),
         (Some(paths), None) | (None, Some(paths)) => Ok(paths),
@@ -66,7 +66,7 @@ impl Tool for PublishMiniAppTool {
         "PublishMiniApp"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Submit an installed MiniApp to the OpenBitFun MiniApp market for human review.
 
 Identify the app by `app_name` — the display name the user used (e.g. "循天问命"), matched against installed apps' manifest names in every locale — or by `app_id` if you already have one. Installed apps are resolved through the running MiniApp manager: do NOT search the filesystem for the app; if the name does not resolve, the error lists every installed app to pick from.
@@ -150,7 +150,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let identity = input
             .get("app_id")
             .and_then(Value::as_str)
@@ -174,9 +174,9 @@ Publishing is an outward-facing action: only call this when the user explicitly 
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let manager = try_get_global_miniapp_manager()
-            .ok_or_else(|| OpenBitFunError::tool("MiniAppManager not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("MiniAppManager not initialized".to_string()))?;
 
         let app_id = input
             .get("app_id")
@@ -198,7 +198,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
                 Ok(app) => app,
                 Err(error) => {
                     let apps = manager.list().await.unwrap_or_default();
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "Installed MiniApp '{app_id}' not found: {error}\nInstalled apps (id — name):\n{}",
                         installed_roster(apps.iter())
                     )));
@@ -206,21 +206,21 @@ Publishing is an outward-facing action: only call this when the user explicitly 
             }
         } else if let Some(app_name) = app_name {
             let apps = manager.list().await.map_err(|e| {
-                OpenBitFunError::tool(format!("Could not list installed MiniApps: {e}"))
+                StarMateError::tool(format!("Could not list installed MiniApps: {e}"))
             })?;
             let matches = find_apps_by_name(&apps, app_name);
             match matches.as_slice() {
                 [only] => manager.get(&only.id).await.map_err(|e| {
-                    OpenBitFunError::tool(format!("Installed MiniApp not found: {e}"))
+                    StarMateError::tool(format!("Installed MiniApp not found: {e}"))
                 })?,
                 [] => {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "No installed MiniApp is named '{app_name}'. Installed apps (id — name):\n{}",
                         installed_roster(apps.iter())
                     )));
                 }
                 many => {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "'{app_name}' matches several installed MiniApps — call again with the app_id:\n{}",
                         installed_roster(many.iter().copied())
                     )));
@@ -228,7 +228,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
             }
         } else {
             let apps = manager.list().await.unwrap_or_default();
-            return Err(OpenBitFunError::validation(format!(
+            return Err(StarMateError::validation(format!(
                 "Provide app_name (the display name the user used) or app_id. Installed apps (id — name):\n{}",
                 installed_roster(apps.iter())
             )));
@@ -236,13 +236,13 @@ Publishing is an outward-facing action: only call this when the user explicitly 
 
         let listing_image_paths = listing_image_paths(input)?;
         if listing_image_paths.is_empty() || listing_image_paths.len() > MARKET_MAX_SCREENSHOTS {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "listing_image_paths must contain 1-5 marketplace image paths (PNG/JPEG/WebP). Ask the user to provide an image, or have them add one via 市场 → 我的投稿.",
             ));
         }
         for path in &listing_image_paths {
             if tokio::fs::metadata(path).await.is_err() {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "Marketplace image file not found: {path}"
                 )));
             }
@@ -250,17 +250,17 @@ Publishing is an outward-facing action: only call this when the user explicitly 
 
         let mut client = MarketClient::from_environment()
             .await
-            .map_err(|e| OpenBitFunError::tool(format!("MiniApp market unavailable: {e}")))?;
+            .map_err(|e| StarMateError::tool(format!("MiniApp market unavailable: {e}")))?;
 
         // Not signed in: hand the GitHub authorization link to the user and
         // keep polling in the background so their browser approval lands in
         // the shared credential vault before the next tool call.
         let me = client.me().await.map_err(|e| {
-            OpenBitFunError::tool(format!("MiniApp market sign-in check failed: {e}"))
+            StarMateError::tool(format!("MiniApp market sign-in check failed: {e}"))
         })?;
         let Some(me) = me else {
             let start = client.start_desktop_auth().await.map_err(|e| {
-                OpenBitFunError::tool(format!("Could not start GitHub sign-in: {e}"))
+                StarMateError::tool(format!("Could not start GitHub sign-in: {e}"))
             })?;
             let authorization_url = start.authorization_url.clone();
             let poll_request = DesktopAuthPollRequest {
@@ -307,7 +307,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
             .map(str::to_string)
             .unwrap_or_else(|| app.description.trim().to_string());
         if description.is_empty() {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "The app has no description. Update meta.json's description (or pass the description parameter) before publishing.",
             ));
         }
@@ -319,7 +319,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
         {
             Some(value) if MARKET_CATEGORIES.contains(&value) => value.to_string(),
             Some(value) => {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "Unknown market category '{value}'. Use one of: {}.",
                     MARKET_CATEGORIES.join(", ")
                 )))
@@ -335,7 +335,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
             .unwrap_or_else(|| suggest_market_slug(&app.name, &app.id));
 
         let submissions = client.list_submissions().await.map_err(|e| {
-            OpenBitFunError::tool(format!("Could not load submission history: {e}"))
+            StarMateError::tool(format!("Could not load submission history: {e}"))
         })?;
         let release_target = match resolve_release_target(&submissions, &slug) {
             ReleaseTarget::NewListing if me.is_admin => match client.listing(&slug).await {
@@ -345,7 +345,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
                 },
                 Err(error) if error.code == "not_found" => ReleaseTarget::NewListing,
                 Err(error) => {
-                    return Err(OpenBitFunError::tool(format!(
+                    return Err(StarMateError::tool(format!(
                         "Could not resolve the administrator release target for '{slug}': {error}"
                     )))
                 }
@@ -458,7 +458,7 @@ Publishing is an outward-facing action: only call this when the user explicitly 
                 }
                 _ => "",
             };
-            OpenBitFunError::tool(format!(
+            StarMateError::tool(format!(
                 "Publishing failed ({}): {}{hint}",
                 error.code, error
             ))

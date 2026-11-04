@@ -1781,13 +1781,13 @@ impl StartupPage {
                                     .iter_mut()
                                     .find(|model| model.id == model_id)
                                     .ok_or_else(|| {
-                                        starmate_core::util::errors::OpenBitFunError::config(
+                                        starmate_core::util::errors::StarMateError::config(
                                             format!("AI model '{model_id}' was not found"),
                                         )
                                     })?;
                                 let model = model_from_mutation(mutation, Some(existing.clone()))
                                     .map_err(|error| {
-                                    starmate_core::util::errors::OpenBitFunError::validation(
+                                    starmate_core::util::errors::StarMateError::validation(
                                         error.to_string(),
                                     )
                                 })?;

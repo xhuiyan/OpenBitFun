@@ -3034,9 +3034,9 @@ export const forbiddenContentRules = [
           'core workspace path facade must not redefine the runtime URI prefix; use starmate-agent-tools',
       },
       {
-        regex: /\bpub struct ParsedOpenBitFunRuntimeUri\b/,
+        regex: /\bpub struct ParsedStarMateRuntimeUri\b/,
         message:
-          'core workspace path facade must not redefine ParsedOpenBitFunRuntimeUri; use starmate-agent-tools',
+          'core workspace path facade must not redefine ParsedStarMateRuntimeUri; use starmate-agent-tools',
       },
       {
         regex: /\bfn\s+posix_normalize_components\b/,

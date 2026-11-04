@@ -13,7 +13,7 @@ pub use provider::{
 use std::path::PathBuf;
 
 use crate::infrastructure::app_paths::get_path_manager_arc;
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 
 pub struct BrowserLauncher;
 
@@ -51,7 +51,7 @@ impl BrowserLauncher {
         port: u16,
         wait_for_user_profile_setup: bool,
         setup_wait_limit: std::time::Duration,
-    ) -> OpenBitFunResult<LaunchResult> {
+    ) -> StarMateResult<LaunchResult> {
         let mut options = Self::launch_options(None, true);
         options.wait_for_user_profile_setup = wait_for_user_profile_setup;
         options.skip_guarded_port_fallback = true;
@@ -59,7 +59,7 @@ impl BrowserLauncher {
         Ok(provider::BrowserLauncher::launch_with_cdp_options(kind, port, options).await?)
     }
 
-    pub fn detect_default_browser() -> OpenBitFunResult<BrowserKind> {
+    pub fn detect_default_browser() -> StarMateResult<BrowserKind> {
         Ok(provider::BrowserLauncher::detect_default_browser()?)
     }
 
@@ -80,7 +80,7 @@ impl BrowserLauncher {
         provider::BrowserLauncher::browser_kind_from_config(value)
     }
 
-    pub fn resolve_browser_kind(preferred_browser: Option<&str>) -> OpenBitFunResult<BrowserKind> {
+    pub fn resolve_browser_kind(preferred_browser: Option<&str>) -> StarMateResult<BrowserKind> {
         Ok(provider::BrowserLauncher::resolve_browser_kind(
             preferred_browser,
         )?)
@@ -119,7 +119,7 @@ impl BrowserLauncher {
         provider::BrowserLauncher::user_profile_debug_endpoint(kind)
     }
 
-    pub async fn launch_with_cdp(kind: &BrowserKind, port: u16) -> OpenBitFunResult<LaunchResult> {
+    pub async fn launch_with_cdp(kind: &BrowserKind, port: u16) -> StarMateResult<LaunchResult> {
         Ok(provider::BrowserLauncher::launch_with_cdp_options(
             kind,
             port,
@@ -132,7 +132,7 @@ impl BrowserLauncher {
         kind: &BrowserKind,
         port: u16,
         user_data_dir: Option<&str>,
-    ) -> OpenBitFunResult<LaunchResult> {
+    ) -> StarMateResult<LaunchResult> {
         Ok(provider::BrowserLauncher::launch_with_cdp_options(
             kind,
             port,
@@ -143,7 +143,7 @@ impl BrowserLauncher {
 
     /// Restarting the user's browser is an explicit, user-initiated action, so
     /// the relaunched browser is brought forward instead of staying hidden.
-    pub async fn restart_with_cdp(kind: &BrowserKind, port: u16) -> OpenBitFunResult<LaunchResult> {
+    pub async fn restart_with_cdp(kind: &BrowserKind, port: u16) -> StarMateResult<LaunchResult> {
         Ok(provider::BrowserLauncher::launch_with_cdp_options(
             kind,
             port,
@@ -158,7 +158,7 @@ impl BrowserLauncher {
     pub async fn enable_default_cdp(
         kind: &BrowserKind,
         port: u16,
-    ) -> OpenBitFunResult<LaunchResult> {
+    ) -> StarMateResult<LaunchResult> {
         let mut options = Self::launch_options(None, true);
         options.wait_for_user_profile_setup = true;
         Ok(provider::BrowserLauncher::launch_with_cdp_options(kind, port, options).await?)

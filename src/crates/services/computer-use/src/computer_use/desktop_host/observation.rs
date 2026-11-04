@@ -8,25 +8,25 @@ impl NativeComputerUseHost {
         max_depth: u32,
         focus_window_only: bool,
         capture_screenshot: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         #[cfg(target_os = "linux")]
         if !app.is_empty() {
             crate::computer_use::linux_control_ax::bind_app_selector(&app).await?;
         }
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let mut snapshot = self
             .get_native_app_state_inner(app, max_depth, focus_window_only, capture_screenshot)
             .await?;
         let pid = snapshot.app.pid.ok_or_else(|| {
-            OpenBitFunError::tool("[APP_IDENTITY_UNAVAILABLE] Observation has no process identity")
+            StarMateError::tool("[APP_IDENTITY_UNAVAILABLE] Observation has no process identity")
         })?;
         let mut state = self.state_for_scope(&scope)?;
         snapshot.observation_id = Some(
             state
                 .observations
                 .record_application(pid)
-                .map_err(OpenBitFunError::tool)?,
+                .map_err(StarMateError::tool)?,
         );
         // Native node indices were rebuilt, including same-content observations.
         #[cfg(any(target_os = "macos", target_os = "windows"))]
@@ -46,7 +46,7 @@ impl NativeComputerUseHost {
         max_depth: u32,
         focus_window_only: bool,
         capture_screenshot: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         #[cfg(target_os = "macos")]
         {
             // Pre-flight: without Accessibility trust macOS silently truncates
@@ -66,7 +66,7 @@ impl NativeComputerUseHost {
                     .as_deref()
                     .is_some_and(|target| target.starts_with(&format!("pid:{pid}/window:")))
             {
-                return Err(OpenBitFunError::tool("[SHARED_TARGET_ONLY] Accessibility observation requires the shared application"));
+                return Err(StarMateError::tool("[SHARED_TARGET_ONLY] Accessibility observation requires the shared application"));
             }
             let focus_window_only = focus_window_only || shared.sharing.is_some();
             debug!(
@@ -92,7 +92,7 @@ impl NativeComputerUseHost {
                 })
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
             debug!(
                 "Computer Use AX observation completed: pid={pid}, node_count={}",
                 snap.nodes.len()
@@ -135,7 +135,7 @@ impl NativeComputerUseHost {
                 )
             })
             .await
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+            .map_err(|e| StarMateError::tool(e.to_string()))??;
 
             let reg_pid = snap.app.pid.unwrap_or(0);
 
@@ -174,7 +174,7 @@ impl NativeComputerUseHost {
         #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
         {
             let _ = (app, max_depth, focus_window_only, capture_screenshot);
-            Err(OpenBitFunError::tool(
+            Err(StarMateError::tool(
                 "[CONTROL_UNSUPPORTED] No accessibility provider",
             ))
         }

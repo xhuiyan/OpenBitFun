@@ -23,10 +23,10 @@ fn video_decoder_compatibility_script() -> String {
     let script = format!(
         r#"
 const isWebView2 = Boolean(window.chrome && window.chrome.webview);
-const isOpenBitFunDocument = location.protocol === 'tauri:'
+const isStarMateDocument = location.protocol === 'tauri:'
   || location.hostname === 'tauri.localhost'
   || (location.hostname === 'localhost' && location.port === '1422');
-if (isWebView2 && !isOpenBitFunDocument) {{
+if (isWebView2 && !isStarMateDocument) {{
   const decoderMode = {mode_json};
   if (decoderMode && typeof VideoDecoder === 'function') {{
     const originalConfigure = VideoDecoder.prototype.configure;

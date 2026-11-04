@@ -25,7 +25,7 @@ pub use crate::computer_use::{
 };
 
 use async_trait::async_trait;
-use error::{OpenBitFunError, OpenBitFunResult};
+use error::{StarMateError, StarMateResult};
 use serde::{Deserialize, Serialize};
 
 /// Action record for history tracking
@@ -64,19 +64,19 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
 
     /// Validate an opaque observation reference against the prepared target.
     /// Older hosts must reject explicit references they cannot validate.
-    fn validate_observation(&self, _observation_id: &str) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    fn validate_observation(&self, _observation_id: &str) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "[OBSERVATION_REFERENCE_UNSUPPORTED] This host cannot validate observation_id",
         ))
     }
 
-    async fn prepare_control_target(&self, _app: AppSelector) -> OpenBitFunResult<()> {
+    async fn prepare_control_target(&self, _app: AppSelector) -> StarMateResult<()> {
         Ok(())
     }
     /// Foreground-only activation of the prepared native window. Capability
     /// negotiation prevents an older/portal host from ignoring an exact target.
-    async fn activate_app(&self, _app: AppSelector) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    async fn activate_app(&self, _app: AppSelector) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "[ACTIVATION_UNSUPPORTED] This host cannot activate a native window. On Linux use the consented portal surface and verify focus before seat input.",
         ))
     }
@@ -87,31 +87,31 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _region: ComputerUseZoomRegion,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<ComputerScreenshot> {
+        Err(StarMateError::tool(
             "[ZOOM_UNSUPPORTED] This host does not advertise app-zoom-v1; observe the full window instead",
         ))
     }
     /// Foreground-only recovery of a selected window that has no live surface:
     /// unhide its application and un-minimize the window. Returns whether a
     /// window state was changed; the caller prepares the target again.
-    async fn restore_window(&self, _app: AppSelector) -> OpenBitFunResult<bool> {
+    async fn restore_window(&self, _app: AppSelector) -> StarMateResult<bool> {
         Ok(false)
     }
     async fn start_control(
         &self,
         _owner: &str,
         _request: ControlStartRequest,
-    ) -> OpenBitFunResult<ControlSnapshot> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<ControlSnapshot> {
+        Err(StarMateError::tool(
             "[CONTROL_UNSUPPORTED] This host has no control-session provider",
         ))
     }
     fn control_snapshot(&self) -> ControlSnapshot {
         ControlSnapshot::default()
     }
-    async fn stop_control(&self, _owner: &str) -> OpenBitFunResult<ControlSnapshot> {
-        Err(OpenBitFunError::tool(
+    async fn stop_control(&self, _owner: &str) -> StarMateResult<ControlSnapshot> {
+        Err(StarMateError::tool(
             "[CONTROL_UNSUPPORTED] This host has no control-session provider",
         ))
     }
@@ -119,9 +119,9 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         owner: &str,
         generation: u64,
-    ) -> OpenBitFunResult<ControlSnapshot> {
+    ) -> StarMateResult<ControlSnapshot> {
         let _ = (owner, generation);
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "[CONTROL_UNSUPPORTED] Conditional stop is unavailable on this host",
         ))
     }
@@ -129,27 +129,27 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _owner: &str,
         _action: &str,
-    ) -> OpenBitFunResult<Option<Box<dyn ComputerUseActionLease>>> {
+    ) -> StarMateResult<Option<Box<dyn ComputerUseActionLease>>> {
         Ok(None)
     }
-    async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot>;
+    async fn permission_snapshot(&self) -> StarMateResult<ComputerUsePermissionSnapshot>;
 
     /// Platform-specific prompt (e.g. macOS accessibility dialog).
-    async fn request_accessibility_permission(&self) -> OpenBitFunResult<()>;
+    async fn request_accessibility_permission(&self) -> StarMateResult<()>;
 
     /// Open settings or trigger OS screen-capture permission flow where supported.
-    async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()>;
+    async fn request_screen_capture_permission(&self) -> StarMateResult<()>;
 
     /// Capture the display that contains `(0,0)`. See [`ComputerUseScreenshotParams`]: point crop, optional quadrant drill, refresh, reset.
     async fn screenshot_display(
         &self,
         params: ComputerUseScreenshotParams,
-    ) -> OpenBitFunResult<ComputerScreenshot>;
+    ) -> StarMateResult<ComputerScreenshot>;
 
     /// Full-screen capture for **UI / human verification only**. Must **not** replace
     /// `last_pointer_map`, navigation focus, or `last_screenshot_refinement` (unlike [`screenshot_display`](Self::screenshot_display)).
     /// Desktop overrides with a side-effect-free capture; default delegates to a plain full-frame `screenshot_display` (may still advance navigation on naive embedders — override on desktop).
-    async fn screenshot_peek_full_display(&self) -> OpenBitFunResult<ComputerScreenshot> {
+    async fn screenshot_peek_full_display(&self) -> StarMateResult<ComputerScreenshot> {
         self.screenshot_display(ComputerUseScreenshotParams::default())
             .await
     }
@@ -161,17 +161,17 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         text_query: &str,
         region_native: Option<OcrRegionNative>,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         let _ = (text_query, region_native);
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "OCR text recognition is not available on this host.".to_string(),
         ))
     }
 
     /// Read all visible text from the authorized target window without a search
     /// query. Coordinates refer to the captured frame's global bounds.
-    async fn read_screen_text(&self) -> OpenBitFunResult<Vec<OcrTextMatch>> {
-        Err(OpenBitFunError::tool(
+    async fn read_screen_text(&self) -> StarMateResult<Vec<OcrTextMatch>> {
+        Err(StarMateError::tool(
             "[OCR_READ_UNSUPPORTED] Full-frame text reading is not available on this host.",
         ))
     }
@@ -182,7 +182,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _gx: f64,
         _gy: f64,
-    ) -> OpenBitFunResult<Option<OcrAccessibilityHit>> {
+    ) -> StarMateResult<Option<OcrAccessibilityHit>> {
         Ok(None)
     }
 
@@ -192,65 +192,65 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         _gx: f64,
         _gy: f64,
         _half_extent_native: u32,
-    ) -> OpenBitFunResult<Vec<u8>> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<Vec<u8>> {
+        Err(StarMateError::tool(
             "OCR preview crops are not available on this host.".to_string(),
         ))
     }
 
     /// Map `(x, y)` from the **last** screenshot's image pixel grid to global pointer pixels.
     /// Fails if no screenshot was taken in this process since startup (or since last host reset).
-    fn map_image_coords_to_pointer(&self, x: i32, y: i32) -> OpenBitFunResult<(i32, i32)>;
+    fn map_image_coords_to_pointer(&self, x: i32, y: i32) -> StarMateResult<(i32, i32)>;
 
     /// Same as `map_image_coords_to_pointer` but **sub-point** precision (macOS: use for the `mouse_move` action).
-    fn map_image_coords_to_pointer_f64(&self, x: i32, y: i32) -> OpenBitFunResult<(f64, f64)> {
+    fn map_image_coords_to_pointer_f64(&self, x: i32, y: i32) -> StarMateResult<(f64, f64)> {
         let (a, b) = self.map_image_coords_to_pointer(x, y)?;
         Ok((a as f64, b as f64))
     }
 
     /// Map `(x, y)` with each axis in `0..=1000` to the captured display in native pointer pixels.
     /// `(0,0)` ≈ top-left of capture, `(1000,1000)` ≈ bottom-right (inclusive mapping).
-    fn map_normalized_coords_to_pointer(&self, x: i32, y: i32) -> OpenBitFunResult<(i32, i32)>;
+    fn map_normalized_coords_to_pointer(&self, x: i32, y: i32) -> StarMateResult<(i32, i32)>;
 
-    fn map_normalized_coords_to_pointer_f64(&self, x: i32, y: i32) -> OpenBitFunResult<(f64, f64)> {
+    fn map_normalized_coords_to_pointer_f64(&self, x: i32, y: i32) -> StarMateResult<(f64, f64)> {
         let (a, b) = self.map_normalized_coords_to_pointer(x, y)?;
         Ok((a as f64, b as f64))
     }
 
     /// Absolute move in host global display coordinates (on macOS: CG space, **double** precision).
-    async fn mouse_move_global_f64(&self, gx: f64, gy: f64) -> OpenBitFunResult<()> {
+    async fn mouse_move_global_f64(&self, gx: f64, gy: f64) -> StarMateResult<()> {
         self.mouse_move(gx.round() as i32, gy.round() as i32).await
     }
 
-    async fn mouse_move(&self, x: i32, y: i32) -> OpenBitFunResult<()>;
+    async fn mouse_move(&self, x: i32, y: i32) -> StarMateResult<()>;
 
     /// Move the pointer by `(dx, dy)` in **global screen pixels** (same space as absolute `mouse_move` globals).
-    async fn pointer_move_relative(&self, dx: i32, dy: i32) -> OpenBitFunResult<()>;
+    async fn pointer_move_relative(&self, dx: i32, dy: i32) -> StarMateResult<()>;
 
     /// Click at the **current** pointer position only (does not move). Use `mouse_move` / `move_to_text` / `pointer_move_rel` first.
     /// `button`: "left" | "right" | "middle"
     /// On desktop, enforces the vision fine-screenshot guard (unlike [`mouse_click_authoritative`](Self::mouse_click_authoritative)).
-    async fn mouse_click(&self, button: &str) -> OpenBitFunResult<()>;
+    async fn mouse_click(&self, button: &str) -> StarMateResult<()>;
 
     /// Click at the current pointer after the host has moved it to a **trusted** target (`click_element`, `move_to_text`).
     /// Skips the vision fine-screenshot / stale-pointer guard that [`mouse_click`](Self::mouse_click) applies after a pointer move.
     /// Default: delegates to [`mouse_click`](Self::mouse_click).
-    async fn mouse_click_authoritative(&self, button: &str) -> OpenBitFunResult<()> {
+    async fn mouse_click_authoritative(&self, button: &str) -> StarMateResult<()> {
         self.mouse_click(button).await
     }
 
     /// Press a mouse button and hold it at the current pointer position.
     /// `button`: "left" | "right" | "middle"
-    async fn mouse_down(&self, _button: &str) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    async fn mouse_down(&self, _button: &str) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "mouse_down is not supported on this host.".to_string(),
         ))
     }
 
     /// Release a mouse button at the current pointer position.
     /// `button`: "left" | "right" | "middle"
-    async fn mouse_up(&self, _button: &str) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    async fn mouse_up(&self, _button: &str) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "mouse_up is not supported on this host.".to_string(),
         ))
     }
@@ -268,7 +268,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         to: (f64, f64),
         button: &str,
         duration_ms: u64,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.mouse_move_global_f64(from.0, from.1).await?;
         self.mouse_down(button).await?;
         let half = (duration_ms / 2).min(2_000);
@@ -282,15 +282,15 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         self.mouse_up(button).await
     }
 
-    async fn scroll(&self, delta_x: i32, delta_y: i32) -> OpenBitFunResult<()>;
+    async fn scroll(&self, delta_x: i32, delta_y: i32) -> StarMateResult<()>;
 
     /// Press key combination; names like "command", "control", "shift", "alt", "return", "tab", "escape", "space", or single letters.
-    async fn key_chord(&self, keys: Vec<String>) -> OpenBitFunResult<()>;
+    async fn key_chord(&self, keys: Vec<String>) -> StarMateResult<()>;
 
     /// Type Unicode text (synthesized key events; may be imperfect for some IMEs).
-    async fn type_text(&self, text: &str) -> OpenBitFunResult<()>;
+    async fn type_text(&self, text: &str) -> StarMateResult<()>;
 
-    async fn wait_ms(&self, ms: u64) -> OpenBitFunResult<()>;
+    async fn wait_ms(&self, ms: u64) -> StarMateResult<()>;
 
     /// Current frontmost app and global pointer position for tool-result JSON (`computer_use_context`).
     /// Default: empty. Desktop overrides with platform queries (typically after each tool action).
@@ -340,13 +340,13 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     /// Refuse `mouse_click` if the pointer moved (or a click happened) since the last screenshot,
     /// or if the latest capture is not a valid “fine” basis (desktop: ~500×500 point crop **or**
     /// quadrant navigation region with longest side < [`COMPUTER_USE_QUADRANT_CLICK_READY_MAX_LONG_EDGE`]).
-    fn computer_use_guard_click_allowed(&self) -> OpenBitFunResult<()> {
+    fn computer_use_guard_click_allowed(&self) -> StarMateResult<()> {
         Ok(())
     }
 
     /// Relaxed click guard for AX-based `click_element`: skips the fine-screenshot requirement.
     /// AX coordinates are authoritative, so no quadrant drill or point crop is needed.
-    fn computer_use_guard_click_allowed_relaxed(&self) -> OpenBitFunResult<()> {
+    fn computer_use_guard_click_allowed_relaxed(&self) -> StarMateResult<()> {
         Ok(())
     }
 
@@ -367,8 +367,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     async fn locate_ui_element_screen_center(
         &self,
         _query: UiElementLocateQuery,
-    ) -> OpenBitFunResult<UiElementLocateResult> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<UiElementLocateResult> {
+        Err(StarMateError::tool(
             "Native UI element (accessibility) lookup is not available on this host.".to_string(),
         ))
     }
@@ -407,8 +407,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
 
     /// Launch a macOS/Windows/Linux application by name and return its PID.
     /// Default: unsupported. Desktop host overrides with platform-specific implementation.
-    async fn open_app(&self, _app_name: &str) -> OpenBitFunResult<OpenAppResult> {
-        Err(OpenBitFunError::tool(
+    async fn open_app(&self, _app_name: &str) -> StarMateResult<OpenAppResult> {
+        Err(StarMateError::tool(
             "open_app is not available on this host.".to_string(),
         ))
     }
@@ -418,7 +418,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     /// `ControlHub` exposes via `desktop.list_displays`.
     ///
     /// Default: empty (non-desktop hosts can't enumerate displays).
-    async fn list_displays(&self) -> OpenBitFunResult<Vec<ComputerUseDisplayInfo>> {
+    async fn list_displays(&self) -> StarMateResult<Vec<ComputerUseDisplayInfo>> {
         Ok(vec![])
     }
 
@@ -431,8 +431,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     /// the target display from the cursor (which is wrong whenever the user
     /// has the keyboard focus on a different screen), the model can
     /// announce "I am working on display N" and the host will commit to it.
-    async fn focus_display(&self, _display_id: Option<u32>) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    async fn focus_display(&self, _display_id: Option<u32>) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "focus_display is not available on this host.".to_string(),
         ))
     }
@@ -473,7 +473,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     /// Enumerate running applications, sorted by recency / launch count
     /// (Codex's `list_apps`). Default: empty list — callers should treat an
     /// empty result as "not available on this host".
-    async fn list_apps(&self, _include_hidden: bool) -> OpenBitFunResult<Vec<AppInfo>> {
+    async fn list_apps(&self, _include_hidden: bool) -> StarMateResult<Vec<AppInfo>> {
         Ok(vec![])
     }
 
@@ -482,8 +482,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     async fn list_windows(
         &self,
         _app: Option<AppSelector>,
-    ) -> OpenBitFunResult<Vec<AppWindowInfo>> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<Vec<AppWindowInfo>> {
+        Err(StarMateError::tool(
             "[WINDOW_DISCOVERY_UNSUPPORTED] This host cannot enumerate native windows; use list_apps and supported app observations",
         ))
     }
@@ -497,8 +497,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         _app: AppSelector,
         _max_depth: u32,
         _focus_window_only: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<AppStateSnapshot> {
+        Err(StarMateError::tool(
             "get_app_state is not available on this host.".to_string(),
         ))
     }
@@ -513,7 +513,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         max_depth: u32,
         focus_window_only: bool,
         include_image: bool,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
+    ) -> StarMateResult<AppStateSnapshot> {
         let mut snapshot = self
             .get_app_state(app, max_depth, focus_window_only)
             .await?;
@@ -540,8 +540,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
     /// queryable from any running app's AX element); on Windows it
     /// resolves a top-level window owned by the target app. Default:
     /// unsupported.
-    async fn get_app_shortcuts(&self, _app: AppSelector) -> OpenBitFunResult<AppShortcutsSnapshot> {
-        Err(OpenBitFunError::tool(
+    async fn get_app_shortcuts(&self, _app: AppSelector) -> StarMateResult<AppShortcutsSnapshot> {
+        Err(StarMateError::tool(
             "get_app_shortcuts is not available on this host.".to_string(),
         ))
     }
@@ -557,8 +557,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _action: AppInputAction,
-    ) -> OpenBitFunResult<()> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<()> {
+        Err(StarMateError::tool(
             "[APP_INPUT_UNSUPPORTED] This provider does not expose observation-free app input",
         ))
     }
@@ -570,7 +570,7 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _policy: AppInputSettlePolicy,
-    ) -> OpenBitFunResult<AppInputSettle> {
+    ) -> StarMateResult<AppInputSettle> {
         Ok(AppInputSettle::unavailable(
             "This provider cannot measure window repaint after input",
         ))
@@ -584,8 +584,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         _pred: AppWaitPredicate,
         _timeout_ms: u32,
         _poll_ms: u32,
-    ) -> OpenBitFunResult<AppStateSnapshot> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<AppStateSnapshot> {
+        Err(StarMateError::tool(
             "app_wait_for is not available on this host.".to_string(),
         ))
     }
@@ -619,8 +619,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _opts: InteractiveViewOpts,
-    ) -> OpenBitFunResult<InteractiveView> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<InteractiveView> {
+        Err(StarMateError::tool(
             "build_interactive_view is not available on this host.".to_string(),
         ))
     }
@@ -633,8 +633,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _params: InteractiveClickParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<InteractiveActionResult> {
+        Err(StarMateError::tool(
             "interactive_click is not available on this host.".to_string(),
         ))
     }
@@ -646,8 +646,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _params: InteractiveTypeTextParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<InteractiveActionResult> {
+        Err(StarMateError::tool(
             "interactive_type_text is not available on this host.".to_string(),
         ))
     }
@@ -658,8 +658,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _params: InteractiveScrollParams,
-    ) -> OpenBitFunResult<InteractiveActionResult> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<InteractiveActionResult> {
+        Err(StarMateError::tool(
             "interactive_scroll is not available on this host.".to_string(),
         ))
     }
@@ -676,8 +676,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _opts: VisualMarkViewOpts,
-    ) -> OpenBitFunResult<VisualMarkView> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<VisualMarkView> {
+        Err(StarMateError::tool(
             "build_visual_mark_view is not available on this host.".to_string(),
         ))
     }
@@ -686,8 +686,8 @@ pub trait ComputerUseHost: Send + Sync + std::fmt::Debug {
         &self,
         _app: AppSelector,
         _params: VisualClickParams,
-    ) -> OpenBitFunResult<VisualActionResult> {
-        Err(OpenBitFunError::tool(
+    ) -> StarMateResult<VisualActionResult> {
+        Err(StarMateError::tool(
             "visual_click is not available on this host.".to_string(),
         ))
     }
@@ -735,6 +735,6 @@ pub mod error {
         }
     }
     // Preserve implementation spelling while removing the upward Core dependency.
-    pub type OpenBitFunError = ComputerUseError;
-    pub type OpenBitFunResult<T> = Result<T, ComputerUseError>;
+    pub type StarMateError = ComputerUseError;
+    pub type StarMateResult<T> = Result<T, ComputerUseError>;
 }

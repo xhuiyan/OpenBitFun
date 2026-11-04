@@ -38,7 +38,7 @@ use starmate_core::miniapp::agent_context::{
     MiniAppAgentContextSnapshot,
 };
 use starmate_core::miniapp::agent_workspace::prepare_agent_workspace;
-use starmate_core::OpenBitFunError;
+use starmate_core::StarMateError;
 
 // ============== Run registry ==============
 
@@ -367,7 +367,7 @@ async fn load_and_validate_miniapp_agent_session(
             .await
         {
             Ok(session) => session,
-            Err(OpenBitFunError::NotFound(_)) => return Ok(None),
+            Err(StarMateError::NotFound(_)) => return Ok(None),
             Err(error) => {
                 return Err(format!(
                     "Failed to restore MiniApp agent session: {}",

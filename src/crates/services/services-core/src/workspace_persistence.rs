@@ -1,6 +1,6 @@
 //! Current Workspace registry persistence contract and validation.
 
-use crate::storage_error::{StorageError as OpenBitFunError, StorageResult as OpenBitFunResult};
+use crate::storage_error::{StorageError as StarMateError, StorageResult as StarMateResult};
 use crate::workspace_records::{PrimaryAssistantKey, WorkspaceInfo, WorkspaceKind};
 use starmate_core_types::product_identity::product_id;
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ pub struct WorkspacePersistenceData {
 pub fn validate_workspace_persistence_data(
     data: &WorkspacePersistenceData,
     _miniapps_root: &Path,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if data.format_version != WORKSPACE_PERSISTENCE_FORMAT_VERSION {
         return Err(unsupported_workspace_persistence(format!(
             "format_version {} is not supported; expected {}",
@@ -120,7 +120,7 @@ fn validate_workspace_reference_list(
     workspaces: &HashMap<String, WorkspaceInfo>,
     ids: &[String],
     field: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let mut seen = HashSet::new();
     for id in ids {
         if !seen.insert(id.as_str()) {
@@ -137,8 +137,8 @@ fn validate_workspace_reference_list(
     Ok(())
 }
 
-pub fn unsupported_workspace_persistence(detail: impl AsRef<str>) -> OpenBitFunError {
-    OpenBitFunError::config(format!(
+pub fn unsupported_workspace_persistence(detail: impl AsRef<str>) -> StarMateError {
+    StarMateError::config(format!(
         "Unsupported workspace persistence format: {}. The persisted file was left unchanged; explicit data migration is required",
         detail.as_ref()
     ))

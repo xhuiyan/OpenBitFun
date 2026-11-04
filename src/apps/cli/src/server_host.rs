@@ -35,7 +35,7 @@ use tokio_util::compat::{TokioAsyncReadCompatExt, TokioAsyncWriteCompatExt};
 
 use starmate_app_server::{
     AppManagementService, AppServerDisconnect, AppServerHostLimits, AppServerHostPolicy,
-    OpenBitFunAppRuntime, OpenBitFunAppServer,
+    StarMateAppRuntime, StarMateAppServer,
 };
 
 /// Host identity injected into the connection policy.
@@ -305,7 +305,7 @@ pub(crate) async fn serve() -> Result<()> {
     let (agent_runtime, event_source, compatibility) = context.parts();
     let disconnect_runtime = agent_runtime.clone();
     let compatibility = std::sync::Arc::new(compatibility);
-    let app_runtime = OpenBitFunAppRuntime::new(agent_runtime, event_source)
+    let app_runtime = StarMateAppRuntime::new(agent_runtime, event_source)
         .with_context_reload(compatibility.clone())
         .with_product_search(compatibility);
     let management = std::sync::Arc::new(
@@ -323,7 +323,7 @@ pub(crate) async fn serve() -> Result<()> {
     .map_err(anyhow::Error::new)
     .context("Failed to build the server Host policy")?;
     let disconnect = std::sync::Arc::new(AppServerDisconnect::default());
-    let server = OpenBitFunAppServer::new(app_runtime)
+    let server = StarMateAppServer::new(app_runtime)
         .with_management(management)
         .with_host_limits(limits)
         .with_host_policy(policy.clone())

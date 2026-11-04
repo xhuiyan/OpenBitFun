@@ -1,6 +1,6 @@
 //! Tool framework - Tool interface definition and execution context
 pub use crate::agentic::tools::tool_context_runtime::ToolUseContext;
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 use async_trait::async_trait;
 pub use starmate_agent_tools::{
     build_tool_path_policy_denial_message, build_tool_runtime_artifact_reference,
@@ -19,13 +19,13 @@ pub trait Tool: Send + Sync {
     fn name(&self) -> &str;
 
     /// Tool description
-    async fn description(&self) -> OpenBitFunResult<String>;
+    async fn description(&self) -> StarMateResult<String>;
 
     /// Tool description with execution context.
     async fn description_with_context(
         &self,
         _context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         self.description().await
     }
 
@@ -138,7 +138,7 @@ pub trait Tool: Send + Sync {
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         if self.is_readonly() {
             Ok(Vec::new())
         } else {
@@ -228,7 +228,7 @@ pub trait Tool: Send + Sync {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>>;
+    ) -> StarMateResult<Vec<ToolResult>>;
 
     /// Unified tool entry point.
     /// This method owns shared framework behavior and delegates the actual
@@ -238,7 +238,7 @@ pub trait Tool: Send + Sync {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         crate::agentic::tools::tool_context_runtime::call_tool_with_runtime_hooks(
             self, input, context,
         )

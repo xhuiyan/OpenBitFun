@@ -1,6 +1,6 @@
 //! Host-local Router service capacity. No request payload or Session state is shared.
 
-use super::{parse_env_usize, OpenBitFunError, OpenBitFunResult};
+use super::{parse_env_usize, StarMateError, StarMateResult};
 use starmate_agent_runtime::router_summary_queue::{RouterSummaryPermit, RouterSummaryQueue};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex, OnceLock, Weak};
@@ -23,7 +23,7 @@ impl Default for RouterAdmissionLimits {
 }
 
 impl RouterAdmissionLimits {
-    pub fn from_env() -> OpenBitFunResult<Self> {
+    pub fn from_env() -> StarMateResult<Self> {
         let defaults = Self::default();
         let limits = Self {
             max_concurrent: parse_env_usize(
@@ -36,12 +36,12 @@ impl RouterAdmissionLimits {
         Ok(limits)
     }
 
-    fn validate(self) -> OpenBitFunResult<usize> {
+    fn validate(self) -> StarMateResult<usize> {
         self.max_concurrent
             .checked_add(self.max_queued)
             .filter(|total| self.max_concurrent > 0 && *total <= Semaphore::MAX_PERMITS)
             .ok_or_else(|| {
-                OpenBitFunError::Configuration(
+                StarMateError::Configuration(
                     "Router concurrency must be positive and total admission capacity must fit the runtime semaphore limit".into(),
                 )
             })
@@ -66,7 +66,7 @@ impl std::fmt::Debug for RouterPermit {
 }
 
 impl RouterAdmission {
-    fn new(limits: RouterAdmissionLimits) -> OpenBitFunResult<Self> {
+    fn new(limits: RouterAdmissionLimits) -> StarMateResult<Self> {
         limits.validate()?;
         Ok(Self {
             limits,
@@ -79,15 +79,15 @@ impl RouterAdmission {
     pub(super) fn shared(
         service_identity: &str,
         limits: RouterAdmissionLimits,
-    ) -> OpenBitFunResult<Arc<Self>> {
+    ) -> StarMateResult<Arc<Self>> {
         static SERVICES: OnceLock<Mutex<HashMap<String, Weak<RouterAdmission>>>> = OnceLock::new();
         let mut services = SERVICES.get_or_init(Default::default).lock().map_err(|_| {
-            OpenBitFunError::Configuration("Router admission registry is unavailable".into())
+            StarMateError::Configuration("Router admission registry is unavailable".into())
         })?;
         services.retain(|_, gate| gate.strong_count() > 0);
         if let Some(gate) = services.get(service_identity).and_then(Weak::upgrade) {
             if gate.limits != limits {
-                return Err(OpenBitFunError::Configuration(
+                return Err(StarMateError::Configuration(
                     "Router capacity changed while this service is in use; restart the execution host to apply new limits".into(),
                 ));
             }
@@ -103,7 +103,7 @@ impl RouterAdmission {
     pub(super) async fn acquire(
         self: &Arc<Self>,
         deadline: Instant,
-    ) -> OpenBitFunResult<RouterPermit> {
+    ) -> StarMateResult<RouterPermit> {
         self.acquire_for(&uuid::Uuid::new_v4().to_string(), deadline)
             .await
     }
@@ -114,9 +114,9 @@ impl RouterAdmission {
         self: &Arc<Self>,
         root_session_id: &str,
         deadline: Instant,
-    ) -> OpenBitFunResult<RouterPermit> {
+    ) -> StarMateResult<RouterPermit> {
         if Instant::now() >= deadline {
-            return Err(OpenBitFunError::Http(
+            return Err(StarMateError::Http(
                 "Router deadline expired before admission".into(),
             ));
         }
@@ -125,20 +125,20 @@ impl RouterAdmission {
             .queue
             .submit_for(root_session_id, uuid::Uuid::new_v4().to_string(), ())
             .map_err(|_| {
-                OpenBitFunError::Http(
+                StarMateError::Http(
                     "Router waiting queue is full for this root task or service".into(),
                 )
             })?;
         let (_, permit) = tokio::time::timeout_at(deadline, ticket.start())
             .await
             .map_err(|_| {
-                OpenBitFunError::Http("Router deadline expired while waiting in the queue".into())
+                StarMateError::Http("Router deadline expired while waiting in the queue".into())
             })?
-            .ok_or_else(|| OpenBitFunError::Http("Router admission was cancelled".into()))?;
+            .ok_or_else(|| StarMateError::Http("Router admission was cancelled".into()))?;
         // Tokio timeouts poll a ready inner future first. A permit becoming ready
         // at the deadline must not start another classifier call after its budget.
         if Instant::now() >= deadline {
-            return Err(OpenBitFunError::Http(
+            return Err(StarMateError::Http(
                 "Router deadline expired while waiting in the queue".into(),
             ));
         }

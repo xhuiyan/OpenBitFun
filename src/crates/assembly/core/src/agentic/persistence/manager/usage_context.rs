@@ -1,5 +1,5 @@
 use super::PersistenceManager;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_core_types::UsageContextCategory;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -23,7 +23,7 @@ impl PersistenceManager {
         &self,
         storage_path: &Path,
         snapshot: &SessionUsageContextSnapshot,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(&snapshot.session_id)?;
         let _session_write =
             self.lock_session_write_operation(storage_path, &snapshot.session_id)?;
@@ -44,7 +44,7 @@ impl PersistenceManager {
         &self,
         storage_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<SessionUsageContextSnapshot>> {
+    ) -> StarMateResult<Option<SessionUsageContextSnapshot>> {
         Self::validate_session_id(session_id)?;
         let snapshot = self
             .read_json_optional::<SessionUsageContextSnapshot>(
@@ -57,7 +57,7 @@ impl PersistenceManager {
         if snapshot.as_ref().is_some_and(|snapshot| {
             snapshot.session_id != session_id || snapshot.schema_version != 1
         }) {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Unsupported or mismatched usage context snapshot",
             ));
         }

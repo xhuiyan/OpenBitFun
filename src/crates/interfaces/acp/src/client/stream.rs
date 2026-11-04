@@ -6,7 +6,7 @@ use agent_client_protocol::schema::{
     ToolCallContent, ToolCallStatus, ToolCallUpdate,
 };
 use agent_client_protocol::util::MatchDispatch;
-use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::util::errors::{StarMateError, StarMateResult};
 use starmate_events::ToolEventData;
 
 use super::session_options::{AcpAvailableCommand, AcpPlanEntry, AcpSessionContextUsage};
@@ -118,7 +118,7 @@ impl AcpStreamRoundTracker {
 pub(super) async fn acp_dispatch_to_stream_events_with_tracker(
     dispatch: agent_client_protocol::Dispatch,
     tracker: &mut AcpToolCallTracker,
-) -> OpenBitFunResult<Vec<AcpClientStreamEvent>> {
+) -> StarMateResult<Vec<AcpClientStreamEvent>> {
     let mut events = Vec::new();
     MatchDispatch::new(dispatch)
         .if_notification(async |notification: SessionNotification| {
@@ -451,8 +451,8 @@ fn value_to_display_text(value: &serde_json::Value) -> String {
     }
 }
 
-fn protocol_error(error: impl std::fmt::Display) -> OpenBitFunError {
-    OpenBitFunError::service(format!("ACP protocol error: {}", error))
+fn protocol_error(error: impl std::fmt::Display) -> StarMateError {
+    StarMateError::service(format!("ACP protocol error: {}", error))
 }
 
 #[cfg(test)]

@@ -36,9 +36,9 @@ export default function Canvas() {
 
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
-        assert!(html.contains("window.OpenBitFunCanvasRuntime.mount"));
-        assert!(html.contains("const h = __OpenBitFunCanvasRuntime.h"));
-        assert!(html.contains("const Fragment = __OpenBitFunCanvasRuntime.Fragment"));
+        assert!(html.contains("window.StarMateCanvasRuntime.mount"));
+        assert!(html.contains("const h = __StarMateCanvasRuntime.h"));
+        assert!(html.contains("const Fragment = __StarMateCanvasRuntime.Fragment"));
         assert!(html.contains("h(Stack"));
         assert!(html.contains("rows.map"));
         assert!(html.contains("h(Text"));
@@ -102,7 +102,7 @@ export default function Canvas() {
 
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
-        assert!(html.contains("const T = __OpenBitFunCanvasSDK.Text;"));
+        assert!(html.contains("const T = __StarMateCanvasSDK.Text;"));
         assert!(html.contains("h(T"));
         assert!(!html.contains("from 'openbitfun/canvas'"));
     }
@@ -148,7 +148,7 @@ export default function CanvasView() {
 
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
-        assert!(html.contains("const Canvas = __OpenBitFunCanvasSDK;"));
+        assert!(html.contains("const Canvas = __StarMateCanvasSDK;"));
         assert!(html.contains("h(Canvas.Stack"));
         assert!(html.contains("h(Canvas.Text"));
     }
@@ -194,7 +194,7 @@ export default function Canvas() {
 
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
-        assert!(html.contains("const T = __OpenBitFunCanvasSDK.Text;"));
+        assert!(html.contains("const T = __StarMateCanvasSDK.Text;"));
         assert!(!html.contains("semi;colon"));
     }
 
@@ -217,8 +217,8 @@ export default function Canvas() {
 
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
-        assert!(html.contains("const React = __OpenBitFunCanvasReactCompat;"));
-        assert!(html.contains("const R = __OpenBitFunCanvasReactCompat;"));
+        assert!(html.contains("const React = __StarMateCanvasReactCompat;"));
+        assert!(html.contains("const R = __StarMateCanvasReactCompat;"));
         assert!(!html.contains("from 'react'"));
     }
 
@@ -239,8 +239,8 @@ export default Canvas;
         let html = result.payload.unwrap().html;
         assert!(html.contains("const Canvas"));
         assert!(html.contains("h(Stack"));
-        assert!(html.contains("const __OpenBitFunCanvasComponent = Canvas;"));
-        assert!(html.contains("window.OpenBitFunCanvasRuntime.mount(__OpenBitFunCanvasComponent)"));
+        assert!(html.contains("const __StarMateCanvasComponent = Canvas;"));
+        assert!(html.contains("window.StarMateCanvasRuntime.mount(__StarMateCanvasComponent)"));
     }
 
     #[test]
@@ -383,7 +383,7 @@ export default function Canvas() {
         let html = result.payload.unwrap().html;
         assert!(html.contains("Stack, Row, Grid, Box, Divider"));
         assert!(html.contains("const Box ="));
-        assert!(html.contains("window.OpenBitFunCanvasSDK = { Stack, Row, Grid, Box"));
+        assert!(html.contains("window.StarMateCanvasSDK = { Stack, Row, Grid, Box"));
         assert!(html.contains("h(Box"));
     }
 
@@ -754,7 +754,7 @@ export default function Canvas() {
         let html = result.payload.unwrap().html;
         assert!(html.contains("h(Box"));
         assert!(html.contains("layers.map"));
-        assert!(html.contains("window.OpenBitFunCanvasRuntime.mount(__OpenBitFunCanvasComponent)"));
+        assert!(html.contains("window.StarMateCanvasRuntime.mount(__StarMateCanvasComponent)"));
         assert!(html.contains("reportRuntimeError"));
     }
 }

@@ -4,7 +4,7 @@ use crate::agentic::tools::framework::{PermissionIntent, Tool, ToolResult, ToolU
 use crate::agentic::tools::frontend_workbench_host::{
     frontend_workbench_host_available, invoke_frontend_workbench, FrontendWorkbenchHostRequest,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
 use serde_json::{json, Value};
@@ -45,7 +45,7 @@ impl Tool for FrontendWorkbenchTool {
         "FrontendWorkbench"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Safely customize the frontend of the running packaged OpenBitFun desktop client. Creative mode only.
 
 Workflow: call prepare, read its API reference, edit the returned CSS/JavaScript files or creation-assets under draftPath, then call apply with draft_id set to draftId. The host supplies the installed app; no source repository, dependency installation, compilation, or index.html edit is needed. JavaScript exports a default activation function receiving the supported UI API with mount slots, scene subscriptions, and product controls. CSS loads after packaged styles. Apply opens immutable recovery controls, hot-loads the candidate, waits for both the real shell and customization activation, then starts the 15-second confirmation countdown. It returns the final confirmed or rolled-back outcome. Confirmed customizations survive compatible client upgrades. status separates active and pending state; rollback restores the previous confirmed revision. For existing settings/actions, use OpenBitFunControl directly; for MiniApp CRUD, discover feature.miniapps there.
@@ -119,7 +119,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let action = input.get("action").and_then(Value::as_str).unwrap_or("");
         if !matches!(action, "apply" | "rollback" | "invoke") {
             return Ok(Vec::new());
@@ -154,20 +154,20 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         if context.agent_type.as_deref() != Some("Creative") {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "FrontendWorkbench is restricted to Creative mode".to_string(),
             ));
         }
         if context.is_remote() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "FrontendWorkbench cannot modify a remote workspace or remote OpenBitFun host"
                     .to_string(),
             ));
         }
         if is_remote_control_context(context) {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "FrontendWorkbench cannot run from a remote mobile or bot controller because the changed local desktop and its recovery controls are not visible there"
                     .to_string(),
             ));
@@ -176,7 +176,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
         let action = input
             .get("action")
             .and_then(Value::as_str)
-            .ok_or_else(|| OpenBitFunError::validation("Missing required field: action"))?;
+            .ok_or_else(|| StarMateError::validation("Missing required field: action"))?;
         let draft_id = input
             .get("draft_id")
             .and_then(Value::as_str)
@@ -184,7 +184,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
             .filter(|value| !value.is_empty())
             .map(str::to_string);
         if action == "apply" && draft_id.is_none() {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "draft_id is required when action is apply",
             ));
         }
@@ -194,7 +194,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
             .and_then(Value::as_str)
             .map(str::to_string);
         if action == "invoke" && command_id.as_deref().is_none_or(|id| id.trim().is_empty()) {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "command_id is required when action is invoke",
             ));
         }
@@ -202,7 +202,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
             .get("arguments")
             .is_some_and(|value| !value.is_object())
         {
-            return Err(OpenBitFunError::validation("arguments must be an object"));
+            return Err(StarMateError::validation("arguments must be an object"));
         }
 
         let result = invoke_frontend_workbench(FrontendWorkbenchHostRequest {
@@ -212,7 +212,7 @@ This tool is unavailable for remote workspaces, remote-control turns, and non-de
             arguments: input.get("arguments").cloned(),
         })
         .await
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
         let assistant = match (action, result.get("status").and_then(Value::as_str)) {
             ("apply", Some("confirmed")) => "The candidate rendered successfully and the user kept it; the returned activeRevision is confirmed.",
             ("apply", Some("rolled_back")) => "The candidate was not kept. OpenBitFun restored the previous confirmed frontend; inspect reason for whether this was user choice, readiness failure, or timeout.",

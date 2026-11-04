@@ -16,7 +16,7 @@ use crate::agentic::tools::framework::{
     Tool, ToolExposure, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
 use crate::agentic::tools::miniapp_surface::miniapp_web_host_available;
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 use actions::{action_from_input, dispatch, Action, ACTIONS};
 use async_trait::async_trait;
 use starmate_product_domains::miniapp::web_surface::{
@@ -48,7 +48,7 @@ impl Tool for MiniAppBrowserTool {
         TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(format!(
             r#"Control a MiniApp at the source level and through its live interface. This is the preferred tool for OpenBitFun MiniApps, before ComputerUse. Read its source to understand business functions and action parameters, then observe live business state and invoke semantic actions on the current instance. MiniAppBrowser operates and verifies the user-visible instance.
 
@@ -194,7 +194,7 @@ This tool has no host-path access or arbitrary JavaScript `evaluate` action. Sou
     async fn description_with_context(
         &self,
         context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let mut description = self.description().await?;
         if !miniapp_web_host_available() {
             description.push_str(
@@ -260,7 +260,7 @@ This tool has no host-path access or arbitrary JavaScript `evaluate` action. Sou
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let Some(action) = action_from_input(input) else {
             return Ok(result::err_response(
                 "?",

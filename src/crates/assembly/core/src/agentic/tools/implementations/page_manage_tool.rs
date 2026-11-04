@@ -5,7 +5,7 @@ use crate::agentic::tools::framework::{
 };
 use crate::agentic::tools::page_manage_host::{invoke_page_manage, PageManageRequest};
 use crate::agentic::tools::page_publish_host::page_account_available;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 
@@ -118,7 +118,7 @@ impl Tool for PageManageTool {
         "PageManage"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(r#"Manage OpenBitFun Pages on the executing host's account relay. Requires OpenBitFun account login.
 
 Actions:
@@ -209,8 +209,8 @@ When the user requests an operation, call it directly. The permission system han
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
-        let request = parse_request(input, Some(context)).map_err(OpenBitFunError::tool)?;
+    ) -> StarMateResult<Vec<PermissionIntent>> {
+        let request = parse_request(input, Some(context)).map_err(StarMateError::tool)?;
         if request.is_readonly() {
             return Ok(Vec::new());
         }
@@ -222,7 +222,7 @@ When the user requests an operation, call it directly. The permission system han
         // Include resolved defaults, so remote approval mailboxes also show
         // private visibility and preview-only publication when fields are omitted.
         let normalized = serde_json::to_value(&request)
-            .map_err(|error| OpenBitFunError::tool(error.to_string()))?;
+            .map_err(|error| StarMateError::tool(error.to_string()))?;
         for key in ["visibility", "title", "deploy", "version_id"] {
             if let Some(value) = normalized.get(key).filter(|value| !value.is_null()) {
                 resource.push_str(&format!("; {key}={value}"));
@@ -275,17 +275,17 @@ When the user requests an operation, call it directly. The permission system han
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
-        let request = parse_request(input, Some(context)).map_err(OpenBitFunError::tool)?;
+    ) -> StarMateResult<Vec<ToolResult>> {
+        let request = parse_request(input, Some(context)).map_err(StarMateError::tool)?;
         if !page_account_available().await {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "PageManage requires a logged-in OpenBitFun account",
             ));
         }
         let result = invoke_page_manage(request)
             .await
-            .map_err(OpenBitFunError::tool)?;
-        let assistant = format!("{}\nPrivate/relay URLs require authenticated access; use the Pages scene/tool card to open them.", serde_json::to_string(&result).map_err(|error| OpenBitFunError::tool(error.to_string()))?);
+            .map_err(StarMateError::tool)?;
+        let assistant = format!("{}\nPrivate/relay URLs require authenticated access; use the Pages scene/tool card to open them.", serde_json::to_string(&result).map_err(|error| StarMateError::tool(error.to_string()))?);
         Ok(vec![ToolResult::Result {
             data: result,
             result_for_assistant: Some(assistant),

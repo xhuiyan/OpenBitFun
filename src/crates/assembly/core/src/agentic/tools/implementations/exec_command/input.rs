@@ -1,4 +1,4 @@
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_runtime_ports::{
     RemoteExecPort, RemoteSendStdinRequest, TerminalPort, TerminalSendStdinRequest,
 };
@@ -16,10 +16,10 @@ pub async fn send_exec_command_input(
     request: ExecCommandInputRequest,
     terminal_port: Option<&Arc<dyn TerminalPort>>,
     remote_exec_port: Option<&Arc<dyn RemoteExecPort>>,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if request.remote {
         let remote_exec_port = remote_exec_port.ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "remote exec runtime service is required for ExecCommand input".to_string(),
             )
         })?;
@@ -31,13 +31,13 @@ pub async fn send_exec_command_input(
             })
             .await
             .map_err(|error| {
-                OpenBitFunError::tool(format!("ExecCommand input failed: {}", error.message))
+                StarMateError::tool(format!("ExecCommand input failed: {}", error.message))
             })?;
         return Ok(());
     }
 
     let terminal_port = terminal_port.ok_or_else(|| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "terminal runtime service is required for ExecCommand input".to_string(),
         )
     })?;
@@ -49,6 +49,6 @@ pub async fn send_exec_command_input(
         })
         .await
         .map_err(|error| {
-            OpenBitFunError::tool(format!("ExecCommand input failed: {}", error.message))
+            StarMateError::tool(format!("ExecCommand input failed: {}", error.message))
         })
 }

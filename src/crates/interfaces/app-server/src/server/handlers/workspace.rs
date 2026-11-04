@@ -3,11 +3,11 @@ use std::sync::Arc;
 use agent_client_protocol::{Builder, HandleDispatchFrom};
 use starmate_app_server_protocol::workspace::*;
 
-use crate::agent::{runtime_call, OpenBitFunAppRuntime};
+use crate::agent::{runtime_call, StarMateAppRuntime};
 use crate::role::{AppClient, AppServer};
 
 pub(in crate::server) fn builder(
-    runtime: Arc<OpenBitFunAppRuntime>,
+    runtime: Arc<StarMateAppRuntime>,
 ) -> Builder<AppServer, impl HandleDispatchFrom<AppClient>> {
     AppServer
         .builder()

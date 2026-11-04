@@ -6,7 +6,7 @@ use crate::service::config::{
     get_global_config_service,
     types::{model_runtime_binding_fingerprint, AIConfig},
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_agent_runtime::model_pool::{Candidate, ModelPoolRouter, Reservation};
 use starmate_core_types::errors::AiProviderError;
 use starmate_core_types::model_pool::{
@@ -41,7 +41,7 @@ struct PoolStatePersistence {
 }
 
 impl PoolStatePersistence {
-    async fn load(&self, router: &Mutex<ModelPoolRouter>) -> OpenBitFunResult<()> {
+    async fn load(&self, router: &Mutex<ModelPoolRouter>) -> StarMateResult<()> {
         self.path
             .get_or_try_init(|| async {
                 let service = get_global_config_service().await?;
@@ -51,43 +51,43 @@ impl PoolStatePersistence {
                         .read_locked_optional(&path)
                         .await
                         .map_err(|error| {
-                            OpenBitFunError::config(format!(
+                            StarMateError::config(format!(
                                 "Failed to read model pool runtime state: {error}"
                             ))
                         })?;
                 if let Some(saved) = saved {
                     *router.lock().map_err(|_| {
-                        OpenBitFunError::service("Model pool state lock poisoned")
+                        StarMateError::service("Model pool state lock poisoned")
                     })? = saved;
                 }
-                Ok::<_, OpenBitFunError>(path)
+                Ok::<_, StarMateError>(path)
             })
             .await?;
         Ok(())
     }
 
-    async fn save(&self, router: &Mutex<ModelPoolRouter>) -> OpenBitFunResult<()> {
+    async fn save(&self, router: &Mutex<ModelPoolRouter>) -> StarMateResult<()> {
         let _write = self.writes.lock().await;
         let path = self
             .path
             .get()
-            .ok_or_else(|| OpenBitFunError::service("Model pool state is not loaded"))?;
+            .ok_or_else(|| StarMateError::service("Model pool state is not loaded"))?;
         let snapshot = router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
             .clone();
         let store = starmate_services_core::json_store::JsonFileStore;
         let _lease = store
             .acquire_cross_process_lock(path)
             .await
             .map_err(|error| {
-                OpenBitFunError::service(format!("Failed to lock model pool state: {error}"))
+                StarMateError::service(format!("Failed to lock model pool state: {error}"))
             })?;
         store
             .write_atomic_strict(path, &snapshot)
             .await
             .map_err(|error| {
-                OpenBitFunError::service(format!("Failed to persist model pool state: {error}"))
+                StarMateError::service(format!("Failed to persist model pool state: {error}"))
             })
     }
 }
@@ -127,14 +127,14 @@ impl PoolAttempt {
             .unwrap_or(false)
     }
 
-    pub async fn accept(&self) -> OpenBitFunResult<ModelPoolBinding> {
+    pub async fn accept(&self) -> StarMateResult<ModelPoolBinding> {
         {
             let mut router = self
                 .router
                 .lock()
-                .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?;
+                .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?;
             if !router.accept(&self.reservation) {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "Model pool attempt was superseded",
                 ));
             }
@@ -188,7 +188,7 @@ impl ModelPoolRuntime {
     fn configured_context_budget(
         config: &AIConfig,
         member_ids: &[String],
-    ) -> OpenBitFunResult<ModelPoolContextBudget> {
+    ) -> StarMateResult<ModelPoolContextBudget> {
         // Request-specific image/tool requirements and transient health must not
         // make the shared pool budget fluctuate between requests.
         Self::candidates(config, member_ids, false, ImageInputRequirement::None)
@@ -199,13 +199,13 @@ impl ModelPoolRuntime {
                 input_limit: left.input_limit.min(right.input_limit),
             })
             .ok_or_else(|| {
-                OpenBitFunError::AIClient(
+                StarMateError::AIClient(
                     "Model pool has no members with a valid context budget".into(),
                 )
             })
     }
 
-    pub async fn context_budget(&self, pool_id: &str) -> OpenBitFunResult<ModelPoolContextBudget> {
+    pub async fn context_budget(&self, pool_id: &str) -> StarMateResult<ModelPoolContextBudget> {
         let service = get_global_config_service().await?;
         let pool = service.model_pool_store().await.get(pool_id).await?;
         let config: AIConfig = service.get_config(Some("ai")).await?;
@@ -251,7 +251,7 @@ impl ModelPoolRuntime {
         candidates: &[Candidate],
         excluded: &BTreeSet<String>,
         image_requirement: ImageInputRequirement,
-    ) -> OpenBitFunError {
+    ) -> StarMateError {
         let members = candidates
             .iter()
             .map(|candidate| {
@@ -280,15 +280,15 @@ impl ModelPoolRuntime {
             ImageInputRequirement::Native => "; request requires native image support",
             ImageInputRequirement::NativeOrAnalysisTool => "; request requires native image support or tool-call support with a configured, enabled image understanding model",
         };
-        OpenBitFunError::AIClient(format!(
+        StarMateError::AIClient(format!(
             "Model pool unavailable: {pool_id}: {error:?}{requirement}; members: [{members}]"
         ))
     }
 
-    pub fn clear_session(&self, session_id: &str) -> OpenBitFunResult<()> {
+    pub fn clear_session(&self, session_id: &str) -> StarMateResult<()> {
         self.router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
             .clear_session(session_id);
         Ok(())
     }
@@ -298,25 +298,25 @@ impl ModelPoolRuntime {
         session_id: &str,
         selection_revision: u64,
         binding: ModelPoolBinding,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.persistence.load(&self.router).await?;
         self.router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
             .restore_binding(&format!("{session_id}:{selection_revision}"), binding);
         Ok(())
     }
 
-    pub async fn retry_member(&self, model_id: &str) -> OpenBitFunResult<()> {
+    pub async fn retry_member(&self, model_id: &str) -> StarMateResult<()> {
         self.persistence.load(&self.router).await?;
         self.router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
             .retry_member(model_id);
         self.persistence.save(&self.router).await
     }
 
-    pub async fn statuses(&self, pool_id: &str) -> OpenBitFunResult<Vec<ModelPoolMemberStatus>> {
+    pub async fn statuses(&self, pool_id: &str) -> StarMateResult<Vec<ModelPoolMemberStatus>> {
         self.persistence.load(&self.router).await?;
         let service = get_global_config_service().await?;
         let pool = service.model_pool_store().await.get(pool_id).await?;
@@ -330,7 +330,7 @@ impl ModelPoolRuntime {
         let router = self
             .router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?;
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?;
         Ok(candidates
             .iter()
             .map(|candidate| {
@@ -362,7 +362,7 @@ impl ModelPoolRuntime {
         pool_id: &str,
         require_tools: bool,
         image_requirement: ImageInputRequirement,
-    ) -> OpenBitFunResult<(String, String)> {
+    ) -> StarMateResult<(String, String)> {
         self.persistence.load(&self.router).await?;
         let service = get_global_config_service().await?;
         let pool = service.model_pool_store().await.get(pool_id).await?;
@@ -383,7 +383,7 @@ impl ModelPoolRuntime {
         config: &AIConfig,
         require_tools: bool,
         image_requirement: ImageInputRequirement,
-    ) -> OpenBitFunResult<(String, String)> {
+    ) -> StarMateResult<(String, String)> {
         let pool_id = &pool.id;
         let candidates = Self::candidates(
             &config,
@@ -394,7 +394,7 @@ impl ModelPoolRuntime {
         let mut preview = self
             .router
             .lock()
-            .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+            .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
             .clone();
         preview.release_session_reservation(key);
         let reservation = preview
@@ -432,10 +432,10 @@ impl ModelPoolRuntime {
         excluded: &mut BTreeSet<String>,
         require_tools: bool,
         image_requirement: ImageInputRequirement,
-    ) -> OpenBitFunResult<(PoolAttempt, Arc<crate::infrastructure::ai::AIClient>)> {
+    ) -> StarMateResult<(PoolAttempt, Arc<crate::infrastructure::ai::AIClient>)> {
         let factory = crate::infrastructure::ai::get_global_ai_client_factory()
             .await
-            .map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
+            .map_err(|error| StarMateError::AIClient(error.to_string()))?;
         // Each failed preparation is excluded, so traverse all configured
         // candidates independently of any member's request retry budget.
         loop {
@@ -464,7 +464,7 @@ impl ModelPoolRuntime {
                     // concerns this configured member, never the user's content.
                     self.router
                         .lock()
-                        .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
+                        .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?
                         .configuration_failed(&attempt.reservation);
                     self.persistence.save(&self.router).await?;
                     excluded.insert(binding.model_id.clone());
@@ -481,7 +481,7 @@ impl ModelPoolRuntime {
         excluded: &BTreeSet<String>,
         require_tools: bool,
         image_requirement: ImageInputRequirement,
-    ) -> OpenBitFunResult<PoolAttempt> {
+    ) -> StarMateResult<PoolAttempt> {
         self.persistence.load(&self.router).await?;
         let service = get_global_config_service().await?;
         let pool = service.model_pool_store().await.get(pool_id).await?;
@@ -509,7 +509,7 @@ impl ModelPoolRuntime {
             let mut router = self
                 .router
                 .lock()
-                .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?;
+                .map_err(|_| StarMateError::service("Model pool state lock poisoned"))?;
             router
                 .reserve(
                     &format!("{session_id}:{selection_revision}"),

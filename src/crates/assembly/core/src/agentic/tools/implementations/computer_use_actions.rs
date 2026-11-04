@@ -10,7 +10,7 @@ use crate::agentic::tools::computer_use_host::{
     VisualMarkViewOpts,
 };
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_services_core::system::{
     LocalSystemActionError, LocalSystemProvider, RunScriptRequest,
 };
@@ -31,7 +31,7 @@ const OPEN_FILE_ROUTING_NOTE: &str = "The file is now open in an external applic
 
 pub(crate) struct ComputerUseActions;
 
-fn clipboard_output_limit(params: &Value) -> OpenBitFunResult<usize> {
+fn clipboard_output_limit(params: &Value) -> StarMateResult<usize> {
     match params
         .get("max_output_bytes")
         .or_else(|| params.get("max_bytes"))
@@ -74,7 +74,7 @@ fn unknown_top_level_fields(params: &Value) -> Vec<String> {
         .unwrap_or_default()
 }
 
-fn app_batch_missing_steps_error(params: &Value) -> OpenBitFunError {
+fn app_batch_missing_steps_error(params: &Value) -> StarMateError {
     let unknown = unknown_top_level_fields(params);
     let received = if unknown.is_empty() {
         String::new()
@@ -96,7 +96,7 @@ fn app_batch_missing_steps_error(params: &Value) -> OpenBitFunError {
 /// instead of a position inside the whole program.
 fn parse_app_program(
     raw: Value,
-) -> OpenBitFunResult<Vec<crate::agentic::tools::computer_use_host::AppInputAction>> {
+) -> StarMateResult<Vec<crate::agentic::tools::computer_use_host::AppInputAction>> {
     let Value::Array(values) = raw else {
         return Err(coded_tool_error(
             ErrorCode::InvalidParams,
@@ -207,7 +207,7 @@ fn clipboard_text_result(text: &str, max_bytes: usize) -> Value {
     json!({"text": &text[..end], "byte_length": text.len(), "truncated": end < text.len()})
 }
 
-fn include_app_state_image(params: &Value) -> OpenBitFunResult<bool> {
+fn include_app_state_image(params: &Value) -> StarMateResult<bool> {
     match params.get("include_image") {
         None => Ok(true),
         Some(Value::Bool(value)) => Ok(*value),
@@ -236,9 +236,9 @@ impl ComputerUseActions {
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let host = context.computer_use_host.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "Computer Use requires a native provider on the executing host".to_string(),
             )
         })?;
@@ -392,7 +392,7 @@ impl ComputerUseActions {
                 let display_id = match params.get("display_id") {
                     Some(Value::Null) | None => None,
                     Some(v) => Some(v.as_u64().ok_or_else(|| {
-                        OpenBitFunError::tool(
+                        StarMateError::tool(
                             "focus_display: 'display_id' must be a non-negative integer or null"
                                 .to_string(),
                         )
@@ -425,7 +425,7 @@ impl ComputerUseActions {
             let target = match v {
                 Value::Null => None,
                 v => Some(v.as_u64().ok_or_else(|| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "display_id must be a non-negative integer or null".to_string(),
                     )
                 })? as u32),
@@ -461,9 +461,9 @@ impl ComputerUseActions {
         params: &Value,
         text_only: bool,
         context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         // ── Helpers ─────────────────────────────────────────────────
-        fn parse_selector(v: &Value) -> OpenBitFunResult<AppSelector> {
+        fn parse_selector(v: &Value) -> StarMateResult<AppSelector> {
             let obj = v.get("app").ok_or_else(|| {
                 coded_tool_error(
                     ErrorCode::InvalidParams,
@@ -477,7 +477,7 @@ impl ComputerUseActions {
                 )
             })?;
             sel.validate_window_target()
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             if sel.is_empty() {
                 return Err(coded_tool_error(
                     ErrorCode::InvalidParams,
@@ -487,7 +487,7 @@ impl ComputerUseActions {
             Ok(sel)
         }
 
-        fn parse_click_target(v: &Value) -> OpenBitFunResult<ClickTarget> {
+        fn parse_click_target(v: &Value) -> StarMateResult<ClickTarget> {
             if v.get("kind").is_some() {
                 return serde_json::from_value(v.clone()).map_err(|e| {
                     coded_tool_error(ErrorCode::InvalidParams, format!("bad ClickTarget: {} (expected {{\"kind\":\"node_idx\", \"idx\":N}}, {{\"kind\":\"image_xy\",\"x\":0,\"y\":0}}, {{\"kind\":\"image_grid\",\"x0\":0,\"y0\":0,\"width\":300,\"height\":300,\"rows\":15,\"cols\":15,\"row\":7,\"col\":7,\"intersections\":true}}, {{\"kind\":\"visual_grid\",\"rows\":15,\"cols\":15,\"row\":7,\"col\":7,\"intersections\":true}}, {{\"kind\":\"screen_xy\",\"x\":0,\"y\":0}}, or {{\"kind\":\"ocr_text\",\"needle\":\"...\"}})",
@@ -610,7 +610,7 @@ impl ComputerUseActions {
             Err(coded_tool_error(ErrorCode::InvalidParams, "unsupported ClickTarget. Use {\"kind\":\"node_idx\",\"idx\":N}, {\"node_idx\":N}, {\"kind\":\"image_xy\",\"x\":0,\"y\":0}, {\"image_xy\":{\"x\":0,\"y\":0}}, {\"kind\":\"image_grid\",\"x0\":0,\"y0\":0,\"width\":300,\"height\":300,\"rows\":15,\"cols\":15,\"row\":7,\"col\":7,\"intersections\":true}, {\"kind\":\"visual_grid\",\"rows\":15,\"cols\":15,\"row\":7,\"col\":7,\"intersections\":true}, {\"kind\":\"screen_xy\",\"x\":0,\"y\":0}, or {\"ocr_text\":{\"needle\":\"...\"}}."))
         }
 
-        fn parse_wait_predicate(v: &Value) -> OpenBitFunResult<AppWaitPredicate> {
+        fn parse_wait_predicate(v: &Value) -> StarMateResult<AppWaitPredicate> {
             if v.get("kind").is_some() {
                 return serde_json::from_value(v.clone()).map_err(|e| {
                     coded_tool_error(
@@ -973,7 +973,7 @@ impl ComputerUseActions {
         // the host resolves the empty selector to that binding. Without one it
         // stays an error, so the human's frontmost app is never chosen.
         let bound_target = host.control_snapshot().target.is_some();
-        let parse_selector = |params: &Value| -> OpenBitFunResult<AppSelector> {
+        let parse_selector = |params: &Value| -> StarMateResult<AppSelector> {
             if bound_target && params.get("app").is_none_or(Value::is_null) {
                 return Ok(AppSelector::default());
             }
@@ -1476,13 +1476,13 @@ impl ComputerUseActions {
         action: &str,
         params: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         match action {
             "open_app" => {
                 let app_name = params
                     .get("app_name")
                     .and_then(|v| v.as_str())
-                    .ok_or_else(|| OpenBitFunError::tool("open_app requires 'app_name'".to_string()))?;
+                    .ok_or_else(|| StarMateError::tool("open_app requires 'app_name'".to_string()))?;
 
                 // Phase 4 (p4_open_app_unify): consolidate the two historical
                 // launch paths (ComputerUse host vs. raw shell `open`/`start`)
@@ -1534,7 +1534,7 @@ impl ComputerUseActions {
 
                 let provider = LocalSystemProvider::new();
                 let outcome = provider.open_app_shell(app_name).map_err(|e| {
-                    OpenBitFunError::tool(format!("{} (host_error: {:?})", e.message(), host_error))
+                    StarMateError::tool(format!("{} (host_error: {:?})", e.message(), host_error))
                 })?;
                 let warning = host_error.map(|e| {
                     format!("computer_use_host open_app failed; shell fallback succeeded: {}", e)
@@ -1555,7 +1555,7 @@ impl ComputerUseActions {
                 let script = params
                     .get("script")
                     .and_then(|v| v.as_str())
-                    .ok_or_else(|| OpenBitFunError::tool("run_script requires 'script'".to_string()))?;
+                    .ok_or_else(|| StarMateError::tool("run_script requires 'script'".to_string()))?;
                 let script_type = params
                     .get("script_type")
                     .and_then(|v| v.as_str())
@@ -1673,7 +1673,7 @@ impl ComputerUseActions {
             // dramatically simpler than driving each target GUI by hand.
             "clipboard_set" => {
                 let text = params.get("text").and_then(|v| v.as_str()).ok_or_else(|| {
-                    OpenBitFunError::tool("clipboard_set requires 'text'".to_string())
+                    StarMateError::tool("clipboard_set requires 'text'".to_string())
                 })?;
                 match LocalSystemProvider::new().clipboard_write_text(text).await {
                     Ok(()) => Ok(vec![ToolResult::ok(
@@ -1696,7 +1696,7 @@ impl ComputerUseActions {
                 let url = params
                     .get("url")
                     .and_then(|v| v.as_str())
-                    .ok_or_else(|| OpenBitFunError::tool("open_url requires 'url'".to_string()))?;
+                    .ok_or_else(|| StarMateError::tool("open_url requires 'url'".to_string()))?;
                 match LocalSystemProvider::new().open_url(url) {
                     Ok(outcome) => Ok(vec![ToolResult::ok(
                         json!({
@@ -1719,7 +1719,7 @@ impl ComputerUseActions {
             // for "open this PDF / picture / spreadsheet for me".
             "open_file" => {
                 let path_str = params.get("path").and_then(|v| v.as_str()).ok_or_else(|| {
-                    OpenBitFunError::tool("open_file requires 'path'".to_string())
+                    StarMateError::tool("open_file requires 'path'".to_string())
                 })?;
                 let app_name = params.get("app").and_then(|v| v.as_str());
 
@@ -1745,7 +1745,7 @@ impl ComputerUseActions {
                 }
             }
 
-            other => Err(OpenBitFunError::tool(format!(
+            other => Err(StarMateError::tool(format!(
                 "Unknown system action: '{}'. Valid: open_app, run_script, get_os_info, open_url, open_file, clipboard_get, clipboard_set",
                 other
             ))),
@@ -1765,12 +1765,12 @@ fn local_system_error_response(
     err_response(domain, action, control_error)
 }
 
-fn map_run_script_error(error: LocalSystemActionError) -> OpenBitFunResult<Vec<ToolResult>> {
+fn map_run_script_error(error: LocalSystemActionError) -> StarMateResult<Vec<ToolResult>> {
     match error.stable_code() {
         "NOT_AVAILABLE" | "TIMEOUT" => {
             Ok(local_system_error_response("system", "run_script", error))
         }
-        _ => Err(OpenBitFunError::tool(error.message().to_string())),
+        _ => Err(StarMateError::tool(error.message().to_string())),
     }
 }
 
@@ -1788,7 +1788,7 @@ fn error_code_from_local(code: &str) -> ErrorCode {
 mod tests {
     use super::{ComputerUseActions, ToolResult};
     use super::{OPEN_FILE_ROUTING_NOTE, OPEN_URL_ROUTING_NOTE};
-    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
     use serde_json::json;
 
     use crate::agentic::tools::computer_use_host as h;
@@ -1859,49 +1859,49 @@ mod tests {
             }
             snapshot
         }
-        async fn permission_snapshot(&self) -> OpenBitFunResult<h::ComputerUsePermissionSnapshot> {
+        async fn permission_snapshot(&self) -> StarMateResult<h::ComputerUsePermissionSnapshot> {
             panic!("unexpected permission request")
         }
-        async fn request_accessibility_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_accessibility_permission(&self) -> StarMateResult<()> {
             panic!("unexpected permission request")
         }
-        async fn request_screen_capture_permission(&self) -> OpenBitFunResult<()> {
+        async fn request_screen_capture_permission(&self) -> StarMateResult<()> {
             panic!("unexpected permission request")
         }
         async fn screenshot_display(
             &self,
             _: h::ComputerUseScreenshotParams,
-        ) -> OpenBitFunResult<h::ComputerScreenshot> {
+        ) -> StarMateResult<h::ComputerScreenshot> {
             panic!("unexpected capture")
         }
-        fn map_image_coords_to_pointer(&self, _: i32, _: i32) -> OpenBitFunResult<(i32, i32)> {
+        fn map_image_coords_to_pointer(&self, _: i32, _: i32) -> StarMateResult<(i32, i32)> {
             panic!("unexpected coordinate conversion")
         }
-        fn map_normalized_coords_to_pointer(&self, _: i32, _: i32) -> OpenBitFunResult<(i32, i32)> {
+        fn map_normalized_coords_to_pointer(&self, _: i32, _: i32) -> StarMateResult<(i32, i32)> {
             panic!("unexpected coordinate conversion")
         }
-        async fn mouse_move(&self, _: i32, _: i32) -> OpenBitFunResult<()> {
+        async fn mouse_move(&self, _: i32, _: i32) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn pointer_move_relative(&self, _: i32, _: i32) -> OpenBitFunResult<()> {
+        async fn pointer_move_relative(&self, _: i32, _: i32) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn mouse_click(&self, _: &str) -> OpenBitFunResult<()> {
+        async fn mouse_click(&self, _: &str) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn scroll(&self, _: i32, _: i32) -> OpenBitFunResult<()> {
+        async fn scroll(&self, _: i32, _: i32) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn key_chord(&self, _: Vec<String>) -> OpenBitFunResult<()> {
+        async fn key_chord(&self, _: Vec<String>) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn type_text(&self, _: &str) -> OpenBitFunResult<()> {
+        async fn type_text(&self, _: &str) -> StarMateResult<()> {
             panic!("unexpected global input")
         }
-        async fn wait_ms(&self, _: u64) -> OpenBitFunResult<()> {
+        async fn wait_ms(&self, _: u64) -> StarMateResult<()> {
             panic!("unexpected wait")
         }
-        async fn list_apps(&self, _: bool) -> OpenBitFunResult<Vec<h::AppInfo>> {
+        async fn list_apps(&self, _: bool) -> StarMateResult<Vec<h::AppInfo>> {
             Ok(serde_json::from_value(json!([
                 {"name":"Fixture","pid":73,"bundle_id":"example.fixture","running":true},
                 {"name":"Google Chrome","pid":74,"bundle_id":"com.google.Chrome","running":true}
@@ -1919,7 +1919,7 @@ mod tests {
             _: h::AppSelector,
             _: u32,
             _: bool,
-        ) -> OpenBitFunResult<h::AppStateSnapshot> {
+        ) -> StarMateResult<h::AppStateSnapshot> {
             assert!(
                 self.calls
                     .lock()
@@ -1933,7 +1933,7 @@ mod tests {
                 .unwrap()
                 .push("recover observation".into());
             if self.fail_observation {
-                return Err(OpenBitFunError::tool("FIXTURE_OBSERVATION_FAILED"));
+                return Err(StarMateError::tool("FIXTURE_OBSERVATION_FAILED"));
             }
             let mut snapshot = unchanged_snapshot();
             snapshot.screenshot = Some(serde_json::from_value(json!({
@@ -1947,7 +1947,7 @@ mod tests {
             &self,
             app: h::AppSelector,
             action: h::AppInputAction,
-        ) -> OpenBitFunResult<()> {
+        ) -> StarMateResult<()> {
             assert_eq!(app.pid, Some(73));
             match &action {
                 h::AppInputAction::Click { target, .. } => {
@@ -1964,7 +1964,7 @@ mod tests {
                 .unwrap()
                 .push(format!("input:{}", action.name()));
             if self.fail_input {
-                return Err(OpenBitFunError::tool("FIXTURE_POST_INPUT_FAILED"));
+                return Err(StarMateError::tool("FIXTURE_POST_INPUT_FAILED"));
             }
             Ok(())
         }

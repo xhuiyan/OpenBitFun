@@ -53,7 +53,7 @@ pub struct PathManager {
 
 impl PathManager {
     /// Create a new path manager
-    pub fn new() -> OpenBitFunResult<Self> {
+    pub fn new() -> StarMateResult<Self> {
         Self::validate_e2e_storage_guard()?;
         let user_root = Self::get_user_config_root()?;
         let product_home_override = Self::get_product_home_override();
@@ -78,7 +78,7 @@ impl PathManager {
         )
     }
 
-    fn validate_e2e_storage_guard() -> OpenBitFunResult<()> {
+    fn validate_e2e_storage_guard() -> StarMateResult<()> {
         if !Self::env_flag_enabled("OPENBITFUN_E2E_STORAGE_GUARD") {
             return Ok(());
         }
@@ -92,7 +92,7 @@ impl PathManager {
             return Ok(());
         }
 
-        Err(OpenBitFunError::config(
+        Err(StarMateError::config(
             "OPENBITFUN_E2E_STORAGE_GUARD requires isolated OPENBITFUN_E2E_USER_ROOT and OPENBITFUN_E2E_HOME storage roots",
         ))
     }
@@ -102,7 +102,7 @@ impl PathManager {
     /// - Windows: %APPDATA%\openbitfun\
     /// - macOS: ~/Library/Application Support/openbitfun/
     /// - Linux: ~/.config/openbitfun/
-    fn get_user_config_root() -> OpenBitFunResult<PathBuf> {
+    fn get_user_config_root() -> StarMateResult<PathBuf> {
         if let Some(path) = Self::env_path("OPENBITFUN_USER_ROOT")
             .or_else(|| Self::env_path("OPENBITFUN_E2E_USER_ROOT"))
         {
@@ -110,7 +110,7 @@ impl PathManager {
         }
 
         let config_dir = dirs::config_dir()
-            .ok_or_else(|| OpenBitFunError::config("Failed to get config directory".to_string()))?;
+            .ok_or_else(|| StarMateError::config("Failed to get config directory".to_string()))?;
 
         Ok(config_dir.join(data_namespace()))
     }
@@ -674,17 +674,17 @@ impl PathManager {
     }
 
     /// Ensure directory exists
-    pub async fn ensure_dir(&self, path: &Path) -> OpenBitFunResult<()> {
+    pub async fn ensure_dir(&self, path: &Path) -> StarMateResult<()> {
         if !path.exists() {
             tokio::fs::create_dir_all(path).await.map_err(|e| {
-                OpenBitFunError::service(format!("Failed to create directory {:?}: {}", path, e))
+                StarMateError::service(format!("Failed to create directory {:?}: {}", path, e))
             })?;
         }
         Ok(())
     }
 
     /// Initialize user-level directory structure
-    pub async fn initialize_user_directories(&self) -> OpenBitFunResult<()> {
+    pub async fn initialize_user_directories(&self) -> StarMateResult<()> {
         let dirs = vec![
             self.product_home_dir(),
             self.projects_root(),
@@ -772,9 +772,9 @@ impl GlobalPathManagerState {
         }
     }
 
-    fn strict_manager(&self) -> OpenBitFunResult<Arc<PathManager>> {
+    fn strict_manager(&self) -> StarMateResult<Arc<PathManager>> {
         if let Some(error) = &self.initialization_error {
-            return Err(OpenBitFunError::config(format!(
+            return Err(StarMateError::config(format!(
                 "global path manager is using a temporary fallback after initialization failed: {error}"
             )));
         }
@@ -782,7 +782,7 @@ impl GlobalPathManagerState {
     }
 }
 
-fn init_global_path_manager() -> OpenBitFunResult<Arc<PathManager>> {
+fn init_global_path_manager() -> StarMateResult<Arc<PathManager>> {
     PathManager::new().map(Arc::new)
 }
 
@@ -806,7 +806,7 @@ pub fn get_path_manager_arc() -> Arc<PathManager> {
 }
 
 /// Try to get the global PathManager instance (Arc)
-pub fn try_get_path_manager_arc() -> OpenBitFunResult<Arc<PathManager>> {
+pub fn try_get_path_manager_arc() -> StarMateResult<Arc<PathManager>> {
     if let Some(manager) = GLOBAL_PATH_MANAGER.get() {
         return manager.strict_manager();
     }

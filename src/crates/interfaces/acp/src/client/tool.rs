@@ -10,7 +10,7 @@ use starmate_agent_tools::{
     AcpExternalAgentToolDefinitionInput, ToolResult, ValidationResult,
 };
 use starmate_core::agentic::tools::framework::{Tool, ToolRenderOptions, ToolUseContext};
-use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::util::errors::{StarMateError, StarMateResult};
 use serde_json::Value;
 
 use super::config::AcpClientConfig;
@@ -64,7 +64,7 @@ impl Tool for AcpAgentTool {
         &self.definition.tool_name
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(self.definition.description.clone())
     }
 
@@ -123,15 +123,15 @@ impl Tool for AcpAgentTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let openbitfun_session_id = context.session_id.clone().ok_or_else(|| {
-            OpenBitFunError::tool("ACP tool requires an active OpenBitFun session".to_string())
+            StarMateError::tool("ACP tool requires an active OpenBitFun session".to_string())
         })?;
         let prompt = input
             .get("prompt")
             .and_then(|value| value.as_str())
             .filter(|value| !value.trim().is_empty())
-            .ok_or_else(|| OpenBitFunError::tool("prompt is required".to_string()))?
+            .ok_or_else(|| StarMateError::tool("prompt is required".to_string()))?
             .to_string();
 
         let workspace_path = input

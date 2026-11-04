@@ -440,7 +440,7 @@ pub(super) fn canvas_runtime_binding_prelude(import_bindings: &CanvasSdkImportBi
         .map(|name| {
             (
                 (*name).to_string(),
-                format!("__OpenBitFunCanvasSDK.{}", property_access(name)),
+                format!("__StarMateCanvasSDK.{}", property_access(name)),
             )
         })
         .collect::<BTreeMap<_, _>>();
@@ -455,18 +455,18 @@ pub(super) fn canvas_runtime_binding_prelude(import_bindings: &CanvasSdkImportBi
         local_bindings.insert(
             namespace.local.clone(),
             match namespace.source {
-                CanvasSdkImportSource::Canvas => "__OpenBitFunCanvasSDK".to_string(),
-                CanvasSdkImportSource::React => "__OpenBitFunCanvasReactCompat".to_string(),
+                CanvasSdkImportSource::Canvas => "__StarMateCanvasSDK".to_string(),
+                CanvasSdkImportSource::React => "__StarMateCanvasReactCompat".to_string(),
             },
         );
     }
 
     let mut prelude = String::from(
-        "const __OpenBitFunCanvasSDK = window.OpenBitFunCanvasSDK;\n\
-const __OpenBitFunCanvasRuntime = window.OpenBitFunCanvasRuntime;\n\
-const __OpenBitFunCanvasReactCompat = Object.freeze({ ...__OpenBitFunCanvasSDK, createElement: __OpenBitFunCanvasRuntime.h, Fragment: __OpenBitFunCanvasRuntime.Fragment });\n\
-const h = __OpenBitFunCanvasRuntime.h;\n\
-const Fragment = __OpenBitFunCanvasRuntime.Fragment;\n",
+        "const __StarMateCanvasSDK = window.StarMateCanvasSDK;\n\
+const __StarMateCanvasRuntime = window.StarMateCanvasRuntime;\n\
+const __StarMateCanvasReactCompat = Object.freeze({ ...__StarMateCanvasSDK, createElement: __StarMateCanvasRuntime.h, Fragment: __StarMateCanvasRuntime.Fragment });\n\
+const h = __StarMateCanvasRuntime.h;\n\
+const Fragment = __StarMateCanvasRuntime.Fragment;\n",
     );
     for (local, expression) in local_bindings {
         if local == "h" || local == "Fragment" {
@@ -504,23 +504,23 @@ fn named_import_target(source: CanvasSdkImportSource, imported: &str) -> Option<
                 .contains(&imported)
                 .then(|| NamedImportTarget {
                     canonical: imported.to_string(),
-                    expression: format!("__OpenBitFunCanvasSDK.{}", property_access(imported)),
+                    expression: format!("__StarMateCanvasSDK.{}", property_access(imported)),
                 })
         }
         CanvasSdkImportSource::React => match imported {
             "useState" | "useRef" | "useEffect" | "useCallback" | "useMemo" => {
                 Some(NamedImportTarget {
                     canonical: imported.to_string(),
-                    expression: format!("__OpenBitFunCanvasSDK.{}", property_access(imported)),
+                    expression: format!("__StarMateCanvasSDK.{}", property_access(imported)),
                 })
             }
             "Fragment" => Some(NamedImportTarget {
                 canonical: "Fragment".to_string(),
-                expression: "__OpenBitFunCanvasRuntime.Fragment".to_string(),
+                expression: "__StarMateCanvasRuntime.Fragment".to_string(),
             }),
             "createElement" => Some(NamedImportTarget {
                 canonical: "createElement".to_string(),
-                expression: "__OpenBitFunCanvasRuntime.h".to_string(),
+                expression: "__StarMateCanvasRuntime.h".to_string(),
             }),
             _ => None,
         },
@@ -584,9 +584,9 @@ fn is_reserved_canvas_runtime_binding(name: &str) -> bool {
     matches!(
         name,
         "h" | "Fragment"
-            | "__OpenBitFunCanvasSDK"
-            | "__OpenBitFunCanvasRuntime"
-            | "__OpenBitFunCanvasReactCompat"
+            | "__StarMateCanvasSDK"
+            | "__StarMateCanvasRuntime"
+            | "__StarMateCanvasReactCompat"
     )
 }
 
@@ -660,7 +660,7 @@ pub(super) fn rewrite_canvas_module_for_runtime(
         cursor = end;
     }
     rewritten.push_str(&source[cursor..]);
-    rewritten.push_str("\nwindow.OpenBitFunCanvasRuntime.mount(__OpenBitFunCanvasComponent);\n");
+    rewritten.push_str("\nwindow.StarMateCanvasRuntime.mount(__StarMateCanvasComponent);\n");
     Ok(rewritten)
 }
 
@@ -678,14 +678,14 @@ fn default_export_replacement(
             *start,
             *end,
             format!(
-                "const __OpenBitFunCanvasComponent = {};",
+                "const __StarMateCanvasComponent = {};",
                 source[*expression_start..*end].trim()
             ),
         ),
         CanvasDefaultExport::Identifier { start, end, name } => (
             *start,
             *end,
-            format!("const __OpenBitFunCanvasComponent = {name};"),
+            format!("const __StarMateCanvasComponent = {name};"),
         ),
     }
 }

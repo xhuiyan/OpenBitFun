@@ -22,7 +22,7 @@ use crate::service::mcp::auth::MCPRemoteOAuthSessionSnapshot;
 use crate::service::mcp::config::MCPConfigService;
 use crate::service::mcp::protocol::{MCPError, MCPPrompt, MCPResource};
 use crate::service::workspace::get_global_workspace_service;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use log::{debug, error, info, warn};
 use starmate_services_integrations::mcp::server::MCPConnectionEvent;
 use starmate_services_integrations::mcp::server::{MCPServerRuntimeState, MCPServerStartFailure};

@@ -82,7 +82,7 @@ pub struct GlobalConfigManager;
 
 impl GlobalConfigManager {
     /// Initializes the global configuration service.
-    pub async fn initialize() -> OpenBitFunResult<()> {
+    pub async fn initialize() -> StarMateResult<()> {
         if Self::is_initialized() {
             debug!("Global config service already initialized, skipping");
             return Ok(());
@@ -90,14 +90,14 @@ impl GlobalConfigManager {
 
         let (sender, _) = tokio::sync::broadcast::channel(100);
         CONFIG_UPDATE_SENDER.set(sender).map_err(|_| {
-            OpenBitFunError::config("Failed to initialize config update sender".to_string())
+            StarMateError::config("Failed to initialize config update sender".to_string())
         })?;
 
         let config_service = Arc::new(ConfigService::new().await?);
         let service_wrapper = Arc::new(RwLock::new(Some(Arc::clone(&config_service))));
 
         GLOBAL_CONFIG_SERVICE.set(service_wrapper).map_err(|_| {
-            OpenBitFunError::config("Failed to initialize global config service".to_string())
+            StarMateError::config("Failed to initialize global config service".to_string())
         })?;
 
         #[cfg(feature = "web-tools")]
@@ -118,22 +118,22 @@ impl GlobalConfigManager {
     }
 
     /// Returns the global configuration service instance.
-    pub async fn get_service() -> OpenBitFunResult<Arc<ConfigService>> {
+    pub async fn get_service() -> StarMateResult<Arc<ConfigService>> {
         let service_wrapper = GLOBAL_CONFIG_SERVICE.get().ok_or_else(|| {
-            OpenBitFunError::config("Global config service not initialized".to_string())
+            StarMateError::config("Global config service not initialized".to_string())
         })?;
 
         let service_guard = service_wrapper.read().await;
         service_guard
             .as_ref()
-            .ok_or_else(|| OpenBitFunError::config("Global config service is None".to_string()))
+            .ok_or_else(|| StarMateError::config("Global config service is None".to_string()))
             .map(Arc::clone)
     }
 
     /// Updates the global configuration service instance (used for configuration reload).
-    pub async fn update_service(new_service: Arc<ConfigService>) -> OpenBitFunResult<()> {
+    pub async fn update_service(new_service: Arc<ConfigService>) -> StarMateResult<()> {
         let service_wrapper = GLOBAL_CONFIG_SERVICE.get().ok_or_else(|| {
-            OpenBitFunError::config("Global config service not initialized".to_string())
+            StarMateError::config("Global config service not initialized".to_string())
         })?;
 
         {
@@ -157,7 +157,7 @@ impl GlobalConfigManager {
     ///
     /// Re-reads the config from disk into the existing `ConfigService` instance,
     /// preserving the `Arc` pointer so that all holders (e.g. `AppState`) stay in sync.
-    pub async fn reload() -> OpenBitFunResult<()> {
+    pub async fn reload() -> StarMateResult<()> {
         let service = Self::get_service().await?;
         service.reload().await?;
         Self::broadcast_update(ConfigUpdateEvent::ConfigReloaded).await;
@@ -181,7 +181,7 @@ impl GlobalConfigManager {
         &self,
         model_id: &str,
         model: crate::service::config::types::AIModelConfig,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let model_name = model.name.clone();
         let service = Self::get_service().await?;
         service.update_ai_model(model_id, model).await?;
@@ -196,7 +196,7 @@ impl GlobalConfigManager {
     }
 
     /// Updates the Web UI appearance selection and broadcasts an event.
-    pub async fn update_appearance(&self, appearance_id: &str) -> OpenBitFunResult<()> {
+    pub async fn update_appearance(&self, appearance_id: &str) -> StarMateResult<()> {
         let service = Self::get_service().await?;
         service
             .set_config("appearance.selection", appearance_id)
@@ -262,17 +262,17 @@ fn spawn_config_file_reload_poller() {
 }
 
 /// Convenience helper: get the global configuration service.
-pub async fn get_global_config_service() -> OpenBitFunResult<Arc<ConfigService>> {
+pub async fn get_global_config_service() -> StarMateResult<Arc<ConfigService>> {
     GlobalConfigManager::get_service().await
 }
 
 /// Convenience helper: initialize the global configuration service.
-pub async fn initialize_global_config() -> OpenBitFunResult<()> {
+pub async fn initialize_global_config() -> StarMateResult<()> {
     GlobalConfigManager::initialize().await
 }
 
 /// Convenience helper: reload the global configuration.
-pub async fn reload_global_config() -> OpenBitFunResult<()> {
+pub async fn reload_global_config() -> StarMateResult<()> {
     GlobalConfigManager::reload().await
 }
 

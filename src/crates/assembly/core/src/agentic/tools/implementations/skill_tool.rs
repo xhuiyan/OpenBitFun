@@ -6,7 +6,7 @@
 use crate::agentic::tools::framework::{
     PermissionIntent, Tool, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use log::debug;
 use starmate_services_core::markdown::expand_prompt_template_arguments_with_names;
@@ -115,7 +115,7 @@ impl Tool for SkillTool {
         "Skill"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(self.render_description())
     }
 
@@ -126,7 +126,7 @@ impl Tool for SkillTool {
     async fn description_with_context(
         &self,
         _context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         Ok(self.render_description())
     }
 
@@ -184,13 +184,13 @@ impl Tool for SkillTool {
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         let skill_name = input
             .get("command")
             .and_then(Value::as_str)
             .map(str::trim)
             .filter(|skill_name| !skill_name.is_empty())
-            .ok_or_else(|| OpenBitFunError::validation("command is required".to_string()))?;
+            .ok_or_else(|| StarMateError::validation("command is required".to_string()))?;
         Ok(vec![PermissionIntent::new(
             "skill",
             vec![skill_name.to_string()],
@@ -246,11 +246,11 @@ impl Tool for SkillTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let skill_name = input
             .get("command")
             .and_then(|v| v.as_str())
-            .ok_or_else(|| OpenBitFunError::tool("command is required".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("command is required".to_string()))?;
 
         debug!("Skill tool executing skill: {}", skill_name);
 

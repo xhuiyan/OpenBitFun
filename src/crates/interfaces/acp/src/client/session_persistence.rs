@@ -6,7 +6,7 @@ use starmate_core::infrastructure::PathManager;
 use starmate_core::service::session::{
     SessionMetadata, SESSION_PROVIDER_ACP, SESSION_PROVIDER_METADATA_KEY,
 };
-use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::util::errors::{StarMateError, StarMateResult};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
@@ -34,7 +34,7 @@ pub(super) struct AcpSessionPersistence {
 }
 
 impl AcpSessionPersistence {
-    pub(super) fn new(path_manager: Arc<PathManager>) -> OpenBitFunResult<Self> {
+    pub(super) fn new(path_manager: Arc<PathManager>) -> StarMateResult<Self> {
         Ok(Self {
             manager: PersistenceManager::new(path_manager)?,
         })
@@ -47,7 +47,7 @@ impl AcpSessionPersistence {
         workspace_path: &str,
         client_id: &str,
         session_name: Option<String>,
-    ) -> OpenBitFunResult<CreateAcpFlowSessionRecordResponse> {
+    ) -> StarMateResult<CreateAcpFlowSessionRecordResponse> {
         let session_id = format!("acp_{}_{}", client_id, uuid::Uuid::new_v4());
         let agent_type = format!("acp:{}", client_id);
         let session_name = session_name
@@ -76,7 +76,7 @@ impl AcpSessionPersistence {
             .create_session_metadata_if_absent(session_storage_path, &metadata)
             .await?
         {
-            return Err(OpenBitFunError::Validation(format!(
+            return Err(StarMateError::Validation(format!(
                 "ACP flow session ID already exists: {}",
                 session_id
             )));
@@ -93,7 +93,7 @@ impl AcpSessionPersistence {
         &self,
         session_storage_path: &Path,
         openbitfun_session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.manager
             .delete_session(session_storage_path, openbitfun_session_id)
             .await
@@ -103,7 +103,7 @@ impl AcpSessionPersistence {
         &self,
         session_storage_path: &Path,
         openbitfun_session_id: &str,
-    ) -> OpenBitFunResult<Option<String>> {
+    ) -> StarMateResult<Option<String>> {
         let Some(metadata) = self
             .manager
             .load_session_metadata(session_storage_path, openbitfun_session_id)
@@ -129,7 +129,7 @@ impl AcpSessionPersistence {
         remote_session_id: &str,
         resume_strategy: &str,
         last_resume_error: Option<String>,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.update_metadata(session_storage_path, openbitfun_session_id, |metadata| {
             let mut custom = metadata.custom_metadata.take().unwrap_or_else(|| json!({}));
             ensure_object(&mut custom)?;
@@ -150,7 +150,7 @@ impl AcpSessionPersistence {
         session_storage_path: &Path,
         openbitfun_session_id: &str,
         model_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.update_metadata(session_storage_path, openbitfun_session_id, |metadata| {
             metadata.model_name = model_id.to_string();
             metadata.touch();
@@ -163,8 +163,8 @@ impl AcpSessionPersistence {
         &self,
         session_storage_path: &Path,
         openbitfun_session_id: &str,
-        update: impl FnOnce(&mut SessionMetadata) -> OpenBitFunResult<()>,
-    ) -> OpenBitFunResult<()> {
+        update: impl FnOnce(&mut SessionMetadata) -> StarMateResult<()>,
+    ) -> StarMateResult<()> {
         self.manager
             .update_session_metadata_if_present(session_storage_path, openbitfun_session_id, update)
             .await
@@ -172,7 +172,7 @@ impl AcpSessionPersistence {
     }
 }
 
-fn ensure_object(value: &mut Value) -> OpenBitFunResult<()> {
+fn ensure_object(value: &mut Value) -> StarMateResult<()> {
     if value.is_object() {
         return Ok(());
     }
@@ -181,7 +181,7 @@ fn ensure_object(value: &mut Value) -> OpenBitFunResult<()> {
     if value.is_object() {
         Ok(())
     } else {
-        Err(OpenBitFunError::service(
+        Err(StarMateError::service(
             "Failed to initialize ACP session custom metadata".to_string(),
         ))
     }

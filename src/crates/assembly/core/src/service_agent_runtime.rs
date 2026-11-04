@@ -1357,7 +1357,7 @@ impl ScheduledSessionManagementPort {
             .local_revert_workspace(&request.session_id)
             .await
             .map_err(|error| {
-                if matches!(&error, crate::util::errors::OpenBitFunError::Validation(message) if message == "Session undo and redo are unavailable for remote workspaces")
+                if matches!(&error, crate::util::errors::StarMateError::Validation(message) if message == "Session undo and redo are unavailable for remote workspaces")
                 {
                     starmate_runtime_ports::PortError::new(
                         starmate_runtime_ports::PortErrorKind::NotAvailable,
@@ -1693,22 +1693,22 @@ impl AgentSessionManagementPort for ScheduledSessionManagementPort {
             .await
             .map_err(|error| {
                 let kind = match error {
-                    crate::util::errors::OpenBitFunError::Validation(_) => {
+                    crate::util::errors::StarMateError::Validation(_) => {
                         starmate_runtime_ports::PortErrorKind::InvalidRequest
                     }
-                    crate::util::errors::OpenBitFunError::NotFound(_) => {
+                    crate::util::errors::StarMateError::NotFound(_) => {
                         starmate_runtime_ports::PortErrorKind::NotFound
                     }
-                    crate::util::errors::OpenBitFunError::Timeout(_) => {
+                    crate::util::errors::StarMateError::Timeout(_) => {
                         starmate_runtime_ports::PortErrorKind::Timeout
                     }
-                    crate::util::errors::OpenBitFunError::Cancelled(_) => {
+                    crate::util::errors::StarMateError::Cancelled(_) => {
                         starmate_runtime_ports::PortErrorKind::Cancelled
                     }
-                    crate::util::errors::OpenBitFunError::SessionInUse { .. } => {
+                    crate::util::errors::StarMateError::SessionInUse { .. } => {
                         starmate_runtime_ports::PortErrorKind::SessionInUse
                     }
-                    crate::util::errors::OpenBitFunError::OutcomeUnknown(_) => {
+                    crate::util::errors::StarMateError::OutcomeUnknown(_) => {
                         starmate_runtime_ports::PortErrorKind::OutcomeUnknown
                     }
                     _ => starmate_runtime_ports::PortErrorKind::Backend,
@@ -1852,25 +1852,25 @@ impl AgentSessionClosePort for ScheduledSessionManagementPort {
 }
 
 fn map_session_close_error(
-    error: crate::util::errors::OpenBitFunError,
+    error: crate::util::errors::StarMateError,
 ) -> starmate_runtime_ports::PortError {
     let kind = match &error {
-        crate::util::errors::OpenBitFunError::Validation(_) => {
+        crate::util::errors::StarMateError::Validation(_) => {
             starmate_runtime_ports::PortErrorKind::InvalidRequest
         }
-        crate::util::errors::OpenBitFunError::NotFound(_) => {
+        crate::util::errors::StarMateError::NotFound(_) => {
             starmate_runtime_ports::PortErrorKind::NotFound
         }
-        crate::util::errors::OpenBitFunError::Timeout(_) => {
+        crate::util::errors::StarMateError::Timeout(_) => {
             starmate_runtime_ports::PortErrorKind::Timeout
         }
-        crate::util::errors::OpenBitFunError::Cancelled(_) => {
+        crate::util::errors::StarMateError::Cancelled(_) => {
             starmate_runtime_ports::PortErrorKind::Cancelled
         }
-        crate::util::errors::OpenBitFunError::SessionInUse { .. } => {
+        crate::util::errors::StarMateError::SessionInUse { .. } => {
             starmate_runtime_ports::PortErrorKind::SessionInUse
         }
-        crate::util::errors::OpenBitFunError::OutcomeUnknown(_) => {
+        crate::util::errors::StarMateError::OutcomeUnknown(_) => {
             starmate_runtime_ports::PortErrorKind::OutcomeUnknown
         }
         _ => starmate_runtime_ports::PortErrorKind::Backend,
@@ -4125,7 +4125,7 @@ mod tests {
         DialogTurnData, DialogTurnKind, ModelRoundData, TextItemData, ThinkingItemData,
         ToolCallData, ToolItemData, TurnStatus, UserMessageData,
     };
-    use crate::OpenBitFunError;
+    use crate::StarMateError;
 
     #[tokio::test]
     async fn remote_session_host_registers_targeted_rollback_port() {
@@ -4476,7 +4476,7 @@ mod tests {
 
     #[test]
     fn session_close_preserves_writer_conflicts() {
-        let error = map_session_close_error(OpenBitFunError::SessionInUse {
+        let error = map_session_close_error(StarMateError::SessionInUse {
             session_id: "session-1".to_string(),
         });
 

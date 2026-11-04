@@ -24,12 +24,12 @@ struct CatalogRevision {
 }
 
 impl CatalogRevision {
-    async fn read(root: &Path) -> OpenBitFunResult<Self> {
+    async fn read(root: &Path) -> StarMateResult<Self> {
         Ok(Self {
             native: JsonFileStore
                 .revision(&SessionStorageLayout::new(root).index_path())
                 .await
-                .map_err(|error| OpenBitFunError::io(error.to_string()))?,
+                .map_err(|error| StarMateError::io(error.to_string()))?,
             #[cfg(feature = "external-sources")]
             external: crate::external_session_import::deferred::catalog_revision(root).await?,
         })
@@ -87,7 +87,7 @@ impl PersistenceManager {
         cursor: Option<&str>,
         limit: usize,
         query: &SessionCatalogQuery,
-    ) -> OpenBitFunResult<SessionMetadataPage> {
+    ) -> StarMateResult<SessionMetadataPage> {
         let root = self.project_sessions_dir(workspace);
         // Serialize builds so simultaneous startup/expansion requests do not
         // parse and sort the same version twice.

@@ -371,7 +371,7 @@ async fn external_source_snapshot_response(
     })
 }
 
-fn core_error(error: starmate_core::OpenBitFunError) -> AppManagementError {
+fn core_error(error: starmate_core::StarMateError) -> AppManagementError {
     AppManagementError::internal(sanitize_management_error(error.to_string()))
 }
 

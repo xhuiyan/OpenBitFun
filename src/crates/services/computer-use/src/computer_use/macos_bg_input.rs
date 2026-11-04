@@ -11,7 +11,7 @@ use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use core_graphics::geometry::CGPoint;
 use foreign_types::ForeignType;
 use log::{debug, info, warn};
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use std::ffi::c_void;
 use std::thread;
 use std::time::{Duration, Instant};
@@ -125,18 +125,18 @@ fn accessibility_is_trusted() -> bool {
     unsafe { AXIsProcessTrustedWithOptions(std::ptr::null()) }
 }
 
-fn private_source(label: &str) -> OpenBitFunResult<CGEventSource> {
+fn private_source(label: &str) -> StarMateResult<CGEventSource> {
     CGEventSource::new(CGEventSourceStateID::Private)
-        .map_err(|_| OpenBitFunError::tool(format!("CGEventSource::Private failed ({})", label)))
+        .map_err(|_| StarMateError::tool(format!("CGEventSource::Private failed ({})", label)))
 }
 
 // AppKit's window ordering depends on the event source state. A private mouse
 // source raises ordinary windows even with window-addressed routing. Session
 // mouse events remain PID-scoped; always set explicit flags to avoid inheriting
 // the user's held modifiers. Keyboard events retain their private source.
-pub(super) fn mouse_source(label: &str) -> OpenBitFunResult<CGEventSource> {
+pub(super) fn mouse_source(label: &str) -> StarMateResult<CGEventSource> {
     CGEventSource::new(CGEventSourceStateID::CombinedSessionState).map_err(|_| {
-        OpenBitFunError::tool(format!(
+        StarMateError::tool(format!(
             "CGEventSource::CombinedSessionState failed ({label})"
         ))
     })
@@ -155,7 +155,7 @@ fn key_chord_events(
     modifiers: &[BgModifier],
     key: u16,
     label: &str,
-) -> OpenBitFunResult<Vec<CGEvent>> {
+) -> StarMateResult<Vec<CGEvent>> {
     let mut unique = Vec::with_capacity(modifiers.len());
     for modifier in modifiers {
         if !unique.contains(modifier) {
@@ -164,9 +164,9 @@ fn key_chord_events(
     }
     let source = private_source(label)?;
     let mut events = Vec::with_capacity(unique.len() * 2 + 2);
-    let mut append = |keycode, down, flags| -> OpenBitFunResult<()> {
+    let mut append = |keycode, down, flags| -> StarMateResult<()> {
         let event = CGEvent::new_keyboard_event(source.clone(), keycode, down).map_err(|_| {
-            OpenBitFunError::tool(format!("CGEvent chord creation failed ({label})"))
+            StarMateError::tool(format!("CGEvent chord creation failed ({label})"))
         })?;
         event.set_flags(flags);
         events.push(event);
@@ -207,9 +207,9 @@ static INPUT_RELEASE: std::sync::Mutex<()> = std::sync::Mutex::new(());
 fn verify_input_identity(
     owner: InputOwner,
     current: Option<super::macos_skylight::ProcessIdentity>,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if current != Some(owner.identity) {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[CONTROL_TARGET_CHANGED] The input target process identity changed or is unavailable",
         ));
     }
@@ -365,14 +365,14 @@ fn release_held_input(
     input: HeldInput,
     mut identity: impl FnMut(i32) -> Option<super::macos_skylight::ProcessIdentity>,
     window_bounds: impl FnOnce(i32, u32) -> Result<[f64; 4], String>,
-    route: impl FnOnce(&CGEvent, u32, f64, f64) -> OpenBitFunResult<()>,
+    route: impl FnOnce(&CGEvent, u32, f64, f64) -> StarMateResult<()>,
     post: impl FnOnce(i32, &CGEvent, bool),
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     verify_input_identity(owner, identity(owner.pid))?;
     let event = match input {
         HeldInput::Key(code, _) => {
             CGEvent::new_keyboard_event(private_source("cancel_release")?, code, false).map_err(
-                |_| OpenBitFunError::tool("Cancellation keyboard release creation failed"),
+                |_| StarMateError::tool("Cancellation keyboard release creation failed"),
             )?
         }
         HeldInput::Mouse {
@@ -380,7 +380,7 @@ fn release_held_input(
             point: [x, y],
             window,
         } => {
-            let current = window_bounds(owner.pid, window).map_err(OpenBitFunError::tool)?;
+            let current = window_bounds(owner.pid, window).map_err(StarMateError::tool)?;
             let (kind, button) = match button {
                 0 => (CGEventType::LeftMouseUp, CGMouseButton::Left),
                 1 => (CGEventType::RightMouseUp, CGMouseButton::Right),
@@ -392,7 +392,7 @@ fn release_held_input(
                 CGPoint::new(x, y),
                 button,
             )
-            .map_err(|_| OpenBitFunError::tool("Cancellation mouse release creation failed"))?;
+            .map_err(|_| StarMateError::tool("Cancellation mouse release creation failed"))?;
             // Moving or resizing the same window must not strand a posted
             // button-down. Keep the last global point instead of translating
             // it with the window: its new local point can be outside content,
@@ -409,7 +409,7 @@ fn release_held_input(
     Ok(())
 }
 
-fn route_mouse_to_window(event: &CGEvent, window: u32, wx: f64, wy: f64) -> OpenBitFunResult<()> {
+fn route_mouse_to_window(event: &CGEvent, window: u32, wx: f64, wy: f64) -> StarMateResult<()> {
     // CGEventPostToPid selects a process, not a window. AppKit drops mouse
     // events without a window number/local point when the app is inactive.
     for field in [51, 91, 92] {
@@ -425,32 +425,32 @@ fn route_mouse_to_window(event: &CGEvent, window: u32, wx: f64, wy: f64) -> Open
         point.x - wx,
         point.y - wy,
     ) {
-        return Err(OpenBitFunError::tool("[BACKGROUND_INPUT_UNAVAILABLE] Window-local event routing is unavailable on this macOS host"));
+        return Err(StarMateError::tool("[BACKGROUND_INPUT_UNAVAILABLE] Window-local event routing is unavailable on this macOS host"));
     }
     Ok(())
 }
 
-fn post_directed(pid: i32, event: &CGEvent, authenticated: bool) -> OpenBitFunResult<()> {
+fn post_directed(pid: i32, event: &CGEvent, authenticated: bool) -> StarMateResult<()> {
     let mut held = HELD_INPUTS
         .lock()
-        .map_err(|_| OpenBitFunError::tool("Input state lock poisoned"))?;
-    super::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
+        .map_err(|_| StarMateError::tool("Input state lock poisoned"))?;
+    super::control_session::input_allowed().map_err(StarMateError::tool)?;
     let identity = super::macos_skylight::process_identity(pid).ok_or_else(|| {
-        OpenBitFunError::tool("[CONTROL_TARGET_CHANGED] The input target process is unavailable")
+        StarMateError::tool("[CONTROL_TARGET_CHANGED] The input target process is unavailable")
     })?;
     let owner = InputOwner { pid, identity };
     for (held_owner, _) in held.iter().filter(|(held_owner, _)| held_owner.pid == pid) {
         verify_input_identity(*held_owner, Some(identity))?;
     }
     let window_id = super::macos_capture::bound_window_id(pid).map_err(|_| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "[CONTROL_TARGET_CHANGED] The captured application window is unavailable",
         )
     })?;
     super::control_session::target_allowed(&format!("pid:{pid}/window:{window_id}"))
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
     let bounds =
-        super::macos_capture::window_bounds(pid, window_id).map_err(OpenBitFunError::tool)?;
+        super::macos_capture::window_bounds(pid, window_id).map_err(StarMateError::tool)?;
     let [wx, wy, width, height] = bounds;
     if matches!(event.get_type(), CGEventType::ScrollWheel) {
         let point = super::control_session::snapshot()
@@ -562,7 +562,7 @@ fn pointer_route(
 }
 
 // One selected delivery path per event. Never post mouse events twice.
-fn post_mouse(pid: i32, event: &CGEvent) -> OpenBitFunResult<()> {
+fn post_mouse(pid: i32, event: &CGEvent) -> StarMateResult<()> {
     post_directed(pid, event, false)?;
     let point = event.location();
     let click = matches!(
@@ -574,10 +574,10 @@ fn post_mouse(pid: i32, event: &CGEvent) -> OpenBitFunResult<()> {
     }
     Ok(())
 }
-fn post_keyboard(pid: i32, event: &CGEvent) -> OpenBitFunResult<()> {
+fn post_keyboard(pid: i32, event: &CGEvent) -> StarMateResult<()> {
     post_directed(pid, event, true)
 }
-fn post_keyboard_no_auth(pid: i32, event: &CGEvent) -> OpenBitFunResult<()> {
+fn post_keyboard_no_auth(pid: i32, event: &CGEvent) -> StarMateResult<()> {
     post_directed(pid, event, false)
 }
 
@@ -617,8 +617,8 @@ fn stamp_chromium_fields(
 /// The focus gesture is a click outside the bound window, which dismisses an
 /// open menu or popup. Pointer input aimed at one of the target's popups is
 /// delivered as a physical click would be: straight to it, without refocusing.
-fn require_pointer_down_mode(pid: i32, point: (f64, f64)) -> OpenBitFunResult<()> {
-    let window = super::macos_capture::bound_window_id(pid).map_err(OpenBitFunError::tool)?;
+fn require_pointer_down_mode(pid: i32, point: (f64, f64)) -> StarMateResult<()> {
+    let window = super::macos_capture::bound_window_id(pid).map_err(StarMateError::tool)?;
     let overlays = super::macos_capture::overlays(pid, window).unwrap_or_default();
     if let Some(overlay) = super::overlay_windows::topmost_at(&overlays, point.0, point.1) {
         debug!(
@@ -646,7 +646,7 @@ pub(super) fn bg_click(
     button: BgMouseButton,
     click_count: u32,
     modifiers: &[BgModifier],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     if click_count == 0 {
         return Ok(());
@@ -687,13 +687,13 @@ pub(super) fn bg_click(
     // hit-testing in the target app sees the right coordinates. Does NOT
     // move the user's real cursor because we post pid-scoped, not global.
     let mv = CGEvent::new_mouse_event(src.clone(), CGEventType::MouseMoved, pt, button.cg())
-        .map_err(|_| OpenBitFunError::tool("CGEvent MouseMoved failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("CGEvent MouseMoved failed".to_string()))?;
     mv.set_flags(flags);
     post_mouse(pid, &mv)?;
 
     for i in 1..=click_count {
         let down = CGEvent::new_mouse_event(src.clone(), button.down(), pt, button.cg())
-            .map_err(|_| OpenBitFunError::tool("CGEvent MouseDown failed".to_string()))?;
+            .map_err(|_| StarMateError::tool("CGEvent MouseDown failed".to_string()))?;
         // Click count field lets the target app recognise double / triple
         // clicks within its own quench-time window.
         down.set_integer_value_field(
@@ -704,7 +704,7 @@ pub(super) fn bg_click(
         post_mouse(pid, &down)?;
 
         let up = CGEvent::new_mouse_event(src.clone(), button.up(), pt, button.cg())
-            .map_err(|_| OpenBitFunError::tool("CGEvent MouseUp failed".to_string()))?;
+            .map_err(|_| StarMateError::tool("CGEvent MouseUp failed".to_string()))?;
         up.set_integer_value_field(
             core_graphics::event::EventField::MOUSE_EVENT_CLICK_STATE,
             i as i64,
@@ -886,7 +886,7 @@ pub(super) unsafe fn ns_string_to_rust(s: *mut objc2::runtime::AnyObject) -> Opt
 ///
 /// Returns `Ok(true)` when activation succeeded, `Ok(false)` when the app
 /// could not be found, and `Err(_)` on AppKit FFI failures.
-pub(super) fn activate_pid_macos(pid: i32) -> OpenBitFunResult<bool> {
+pub(super) fn activate_pid_macos(pid: i32) -> StarMateResult<bool> {
     // Without a window_id we can't use the focus-without-raise SPI.
     // Fall through to the public API.
     activate_pid_macos_with_window(pid, None)
@@ -897,8 +897,8 @@ pub(super) fn activate_pid_macos(pid: i32) -> OpenBitFunResult<bool> {
 pub(super) fn activate_pid_macos_with_window(
     pid: i32,
     window_id: Option<u32>,
-) -> OpenBitFunResult<bool> {
-    super::control_session::foreground_allowed().map_err(OpenBitFunError::tool)?;
+) -> StarMateResult<bool> {
+    super::control_session::foreground_allowed().map_err(StarMateError::tool)?;
     // Try focus-without-raise first when we have a window id.
     if let Some(wid) = window_id {
         if super::macos_skylight::is_focus_without_raise_available() {
@@ -954,7 +954,7 @@ pub(super) fn activate_pid_macos_with_window(
 /// Pixel-delta scroll inside the focused scroll container of the target
 /// pid's frontmost window. Positive `dy` scrolls content down (matches
 /// trackpad / `wheel1>0` direction).
-pub(super) fn bg_scroll(pid: i32, dx: i32, dy: i32) -> OpenBitFunResult<()> {
+pub(super) fn bg_scroll(pid: i32, dx: i32, dy: i32) -> StarMateResult<()> {
     info!(
         target: "computer_use::bg_input",
         "bg_scroll.enter pid={} dx={} dy={}",
@@ -965,7 +965,7 @@ pub(super) fn bg_scroll(pid: i32, dx: i32, dy: i32) -> OpenBitFunResult<()> {
     // Sign convention matches the system trackpad (positive dy = content
     // moves down on screen, i.e. user is looking further into the document).
     let ev = CGEvent::new_scroll_event(src, ScrollEventUnit::PIXEL, 2, dy, dx, 0)
-        .map_err(|_| OpenBitFunError::tool("CGEventCreateScrollWheelEvent2 failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("CGEventCreateScrollWheelEvent2 failed".to_string()))?;
     ev.set_flags(CGEventFlags::CGEventFlagNull);
     post_mouse(pid, &ev)?;
     Ok(())
@@ -975,7 +975,7 @@ pub(super) fn bg_scroll(pid: i32, dx: i32, dy: i32) -> OpenBitFunResult<()> {
 /// `kCGEventKeyboardEventUnicodeString` field. This bypasses keymap
 /// translation entirely, so it correctly handles emoji, CJK and other
 /// non-Latin input without touching the system IME.
-pub(super) fn bg_type_text(pid: i32, text: &str) -> OpenBitFunResult<()> {
+pub(super) fn bg_type_text(pid: i32, text: &str) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     super::macos_input_focus::prepare(pid)?;
     if text.is_empty() {
@@ -998,13 +998,13 @@ pub(super) fn bg_type_text(pid: i32, text: &str) -> OpenBitFunResult<()> {
     for ch in text.chars() {
         // Keycode 0 is irrelevant when the unicode string field is set.
         let ev = CGEvent::new_keyboard_event(src.clone(), 0, true)
-            .map_err(|_| OpenBitFunError::tool("CGEventCreateKeyboardEvent failed".to_string()))?;
+            .map_err(|_| StarMateError::tool("CGEventCreateKeyboardEvent failed".to_string()))?;
         let buf: Vec<u16> = ch.encode_utf16(&mut [0u16; 2]).to_vec();
         ev.set_string_from_utf16_unchecked(&buf);
         post_keyboard(pid, &ev)?;
         // Match keyup so the target app sees a complete keystroke.
         let ev2 = CGEvent::new_keyboard_event(src.clone(), 0, false).map_err(|_| {
-            OpenBitFunError::tool("CGEventCreateKeyboardEvent (up) failed".to_string())
+            StarMateError::tool("CGEventCreateKeyboardEvent (up) failed".to_string())
         })?;
         ev2.set_string_from_utf16_unchecked(&buf);
         post_keyboard(pid, &ev2)?;
@@ -1018,7 +1018,7 @@ pub(super) fn bg_type_text(pid: i32, text: &str) -> OpenBitFunResult<()> {
 /// Send a key chord (modifier+key combo) to the target pid using the
 /// private event source. `key` is the AX / Carbon virtual keycode; callers
 /// can use `keycode_for_char` for ASCII letters or pass a literal keycode.
-pub(super) fn bg_key_chord(pid: i32, modifiers: &[BgModifier], key: u16) -> OpenBitFunResult<()> {
+pub(super) fn bg_key_chord(pid: i32, modifiers: &[BgModifier], key: u16) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     super::macos_input_focus::prepare(pid)?;
     info!(
@@ -1043,7 +1043,7 @@ pub(super) fn bg_click_chromium(
     wid: u32,
     click_count: u32,
     modifiers: &[BgModifier],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     if click_count == 0 {
         return Ok(());
@@ -1087,7 +1087,7 @@ pub(super) fn bg_click_chromium(
         target,
         CGMouseButton::Left,
     )
-    .map_err(|_| OpenBitFunError::tool("Chromium click: mouseMoved creation failed".to_string()))?;
+    .map_err(|_| StarMateError::tool("Chromium click: mouseMoved creation failed".to_string()))?;
     stamp(&move_ev, win_local, 0, 2);
     post(&move_ev)?;
     thread::sleep(Duration::from_millis(15));
@@ -1101,7 +1101,7 @@ pub(super) fn bg_click_chromium(
             target,
             CGMouseButton::Left,
         )
-        .map_err(|_| OpenBitFunError::tool("Chromium click: target down failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("Chromium click: target down failed".to_string()))?;
         stamp(&down, win_local, click_state, 3);
         post(&down)?;
         thread::sleep(Duration::from_millis(1));
@@ -1112,7 +1112,7 @@ pub(super) fn bg_click_chromium(
             target,
             CGMouseButton::Left,
         )
-        .map_err(|_| OpenBitFunError::tool("Chromium click: target up failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("Chromium click: target up failed".to_string()))?;
         stamp(&up, win_local, click_state, 3);
         post(&up)?;
 
@@ -1187,7 +1187,7 @@ pub(super) fn bg_drag(
     steps: usize,
     modifiers: &[BgModifier],
     button: BgDragButton,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     require_pointer_down_mode(pid, (from_x, from_y))?;
     let src = mouse_source("drag")?;
@@ -1207,7 +1207,7 @@ pub(super) fn bg_drag(
         y: from_y,
     };
     let down = CGEvent::new_mouse_event(src.clone(), button.down(), from_pt, cg_button)
-        .map_err(|_| OpenBitFunError::tool("drag: mouseDown failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("drag: mouseDown failed".to_string()))?;
     down.set_flags(flags);
     stamp_chromium_fields(&down, pid, wid, 1, from_local);
     post_mouse(pid, &down)?;
@@ -1223,7 +1223,7 @@ pub(super) fn bg_drag(
             .map(|((fx, fy), (tx, ty))| (fx + (tx - fx) * t, fy + (ty - fy) * t));
         let drag_pt = CGPoint { x: ix, y: iy };
         let drag = CGEvent::new_mouse_event(src.clone(), button.dragged(), drag_pt, cg_button)
-            .map_err(|_| OpenBitFunError::tool("drag: mouseDragged failed".to_string()))?;
+            .map_err(|_| StarMateError::tool("drag: mouseDragged failed".to_string()))?;
         drag.set_flags(flags);
         stamp_chromium_fields(&drag, pid, wid, 1, il);
         post_mouse(pid, &drag)?;
@@ -1235,7 +1235,7 @@ pub(super) fn bg_drag(
     // MouseUp at end.
     let to_pt = CGPoint { x: to_x, y: to_y };
     let up = CGEvent::new_mouse_event(src.clone(), button.up(), to_pt, cg_button)
-        .map_err(|_| OpenBitFunError::tool("drag: mouseUp failed".to_string()))?;
+        .map_err(|_| StarMateError::tool("drag: mouseUp failed".to_string()))?;
     up.set_flags(flags);
     stamp_chromium_fields(&up, pid, wid, 1, to_local);
     post_mouse(pid, &up)?;
@@ -1259,7 +1259,7 @@ pub(super) fn bg_key_chord_no_auth(
     pid: i32,
     modifiers: &[BgModifier],
     key: u16,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     super::macos_input_focus::prepare(pid)?;
     info!(
@@ -1278,7 +1278,7 @@ pub(super) fn bg_right_click(
     pid: i32,
     point: (f64, f64),
     modifiers: &[BgModifier],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     require_pointer_down_mode(pid, point)?;
     let src = mouse_source("right_click")?;
@@ -1294,7 +1294,7 @@ pub(super) fn bg_right_click(
         pt,
         CGMouseButton::Right,
     )
-    .map_err(|_| OpenBitFunError::tool("CGEvent RightMouseDown failed".to_string()))?;
+    .map_err(|_| StarMateError::tool("CGEvent RightMouseDown failed".to_string()))?;
     down.set_flags(flags);
     stamp_chromium_fields(&down, pid, None, 1, None);
     post_mouse(pid, &down)?;
@@ -1306,7 +1306,7 @@ pub(super) fn bg_right_click(
         pt,
         CGMouseButton::Right,
     )
-    .map_err(|_| OpenBitFunError::tool("CGEvent RightMouseUp failed".to_string()))?;
+    .map_err(|_| StarMateError::tool("CGEvent RightMouseUp failed".to_string()))?;
     up.set_flags(flags);
     stamp_chromium_fields(&up, pid, None, 1, None);
     post_mouse(pid, &up)?;
@@ -1318,7 +1318,7 @@ pub(super) fn bg_middle_click(
     pid: i32,
     point: (f64, f64),
     modifiers: &[BgModifier],
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     require_pointer_down_mode(pid, point)?;
     let src = mouse_source("middle_click")?;
@@ -1334,7 +1334,7 @@ pub(super) fn bg_middle_click(
         pt,
         CGMouseButton::Center,
     )
-    .map_err(|_| OpenBitFunError::tool("CGEvent OtherMouseDown failed".to_string()))?;
+    .map_err(|_| StarMateError::tool("CGEvent OtherMouseDown failed".to_string()))?;
     down.set_flags(flags);
     stamp_chromium_fields(&down, pid, None, 1, None);
     post_mouse(pid, &down)?;
@@ -1346,7 +1346,7 @@ pub(super) fn bg_middle_click(
         pt,
         CGMouseButton::Center,
     )
-    .map_err(|_| OpenBitFunError::tool("CGEvent OtherMouseUp failed".to_string()))?;
+    .map_err(|_| StarMateError::tool("CGEvent OtherMouseUp failed".to_string()))?;
     up.set_flags(flags);
     stamp_chromium_fields(&up, pid, None, 1, None);
     post_mouse(pid, &up)?;
@@ -1356,16 +1356,16 @@ pub(super) fn bg_middle_click(
 /// Parse a key spec the dispatch layer might pass us, of the form
 /// `"command+shift+p"` / `"return"` / `"escape"` / `"a"`. Returns the
 /// modifier list and the resolved keycode.
-pub(super) fn parse_key_spec(spec: &str) -> OpenBitFunResult<(Vec<BgModifier>, u16)> {
+pub(super) fn parse_key_spec(spec: &str) -> StarMateResult<(Vec<BgModifier>, u16)> {
     let mut mods = Vec::new();
     let parts: Vec<&str> = spec.split('+').map(str::trim).collect();
     if parts.is_empty() {
-        return Err(OpenBitFunError::tool("empty key spec".to_string()));
+        return Err(StarMateError::tool("empty key spec".to_string()));
     }
     let (last, head) = parts.split_last().unwrap();
     for p in head {
         let m = BgModifier::from_str(p)
-            .ok_or_else(|| OpenBitFunError::tool(format!("unknown modifier in key spec: {}", p)))?;
+            .ok_or_else(|| StarMateError::tool(format!("unknown modifier in key spec: {}", p)))?;
         if !mods.contains(&m) {
             mods.push(m);
         }
@@ -1380,15 +1380,15 @@ pub(super) fn parse_key_spec(spec: &str) -> OpenBitFunResult<(Vec<BgModifier>, u
             }
             keycode_for_char(c)
         })
-        .ok_or_else(|| OpenBitFunError::tool(format!("unknown key in key spec: {}", last)))?;
+        .ok_or_else(|| StarMateError::tool(format!("unknown key in key spec: {}", last)))?;
     Ok((mods, kc))
 }
 
 /// Parse the ControlHub/Codex chord shape: `["command", "shift", "p"]`,
 /// `["command+shift+p"]`, or `["return"]`.
-pub(super) fn parse_key_sequence(keys: &[String]) -> OpenBitFunResult<(Vec<BgModifier>, u16)> {
+pub(super) fn parse_key_sequence(keys: &[String]) -> StarMateResult<(Vec<BgModifier>, u16)> {
     if keys.is_empty() {
-        return Err(OpenBitFunError::tool("empty key sequence".to_string()));
+        return Err(StarMateError::tool("empty key sequence".to_string()));
     }
     if keys.len() == 1 {
         return parse_key_spec(&keys[0]);
@@ -1398,7 +1398,7 @@ pub(super) fn parse_key_sequence(keys: &[String]) -> OpenBitFunResult<(Vec<BgMod
     let mut mods = Vec::with_capacity(head.len());
     for p in head {
         let m = BgModifier::from_str(p).ok_or_else(|| {
-            OpenBitFunError::tool(format!("unknown modifier in key sequence: {}", p))
+            StarMateError::tool(format!("unknown modifier in key sequence: {}", p))
         })?;
         if !mods.contains(&m) {
             mods.push(m);
@@ -1413,7 +1413,7 @@ pub(super) fn parse_key_sequence(keys: &[String]) -> OpenBitFunResult<(Vec<BgMod
             }
             keycode_for_char(c)
         })
-        .ok_or_else(|| OpenBitFunError::tool(format!("unknown key in key sequence: {}", last)))?;
+        .ok_or_else(|| StarMateError::tool(format!("unknown key in key sequence: {}", last)))?;
     Ok((mods, kc))
 }
 
@@ -1595,7 +1595,7 @@ pub(super) fn is_terminal_emulator(pid: i32) -> bool {
 ///
 /// Only works for ASCII characters that have direct keycodes. Non-ASCII text
 /// (CJK, emoji) should use `bg_type_text` (Unicode string) or `paste` instead.
-pub(super) fn bg_type_text_terminal_safe(pid: i32, text: &str) -> OpenBitFunResult<()> {
+pub(super) fn bg_type_text_terminal_safe(pid: i32, text: &str) -> StarMateResult<()> {
     let _release = InputReleaseGuard;
     super::macos_input_focus::prepare(pid)?;
     if text.is_empty() {
@@ -1620,13 +1620,13 @@ pub(super) fn bg_type_text_terminal_safe(pid: i32, text: &str) -> OpenBitFunResu
         if let Some(kc) = kc {
             // Use key events for mappable ASCII characters.
             let down = CGEvent::new_keyboard_event(src.clone(), kc, true)
-                .map_err(|_| OpenBitFunError::tool("terminal type: keydown failed".to_string()))?;
+                .map_err(|_| StarMateError::tool("terminal type: keydown failed".to_string()))?;
             down.set_flags(flags);
             post_keyboard(pid, &down)?;
             thread::sleep(Duration::from_millis(8));
 
             let up = CGEvent::new_keyboard_event(src.clone(), kc, false)
-                .map_err(|_| OpenBitFunError::tool("terminal type: keyup failed".to_string()))?;
+                .map_err(|_| StarMateError::tool("terminal type: keyup failed".to_string()))?;
             up.set_flags(flags);
             post_keyboard(pid, &up)?;
             thread::sleep(Duration::from_millis(8));
@@ -1634,14 +1634,14 @@ pub(super) fn bg_type_text_terminal_safe(pid: i32, text: &str) -> OpenBitFunResu
             // Fallback to Unicode string for non-ASCII characters.
             let buf: Vec<u16> = ch.encode_utf16(&mut [0u16; 2]).to_vec();
             let down = CGEvent::new_keyboard_event(src.clone(), 0, true).map_err(|_| {
-                OpenBitFunError::tool("terminal type: unicode down failed".to_string())
+                StarMateError::tool("terminal type: unicode down failed".to_string())
             })?;
             down.set_string_from_utf16_unchecked(&buf);
             post_keyboard(pid, &down)?;
             thread::sleep(Duration::from_millis(8));
 
             let up = CGEvent::new_keyboard_event(src.clone(), 0, false).map_err(|_| {
-                OpenBitFunError::tool("terminal type: unicode up failed".to_string())
+                StarMateError::tool("terminal type: unicode up failed".to_string())
             })?;
             up.set_string_from_utf16_unchecked(&buf);
             post_keyboard(pid, &up)?;
@@ -1654,7 +1654,7 @@ pub(super) fn bg_type_text_terminal_safe(pid: i32, text: &str) -> OpenBitFunResu
 /// Type text with automatic terminal detection: routes to
 /// `bg_type_text_terminal_safe` when the target is a terminal emulator,
 /// otherwise uses the standard `bg_type_text` (Unicode string injection).
-pub(super) fn bg_type_text_auto(pid: i32, text: &str) -> OpenBitFunResult<()> {
+pub(super) fn bg_type_text_auto(pid: i32, text: &str) -> StarMateResult<()> {
     if is_terminal_emulator(pid) {
         debug!(
             target: "computer_use::bg_input",
@@ -1964,7 +1964,7 @@ mod tests {
             |event, window, wx, wy| {
                 assert_eq!(event.get_type() as u32, CGEventType::LeftMouseUp as u32);
                 assert_eq!((window, wx, wy), (17, 100.0, 100.0));
-                Err(OpenBitFunError::tool("Window-local routing unavailable"))
+                Err(StarMateError::tool("Window-local routing unavailable"))
             },
             |_, _, _| panic!("An unrouted release must never be posted"),
         );

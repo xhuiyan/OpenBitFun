@@ -17,7 +17,7 @@ use crate::agentic::tools::tool_result_storage;
 use crate::agentic::WorkspaceBinding;
 use crate::native_hooks::{self, NativeHookSessionFacts};
 use crate::util::elapsed_ms_u64;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use futures::future::join_all;
 use log::{debug, error, info, warn};
 use starmate_agent_runtime::permission::{
@@ -328,12 +328,12 @@ fn elapsed_ms_since(time: SystemTime) -> u64 {
         .unwrap_or(0)
 }
 
-fn classify_tool_error(error: &OpenBitFunError) -> &'static str {
+fn classify_tool_error(error: &StarMateError) -> &'static str {
     match error {
-        OpenBitFunError::Validation(_) => "invalid_arguments",
-        OpenBitFunError::Cancelled(_) => "cancelled",
-        OpenBitFunError::Timeout(_) => "timeout",
-        OpenBitFunError::NotFound(_) => "not_found",
+        StarMateError::Validation(_) => "invalid_arguments",
+        StarMateError::Cancelled(_) => "cancelled",
+        StarMateError::Timeout(_) => "timeout",
+        StarMateError::NotFound(_) => "not_found",
         _ => "execution_error",
     }
 }
@@ -341,7 +341,7 @@ fn classify_tool_error(error: &OpenBitFunError) -> &'static str {
 fn build_error_execution_result(
     task_id: &str,
     task: Option<ToolTask>,
-    error: &OpenBitFunError,
+    error: &StarMateError,
 ) -> ToolExecutionResult {
     let error_message = error.to_string();
     let category = classify_tool_error(error);
@@ -523,23 +523,23 @@ fn build_permission_rejected_tool_result(
 const ROUND_INJECTION_RUNNING_TOOL_CANCELLED_MESSAGE: &str =
     "Tool execution cancelled because a pending round injection requested running-tool preemption for this turn.";
 
-fn should_retry_tool_error(error: &OpenBitFunError) -> bool {
-    if matches!(error, OpenBitFunError::OutcomeUnknown(_)) {
+fn should_retry_tool_error(error: &StarMateError) -> bool {
+    if matches!(error, StarMateError::OutcomeUnknown(_)) {
         return false;
     }
     matches!(
         error,
-        OpenBitFunError::Timeout(_)
-            | OpenBitFunError::Io(_)
-            | OpenBitFunError::Http(_)
-            | OpenBitFunError::Service(_)
-            | OpenBitFunError::MCPError(_)
-            | OpenBitFunError::ProcessError(_)
-            | OpenBitFunError::Other(_)
+        StarMateError::Timeout(_)
+            | StarMateError::Io(_)
+            | StarMateError::Http(_)
+            | StarMateError::Service(_)
+            | StarMateError::MCPError(_)
+            | StarMateError::ProcessError(_)
+            | StarMateError::Other(_)
     )
 }
 
-fn classify_tool_retry_error(error: &OpenBitFunError) -> ToolExecutionErrorClass {
+fn classify_tool_retry_error(error: &StarMateError) -> ToolExecutionErrorClass {
     if should_retry_tool_error(error) {
         ToolExecutionErrorClass::Retryable
     } else {
@@ -549,26 +549,26 @@ fn classify_tool_retry_error(error: &OpenBitFunError) -> ToolExecutionErrorClass
 
 fn map_tool_execution_admission_rejection(
     error: ToolExecutionAdmissionRejection,
-) -> OpenBitFunError {
+) -> StarMateError {
     match error {
         ToolExecutionAdmissionRejection::RuntimeRestriction(error) => error.into(),
         ToolExecutionAdmissionRejection::AllowedList(error) => {
-            OpenBitFunError::Validation(error.to_string())
+            StarMateError::Validation(error.to_string())
         }
         ToolExecutionAdmissionRejection::Deferred(error) => {
-            OpenBitFunError::Validation(error.to_string())
+            StarMateError::Validation(error.to_string())
         }
     }
 }
 
 #[cfg(feature = "ptc-runtime")]
-fn map_ptc_runtime_error(error: PortError) -> OpenBitFunError {
+fn map_ptc_runtime_error(error: PortError) -> StarMateError {
     match error.kind {
-        PortErrorKind::Cancelled => OpenBitFunError::Cancelled(error.message),
-        PortErrorKind::Timeout => OpenBitFunError::Timeout(error.message),
-        PortErrorKind::InvalidRequest => OpenBitFunError::Validation(error.message),
-        PortErrorKind::NotAvailable => OpenBitFunError::Service(error.message),
-        _ => OpenBitFunError::ProcessError(error.message),
+        PortErrorKind::Cancelled => StarMateError::Cancelled(error.message),
+        PortErrorKind::Timeout => StarMateError::Timeout(error.message),
+        PortErrorKind::InvalidRequest => StarMateError::Validation(error.message),
+        PortErrorKind::NotAvailable => StarMateError::Service(error.message),
+        _ => StarMateError::ProcessError(error.message),
     }
 }
 
@@ -619,7 +619,7 @@ enum PermissionPlanDraft {
 pub fn permission_project_id_for_workspace_identity(
     identity: &starmate_services_core::workspace_identity::WorkspaceSessionIdentity,
     is_remote: bool,
-) -> OpenBitFunResult<String> {
+) -> StarMateResult<String> {
     if !is_remote {
         return Ok(
             starmate_services_core::workspace_identity::local_workspace_stable_storage_id(
@@ -630,7 +630,7 @@ pub fn permission_project_id_for_workspace_identity(
 
     if identity.hostname == "_unresolved" {
         let connection_id = identity.remote_connection_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::validation(
+            StarMateError::validation(
                 "Unresolved remote workspace permission identity has no connection id".to_string(),
             )
         })?;
@@ -650,16 +650,16 @@ pub fn permission_project_id_for_workspace_identity(
     )
 }
 
-fn permission_project_id(context: &ToolUseContext) -> OpenBitFunResult<String> {
+fn permission_project_id(context: &ToolUseContext) -> StarMateResult<String> {
     let workspace = context.workspace.as_ref().ok_or_else(|| {
-        OpenBitFunError::validation("A workspace is required for file permissions".to_string())
+        StarMateError::validation("A workspace is required for file permissions".to_string())
     })?;
     permission_project_id_for_workspace_identity(&workspace.session_identity, workspace.is_remote())
 }
 
-fn permission_project_path(context: &ToolUseContext) -> OpenBitFunResult<String> {
+fn permission_project_path(context: &ToolUseContext) -> StarMateResult<String> {
     let workspace = context.workspace.as_ref().ok_or_else(|| {
-        OpenBitFunError::validation("A workspace is required for file permissions".to_string())
+        StarMateError::validation("A workspace is required for file permissions".to_string())
     })?;
     Ok(workspace
         .session_identity
@@ -674,7 +674,7 @@ const ACCOUNT_PERMISSION_PROJECT_PATH: &str = "GitHub account";
 fn permission_scope(
     context: &ToolUseContext,
     intents: &[PermissionIntent],
-) -> OpenBitFunResult<(String, String)> {
+) -> StarMateResult<(String, String)> {
     if context.workspace.is_some() {
         return Ok((
             permission_project_id(context)?,
@@ -696,7 +696,7 @@ fn permission_scope(
         ));
     }
 
-    Err(OpenBitFunError::validation(
+    Err(StarMateError::validation(
         "A workspace is required for file permissions".to_string(),
     ))
 }
@@ -967,7 +967,7 @@ impl ToolPipeline {
         tool_name: String,
         intents: Vec<PermissionIntent>,
         context: ToolUseContext,
-    ) -> OpenBitFunResult<PermissionPlanDraft> {
+    ) -> StarMateResult<PermissionPlanDraft> {
         let hook_ask = self
             .hook_asks
             .lock()
@@ -1004,7 +1004,7 @@ impl ToolPipeline {
             Some(ref manager) => manager
                 .list_project_grants(&project_id)
                 .await
-                .map_err(|error| OpenBitFunError::service(error.to_string()))?,
+                .map_err(|error| StarMateError::service(error.to_string()))?,
             None => Vec::new(),
         };
         let asks =
@@ -1054,7 +1054,7 @@ impl ToolPipeline {
         }
 
         if manager.is_none() {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "Permission request manager is unavailable for a file tool request".to_string(),
             ));
         }
@@ -1103,9 +1103,9 @@ impl ToolPipeline {
         requests: Vec<PermissionRequest>,
         dialog_turn_id: &str,
         auto_approve: bool,
-    ) -> OpenBitFunResult<Vec<PendingPermissionReceiver>> {
+    ) -> StarMateResult<Vec<PendingPermissionReceiver>> {
         let manager = self.permission_request_manager.as_ref().ok_or_else(|| {
-            OpenBitFunError::service(
+            StarMateError::service(
                 "Permission request manager is unavailable for a file tool request".to_string(),
             )
         })?;
@@ -1122,7 +1122,7 @@ impl ToolPipeline {
                 .register_batch_for_turn(requests.clone(), dialog_turn_id.to_string())
                 .await
         }
-        .map_err(|error| OpenBitFunError::service(error.to_string()))?;
+        .map_err(|error| StarMateError::service(error.to_string()))?;
 
         if auto_approve {
             for request in &requests {
@@ -1142,7 +1142,7 @@ impl ToolPipeline {
                         "Automatic permission approval failed".to_string(),
                     )
                     .await;
-                    return Err(OpenBitFunError::service(error.to_string()));
+                    return Err(StarMateError::service(error.to_string()));
                 }
             }
         }
@@ -1447,7 +1447,7 @@ impl ToolPipeline {
         });
     }
 
-    async fn prepare_permission_plans(&self, task_ids: &[String]) -> OpenBitFunResult<()> {
+    async fn prepare_permission_plans(&self, task_ids: &[String]) -> StarMateResult<()> {
         let mut drafts = Vec::with_capacity(task_ids.len());
         let mut ordered_requests = Vec::new();
 
@@ -1538,7 +1538,7 @@ impl ToolPipeline {
                 .and_then(|task_id| self.state_manager.get_task(task_id))
                 .map(|task| task.context.dialog_turn_id)
                 .ok_or_else(|| {
-                    OpenBitFunError::service(
+                    StarMateError::service(
                         "Permission batch lost its owning Dialog Turn".to_string(),
                     )
                 })?;
@@ -1591,7 +1591,7 @@ impl ToolPipeline {
             for (task_id, draft) in &drafts {
                 if let PermissionPlanDraft::Requests(_) = draft {
                     let receivers = receivers_by_task.remove(task_id).ok_or_else(|| {
-                        OpenBitFunError::service(format!(
+                        StarMateError::service(format!(
                             "Permission plan lost its pending receivers for tool task '{task_id}'"
                         ))
                     })?;
@@ -1628,7 +1628,7 @@ impl ToolPipeline {
         &self,
         task_id: &str,
         cancellation_token: &CancellationToken,
-    ) -> OpenBitFunResult<PermissionAuthorization> {
+    ) -> StarMateResult<PermissionAuthorization> {
         let Some(plan) = self.permission_plans.lock().await.remove(task_id) else {
             return Ok(PermissionAuthorization::Allowed);
         };
@@ -1641,7 +1641,7 @@ impl ToolPipeline {
         &self,
         plan: PermissionExecutionPlan,
         cancellation_token: &CancellationToken,
-    ) -> OpenBitFunResult<PermissionAuthorization> {
+    ) -> StarMateResult<PermissionAuthorization> {
         let receivers = match plan {
             PermissionExecutionPlan::Allowed => return Ok(PermissionAuthorization::Allowed),
             PermissionExecutionPlan::Rejected { reason } => {
@@ -1664,7 +1664,7 @@ impl ToolPipeline {
                         "Tool execution was cancelled".to_string(),
                     )
                     .await;
-                    return Err(OpenBitFunError::Cancelled(
+                    return Err(StarMateError::Cancelled(
                         "Tool execution was cancelled while awaiting permission".to_string(),
                     ));
                 }
@@ -1677,7 +1677,7 @@ impl ToolPipeline {
                     updated_input: patch,
                 }) => {
                     let patch = patch.as_object().ok_or_else(|| {
-                        OpenBitFunError::Validation(
+                        StarMateError::Validation(
                             "Edited approval input must be an object".to_string(),
                         )
                     })?;
@@ -1704,7 +1704,7 @@ impl ToolPipeline {
                         "Another permission request for this tool was cancelled".to_string(),
                     )
                     .await;
-                    return Err(OpenBitFunError::Cancelled(reason));
+                    return Err(StarMateError::Cancelled(reason));
                 }
             }
 
@@ -1716,7 +1716,7 @@ impl ToolPipeline {
                     "Tool execution was cancelled".to_string(),
                 )
                 .await;
-                return Err(OpenBitFunError::Cancelled(
+                return Err(StarMateError::Cancelled(
                     "Tool execution was cancelled after permission reply".to_string(),
                 ));
             }
@@ -1784,7 +1784,7 @@ impl ToolPipeline {
         intents: Vec<PermissionIntent>,
         context: &ToolUseContext,
         cancellation_token: &CancellationToken,
-    ) -> OpenBitFunResult<PermissionAuthorization> {
+    ) -> StarMateResult<PermissionAuthorization> {
         let draft = self
             .draft_permission_plan(
                 task.clone(),
@@ -1861,7 +1861,7 @@ impl ToolPipeline {
     fn append_execution_result(
         &self,
         task_id: &str,
-        result: OpenBitFunResult<ToolExecutionResult>,
+        result: StarMateResult<ToolExecutionResult>,
         all_results: &mut Vec<ToolExecutionResult>,
     ) {
         match result {
@@ -1882,7 +1882,7 @@ impl ToolPipeline {
         &self,
         task_ids: impl IntoIterator<Item = String>,
         preemption: RoundInjectionToolPreemption,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         for task_id in task_ids {
             let Some(task) = self.state_manager.get_task(&task_id) else {
                 continue;
@@ -1941,7 +1941,7 @@ impl ToolPipeline {
         tool_calls: Vec<ToolCall>,
         context: ToolExecutionContext,
         options: ToolExecutionOptions,
-    ) -> OpenBitFunResult<Vec<ToolExecutionResult>> {
+    ) -> StarMateResult<Vec<ToolExecutionResult>> {
         if tool_calls.is_empty() {
             return Ok(vec![]);
         }
@@ -2035,7 +2035,7 @@ impl ToolPipeline {
         task_ids: Vec<String>,
         options: &ToolExecutionOptions,
         subagent_call_count: usize,
-    ) -> OpenBitFunResult<Vec<ToolExecutionResult>> {
+    ) -> StarMateResult<Vec<ToolExecutionResult>> {
         let tool_names = task_ids
             .iter()
             .filter_map(|id| self.state_manager.get_task(id))
@@ -2153,7 +2153,7 @@ impl ToolPipeline {
     async fn execute_parallel(
         &self,
         task_ids: Vec<String>,
-    ) -> OpenBitFunResult<Vec<ToolExecutionResult>> {
+    ) -> StarMateResult<Vec<ToolExecutionResult>> {
         let batch_interrupt = task_ids
             .first()
             .and_then(|task_id| self.state_manager.get_task(task_id))
@@ -2186,7 +2186,7 @@ impl ToolPipeline {
     async fn execute_sequential(
         &self,
         task_ids: Vec<String>,
-    ) -> OpenBitFunResult<Vec<ToolExecutionResult>> {
+    ) -> StarMateResult<Vec<ToolExecutionResult>> {
         let mut results = Vec::new();
 
         let mut task_iter = task_ids.into_iter().peekable();
@@ -2219,14 +2219,14 @@ impl ToolPipeline {
     }
 
     /// Execute single tool
-    async fn execute_single_tool(&self, tool_id: String) -> OpenBitFunResult<ToolExecutionResult> {
+    async fn execute_single_tool(&self, tool_id: String) -> StarMateResult<ToolExecutionResult> {
         let start_time = Instant::now();
 
         debug!("Starting tool execution: tool_id={}", tool_id);
 
         // Get task
         let mut task = self.state_manager.get_task(&tool_id).ok_or_else(|| {
-            OpenBitFunError::NotFound(format!("Tool task not found: {}", tool_id))
+            StarMateError::NotFound(format!("Tool task not found: {}", tool_id))
         })?;
 
         let wire_tool_name = task.tool_call.tool_name.clone();
@@ -2284,7 +2284,7 @@ impl ToolPipeline {
                 )
                 .await;
 
-            return Err(OpenBitFunError::Validation(error_msg));
+            return Err(StarMateError::Validation(error_msg));
         }
 
         if let Some(rejection) = task.input_rewrite_rejection.as_ref() {
@@ -2309,7 +2309,7 @@ impl ToolPipeline {
                     },
                 )
                 .await;
-            return Err(OpenBitFunError::Validation(error_msg));
+            return Err(StarMateError::Validation(error_msg));
         }
 
         match repair_kind {
@@ -2390,7 +2390,7 @@ impl ToolPipeline {
         let registered_tool = tool.ok_or_else(|| {
             let error_msg = format!("Tool '{}' is not registered or enabled.", tool_name);
             error!("{}", error_msg);
-            OpenBitFunError::tool(error_msg)
+            StarMateError::tool(error_msg)
         })?;
 
         let cancellation_token = task
@@ -2413,7 +2413,7 @@ impl ToolPipeline {
                     },
                 )
                 .await;
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Tool was cancelled before validation".to_string(),
             ));
         }
@@ -2448,11 +2448,11 @@ impl ToolPipeline {
                 )
                 .await;
             return Err(match error_detail {
-                Some(detail) => OpenBitFunError::ClassifiedTool {
+                Some(detail) => StarMateError::ClassifiedTool {
                     message: error_msg,
                     detail,
                 },
-                None => OpenBitFunError::Validation(error_msg),
+                None => StarMateError::Validation(error_msg),
             });
         }
         if let Some(message) = validation
@@ -2484,7 +2484,7 @@ impl ToolPipeline {
                 )
                 .await;
             self.cancellation_tokens.remove(&tool_id);
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Tool was cancelled during validation".to_string(),
             ));
         }
@@ -2582,7 +2582,7 @@ impl ToolPipeline {
                 )
                 .await;
             self.cancellation_tokens.remove(&tool_id);
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Tool was cancelled before execution".to_string(),
             ));
         }
@@ -2705,7 +2705,7 @@ impl ToolPipeline {
                 // Cancellation is a first-class terminal state, not a failure.
                 // Preserve Cancelled here so a late cancel cannot be overwritten
                 // by the generic Failed branch below.
-                if let OpenBitFunError::Cancelled(reason) = &e {
+                if let StarMateError::Cancelled(reason) = &e {
                     self.state_manager
                         .update_state(
                             &tool_id,
@@ -2734,7 +2734,7 @@ impl ToolPipeline {
                     return Err(e);
                 }
 
-                if matches!(e, OpenBitFunError::Timeout(_)) {
+                if matches!(e, StarMateError::Timeout(_)) {
                     let duration_ms = elapsed_ms_u64(start_time);
                     let presentation = build_tool_execution_timeout_presentation(
                         &tool_name,
@@ -2830,14 +2830,14 @@ impl ToolPipeline {
         task: &ToolTask,
         cancellation_token: CancellationToken,
         tool: Arc<dyn crate::agentic::tools::framework::Tool>,
-    ) -> OpenBitFunResult<ExecutedToolResult> {
+    ) -> StarMateResult<ExecutedToolResult> {
         let mut attempts = 0;
         let max_attempts = task.options.max_retries + 1;
 
         loop {
             // Check cancellation token
             if cancellation_token.is_cancelled() {
-                return Err(OpenBitFunError::Cancelled(
+                return Err(StarMateError::Cancelled(
                     "Tool execution was cancelled".to_string(),
                 ));
             }
@@ -2877,10 +2877,10 @@ impl ToolPipeline {
         task: &ToolTask,
         cancellation_token: CancellationToken,
         tool: Arc<dyn crate::agentic::tools::framework::Tool>,
-    ) -> OpenBitFunResult<ExecutedToolResult> {
+    ) -> StarMateResult<ExecutedToolResult> {
         // Check cancellation token
         if cancellation_token.is_cancelled() {
-            return Err(OpenBitFunError::Cancelled(
+            return Err(StarMateError::Cancelled(
                 "Tool execution was cancelled".to_string(),
             ));
         }
@@ -2914,7 +2914,7 @@ impl ToolPipeline {
                 let result = timeout(timeout_duration, execution_future)
                     .await
                     .map_err(|_| {
-                        OpenBitFunError::Timeout(format!(
+                        StarMateError::Timeout(format!(
                             "Tool execution timeout: {}",
                             task.effective_tool_name()
                         ))
@@ -2945,7 +2945,7 @@ impl ToolPipeline {
                 }
             })
             .ok_or_else(|| {
-                OpenBitFunError::Tool(format!(
+                StarMateError::Tool(format!(
                     "Tool did not return result: {}",
                     task.effective_tool_name()
                 ))
@@ -2957,12 +2957,12 @@ impl ToolPipeline {
         &self,
         task: &ToolTask,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<FrameworkToolResult>> {
+    ) -> StarMateResult<Vec<FrameworkToolResult>> {
         let code = task
             .effective_arguments()
             .get("code")
             .and_then(serde_json::Value::as_str)
-            .ok_or_else(|| OpenBitFunError::Validation("RunCode requires code".to_string()))?;
+            .ok_or_else(|| StarMateError::Validation("RunCode requires code".to_string()))?;
         let working_directory = context
             .workspace_root()
             .map(|path| path.to_string_lossy().into_owned())
@@ -2971,7 +2971,7 @@ impl ToolPipeline {
                     .ok()
                     .map(|path| path.to_string_lossy().into_owned())
             })
-            .ok_or_else(|| OpenBitFunError::Service("PTC has no working directory".to_string()))?;
+            .ok_or_else(|| StarMateError::Service("PTC has no working directory".to_string()))?;
         let bindings = {
             let registry = self.tool_registry.read().await;
             let allowed = Self::ptc_nested_allowed_tools(&task.context);
@@ -3006,19 +3006,19 @@ impl ToolPipeline {
             #[cfg(feature = "ssh-remote")]
             {
                 let workspace = context.workspace.as_ref().ok_or_else(|| {
-                    OpenBitFunError::NotImplemented(
+                    StarMateError::NotImplemented(
                         "PTC execution requires a resolved remote workspace".to_string(),
                     )
                 })?;
                 let connection_id = workspace.connection_id().ok_or_else(|| {
-                    OpenBitFunError::NotImplemented(
+                    StarMateError::NotImplemented(
                         "PTC execution requires a remote SSH connection".to_string(),
                     )
                 })?;
                 let remote_workspace_manager =
                     crate::service::remote_ssh::workspace_state::get_remote_workspace_manager()
                         .ok_or_else(|| {
-                            OpenBitFunError::Service(
+                            StarMateError::Service(
                                 "Remote workspace services are not initialized".to_string(),
                             )
                         })?;
@@ -3026,7 +3026,7 @@ impl ToolPipeline {
                     .get_ssh_manager()
                     .await
                     .ok_or_else(|| {
-                        OpenBitFunError::Service(
+                        StarMateError::Service(
                             "Remote SSH services are not initialized".to_string(),
                         )
                     })?;
@@ -3038,7 +3038,7 @@ impl ToolPipeline {
             }
             #[cfg(not(feature = "ssh-remote"))]
             {
-                return Err(OpenBitFunError::NotImplemented(
+                return Err(StarMateError::NotImplemented(
                     "PTC execution requires the SSH remote runtime".to_string(),
                 ));
             }
@@ -3077,7 +3077,7 @@ impl ToolPipeline {
                 result = execute => result.map_err(map_ptc_runtime_error)?,
                 _ = cancellation_token.cancelled() => {
                     let _ = runtime.cancel(&operation_id).await;
-                    return Err(OpenBitFunError::Cancelled("PTC execution was cancelled".to_string()));
+                    return Err(StarMateError::Cancelled("PTC execution was cancelled".to_string()));
                 }
             }
         } else {
@@ -3167,7 +3167,7 @@ impl ToolPipeline {
         &self,
         task: &ToolTask,
         results: &[FrameworkToolResult],
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let mut chunks_received = 0;
 
         for result in results {
@@ -3206,7 +3206,7 @@ impl ToolPipeline {
     }
 
     /// Cancel tool execution
-    pub async fn cancel_tool(&self, tool_id: &str, reason: String) -> OpenBitFunResult<()> {
+    pub async fn cancel_tool(&self, tool_id: &str, reason: String) -> StarMateResult<()> {
         let Some(task) = self.state_manager.get_task(tool_id) else {
             debug!(
                 "Ignoring cancel request for unknown tool: tool_id={}",
@@ -3260,26 +3260,26 @@ impl ToolPipeline {
         &self,
         task: &ToolTask,
         patch: serde_json::Value,
-    ) -> OpenBitFunResult<serde_json::Value> {
+    ) -> StarMateResult<serde_json::Value> {
         let mut arguments = task
             .invocation
             .effective_arguments
             .as_object()
             .cloned()
             .ok_or_else(|| {
-                OpenBitFunError::Validation(
+                StarMateError::Validation(
                     "This tool does not support object input edits".to_string(),
                 )
             })?;
         arguments.extend(patch.as_object().cloned().ok_or_else(|| {
-            OpenBitFunError::Validation("Edited approval input must be an object".to_string())
+            StarMateError::Validation("Edited approval input must be an object".to_string())
         })?);
         let arguments = serde_json::Value::Object(arguments);
         if let Some(rejection) = self
             .non_relaxable_original_input_rejection(task, &arguments)
             .await
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 rejection
                     .message
                     .unwrap_or_else(|| "This tool input is immutable".to_string()),
@@ -3291,18 +3291,18 @@ impl ToolPipeline {
             .read()
             .await
             .get_tool(task.effective_tool_name())
-            .ok_or_else(|| OpenBitFunError::NotFound("Approval tool is unavailable".to_string()))?;
+            .ok_or_else(|| StarMateError::NotFound("Approval tool is unavailable".to_string()))?;
         if tool.is_concurrency_safe(Some(task.effective_arguments()))
             && !tool.is_concurrency_safe(Some(&arguments))
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Edited input changes the admitted concurrency class; submit it as a new tool call"
                     .to_string(),
             ));
         }
         let validation = tool.validate_input(&arguments, Some(&context)).await;
         if !validation.result {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 validation
                     .message
                     .unwrap_or_else(|| "Invalid edited tool input".to_string()),
@@ -3318,7 +3318,7 @@ impl ToolPipeline {
             )
             .await?
         {
-            return Err(OpenBitFunError::Validation(reason));
+            return Err(StarMateError::Validation(reason));
         }
         Ok(arguments)
     }
@@ -3327,9 +3327,9 @@ impl ToolPipeline {
         &self,
         tool_id: &str,
         reply: PermissionReply,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let manager = self.permission_request_manager.as_ref().ok_or_else(|| {
-            OpenBitFunError::service("Permission request manager is unavailable".to_string())
+            StarMateError::service("Permission request manager is unavailable".to_string())
         })?;
         let request = manager
             .pending_requests()
@@ -3338,7 +3338,7 @@ impl ToolPipeline {
                 request.tool_call_id.as_deref() == Some(tool_id) || request.request_id == tool_id
             })
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Permission request not found for tool: {tool_id}"
                 ))
             })?;
@@ -3348,7 +3348,7 @@ impl ToolPipeline {
                 .as_deref()
                 .and_then(|id| self.state_manager.get_task(id))
                 .ok_or_else(|| {
-                    OpenBitFunError::Validation(
+                    StarMateError::Validation(
                         "This permission request does not own editable tool input".to_string(),
                     )
                 })?;
@@ -3359,11 +3359,11 @@ impl ToolPipeline {
             .reply(&request.request_id, reply, PermissionReplySource::User)
             .await
             .map(|_| ())
-            .map_err(|error| OpenBitFunError::service(error.to_string()))
+            .map_err(|error| StarMateError::service(error.to_string()))
     }
 
     /// Cancel all tools for a dialog turn
-    pub async fn cancel_dialog_turn_tools(&self, dialog_turn_id: &str) -> OpenBitFunResult<()> {
+    pub async fn cancel_dialog_turn_tools(&self, dialog_turn_id: &str) -> StarMateResult<()> {
         info!(
             "Cancelling all tools for dialog turn: dialog_turn_id={}",
             dialog_turn_id
@@ -3688,7 +3688,7 @@ mod tests {
         fn name(&self) -> &str {
             "ActivateSkillHooks"
         }
-        async fn description(&self) -> OpenBitFunResult<String> {
+        async fn description(&self) -> StarMateResult<String> {
             Ok("Activate test skill".into())
         }
         fn short_description(&self) -> String {
@@ -3710,7 +3710,7 @@ mod tests {
             &self,
             _: &serde_json::Value,
             context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<ToolResult>> {
+        ) -> StarMateResult<Vec<ToolResult>> {
             native_hooks::activate_skill_hooks(&self.skill, context).await?;
             Ok(vec![ToolResult::Result {
                 data: json!({"loaded":true}),
@@ -3941,7 +3941,7 @@ mod tests {
             true
         }
 
-        async fn description(&self) -> OpenBitFunResult<String> {
+        async fn description(&self) -> StarMateResult<String> {
             Ok("File permission test tool".to_string())
         }
 
@@ -3957,7 +3957,7 @@ mod tests {
             &self,
             _input: &serde_json::Value,
             _context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+        ) -> StarMateResult<Vec<PermissionIntent>> {
             Ok(self.intents.clone())
         }
 
@@ -3965,7 +3965,7 @@ mod tests {
             &self,
             input: &serde_json::Value,
             _context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<ToolResult>> {
+        ) -> StarMateResult<Vec<ToolResult>> {
             self.call_count.fetch_add(1, Ordering::SeqCst);
             Ok(vec![ToolResult::Result {
                 data: json!({ "written": true, "input": input }),
@@ -4087,7 +4087,7 @@ mod tests {
             &self.name
         }
 
-        async fn description(&self) -> OpenBitFunResult<String> {
+        async fn description(&self) -> StarMateResult<String> {
             Ok("capturing test tool".to_string())
         }
 
@@ -4172,7 +4172,7 @@ mod tests {
             &self,
             input: &serde_json::Value,
             _context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<ToolResult>> {
+        ) -> StarMateResult<Vec<ToolResult>> {
             *self
                 .received_arguments
                 .lock()
@@ -4195,7 +4195,7 @@ mod tests {
             self.dynamic_tool_info.clone()
         }
 
-        async fn description(&self) -> OpenBitFunResult<String> {
+        async fn description(&self) -> StarMateResult<String> {
             Ok("static test tool".to_string())
         }
 
@@ -4232,7 +4232,7 @@ mod tests {
             &self,
             _input: &serde_json::Value,
             context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<ToolResult>> {
+        ) -> StarMateResult<Vec<ToolResult>> {
             if self.delay_ms > 0 {
                 if let Some(token) = context
                     .round_injection_preemption_token()
@@ -5090,7 +5090,7 @@ mod tests {
             .execute_single_tool(tool_id)
             .await
             .expect_err("protected original input must block execution");
-        assert!(matches!(error, OpenBitFunError::Validation(_)));
+        assert!(matches!(error, StarMateError::Validation(_)));
         assert!(received_arguments
             .lock()
             .expect("capturing tool argument lock")
@@ -5129,7 +5129,7 @@ mod tests {
             .execute_single_tool(tool_id)
             .await
             .expect_err("protected original target must block execution");
-        assert!(matches!(error, OpenBitFunError::Validation(_)));
+        assert!(matches!(error, StarMateError::Validation(_)));
         assert!(received_arguments
             .lock()
             .expect("capturing tool argument lock")
@@ -5206,7 +5206,7 @@ mod tests {
             .execute_single_tool(tool_id)
             .await
             .expect_err("protected final input must fail final validation");
-        assert!(matches!(error, OpenBitFunError::Validation(_)));
+        assert!(matches!(error, StarMateError::Validation(_)));
         assert!(received_arguments
             .lock()
             .expect("capturing tool argument lock")
@@ -6217,7 +6217,7 @@ mod tests {
 
     #[test]
     fn classified_edit_failure_preserves_model_error_and_persisted_detail() {
-        let error = OpenBitFunError::ClassifiedTool {
+        let error = StarMateError::ClassifiedTool {
             message: "[guidance] new_string must be different from old_string".into(),
             detail: starmate_core_types::errors::ToolErrorDetail {
                 code: "edit_no_change".into(),
@@ -6249,7 +6249,7 @@ mod tests {
         let result = build_error_execution_result(
             "tool_1",
             Some(task),
-            &OpenBitFunError::Validation("Arguments are invalid JSON.".to_string()),
+            &StarMateError::Validation("Arguments are invalid JSON.".to_string()),
         );
 
         assert_eq!(
@@ -6278,7 +6278,7 @@ mod tests {
         let result = build_error_execution_result(
             "tool_1",
             Some(task),
-            &OpenBitFunError::Validation("operation is not supported".to_string()),
+            &StarMateError::Validation("operation is not supported".to_string()),
         );
 
         assert!(result.result.result["provided_arguments"].is_null());

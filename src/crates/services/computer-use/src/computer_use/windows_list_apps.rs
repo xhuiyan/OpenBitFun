@@ -19,7 +19,7 @@ use std::collections::HashMap;
 use std::ffi::c_void;
 use std::sync::Mutex;
 
-use starmate_agent_tools::computer_use_host::error::OpenBitFunResult;
+use starmate_agent_tools::computer_use_host::error::StarMateResult;
 use starmate_agent_tools::computer_use_host::{AppInfo, AppWindowInfo};
 use windows::core::BOOL;
 use windows::Win32::Foundation::{HWND, LPARAM, TRUE};
@@ -56,7 +56,7 @@ struct EnumState {
 /// window, sorted by name. `include_hidden` is accepted for parity with the
 /// macOS host; on Windows there is no per-app hidden flag, so every windowed
 /// process is returned regardless.
-pub(super) fn list_running_apps(_include_hidden: bool) -> OpenBitFunResult<Vec<AppInfo>> {
+pub(super) fn list_running_apps(_include_hidden: bool) -> StarMateResult<Vec<AppInfo>> {
     let windows = enumerate_windows(false);
 
     // Group by pid: keep the first non-empty title as a fallback display name.
@@ -180,10 +180,10 @@ pub(super) fn minimized_window_for_pid(pid: u32) -> Option<usize> {
 /// Foreground recovery of a minimized window: restore the exact window (for
 /// an application selector, its first minimized titled window). Window-only
 /// sharing must admit it. Returns whether a window was restored.
-pub(super) fn restore_window(pid: u32, window: Option<usize>) -> OpenBitFunResult<bool> {
-    use starmate_agent_tools::computer_use_host::error::OpenBitFunError;
+pub(super) fn restore_window(pid: u32, window: Option<usize>) -> StarMateResult<bool> {
+    use starmate_agent_tools::computer_use_host::error::StarMateError;
     use windows::Win32::UI::WindowsAndMessaging::{IsWindow, ShowWindow, SW_RESTORE};
-    crate::computer_use::control_session::foreground_allowed().map_err(OpenBitFunError::tool)?;
+    crate::computer_use::control_session::foreground_allowed().map_err(StarMateError::tool)?;
     let Some(handle) = window.or_else(|| minimized_window_for_pid(pid)) else {
         return Ok(false);
     };
@@ -191,10 +191,10 @@ pub(super) fn restore_window(pid: u32, window: Option<usize>) -> OpenBitFunResul
     let mut owner = 0;
     unsafe { GetWindowThreadProcessId(hwnd, Some(&mut owner)) };
     if !unsafe { IsWindow(Some(hwnd)) }.as_bool() || owner != pid {
-        return Err(OpenBitFunError::tool("[TARGET_WINDOW_UNAVAILABLE] The requested window no longer belongs to this process; refresh list_windows and select the intended window"));
+        return Err(StarMateError::tool("[TARGET_WINDOW_UNAVAILABLE] The requested window no longer belongs to this process; refresh list_windows and select the intended window"));
     }
     crate::computer_use::control_session::target_admissible(&format!("pid:{pid}/window:{handle}"))
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
     if !unsafe { IsIconic(hwnd) }.as_bool() {
         return Ok(false);
     }

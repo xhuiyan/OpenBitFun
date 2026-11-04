@@ -102,10 +102,10 @@ pub(super) trait ExternalMcpRuntimePort: Send + Sync {
     ) -> Result<(), String>;
 }
 
-pub(super) struct OpenBitFunExternalMcpRuntime;
+pub(super) struct StarMateExternalMcpRuntime;
 
 #[async_trait]
-impl ExternalMcpRuntimePort for OpenBitFunExternalMcpRuntime {
+impl ExternalMcpRuntimePort for StarMateExternalMcpRuntime {
     async fn install(
         &self,
         candidate: &ActiveExternalMcpCandidate,

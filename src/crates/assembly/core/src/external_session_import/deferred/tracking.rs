@@ -59,8 +59,8 @@ fn content_version(metadata: &SessionMetadata) -> Option<&str> {
     metadata.custom_metadata.as_ref()?.get(VERSION)?.as_str()
 }
 
-fn snapshot_path(root: &Path, id: &str, version: &str) -> OpenBitFunResult<PathBuf> {
-    starmate_core_types::validate_session_id(id).map_err(OpenBitFunError::Validation)?;
+fn snapshot_path(root: &Path, id: &str, version: &str) -> StarMateResult<PathBuf> {
+    starmate_core_types::validate_session_id(id).map_err(StarMateError::Validation)?;
     if version.len() != 64 || !version.bytes().all(|byte| byte.is_ascii_hexdigit()) {
         return Err(index_error("Invalid external history version"));
     }
@@ -70,7 +70,7 @@ fn snapshot_path(root: &Path, id: &str, version: &str) -> OpenBitFunResult<PathB
         .join(format!("{version}.json")))
 }
 
-async fn reference(root: &Path, id: &str) -> OpenBitFunResult<Option<Reference>> {
+async fn reference(root: &Path, id: &str) -> StarMateResult<Option<Reference>> {
     Ok(read_index(root)
         .await?
         .entries
@@ -83,7 +83,7 @@ fn validate_snapshot(
     snapshot: &Snapshot,
     entry: &Reference,
     version: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if snapshot.schema_version != 1
         || snapshot.version != version
         || snapshot.ecosystem_id != entry.ecosystem_id
@@ -124,7 +124,7 @@ async fn read_snapshot_shared(
     root: &Path,
     entry: &Reference,
     version: &str,
-) -> OpenBitFunResult<HistorySnapshot> {
+) -> StarMateResult<HistorySnapshot> {
     history_cache::read(root, entry, version).await
 }
 
@@ -134,7 +134,7 @@ pub(crate) async fn snapshot_at_turn(
     root: &Path,
     id: &str,
     turn_id: &str,
-) -> OpenBitFunResult<Option<OfflineSessionBundle>> {
+) -> StarMateResult<Option<OfflineSessionBundle>> {
     Ok(snapshot_at_turn_shared(root, id, turn_id)
         .await?
         .map(HistorySnapshot::into_bundle))
@@ -144,7 +144,7 @@ pub(crate) async fn snapshot_at_turn_shared(
     root: &Path,
     id: &str,
     turn_id: &str,
-) -> OpenBitFunResult<Option<HistorySnapshot>> {
+) -> StarMateResult<Option<HistorySnapshot>> {
     let Some(entry) = reference(root, id).await? else {
         return Ok(None);
     };
@@ -167,7 +167,7 @@ pub(crate) async fn snapshot(
     root: &Path,
     id: &str,
     refresh: bool,
-) -> OpenBitFunResult<Option<OfflineSessionBundle>> {
+) -> StarMateResult<Option<OfflineSessionBundle>> {
     Ok(snapshot_shared(root, id, refresh)
         .await?
         .map(HistorySnapshot::into_bundle))
@@ -177,7 +177,7 @@ pub(crate) async fn snapshot_shared(
     root: &Path,
     id: &str,
     refresh: bool,
-) -> OpenBitFunResult<Option<HistorySnapshot>> {
+) -> StarMateResult<Option<HistorySnapshot>> {
     let Some(entry) = reference(root, id).await? else {
         return Ok(None);
     };
@@ -194,7 +194,7 @@ async fn load_current_snapshot(
     root: &Path,
     id: &str,
     refreshed: Option<HistorySnapshot>,
-) -> OpenBitFunResult<Option<OfflineSessionBundle>> {
+) -> StarMateResult<Option<OfflineSessionBundle>> {
     Ok(load_current_snapshot_shared(root, id, refreshed)
         .await?
         .map(HistorySnapshot::into_bundle))
@@ -204,7 +204,7 @@ async fn load_current_snapshot_shared(
     root: &Path,
     id: &str,
     refreshed: Option<HistorySnapshot>,
-) -> OpenBitFunResult<Option<HistorySnapshot>> {
+) -> StarMateResult<Option<HistorySnapshot>> {
     let Some(entry) = reference(root, id).await? else {
         return Ok(None);
     };
@@ -233,7 +233,7 @@ async fn load_current_snapshot_shared(
 async fn refresh_source(
     root: &Path,
     entry: Reference,
-) -> OpenBitFunResult<Option<HistorySnapshot>> {
+) -> StarMateResult<Option<HistorySnapshot>> {
     let service = crate::service::workspace::get_global_workspace_service()
         .ok_or_else(|| index_error("Workspace service is unavailable"))?;
     let workspace_id = entry
@@ -268,7 +268,7 @@ async fn refresh_source(
 async fn cache_unavailable_legacy_history(
     root: &Path,
     entry: &Reference,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     if !super::legacy::follows_native(&entry.metadata) {
         return Ok(false);
     }
@@ -340,9 +340,9 @@ pub(super) async fn refresh_reference(
     project: WorkspaceInfo,
     workspaces: Vec<WorkspaceInfo>,
     read: impl FnOnce(ImportSource, &str) -> Result<ExternalSessionDocument, String> + Send + 'static,
-) -> OpenBitFunResult<Option<HistorySnapshot>> {
+) -> StarMateResult<Option<HistorySnapshot>> {
     let id = entry.metadata.session_id.clone();
-    starmate_core_types::validate_session_id(&id).map_err(OpenBitFunError::Validation)?;
+    starmate_core_types::validate_session_id(&id).map_err(StarMateError::Validation)?;
     // The source lock is distinct from native Session writers. A snapshot is
     // published before its index pointer, so a crash leaves the old view valid.
     let _lock = JsonFileStore

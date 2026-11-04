@@ -29,11 +29,11 @@ fn legacy_requested() -> bool {
     std::env::var("OPENBITFUN_ROUND_ROUTER_URL").is_ok_and(|value| !value.trim().is_empty())
 }
 
-pub fn require_available() -> OpenBitFunResult<()> {
+pub fn require_available() -> StarMateResult<()> {
     if available() {
         Ok(())
     } else {
-        Err(OpenBitFunError::Validation(SMART_MODE_UNAVAILABLE.into()))
+        Err(StarMateError::Validation(SMART_MODE_UNAVAILABLE.into()))
     }
 }
 
@@ -58,18 +58,18 @@ pub fn legacy_enabled() -> bool {
     available() && legacy_requested()
 }
 
-pub fn routing_enabled(mode: Option<&str>) -> OpenBitFunResult<bool> {
+pub fn routing_enabled(mode: Option<&str>) -> StarMateResult<bool> {
     match mode {
         Some("manual") => Ok(false),
         Some("smart") => Ok(available()),
         None => Ok(legacy_enabled()),
-        Some(_) => Err(OpenBitFunError::Configuration(
+        Some(_) => Err(StarMateError::Configuration(
             "Unsupported model routing strategy; select manual or smart mode".into(),
         )),
     }
 }
 
-pub fn economy_model_id(config: &AIConfig, legacy: bool) -> OpenBitFunResult<String> {
+pub fn economy_model_id(config: &AIConfig, legacy: bool) -> StarMateResult<String> {
     // Environment-only installations retain the original fast-to-primary fallback.
     let legacy_reference = legacy
         .then(|| config.resolve_model_selection("fast"))
@@ -89,13 +89,13 @@ pub fn economy_model_id(config: &AIConfig, legacy: bool) -> OpenBitFunResult<Str
         })
         .map(|model| model.id.clone())
         .ok_or_else(|| {
-            OpenBitFunError::Configuration(
+            StarMateError::Configuration(
                 "Configure an enabled economy model before using smart mode".into(),
             )
         })
 }
 
-fn product_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelRouterConfig> {
+fn product_config(config: &AIConfig) -> StarMateResult<HttpRoundModelRouterConfig> {
     // Product smart mode maintains its routing history automatically. Keep the
     // persisted switch readable for older hosts without letting it disable the
     // current runtime's history preparation.
@@ -106,7 +106,7 @@ fn product_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelRouterCon
         if classifier_id == summary_model_id.as_deref()
             || classifier_id == config.resolve_model_selection("primary").as_deref()
         {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "Classifier Router service cannot be used as a primary or economy execution model"
                     .into(),
             ));
@@ -117,13 +117,13 @@ fn product_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelRouterCon
 }
 
 /// Service checks do not depend on the execution models used after classification.
-fn product_service_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelRouterConfig> {
+fn product_service_config(config: &AIConfig) -> StarMateResult<HttpRoundModelRouterConfig> {
     let setup = &config.model_routing;
     let protocol =
         match setup.protocol.as_str() {
             "openai_logprobs" => RouterProtocol::OpenAiLogprobs,
             "openai_router_extension" => RouterProtocol::OpenAiRouterExtension,
-            _ => return Err(OpenBitFunError::Configuration(
+            _ => return Err(StarMateError::Configuration(
                 "Unsupported Router protocol; select a protocol supported by the execution host"
                     .into(),
             )),
@@ -138,12 +138,12 @@ fn product_service_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelR
                 .find(|model| model.id == id && model.enabled)
         })
         .ok_or_else(|| {
-            OpenBitFunError::Configuration(
+            StarMateError::Configuration(
                 "Configure a Router service model in model settings".into(),
             )
         })?;
     if !matches!(model.auth, AuthConfig::ApiKey) {
-        return Err(OpenBitFunError::Configuration(
+        return Err(StarMateError::Configuration(
             "Router requires an API-key service; subscription authentication is unsupported".into(),
         ));
     }
@@ -151,12 +151,12 @@ fn product_service_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelR
     // model's normal chat adapter. Reject other formats before deriving an
     // endpoint or sending their credentials with a different wire protocol.
     if !model.provider.trim().eq_ignore_ascii_case("openai") {
-        return Err(OpenBitFunError::Configuration(
+        return Err(StarMateError::Configuration(
             "Router requires OpenAI Chat Completions API format; select an OpenAI-compatible classifier service".into(),
         ));
     }
     if !(0.0..=1.0).contains(&setup.simple_threshold) || setup.timeout_ms == 0 {
-        return Err(OpenBitFunError::Configuration(
+        return Err(StarMateError::Configuration(
             "Router threshold must be between 0 and 1 and timeout must be positive".into(),
         ));
     }
@@ -165,7 +165,7 @@ fn product_service_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelR
         .as_deref()
         .is_some_and(|value| !value.trim().is_empty())
     {
-        return Err(OpenBitFunError::Configuration(
+        return Err(StarMateError::Configuration(
             "Router models cannot override the classifier request body".into(),
         ));
     }
@@ -223,7 +223,7 @@ pub struct TurnRouting {
 }
 
 /// Cache only the transport/tokenizer, never a session context or a routing decision.
-async fn configured_router(config: &AIConfig) -> OpenBitFunResult<Arc<HttpRoundModelRouter>> {
+async fn configured_router(config: &AIConfig) -> StarMateResult<Arc<HttpRoundModelRouter>> {
     let router_config = if config.model_routing.router_model_id.is_some() {
         product_config(config)?
     } else {
@@ -232,24 +232,24 @@ async fn configured_router(config: &AIConfig) -> OpenBitFunResult<Arc<HttpRoundM
     cached_router(router_config).await
 }
 
-fn service_config(config: &AIConfig) -> OpenBitFunResult<HttpRoundModelRouterConfig> {
+fn service_config(config: &AIConfig) -> StarMateResult<HttpRoundModelRouterConfig> {
     if config.model_routing.router_model_id.is_some() {
         product_service_config(config)
     } else {
         if config.model_routing.protocol != "openai_logprobs" {
-            return Err(OpenBitFunError::Configuration(
+            return Err(StarMateError::Configuration(
                 "Select a Router service model for the configured classifier protocol".into(),
             ));
         }
         HttpRoundModelRouterConfig::from_env()?.ok_or_else(|| {
-            OpenBitFunError::Configuration("Configure a Router service in model settings".into())
+            StarMateError::Configuration("Configure a Router service in model settings".into())
         })
     }
 }
 
 async fn cached_router(
     router_config: HttpRoundModelRouterConfig,
-) -> OpenBitFunResult<Arc<HttpRoundModelRouter>> {
+) -> StarMateResult<Arc<HttpRoundModelRouter>> {
     static CACHE: OnceLock<tokio::sync::Mutex<Option<(String, Arc<HttpRoundModelRouter>)>>> =
         OnceLock::new();
     // This private in-memory identity includes credential/proxy revisions. Never log it.
@@ -272,7 +272,7 @@ async fn cached_router(
         tokio::task::spawn_blocking(move || HttpRoundModelRouter::new(router_config))
             .await
             .map_err(|error| {
-                OpenBitFunError::Configuration(format!("Failed to initialize Router: {error}"))
+                StarMateError::Configuration(format!("Failed to initialize Router: {error}"))
             })??,
     );
     *cache.lock().await = Some((key, router.clone()));
@@ -282,7 +282,7 @@ async fn cached_router(
 pub async fn prepare_turn(
     mode: Option<&str>,
     eligible: bool,
-) -> OpenBitFunResult<Option<TurnRouting>> {
+) -> StarMateResult<Option<TurnRouting>> {
     if !available() || !eligible || !routing_enabled(mode)? {
         return Ok(None);
     }
@@ -331,7 +331,7 @@ fn supported_router_protocols() -> Vec<String> {
 pub async fn session_status(
     session: Option<&crate::agentic::core::Session>,
     probe: bool,
-) -> OpenBitFunResult<ModelRoutingStatus> {
+) -> StarMateResult<ModelRoutingStatus> {
     let eligible = session.is_none_or(session_eligible);
     status(
         session.and_then(|session| session.config.model_routing.as_deref()),
@@ -358,7 +358,7 @@ pub async fn status(
     mode: Option<&str>,
     eligible: bool,
     probe: bool,
-) -> OpenBitFunResult<ModelRoutingStatus> {
+) -> StarMateResult<ModelRoutingStatus> {
     if !available() {
         return Ok(unavailable_status());
     }
@@ -403,10 +403,10 @@ async fn status_for_config(
         subagent_model: None,
     };
     let check = async {
-        if !eligible { return Err(OpenBitFunError::Configuration("Smart mode is unavailable for external agents, subagents and immutable dispatched sessions".into())); }
+        if !eligible { return Err(StarMateError::Configuration("Smart mode is unavailable for external agents, subagents and immutable dispatched sessions".into())); }
         economy_model_id(config, mode.is_none() && legacy_enabled())?;
         if config.resolve_model_selection("primary").is_none() {
-            return Err(OpenBitFunError::Configuration("Configure an enabled primary model before using smart mode".into()));
+            return Err(StarMateError::Configuration("Configure an enabled primary model before using smart mode".into()));
         }
         configured_router(config).await
     }.await;
@@ -432,12 +432,12 @@ async fn status_for_config(
                 .predict("Task: inspect a file and explain its purpose", None)
                 .await?;
             if prediction.simple_probability.is_none() {
-                return Err(OpenBitFunError::Configuration(
+                return Err(StarMateError::Configuration(
                     "Router protocol mismatch: classifier token IDs and logprobs are required"
                         .into(),
                 ));
             }
-            Ok::<(), OpenBitFunError>(())
+            Ok::<(), StarMateError>(())
         }
         .await;
         result.connected = Some(connection.is_ok());

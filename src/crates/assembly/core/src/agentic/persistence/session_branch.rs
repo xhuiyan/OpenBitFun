@@ -3,7 +3,7 @@ use crate::agentic::core::{Message, MessageContent, Session, SessionKind};
 use crate::agentic::session::{EvidenceLedgerEvent, SessionPromptCache};
 use crate::agentic::skill_agent_snapshot::TurnSkillAgentSnapshot;
 use crate::service::session::DialogTurnData;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_services_core::session::SessionBranchBoundary;
 use starmate_services_core::session::{
     build_branched_session_metadata, format_branch_session_name, resolve_branch_session_lineage,
@@ -39,7 +39,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         request: &SessionBranchRequest,
-    ) -> OpenBitFunResult<SessionBranchResult> {
+    ) -> StarMateResult<SessionBranchResult> {
         Box::pin(self.branch_session_with_transient_source(workspace_path, request, None)).await
     }
 
@@ -48,7 +48,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         request: &SessionBranchRequest,
         source: TransientSessionBranchSource,
-    ) -> OpenBitFunResult<SessionBranchResult> {
+    ) -> StarMateResult<SessionBranchResult> {
         // Both native and external history forks copy complete persisted state.
         // Do not embed that future into each nested runtime facade.
         Box::pin(self.branch_session_with_transient_source(workspace_path, request, Some(source)))
@@ -60,9 +60,9 @@ impl PersistenceManager {
         workspace_path: &Path,
         request: &SessionBranchRequest,
         transient_source: Option<TransientSessionBranchSource>,
-    ) -> OpenBitFunResult<SessionBranchResult> {
+    ) -> StarMateResult<SessionBranchResult> {
         starmate_core_types::validate_session_id(&request.source_session_id)
-            .map_err(OpenBitFunError::Validation)?;
+            .map_err(StarMateError::Validation)?;
         let branch_allocation_lock = self
             .get_session_branch_allocation_lock(workspace_path)
             .await;
@@ -70,7 +70,7 @@ impl PersistenceManager {
 
         let (source_session, source_metadata) = if let Some(source) = transient_source.as_ref() {
             if source.session.session_id != request.source_session_id {
-                return Err(OpenBitFunError::Validation(
+                return Err(StarMateError::Validation(
                     "Transient fork source identity mismatch".to_string(),
                 ));
             }
@@ -92,7 +92,7 @@ impl PersistenceManager {
                 .load_session_metadata(workspace_path, &request.source_session_id)
                 .await?
                 .ok_or_else(|| {
-                    OpenBitFunError::NotFound(format!(
+                    StarMateError::NotFound(format!(
                         "Source session metadata not found: {}",
                         request.source_session_id
                     ))
@@ -121,7 +121,7 @@ impl PersistenceManager {
         };
 
         if source_turns.is_empty() {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Source session has no persisted turns to branch".to_string(),
             ));
         }
@@ -130,7 +130,7 @@ impl PersistenceManager {
             .iter()
             .position(|turn| turn.turn_id == request.source_turn_id)
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Source turn not found in persisted session: {}",
                     request.source_turn_id
                 ))
@@ -344,7 +344,7 @@ impl PersistenceManager {
             self.save_session_metadata(workspace_path, &branched_metadata)
                 .await?;
 
-            Ok::<(), OpenBitFunError>(())
+            Ok::<(), StarMateError>(())
         }
         .await;
 

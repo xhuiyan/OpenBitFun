@@ -4,7 +4,7 @@ use crate::agentic::coordination::get_global_coordinator;
 use crate::agentic::goal_mode::user_facing_thread_goal_error;
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
 use crate::service_agent_runtime::CoreServiceAgentRuntime;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_agent_runtime::sdk::RuntimeError;
 use starmate_agent_runtime::thread_goal_tools::{
@@ -17,30 +17,30 @@ use starmate_runtime_ports::{
 };
 use serde_json::{json, Value};
 
-fn require_agent_runtime() -> OpenBitFunResult<starmate_agent_runtime::sdk::AgentRuntime> {
+fn require_agent_runtime() -> StarMateResult<starmate_agent_runtime::sdk::AgentRuntime> {
     let coordinator = get_global_coordinator()
-        .ok_or_else(|| OpenBitFunError::Validation("coordinator is unavailable".to_string()))?;
-    CoreServiceAgentRuntime::agent_runtime(coordinator).map_err(OpenBitFunError::tool)
+        .ok_or_else(|| StarMateError::Validation("coordinator is unavailable".to_string()))?;
+    CoreServiceAgentRuntime::agent_runtime(coordinator).map_err(StarMateError::tool)
 }
 
 fn require_session_context(
     context: &ToolUseContext,
-) -> OpenBitFunResult<(String, std::path::PathBuf)> {
+) -> StarMateResult<(String, std::path::PathBuf)> {
     let session_id = context
         .session_id
         .clone()
-        .ok_or_else(|| OpenBitFunError::Validation("session_id is unavailable".to_string()))?;
+        .ok_or_else(|| StarMateError::Validation("session_id is unavailable".to_string()))?;
     let workspace_path = context
         .workspace_root()
-        .ok_or_else(|| OpenBitFunError::Validation("workspace_path is unavailable".to_string()))?
+        .ok_or_else(|| StarMateError::Validation("workspace_path is unavailable".to_string()))?
         .to_path_buf();
     Ok((session_id, workspace_path))
 }
 
-fn thread_goal_runtime_error(error: RuntimeError) -> OpenBitFunError {
+fn thread_goal_runtime_error(error: RuntimeError) -> StarMateError {
     match error {
         RuntimeError::Port(port_error) => thread_goal_port_error(port_error),
-        other => user_facing_thread_goal_error(OpenBitFunError::Tool(
+        other => user_facing_thread_goal_error(StarMateError::Tool(
             CoreServiceAgentRuntime::runtime_error_message(other),
         )),
     }
@@ -61,27 +61,27 @@ fn thread_goal_output_schema() -> Value {
     })
 }
 
-fn thread_goal_port_error(port_error: PortError) -> OpenBitFunError {
+fn thread_goal_port_error(port_error: PortError) -> StarMateError {
     match port_error.kind {
-        PortErrorKind::InvalidRequest => OpenBitFunError::Validation(port_error.message),
-        PortErrorKind::NotFound => OpenBitFunError::NotFound(port_error.message),
+        PortErrorKind::InvalidRequest => StarMateError::Validation(port_error.message),
+        PortErrorKind::NotFound => StarMateError::NotFound(port_error.message),
         PortErrorKind::Cancelled => {
-            user_facing_thread_goal_error(OpenBitFunError::Cancelled(port_error.message))
+            user_facing_thread_goal_error(StarMateError::Cancelled(port_error.message))
         }
         PortErrorKind::Timeout => {
-            user_facing_thread_goal_error(OpenBitFunError::Timeout(port_error.message))
+            user_facing_thread_goal_error(StarMateError::Timeout(port_error.message))
         }
         PortErrorKind::NotAvailable => {
-            user_facing_thread_goal_error(OpenBitFunError::NotImplemented(port_error.message))
+            user_facing_thread_goal_error(StarMateError::NotImplemented(port_error.message))
         }
         PortErrorKind::OutcomeUnknown => {
-            user_facing_thread_goal_error(OpenBitFunError::OutcomeUnknown(port_error.message))
+            user_facing_thread_goal_error(StarMateError::OutcomeUnknown(port_error.message))
         }
         PortErrorKind::PermissionDenied
         | PortErrorKind::SessionInUse
         | PortErrorKind::CleanupRequired
         | PortErrorKind::Backend => {
-            user_facing_thread_goal_error(OpenBitFunError::Tool(port_error.message))
+            user_facing_thread_goal_error(StarMateError::Tool(port_error.message))
         }
     }
 }
@@ -106,7 +106,7 @@ impl Tool for GetGoalTool {
         GET_GOAL_TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok("Get the current goal for this session, including status, budgets, token and elapsed-time usage, and remaining token budget.".to_string())
     }
 
@@ -134,7 +134,7 @@ impl Tool for GetGoalTool {
         &self,
         _input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let runtime = require_agent_runtime()?;
         let (session_id, workspace_path) = require_session_context(context)?;
         let remote_connection_id = context
@@ -158,7 +158,7 @@ impl Tool for GetGoalTool {
             .await
             .map_err(thread_goal_runtime_error)?;
         let result = build_goal_tool_result(goal, false)
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         Ok(vec![ToolResult::Result {
             data: result.data,
             result_for_assistant: Some(result.result_for_assistant),
@@ -187,7 +187,7 @@ impl Tool for CreateGoalTool {
         CREATE_GOAL_TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(format!(
             "Create a goal only when explicitly requested by the user or system/developer instructions; do not infer goals from ordinary tasks. \
 Set token_budget only when an explicit token budget is requested. Fails if a goal exists; use {UPDATE_GOAL_TOOL_NAME} only for status."
@@ -224,9 +224,9 @@ Set token_budget only when an explicit token budget is requested. Fails if a goa
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let parsed = parse_create_goal_args(input.clone())
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         let runtime = require_agent_runtime()?;
         let (session_id, workspace_path) = require_session_context(context)?;
         let goal = runtime
@@ -239,7 +239,7 @@ Set token_budget only when an explicit token budget is requested. Fails if a goa
             .await
             .map_err(thread_goal_runtime_error)?;
         let result = build_goal_tool_result(Some(goal), false)
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         Ok(vec![ToolResult::Result {
             data: result.data,
             result_for_assistant: Some(result.result_for_assistant),
@@ -268,7 +268,7 @@ impl Tool for UpdateGoalTool {
         UPDATE_GOAL_TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(
             "Update the existing goal. Use only to mark the goal achieved or genuinely blocked. \
 Set status to complete only when current evidence verifies the full objective, subsequent user requirements, and requested delivery; no required work may remain. \
@@ -305,11 +305,11 @@ After an explicit resume, begin a fresh blocked audit. Do not repeat failed side
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let parsed = parse_update_goal_args(input.clone())
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         let status = parse_update_goal_status(&parsed.status)
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         let runtime = require_agent_runtime()?;
         let (session_id, workspace_path) = require_session_context(context)?;
         let goal = runtime
@@ -323,7 +323,7 @@ After an explicit resume, begin a fresh blocked audit. Do not repeat failed side
             .map_err(thread_goal_runtime_error)?;
         let include_report = status == ThreadGoalStatus::Complete;
         let result = build_goal_tool_result(Some(goal), include_report)
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
         Ok(vec![ToolResult::Result {
             data: result.data,
             result_for_assistant: Some(result.result_for_assistant),
@@ -350,15 +350,15 @@ mod tests {
 
         assert!(matches!(
             invalid,
-            OpenBitFunError::Validation(message) if message == "missing objective"
+            StarMateError::Validation(message) if message == "missing objective"
         ));
         assert!(matches!(
             not_found,
-            OpenBitFunError::NotFound(message) if message == "thread goal not found"
+            StarMateError::NotFound(message) if message == "thread goal not found"
         ));
         assert!(matches!(
             timeout,
-            OpenBitFunError::Validation(message)
+            StarMateError::Validation(message)
                 if message == "Thread goal operation failed. Check session state and try again."
         ));
     }

@@ -64,10 +64,10 @@ impl<'de> Deserialize<'de> for ConfigExport {
     }
 }
 
-fn validate_config_export(export: &ConfigExport) -> OpenBitFunResult<()> {
+fn validate_config_export(export: &ConfigExport) -> StarMateResult<()> {
     validate_openbitfun_product_identity(&export.product_id, "Configuration export")?;
     if export.format_version != CURRENT_CONFIG_EXPORT_FORMAT_VERSION {
-        return Err(OpenBitFunError::validation(format!(
+        return Err(StarMateError::validation(format!(
             "Configuration export format_version must be {CURRENT_CONFIG_EXPORT_FORMAT_VERSION}, found {}",
             export.format_version
         )));
@@ -102,7 +102,7 @@ pub struct ConfigHealthStatus {
 fn translate_legacy_model_selection_write(
     path: &str,
     value: serde_json::Value,
-) -> OpenBitFunResult<(String, serde_json::Value)> {
+) -> StarMateResult<(String, serde_json::Value)> {
     use starmate_config_contracts::model_pool::{AgentModelSelection, AgentModelSelections};
     let Some(suffix) = path.strip_prefix("ai.agent_model_defaults") else {
         return Ok((path.into(), value));
@@ -147,7 +147,7 @@ fn translate_legacy_model_selection_write(
             }
         }
         _ => {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Unsupported legacy model selection path",
             ))
         }
@@ -157,13 +157,13 @@ fn translate_legacy_model_selection_write(
 
 impl ConfigService {
     /// Creates a new configuration service.
-    pub async fn new() -> OpenBitFunResult<Self> {
+    pub async fn new() -> StarMateResult<Self> {
         let settings = ConfigManagerSettings::default();
         Self::with_settings(settings).await
     }
 
     /// Creates a configuration service with custom settings.
-    pub async fn with_settings(settings: ConfigManagerSettings) -> OpenBitFunResult<Self> {
+    pub async fn with_settings(settings: ConfigManagerSettings) -> StarMateResult<Self> {
         let manager = ConfigManager::new(settings).await?;
 
         Ok(Self {
@@ -179,7 +179,7 @@ impl ConfigService {
     }
 
     /// Gets a configuration value (supports dot-paths).
-    pub async fn get_config<T>(&self, path: Option<&str>) -> OpenBitFunResult<T>
+    pub async fn get_config<T>(&self, path: Option<&str>) -> StarMateResult<T>
     where
         T: serde::de::DeserializeOwned,
     {
@@ -190,7 +190,7 @@ impl ConfigService {
         } else {
             let config = manager.get_config();
             serde_json::from_value(serde_json::to_value(config)?)
-                .map_err(|e| OpenBitFunError::config(format!("Failed to serialize config: {}", e)))
+                .map_err(|e| StarMateError::config(format!("Failed to serialize config: {}", e)))
         }
     }
 
@@ -199,9 +199,9 @@ impl ConfigService {
         super::model_pool_store::ModelPoolStore::new(self, directory)
     }
 
-    pub async fn install_runtime_ai_model(&self, model: AIModelConfig) -> OpenBitFunResult<()> {
+    pub async fn install_runtime_ai_model(&self, model: AIModelConfig) -> StarMateResult<()> {
         if model.id.trim().is_empty() {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Runtime model id is required".to_string(),
             ));
         }
@@ -216,7 +216,7 @@ impl ConfigService {
         self.runtime_ai_models.read().await.get(model_id).cloned()
     }
 
-    pub async fn get_effective_ai_config(&self) -> OpenBitFunResult<AIConfig> {
+    pub async fn get_effective_ai_config(&self) -> StarMateResult<AIConfig> {
         let mut ai: AIConfig = self.get_config(Some("ai")).await?;
         for runtime_model in self.runtime_ai_models.read().await.values() {
             if let Some(model) = ai
@@ -235,14 +235,14 @@ impl ConfigService {
     pub async fn get_project_ai_config(
         &self,
         project_id: Option<&str>,
-    ) -> OpenBitFunResult<AIConfig> {
+    ) -> StarMateResult<AIConfig> {
         let mut ai = self.get_effective_ai_config().await?;
         if let Some(project_id) = project_id {
             let app: crate::service::config::AppConfig = self.get_config(Some("app")).await?;
             if let Some(defaults) = app.project_defaults.get(project_id) {
                 defaults
                     .apply_model_defaults(&mut ai)
-                    .map_err(OpenBitFunError::validation)?;
+                    .map_err(StarMateError::validation)?;
             }
         }
         Ok(ai)
@@ -264,7 +264,7 @@ impl ConfigService {
     /// When the path touches AI models / default model slots / agent-model
     /// mappings, runs [`Self::reconcile_models`] afterwards so the config can
     /// never end up referencing a disabled or deleted model.
-    pub async fn set_config<T>(&self, path: &str, value: T) -> OpenBitFunResult<()>
+    pub async fn set_config<T>(&self, path: &str, value: T) -> StarMateResult<()>
     where
         T: serde::Serialize,
     {
@@ -273,7 +273,7 @@ impl ConfigService {
 
     /// Compares and persists under the same lock; unchanged preferences do not
     /// trigger validation, disk writes, account sync, or runtime notifications.
-    pub async fn set_config_if_changed<T>(&self, path: &str, value: T) -> OpenBitFunResult<bool>
+    pub async fn set_config_if_changed<T>(&self, path: &str, value: T) -> StarMateResult<bool>
     where
         T: serde::Serialize,
     {
@@ -304,8 +304,8 @@ impl ConfigService {
     pub async fn update_config<T, R>(
         &self,
         path: &str,
-        update: impl FnOnce(&mut T) -> OpenBitFunResult<R>,
-    ) -> OpenBitFunResult<R>
+        update: impl FnOnce(&mut T) -> StarMateResult<R>,
+    ) -> StarMateResult<R>
     where
         T: serde::Serialize + serde::de::DeserializeOwned,
     {
@@ -371,11 +371,11 @@ impl ConfigService {
         path: &str,
         expected: Option<serde_json::Value>,
         replacement: serde_json::Value,
-    ) -> OpenBitFunResult<bool> {
+    ) -> StarMateResult<bool> {
         let mut manager = self.manager.write().await;
         let current = match manager.get::<serde_json::Value>(path) {
             Ok(value) => Some(value),
-            Err(OpenBitFunError::NotFound(_)) => None,
+            Err(StarMateError::NotFound(_)) => None,
             Err(error) => return Err(error),
         };
         if current != expected {
@@ -406,7 +406,7 @@ impl ConfigService {
     /// When the reset target touches AI models (or is a global reset),
     /// triggers [`Self::reconcile_models`] so default-slot / agent-model
     /// references can never linger pointing at a now-missing model.
-    pub async fn reset_config(&self, path: Option<&str>) -> OpenBitFunResult<()> {
+    pub async fn reset_config(&self, path: Option<&str>) -> StarMateResult<()> {
         {
             let mut manager = self.manager.write().await;
             manager.reset(path).await?;
@@ -440,7 +440,7 @@ impl ConfigService {
     }
 
     /// Validates configuration.
-    pub async fn validate_config(&self) -> OpenBitFunResult<ConfigValidationResult> {
+    pub async fn validate_config(&self) -> StarMateResult<ConfigValidationResult> {
         let manager = self.manager.read().await;
         let mut result = manager.validate_config().await?;
         result
@@ -454,7 +454,7 @@ impl ConfigService {
     }
 
     /// Exports configuration.
-    pub async fn export_config(&self) -> OpenBitFunResult<ConfigExport> {
+    pub async fn export_config(&self) -> StarMateResult<ConfigExport> {
         let manager = self.manager.read().await;
         let config_value = manager.export_config()?;
         let config: GlobalConfig = serde_json::from_value(config_value)?;
@@ -472,7 +472,7 @@ impl ConfigService {
     pub async fn import_config(
         &self,
         export: ConfigExport,
-    ) -> OpenBitFunResult<ConfigImportResult> {
+    ) -> StarMateResult<ConfigImportResult> {
         if let Err(error) = validate_config_export(&export) {
             return Ok(ConfigImportResult {
                 success: false,
@@ -516,7 +516,7 @@ impl ConfigService {
     }
 
     /// Runs a health check.
-    pub async fn health_check(&self) -> OpenBitFunResult<ConfigHealthStatus> {
+    pub async fn health_check(&self) -> StarMateResult<ConfigHealthStatus> {
         let manager = self.manager.read().await;
         let stats = manager.get_statistics();
         let validation_result = manager.validate_config().await?;
@@ -564,7 +564,7 @@ impl ConfigService {
     }
 
     /// Reloads configuration.
-    pub async fn reload(&self) -> OpenBitFunResult<()> {
+    pub async fn reload(&self) -> StarMateResult<()> {
         {
             let mut manager = self.manager.write().await;
             manager.reload().await?;
@@ -587,7 +587,7 @@ impl ConfigService {
     /// A missing file is left alone rather than recreated, and a file that
     /// fails to load keeps the current in-memory configuration. Returns
     /// whether a reload happened.
-    pub async fn reload_if_changed_on_disk(&self) -> OpenBitFunResult<bool> {
+    pub async fn reload_if_changed_on_disk(&self) -> StarMateResult<bool> {
         let (config_file, known) = {
             let manager = self.manager.read().await;
             (
@@ -630,7 +630,7 @@ impl ConfigService {
     }
 
     /// Creates a configuration backup.
-    pub async fn create_backup(&self) -> OpenBitFunResult<std::path::PathBuf> {
+    pub async fn create_backup(&self) -> StarMateResult<std::path::PathBuf> {
         let manager = self.manager.read().await;
         manager.create_backup().await
     }
@@ -642,13 +642,13 @@ impl ConfigService {
     }
 
     /// Returns all AI model configurations.
-    pub async fn get_ai_models(&self) -> OpenBitFunResult<Vec<AIModelConfig>> {
+    pub async fn get_ai_models(&self) -> StarMateResult<Vec<AIModelConfig>> {
         let config: GlobalConfig = self.get_config(None).await?;
         Ok(config.ai.models)
     }
 
     /// Adds an AI model configuration.
-    pub async fn add_ai_model(&self, model: AIModelConfig) -> OpenBitFunResult<()> {
+    pub async fn add_ai_model(&self, model: AIModelConfig) -> StarMateResult<()> {
         self.update_config("ai.models", |models: &mut Vec<AIModelConfig>| {
             models.push(model);
             Ok(())
@@ -661,13 +661,13 @@ impl ConfigService {
         &self,
         model_id: &str,
         model: AIModelConfig,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.update_config("ai.models", |models: &mut Vec<AIModelConfig>| {
             let existing = models
                 .iter_mut()
                 .find(|m| m.id == model_id)
                 .ok_or_else(|| {
-                    OpenBitFunError::config(format!("AI model '{}' not found", model_id))
+                    StarMateError::config(format!("AI model '{}' not found", model_id))
                 })?;
             *existing = model;
             Ok(())
@@ -676,12 +676,12 @@ impl ConfigService {
     }
 
     /// Deletes an AI model configuration.
-    pub async fn delete_ai_model(&self, model_id: &str) -> OpenBitFunResult<()> {
+    pub async fn delete_ai_model(&self, model_id: &str) -> StarMateResult<()> {
         self.update_config("ai.models", |models: &mut Vec<AIModelConfig>| {
             let original_len = models.len();
             models.retain(|m| m.id != model_id);
             if models.len() == original_len {
-                return Err(OpenBitFunError::config(format!(
+                return Err(StarMateError::config(format!(
                     "AI model '{}' not found",
                     model_id
                 )));
@@ -696,18 +696,18 @@ impl ConfigService {
     pub async fn save_cloud_speech_config(
         &self,
         request: SaveCloudSpeechConfigRequest,
-    ) -> OpenBitFunResult<SaveCloudSpeechConfigResult> {
+    ) -> StarMateResult<SaveCloudSpeechConfigResult> {
         let name = request.name.trim();
         let base_url = request.base_url.trim().trim_end_matches('/');
         let model_name = request.model_name.trim();
         let api_key = request.api_key.trim();
         if name.is_empty() || base_url.is_empty() || model_name.is_empty() || api_key.is_empty() {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Cloud speech name, base URL, model name, and API key are required".to_string(),
             ));
         }
         if !base_url.starts_with("http://") && !base_url.starts_with("https://") {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Cloud speech base URL must use http or https".to_string(),
             ));
         }
@@ -726,7 +726,7 @@ impl ConfigService {
                 }
             });
         if !request_url.starts_with("http://") && !request_url.starts_with("https://") {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Cloud speech request URL must use http or https".to_string(),
             ));
         }
@@ -816,7 +816,7 @@ impl ConfigService {
     ///   and the AI client cache can react in lockstep.
     ///
     /// `caller` is logged for diagnostics (e.g. `set_config`, `update_ai_model`).
-    pub async fn reconcile_models(&self, caller: &str) -> OpenBitFunResult<ReconcileModelsReport> {
+    pub async fn reconcile_models(&self, caller: &str) -> StarMateResult<ReconcileModelsReport> {
         let reconciliation = {
             // Reconciliation writes a full config snapshot. Keep its read and
             // write under one lock so unrelated saves (such as voice keys)
@@ -898,11 +898,11 @@ impl ReconcileModelsReport {
     }
 }
 
-async fn read_config_fingerprint(path: &std::path::Path) -> OpenBitFunResult<Option<u64>> {
+async fn read_config_fingerprint(path: &std::path::Path) -> StarMateResult<Option<u64>> {
     match tokio::fs::read(path).await {
         Ok(content) => Ok(Some(super::manager::config_content_fingerprint(&content))),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
-        Err(error) => Err(OpenBitFunError::config(format!(
+        Err(error) => Err(StarMateError::config(format!(
             "Failed to read config file {}: {error}",
             path.display()
         ))),

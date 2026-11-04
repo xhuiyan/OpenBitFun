@@ -69,7 +69,7 @@ async fn prompt_suggestion_enabled() -> bool {
 /// unchanged, then the suggestion instruction as the only appended message.
 pub(super) async fn build_prompt_suggestion_messages(
     request: &PromptSuggestionRequest,
-) -> crate::util::errors::OpenBitFunResult<Vec<AIMessage>> {
+) -> crate::util::errors::StarMateResult<Vec<AIMessage>> {
     let reminders = request
         .prepended_reminders
         .iter()

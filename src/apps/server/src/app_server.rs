@@ -1,4 +1,4 @@
-//! Server-host app-server wiring: build the in-process `OpenBitFunAppServer` from
+//! Server-host app-server wiring: build the in-process `StarMateAppServer` from
 //! the product-assembled [`AgentRuntime`] and return a cloneable handle.
 //!
 //! The containing Web Server was already deprecated before this refactor.
@@ -7,32 +7,32 @@
 //!
 //! Under browser-direct ACP-over-WS (Step 2) the server host no longer pairs
 //! the app-server with an in-process client over `in_memory_pair`. Instead each
-//! WebSocket connection is handed straight to [`OpenBitFunAppServer::serve`] via the
+//! WebSocket connection is handed straight to [`StarMateAppServer::serve`] via the
 //! [`crate::routes::ws_transport`] `Lines` adapter, so the browser connects
 //! directly to the in-process app-server over native JSON-RPC. This module only
-//! constructs the [`OpenBitFunAppRuntime`] and wraps it in a [`OpenBitFunAppServer`]
+//! constructs the [`StarMateAppRuntime`] and wraps it in a [`StarMateAppServer`]
 //! (cheap `Clone` via the inner `Arc`); `serve` runs once per WS connection.
 
 use starmate_agent_runtime::sdk::{AgentEventSource, AgentRuntime};
-use starmate_app_server::{OpenBitFunAppRuntime, OpenBitFunAppServer};
+use starmate_app_server::{StarMateAppRuntime, StarMateAppServer};
 use std::sync::Arc;
 
-/// Build the in-process `OpenBitFunAppServer` for the Server Host.
+/// Build the in-process `StarMateAppServer` for the Server Host.
 ///
-/// Constructs a [`OpenBitFunAppRuntime`] from the product-assembled `runtime` and
-/// its `event_source`, wraps it in a [`OpenBitFunAppServer`] (cheap `Clone`), and
+/// Constructs a [`StarMateAppRuntime`] from the product-assembled `runtime` and
+/// its `event_source`, wraps it in a [`StarMateAppServer`] (cheap `Clone`), and
 /// returns it. The websocket handler clones this handle once per connection and
 /// spawns `serve` on a WS-bridged `Lines` transport.
 ///
 /// The caller must keep the runtime services (coordinator, scheduler, ...) and
 /// the `EventQueue` the `event_source` was built from alive for as long as the
-/// [`OpenBitFunAppServer`] is in use.
+/// [`StarMateAppServer`] is in use.
 pub(crate) fn build(
     runtime: AgentRuntime,
     event_source: AgentEventSource,
     product_search: Arc<starmate_core::product_runtime::CoreAgentRuntimeCompatibility>,
-) -> OpenBitFunAppServer {
+) -> StarMateAppServer {
     let app_runtime =
-        OpenBitFunAppRuntime::new(runtime, event_source).with_product_search(product_search);
-    OpenBitFunAppServer::new(app_runtime)
+        StarMateAppRuntime::new(runtime, event_source).with_product_search(product_search);
+    StarMateAppServer::new(app_runtime)
 }

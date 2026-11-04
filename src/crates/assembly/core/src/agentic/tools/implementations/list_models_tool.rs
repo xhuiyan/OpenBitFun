@@ -5,7 +5,7 @@ use crate::agentic::tools::framework::{
 };
 use crate::service::config::global::GlobalConfigManager;
 use crate::service::config::types::{AIConfig, AIModelConfig};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 
@@ -172,7 +172,7 @@ impl Tool for ListModelsTool {
         "ListModels"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok("List enabled OpenBitFun models as provider_name, model_id, and model_name. Use `query` to filter models; exact `primary` or `fast` resolves that default selector.".to_string())
     }
 
@@ -277,12 +277,12 @@ impl Tool for ListModelsTool {
         &self,
         input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let service = GlobalConfigManager::get_service().await.map_err(|_| {
-            OpenBitFunError::tool("OpenBitFun model configuration is unavailable.".to_string())
+            StarMateError::tool("OpenBitFun model configuration is unavailable.".to_string())
         })?;
         let config: AIConfig = service.get_config(Some("ai")).await.map_err(|_| {
-            OpenBitFunError::tool("OpenBitFun model configuration could not be loaded.".to_string())
+            StarMateError::tool("OpenBitFun model configuration could not be loaded.".to_string())
         })?;
         let query = input.get("query").and_then(Value::as_str);
         let (data, result_for_assistant) = build_list_models_result(&config, query);

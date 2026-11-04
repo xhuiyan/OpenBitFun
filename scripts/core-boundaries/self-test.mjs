@@ -906,7 +906,7 @@ export function runManifestParserSelfTest({
   }
   const coreWorkspacePathContracts = [
     'OPENBITFUN_RUNTIME_URI_PREFIX',
-    'ParsedOpenBitFunRuntimeUri',
+    'ParsedStarMateRuntimeUri',
     'posix_normalize_components',
     'Component::ParentDir',
   ];
@@ -3536,7 +3536,7 @@ export function runManifestParserSelfTest({
       contracts: [
         'tool_restrictions_for_delegation_policy',
         'miniapp_headless_agent_tool_restrictions',
-        'impl From<ToolRestrictionError> for OpenBitFunError',
+        'impl From<ToolRestrictionError> for StarMateError',
         'is_local_path_within_root',
       ],
     },
@@ -5649,7 +5649,7 @@ async fn release_baseline_claim(release: BaselineClaimRelease) -> Result<(), Dis
   if (!cliServerHostPattern) {
     throw new Error('CLI source must carry a starmate_app_server import guard');
   }
-  if (!cliServerHostPattern.regex.test('use starmate_app_server::OpenBitFunAppServer;')) {
+  if (!cliServerHostPattern.regex.test('use starmate_app_server::StarMateAppServer;')) {
     throw new Error('CLI app-server import guard must match implementation imports');
   }
   if (

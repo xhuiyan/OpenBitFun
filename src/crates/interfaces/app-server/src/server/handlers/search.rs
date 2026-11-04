@@ -7,11 +7,11 @@ use starmate_app_server_protocol::search::{
 };
 use starmate_runtime_ports::{PortError, PortErrorKind};
 
-use crate::agent::OpenBitFunAppRuntime;
+use crate::agent::StarMateAppRuntime;
 use crate::role::{AppClient, AppServer};
 
 pub(in crate::server) fn builder(
-    runtime: Arc<OpenBitFunAppRuntime>,
+    runtime: Arc<StarMateAppRuntime>,
 ) -> Builder<AppServer, impl HandleDispatchFrom<AppClient>> {
     AppServer
         .builder()

@@ -31,7 +31,7 @@ use crate::infrastructure::get_path_manager_arc;
 use crate::service::git::{GitDiffParams, GitService};
 use crate::service::remote_ssh::workspace_state::remote_workspace_runtime_root;
 use crate::service::{get_workspace_runtime_service_arc, WorkspaceRuntimeContext};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 #[cfg(feature = "git")]
 use log::warn;
 #[cfg(feature = "git")]
@@ -261,8 +261,8 @@ pub(crate) async fn call_with_tool_runtime_hooks(
     tool_name: &str,
     input: &Value,
     context: &ToolUseContext,
-    call_impl: impl Future<Output = OpenBitFunResult<Vec<ToolResult>>>,
-) -> OpenBitFunResult<Vec<ToolResult>> {
+    call_impl: impl Future<Output = StarMateResult<Vec<ToolResult>>>,
+) -> StarMateResult<Vec<ToolResult>> {
     let result = if let Some(cancellation_token) = context.cancellation_token() {
         tokio::select! {
             result = call_impl => {
@@ -270,7 +270,7 @@ pub(crate) async fn call_with_tool_runtime_hooks(
             }
 
             _ = cancellation_token.cancelled() => {
-                Err(OpenBitFunError::Cancelled("Tool execution cancelled".to_string()))
+                Err(StarMateError::Cancelled("Tool execution cancelled".to_string()))
             }
         }
     } else {
@@ -288,7 +288,7 @@ pub(crate) async fn call_tool_with_runtime_hooks<T: Tool + ?Sized>(
     tool: &T,
     input: &Value,
     context: &ToolUseContext,
-) -> OpenBitFunResult<Vec<ToolResult>> {
+) -> StarMateResult<Vec<ToolResult>> {
     call_with_tool_runtime_hooks(tool.name(), input, context, tool.call_impl(input, context)).await
 }
 
@@ -494,16 +494,16 @@ impl ToolUseContext {
     pub fn file_system_for_path(
         &self,
         resolved: &ToolPathResolution,
-    ) -> OpenBitFunResult<Arc<dyn crate::agentic::workspace::WorkspaceFileSystem>> {
+    ) -> StarMateResult<Arc<dyn crate::agentic::workspace::WorkspaceFileSystem>> {
         match resolved.backend {
-            ToolPathBackend::RemoteWorkspace if !self.is_remote() => Err(OpenBitFunError::tool(
+            ToolPathBackend::RemoteWorkspace if !self.is_remote() => Err(StarMateError::tool(
                 "Remote file access requires a remote Session workspace binding".to_string(),
             )),
             ToolPathBackend::RemoteWorkspace => self
                 .workspace_services()
                 .map(|services| Arc::clone(&services.fs))
                 .ok_or_else(|| {
-                    OpenBitFunError::tool("Remote workspace file system is unavailable".to_string())
+                    StarMateError::tool("Remote workspace file system is unavailable".to_string())
                 }),
             ToolPathBackend::Local if !self.is_remote() && !resolved.is_runtime_artifact() => {
                 Ok(self
@@ -528,7 +528,7 @@ impl ToolUseContext {
         tool_name: &str,
         target: &str,
         touched_files: Vec<String>,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let Some(session_id) = self.session_id.as_deref() else {
             return Ok(());
         };
@@ -638,7 +638,7 @@ impl ToolUseContext {
         }
     }
 
-    pub fn enforce_tool_runtime_restrictions(&self, tool_name: &str) -> OpenBitFunResult<()> {
+    pub fn enforce_tool_runtime_restrictions(&self, tool_name: &str) -> StarMateResult<()> {
         self.runtime_tool_restrictions
             .ensure_tool_allowed(tool_name)
             .map_err(Into::into)
@@ -648,7 +648,7 @@ impl ToolUseContext {
         &self,
         operation: ToolPathOperation,
         resolution: &ToolPathResolution,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let allowed_roots = self
             .runtime_tool_restrictions
             .path_policy
@@ -665,7 +665,7 @@ impl ToolUseContext {
         let is_allowed = is_tool_path_allowed_by_resolved_roots(
             resolution,
             &resolved_roots,
-            |resolution, root| -> OpenBitFunResult<bool> {
+            |resolution, root| -> StarMateResult<bool> {
                 match resolution.backend {
                     ToolPathBackend::Local => is_local_path_within_root(
                         Path::new(&resolution.resolved_path),
@@ -683,7 +683,7 @@ impl ToolUseContext {
             return Ok(());
         }
 
-        Err(OpenBitFunError::validation(
+        Err(StarMateError::validation(
             build_tool_path_policy_denial_message(
                 &resolution.logical_path,
                 operation,
@@ -694,13 +694,13 @@ impl ToolUseContext {
 
     /// Resolve a user or model-supplied path for file/shell tools. Uses POSIX semantics when the
     /// workspace is remote SSH so Windows-hosted clients still resolve `/home/...` correctly.
-    pub fn resolve_workspace_tool_path(&self, path: &str) -> OpenBitFunResult<String> {
+    pub fn resolve_workspace_tool_path(&self, path: &str) -> StarMateResult<String> {
         let workspace_root_owned = self
             .workspace
             .as_ref()
             .map(|w| w.root_path_string())
             .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "A workspace path is required to resolve tool path: {}",
                     path
                 ))
@@ -717,7 +717,7 @@ impl ToolUseContext {
         if self.is_remote()
             && !is_remote_posix_path_within_root(&resolved_path, &workspace_root_owned)
         {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "Path '{}' resolves outside current workspace '{}': {}",
                 path, workspace_root_owned, resolved_path
             )));
@@ -726,7 +726,7 @@ impl ToolUseContext {
         Ok(resolved_path)
     }
 
-    pub fn current_workspace_runtime_root(&self) -> OpenBitFunResult<PathBuf> {
+    pub fn current_workspace_runtime_root(&self) -> StarMateResult<PathBuf> {
         #[cfg(test)]
         if let Some(path) = self
             .custom_data
@@ -738,7 +738,7 @@ impl ToolUseContext {
         }
 
         let workspace = self.workspace.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "A workspace is required to resolve runtime artifacts".to_string(),
             )
         })?;
@@ -762,9 +762,9 @@ impl ToolUseContext {
 
     pub async fn ensure_current_workspace_runtime(
         &self,
-    ) -> OpenBitFunResult<WorkspaceRuntimeContext> {
+    ) -> StarMateResult<WorkspaceRuntimeContext> {
         let workspace = self.workspace.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool("A workspace is required to ensure runtime artifacts".to_string())
+            StarMateError::tool("A workspace is required to ensure runtime artifacts".to_string())
         })?;
 
         let runtime_service = get_workspace_runtime_service_arc();
@@ -778,7 +778,7 @@ impl ToolUseContext {
         self.is_remote()
     }
 
-    pub fn build_runtime_uri(&self, relative_path: &str) -> OpenBitFunResult<String> {
+    pub fn build_runtime_uri(&self, relative_path: &str) -> StarMateResult<String> {
         let scope = self
             .current_workspace_scope()
             .unwrap_or_else(|| "current".to_string());
@@ -788,7 +788,7 @@ impl ToolUseContext {
     pub fn build_runtime_artifact_reference(
         &self,
         relative_path: &str,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let runtime_root = if self.should_emit_runtime_uri() {
             None
         } else {
@@ -800,14 +800,14 @@ impl ToolUseContext {
             self.current_workspace_scope().as_deref(),
             self.should_emit_runtime_uri(),
         )
-        .map_err(|error| OpenBitFunError::tool(error.to_string()))
+        .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
     pub fn build_session_runtime_artifact_reference(
         &self,
         session_id: &str,
         relative_path: &str,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let runtime_root = if self.should_emit_runtime_uri() {
             None
         } else {
@@ -820,10 +820,10 @@ impl ToolUseContext {
             self.current_workspace_scope().as_deref(),
             self.should_emit_runtime_uri(),
         )
-        .map_err(|error| OpenBitFunError::tool(error.to_string()))
+        .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
-    pub fn current_workspace_session_dir(&self, session_id: &str) -> OpenBitFunResult<PathBuf> {
+    pub fn current_workspace_session_dir(&self, session_id: &str) -> StarMateResult<PathBuf> {
         Ok(self
             .current_workspace_runtime_root()?
             .join("sessions")
@@ -833,7 +833,7 @@ impl ToolUseContext {
     pub fn current_workspace_session_tool_results_dir(
         &self,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         Ok(self
             .current_workspace_session_dir(session_id)?
             .join("tool-results"))
@@ -843,13 +843,13 @@ impl ToolUseContext {
         &self,
         session_id: &str,
         file_name: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         Ok(self
             .current_workspace_session_tool_results_dir(session_id)?
             .join(file_name))
     }
 
-    pub fn resolve_tool_path(&self, path: &str) -> OpenBitFunResult<ToolPathResolution> {
+    pub fn resolve_tool_path(&self, path: &str) -> StarMateResult<ToolPathResolution> {
         if is_openbitfun_tool_uri(path) {
             let workspace_scope = self.current_workspace_scope();
             let runtime_root = if self.workspace.is_some() {
@@ -870,7 +870,7 @@ impl ToolUseContext {
                 runtime_root,
                 current_session_root,
             )
-            .map_err(|error| OpenBitFunError::tool(error.to_string()));
+            .map_err(|error| StarMateError::tool(error.to_string()));
         }
 
         let workspace_root_owned = self
@@ -878,7 +878,7 @@ impl ToolUseContext {
             .as_ref()
             .map(|w| w.root_path_string())
             .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "A workspace path is required to resolve tool path: {}",
                     path
                 ))
@@ -891,7 +891,7 @@ impl ToolUseContext {
             self.current_workspace_scope().as_deref(),
             None,
         )
-        .map_err(|error| OpenBitFunError::tool(error.to_string()))
+        .map_err(|error| StarMateError::tool(error.to_string()))
     }
 
     /// Whether `path` is absolute for the active workspace (POSIX `/` for remote SSH).
@@ -1468,7 +1468,7 @@ mod call_runtime_tests {
     use crate::agentic::tools::framework::Tool;
     use crate::agentic::tools::framework::ToolResult;
     use crate::agentic::tools::ToolRuntimeRestrictions;
-    use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+    use crate::util::errors::{StarMateError, StarMateResult};
     use async_trait::async_trait;
     use serde_json::json;
     use serde_json::Value;
@@ -1485,7 +1485,7 @@ mod call_runtime_tests {
             "Read"
         }
 
-        async fn description(&self) -> OpenBitFunResult<String> {
+        async fn description(&self) -> StarMateResult<String> {
             Ok("Read file".to_string())
         }
 
@@ -1506,7 +1506,7 @@ mod call_runtime_tests {
             &self,
             _input: &Value,
             _context: &ToolUseContext,
-        ) -> OpenBitFunResult<Vec<ToolResult>> {
+        ) -> StarMateResult<Vec<ToolResult>> {
             Ok(vec![ToolResult::ok(
                 json!({ "ok": true }),
                 Some("ok".to_string()),
@@ -1546,7 +1546,7 @@ mod call_runtime_tests {
         .await;
 
         assert!(
-            matches!(result, Err(OpenBitFunError::Cancelled(message)) if message == "Tool execution cancelled")
+            matches!(result, Err(StarMateError::Cancelled(message)) if message == "Tool execution cancelled")
         );
     }
 
@@ -1566,7 +1566,7 @@ mod call_runtime_tests {
             runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
 
-        let result: OpenBitFunResult<Vec<ToolResult>> =
+        let result: StarMateResult<Vec<ToolResult>> =
             call_with_tool_runtime_hooks("Read", &json!({}), &context, async {
                 Ok(vec![ToolResult::ok(
                     json!({ "ok": true }),

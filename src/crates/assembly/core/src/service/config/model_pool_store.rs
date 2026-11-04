@@ -1,6 +1,6 @@
 //! Pool editing uses the main configuration owner and its atomic mutation lock.
 use super::{AIConfig, ConfigService};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 pub use starmate_config_contracts::model_pool::{ModelPoolDefinition, ModelPoolDocument};
 use std::collections::HashSet;
 use std::path::PathBuf;
@@ -102,7 +102,7 @@ mod tests {
         store.delete(&renamed.id).await.unwrap();
         assert!(matches!(
             store.save(renamed).await,
-            Err(OpenBitFunError::NotFound(_))
+            Err(StarMateError::NotFound(_))
         ));
         assert_eq!(
             store.read().await.unwrap().pools,
@@ -156,10 +156,10 @@ impl<'a> ModelPoolStore<'a> {
         self.runtime_path.clone()
     }
 
-    pub async fn read(&self) -> OpenBitFunResult<ModelPoolDocument> {
+    pub async fn read(&self) -> StarMateResult<ModelPoolDocument> {
         let document: ModelPoolDocument = self.service.get_config(Some("ai.model_pools")).await?;
         if document.version != 1 {
-            return Err(OpenBitFunError::config(format!(
+            return Err(StarMateError::config(format!(
                 "Unsupported model pool document version: {}",
                 document.version
             )));
@@ -167,16 +167,16 @@ impl<'a> ModelPoolStore<'a> {
         Ok(document)
     }
 
-    pub async fn get(&self, id: &str) -> OpenBitFunResult<ModelPoolDefinition> {
+    pub async fn get(&self, id: &str) -> StarMateResult<ModelPoolDefinition> {
         self.read()
             .await?
             .get(id)
-            .map_err(OpenBitFunError::validation)
+            .map_err(StarMateError::validation)
     }
 
     /// An empty draft ID creates a pool with a host-generated ID. A non-empty
     /// ID edits an existing pool; it must never recreate a deleted record.
-    pub async fn save(&self, pool: ModelPoolDefinition) -> OpenBitFunResult<ModelPoolDocument> {
+    pub async fn save(&self, pool: ModelPoolDefinition) -> StarMateResult<ModelPoolDocument> {
         self.save_with_id_generator(pool, generate_pool_id).await
     }
 
@@ -184,7 +184,7 @@ impl<'a> ModelPoolStore<'a> {
         &self,
         mut pool: ModelPoolDefinition,
         mut next_id: impl FnMut() -> String,
-    ) -> OpenBitFunResult<ModelPoolDocument> {
+    ) -> StarMateResult<ModelPoolDocument> {
         let creating = pool.id.is_empty();
         self.service
             .update_config::<AIConfig, _>("ai", |ai| {
@@ -203,7 +203,7 @@ impl<'a> ModelPoolStore<'a> {
                         }
                     }
                 }
-                pool.validate().map_err(OpenBitFunError::validation)?;
+                pool.validate().map_err(StarMateError::validation)?;
                 let indices: Vec<_> = document
                     .pools
                     .iter()
@@ -214,10 +214,10 @@ impl<'a> ModelPoolStore<'a> {
                     .map(|(index, _)| index)
                     .collect();
                 if indices.len() > 1 {
-                    return Err(OpenBitFunError::validation("Duplicate model pool ID"));
+                    return Err(StarMateError::validation("Duplicate model pool ID"));
                 }
                 if !creating && indices.is_empty() {
-                    return Err(OpenBitFunError::NotFound(format!(
+                    return Err(StarMateError::NotFound(format!(
                         "Model pool no longer exists: {}",
                         pool.id
                     )));
@@ -231,7 +231,7 @@ impl<'a> ModelPoolStore<'a> {
                             .as_ref()
                             .is_some_and(|old| old.member_model_ids.contains(id))
                     {
-                        return Err(OpenBitFunError::validation(format!(
+                        return Err(StarMateError::validation(format!(
                             "Unknown model pool member: {id}"
                         )));
                     }
@@ -252,7 +252,7 @@ impl<'a> ModelPoolStore<'a> {
             .await
     }
 
-    pub async fn delete(&self, id: &str) -> OpenBitFunResult<ModelPoolDocument> {
+    pub async fn delete(&self, id: &str) -> StarMateResult<ModelPoolDocument> {
         self.service
             .update_config::<ModelPoolDocument, _>("ai.model_pools", |document| {
                 Self::check_version(document)?;
@@ -264,9 +264,9 @@ impl<'a> ModelPoolStore<'a> {
             .await
     }
 
-    fn check_version(document: &ModelPoolDocument) -> OpenBitFunResult<()> {
+    fn check_version(document: &ModelPoolDocument) -> StarMateResult<()> {
         if document.version != 1 {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Unsupported model pool version",
             ));
         }

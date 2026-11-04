@@ -6,7 +6,7 @@ use super::{
 };
 use crate::agentic::tools::framework::{Tool, ToolRenderOptions, ToolResult, ValidationResult};
 use crate::agentic::tools::tool_context_runtime::ToolUseContext;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_agent_tools::{
     build_get_tool_spec_catalog_description, build_get_tool_spec_description,
@@ -45,7 +45,7 @@ impl Tool for GetToolSpecTool {
         GET_TOOL_SPEC_TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(build_get_tool_spec_description())
     }
 
@@ -56,7 +56,7 @@ impl Tool for GetToolSpecTool {
     async fn description_with_context(
         &self,
         _context: Option<&ToolUseContext>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         Ok(build_get_tool_spec_description())
     }
 
@@ -102,17 +102,17 @@ impl Tool for GetToolSpecTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         resolve_product_get_tool_spec_results(input, context, self.name())
             .await
             .map_err(map_get_tool_spec_execution_error)
     }
 }
 
-fn map_get_tool_spec_execution_error(error: GetToolSpecExecutionError) -> OpenBitFunError {
+fn map_get_tool_spec_execution_error(error: GetToolSpecExecutionError) -> StarMateError {
     match error {
-        GetToolSpecExecutionError::MissingToolName => OpenBitFunError::tool(error.to_string()),
-        GetToolSpecExecutionError::Detail(message) => OpenBitFunError::Validation(message),
+        GetToolSpecExecutionError::MissingToolName => StarMateError::tool(error.to_string()),
+        GetToolSpecExecutionError::Detail(message) => StarMateError::Validation(message),
     }
 }
 

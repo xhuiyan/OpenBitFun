@@ -1,4 +1,4 @@
-use crate::agent::OpenBitFunAppRuntime;
+use crate::agent::StarMateAppRuntime;
 use crate::management::AppManagementService;
 use crate::role::AppClient;
 use crate::schema::{
@@ -11,7 +11,7 @@ use starmate_app_server_protocol::external_source::ExternalSourceEventNotificati
 use std::sync::Arc;
 
 pub(super) async fn run(
-    runtime: Arc<OpenBitFunAppRuntime>,
+    runtime: Arc<StarMateAppRuntime>,
     management: Option<Arc<AppManagementService>>,
     cx: ConnectionTo<AppClient>,
     event_state: Arc<crate::server::ConnectionEventState>,

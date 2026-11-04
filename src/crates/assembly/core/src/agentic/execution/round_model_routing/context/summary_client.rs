@@ -8,7 +8,7 @@ use crate::infrastructure::ai::reasoning_catalog::{
     load_models_dev_reasoning_catalog_without_refresh, project_model_reasoning_catalog,
 };
 use crate::service::config::get_global_config_service;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use crate::util::types::Message as AIMessage;
 use starmate_agent_runtime::router_context::{EstimatedRouterTokens, RouterTokenCounter};
 use starmate_ai_adapters::models_dev::is_protocol_generic_reasoning_preset;
@@ -22,14 +22,14 @@ use starmate_core_types::{
 /// the factory's cached client, model defaults, or the main conversation's preset.
 pub(super) async fn configured_client(
     summary_config: &RouterContextConfig,
-) -> OpenBitFunResult<(String, AIClient)> {
+) -> StarMateResult<(String, AIClient)> {
     let config = get_global_config_service()
         .await?
         .get_effective_ai_config()
         .await?;
     let model_id = match summary_config.summary_model_id.as_deref() {
         Some(id) => config.resolve_model_reference(id).ok_or_else(|| {
-            OpenBitFunError::Configuration("Router summary economy model is unavailable".into())
+            StarMateError::Configuration("Router summary economy model is unavailable".into())
         })?,
         None => configured_summary_model(&config)?,
     };
@@ -38,7 +38,7 @@ pub(super) async fn configured_client(
         .iter()
         .find(|model| model.id == model_id)
         .ok_or_else(|| {
-            OpenBitFunError::Configuration(
+            StarMateError::Configuration(
                 "Router summary model configuration is unavailable".into(),
             )
         })?;
@@ -48,7 +48,7 @@ pub(super) async fn configured_client(
         .await?
         .get_client_resolved(&model_id)
         .await
-        .map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
+        .map_err(|error| StarMateError::AIClient(error.to_string()))?;
     let client = request_client(shared.as_ref(), &projection, summary_config)?;
     Ok((model_id, client))
 }
@@ -59,7 +59,7 @@ pub(super) async fn configured_client(
 pub(super) fn input_budget(
     client: &AIClient,
     config: &RouterContextConfig,
-) -> OpenBitFunResult<usize> {
+) -> StarMateResult<usize> {
     let window = client.config.context_window as usize;
     let output = client
         .config
@@ -72,7 +72,7 @@ pub(super) fn input_budget(
         .saturating_sub(EstimatedRouterTokens.count(&summary_system_prompt(config)))
         .saturating_sub(256);
     if budget < 512 {
-        return Err(OpenBitFunError::Configuration(
+        return Err(StarMateError::Configuration(
             "Summary model context window leaves insufficient room for routing history".into(),
         ));
     }
@@ -83,11 +83,11 @@ pub(super) fn validate_input(
     client: &AIClient,
     config: &RouterContextConfig,
     prompt: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let budget = input_budget(client, config)?;
     let input_tokens = EstimatedRouterTokens.count(prompt);
     if input_tokens > budget {
-        return Err(OpenBitFunError::Configuration(format!(
+        return Err(StarMateError::Configuration(format!(
             "Router summary input exceeds the current summary model budget: input_tokens={input_tokens}, budget_tokens={budget}"
         )));
     }
@@ -100,7 +100,7 @@ pub(super) async fn send_request(
     client: &AIClient,
     config: &RouterContextConfig,
     prompt: String,
-) -> OpenBitFunResult<GeminiResponse> {
+) -> StarMateResult<GeminiResponse> {
     validate_input(client, config, &prompt)?;
     client
         .send_message_once_with_trace_and_request_context(
@@ -113,7 +113,7 @@ pub(super) async fn send_request(
             None,
         )
         .await
-        .map_err(|error| OpenBitFunError::AIClient(error.to_string()))
+        .map_err(|error| StarMateError::AIClient(error.to_string()))
 }
 
 fn lowest_summary_reasoning_preset(
@@ -183,7 +183,7 @@ fn request_client(
     shared: &AIClient,
     projection: &ReasoningCatalogProjection,
     config: &RouterContextConfig,
-) -> OpenBitFunResult<AIClient> {
+) -> StarMateResult<AIClient> {
     let preset = match config.summary_reasoning_preset.as_deref() {
         Some(requested) => Some(
             projection
@@ -192,14 +192,14 @@ fn request_client(
                 .find(|preset| preset.id == requested)
                 .cloned()
                 .ok_or_else(|| {
-                    OpenBitFunError::Configuration(format!(
+                    StarMateError::Configuration(format!(
                         "Router summary reasoning preset '{requested}' is unavailable for the summary model"
                     ))
                 })?,
         ),
         None => {
             if shared.selected_reasoning_preset().is_some() {
-                return Err(OpenBitFunError::Configuration(
+                return Err(StarMateError::Configuration(
                     "Router summary cannot inherit a session reasoning preset".into(),
                 ));
             }
@@ -224,7 +224,7 @@ fn request_client(
         if let Some(preset) = client.model_reasoning_preset() {
             client
                 .validate_reasoning_preset(preset)
-                .map_err(|error| OpenBitFunError::Configuration(error.to_string()))?;
+                .map_err(|error| StarMateError::Configuration(error.to_string()))?;
         }
     }
     Ok(client)

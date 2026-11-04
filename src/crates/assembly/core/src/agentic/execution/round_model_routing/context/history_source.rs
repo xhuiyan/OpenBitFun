@@ -3,7 +3,7 @@
 use crate::agentic::core::strip_prompt_markup;
 use crate::agentic::persistence::PersistenceManager;
 use crate::service::session::{DialogTurnData, ModelRoundData, ToolItemIdentityExt};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use starmate_agent_runtime::router_context::RouterEntryKind;
 use serde_json::{json, Map, Value};
 use std::collections::{HashMap, HashSet};
@@ -21,7 +21,7 @@ pub(in crate::agentic::execution) struct HistoryObservation {
 pub(in crate::agentic::execution) trait RouterHistorySource:
     Send + Sync
 {
-    async fn observations(&self, turn_id: &str) -> OpenBitFunResult<Vec<HistoryObservation>>;
+    async fn observations(&self, turn_id: &str) -> StarMateResult<Vec<HistoryObservation>>;
 }
 
 /// Paths belong to the execution host's resolved session store, never the controller.
@@ -48,9 +48,9 @@ impl PersistentRouterHistorySource {
         }
     }
 
-    async fn load_turn(&self, turn_id: &str) -> OpenBitFunResult<DialogTurnData> {
+    async fn load_turn(&self, turn_id: &str) -> StarMateResult<DialogTurnData> {
         if turn_id.is_empty() {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Router historical turn ID is empty".into(),
             ));
         }
@@ -75,19 +75,19 @@ impl PersistentRouterHistorySource {
                         .await?;
                     for turn in turns {
                         if turn.session_id != self.session_id || turn.turn_id.is_empty() {
-                            return Err(OpenBitFunError::Validation(
+                            return Err(StarMateError::Validation(
                                 "Router historical turn identity mismatch".into(),
                             ));
                         }
                         if indices.insert(turn.turn_id, turn.turn_index).is_some() {
-                            return Err(OpenBitFunError::Validation(
+                            return Err(StarMateError::Validation(
                                 "Router history contains duplicate turn IDs".into(),
                             ));
                         }
                     }
                     let Some(next) = next else { break };
                     if before.is_some_and(|previous| next >= previous) {
-                        return Err(OpenBitFunError::Validation(
+                        return Err(StarMateError::Validation(
                             "Router history cursor did not advance".into(),
                         ));
                     }
@@ -100,14 +100,14 @@ impl PersistentRouterHistorySource {
                 .and_then(|indices| indices.get(turn_id))
                 .copied()
         }
-        .ok_or_else(|| OpenBitFunError::NotFound("Router historical turn is unavailable".into()))?;
+        .ok_or_else(|| StarMateError::NotFound("Router historical turn is unavailable".into()))?;
 
         let turn = self
             .persistence
             .load_dialog_turn(&self.workspace, &self.session_id, index)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound("Router historical turn is unavailable".into())
+                StarMateError::NotFound("Router historical turn is unavailable".into())
             })?;
         self.validate_turn(&turn, turn_id, index)?;
         // A previously cached index must not bypass a newer undo boundary.
@@ -117,7 +117,7 @@ impl PersistentRouterHistorySource {
             .await?
             .is_some_and(|state| index >= state.boundary_turn)
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Router historical turn is no longer visible".into(),
             ));
         }
@@ -129,10 +129,10 @@ impl PersistentRouterHistorySource {
         turn: &DialogTurnData,
         turn_id: &str,
         index: usize,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if turn.session_id != self.session_id || turn.turn_id != turn_id || turn.turn_index != index
         {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Router historical turn identity mismatch".into(),
             ));
         }
@@ -142,7 +142,7 @@ impl PersistentRouterHistorySource {
 
 #[async_trait::async_trait]
 impl RouterHistorySource for PersistentRouterHistorySource {
-    async fn observations(&self, turn_id: &str) -> OpenBitFunResult<Vec<HistoryObservation>> {
+    async fn observations(&self, turn_id: &str) -> StarMateResult<Vec<HistoryObservation>> {
         project_turn(&self.load_turn(turn_id).await?)
     }
 }
@@ -170,7 +170,7 @@ fn effective_attempt(round: &ModelRoundData) -> Option<u32> {
         .max()
 }
 
-fn project_turn(turn: &DialogTurnData) -> OpenBitFunResult<Vec<HistoryObservation>> {
+fn project_turn(turn: &DialogTurnData) -> StarMateResult<Vec<HistoryObservation>> {
     if !turn.kind.is_model_visible() {
         return Ok(Vec::new());
     }
@@ -199,7 +199,7 @@ fn project_turn(turn: &DialogTurnData) -> OpenBitFunResult<Vec<HistoryObservatio
     let mut round_ids = HashSet::new();
     for round in rounds {
         if round.turn_id != turn.turn_id || round.id.is_empty() || !round_ids.insert(&round.id) {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "Router historical round identity mismatch".into(),
             ));
         }

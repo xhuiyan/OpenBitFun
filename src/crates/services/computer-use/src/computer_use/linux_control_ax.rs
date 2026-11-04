@@ -3,7 +3,7 @@ use atspi::{
     connection::P2P, proxy::proxy_ext::ProxyExt, AccessibilityConnection, CoordType,
     ObjectRefOwned, State,
 };
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{AppInfo, AppSelector, AppStateSnapshot, AxNode};
 use std::{
     collections::{HashMap, HashSet, VecDeque},
@@ -28,13 +28,13 @@ pub(super) fn clear_observations() {
         entries.clear();
     }
 }
-fn error(message: impl std::fmt::Display) -> OpenBitFunError {
-    OpenBitFunError::tool(format!("[AT_SPI] {message}"))
+fn error(message: impl std::fmt::Display) -> StarMateError {
+    StarMateError::tool(format!("[AT_SPI] {message}"))
 }
 
 async fn applications(
     connection: &AccessibilityConnection,
-) -> OpenBitFunResult<Vec<(AppInfo, ObjectRefOwned)>> {
+) -> StarMateResult<Vec<(AppInfo, ObjectRefOwned)>> {
     let root = connection
         .root_accessible_on_registry()
         .await
@@ -71,7 +71,7 @@ async fn applications(
     Ok(result)
 }
 
-pub(super) async fn list_apps() -> OpenBitFunResult<Vec<AppInfo>> {
+pub(super) async fn list_apps() -> StarMateResult<Vec<AppInfo>> {
     let connection = AccessibilityConnection::new().await.map_err(error)?;
     Ok(applications(&connection)
         .await?
@@ -80,19 +80,19 @@ pub(super) async fn list_apps() -> OpenBitFunResult<Vec<AppInfo>> {
         .collect())
 }
 
-fn bound_selector(target: Option<&str>) -> OpenBitFunResult<AppSelector> {
+fn bound_selector(target: Option<&str>) -> StarMateResult<AppSelector> {
     let pid = target.and_then(|target| target.strip_prefix("atspi:"))
         .and_then(|pid| pid.parse::<i32>().ok()).filter(|pid| *pid > 0)
         .ok_or_else(|| error("[TARGET_REQUIRED] Select an application with get_app_state and an explicit app PID or name before AT-SPI observation. Portal pixel selection does not identify an application."))?;
     Ok(AppSelector::by_pid(pid))
 }
 
-pub(super) fn bound_app_selector() -> OpenBitFunResult<AppSelector> {
+pub(super) fn bound_app_selector() -> StarMateResult<AppSelector> {
     bound_selector(super::control_session::snapshot().target.as_deref())
 }
 
 /// Resolve and bind identity without replacing the caller's cached node indices.
-pub(super) async fn bind_app_selector(selector: &AppSelector) -> OpenBitFunResult<()> {
+pub(super) async fn bind_app_selector(selector: &AppSelector) -> StarMateResult<()> {
     let connection = AccessibilityConnection::new().await.map_err(error)?;
     let (app, _) = resolve(&connection, selector).await?;
     let pid = app
@@ -104,7 +104,7 @@ pub(super) async fn bind_app_selector(selector: &AppSelector) -> OpenBitFunResul
 /// Locate starts at exactly the bound application's root, never the desktop registry.
 pub(super) async fn bound_application_root(
     connection: &AccessibilityConnection,
-) -> OpenBitFunResult<ObjectRefOwned> {
+) -> StarMateResult<ObjectRefOwned> {
     let selector = bound_app_selector()?;
     let (_, root) = resolve(connection, &selector).await?;
     Ok(root)
@@ -113,7 +113,7 @@ pub(super) async fn bound_application_root(
 async fn resolve(
     connection: &AccessibilityConnection,
     selector: &AppSelector,
-) -> OpenBitFunResult<(AppInfo, ObjectRefOwned)> {
+) -> StarMateResult<(AppInfo, ObjectRefOwned)> {
     let bound;
     let selector = if selector.is_empty() {
         bound = bound_app_selector()?;
@@ -150,7 +150,7 @@ pub(super) async fn snapshot(
     selector: AppSelector,
     max_depth: u32,
     focus_only: bool,
-) -> OpenBitFunResult<AppStateSnapshot> {
+) -> StarMateResult<AppStateSnapshot> {
     snapshot_impl(selector, max_depth, focus_only, true).await
 }
 
@@ -159,7 +159,7 @@ pub(super) async fn snapshot(
 pub(super) async fn preview_snapshot(
     selector: AppSelector,
     max_depth: u32,
-) -> OpenBitFunResult<AppStateSnapshot> {
+) -> StarMateResult<AppStateSnapshot> {
     snapshot_impl(selector, max_depth, false, false).await
 }
 
@@ -168,7 +168,7 @@ async fn snapshot_impl(
     max_depth: u32,
     focus_only: bool,
     publish_nodes: bool,
-) -> OpenBitFunResult<AppStateSnapshot> {
+) -> StarMateResult<AppStateSnapshot> {
     let selector = if selector.is_empty() {
         bound_app_selector()?
     } else {
@@ -356,7 +356,7 @@ async fn snapshot_impl(
 async fn cached_target(
     selector: &AppSelector,
     index: u32,
-) -> OpenBitFunResult<(AccessibilityConnection, CachedNode)> {
+) -> StarMateResult<(AccessibilityConnection, CachedNode)> {
     let connection = AccessibilityConnection::new().await.map_err(error)?;
     let (app, root) = resolve(&connection, selector).await?;
     let pid = app
@@ -397,7 +397,7 @@ async fn cached_target(
     Ok((connection, target))
 }
 
-pub(super) async fn press(selector: &AppSelector, index: u32) -> OpenBitFunResult<()> {
+pub(super) async fn press(selector: &AppSelector, index: u32) -> StarMateResult<()> {
     let (connection, target) = cached_target(selector, index).await?;
     let accessible = connection
         .object_as_accessible(&target.object)
@@ -433,7 +433,7 @@ pub(super) async fn insert_text(
     selector: &AppSelector,
     index: u32,
     text: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let (connection, target) = cached_target(selector, index).await?;
     let accessible = connection
         .object_as_accessible(&target.object)

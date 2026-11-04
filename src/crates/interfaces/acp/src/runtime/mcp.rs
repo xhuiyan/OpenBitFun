@@ -10,9 +10,9 @@ use starmate_core::service::mcp::{
 };
 use sha2::{Digest, Sha256};
 
-use super::OpenBitFunAcpRuntime;
+use super::StarMateAcpRuntime;
 
-impl OpenBitFunAcpRuntime {
+impl StarMateAcpRuntime {
     pub(super) fn validate_mcp_servers(&self, servers: &[McpServer]) -> Result<()> {
         let configs = acp_mcp_server_configs("validation", servers.iter().cloned())?;
         ensure_unique_server_ids(&configs)
@@ -115,9 +115,9 @@ async fn mcp_server_manager() -> Result<Arc<MCPServerManager>> {
 
     let config_service = get_global_config_service()
         .await
-        .map_err(OpenBitFunAcpRuntime::internal_error)?;
+        .map_err(StarMateAcpRuntime::internal_error)?;
     let service =
-        Arc::new(MCPService::new(config_service).map_err(OpenBitFunAcpRuntime::internal_error)?);
+        Arc::new(MCPService::new(config_service).map_err(StarMateAcpRuntime::internal_error)?);
     set_global_mcp_service(service.clone());
     Ok(service.server_manager())
 }

@@ -1,6 +1,6 @@
 //! Shared persisted configuration records and live provider interface.
 
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 use async_trait::async_trait;
 pub use starmate_config_contracts::*;
 
@@ -14,12 +14,12 @@ pub trait ConfigProvider: Send + Sync {
     fn get_default_config(&self) -> serde_json::Value;
 
     /// Validates configuration.
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>>;
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>>;
 
     /// Called when configuration changes.
     async fn on_config_changed(
         &self,
         old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()>;
+    ) -> StarMateResult<()>;
 }

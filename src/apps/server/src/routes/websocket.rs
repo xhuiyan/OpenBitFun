@@ -2,7 +2,7 @@
 //!
 //! Under browser-direct ACP-over-WS (Step 2), the browser speaks raw JSON-RPC
 //! 2.0 over the WebSocket. Each connection is handed straight to
-//! [`starmate_app_server::OpenBitFunAppServer::serve`] via the [`super::ws_transport`]
+//! [`starmate_app_server::StarMateAppServer::serve`] via the [`super::ws_transport`]
 //! `Lines` adapter -- no custom `{type:"request"|...}` envelope, no
 //! `route_agent_command`, no shared in-process client. The browser connects
 //! directly to the in-process app-server over native JSON-RPC; runtime and
@@ -31,7 +31,7 @@ use axum::{
     response::{IntoResponse, Response},
 };
 
-use starmate_app_server::OpenBitFunAppServer;
+use starmate_app_server::StarMateAppServer;
 
 use crate::AppState;
 
@@ -41,12 +41,12 @@ const MAX_WS_TEXT_BYTES: usize = 256 * 1024;
 /// WebSocket connection handler.
 ///
 /// Validates the browser origin, then upgrades the connection and runs one
-/// in-process `OpenBitFunAppServer::serve` per connection over the WS-bridged
+/// in-process `StarMateAppServer::serve` per connection over the WS-bridged
 /// `Lines` transport.
 pub(crate) async fn websocket_handler(
     ws: WebSocketUpgrade,
     State(state): State<AppState>,
-    Extension(starmate_app_server): Extension<OpenBitFunAppServer>,
+    Extension(starmate_app_server): Extension<StarMateAppServer>,
     headers: HeaderMap,
 ) -> Response {
     if !browser_origin_allowed(&headers, &state) {
@@ -79,11 +79,11 @@ fn browser_origin_allowed(headers: &HeaderMap, state: &AppState) -> bool {
 
 /// Run one in-process app-server over the WebSocket for the connection's life.
 ///
-/// `OpenBitFunAppServer` is `Clone` (cheap Arc clone), so each connection gets its
+/// `StarMateAppServer` is `Clone` (cheap Arc clone), so each connection gets its
 /// own `serve` task; the shared `AgentRuntime` is internally synchronized, and
 /// each connection subscribes independently to the runtime event/permission
 /// streams. The task ends when the WS transport closes.
-async fn handle_socket(socket: WebSocket, starmate_app_server: OpenBitFunAppServer) {
+async fn handle_socket(socket: WebSocket, starmate_app_server: StarMateAppServer) {
     tracing::info!("WebSocket connection established");
     let lines = super::ws_transport::ws_lines(socket);
     let result = starmate_app_server.serve(lines).await;

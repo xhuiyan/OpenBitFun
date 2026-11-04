@@ -181,7 +181,7 @@ pub(crate) fn prepare(
     generation_key: &str,
     publication: PluginPublicationIdentity,
     projection: PluginCapabilityProjection,
-) -> crate::OpenBitFunResult<PluginCapabilityPublicationPlan> {
+) -> crate::StarMateResult<PluginCapabilityPublicationPlan> {
     let workspace_id = workspace_id.to_owned();
     if projection.agents.is_empty() && projection.skill_roots.is_empty() {
         return Ok(PluginCapabilityPublicationPlan::empty(
@@ -192,7 +192,7 @@ pub(crate) fn prepare(
     }
 
     let ecosystem_id = EcosystemId::new(&publication.ecosystem_id).map_err(|error| {
-        crate::OpenBitFunError::Validation(format!(
+        crate::StarMateError::Validation(format!(
             "Invalid plugin publication ecosystem id '{}': {error}",
             publication.ecosystem_id
         ))

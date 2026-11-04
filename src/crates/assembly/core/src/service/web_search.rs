@@ -2,7 +2,7 @@
 
 use crate::infrastructure::try_get_path_manager_arc;
 use crate::service::config::types::{AIConfig, WebSearchConfig};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_runtime_ports::{
     WebSearchError, WebSearchErrorKind, WebSearchProvider, WebSearchProviderId, WebSearchRequest,
@@ -10,8 +10,8 @@ use starmate_runtime_ports::{
 };
 use starmate_services_core::credential_vault::CredentialVault;
 use starmate_services_integrations::web_tools::{
-    DeepSeekSearchProvider, ExaSearchApiProvider, FreeExaMcpProvider, OpenBitFunSearchHttpAuth,
-    OpenBitFunSearchHttpProvider, TavilySearchProvider,
+    DeepSeekSearchProvider, ExaSearchApiProvider, FreeExaMcpProvider, StarMateSearchHttpAuth,
+    StarMateSearchHttpProvider, TavilySearchProvider,
 };
 use serde::{Deserialize, Serialize};
 use std::path::Path;
@@ -72,7 +72,7 @@ pub async fn refresh_global_web_search_runtime(ai_config: &AIConfig) {
         .await;
 }
 
-fn credential_vault() -> OpenBitFunResult<CredentialVault> {
+fn credential_vault() -> StarMateResult<CredentialVault> {
     let directory = try_get_path_manager_arc()?
         .user_data_dir()
         .join("web-search");
@@ -86,31 +86,31 @@ fn credential_vault_in(directory: &Path) -> CredentialVault {
     )
 }
 
-fn credential_entry_id(credential_id: &str) -> OpenBitFunResult<&str> {
+fn credential_entry_id(credential_id: &str) -> StarMateResult<&str> {
     let credential_id = credential_id.trim();
     if credential_id.is_empty() {
-        return Err(OpenBitFunError::config(
+        return Err(StarMateError::config(
             "WebSearch credential reference is empty".to_string(),
         ));
     }
     Ok(credential_id)
 }
 
-async fn read_credential(vault: &CredentialVault, credential_id: &str) -> OpenBitFunResult<String> {
+async fn read_credential(vault: &CredentialVault, credential_id: &str) -> StarMateResult<String> {
     let credential_id = credential_entry_id(credential_id)?;
     let bytes = vault
         .get(credential_id)
         .await
         .map_err(|error| {
-            OpenBitFunError::config(format!("Failed to read WebSearch credential: {error}"))
+            StarMateError::config(format!("Failed to read WebSearch credential: {error}"))
         })?
         .ok_or_else(|| {
-            OpenBitFunError::config(
+            StarMateError::config(
                 "WebSearch credential is not configured on this device".to_string(),
             )
         })?;
     String::from_utf8(bytes)
-        .map_err(|_| OpenBitFunError::config("WebSearch credential is not valid UTF-8".to_string()))
+        .map_err(|_| StarMateError::config("WebSearch credential is not valid UTF-8".to_string()))
 }
 
 async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider> {
@@ -120,7 +120,7 @@ async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider
     } else {
         selected
     });
-    let resolved: OpenBitFunResult<Arc<dyn WebSearchProvider>> = async {
+    let resolved: StarMateResult<Arc<dyn WebSearchProvider>> = async {
         match provider_id.as_str() {
             WebSearchProviderId::EXA_MCP_FREE => {
                 Ok(Arc::new(FreeExaMcpProvider) as Arc<dyn WebSearchProvider>)
@@ -146,42 +146,42 @@ async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider
             WebSearchProviderId::OPENBITFUN_SEARCH_HTTP => {
                 let http = &config.providers.openbitfun_search_http;
                 if http.endpoint.trim().is_empty() {
-                    return Err(OpenBitFunError::config(
+                    return Err(StarMateError::config(
                         "OpenBitFun Search HTTP endpoint is not configured".to_string(),
                     ));
                 }
                 let auth = match http.auth.mode.trim() {
-                    "" | "none" => OpenBitFunSearchHttpAuth::None,
+                    "" | "none" => StarMateSearchHttpAuth::None,
                     "bearer" => {
                         let vault = credential_vault()?;
-                        OpenBitFunSearchHttpAuth::Bearer(
+                        StarMateSearchHttpAuth::Bearer(
                             read_credential(&vault, &http.auth.credential_id).await?,
                         )
                     }
                     "header" => {
                         if http.auth.header_name.trim().is_empty() {
-                            return Err(OpenBitFunError::config(
+                            return Err(StarMateError::config(
                                 "OpenBitFun Search HTTP auth header name is not configured"
                                     .to_string(),
                             ));
                         }
                         let vault = credential_vault()?;
-                        OpenBitFunSearchHttpAuth::Header {
+                        StarMateSearchHttpAuth::Header {
                             name: http.auth.header_name.trim().to_string(),
                             value: read_credential(&vault, &http.auth.credential_id).await?,
                         }
                     }
                     mode => {
-                        return Err(OpenBitFunError::config(format!(
+                        return Err(StarMateError::config(format!(
                             "Unsupported OpenBitFun Search HTTP authentication mode '{mode}'"
                         )))
                     }
                 };
-                let provider = OpenBitFunSearchHttpProvider::new(http.endpoint.trim(), auth)
-                    .map_err(|error| OpenBitFunError::config(error.message))?;
+                let provider = StarMateSearchHttpProvider::new(http.endpoint.trim(), auth)
+                    .map_err(|error| StarMateError::config(error.message))?;
                 Ok(Arc::new(provider) as Arc<dyn WebSearchProvider>)
             }
-            unknown => Err(OpenBitFunError::config(format!(
+            unknown => Err(StarMateError::config(format!(
                 "Unsupported WebSearch provider '{unknown}'"
             ))),
         }
@@ -242,7 +242,7 @@ pub struct WebSearchCredentialStatus {
 fn credential_id_for_provider<'a>(
     config: &'a WebSearchConfig,
     provider: &str,
-) -> OpenBitFunResult<&'a str> {
+) -> StarMateResult<&'a str> {
     match provider.trim() {
         WebSearchProviderId::EXA_SEARCH_API => {
             Ok(config.providers.exa_search_api.credential_id.as_str())
@@ -254,7 +254,7 @@ fn credential_id_for_provider<'a>(
                 config.providers.openbitfun_search_http.auth.mode.trim(),
                 "" | "none"
             ) {
-                return Err(OpenBitFunError::validation(
+                return Err(StarMateError::validation(
                     "OpenBitFun Search HTTP authentication mode does not use a credential"
                         .to_string(),
                 ));
@@ -266,13 +266,13 @@ fn credential_id_for_provider<'a>(
                 .credential_id
                 .as_str())
         }
-        _ => Err(OpenBitFunError::validation(format!(
+        _ => Err(StarMateError::validation(format!(
             "WebSearch provider '{provider}' does not accept a device credential"
         ))),
     }
 }
 
-async fn current_ai_config() -> OpenBitFunResult<AIConfig> {
+async fn current_ai_config() -> StarMateResult<AIConfig> {
     crate::service::config::get_global_config_service()
         .await?
         .get_config(Some("ai"))
@@ -282,14 +282,14 @@ async fn current_ai_config() -> OpenBitFunResult<AIConfig> {
 async fn credential_is_configured(
     vault: &CredentialVault,
     credential_id: &str,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     let credential_id = credential_entry_id(credential_id)?;
     vault
         .get(credential_id)
         .await
         .map(|secret| secret.is_some())
         .map_err(|error| {
-            OpenBitFunError::config(format!("Failed to read WebSearch credential: {error}"))
+            StarMateError::config(format!("Failed to read WebSearch credential: {error}"))
         })
 }
 
@@ -297,26 +297,26 @@ async fn store_credential(
     vault: &CredentialVault,
     credential_id: &str,
     secret: &str,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let credential_id = credential_entry_id(credential_id)?;
     vault
         .set(credential_id, secret.as_bytes())
         .await
         .map_err(|error| {
-            OpenBitFunError::config(format!("Failed to save WebSearch credential: {error}"))
+            StarMateError::config(format!("Failed to save WebSearch credential: {error}"))
         })
 }
 
-async fn remove_credential(vault: &CredentialVault, credential_id: &str) -> OpenBitFunResult<()> {
+async fn remove_credential(vault: &CredentialVault, credential_id: &str) -> StarMateResult<()> {
     let credential_id = credential_entry_id(credential_id)?;
     vault.remove(credential_id).await.map_err(|error| {
-        OpenBitFunError::config(format!("Failed to clear WebSearch credential: {error}"))
+        StarMateError::config(format!("Failed to clear WebSearch credential: {error}"))
     })
 }
 
 pub async fn get_web_search_credential_status(
     provider: &str,
-) -> OpenBitFunResult<WebSearchCredentialStatus> {
+) -> StarMateResult<WebSearchCredentialStatus> {
     let ai = current_ai_config().await?;
     let credential_id = credential_id_for_provider(&ai.web_search, provider)?;
     let configured = credential_is_configured(&credential_vault()?, credential_id).await?;
@@ -328,9 +328,9 @@ pub async fn get_web_search_credential_status(
 
 pub async fn save_web_search_credential(
     request: SaveWebSearchCredentialRequest,
-) -> OpenBitFunResult<WebSearchCredentialStatus> {
+) -> StarMateResult<WebSearchCredentialStatus> {
     if request.secret.trim().is_empty() {
-        return Err(OpenBitFunError::validation(
+        return Err(StarMateError::validation(
             "WebSearch credential cannot be empty".to_string(),
         ));
     }
@@ -346,7 +346,7 @@ pub async fn save_web_search_credential(
 
 pub async fn clear_web_search_credential(
     request: ClearWebSearchCredentialRequest,
-) -> OpenBitFunResult<WebSearchCredentialStatus> {
+) -> StarMateResult<WebSearchCredentialStatus> {
     let ai = current_ai_config().await?;
     let credential_id = credential_id_for_provider(&ai.web_search, request.provider.trim())?;
     remove_credential(&credential_vault()?, credential_id).await?;

@@ -607,7 +607,7 @@ mod tests {
             .is_some_and(|scopes| scopes.iter().any(|scope| scope == "{appdata}")));
         assert!(!app.ui_js.contains("Sparo"));
         assert!(include_str!("builtin/assets/ppt-live/ui.js")
-            .contains("installOpenBitFunBackendAdapter"));
+            .contains("installStarMateBackendAdapter"));
         // The single cowork agent turn loads the stable ppt-design skill key.
         assert!(prompt_source.contains("user::openbitfun-system::ppt-design"));
         let ppt_live_source = include_str!("builtin/assets/ppt-live/ui.js");

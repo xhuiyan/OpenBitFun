@@ -1941,7 +1941,7 @@ fn deep_review_provider_capacity_error_builds_capacity_skipped_payload_and_lower
     use crate::agentic::deep_review_policy::{
         deep_review_effective_concurrency_snapshot, DeepReviewConcurrencyPolicy,
     };
-    use crate::util::OpenBitFunError;
+    use crate::util::StarMateError;
 
     let policy = DeepReviewConcurrencyPolicy {
         max_parallel_instances: 3,
@@ -1953,7 +1953,7 @@ fn deep_review_provider_capacity_error_builds_capacity_skipped_payload_and_lower
     };
     let turn_id = "turn-provider-capacity-skip";
     let decision = LaunchReviewAgentTool::deep_review_capacity_decision_for_provider_error(
-        &OpenBitFunError::ai(
+        &StarMateError::ai(
             "Provider error: provider=openai, code=429, message=rate limit exceeded",
         ),
     );
@@ -1985,10 +1985,10 @@ fn deep_review_provider_capacity_error_builds_capacity_skipped_payload_and_lower
 
 #[test]
 fn deep_review_provider_quota_error_is_not_capacity_skipped() {
-    use crate::util::OpenBitFunError;
+    use crate::util::StarMateError;
 
     let decision = LaunchReviewAgentTool::deep_review_capacity_decision_for_provider_error(
-        &OpenBitFunError::ai("Provider error: provider=glm, code=1113, message=insufficient quota"),
+        &StarMateError::ai("Provider error: provider=glm, code=1113, message=insufficient quota"),
     );
 
     assert!(

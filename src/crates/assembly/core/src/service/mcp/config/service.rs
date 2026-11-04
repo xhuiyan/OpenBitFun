@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use crate::service::config::ConfigService;
 use crate::service::mcp::server::MCPServerConfig;
-use crate::util::errors::OpenBitFunResult;
+use crate::util::errors::StarMateResult;
 
 pub struct MCPConfigService {
     pub(super) inner: starmate_services_integrations::mcp::config::MCPConfigService,
@@ -25,7 +25,7 @@ impl starmate_services_integrations::mcp::config::MCPConfigStore for CoreMCPConf
             .await
         {
             Ok(value) => Ok(Some(value)),
-            Err(crate::util::errors::OpenBitFunError::NotFound(_)) => Ok(None),
+            Err(crate::util::errors::StarMateError::NotFound(_)) => Ok(None),
             Err(error) => Err(
                 starmate_services_integrations::mcp::MCPRuntimeError::configuration(
                     error.to_string(),
@@ -91,14 +91,14 @@ impl MCPConfigService {
         starmate_services_integrations::mcp::config::MCPConfigService::has_remote_xaa(config)
     }
 
-    pub fn new(config_service: Arc<ConfigService>) -> OpenBitFunResult<Self> {
+    pub fn new(config_service: Arc<ConfigService>) -> StarMateResult<Self> {
         let store = Arc::new(CoreMCPConfigStore { config_service });
         Ok(Self {
             inner: starmate_services_integrations::mcp::config::MCPConfigService::new(store),
         })
     }
 
-    pub async fn load_all_configs(&self) -> OpenBitFunResult<Vec<MCPServerConfig>> {
+    pub async fn load_all_configs(&self) -> StarMateResult<Vec<MCPServerConfig>> {
         Ok(self.inner.load_all_configs().await?)
     }
 
@@ -125,11 +125,11 @@ impl MCPConfigService {
     pub async fn get_server_config(
         &self,
         server_id: &str,
-    ) -> OpenBitFunResult<Option<MCPServerConfig>> {
+    ) -> StarMateResult<Option<MCPServerConfig>> {
         Ok(self.inner.get_server_config(server_id).await?)
     }
 
-    pub async fn save_server_config(&self, config: &MCPServerConfig) -> OpenBitFunResult<()> {
+    pub async fn save_server_config(&self, config: &MCPServerConfig) -> StarMateResult<()> {
         Ok(self.inner.save_server_config(config).await?)
     }
 
@@ -137,7 +137,7 @@ impl MCPConfigService {
         &self,
         server_id: &str,
         authorization_value: &str,
-    ) -> OpenBitFunResult<MCPServerConfig> {
+    ) -> StarMateResult<MCPServerConfig> {
         Ok(self
             .inner
             .set_remote_authorization(server_id, authorization_value)
@@ -147,11 +147,11 @@ impl MCPConfigService {
     pub async fn clear_remote_authorization(
         &self,
         server_id: &str,
-    ) -> OpenBitFunResult<MCPServerConfig> {
+    ) -> StarMateResult<MCPServerConfig> {
         Ok(self.inner.clear_remote_authorization(server_id).await?)
     }
 
-    pub async fn delete_server_config(&self, server_id: &str) -> OpenBitFunResult<()> {
+    pub async fn delete_server_config(&self, server_id: &str) -> StarMateResult<()> {
         Ok(self.inner.delete_server_config(server_id).await?)
     }
 

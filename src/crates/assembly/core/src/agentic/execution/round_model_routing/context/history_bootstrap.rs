@@ -245,7 +245,7 @@ async fn publish(
     state: &RouterContextState,
     checkpoint: Option<&SessionRouterCheckpoint>,
     updates: &watch::Sender<BootstrapUpdate>,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     if let Some(checkpoint) = checkpoint {
         checkpoint.save(state).await?;
     }
@@ -265,7 +265,7 @@ async fn rebuild(
     root_session_id: &str,
     lease: &BootstrapLease,
     updates: &watch::Sender<BootstrapUpdate>,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     let mut cancelled = lease.0.subscribe();
     let budget = factory
         .summary_provider
@@ -275,7 +275,7 @@ async fn rebuild(
     let mut batch = RouterHistoryBatch::new(state, budget);
     loop {
         if !*cancelled.borrow() || lease.1.is_cancelled() {
-            return Err(OpenBitFunError::Session(
+            return Err(StarMateError::Session(
                 "Router history preparation superseded or cancelled".into(),
             ));
         }
@@ -289,13 +289,13 @@ async fn rebuild(
         let observations = source.observations(&turn_id).await?;
         let start = progress.entry_cursor;
         if start > observations.len() {
-            return Err(OpenBitFunError::Session(
+            return Err(StarMateError::Session(
                 "Router history source changed before its saved cursor".into(),
             ));
         }
         for (index, observation) in observations.into_iter().enumerate().skip(start) {
             if !*cancelled.borrow() || lease.1.is_cancelled() {
-                return Err(OpenBitFunError::Session(
+                return Err(StarMateError::Session(
                     "Router history preparation superseded or cancelled".into(),
                 ));
             }
@@ -387,26 +387,26 @@ async fn summarize_prefix(
     root_session_id: &str,
     cancelled: &mut watch::Receiver<bool>,
     turn_cancel: &tokio_util::sync::CancellationToken,
-) -> OpenBitFunResult<()> {
+) -> StarMateResult<()> {
     // A legacy local tokenizer belongs to the Router, not the economy model.
     let work = batch.summary_work(state, recent_rounds)
-        .ok_or_else(|| OpenBitFunError::Configuration("A Router history observation or its summary cannot fit in the summary model input budget".into()))?;
+        .ok_or_else(|| StarMateError::Configuration("A Router history observation or its summary cannot fit in the summary model input budget".into()))?;
     let (_, ticket) = factory
         .summary_queue
         .submit_for(root_session_id, &state.session_id, work.clone())
-        .map_err(|error| OpenBitFunError::AIClient(error.to_string()))?;
+        .map_err(|error| StarMateError::AIClient(error.to_string()))?;
     if !*cancelled.borrow() {
-        return Err(OpenBitFunError::Session(
+        return Err(StarMateError::Session(
             "Router history preparation superseded".into(),
         ));
     }
     let result = tokio::select! {
         biased;
-        _ = turn_cancel.cancelled() => return Err(OpenBitFunError::cancelled("Router history preparation cancelled")),
-        _ = cancelled.changed() => return Err(OpenBitFunError::Session("Router history preparation superseded".into())),
+        _ = turn_cancel.cancelled() => return Err(StarMateError::cancelled("Router history preparation cancelled")),
+        _ = cancelled.changed() => return Err(StarMateError::Session("Router history preparation superseded".into())),
         result = async {
             let Some((work, _permit)) = ticket.start().await else {
-                return Err(OpenBitFunError::Session("Router history summary superseded".into()));
+                return Err(StarMateError::Session("Router history summary superseded".into()));
             };
             tokio::time::timeout(factory.config.summary_timeout,
                 summarize_bounded(factory.summary_provider.as_ref(), work.prompt, &factory.config,
@@ -418,16 +418,16 @@ async fn summarize_prefix(
                             "base_through": work.base_through, "through": work.through,
                         }),
                     }))).await
-                .map_err(|_| OpenBitFunError::AIClient("Router history summary timed out".into()))?
+                .map_err(|_| StarMateError::AIClient("Router history summary timed out".into()))?
         } => result?,
     };
     if !result.complete {
-        return Err(OpenBitFunError::AIClient(
+        return Err(StarMateError::AIClient(
             result.incomplete_error().unwrap_or_default(),
         ));
     }
     if !state.apply_summary(&work, &result.text) {
-        return Err(OpenBitFunError::Session(
+        return Err(StarMateError::Session(
             "Router history summary no longer matches its prefix".into(),
         ));
     }

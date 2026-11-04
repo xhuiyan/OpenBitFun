@@ -11,7 +11,7 @@ use image::codecs::jpeg::JpegEncoder;
 use image::DynamicImage;
 use image::RgbImage;
 use starmate_agent_tools::computer_use_geometry::CaptureGeometry;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 #[cfg(any(test, target_os = "macos", target_os = "windows"))]
 use starmate_agent_tools::computer_use_host::ComputerUseZoomRegion;
 use starmate_agent_tools::computer_use_host::{
@@ -20,14 +20,14 @@ use starmate_agent_tools::computer_use_host::{
 };
 
 #[cfg(any(test, target_os = "macos", target_os = "windows"))]
-fn bound_window_identity(target: &str) -> OpenBitFunResult<(i32, isize)> {
+fn bound_window_identity(target: &str) -> StarMateResult<(i32, isize)> {
     let identity = target
         .strip_prefix("pid:")
         .and_then(|value| value.split_once("/window:"))
         .and_then(|(pid, window)| Some((pid.parse::<i32>().ok()?, window.parse::<isize>().ok()?)))
         .filter(|(pid, window)| *pid > 0 && *window != 0);
     identity.ok_or_else(|| {
-        OpenBitFunError::tool("[TARGET_INVALID] Capture requires an exact process/window identity")
+        StarMateError::tool("[TARGET_INVALID] Capture requires an exact process/window identity")
     })
 }
 
@@ -60,16 +60,16 @@ impl PointerMap {
         selected: Self,
         latest: Option<Self>,
         implicit_needs_full: bool,
-    ) -> OpenBitFunResult<Self> {
+    ) -> StarMateResult<Self> {
         if !latest.is_some_and(|current| current.same_window_projection(&selected)) {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[STALE_CAPTURE] Screenshot does not match the target's current geometry",
             ));
         }
         // After a zoom, coordinates may come from either image; guessing the
         // region would move the pointer silently.
         if implicit_needs_full && selected.zoomed {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[SCREENSHOT_ID_REQUIRED] The latest image is a zoomed region; pass the screenshot_id of the image these coordinates come from, or observe the full window again",
             ));
         }
@@ -93,11 +93,11 @@ impl PointerMap {
     /// The region of the window, relative to its origin, covered by an image
     /// pixel rectangle of this observation.
     #[cfg(any(test, target_os = "macos", target_os = "windows"))]
-    fn window_region_of(&self, region: &ComputerUseZoomRegion) -> OpenBitFunResult<[f64; 4]> {
+    fn window_region_of(&self, region: &ComputerUseZoomRegion) -> StarMateResult<[f64; 4]> {
         let global = self
             .geometry
             .image_rect_to_global(region.x, region.y, region.width, region.height)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let bounds = self.geometry.bounds();
         Ok([
             global[0] - bounds[0] + self.window_offset[0],
@@ -107,21 +107,21 @@ impl PointerMap {
         ])
     }
 
-    fn from_screenshot(shot: &ComputerScreenshot) -> OpenBitFunResult<Self> {
+    fn from_screenshot(shot: &ComputerScreenshot) -> StarMateResult<Self> {
         let content = shot.image_content_rect.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool("[INVALID_GEOMETRY] Capture content rectangle unavailable")
+            StarMateError::tool("[INVALID_GEOMETRY] Capture content rectangle unavailable")
         })?;
         let bounds = shot.image_global_bounds.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "[COORDINATES_UNAVAILABLE] Capture has no authoritative surface bounds",
             )
         })?;
         CaptureGeometry::new(shot.image_width, shot.image_height, content, bounds)
             .map(Self::full_window)
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
     #[cfg(target_os = "macos")]
-    pub(super) fn image_delta_to_global(&self, dx: i32, dy: i32) -> OpenBitFunResult<(f64, f64)> {
+    pub(super) fn image_delta_to_global(&self, dx: i32, dy: i32) -> StarMateResult<(f64, f64)> {
         Ok(self.geometry.image_delta_to_global(dx, dy))
     }
     /// Two full-window observations must share one image projection. A
@@ -134,9 +134,9 @@ impl PointerMap {
             self.window_size == other.window_size
         }
     }
-    pub(super) fn at_window_bounds(self, bounds: [f64; 4]) -> OpenBitFunResult<Self> {
+    pub(super) fn at_window_bounds(self, bounds: [f64; 4]) -> StarMateResult<Self> {
         if bounds[2..] != self.window_size {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[STALE_CAPTURE] Target resized; observe again before coordinate input",
             ));
         }
@@ -149,27 +149,27 @@ impl PointerMap {
                 region[2],
                 region[3],
             ])
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         Ok(Self { geometry, ..self })
     }
-    pub(super) fn map_image_to_global_f64(&self, x: i32, y: i32) -> OpenBitFunResult<(f64, f64)> {
+    pub(super) fn map_image_to_global_f64(&self, x: i32, y: i32) -> StarMateResult<(f64, f64)> {
         self.geometry
             .image_to_global(x, y)
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
     pub(super) fn map_normalized_to_global_f64(
         &self,
         x: i32,
         y: i32,
-    ) -> OpenBitFunResult<(f64, f64)> {
+    ) -> StarMateResult<(f64, f64)> {
         self.geometry
             .normalized_to_global(x, y)
-            .map_err(OpenBitFunError::tool)
+            .map_err(StarMateError::tool)
     }
 }
 
 impl NativeComputerUseHost {
-    fn encode_jpeg(rgb: &RgbImage, quality: u8) -> OpenBitFunResult<Vec<u8>> {
+    fn encode_jpeg(rgb: &RgbImage, quality: u8) -> StarMateResult<Vec<u8>> {
         let mut buf = Vec::new();
         let mut enc = JpegEncoder::new_with_quality(&mut buf, quality);
         enc.encode(
@@ -178,7 +178,7 @@ impl NativeComputerUseHost {
             rgb.height(),
             image::ExtendedColorType::Rgb8,
         )
-        .map_err(|e| OpenBitFunError::tool(format!("JPEG encode: {}", e)))?;
+        .map_err(|e| StarMateError::tool(format!("JPEG encode: {}", e)))?;
         Ok(buf)
     }
 
@@ -192,7 +192,7 @@ impl NativeComputerUseHost {
         display_origin_y: i32,
         native_w: u32,
         native_h: u32,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         let jpeg_bytes = Self::encode_jpeg(&rgb, Self::OCR_RAW_JPEG_QUALITY)?;
         let iw = rgb.width();
         let ih = rgb.height();
@@ -237,7 +237,7 @@ impl NativeComputerUseHost {
         cx: f64,
         cy: f64,
         half: u32,
-    ) -> OpenBitFunResult<OcrRegionNative> {
+    ) -> StarMateResult<OcrRegionNative> {
         let hh = half as f64;
         let x0 = (cx - hh).floor() as i32;
         let y0 = (cy - hh).floor() as i32;
@@ -293,7 +293,7 @@ impl NativeComputerUseHost {
     pub(super) async fn screenshot_for_app_pid(
         &self,
         pid: i32,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         self.capture_app_pid(pid, true).await
     }
 
@@ -302,23 +302,23 @@ impl NativeComputerUseHost {
         &self,
         pid: i32,
         update_navigation: bool,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         let (cap, scope) = crate::computer_use::control_session::spawn_blocking(move || {
             crate::computer_use::macos_capture::ensure_capture(pid, None)
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             let scope = crate::computer_use::control_session::observation_scope()
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             let cap = crate::computer_use::macos_capture::capture_frame(pid, None)
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             crate::computer_use::control_session::validate_observation_scope(&scope)
-                .map_err(OpenBitFunError::tool)?;
-            Ok::<_, OpenBitFunError>((cap, scope))
+                .map_err(StarMateError::tool)?;
+            Ok::<_, StarMateError>((cap, scope))
         })
         .await
-        .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+        .map_err(|e| StarMateError::tool(e.to_string()))??;
         let auxiliary = cap.auxiliary;
         let rgba = image::RgbaImage::from_raw(cap.width, cap.height, cap.rgba)
-            .ok_or_else(|| OpenBitFunError::tool("CAPTURE_INVALID_FRAME"))?;
+            .ok_or_else(|| StarMateError::tool("CAPTURE_INVALID_FRAME"))?;
         let rgb = DynamicImage::ImageRgba8(rgba).to_rgb8();
         let origin_x = cap.bounds[0].round() as i32;
         let origin_y = cap.bounds[1].round() as i32;
@@ -335,7 +335,7 @@ impl NativeComputerUseHost {
             crate::computer_use::overlay_windows::auxiliary_metadata(&shot, &auxiliary);
         shot.quadrant_navigation_click_ready = true;
         crate::computer_use::control_session::validate_observation_scope(&scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let map = PointerMap::from_screenshot(&shot)?;
         if !update_navigation {
             return Ok(shot);
@@ -362,7 +362,7 @@ impl NativeComputerUseHost {
         &self,
         pid: i32,
         hwnd_raw: isize,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         self.capture_window(pid, hwnd_raw, true).await
     }
 
@@ -372,21 +372,21 @@ impl NativeComputerUseHost {
         _pid: i32,
         hwnd_raw: isize,
         update_navigation: bool,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         use windows::Win32::Foundation::HWND;
 
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let cap = crate::computer_use::control_session::spawn_blocking(move || {
             let hwnd = HWND(hwnd_raw as *mut std::ffi::c_void);
             crate::computer_use::windows_capture::screenshot_window_capture(hwnd)
         })
         .await
-        .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+        .map_err(|e| StarMateError::tool(e.to_string()))??;
 
         let auxiliary = cap.auxiliary;
         let rgba = image::RgbaImage::from_raw(cap.width, cap.height, cap.rgba)
-            .ok_or_else(|| OpenBitFunError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
+            .ok_or_else(|| StarMateError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
         let rgb = DynamicImage::ImageRgba8(rgba).to_rgb8();
         let native_w = rgb.width();
         let native_h = rgb.height();
@@ -402,7 +402,7 @@ impl NativeComputerUseHost {
         // (DWM-frame-adjusted) top-left.
         let map = PointerMap::from_screenshot(&shot)?;
         crate::computer_use::control_session::validate_observation_scope(&scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         if update_navigation {
             self.state_for_scope(&scope)?.transition_after_screenshot(
                 shot.screenshot_id.clone().expect("capture identity"),
@@ -444,7 +444,7 @@ fn zoom_crop(
     source: &image::RgbaImage,
     window_size: [f64; 2],
     region: [f64; 4],
-) -> OpenBitFunResult<ZoomCrop> {
+) -> StarMateResult<ZoomCrop> {
     let scale_x = f64::from(source.width()) / window_size[0];
     let scale_y = f64::from(source.height()) / window_size[1];
     let x0 = (region[0] * scale_x).floor().max(0.0) as u32;
@@ -456,7 +456,7 @@ fn zoom_crop(
         .ceil()
         .min(f64::from(source.height())) as u32;
     if !(scale_x.is_finite() && scale_y.is_finite()) || x1 <= x0 || y1 <= y0 {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[INVALID_COORDINATES] Zoom region is outside the bound window",
         ));
     }
@@ -502,43 +502,43 @@ impl NativeComputerUseHost {
         &self,
         app: starmate_agent_tools::computer_use_host::AppSelector,
         region: ComputerUseZoomRegion,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
-        crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::tool)?;
+    ) -> StarMateResult<ComputerScreenshot> {
+        crate::computer_use::control_session::capture_allowed().map_err(StarMateError::tool)?;
         let snapshot = crate::computer_use::control_session::snapshot();
         if snapshot.state != "active" {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[CONTROL_STOPPED] Zoom requires an active control session",
             ));
         }
         let target = snapshot.target.ok_or_else(|| {
-            OpenBitFunError::tool("[TARGET_REQUIRED] Observe the bound window before zooming")
+            StarMateError::tool("[TARGET_REQUIRED] Observe the bound window before zooming")
         })?;
         crate::computer_use::control_session::target_allowed(&target)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let (pid, window) = bound_window_identity(&target)?;
         if app.pid.is_some_and(|requested| requested != pid)
             || app
                 .window_id
                 .is_some_and(|requested| i64::try_from(requested).ok() != Some(window as i64))
         {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[TARGET_CHANGED] Zoom reads the bound window only; observe the requested window before zooming into it",
             ));
         }
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let (window_region, window_size) = {
             let state = self.state_for_scope(&scope)?;
             let source = state
                 .observations
                 .image(Some(&region.screenshot_id))
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             if !state
                 .observations
                 .latest_image()
                 .is_some_and(|current| current.same_window_projection(&source))
             {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[STALE_CAPTURE] Screenshot does not match the target's current geometry; observe the window again before zooming",
                 ));
             }
@@ -546,12 +546,12 @@ impl NativeComputerUseHost {
         };
         let (rgba, bounds, auxiliary) = Self::window_detail_frame(pid, window).await?;
         if bounds[2..] != window_size {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[STALE_CAPTURE] Target resized; observe the window again before zooming",
             ));
         }
         crate::computer_use::control_session::validate_observation_scope(&scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let crop = zoom_crop(&rgba, window_size, window_region)?;
         let [x, y, width, height] = crop.region;
         let left = bounds[0] + x;
@@ -577,7 +577,7 @@ impl NativeComputerUseHost {
             window_size,
         );
         crate::computer_use::control_session::validate_observation_scope(&scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         self.state_for_scope(&scope)?.transition_after_screenshot(
             shot.screenshot_id.clone().expect("capture identity"),
             map,
@@ -589,9 +589,9 @@ impl NativeComputerUseHost {
     /// its global frame and composited popups: backing scale on macOS 14+,
     /// else the live frame.
     #[cfg(target_os = "macos")]
-    async fn window_detail_frame(pid: i32, window: isize) -> OpenBitFunResult<DetailFrame> {
+    async fn window_detail_frame(pid: i32, window: isize) -> StarMateResult<DetailFrame> {
         let window = u32::try_from(window)
-            .map_err(|_| OpenBitFunError::tool("[TARGET_INVALID] Window id out of range"))?;
+            .map_err(|_| StarMateError::tool("[TARGET_INVALID] Window id out of range"))?;
         let frame = crate::computer_use::control_session::spawn_blocking(move || {
             let bound = crate::computer_use::macos_capture::bound_window_id(pid)?;
             if bound != window {
@@ -609,22 +609,22 @@ impl NativeComputerUseHost {
             }
         })
         .await
-        .map_err(|e| OpenBitFunError::tool(e.to_string()))?
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(|e| StarMateError::tool(e.to_string()))?
+        .map_err(StarMateError::tool)?;
         let image = image::RgbaImage::from_raw(frame.width, frame.height, frame.rgba)
-            .ok_or_else(|| OpenBitFunError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
+            .ok_or_else(|| StarMateError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
         Ok((image, frame.bounds, frame.auxiliary))
     }
 
     #[cfg(target_os = "windows")]
-    async fn window_detail_frame(_pid: i32, window: isize) -> OpenBitFunResult<DetailFrame> {
+    async fn window_detail_frame(_pid: i32, window: isize) -> StarMateResult<DetailFrame> {
         let cap = crate::computer_use::control_session::spawn_blocking(move || {
             crate::computer_use::windows_capture::screenshot_window_capture(
                 windows::Win32::Foundation::HWND(window as *mut std::ffi::c_void),
             )
         })
         .await
-        .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+        .map_err(|e| StarMateError::tool(e.to_string()))??;
         let bounds = [
             f64::from(cap.origin_x),
             f64::from(cap.origin_y),
@@ -632,7 +632,7 @@ impl NativeComputerUseHost {
             f64::from(cap.height),
         ];
         let image = image::RgbaImage::from_raw(cap.width, cap.height, cap.rgba)
-            .ok_or_else(|| OpenBitFunError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
+            .ok_or_else(|| StarMateError::tool("[CAPTURE_INVALID_FRAME] Invalid RGBA buffer"))?;
         Ok((image, bounds, cap.auxiliary))
     }
 }
@@ -645,14 +645,14 @@ impl NativeComputerUseHost {
         &self,
         session: &crate::computer_use::linux_control::LinuxControlSession,
         update_navigation: bool,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::tool)?;
-        let jpeg = session.capture().await.map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
+        let jpeg = session.capture().await.map_err(StarMateError::tool)?;
         crate::computer_use::control_session::validate_observation_scope(&scope)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         let rgb = image::load_from_memory(&jpeg)
-            .map_err(|e| OpenBitFunError::tool(format!("[CAPTURE_INVALID_FRAME] {e}")))?
+            .map_err(|e| StarMateError::tool(format!("[CAPTURE_INVALID_FRAME] {e}")))?
             .to_rgb8();
         let size = session.logical_size();
         let (logical_w, logical_h) = size
@@ -687,14 +687,14 @@ impl NativeComputerUseHost {
     pub(super) async fn screenshot_display_impl(
         &self,
         _params: ComputerUseScreenshotParams,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         // Legacy crop/navigation parameters cannot widen the authorized scope.
         self.capture_bound_target(true).await
     }
 
     pub(super) async fn screenshot_peek_full_display_impl(
         &self,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         // The legacy trait name is retained for callers, but preview captures
         // only the same authorized target and does not change coordinate maps.
         self.capture_bound_target(false).await
@@ -703,19 +703,19 @@ impl NativeComputerUseHost {
     async fn capture_bound_target(
         &self,
         update_navigation: bool,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
-        crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::tool)?;
+    ) -> StarMateResult<ComputerScreenshot> {
+        crate::computer_use::control_session::capture_allowed().map_err(StarMateError::tool)?;
         let snapshot = crate::computer_use::control_session::snapshot();
         if snapshot.state != "active" {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[CONTROL_STOPPED] Capture requires an active control session",
             ));
         }
         let target = snapshot.target.ok_or_else(|| {
-            OpenBitFunError::tool("[TARGET_REQUIRED] Select an authorized target before capture")
+            StarMateError::tool("[TARGET_REQUIRED] Select an authorized target before capture")
         })?;
         crate::computer_use::control_session::target_allowed(&target)
-            .map_err(OpenBitFunError::tool)?;
+            .map_err(StarMateError::tool)?;
         #[cfg(target_os = "windows")]
         {
             let (pid, window) = bound_window_identity(&target)?;
@@ -725,9 +725,9 @@ impl NativeComputerUseHost {
         {
             let (pid, window) = bound_window_identity(&target)?;
             let bound = crate::computer_use::macos_capture::bound_window_id(pid)
-                .map_err(OpenBitFunError::tool)?;
+                .map_err(StarMateError::tool)?;
             if bound as isize != window {
-                return Err(OpenBitFunError::tool(
+                return Err(StarMateError::tool(
                     "[TARGET_CHANGED] Native capture window differs from the authorized target",
                 ));
             }
@@ -736,19 +736,19 @@ impl NativeComputerUseHost {
         #[cfg(target_os = "linux")]
         {
             let session = crate::computer_use::linux_control::session()
-                .map_err(OpenBitFunError::tool)?
+                .map_err(StarMateError::tool)?
                 .ok_or_else(|| {
-                    OpenBitFunError::tool(
+                    StarMateError::tool(
                         "[CAPTURE_REQUIRED] Start an authorized portal capture session",
                     )
                 })?;
             if target != session.target_identity() {
-                return Err(OpenBitFunError::tool("[CAPTURE_TARGET_MISMATCH] Portal-selected pixels do not represent the bound application; no capture was taken"));
+                return Err(StarMateError::tool("[CAPTURE_TARGET_MISMATCH] Portal-selected pixels do not represent the bound application; no capture was taken"));
             }
             return self.screenshot_portal(&session, update_navigation).await;
         }
         #[allow(unreachable_code)]
-        Err(OpenBitFunError::tool(
+        Err(StarMateError::tool(
             "[CAPTURE_UNSUPPORTED] This platform has no authorized target capture provider",
         ))
     }
@@ -756,10 +756,10 @@ impl NativeComputerUseHost {
     async fn control_ocr_capture(
         &self,
         region: Option<OcrRegionNative>,
-    ) -> OpenBitFunResult<ComputerScreenshot> {
+    ) -> StarMateResult<ComputerScreenshot> {
         let snapshot = crate::computer_use::control_session::snapshot();
         if snapshot.state != "active" || snapshot.target.is_none() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[CAPTURE_REQUIRED] Observe an authorized target before OCR",
             ));
         }
@@ -769,14 +769,14 @@ impl NativeComputerUseHost {
             .as_deref()
             .is_some_and(|target| target.starts_with("atspi:"))
         {
-            return Err(OpenBitFunError::tool("[OCR_TARGET_ASSOCIATION_UNAVAILABLE] AT-SPI application identity is not linked to the portal-selected window. Observe the portal window independently; its pixels cannot verify this application's semantic state."));
+            return Err(StarMateError::tool("[OCR_TARGET_ASSOCIATION_UNAVAILABLE] AT-SPI application identity is not linked to the portal-selected window. Observe the portal window independently; its pixels cannot verify this application's semantic state."));
         }
         let shot = self.screenshot_peek_full_display_impl().await?;
         let Some(region) = region else {
             return Ok(shot);
         };
         let bounds = shot.image_global_bounds.as_ref().ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "[COORDINATES_UNAVAILABLE] Capture has no authoritative coordinate geometry",
             )
         })?;
@@ -785,12 +785,12 @@ impl NativeComputerUseHost {
         let right = (region.x0 as f64 + region.width as f64).min(bounds.left + bounds.width);
         let bottom = (region.y0 as f64 + region.height as f64).min(bounds.top + bounds.height);
         if right <= left || bottom <= top || bounds.width <= 0.0 || bounds.height <= 0.0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[TARGET_SCOPE_MISMATCH] OCR region is outside the authorized target",
             ));
         }
         let image = image::load_from_memory(&shot.bytes)
-            .map_err(|e| OpenBitFunError::tool(e.to_string()))?
+            .map_err(|e| StarMateError::tool(e.to_string()))?
             .to_rgb8();
         let scale_x = image.width() as f64 / bounds.width;
         let scale_y = image.height() as f64 / bounds.height;
@@ -799,7 +799,7 @@ impl NativeComputerUseHost {
         let x1 = (((right - bounds.left) * scale_x).ceil() as u32).min(image.width());
         let y1 = (((bottom - bounds.top) * scale_y).ceil() as u32).min(image.height());
         if x1 <= x0 || y1 <= y0 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[INVALID_COORDINATES] Empty OCR crop",
             ));
         }
@@ -813,7 +813,7 @@ impl NativeComputerUseHost {
         )
     }
 
-    pub(super) async fn read_screen_text_impl(&self) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    pub(super) async fn read_screen_text_impl(&self) -> StarMateResult<Vec<OcrTextMatch>> {
         let shot = self.control_ocr_capture(None).await?;
         crate::computer_use::control_session::spawn_blocking(move || {
             #[cfg(target_os = "macos")]
@@ -826,14 +826,14 @@ impl NativeComputerUseHost {
             }
         })
         .await
-        .map_err(|error| OpenBitFunError::tool(error.to_string()))?
+        .map_err(|error| StarMateError::tool(error.to_string()))?
     }
 
     pub(super) async fn ocr_find_text_matches_impl(
         &self,
         text_query: &str,
         region_native: Option<starmate_agent_tools::computer_use_host::OcrRegionNative>,
-    ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
+    ) -> StarMateResult<Vec<OcrTextMatch>> {
         let shot = self.control_ocr_capture(region_native).await?;
         let query = text_query.to_string();
         let desktop_matches = crate::computer_use::control_session::spawn_blocking(move || {
@@ -852,7 +852,7 @@ impl NativeComputerUseHost {
             }
         })
         .await
-        .map_err(|e| OpenBitFunError::tool(e.to_string()))??;
+        .map_err(|e| StarMateError::tool(e.to_string()))??;
         Ok(desktop_matches
             .into_iter()
             .map(
@@ -875,7 +875,7 @@ impl NativeComputerUseHost {
         gx: f64,
         gy: f64,
         half_extent_native: u32,
-    ) -> OpenBitFunResult<Vec<u8>> {
+    ) -> StarMateResult<Vec<u8>> {
         let region = Self::ocr_region_square_around_point(gx, gy, half_extent_native)?;
         let shot = self.control_ocr_capture(Some(region)).await?;
         Ok(shot.bytes)

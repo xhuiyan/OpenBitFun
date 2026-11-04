@@ -8,7 +8,7 @@
 //! reviewable home instead of living inline inside the multi-thousand-line
 //! host file.
 
-use super::{OpenBitFunError, OpenBitFunResult};
+use super::{StarMateError, StarMateResult};
 use core_foundation::base::{CFRelease, TCFType};
 use core_foundation::boolean::CFBoolean;
 use core_foundation::dictionary::CFDictionary;
@@ -34,12 +34,12 @@ unsafe extern "C" {
 /// Objective-C `NSException` thrown by TSM / HIToolbox / AppKit (which
 /// historically appears as `__rust_foreign_exception` and aborts the
 /// process when it crosses back into the Rust runtime) is converted into
-/// a `OpenBitFunError` we can return to the caller. The closure must itself
-/// return a `OpenBitFunResult<T>` so we can flatten the two error sources
+/// a `StarMateError` we can return to the caller. The closure must itself
+/// return a `StarMateResult<T>` so we can flatten the two error sources
 /// (ObjC exception + Rust-side error) into one.
-pub(super) fn run_on_main_for_enigo<F, T>(f: F) -> OpenBitFunResult<T>
+pub(super) fn run_on_main_for_enigo<F, T>(f: F) -> StarMateResult<T>
 where
-    F: FnOnce() -> OpenBitFunResult<T> + Send,
+    F: FnOnce() -> StarMateResult<T> + Send,
     T: Send,
 {
     let token = crate::computer_use::control_session::dispatch_token();
@@ -61,9 +61,9 @@ where
 ///
 /// If we're already on the main thread we run inline (avoids
 /// `dispatch_sync(main)` deadlock).
-pub(super) fn catch_objc<F, T>(f: F) -> OpenBitFunResult<T>
+pub(super) fn catch_objc<F, T>(f: F) -> StarMateResult<T>
 where
-    F: FnOnce() -> OpenBitFunResult<T> + Send,
+    F: FnOnce() -> StarMateResult<T> + Send,
     T: Send,
 {
     let token = crate::computer_use::control_session::dispatch_token();
@@ -80,25 +80,25 @@ where
 /// Run a closure under an Objective-C `@try/@catch` **on the current
 /// thread** (no main-queue dispatch). AX work routes individual messages through
 /// `macos_ax_dispatch`; Vision OCR can also run here with borrowed image data.
-pub(super) fn catch_objc_local<F, T>(f: F) -> OpenBitFunResult<T>
+pub(super) fn catch_objc_local<F, T>(f: F) -> StarMateResult<T>
 where
-    F: FnOnce() -> OpenBitFunResult<T>,
+    F: FnOnce() -> StarMateResult<T>,
 {
     catch_only(f)
 }
 
-fn catch_only<F, T>(f: F) -> OpenBitFunResult<T>
+fn catch_only<F, T>(f: F) -> StarMateResult<T>
 where
-    F: FnOnce() -> OpenBitFunResult<T>,
+    F: FnOnce() -> StarMateResult<T>,
 {
     use std::panic::AssertUnwindSafe;
     match objc2::exception::catch(AssertUnwindSafe(f)) {
         Ok(inner) => inner,
-        Err(Some(exc)) => Err(OpenBitFunError::tool(format!(
+        Err(Some(exc)) => Err(StarMateError::tool(format!(
             "Objective-C exception: {}",
             exc
         ))),
-        Err(None) => Err(OpenBitFunError::tool(
+        Err(None) => Err(StarMateError::tool(
             "Objective-C exception (nil)".to_string(),
         )),
     }
@@ -118,11 +118,11 @@ unsafe extern "C" {
 }
 
 /// Mouse location in Quartz global coordinates (same space as `CGEvent` / `CGWarpMouseCursorPosition`).
-pub(super) fn quartz_mouse_location() -> OpenBitFunResult<(f64, f64)> {
+pub(super) fn quartz_mouse_location() -> StarMateResult<(f64, f64)> {
     unsafe {
         let ev = CGEventCreate(std::ptr::null());
         if ev.is_null() {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "CGEventCreate returned null (pointer overlay).".to_string(),
             ));
         }
@@ -151,12 +151,12 @@ pub(super) fn request_screen_capture() -> bool {
 
 /// Observation never invokes consent prompts. The user's permission action
 /// owns the explicit request and the OS owns its outcome.
-pub(super) fn require_ax_trust_for(retry_hint: &str) -> OpenBitFunResult<()> {
+pub(super) fn require_ax_trust_for(retry_hint: &str) -> StarMateResult<()> {
     if ax_trusted() {
         return crate::computer_use::macos_ax_dispatch::require_process_routing()
-            .map_err(OpenBitFunError::tool);
+            .map_err(StarMateError::tool);
     }
-    Err(OpenBitFunError::tool(format!(
+    Err(StarMateError::tool(format!(
         "[PERMISSION_DENIED] macOS Accessibility permission not granted to OpenBitFun. \
          Use Computer Use permissions to request access, or open System Settings → \
          Privacy & Security → Accessibility → enable OpenBitFun. {}",

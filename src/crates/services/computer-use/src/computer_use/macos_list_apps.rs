@@ -9,7 +9,7 @@ use core_foundation::dictionary::CFDictionary;
 use core_foundation::number::CFNumber;
 use core_foundation::string::CFString;
 use objc2_app_kit::{NSApplicationActivationPolicy, NSRunningApplication, NSWorkspace};
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{
     AppInfo, AppWindowInfo, ComputerUseImageGlobalBounds,
 };
@@ -32,7 +32,7 @@ fn number(dictionary: &Dictionary, key: &str) -> Option<f64> {
     unsafe { CFNumber::wrap_under_get_rule(value.cast()) }.to_f64()
 }
 
-pub(super) fn list_windows() -> OpenBitFunResult<Vec<AppWindowInfo>> {
+pub(super) fn list_windows() -> StarMateResult<Vec<AppWindowInfo>> {
     #[link(name = "CoreGraphics", kind = "framework")]
     unsafe extern "C" {
         fn CGWindowListCopyWindowInfo(
@@ -44,7 +44,7 @@ pub(super) fn list_windows() -> OpenBitFunResult<Vec<AppWindowInfo>> {
     // application's hidden state rather than whichever Space is visible.
     let raw = unsafe { CGWindowListCopyWindowInfo(16, 0) };
     if raw.is_null() {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "APP_DISCOVERY_UNAVAILABLE: WindowServer application inventory is unavailable",
         ));
     }
@@ -218,7 +218,7 @@ pub(super) fn overlays_above(
 }
 
 pub(super) fn list_share_targets(
-) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_control::ShareTarget>> {
+) -> StarMateResult<Vec<starmate_agent_tools::computer_use_control::ShareTarget>> {
     Ok(list_windows()?
         .into_iter()
         .map(
@@ -239,7 +239,7 @@ pub(super) fn list_share_targets(
         .collect())
 }
 
-fn window_owners() -> OpenBitFunResult<HashSet<i32>> {
+fn window_owners() -> StarMateResult<HashSet<i32>> {
     Ok(list_share_targets()?
         .into_iter()
         .filter_map(|window| window.pid)
@@ -257,7 +257,7 @@ fn include_application(
         && (include_hidden || !hidden)
 }
 
-pub(super) fn list_running_apps(include_hidden: bool) -> OpenBitFunResult<Vec<AppInfo>> {
+pub(super) fn list_running_apps(include_hidden: bool) -> StarMateResult<Vec<AppInfo>> {
     let owners = window_owners()?;
     let applications = NSWorkspace::sharedWorkspace().runningApplications();
     let mut apps = Vec::new();

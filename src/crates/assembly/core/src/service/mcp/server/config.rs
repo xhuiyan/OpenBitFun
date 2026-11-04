@@ -1,6 +1,6 @@
 //! MCP server configuration types.
 
-use crate::util::errors::OpenBitFunError;
+use crate::util::errors::StarMateError;
 
 use starmate_services_integrations::mcp::server::MCPServerConfigValidationError;
 pub use starmate_services_integrations::mcp::server::{
@@ -8,7 +8,7 @@ pub use starmate_services_integrations::mcp::server::{
     MCPServerXaaConfig,
 };
 
-impl From<MCPServerConfigValidationError> for OpenBitFunError {
+impl From<MCPServerConfigValidationError> for StarMateError {
     fn from(error: MCPServerConfigValidationError) -> Self {
         Self::Configuration(error.to_string())
     }

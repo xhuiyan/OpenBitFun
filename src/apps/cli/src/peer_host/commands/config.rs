@@ -6,14 +6,14 @@ use serde_json::{json, Value};
 
 use starmate_core::agentic::tools::openbitfun_control_config::global_shared_product_control_executor;
 use starmate_core::service::config::get_global_config_service;
-use starmate_core::util::errors::OpenBitFunError;
+use starmate_core::util::errors::StarMateError;
 
 use crate::peer_host::args::{optional_bool, request_value};
 use crate::peer_host::state::PeerHostState;
 
-fn is_expected_config_path_not_found(error: &OpenBitFunError, path: Option<&str>) -> bool {
+fn is_expected_config_path_not_found(error: &StarMateError, path: Option<&str>) -> bool {
     match (error, path) {
-        (OpenBitFunError::NotFound(message), Some(path)) => {
+        (StarMateError::NotFound(message), Some(path)) => {
             message == &format!("Config path '{path}' not found")
         }
         _ => false,

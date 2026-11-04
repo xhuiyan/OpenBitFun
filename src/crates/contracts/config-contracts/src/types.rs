@@ -1433,7 +1433,7 @@ pub struct WebSearchProviderConfigs {
     pub exa_search_api: WebSearchCredentialProviderConfig,
     pub tavily: WebSearchCredentialProviderConfig,
     pub deepseek: WebSearchCredentialProviderConfig,
-    pub openbitfun_search_http: OpenBitFunSearchHttpConfig,
+    pub openbitfun_search_http: StarMateSearchHttpConfig,
     #[serde(flatten)]
     pub unknown: serde_json::Map<String, serde_json::Value>,
 }
@@ -1453,7 +1453,7 @@ impl Default for WebSearchProviderConfigs {
                 credential_id: default_deepseek_credential_id(),
                 unknown: serde_json::Map::new(),
             },
-            openbitfun_search_http: OpenBitFunSearchHttpConfig::default(),
+            openbitfun_search_http: StarMateSearchHttpConfig::default(),
             unknown: serde_json::Map::new(),
         }
     }
@@ -1478,18 +1478,18 @@ impl Default for WebSearchCredentialProviderConfig {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default, rename_all = "camelCase")]
-pub struct OpenBitFunSearchHttpConfig {
+pub struct StarMateSearchHttpConfig {
     pub endpoint: String,
-    pub auth: OpenBitFunSearchHttpAuthConfig,
+    pub auth: StarMateSearchHttpAuthConfig,
     #[serde(flatten)]
     pub unknown: serde_json::Map<String, serde_json::Value>,
 }
 
-impl Default for OpenBitFunSearchHttpConfig {
+impl Default for StarMateSearchHttpConfig {
     fn default() -> Self {
         Self {
             endpoint: String::new(),
-            auth: OpenBitFunSearchHttpAuthConfig::default(),
+            auth: StarMateSearchHttpAuthConfig::default(),
             unknown: serde_json::Map::new(),
         }
     }
@@ -1497,7 +1497,7 @@ impl Default for OpenBitFunSearchHttpConfig {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default, rename_all = "camelCase")]
-pub struct OpenBitFunSearchHttpAuthConfig {
+pub struct StarMateSearchHttpAuthConfig {
     /// `none`, `bearer`, or `header`. Kept as a string so unknown future modes
     /// round-trip and fail explicitly only when selected at runtime.
     pub mode: String,
@@ -1507,7 +1507,7 @@ pub struct OpenBitFunSearchHttpAuthConfig {
     pub unknown: serde_json::Map<String, serde_json::Value>,
 }
 
-impl Default for OpenBitFunSearchHttpAuthConfig {
+impl Default for StarMateSearchHttpAuthConfig {
     fn default() -> Self {
         Self {
             mode: "none".to_string(),

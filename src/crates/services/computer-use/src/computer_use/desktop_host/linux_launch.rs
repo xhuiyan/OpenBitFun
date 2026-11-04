@@ -1,6 +1,6 @@
 //! Linux application launch, separate from opening documents/URLs.
 //! A GUI process outlives its launch request; never wait for that process to exit.
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::OpenAppResult;
 use std::process::Stdio;
 
@@ -17,9 +17,9 @@ fn result(name: &str, pid: Option<u32>, path: &str) -> OpenAppResult {
     }
 }
 
-pub(super) async fn open(name: &str) -> OpenBitFunResult<OpenAppResult> {
+pub(super) async fn open(name: &str) -> StarMateResult<OpenAppResult> {
     if name.trim().is_empty() || name.contains('\0') || name.starts_with('-') {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[APP_REQUIRED] Use an executable name/path or desktop application ID",
         ));
     }
@@ -41,7 +41,7 @@ pub(super) async fn open(name: &str) -> OpenBitFunResult<OpenAppResult> {
             }
             Err(error) if error.kind() == std::io::ErrorKind::NotFound && !name.contains('/') => {}
             Err(error) => {
-                return Err(OpenBitFunError::tool(format!(
+                return Err(StarMateError::tool(format!(
                     "[APP_LAUNCH_FAILED] {error}"
                 )))
             }
@@ -55,15 +55,15 @@ pub(super) async fn open(name: &str) -> OpenBitFunResult<OpenAppResult> {
         .stdout(Stdio::null())
         .stderr(Stdio::piped())
         .kill_on_drop(true);
-    let child = command.spawn().map_err(|error| OpenBitFunError::tool(format!(
+    let child = command.spawn().map_err(|error| StarMateError::tool(format!(
         "[APP_LAUNCH_UNAVAILABLE] {program}: {error}. Use an installed executable name/path or a desktop application ID; xdg-open is not an application launcher."
     )))?;
     let output = tokio::time::timeout(std::time::Duration::from_secs(5), child.wait_with_output())
         .await
-        .map_err(|_| OpenBitFunError::tool("[APP_LAUNCH_OUTCOME_UNKNOWN] The desktop launcher did not finish. Inspect list_apps before retrying; the application may already have started."))?
-        .map_err(|error| OpenBitFunError::tool(format!("[APP_LAUNCH_OUTCOME_UNKNOWN] {error}; inspect list_apps before retrying")))?;
+        .map_err(|_| StarMateError::tool("[APP_LAUNCH_OUTCOME_UNKNOWN] The desktop launcher did not finish. Inspect list_apps before retrying; the application may already have started."))?
+        .map_err(|error| StarMateError::tool(format!("[APP_LAUNCH_OUTCOME_UNKNOWN] {error}; inspect list_apps before retrying")))?;
     if !output.status.success() {
-        return Err(OpenBitFunError::tool(format!(
+        return Err(StarMateError::tool(format!(
             "[APP_LAUNCH_FAILED] {program}: {}",
             String::from_utf8_lossy(&output.stderr).trim()
         )));

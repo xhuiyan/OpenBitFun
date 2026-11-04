@@ -1700,13 +1700,13 @@ pub const OPENBITFUN_RUNTIME_URI_PREFIX: &str = "openbitfun://runtime/";
 pub const OPENBITFUN_CURRENT_SESSION_URI_PREFIX: &str = "openbitfun://current-session/";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ParsedOpenBitFunRuntimeUri {
+pub struct ParsedStarMateRuntimeUri {
     pub workspace_scope: String,
     pub relative_path: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ParsedOpenBitFunCurrentSessionUri {
+pub struct ParsedStarMateCurrentSessionUri {
     pub relative_path: String,
 }
 
@@ -2003,7 +2003,7 @@ pub fn normalize_runtime_relative_path(path: &str) -> Result<String, ToolPathCon
 
 pub fn parse_openbitfun_runtime_uri(
     path: &str,
-) -> Result<ParsedOpenBitFunRuntimeUri, ToolPathContractError> {
+) -> Result<ParsedStarMateRuntimeUri, ToolPathContractError> {
     let trimmed = path.trim();
     let suffix = trimmed
         .strip_prefix(OPENBITFUN_RUNTIME_URI_PREFIX)
@@ -2022,7 +2022,7 @@ pub fn parse_openbitfun_runtime_uri(
         .next()
         .ok_or(ToolPathContractError::MissingRuntimeUriArtifactPath)?;
 
-    Ok(ParsedOpenBitFunRuntimeUri {
+    Ok(ParsedStarMateRuntimeUri {
         workspace_scope,
         relative_path: normalize_runtime_relative_path(relative_path)?,
     })
@@ -2030,7 +2030,7 @@ pub fn parse_openbitfun_runtime_uri(
 
 pub fn parse_openbitfun_current_session_uri(
     path: &str,
-) -> Result<ParsedOpenBitFunCurrentSessionUri, ToolPathContractError> {
+) -> Result<ParsedStarMateCurrentSessionUri, ToolPathContractError> {
     let trimmed = path.trim();
     let relative_path = trimmed
         .strip_prefix(OPENBITFUN_CURRENT_SESSION_URI_PREFIX)
@@ -2040,7 +2040,7 @@ pub fn parse_openbitfun_current_session_uri(
     if relative_path.trim().is_empty() {
         return Err(ToolPathContractError::MissingCurrentSessionArtifactPath);
     }
-    Ok(ParsedOpenBitFunCurrentSessionUri {
+    Ok(ParsedStarMateCurrentSessionUri {
         relative_path: normalize_runtime_relative_path(relative_path)?,
     })
 }

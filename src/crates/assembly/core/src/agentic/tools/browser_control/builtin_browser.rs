@@ -11,7 +11,7 @@ use tokio::sync::broadcast;
 use super::automation_client::{
     BrowserAutomationCapabilities, BrowserAutomationClient, BrowserAutomationEvent,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 
 const BUILTIN_EVENT_CAPACITY: usize = 128;
 
@@ -112,18 +112,18 @@ pub fn builtin_browser_host_available() -> bool {
     read_lock(host_slot()).is_some()
 }
 
-fn host() -> OpenBitFunResult<Arc<dyn BuiltInBrowserHost>> {
+fn host() -> StarMateResult<Arc<dyn BuiltInBrowserHost>> {
     read_lock(host_slot()).clone().ok_or_else(|| {
-        OpenBitFunError::tool(
+        StarMateError::tool(
             "OpenBitFun's built-in browser automation host is unavailable in this runtime. This capability requires an active Desktop product surface."
                 .to_string(),
         )
     })
 }
 
-pub async fn list_builtin_browser_targets() -> OpenBitFunResult<Vec<BuiltInBrowserTarget>> {
+pub async fn list_builtin_browser_targets() -> StarMateResult<Vec<BuiltInBrowserTarget>> {
     host()?.list_targets().await.map_err(|error| {
-        OpenBitFunError::tool(format!("Built-in browser target discovery failed: {error}"))
+        StarMateError::tool(format!("Built-in browser target discovery failed: {error}"))
     })
 }
 
@@ -131,24 +131,24 @@ pub async fn list_builtin_browser_targets() -> OpenBitFunResult<Vec<BuiltInBrows
 /// Unscoped callers retain the legacy inventory for host UI/diagnostics.
 pub async fn list_builtin_browser_targets_for_session(
     conversation_id: Option<&str>,
-) -> OpenBitFunResult<Vec<BuiltInBrowserTarget>> {
+) -> StarMateResult<Vec<BuiltInBrowserTarget>> {
     host()?
         .list_targets_for_session(conversation_id)
         .await
         .map_err(|error| {
-            OpenBitFunError::tool(format!("Built-in browser target discovery failed: {error}"))
+            StarMateError::tool(format!("Built-in browser target discovery failed: {error}"))
         })
 }
 
 pub async fn open_builtin_browser(
     request: BuiltInBrowserOpenRequest,
-) -> OpenBitFunResult<BuiltInBrowserClient> {
+) -> StarMateResult<BuiltInBrowserClient> {
     let conversation_id = request.conversation_id.clone();
     let target = host()?.open(request).await.map_err(|error| {
-        OpenBitFunError::tool(format!("Built-in browser surface failed to open: {error}"))
+        StarMateError::tool(format!("Built-in browser surface failed to open: {error}"))
     })?;
     if target.conversation_id != conversation_id {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[WRONG_TAB] The browser host returned a page owned by another conversation"
                 .to_string(),
         ));
@@ -226,7 +226,7 @@ pub fn publish_builtin_browser_navigation_failed(target_id: &str, error: &str) {
 
 pub async fn connect_builtin_browser(
     requested_target_id: Option<&str>,
-) -> OpenBitFunResult<BuiltInBrowserClient> {
+) -> StarMateResult<BuiltInBrowserClient> {
     connect_builtin_browser_matching(requested_target_id, None, None).await
 }
 
@@ -238,7 +238,7 @@ pub async fn connect_builtin_browser_matching(
     requested_target_id: Option<&str>,
     target_url: Option<&str>,
     target_title: Option<&str>,
-) -> OpenBitFunResult<BuiltInBrowserClient> {
+) -> StarMateResult<BuiltInBrowserClient> {
     connect_builtin_browser_for_session(requested_target_id, target_url, target_title, None).await
 }
 
@@ -247,7 +247,7 @@ pub async fn connect_builtin_browser_for_session(
     target_url: Option<&str>,
     target_title: Option<&str>,
     conversation_id: Option<&str>,
-) -> OpenBitFunResult<BuiltInBrowserClient> {
+) -> StarMateResult<BuiltInBrowserClient> {
     let targets = list_builtin_browser_targets_for_session(conversation_id).await?;
     let default_id = conversation_id
         .is_none()
@@ -276,14 +276,14 @@ fn select_builtin_browser_target(
     target_url: Option<&str>,
     target_title: Option<&str>,
     default_target_id: Option<&str>,
-) -> OpenBitFunResult<BuiltInBrowserTarget> {
+) -> StarMateResult<BuiltInBrowserTarget> {
     if let Some(requested_id) = requested_target_id {
         return targets
             .iter()
             .find(|target| target.id == requested_id)
             .cloned()
             .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "[WRONG_TAB] Built-in browser page '{requested_id}' was not found. It may have been closed."
                 ))
             });
@@ -306,13 +306,13 @@ fn select_builtin_browser_target(
             })
             .collect();
         if matches.len() > 1 {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "[AMBIGUOUS] Several built-in pages match. Use browser.list_pages, then an exact session_id.".to_string(),
             ));
         }
         return matches.first().copied().cloned()
             .ok_or_else(|| {
-                OpenBitFunError::tool(format!(
+                StarMateError::tool(format!(
                     "[WRONG_TAB] No built-in browser page matched target_url={normalized_url:?} target_title={normalized_title:?}"
                 ))
             });
@@ -324,7 +324,7 @@ fn select_builtin_browser_target(
         .or_else(|| targets.first())
         .cloned()
         .ok_or_else(|| {
-            OpenBitFunError::tool(
+            StarMateError::tool(
                 "[NOT_AVAILABLE] No built-in page is open. Use browser.navigate with a URL to open and control it in one call."
                     .to_string(),
             )
@@ -344,7 +344,7 @@ impl BuiltInBrowserClient {
 
 #[async_trait]
 impl BrowserAutomationClient for BuiltInBrowserClient {
-    async fn send(&self, method: &str, params: Option<Value>) -> OpenBitFunResult<Value> {
+    async fn send(&self, method: &str, params: Option<Value>) -> StarMateResult<Value> {
         host()?
             .execute(BuiltInBrowserCommand {
                 target_id: self.target.id.clone(),
@@ -356,9 +356,9 @@ impl BrowserAutomationClient for BuiltInBrowserClient {
                 // Retain the navigation outcome code for ControlHub while
                 // preserving operation context for ordinary adapter errors.
                 if error.starts_with("[NOT_AVAILABLE] ") {
-                    OpenBitFunError::tool(error)
+                    StarMateError::tool(error)
                 } else {
-                    OpenBitFunError::tool(format!(
+                    StarMateError::tool(format!(
                         "Built-in browser adapter failed for {method}: {error}"
                     ))
                 }

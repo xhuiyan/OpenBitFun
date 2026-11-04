@@ -1,6 +1,6 @@
 //! Window-only WGC frames and authoritative DWM geometry.
 //! There is no desktop/GDI fallback and no encode/decode round trip.
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use windows::Win32::Foundation::{HWND, RECT};
 use windows::Win32::Graphics::Dwm::{DwmGetWindowAttribute, DWMWA_EXTENDED_FRAME_BOUNDS};
 
@@ -18,7 +18,7 @@ pub(super) struct WindowCapture {
 
 /// Live physical frame geometry is also used immediately before input. Preview
 /// metadata is an observation, never evidence of the window's current position.
-pub(super) fn window_bounds(hwnd: HWND) -> OpenBitFunResult<[f64; 4]> {
+pub(super) fn window_bounds(hwnd: HWND) -> StarMateResult<[f64; 4]> {
     let mut bounds = RECT::default();
     unsafe {
         DwmGetWindowAttribute(
@@ -28,11 +28,11 @@ pub(super) fn window_bounds(hwnd: HWND) -> OpenBitFunResult<[f64; 4]> {
             std::mem::size_of::<RECT>() as u32,
         )
     }
-    .map_err(|e| OpenBitFunError::service(format!("[CAPTURE_GEOMETRY_UNAVAILABLE] {e}")))?;
+    .map_err(|e| StarMateError::service(format!("[CAPTURE_GEOMETRY_UNAVAILABLE] {e}")))?;
     let width = i64::from(bounds.right) - i64::from(bounds.left);
     let height = i64::from(bounds.bottom) - i64::from(bounds.top);
     if width <= 0 || height <= 0 {
-        return Err(OpenBitFunError::service(
+        return Err(StarMateError::service(
             "[CAPTURE_GEOMETRY_UNAVAILABLE] Empty window bounds",
         ));
     }
@@ -44,18 +44,18 @@ pub(super) fn window_bounds(hwnd: HWND) -> OpenBitFunResult<[f64; 4]> {
     ])
 }
 
-pub(super) fn screenshot_window_capture(hwnd: HWND) -> OpenBitFunResult<WindowCapture> {
-    let scope = super::control_session::observation_scope().map_err(OpenBitFunError::service)?;
+pub(super) fn screenshot_window_capture(hwnd: HWND) -> StarMateResult<WindowCapture> {
+    let scope = super::control_session::observation_scope().map_err(StarMateError::service)?;
     let (mut rgba, width, height, frame_info) =
         super::windows_wgc_capture::capture_window_bgra(hwnd)?;
     let bounds = window_bounds(hwnd)?;
     if bounds[2] != f64::from(width) || bounds[3] != f64::from(height) {
-        return Err(OpenBitFunError::service(
+        return Err(StarMateError::service(
             "[CAPTURE_GEOMETRY_CHANGED] Refresh the resized window before input",
         ));
     }
     if width == 0 || height == 0 || u64::from(width) * u64::from(height) * 4 != rgba.len() as u64 {
-        return Err(OpenBitFunError::service(
+        return Err(StarMateError::service(
             "[CAPTURE_INVALID_FRAME] Invalid BGRA buffer",
         ));
     }
@@ -63,7 +63,7 @@ pub(super) fn screenshot_window_capture(hwnd: HWND) -> OpenBitFunResult<WindowCa
         pixel.swap(0, 2);
     }
     let auxiliary = composite_popups(hwnd, &mut rgba, (width, height), bounds);
-    super::control_session::validate_observation_scope(&scope).map_err(OpenBitFunError::service)?;
+    super::control_session::validate_observation_scope(&scope).map_err(StarMateError::service)?;
     super::control_session::publish_rgba(&scope, &rgba, width, height, bounds);
     Ok(WindowCapture {
         frame_info,

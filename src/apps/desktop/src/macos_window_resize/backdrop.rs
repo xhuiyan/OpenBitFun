@@ -65,7 +65,7 @@ pub(super) struct PaintCell(RefCell<Paint>);
 
 define_class!(
     #[unsafe(super(NSView))]
-    #[name = "OpenBitFunSceneBackdrop"]
+    #[name = "StarMateSceneBackdrop"]
     #[ivars = PaintCell]
     pub(super) struct SceneBackdrop;
 

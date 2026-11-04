@@ -145,13 +145,13 @@ impl ConfigProvider for AIConfigProvider {
         serialize_default_config("ai", AIConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let mut warnings = Vec::new();
 
         if let Ok(ai_config) = serde_json::from_value::<AIConfig>(config.clone()) {
             if let Some(stream_idle_timeout_secs) = ai_config.stream_idle_timeout_secs {
                 if stream_idle_timeout_secs == 0 {
-                    return Err(OpenBitFunError::validation(
+                    return Err(StarMateError::validation(
                         "AI stream_idle_timeout_secs must be greater than 0".to_string(),
                     ));
                 }
@@ -159,7 +159,7 @@ impl ConfigProvider for AIConfigProvider {
 
             if let Some(stream_ttft_timeout_secs) = ai_config.stream_ttft_timeout_secs {
                 if stream_ttft_timeout_secs == 0 {
-                    return Err(OpenBitFunError::validation(
+                    return Err(StarMateError::validation(
                         "AI stream_ttft_timeout_secs must be greater than 0".to_string(),
                     ));
                 }
@@ -167,7 +167,7 @@ impl ConfigProvider for AIConfigProvider {
 
             for (index, model) in ai_config.models.iter().enumerate() {
                 starmate_config_contracts::normalization::validate_model_config(model, index)
-                    .map_err(OpenBitFunError::validation)?;
+                    .map_err(StarMateError::validation)?;
                 if !model.enabled {
                     continue;
                 }
@@ -228,7 +228,7 @@ impl ConfigProvider for AIConfigProvider {
                 if model_id.is_some_and(|model_id| {
                     !enabled_model_with_capability(model_id, capability.clone())
                 }) {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "ai.default_models.{field} references unavailable or incapable model '{}'",
                         model_id.expect("checked above")
                     )));
@@ -241,7 +241,7 @@ impl ConfigProvider for AIConfigProvider {
             };
             if let Some(model_id) = ai_config.task_models.session_title.fixed_model_id() {
                 if !valid_task_model(model_id) {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "The session-title task model '{}' does not exist",
                         model_id
                     )));
@@ -249,14 +249,14 @@ impl ConfigProvider for AIConfigProvider {
             }
             match &ai_config.task_models.git_commit {
                 crate::service::config::types::TaskModelSelection::Inherit => {
-                    return Err(OpenBitFunError::validation(
+                    return Err(StarMateError::validation(
                         "The Git commit task model cannot inherit a session model".to_string(),
                     ));
                 }
                 crate::service::config::types::TaskModelSelection::Fixed { model_id }
                     if !valid_task_model(model_id) =>
                 {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                         "The Git commit task model '{}' does not exist",
                         model_id
                     )));
@@ -267,12 +267,12 @@ impl ConfigProvider for AIConfigProvider {
             if ai_config.agent_model_selections.is_none() {
                 let validate_agent_selection = |path: &str,
                                                 selection: &SubagentModelSelection|
-                 -> OpenBitFunResult<()> {
+                 -> StarMateResult<()> {
                     if selection
                         .fixed_model_id()
                         .is_some_and(|model_id| !valid_task_model(model_id))
                     {
-                        return Err(OpenBitFunError::validation(format!(
+                        return Err(StarMateError::validation(format!(
                             "ai.agent_model_defaults.{path} references unavailable or incapable model '{}'",
                             selection.fixed_model_id().expect("checked above")
                         )));
@@ -280,7 +280,7 @@ impl ConfigProvider for AIConfigProvider {
                     Ok(())
                 };
                 if !valid_task_model(&ai_config.agent_model_defaults.mode) {
-                    return Err(OpenBitFunError::validation(format!(
+                    return Err(StarMateError::validation(format!(
                     "ai.agent_model_defaults.mode references unavailable or incapable model '{}'",
                     ai_config.agent_model_defaults.mode
                 )));
@@ -301,7 +301,7 @@ impl ConfigProvider for AIConfigProvider {
                 }
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid AI config format".to_string(),
             ));
         }
@@ -313,7 +313,7 @@ impl ConfigProvider for AIConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(ai_config) = serde_json::from_value::<AIConfig>(new_config.clone()) {
             info!(
                 "AI config changed: {} models configured",
@@ -343,17 +343,17 @@ impl ConfigProvider for AppearanceConfigProvider {
         serialize_default_config("appearance", AppearanceConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let warnings = Vec::new();
 
         if let Ok(appearance_config) = serde_json::from_value::<AppearanceConfig>(config.clone()) {
             if appearance_config.selection.trim().is_empty() {
-                return Err(OpenBitFunError::validation(
+                return Err(StarMateError::validation(
                     "Appearance selection must not be empty".to_string(),
                 ));
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid appearance config format".to_string(),
             ));
         }
@@ -365,7 +365,7 @@ impl ConfigProvider for AppearanceConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(appearance_config) =
             serde_json::from_value::<AppearanceConfig>(new_config.clone())
         {
@@ -391,7 +391,7 @@ impl ConfigProvider for EditorConfigProvider {
         serialize_default_config("editor", EditorConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let mut warnings = Vec::new();
 
         if let Ok(editor_config) = serde_json::from_value::<EditorConfig>(config.clone()) {
@@ -407,7 +407,7 @@ impl ConfigProvider for EditorConfigProvider {
                 warnings.push("Line height should be between 1.0 and 3.0".to_string());
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid editor config format".to_string(),
             ));
         }
@@ -419,7 +419,7 @@ impl ConfigProvider for EditorConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(editor_config) = serde_json::from_value::<EditorConfig>(new_config.clone()) {
             info!(
                 "Editor config changed: font_size={}",
@@ -443,7 +443,7 @@ impl ConfigProvider for TerminalConfigProvider {
         serialize_default_config("terminal", TerminalConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let mut warnings = Vec::new();
 
         if let Ok(terminal_config) = serde_json::from_value::<TerminalConfig>(config.clone()) {
@@ -463,7 +463,7 @@ impl ConfigProvider for TerminalConfigProvider {
                 );
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid terminal config format".to_string(),
             ));
         }
@@ -475,7 +475,7 @@ impl ConfigProvider for TerminalConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(terminal_config) = serde_json::from_value::<TerminalConfig>(new_config.clone()) {
             info!(
                 "Terminal config changed: shell={}, font_size={}",
@@ -499,7 +499,7 @@ impl ConfigProvider for WorkspaceConfigProvider {
         serialize_default_config("workspace", WorkspaceConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let mut warnings = Vec::new();
 
         if let Ok(workspace_config) = serde_json::from_value::<WorkspaceConfig>(config.clone()) {
@@ -512,7 +512,7 @@ impl ConfigProvider for WorkspaceConfigProvider {
                     .push("No exclude patterns defined, may scan unnecessary files".to_string());
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid workspace config format".to_string(),
             ));
         }
@@ -524,7 +524,7 @@ impl ConfigProvider for WorkspaceConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(workspace_config) = serde_json::from_value::<WorkspaceConfig>(new_config.clone())
         {
             info!(
@@ -549,7 +549,7 @@ impl ConfigProvider for AppConfigProvider {
         serialize_default_config("app", AppConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let mut warnings = Vec::new();
 
         if let Ok(app_config) = serde_json::from_value::<AppConfig>(config.clone()) {
@@ -566,13 +566,13 @@ impl ConfigProvider for AppConfigProvider {
                 "trace" | "debug" | "info" | "warn" | "error" | "off"
             );
             if !valid_log_level {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "Invalid app.logging.level '{}': expected one of trace/debug/info/warn/error/off",
                     app_config.logging.level
                 )));
             }
         } else {
-            return Err(OpenBitFunError::validation(
+            return Err(StarMateError::validation(
                 "Invalid app config format".to_string(),
             ));
         }
@@ -584,7 +584,7 @@ impl ConfigProvider for AppConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(app_config) = serde_json::from_value::<AppConfig>(new_config.clone()) {
             info!(
                 "App config changed: language={}, zoom_level={}, log_level={}",
@@ -608,11 +608,11 @@ impl ConfigProvider for MediaConfigProvider {
         serialize_default_config("media", MediaConfig::default())
     }
 
-    async fn validate_config(&self, config: &serde_json::Value) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_config(&self, config: &serde_json::Value) -> StarMateResult<Vec<String>> {
         let media = match serde_json::from_value::<MediaConfig>(config.clone()) {
             Ok(media) => media,
             Err(err) => {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "Invalid media config format: {}",
                     err
                 )))
@@ -622,7 +622,7 @@ impl ConfigProvider for MediaConfigProvider {
         let mut warnings = Vec::new();
         for (index, service) in media.image_services.iter().enumerate() {
             if service.id.trim().is_empty() {
-                return Err(OpenBitFunError::validation(format!(
+                return Err(StarMateError::validation(format!(
                     "media.image_services[{index}]: service id is required"
                 )));
             }
@@ -667,7 +667,7 @@ impl ConfigProvider for MediaConfigProvider {
         &self,
         _old_config: &serde_json::Value,
         new_config: &serde_json::Value,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         if let Ok(media) = serde_json::from_value::<MediaConfig>(new_config.clone()) {
             info!(
                 "Media config changed: image_services={}, default_image_service={:?}",
@@ -727,7 +727,7 @@ impl ConfigProviderRegistry {
     pub async fn validate_config(
         &self,
         config: &GlobalConfig,
-    ) -> OpenBitFunResult<ConfigValidationResult> {
+    ) -> StarMateResult<ConfigValidationResult> {
         let mut errors = Vec::new();
         let mut warnings = Vec::new();
 
@@ -806,7 +806,7 @@ impl ConfigProviderRegistry {
         path: &str,
         old_config: &GlobalConfig,
         new_config: &GlobalConfig,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let provider_name = path.split('.').next().unwrap_or(path);
 
         if let Some(provider) = self.get_provider(provider_name) {
@@ -824,7 +824,7 @@ impl ConfigProviderRegistry {
         &self,
         section: &str,
         config: &GlobalConfig,
-    ) -> OpenBitFunResult<serde_json::Value> {
+    ) -> StarMateResult<serde_json::Value> {
         match section {
             "app" => Ok(serde_json::to_value(&config.app)?),
             "appearance" => Ok(serde_json::to_value(&config.appearance)?),
@@ -833,7 +833,7 @@ impl ConfigProviderRegistry {
             "workspace" => Ok(serde_json::to_value(&config.workspace)?),
             "ai" => Ok(serde_json::to_value(&config.ai)?),
             "media" => Ok(serde_json::to_value(&config.media)?),
-            _ => Err(OpenBitFunError::validation(format!(
+            _ => Err(StarMateError::validation(format!(
                 "Unknown config section: {}",
                 section
             ))),
@@ -864,7 +864,7 @@ mod tests {
         }
     }
 
-    async fn validate_reasoning(reasoning: ReasoningConfig) -> OpenBitFunResult<Vec<String>> {
+    async fn validate_reasoning(reasoning: ReasoningConfig) -> StarMateResult<Vec<String>> {
         let mut config = AIConfig::default();
         config.models.push(model_with_reasoning(reasoning));
         AIConfigProvider

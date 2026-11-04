@@ -321,11 +321,11 @@ impl SummaryProvider for FakeSummary {
         &self,
         prompt: String,
         _: &RouterContextConfig,
-    ) -> OpenBitFunResult<SummaryResult> {
+    ) -> StarMateResult<SummaryResult> {
         self.prompts.lock().unwrap().push(prompt);
         self.calls.fetch_add(1, Ordering::SeqCst);
         if self.fail {
-            return Err(OpenBitFunError::AIClient("synthetic failure".into()));
+            return Err(StarMateError::AIClient("synthetic failure".into()));
         }
         self.release.notified().await;
         Ok(SummaryResult {
@@ -383,8 +383,8 @@ async fn unavailable_economy_input_budget_never_schedules_a_router_sized_summary
     struct UnavailableBudget;
     #[async_trait::async_trait]
     impl SummaryProvider for UnavailableBudget {
-        async fn input_budget(&self, _: &RouterContextConfig) -> OpenBitFunResult<usize> {
-            Err(OpenBitFunError::Configuration(
+        async fn input_budget(&self, _: &RouterContextConfig) -> StarMateResult<usize> {
+            Err(StarMateError::Configuration(
                 "Summary model window unavailable".into(),
             ))
         }
@@ -392,7 +392,7 @@ async fn unavailable_economy_input_budget_never_schedules_a_router_sized_summary
             &self,
             _: String,
             _: &RouterContextConfig,
-        ) -> OpenBitFunResult<SummaryResult> {
+        ) -> StarMateResult<SummaryResult> {
             panic!("No summary request may be sent without a valid economy budget")
         }
     }
@@ -1050,7 +1050,7 @@ async fn incomplete_summary_keeps_old_state_but_records_reported_usage() {
             &self,
             _: String,
             _: &RouterContextConfig,
-        ) -> OpenBitFunResult<SummaryResult> {
+        ) -> StarMateResult<SummaryResult> {
             Ok(SummaryResult {
                 text: String::new(),
                 complete: false,
@@ -1098,13 +1098,13 @@ async fn incomplete_summary_keeps_old_state_but_records_reported_usage() {
 /// Distinct evidence at the tail catches accidental clipping or candidate-only
 /// recompression; every attempt must still receive the entire source snapshot.
 struct BudgetSummary {
-    responses: std::sync::Mutex<std::collections::VecDeque<OpenBitFunResult<SummaryResult>>>,
+    responses: std::sync::Mutex<std::collections::VecDeque<StarMateResult<SummaryResult>>>,
     prompts: std::sync::Mutex<Vec<(String, usize)>>,
     delay: Duration,
 }
 
 impl BudgetSummary {
-    fn new(responses: Vec<OpenBitFunResult<SummaryResult>>) -> Arc<Self> {
+    fn new(responses: Vec<StarMateResult<SummaryResult>>) -> Arc<Self> {
         Arc::new(Self {
             responses: std::sync::Mutex::new(responses.into()),
             prompts: Default::default(),
@@ -1119,7 +1119,7 @@ impl SummaryProvider for BudgetSummary {
         &self,
         prompt: String,
         config: &RouterContextConfig,
-    ) -> OpenBitFunResult<SummaryResult> {
+    ) -> StarMateResult<SummaryResult> {
         self.prompts
             .lock()
             .unwrap()
@@ -1133,7 +1133,7 @@ impl SummaryProvider for BudgetSummary {
     }
 }
 
-fn budget_response(text: &str, finish: &str, usage: Value) -> OpenBitFunResult<SummaryResult> {
+fn budget_response(text: &str, finish: &str, usage: Value) -> StarMateResult<SummaryResult> {
     let response = serde_json::from_value(json!({"text": text, "finish_reason": finish,
         "usage": usage}))
     .unwrap();
@@ -1215,7 +1215,7 @@ async fn bounded_summary_failed_or_incomplete_rewrite_never_advances_or_discards
             "length",
             budget_usage(100, 16000),
         ),
-        Err(OpenBitFunError::AIClient(
+        Err(StarMateError::AIClient(
             "Synthetic rewrite failure".into(),
         )),
     ] {
@@ -1305,7 +1305,7 @@ async fn bounded_summary_short_output_does_not_retry_and_unknown_usage_stays_unk
     assert_eq!(result.usage.unwrap()["promptTokenCount"], 100);
     let provider = BudgetSummary::new(vec![
         budget_response(&"too long ".repeat(2000), "stop", budget_usage(100, 5000)),
-        Err(OpenBitFunError::AIClient(
+        Err(StarMateError::AIClient(
             "Synthetic rewrite failure".into(),
         )),
     ]);

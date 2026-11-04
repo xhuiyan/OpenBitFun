@@ -1629,13 +1629,13 @@ fn validate_min_openbitfun_version(value: &str) -> SkinMarketResult<()> {
     let version = Version::parse(value).map_err(|_| {
         SkinMarketError::bad_request(
             "invalid_min_openbitfun_version",
-            "minOpenBitFunVersion must use semantic version syntax, for example 1.0.0.",
+            "minStarMateVersion must use semantic version syntax, for example 1.0.0.",
         )
     })?;
     if version < OPENBITFUN_INITIAL_RELEASE_VERSION {
         return Err(SkinMarketError::bad_request(
             "invalid_min_openbitfun_version",
-            "minOpenBitFunVersion must be 1.0.0 or newer.",
+            "minStarMateVersion must be 1.0.0 or newer.",
         ));
     }
     Ok(())

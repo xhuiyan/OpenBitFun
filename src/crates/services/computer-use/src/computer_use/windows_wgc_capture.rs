@@ -4,7 +4,7 @@
 
 #![allow(dead_code)]
 
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use std::time::{Duration, Instant};
 use windows::core::{Interface, HRESULT};
 use windows::Graphics::Capture::{
@@ -73,16 +73,16 @@ impl RetainedFrame {
 }
 
 impl WgcCaptureSession {
-    pub(super) fn start(hwnd: HWND) -> OpenBitFunResult<Self> {
+    pub(super) fn start(hwnd: HWND) -> StarMateResult<Self> {
         if hwnd.is_invalid() {
-            return Err(OpenBitFunError::service("WGC capture: invalid HWND"));
+            return Err(StarMateError::service("WGC capture: invalid HWND"));
         }
         let scope = crate::computer_use::control_session::observation_scope()
-            .map_err(OpenBitFunError::service)?;
+            .map_err(StarMateError::service)?;
         let target = super::windows_window_target::inspect_window(hwnd);
         if let Some(reason) = target.capture_unavailable_reason() {
             log::debug!("WGC capture target unavailable: reason={reason:?}, target={target:?}");
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 reason.error(target.pid, target.handle),
             ));
         }
@@ -91,9 +91,9 @@ impl WgcCaptureSession {
             let direct_device = create_winrt_d3d_device(&device)?;
             let interop =
                 windows::core::factory::<GraphicsCaptureItem, IGraphicsCaptureItemInterop>()
-                    .map_err(|e| OpenBitFunError::service(format!("WGC factory: {e}")))?;
+                    .map_err(|e| StarMateError::service(format!("WGC factory: {e}")))?;
             let item: GraphicsCaptureItem = interop.CreateForWindow(hwnd).map_err(|e| {
-                OpenBitFunError::service(format!(
+                StarMateError::service(format!(
                     "[CAPTURE_TARGET_UNAVAILABLE] WGC CreateForWindow: {e}; {target:?}. \
                          Use list_windows and an explicit app: {{pid, window_id}} to select the \
                          intended window. No other window or desktop pixels were captured."
@@ -101,9 +101,9 @@ impl WgcCaptureSession {
             })?;
             let size = item
                 .Size()
-                .map_err(|e| OpenBitFunError::service(format!("WGC size: {e}")))?;
+                .map_err(|e| StarMateError::service(format!("WGC size: {e}")))?;
             if size.Width <= 0 || size.Height <= 0 {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "WGC target has no rendered content",
                 ));
             }
@@ -113,12 +113,12 @@ impl WgcCaptureSession {
                 2,
                 size,
             )
-            .map_err(|e| OpenBitFunError::service(format!("WGC frame pool: {e}")))?;
+            .map_err(|e| StarMateError::service(format!("WGC frame pool: {e}")))?;
             let session = match pool.CreateCaptureSession(&item) {
                 Ok(session) => session,
                 Err(e) => {
                     let _ = pool.Close();
-                    return Err(OpenBitFunError::service(format!("WGC session: {e}")));
+                    return Err(StarMateError::service(format!("WGC session: {e}")));
                 }
             };
             // Cursor control arrived after WGC itself. On older systems this
@@ -127,7 +127,7 @@ impl WgcCaptureSession {
             if let Err(e) = session.StartCapture() {
                 let _ = session.Close();
                 let _ = pool.Close();
-                return Err(OpenBitFunError::service(format!("WGC start: {e}")));
+                return Err(StarMateError::service(format!("WGC start: {e}")));
             }
             let closed = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
             let signal = closed.clone();
@@ -149,7 +149,7 @@ impl WgcCaptureSession {
                 .map_err(|e| {
                     let _ = session.Close();
                     let _ = pool.Close();
-                    OpenBitFunError::service(format!("WGC Closed handler: {e}"))
+                    StarMateError::service(format!("WGC Closed handler: {e}"))
                 })?;
             Ok(Self {
                 device,
@@ -177,23 +177,23 @@ impl WgcCaptureSession {
         }
     }
 
-    fn ensure_live(&self) -> OpenBitFunResult<()> {
+    fn ensure_live(&self) -> StarMateResult<()> {
         if self.stopped || self.closed.load(std::sync::atomic::Ordering::Acquire) {
-            return Err(OpenBitFunError::service("WGC capture session stopped"));
+            return Err(StarMateError::service("WGC capture session stopped"));
         }
         let size = self
             .item
             .Size()
-            .map_err(|e| OpenBitFunError::service(format!("WGC target unavailable: {e}")))?;
+            .map_err(|e| StarMateError::service(format!("WGC target unavailable: {e}")))?;
         if size.Width <= 0 || size.Height <= 0 {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "WGC target has no rendered content",
             ));
         }
         Ok(())
     }
 
-    fn next_frame(&mut self) -> OpenBitFunResult<Option<Direct3D11CaptureFrame>> {
+    fn next_frame(&mut self) -> StarMateResult<Option<Direct3D11CaptureFrame>> {
         // The WinRT method returns S_OK + null when its queue is empty. The
         // generated non-optional wrapper converts null into an error, losing
         // the distinction from a real provider/device failure.
@@ -235,12 +235,12 @@ impl WgcCaptureSession {
                 }
                 let content = frame
                     .ContentSize()
-                    .map_err(|e| OpenBitFunError::service(format!("WGC content size: {e}")))?;
+                    .map_err(|e| StarMateError::service(format!("WGC content size: {e}")))?;
                 if content.Width != self.size.Width || content.Height != self.size.Height {
                     self.last_frame = None;
                     let _ = frame.Close();
                     if content.Width <= 0 || content.Height <= 0 {
-                        return Err(OpenBitFunError::service(
+                        return Err(StarMateError::service(
                             "WGC target has no rendered content",
                         ));
                     }
@@ -251,7 +251,7 @@ impl WgcCaptureSession {
                             2,
                             content,
                         )
-                        .map_err(|e| OpenBitFunError::service(format!("WGC resize: {e}")))?;
+                        .map_err(|e| StarMateError::service(format!("WGC resize: {e}")))?;
                     self.size = content;
                     continue;
                 }
@@ -272,7 +272,7 @@ impl WgcCaptureSession {
             let size = self
                 .item
                 .Size()
-                .map_err(|e| OpenBitFunError::service(format!("WGC target unavailable: {e}")))?;
+                .map_err(|e| StarMateError::service(format!("WGC target unavailable: {e}")))?;
             if size.Width != self.size.Width || size.Height != self.size.Height {
                 self.last_frame = None;
             }
@@ -284,7 +284,7 @@ impl WgcCaptureSession {
                 return Ok(frame);
             }
             if Instant::now() >= deadline {
-                return Err(OpenBitFunError::service(
+                return Err(StarMateError::service(
                     "[CAPTURE_FRAME_PENDING] The live window stream has not produced a frame yet. Observe again or use include_image=false for accessibility; no desktop pixels were substituted",
                 ));
             }
@@ -298,7 +298,7 @@ impl WgcCaptureSession {
     fn settle(
         &mut self,
         policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
-    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
+    ) -> StarMateResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
         use starmate_agent_tools::computer_use_host::{
             app_input_settle_decision, app_input_settle_next_wait_ms, AppInputSettle,
             AppInputSettleStatus,
@@ -364,17 +364,17 @@ impl WgcCaptureSession {
     /// One frame of another window of the target process (an open popup),
     /// read with this stream's device. It registers no Closed handler: a
     /// popup closing is not the bound target stopping.
-    fn snapshot_window(&self, hwnd: HWND) -> OpenBitFunResult<(Vec<u8>, u32, u32)> {
+    fn snapshot_window(&self, hwnd: HWND) -> StarMateResult<(Vec<u8>, u32, u32)> {
         self.ensure_live()?;
         let failed = |e: windows::core::Error| {
-            OpenBitFunError::service(format!("AUXILIARY_CAPTURE_FAILED: {e}"))
+            StarMateError::service(format!("AUXILIARY_CAPTURE_FAILED: {e}"))
         };
         let interop = windows::core::factory::<GraphicsCaptureItem, IGraphicsCaptureItemInterop>()
             .map_err(failed)?;
         let item: GraphicsCaptureItem = unsafe { interop.CreateForWindow(hwnd) }.map_err(failed)?;
         let size = item.Size().map_err(failed)?;
         if size.Width <= 0 || size.Height <= 0 {
-            return Err(OpenBitFunError::service(
+            return Err(StarMateError::service(
                 "AUXILIARY_CAPTURE_FAILED: Popup has no rendered content",
             ));
         }
@@ -408,7 +408,7 @@ impl WgcCaptureSession {
                     return pixels;
                 }
                 if Instant::now() >= deadline {
-                    return Err(OpenBitFunError::service(
+                    return Err(StarMateError::service(
                         "AUXILIARY_CAPTURE_TIMEOUT: The popup produced no frame",
                     ));
                 }
@@ -422,10 +422,10 @@ impl WgcCaptureSession {
 
     /// Keep a consumed frame as the stream's latest observation. A resized
     /// frame resets the pool instead, so old pixels never get new geometry.
-    fn retain_frame(&mut self, frame: Direct3D11CaptureFrame) -> OpenBitFunResult<()> {
+    fn retain_frame(&mut self, frame: Direct3D11CaptureFrame) -> StarMateResult<()> {
         let content = frame
             .ContentSize()
-            .map_err(|e| OpenBitFunError::service(format!("WGC content size: {e}")));
+            .map_err(|e| StarMateError::service(format!("WGC content size: {e}")));
         let content = match content {
             Ok(content) => content,
             Err(error) => {
@@ -446,7 +446,7 @@ impl WgcCaptureSession {
                     2,
                     content,
                 )
-                .map_err(|e| OpenBitFunError::service(format!("WGC resize: {e}")))?;
+                .map_err(|e| StarMateError::service(format!("WGC resize: {e}")))?;
             self.size = content;
             return Ok(());
         }
@@ -472,9 +472,9 @@ impl Drop for WgcCaptureSession {
 fn checked_frame_result(
     status: HRESULT,
     frame: Option<Direct3D11CaptureFrame>,
-) -> OpenBitFunResult<Option<Direct3D11CaptureFrame>> {
+) -> StarMateResult<Option<Direct3D11CaptureFrame>> {
     status.ok().map_err(|error| {
-        OpenBitFunError::service(format!(
+        StarMateError::service(format!(
             "[CAPTURE_UNAVAILABLE] WGC frame acquisition failed: {error}"
         ))
     })?;
@@ -525,7 +525,7 @@ mod retained_frame_tests {
     }
 }
 
-type CaptureResult = OpenBitFunResult<(
+type CaptureResult = StarMateResult<(
     Vec<u8>,
     u32,
     u32,
@@ -535,7 +535,7 @@ enum CaptureCommand {
     Ensure(
         usize,
         crate::computer_use::control_session::ControlToken,
-        std::sync::mpsc::SyncSender<OpenBitFunResult<()>>,
+        std::sync::mpsc::SyncSender<StarMateResult<()>>,
     ),
     Capture(
         usize,
@@ -552,11 +552,11 @@ enum CaptureCommand {
         usize,
         usize,
         crate::computer_use::control_session::ControlToken,
-        std::sync::mpsc::SyncSender<OpenBitFunResult<(Vec<u8>, u32, u32)>>,
+        std::sync::mpsc::SyncSender<StarMateResult<(Vec<u8>, u32, u32)>>,
     ),
     Stop(std::sync::mpsc::SyncSender<()>),
 }
-type SettleResult = OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle>;
+type SettleResult = StarMateResult<starmate_agent_tools::computer_use_host::AppInputSettle>;
 
 // A generation change must not retain a prior owner's native capture session.
 fn ensure_stream(
@@ -566,27 +566,27 @@ fn ensure_stream(
         WgcCaptureSession,
     )>,
     handle: usize,
-) -> OpenBitFunResult<&mut WgcCaptureSession> {
+) -> StarMateResult<&mut WgcCaptureSession> {
     use windows::Win32::UI::WindowsAndMessaging::IsWindow;
-    crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::service)?;
+    crate::computer_use::control_session::capture_allowed().map_err(StarMateError::service)?;
     let hwnd = HWND(handle as *mut _);
     if !unsafe { IsWindow(Some(hwnd)) }.as_bool() {
-        return Err(OpenBitFunError::tool(format!(
+        return Err(StarMateError::tool(format!(
             "[TARGET_WINDOW_UNAVAILABLE] Window {handle} was closed. No other window or desktop pixels were captured."
         )));
     }
     let target = super::windows_window_target::inspect_window(hwnd);
     if let Some(error) = target.bound_surface_error() {
-        return Err(OpenBitFunError::tool(error));
+        return Err(StarMateError::tool(error));
     }
     let pid = target.pid;
     crate::computer_use::control_session::target_allowed(&format!(
         "pid:{pid}/window:{}",
         handle as isize
     ))
-    .map_err(OpenBitFunError::service)?;
+    .map_err(StarMateError::service)?;
     let scope = crate::computer_use::control_session::observation_scope()
-        .map_err(OpenBitFunError::service)?;
+        .map_err(StarMateError::service)?;
     if active.as_ref().map(|(id, owner, _)| (*id, owner)) != Some((handle, &scope)) {
         *active = None;
         *active = Some((handle, scope, WgcCaptureSession::start(hwnd)?));
@@ -646,7 +646,7 @@ fn capture_worker() -> &'static std::sync::mpsc::Sender<CaptureCommand> {
                                     .snapshot_window(HWND(popup as *mut _))
                             })
                         } else {
-                            Err(OpenBitFunError::service(
+                            Err(StarMateError::service(
                                 "AUXILIARY_CAPTURE_FAILED: No live stream for the bound window",
                             ))
                         };
@@ -693,48 +693,48 @@ pub(super) fn stop_capture() {
 
 /// Establish/validate the authorized stream without consuming a frame, GPU
 /// readback, or image encoding. Actual observation still validates frame delivery.
-pub(super) fn ensure_window_capture(hwnd: HWND) -> OpenBitFunResult<()> {
+pub(super) fn ensure_window_capture(hwnd: HWND) -> StarMateResult<()> {
     let token =
-        crate::computer_use::control_session::capture_token().map_err(OpenBitFunError::service)?;
+        crate::computer_use::control_session::capture_token().map_err(StarMateError::service)?;
     let (tx, rx) = std::sync::mpsc::sync_channel(1);
     capture_worker()
         .send(CaptureCommand::Ensure(hwnd.0 as usize, token, tx))
-        .map_err(|_| OpenBitFunError::service("WGC worker unavailable"))?;
+        .map_err(|_| StarMateError::service("WGC worker unavailable"))?;
     rx.recv()
-        .map_err(|_| OpenBitFunError::service("WGC worker stopped"))?
+        .map_err(|_| StarMateError::service("WGC worker stopped"))?
 }
 
 /// Reuses the one window stream until the control owner stops or retargets it.
 pub(super) fn capture_window_bgra(hwnd: HWND) -> CaptureResult {
-    crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::service)?;
+    crate::computer_use::control_session::capture_allowed().map_err(StarMateError::service)?;
     let (tx, rx) = std::sync::mpsc::sync_channel(1);
     capture_worker()
         .send(CaptureCommand::Capture(
             hwnd.0 as usize,
             crate::computer_use::control_session::capture_token()
-                .map_err(OpenBitFunError::service)?,
+                .map_err(StarMateError::service)?,
             tx,
         ))
-        .map_err(|_| OpenBitFunError::service("WGC worker unavailable"))?;
+        .map_err(|_| StarMateError::service("WGC worker unavailable"))?;
     rx.recv()
-        .map_err(|_| OpenBitFunError::service("WGC worker stopped"))?
+        .map_err(|_| StarMateError::service("WGC worker stopped"))?
 }
 
 /// One frame of `popup`, an open popup of the bound window `hwnd`.
-pub(super) fn snapshot_popup(hwnd: HWND, popup: HWND) -> OpenBitFunResult<(Vec<u8>, u32, u32)> {
-    crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::service)?;
+pub(super) fn snapshot_popup(hwnd: HWND, popup: HWND) -> StarMateResult<(Vec<u8>, u32, u32)> {
+    crate::computer_use::control_session::capture_allowed().map_err(StarMateError::service)?;
     let (tx, rx) = std::sync::mpsc::sync_channel(1);
     capture_worker()
         .send(CaptureCommand::Snapshot(
             hwnd.0 as usize,
             popup.0 as usize,
             crate::computer_use::control_session::capture_token()
-                .map_err(OpenBitFunError::service)?,
+                .map_err(StarMateError::service)?,
             tx,
         ))
-        .map_err(|_| OpenBitFunError::service("WGC worker unavailable"))?;
+        .map_err(|_| StarMateError::service("WGC worker unavailable"))?;
     rx.recv()
-        .map_err(|_| OpenBitFunError::service("WGC worker stopped"))?
+        .map_err(|_| StarMateError::service("WGC worker stopped"))?
 }
 
 /// Wait on the worker until the bound stream stops repainting after input.
@@ -742,22 +742,22 @@ pub(super) fn wait_settled(
     hwnd: HWND,
     policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
 ) -> SettleResult {
-    crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::service)?;
+    crate::computer_use::control_session::capture_allowed().map_err(StarMateError::service)?;
     let (tx, rx) = std::sync::mpsc::sync_channel(1);
     capture_worker()
         .send(CaptureCommand::Settle(
             hwnd.0 as usize,
             crate::computer_use::control_session::capture_token()
-                .map_err(OpenBitFunError::service)?,
+                .map_err(StarMateError::service)?,
             policy,
             tx,
         ))
-        .map_err(|_| OpenBitFunError::service("WGC worker unavailable"))?;
+        .map_err(|_| StarMateError::service("WGC worker unavailable"))?;
     rx.recv()
-        .map_err(|_| OpenBitFunError::service("WGC worker stopped"))?
+        .map_err(|_| StarMateError::service("WGC worker stopped"))?
 }
 
-unsafe fn create_d3d11_device() -> OpenBitFunResult<(ID3D11Device, ID3D11DeviceContext)> {
+unsafe fn create_d3d11_device() -> StarMateResult<(ID3D11Device, ID3D11DeviceContext)> {
     let mut device: Option<ID3D11Device> = None;
     let mut context: Option<ID3D11DeviceContext> = None;
     let flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
@@ -792,67 +792,67 @@ unsafe fn create_d3d11_device() -> OpenBitFunResult<(ID3D11Device, ID3D11DeviceC
                 Some(&mut context),
             )
         }
-        .map_err(|e| OpenBitFunError::service(format!("D3D11CreateDevice (WARP): {e}")))?;
+        .map_err(|e| StarMateError::service(format!("D3D11CreateDevice (WARP): {e}")))?;
     }
 
     let device = device.ok_or_else(|| {
-        OpenBitFunError::service("D3D11CreateDevice returned null device".to_string())
+        StarMateError::service("D3D11CreateDevice returned null device".to_string())
     })?;
     let context = context.ok_or_else(|| {
-        OpenBitFunError::service("D3D11CreateDevice returned null context".to_string())
+        StarMateError::service("D3D11CreateDevice returned null context".to_string())
     })?;
     Ok((device, context))
 }
 
-unsafe fn create_winrt_d3d_device(d3d_device: &ID3D11Device) -> OpenBitFunResult<IDirect3DDevice> {
+unsafe fn create_winrt_d3d_device(d3d_device: &ID3D11Device) -> StarMateResult<IDirect3DDevice> {
     let dxgi_device: IDXGIDevice = d3d_device
         .cast()
-        .map_err(|e| OpenBitFunError::service(format!("IDXGIDevice cast: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("IDXGIDevice cast: {e}")))?;
     // SAFETY: `dxgi_device` is a live COM interface obtained from the supplied
     // D3D11 device and remains alive through the conversion call.
     let inspectable =
         unsafe { CreateDirect3D11DeviceFromDXGIDevice(&dxgi_device) }.map_err(|e| {
-            OpenBitFunError::service(format!("CreateDirect3D11DeviceFromDXGIDevice: {e}"))
+            StarMateError::service(format!("CreateDirect3D11DeviceFromDXGIDevice: {e}"))
         })?;
     inspectable
         .cast()
-        .map_err(|e| OpenBitFunError::service(format!("IDirect3DDevice cast: {e}")))
+        .map_err(|e| StarMateError::service(format!("IDirect3DDevice cast: {e}")))
 }
 
 unsafe fn copy_frame_to_bgra(
     frame: &windows::Graphics::Capture::Direct3D11CaptureFrame,
     d3d_device: &ID3D11Device,
     d3d_context: &ID3D11DeviceContext,
-) -> OpenBitFunResult<(Vec<u8>, u32, u32)> {
+) -> StarMateResult<(Vec<u8>, u32, u32)> {
     let surface = frame
         .Surface()
-        .map_err(|e| OpenBitFunError::service(format!("WGC frame Surface: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("WGC frame Surface: {e}")))?;
     let access: IDirect3DDxgiInterfaceAccess = surface
         .cast()
-        .map_err(|e| OpenBitFunError::service(format!("IDirect3DDxgiInterfaceAccess cast: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("IDirect3DDxgiInterfaceAccess cast: {e}")))?;
     // SAFETY: `access` is the live DXGI interface for `surface`; the requested
     // interface type matches the WGC frame surface contract.
     let src_texture: ID3D11Texture2D = unsafe { access.GetInterface::<ID3D11Texture2D>() }
-        .map_err(|e| OpenBitFunError::service(format!("GetInterface ID3D11Texture2D: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("GetInterface ID3D11Texture2D: {e}")))?;
 
     let mut desc = D3D11_TEXTURE2D_DESC::default();
     unsafe { src_texture.GetDesc(&mut desc) };
     let content = frame
         .ContentSize()
-        .map_err(|e| OpenBitFunError::service(format!("WGC content size: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("WGC content size: {e}")))?;
     if content.Width <= 0
         || content.Height <= 0
         || content.Width as u32 > desc.Width
         || content.Height as u32 > desc.Height
     {
-        return Err(OpenBitFunError::service(
+        return Err(StarMateError::service(
             "WGC frame geometry changed; retry observation",
         ));
     }
     let width = content.Width as u32;
     let height = content.Height as u32;
     if width == 0 || height == 0 {
-        return Err(OpenBitFunError::service(
+        return Err(StarMateError::service(
             "WGC frame texture has zero dimensions".to_string(),
         ));
     }
@@ -873,22 +873,22 @@ unsafe fn copy_frame_to_bgra(
     // SAFETY: `staging_desc` is fully initialized and `staging` is a live
     // output slot for the newly created texture interface.
     unsafe { d3d_device.CreateTexture2D(&staging_desc, None, Some(&mut staging)) }
-        .map_err(|e| OpenBitFunError::service(format!("CreateTexture2D staging: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("CreateTexture2D staging: {e}")))?;
     let staging = staging.ok_or_else(|| {
-        OpenBitFunError::service("CreateTexture2D returned null staging texture".to_string())
+        StarMateError::service("CreateTexture2D returned null staging texture".to_string())
     })?;
 
     unsafe { d3d_context.CopyResource(&staging, &src_texture) };
 
     let mut mapped = windows::Win32::Graphics::Direct3D11::D3D11_MAPPED_SUBRESOURCE::default();
     unsafe { d3d_context.Map(&staging, 0, D3D11_MAP_READ, 0, Some(&mut mapped)) }
-        .map_err(|e| OpenBitFunError::service(format!("Map staging texture: {e}")))?;
+        .map_err(|e| StarMateError::service(format!("Map staging texture: {e}")))?;
 
     let row_pitch = mapped.RowPitch as usize;
     let width_bytes = (width as usize) * 4;
     if mapped.pData.is_null() || row_pitch < width_bytes {
         unsafe { d3d_context.Unmap(&staging, 0) };
-        return Err(OpenBitFunError::service("WGC invalid mapped surface"));
+        return Err(StarMateError::service("WGC invalid mapped surface"));
     }
     let mut pixels = vec![0u8; (width as usize) * (height as usize) * 4];
     let src = mapped.pData as *const u8;

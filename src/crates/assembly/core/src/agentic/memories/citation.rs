@@ -11,27 +11,27 @@ const ROLLOUT_IDS_OPEN: &str = "<rollout_ids>";
 const ROLLOUT_IDS_CLOSE: &str = "</rollout_ids>";
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct OpenBitFunMemoryCitation {
-    pub entries: Vec<OpenBitFunMemoryCitationEntry>,
+pub struct StarMateMemoryCitation {
+    pub entries: Vec<StarMateMemoryCitationEntry>,
     pub rollout_ids: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct OpenBitFunMemoryCitationEntry {
+pub struct StarMateMemoryCitationEntry {
     pub path: String,
     pub line_start: u32,
     pub line_end: u32,
     pub note: Option<String>,
 }
 
-pub fn parse_openbitfun_memory_citation(text: &str) -> Option<OpenBitFunMemoryCitation> {
+pub fn parse_openbitfun_memory_citation(text: &str) -> Option<StarMateMemoryCitation> {
     let (_, payloads) = strip_openbitfun_memory_citations(text);
     parse_openbitfun_memory_citation_payloads(payloads)
 }
 
 pub fn parse_openbitfun_memory_citation_payloads<I, S>(
     payloads: I,
-) -> Option<OpenBitFunMemoryCitation>
+) -> Option<StarMateMemoryCitation>
 where
     I: IntoIterator<Item = S>,
     S: AsRef<str>,
@@ -54,7 +54,7 @@ where
     if entries.is_empty() && rollout_ids.is_empty() {
         None
     } else {
-        Some(OpenBitFunMemoryCitation {
+        Some(StarMateMemoryCitation {
             entries,
             rollout_ids,
         })
@@ -79,8 +79,8 @@ pub fn strip_openbitfun_memory_citations(text: &str) -> (String, Vec<String>) {
     (parsed.visible_text, payloads)
 }
 
-impl From<OpenBitFunMemoryCitation> for MemoryCitation {
-    fn from(value: OpenBitFunMemoryCitation) -> Self {
+impl From<StarMateMemoryCitation> for MemoryCitation {
+    fn from(value: StarMateMemoryCitation) -> Self {
         Self {
             entries: value
                 .entries
@@ -97,7 +97,7 @@ impl From<OpenBitFunMemoryCitation> for MemoryCitation {
     }
 }
 
-fn parse_citation_entries(body: &str) -> Vec<OpenBitFunMemoryCitationEntry> {
+fn parse_citation_entries(body: &str) -> Vec<StarMateMemoryCitationEntry> {
     body.lines()
         .map(str::trim)
         .filter(|line| !line.is_empty())
@@ -106,7 +106,7 @@ fn parse_citation_entries(body: &str) -> Vec<OpenBitFunMemoryCitationEntry> {
             let note = note_part.strip_suffix(']')?.trim();
             let (path_with_range, line_range) = path_part.rsplit_once(':')?;
             let (line_start, line_end) = line_range.split_once('-')?;
-            Some(OpenBitFunMemoryCitationEntry {
+            Some(StarMateMemoryCitationEntry {
                 path: path_with_range.trim().to_string(),
                 line_start: line_start.trim().parse().ok()?,
                 line_end: line_end.trim().parse().ok()?,

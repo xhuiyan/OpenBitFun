@@ -17,7 +17,7 @@
 #![allow(dead_code)]
 
 use crate::computer_use::windows_ax_ui::build_updated_cache_with_retry;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{
     parse_windows_accelerator_display, AppMenuShortcut,
 };
@@ -41,11 +41,11 @@ const MENU_BAR_SEARCH_MAX_VISITED: usize = 4_000;
 
 unsafe fn build_shortcuts_cache_request(
     automation: &IUIAutomation,
-) -> OpenBitFunResult<IUIAutomationCacheRequest> {
+) -> StarMateResult<IUIAutomationCacheRequest> {
     // SAFETY: `automation` is a live UI Automation COM interface and every
     // property, pattern, and scope identifier below is a documented UIA value.
     let cache_req = unsafe { automation.CreateCacheRequest() }
-        .map_err(|e| OpenBitFunError::tool(format!("UI Automation CreateCacheRequest: {}.", e)))?;
+        .map_err(|e| StarMateError::tool(format!("UI Automation CreateCacheRequest: {}.", e)))?;
     for prop in [
         UIA_ControlTypePropertyId,
         UIA_NamePropertyId,
@@ -217,7 +217,7 @@ fn find_menu_bar(root: &IUIAutomationElement) -> Option<IUIAutomationElement> {
 /// Returns an empty result (not an error) when no `MenuBar` element is
 /// found — modern Fluent/Electron apps frequently have no classic menu
 /// bar, which is a legitimate "no shortcuts (via this mechanism)" answer.
-pub(super) fn get_app_menu_shortcuts(hwnd: HWND) -> OpenBitFunResult<(Vec<AppMenuShortcut>, u32)> {
+pub(super) fn get_app_menu_shortcuts(hwnd: HWND) -> StarMateResult<(Vec<AppMenuShortcut>, u32)> {
     let hwnd = hwnd.0 as isize;
     super::windows_ax_ui::run_read("shortcuts", move || unsafe {
         let hwnd = HWND(hwnd as *mut _);
@@ -226,7 +226,7 @@ pub(super) fn get_app_menu_shortcuts(hwnd: HWND) -> OpenBitFunResult<(Vec<AppMen
         let cache_req = build_shortcuts_cache_request(&automation)?;
 
         let uncached = automation.ElementFromHandle(hwnd).map_err(|e| {
-            OpenBitFunError::tool(format!("UI Automation ElementFromHandle: {}.", e))
+            StarMateError::tool(format!("UI Automation ElementFromHandle: {}.", e))
         })?;
 
         let root = build_updated_cache_with_retry(&uncached, &cache_req)?;

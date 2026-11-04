@@ -128,7 +128,7 @@ fn normalize(value: &mut Value) {
 fn unedited_prefix(
     before: &OfflineSessionBundle,
     after: &OfflineSessionBundle,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     if can_repair_history(before, after) {
         return Ok(true);
     }
@@ -232,7 +232,7 @@ pub(super) async fn validate_native(
     root: &Path,
     entry: &Reference,
     source: &OfflineSessionBundle,
-) -> OpenBitFunResult<bool> {
+) -> StarMateResult<bool> {
     if !follows_native(&entry.metadata) {
         return Ok(true);
     }
@@ -336,7 +336,7 @@ pub(super) async fn validate_native(
     Ok(false)
 }
 
-pub(crate) async fn has_native_view(root: &Path, id: &str) -> OpenBitFunResult<bool> {
+pub(crate) async fn has_native_view(root: &Path, id: &str) -> StarMateResult<bool> {
     Ok(metadata(root, id)
         .await?
         .as_ref()

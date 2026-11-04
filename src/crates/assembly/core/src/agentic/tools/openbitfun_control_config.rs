@@ -506,7 +506,7 @@ pub async fn apply_legacy_config_mutation_with_model_snapshot(
         }
         config_service.update_config::<Value, bool>(path, |current| {
             if !model_snapshot_matches(current, &expected) {
-                return Err(crate::util::errors::OpenBitFunError::config(
+                return Err(crate::util::errors::StarMateError::config(
                     "SUBSCRIPTION_ACCOUNT_POOL_CONFLICT: Model configuration changed while it was being edited",
                 ));
             }

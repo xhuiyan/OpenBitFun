@@ -12,7 +12,7 @@ use starmate_agent_runtime::sdk::{
 };
 use starmate_core::agentic::core::Session;
 use starmate_core::agentic::get_agent_registry;
-use starmate_core::util::errors::OpenBitFunError;
+use starmate_core::util::errors::StarMateError;
 use starmate_events::{project_agentic_frontend_event, AgenticEvent};
 use starmate_product_domains::product_search::SessionContentSearchRequest;
 use starmate_runtime_ports::{
@@ -267,9 +267,9 @@ fn restored_session_to_json(restored: AgentSessionRestoreResult) -> Value {
     })
 }
 
-fn peer_core_session_error(operation: &str, error: OpenBitFunError) -> String {
+fn peer_core_session_error(operation: &str, error: StarMateError) -> String {
     match error {
-        OpenBitFunError::SessionInUse { session_id } => format!(
+        StarMateError::SessionInUse { session_id } => format!(
             "{SESSION_IN_USE_ERROR_CODE}: Session is already open for writing: {session_id}"
         ),
         error => format!("{operation}: {error}"),
@@ -1114,7 +1114,7 @@ mod tests {
     use starmate_core::agentic::core::{
         ProcessingPhase, Session as CoreSession, SessionConfig, SessionState as CoreSessionState,
     };
-    use starmate_core::util::errors::OpenBitFunError;
+    use starmate_core::util::errors::StarMateError;
     use starmate_events::AgenticEvent;
 
     #[test]
@@ -1154,7 +1154,7 @@ mod tests {
     fn peer_writer_conflicts_keep_the_stable_transport_code() {
         let core_error = peer_core_session_error(
             "Failed to restore session with turns",
-            OpenBitFunError::SessionInUse {
+            StarMateError::SessionInUse {
                 session_id: "session-1".to_string(),
             },
         );

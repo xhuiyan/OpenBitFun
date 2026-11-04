@@ -2,7 +2,7 @@
 
 use super::types::{WorkspaceInfo, WorkspaceKind};
 use crate::service::i18n::LocaleId;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, path::Path};
 
@@ -23,7 +23,7 @@ pub(crate) async fn allocate_number(
     id: &str,
     high_water: u64,
     known: HashMap<String, u64>,
-) -> OpenBitFunResult<u64> {
+) -> StarMateResult<u64> {
     let (number, _) = starmate_services_core::json_store::JsonFileStore
         .update_locked(path, NameRegistry::default(), |registry| {
             registry.high_water = registry.high_water.max(high_water);
@@ -39,7 +39,7 @@ pub(crate) async fn allocate_number(
                 .checked_add(1)
                 .filter(|n| *n <= 9_007_199_254_740_991)
                 .ok_or_else(|| {
-                    OpenBitFunError::service("Assistant name number capacity exhausted")
+                    StarMateError::service("Assistant name number capacity exhausted")
                 })?;
             registry.high_water = next;
             registry.numbers.insert(id.into(), next);
@@ -47,7 +47,7 @@ pub(crate) async fn allocate_number(
         })
         .await
         .map_err(|error| {
-            OpenBitFunError::service(format!("Failed to allocate assistant name: {error}"))
+            StarMateError::service(format!("Failed to allocate assistant name: {error}"))
         })?;
     number
 }

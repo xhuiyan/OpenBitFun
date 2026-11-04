@@ -2,7 +2,7 @@ use crate::agentic::coordination::get_global_coordinator;
 use crate::agentic::tools::framework::{
     PermissionIntent, Tool, ToolRenderOptions, ToolResult, ToolUseContext, ValidationResult,
 };
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use serde_json::{json, Value};
 
@@ -23,7 +23,7 @@ impl AgentListTool {
         coordinator: &crate::agentic::coordination::ConversationCoordinator,
         session_id: &str,
         include_reserved: bool,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let agents = coordinator.direct_child_agents(session_id).await?;
         let mut assistant_text = format!("Found {} direct child agent(s).", agents.len());
         for agent in &agents {
@@ -63,15 +63,15 @@ impl AgentListTool {
         }])
     }
 
-    fn validate_request(input: &Value, context: Option<&ToolUseContext>) -> OpenBitFunResult<bool> {
+    fn validate_request(input: &Value, context: Option<&ToolUseContext>) -> StarMateResult<bool> {
         let object = input.as_object().ok_or_else(|| {
-            OpenBitFunError::tool("AgentList input must be an object".to_string())
+            StarMateError::tool("AgentList input must be an object".to_string())
         })?;
         if let Some(field) = object
             .keys()
             .find(|field| field.as_str() != "include_reserved")
         {
-            return Err(OpenBitFunError::tool(format!(
+            return Err(StarMateError::tool(format!(
                 "AgentList does not accept field '{field}'"
             )));
         }
@@ -79,7 +79,7 @@ impl AgentListTool {
         match object.get("include_reserved") {
             None => Ok(false),
             Some(Value::Bool(include_reserved)) => Ok(*include_reserved),
-            Some(_) => Err(OpenBitFunError::tool(
+            Some(_) => Err(StarMateError::tool(
                 "include_reserved must be a boolean".to_string(),
             )),
         }
@@ -92,7 +92,7 @@ impl Tool for AgentListTool {
         "AgentList"
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok("List direct child agents and their latest status.".to_string())
     }
 
@@ -144,7 +144,7 @@ impl Tool for AgentListTool {
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<PermissionIntent>> {
+    ) -> StarMateResult<Vec<PermissionIntent>> {
         Ok(Vec::new())
     }
 
@@ -172,13 +172,13 @@ impl Tool for AgentListTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
+    ) -> StarMateResult<Vec<ToolResult>> {
         let include_reserved = Self::validate_request(input, Some(context))?;
         let session_id = context.session_id.as_deref().ok_or_else(|| {
-            OpenBitFunError::tool("session_id is required in context".to_string())
+            StarMateError::tool("session_id is required in context".to_string())
         })?;
         let coordinator = get_global_coordinator()
-            .ok_or_else(|| OpenBitFunError::tool("coordinator not initialized".to_string()))?;
+            .ok_or_else(|| StarMateError::tool("coordinator not initialized".to_string()))?;
         Self::list_agents(&coordinator, session_id, include_reserved).await
     }
 }

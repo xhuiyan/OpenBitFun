@@ -29,7 +29,7 @@ use core_foundation::base::{CFGetTypeID, CFTypeRef, TCFType};
 use core_foundation::boolean::{CFBoolean, CFBooleanGetTypeID, CFBooleanRef};
 use core_foundation::string::{CFString, CFStringRef};
 use core_graphics::geometry::{CGPoint, CGSize};
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{AppStateSnapshot, AxNode};
 use std::collections::{HashMap, VecDeque};
 use std::ffi::c_void;
@@ -208,12 +208,12 @@ pub(crate) fn retained_cached_target(pid: i32, idx: u32) -> Option<RetainedCache
     cached_ref(pid, None, idx)
 }
 
-pub(crate) fn validate_bound_target(pid: i32, target: AxRef) -> OpenBitFunResult<()> {
-    super::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
-    let bound = super::macos_capture::bound_window_id(pid).map_err(OpenBitFunError::tool)?;
+pub(crate) fn validate_bound_target(pid: i32, target: AxRef) -> StarMateResult<()> {
+    super::control_session::input_allowed().map_err(StarMateError::tool)?;
+    let bound = super::macos_capture::bound_window_id(pid).map_err(StarMateError::tool)?;
     let mut actual_pid = 0;
     if unsafe { AXUIElementGetPid(target.0, &mut actual_pid) } != 0 || actual_pid != pid {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "AX_TARGET_MISMATCH: Accessibility target belongs to a different application",
         ));
     }
@@ -228,12 +228,12 @@ pub(crate) fn validate_bound_target(pid: i32, target: AxRef) -> OpenBitFunResult
         None => is_application_menu_item(target),
     };
     if !allowed {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "AX_TARGET_MISMATCH: Accessibility target does not belong to the captured window",
         ));
     }
     super::control_session::target_allowed(&format!("pid:{pid}/window:{bound}"))
-        .map_err(OpenBitFunError::tool)
+        .map_err(StarMateError::tool)
 }
 
 pub(crate) fn element_window_id(target: AxRef) -> Option<u32> {
@@ -263,7 +263,7 @@ pub(crate) fn is_application_menu_item(target: AxRef) -> bool {
 /// window coordinate. A busy app or missing AX implementation does not make
 /// directed pointer input unavailable. Never apply this policy to AX writes or
 /// observed node indices: their outcome/identity must remain authoritative.
-fn optional_point_hit_available(status: i32) -> OpenBitFunResult<bool> {
+fn optional_point_hit_available(status: i32) -> StarMateResult<bool> {
     match status {
         0 => Ok(true),
         // Failure / CannotComplete / AttributeUnsupported / NoValue /
@@ -274,7 +274,7 @@ fn optional_point_hit_available(status: i32) -> OpenBitFunResult<bool> {
         }
         // Keep permission denial, invalid references/arguments and unknown
         // errors visible instead of treating them as missing accessibility.
-        _ => Err(OpenBitFunError::tool(format!(
+        _ => Err(StarMateError::tool(format!(
             "AX_HIT_TEST_FAILED: Application hit testing failed (status={status})"
         ))),
     }
@@ -287,13 +287,13 @@ pub(crate) fn retained_target_at_point(
     pid: i32,
     x: f64,
     y: f64,
-) -> OpenBitFunResult<Option<RetainedCachedTarget>> {
+) -> StarMateResult<Option<RetainedCachedTarget>> {
     if !x.is_finite() || !y.is_finite() {
         return Ok(None);
     }
-    let window_id = super::macos_capture::bound_window_id(pid).map_err(OpenBitFunError::tool)?;
+    let window_id = super::macos_capture::bound_window_id(pid).map_err(StarMateError::tool)?;
     super::control_session::target_allowed(&format!("pid:{pid}/window:{window_id}"))
-        .map_err(OpenBitFunError::tool)?;
+        .map_err(StarMateError::tool)?;
     unsafe {
         let app = AXUIElementCreateApplication(pid);
         if app.is_null() {
@@ -341,9 +341,9 @@ pub(crate) fn retained_target_at_point(
 
 /// Evidence check after a visual focus attempt. `false` means no proven
 /// mismatch, not verified delivery: custom canvases may expose no AX focus.
-pub(crate) fn focused_text_target_mismatch(pid: i32, x: f64, y: f64) -> OpenBitFunResult<bool> {
-    super::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
-    let bound = super::macos_capture::bound_window_id(pid).map_err(OpenBitFunError::tool)?;
+pub(crate) fn focused_text_target_mismatch(pid: i32, x: f64, y: f64) -> StarMateResult<bool> {
+    super::control_session::input_allowed().map_err(StarMateError::tool)?;
+    let bound = super::macos_capture::bound_window_id(pid).map_err(StarMateError::tool)?;
     unsafe {
         let app = AXUIElementCreateApplication(pid);
         if app.is_null() {
@@ -358,7 +358,7 @@ pub(crate) fn focused_text_target_mismatch(pid: i32, x: f64, y: f64) -> OpenBitF
             return if matches!(status, -25205 | -25208 | -25212) {
                 Ok(false)
             } else {
-                Err(OpenBitFunError::tool(format!("AX_FOCUS_CHECK_FAILED: Cannot inspect the current text destination (status={status})")))
+                Err(StarMateError::tool(format!("AX_FOCUS_CHECK_FAILED: Cannot inspect the current text destination (status={status})")))
             };
         }
         if value.is_null() {
@@ -715,13 +715,13 @@ fn is_closed_menu_container(role: &str, frame: Option<(f64, f64, f64, f64)>) -> 
     }
 }
 
-pub(super) fn dump_app_ax(pid: i32, opts: DumpOpts) -> OpenBitFunResult<AppStateSnapshot> {
+pub(super) fn dump_app_ax(pid: i32, opts: DumpOpts) -> StarMateResult<AppStateSnapshot> {
     let scope = starmate_agent_tools::computer_use_control::ObservationScope::from_control(
         &super::control_session::snapshot(),
     );
     let app = unsafe { AXUIElementCreateApplication(pid) };
     if app.is_null() {
-        return Err(OpenBitFunError::tool(format!(
+        return Err(StarMateError::tool(format!(
             "AXUIElementCreateApplication returned null for pid={}",
             pid
         )));
@@ -759,7 +759,7 @@ pub(super) fn dump_app_ax(pid: i32, opts: DumpOpts) -> OpenBitFunResult<AppState
                 Some(window) => window,
                 None => {
                     unsafe { ax_release(app as CFTypeRef) };
-                    return Err(OpenBitFunError::tool("AX_BOUND_WINDOW_UNAVAILABLE: Accessibility cannot identify the captured window; another application window was not substituted"));
+                    return Err(StarMateError::tool("AX_BOUND_WINDOW_UNAVAILABLE: Accessibility cannot identify the captured window; another application window was not substituted"));
                 }
             }
         } else {
@@ -953,7 +953,7 @@ equivalents, or AXPress the menu first.\n",
     {
         let mut cache = snapshot_cache()
             .lock()
-            .map_err(|_| OpenBitFunError::tool("AX snapshot cache poisoned".to_string()))?;
+            .map_err(|_| StarMateError::tool("AX snapshot cache poisoned".to_string()))?;
         cache.clear();
         cache.insert(
             pid,

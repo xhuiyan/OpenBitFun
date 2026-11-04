@@ -7,7 +7,7 @@ mod tavily;
 
 pub use deepseek::DeepSeekSearchProvider;
 pub use exa_search_api::ExaSearchApiProvider;
-pub use openbitfun_search_http::{OpenBitFunSearchHttpAuth, OpenBitFunSearchHttpProvider};
+pub use openbitfun_search_http::{StarMateSearchHttpAuth, StarMateSearchHttpProvider};
 pub use tavily::TavilySearchProvider;
 
 use async_trait::async_trait;
@@ -1000,9 +1000,9 @@ mod tests {
             response_body
         ))
         .await;
-        let provider = OpenBitFunSearchHttpProvider::new(
+        let provider = StarMateSearchHttpProvider::new(
             endpoint,
-            OpenBitFunSearchHttpAuth::Header {
+            StarMateSearchHttpAuth::Header {
                 name: "X-Search-Key".to_string(),
                 value: "http-secret".to_string(),
             },
@@ -1029,14 +1029,14 @@ mod tests {
 
     #[test]
     fn openbitfun_http_protocol_rejects_unsafe_endpoint_and_managed_headers() {
-        assert!(OpenBitFunSearchHttpProvider::new(
+        assert!(StarMateSearchHttpProvider::new(
             "http://example.com/search",
-            OpenBitFunSearchHttpAuth::None
+            StarMateSearchHttpAuth::None
         )
         .is_err());
-        assert!(OpenBitFunSearchHttpProvider::new(
+        assert!(StarMateSearchHttpProvider::new(
             "https://example.com/search",
-            OpenBitFunSearchHttpAuth::Header {
+            StarMateSearchHttpAuth::Header {
                 name: "Authorization".to_string(),
                 value: "secret".to_string(),
             }
@@ -1051,7 +1051,7 @@ mod tests {
                 .to_string(),
         )
         .await;
-        let provider = OpenBitFunSearchHttpProvider::new(endpoint, OpenBitFunSearchHttpAuth::None)
+        let provider = StarMateSearchHttpProvider::new(endpoint, StarMateSearchHttpAuth::None)
             .expect("loopback endpoint should be valid");
 
         let error = provider
@@ -1075,7 +1075,7 @@ mod tests {
             response_body
         ))
         .await;
-        let provider = OpenBitFunSearchHttpProvider::new(endpoint, OpenBitFunSearchHttpAuth::None)
+        let provider = StarMateSearchHttpProvider::new(endpoint, StarMateSearchHttpAuth::None)
             .expect("loopback endpoint should be valid");
 
         let error = provider

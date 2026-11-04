@@ -6,7 +6,7 @@
 //! invoke it outside that pipeline.
 
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext, ValidationResult};
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use async_trait::async_trait;
 use starmate_agent_tools::{
     ptc_run_code_description, ptc_run_code_input_schema, PTC_RUN_CODE_TOOL_NAME,
@@ -33,7 +33,7 @@ impl Tool for PtcRunCodeTool {
         PTC_RUN_CODE_TOOL_NAME
     }
 
-    async fn description(&self) -> OpenBitFunResult<String> {
+    async fn description(&self) -> StarMateResult<String> {
         Ok(ptc_run_code_description())
     }
 
@@ -75,7 +75,7 @@ impl Tool for PtcRunCodeTool {
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<crate::agentic::tools::framework::PermissionIntent>> {
+    ) -> StarMateResult<Vec<crate::agentic::tools::framework::PermissionIntent>> {
         // The outer program has no independent resource target. Every nested
         // tool call re-enters the normal permission pipeline and prompts for
         // its own concrete resources.
@@ -106,8 +106,8 @@ impl Tool for PtcRunCodeTool {
         &self,
         _input: &Value,
         _context: &ToolUseContext,
-    ) -> OpenBitFunResult<Vec<ToolResult>> {
-        Err(OpenBitFunError::NotImplemented(
+    ) -> StarMateResult<Vec<ToolResult>> {
+        Err(StarMateError::NotImplemented(
             "RunCode must be executed by the PTC tool pipeline".to_string(),
         ))
     }

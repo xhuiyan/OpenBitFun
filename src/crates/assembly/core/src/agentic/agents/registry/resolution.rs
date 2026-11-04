@@ -3,7 +3,7 @@ use super::types::AgentCategory;
 use super::AgentRegistry;
 use crate::service::config::global::GlobalConfigManager;
 use crate::service::config::SubagentModelSelection;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use log::{debug, error, warn};
 
 impl AgentRegistry {
@@ -39,7 +39,7 @@ impl AgentRegistry {
         &self,
         agent_type: &str,
         workspace_id: Option<&str>,
-    ) -> OpenBitFunResult<String> {
+    ) -> StarMateResult<String> {
         let externally_owned = workspace_id
             .is_some_and(|workspace| self.is_external_subagent_route(agent_type, Some(workspace)));
         let entry = if externally_owned {
@@ -49,7 +49,7 @@ impl AgentRegistry {
         };
         let entry = entry.ok_or_else(|| {
             error!("[AgentRegistry] Agent not found: {}", agent_type);
-            OpenBitFunError::agent(format!("[AgentRegistry] Agent not found: {}", agent_type))
+            StarMateError::agent(format!("[AgentRegistry] Agent not found: {}", agent_type))
         })?;
 
         if let Some(config) = entry.custom_config {
@@ -72,9 +72,9 @@ impl AgentRegistry {
         if entry.category == AgentCategory::Mode {
             if let Ok(config_service) = GlobalConfigManager::get_service().await {
                 let ai_config = config_service.get_project_ai_config(workspace_id).await?;
-                match ai_config.effective_model_selections().map_err(OpenBitFunError::validation)?.mode {
+                match ai_config.effective_model_selections().map_err(StarMateError::validation)?.mode {
                     starmate_core_types::model_pool::ModelSelection::Model { model_ref } if !model_ref.trim().is_empty() => return Ok(model_ref),
-                    starmate_core_types::model_pool::ModelSelection::Pool { .. } => return Err(OpenBitFunError::validation("A pool default requires a session model target; it cannot be resolved as a fixed model")),
+                    starmate_core_types::model_pool::ModelSelection::Pool { .. } => return Err(StarMateError::validation("A pool default requires a session model target; it cannot be resolved as a fixed model")),
                     _ => {}
                 }
             } else {

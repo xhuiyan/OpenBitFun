@@ -8,7 +8,7 @@ use atspi::proxy::accessible::AccessibleProxy;
 use atspi::proxy::proxy_ext::ProxyExt;
 use atspi::AccessibilityConnection;
 use atspi::CoordType;
-use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{StarMateError, StarMateResult};
 use starmate_agent_tools::computer_use_host::{UiElementLocateQuery, UiElementLocateResult};
 use std::collections::VecDeque;
 
@@ -31,13 +31,13 @@ async fn role_match_string(acc: &AccessibleProxy<'_>) -> String {
 /// Search only the bound AT-SPI application, independently of the human foreground.
 pub(super) async fn locate_ui_element_center(
     query: UiElementLocateQuery,
-) -> OpenBitFunResult<UiElementLocateResult> {
+) -> StarMateResult<UiElementLocateResult> {
     ui_locate_common::validate_query(&query)?;
     // Check scope before connecting so headless/unbound callers get a precise error.
     let _ = super::linux_control_ax::bound_app_selector()?;
 
     if query.node_idx.is_some() {
-        return Err(OpenBitFunError::tool(
+        return Err(StarMateError::tool(
             "[AX_IDX_NOT_SUPPORTED] node_idx locate is unavailable on this Linux backend; cached indices remain supported by app_click. \
              Fall back to `text_contains` / `title_contains` + `role_substring` on this host."
                 .to_string(),
@@ -49,7 +49,7 @@ pub(super) async fn locate_ui_element_center(
 
     let conn = AccessibilityConnection::new()
         .await
-        .map_err(|e| OpenBitFunError::tool(format!("AT-SPI connection: {}.", e)))?;
+        .map_err(|e| StarMateError::tool(format!("AT-SPI connection: {}.", e)))?;
 
     let root = super::linux_control_ax::bound_application_root(&conn).await?;
     let mut queue = VecDeque::from([(root, 0u32)]);
@@ -62,7 +62,7 @@ pub(super) async fn locate_ui_element_center(
         }
         visited += 1;
         if visited > max_nodes {
-            return Err(OpenBitFunError::tool(
+            return Err(StarMateError::tool(
                 "AT-SPI search limit reached; narrow title/role/identifier filters.".to_string(),
             ));
         }
@@ -124,7 +124,7 @@ pub(super) async fn locate_ui_element_center(
         }
     }
 
-    Err(OpenBitFunError::tool(
+    Err(StarMateError::tool(
         "No AT-SPI accessible matched the query (try different substrings, enable desktop accessibility services, or use ComputerUse screenshot). Locate uses the same AT-SPI accessibility session as other automation."
             .to_string(),
     ))

@@ -42,7 +42,7 @@ use crate::service::session::{
     SESSION_STORAGE_SCHEMA_VERSION, SESSION_TURN_CATALOG_SCHEMA_VERSION,
 };
 use crate::service::workspace_runtime::WorkspaceRuntimeService;
-use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
+use crate::util::errors::{StarMateError, StarMateResult};
 use crate::util::timing::elapsed_ms_u64;
 use futures::{stream, StreamExt};
 use log::{debug, info, warn};
@@ -131,7 +131,7 @@ impl Drop for PendingSessionDirectory {
 async fn memory_pollution_guard_enabled() -> bool {
     match get_global_config_service().await {
         Ok(service) => {
-            let config: OpenBitFunResult<GlobalConfig> = service.get_config(None).await;
+            let config: StarMateResult<GlobalConfig> = service.get_config(None).await;
             config
                 .map(|config| {
                     config.memories.generate_memories
@@ -147,7 +147,7 @@ async fn memory_pollution_guard_enabled() -> bool {
 async fn new_session_memory_mode_from_global_config() -> SessionMemoryMode {
     match get_global_config_service().await {
         Ok(service) => {
-            let config: OpenBitFunResult<GlobalConfig> = service.get_config(None).await;
+            let config: StarMateResult<GlobalConfig> = service.get_config(None).await;
             if config
                 .map(|config| config.memories.generate_memories)
                 .unwrap_or(true)
@@ -587,7 +587,7 @@ pub struct PersistenceManager {
 }
 
 impl PersistenceManager {
-    pub fn new(path_manager: Arc<PathManager>) -> OpenBitFunResult<Self> {
+    pub fn new(path_manager: Arc<PathManager>) -> StarMateResult<Self> {
         Ok(Self {
             runtime_service: Arc::new(WorkspaceRuntimeService::new(path_manager.clone())),
             path_manager,
@@ -605,8 +605,8 @@ impl PersistenceManager {
         })
     }
 
-    fn validate_session_id(session_id: &str) -> OpenBitFunResult<()> {
-        starmate_core_types::validate_session_id(session_id).map_err(OpenBitFunError::Validation)
+    fn validate_session_id(session_id: &str) -> StarMateResult<()> {
+        starmate_core_types::validate_session_id(session_id).map_err(StarMateError::Validation)
     }
 
     /// Get PathManager reference
@@ -702,7 +702,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<SessionWriteLock> {
+    ) -> StarMateResult<SessionWriteLock> {
         let sessions_dir = self.project_sessions_dir(workspace_path);
         SessionWriteLock::try_acquire(&sessions_dir, session_id)
             .map_err(|error| Self::session_write_lock_error(session_id, error))
@@ -712,18 +712,18 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<SessionWriteLock> {
+    ) -> StarMateResult<SessionWriteLock> {
         let sessions_dir = self.project_sessions_dir(workspace_path);
         SessionWriteLock::try_acquire_for_operation(&sessions_dir, session_id)
             .map_err(|error| Self::session_write_lock_error(session_id, error))
     }
 
-    fn session_write_lock_error(session_id: &str, error: SessionWriteLockError) -> OpenBitFunError {
+    fn session_write_lock_error(session_id: &str, error: SessionWriteLockError) -> StarMateError {
         match error {
-            SessionWriteLockError::InUse => OpenBitFunError::SessionInUse {
+            SessionWriteLockError::InUse => StarMateError::SessionInUse {
                 session_id: session_id.to_string(),
             },
-            other => OpenBitFunError::Session(format!(
+            other => StarMateError::Session(format!(
                 "Failed to protect Session writes: session_id={session_id}, code={}, error={other}",
                 other.code()
             )),
@@ -851,7 +851,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<bool> {
+    ) -> StarMateResult<bool> {
         Self::validate_session_id(session_id)?;
         Ok(self
             .session_layout(workspace_path)
@@ -868,7 +868,7 @@ impl PersistenceManager {
         dir.exists().then_some(dir)
     }
 
-    async fn ensure_runtime_for_write(&self, workspace_path: &Path) -> OpenBitFunResult<()> {
+    async fn ensure_runtime_for_write(&self, workspace_path: &Path) -> StarMateResult<()> {
         if self.is_resolved_sessions_dir(workspace_path) {
             return Ok(());
         }
@@ -883,34 +883,34 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         self.session_layout(workspace_path)
             .ensure_session_dir(session_id)
             .await
-            .map_err(|e| OpenBitFunError::io(format!("Failed to create session directory: {}", e)))
+            .map_err(|e| StarMateError::io(format!("Failed to create session directory: {}", e)))
     }
 
     async fn ensure_turns_dir(
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         self.session_layout(workspace_path)
             .ensure_turns_dir(session_id)
             .await
-            .map_err(|e| OpenBitFunError::io(format!("Failed to create turns directory: {}", e)))
+            .map_err(|e| StarMateError::io(format!("Failed to create turns directory: {}", e)))
     }
 
     async fn ensure_snapshots_dir(
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         self.session_layout(workspace_path)
             .ensure_snapshots_dir(session_id)
             .await
             .map_err(|e| {
-                OpenBitFunError::io(format!("Failed to create snapshots directory: {}", e))
+                StarMateError::io(format!("Failed to create snapshots directory: {}", e))
             })
     }
 
@@ -918,12 +918,12 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         self.session_layout(workspace_path)
             .ensure_artifacts_dir(session_id)
             .await
             .map_err(|e| {
-                OpenBitFunError::io(format!("Failed to create artifacts directory: {}", e))
+                StarMateError::io(format!("Failed to create artifacts directory: {}", e))
             })
     }
 
@@ -931,12 +931,12 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<PathBuf> {
+    ) -> StarMateResult<PathBuf> {
         self.session_layout(workspace_path)
             .ensure_session_references_dir(session_id)
             .await
             .map_err(|e| {
-                OpenBitFunError::io(format!(
+                StarMateError::io(format!(
                     "Failed to create session reference directory: {}",
                     e
                 ))
@@ -946,7 +946,7 @@ impl PersistenceManager {
     async fn read_json_optional<T: DeserializeOwned>(
         &self,
         path: &Path,
-    ) -> OpenBitFunResult<Option<T>> {
+    ) -> StarMateResult<Option<T>> {
         JsonFileStore
             .read_optional(path)
             .await
@@ -957,14 +957,14 @@ impl PersistenceManager {
         &self,
         path: &Path,
         value: &T,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         JsonFileStore
             .write_atomic(path, value)
             .await
             .map_err(Self::json_store_error)
     }
 
-    async fn write_text_atomic(&self, path: &Path, text: &str) -> OpenBitFunResult<()> {
+    async fn write_text_atomic(&self, path: &Path, text: &str) -> StarMateResult<()> {
         JsonFileStore
             .write_text_atomic(path, text)
             .await
@@ -1007,23 +1007,23 @@ impl PersistenceManager {
             .clone()
     }
 
-    fn json_store_error(error: JsonFileStoreError) -> OpenBitFunError {
+    fn json_store_error(error: JsonFileStoreError) -> StarMateError {
         if error.is_deserialization() {
-            OpenBitFunError::Deserialization(error.to_string())
+            StarMateError::Deserialization(error.to_string())
         } else if error.is_serialization() {
-            OpenBitFunError::serialization(error.to_string())
+            StarMateError::serialization(error.to_string())
         } else {
-            OpenBitFunError::io(error.to_string())
+            StarMateError::io(error.to_string())
         }
     }
 
-    fn session_metadata_store_error(error: SessionMetadataStoreError) -> OpenBitFunError {
+    fn session_metadata_store_error(error: SessionMetadataStoreError) -> StarMateError {
         if error.is_deserialization() {
-            OpenBitFunError::Deserialization(error.to_string())
+            StarMateError::Deserialization(error.to_string())
         } else if error.is_serialization() {
-            OpenBitFunError::serialization(error.to_string())
+            StarMateError::serialization(error.to_string())
         } else {
-            OpenBitFunError::io(error.to_string())
+            StarMateError::io(error.to_string())
         }
     }
 
@@ -1202,9 +1202,9 @@ impl PersistenceManager {
 
     fn parse_transcript_turn_selectors(
         selectors: &[String],
-    ) -> OpenBitFunResult<Vec<ParsedTranscriptTurnSelector>> {
+    ) -> StarMateResult<Vec<ParsedTranscriptTurnSelector>> {
         if selectors.is_empty() {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "turns cannot be an empty array".to_string(),
             ));
         }
@@ -1217,16 +1217,16 @@ impl PersistenceManager {
 
     fn parse_transcript_turn_selector(
         selector: &str,
-    ) -> OpenBitFunResult<ParsedTranscriptTurnSelector> {
+    ) -> StarMateResult<ParsedTranscriptTurnSelector> {
         let normalized = selector.trim();
         if normalized.is_empty() {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "turns cannot contain empty selectors".to_string(),
             ));
         }
 
         if normalized.matches(':').count() > 1 {
-            return Err(OpenBitFunError::Validation(format!(
+            return Err(StarMateError::Validation(format!(
                 "Invalid turn selector '{}'. Use forms like ':20', '-20:', '10:30', or '15'.",
                 normalized
             )));
@@ -1257,9 +1257,9 @@ impl PersistenceManager {
         })
     }
 
-    fn parse_transcript_turn_value(value: &str, selector: &str) -> OpenBitFunResult<isize> {
+    fn parse_transcript_turn_value(value: &str, selector: &str) -> StarMateResult<isize> {
         value.parse::<isize>().map_err(|_| {
-            OpenBitFunError::Validation(format!(
+            StarMateError::Validation(format!(
                 "Invalid turn selector '{}'. Use forms like ':20', '-20:', '10:30', or '15'.",
                 selector
             ))
@@ -1332,7 +1332,7 @@ impl PersistenceManager {
     pub async fn list_session_metadata(
         &self,
         workspace_path: &Path,
-    ) -> OpenBitFunResult<Vec<SessionMetadata>> {
+    ) -> StarMateResult<Vec<SessionMetadata>> {
         if !workspace_path.exists() {
             return Ok(Vec::new());
         }
@@ -1362,7 +1362,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_ids: &[String],
-    ) -> OpenBitFunResult<Vec<SessionMetadata>> {
+    ) -> StarMateResult<Vec<SessionMetadata>> {
         let mut metadata = self
             .session_metadata_store(workspace_path)
             .metadata_by_ids(session_ids)
@@ -1397,7 +1397,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         metadata: SessionMetadata,
-    ) -> OpenBitFunResult<SessionMetadata> {
+    ) -> StarMateResult<SessionMetadata> {
         if !metadata.needs_last_turn_backfill() {
             return Ok(metadata);
         }
@@ -1418,7 +1418,7 @@ impl PersistenceManager {
             .load_session_metadata(workspace_path, &metadata.session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Session metadata not found: {}",
                     metadata.session_id
                 ))
@@ -1436,7 +1436,7 @@ impl PersistenceManager {
             .list_indexed_turn_paths(workspace_path, &current.session_id)
             .await?;
         if paths.is_empty() {
-            return Err(OpenBitFunError::NotFound(format!(
+            return Err(StarMateError::NotFound(format!(
                 "Session activity history is missing: {}",
                 current.session_id
             )));
@@ -1449,13 +1449,13 @@ impl PersistenceManager {
                 .read_json_optional::<StoredTurnActivity>(&path)
                 .await?
                 .ok_or_else(|| {
-                    OpenBitFunError::NotFound(format!(
+                    StarMateError::NotFound(format!(
                         "Session activity Turn is missing: {}",
                         path.display()
                     ))
                 })?;
             if turn.session_id != current.session_id || turn.turn_index != index {
-                return Err(OpenBitFunError::Validation(format!(
+                return Err(StarMateError::Validation(format!(
                     "Session activity Turn identity mismatch: {}",
                     path.display()
                 )));
@@ -1495,7 +1495,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         cursor: Option<&str>,
         limit: usize,
-    ) -> OpenBitFunResult<SessionMetadataPage> {
+    ) -> StarMateResult<SessionMetadataPage> {
         self.list_session_metadata_page_with_query(workspace_path, cursor, limit, None)
             .await
     }
@@ -1506,7 +1506,7 @@ impl PersistenceManager {
         cursor: Option<&str>,
         limit: usize,
         query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
-    ) -> OpenBitFunResult<SessionMetadataPage> {
+    ) -> StarMateResult<SessionMetadataPage> {
         use starmate_services_core::session::page::build_session_metadata_page_with_query;
         if !workspace_path.exists() {
             return Ok(build_session_metadata_page_with_query(
@@ -1542,7 +1542,7 @@ impl PersistenceManager {
         cursor: Option<&str>,
         limit: usize,
         query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
-    ) -> OpenBitFunResult<SessionMetadataPage> {
+    ) -> StarMateResult<SessionMetadataPage> {
         use starmate_services_core::session::page::build_session_metadata_page_with_query;
 
         #[cfg(feature = "external-sources")]
@@ -1578,7 +1578,7 @@ impl PersistenceManager {
     pub async fn list_session_metadata_including_internal(
         &self,
         workspace_path: &Path,
-    ) -> OpenBitFunResult<Vec<SessionMetadata>> {
+    ) -> StarMateResult<Vec<SessionMetadata>> {
         if !workspace_path.exists() {
             return Ok(Vec::new());
         }
@@ -1605,7 +1605,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         metadata: &SessionMetadata,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let _session_write =
             self.lock_session_write_operation(workspace_path, &metadata.session_id)?;
         let persistence_lock = self
@@ -1620,7 +1620,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         metadata: &SessionMetadata,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(&metadata.session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
         #[cfg(test)]
@@ -1631,7 +1631,7 @@ impl PersistenceManager {
                 .expect("session metadata fault lock");
             if fault.as_deref() == Some(metadata.session_id.as_str()) {
                 *fault = None;
-                return Err(OpenBitFunError::io(
+                return Err(StarMateError::io(
                     "Injected session metadata write failure",
                 ));
             }
@@ -1655,7 +1655,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         metadata: &SessionMetadata,
-    ) -> OpenBitFunResult<bool> {
+    ) -> StarMateResult<bool> {
         Self::validate_session_id(&metadata.session_id)?;
         let _session_write =
             self.lock_session_write_operation(workspace_path, &metadata.session_id)?;
@@ -1681,7 +1681,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         update: impl FnOnce(&mut SessionMetadata),
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let updated = self
             .update_session_metadata_if_present(workspace_path, session_id, |metadata| {
                 update(metadata);
@@ -1691,7 +1691,7 @@ impl PersistenceManager {
         if updated {
             Ok(())
         } else {
-            Err(OpenBitFunError::NotFound(format!(
+            Err(StarMateError::NotFound(format!(
                 "Session metadata not found: {}",
                 session_id
             )))
@@ -1705,7 +1705,7 @@ impl PersistenceManager {
         session_name: &str,
         last_active_at: u64,
         user_edited: bool,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -1717,7 +1717,7 @@ impl PersistenceManager {
             .load_session_metadata(workspace_path, session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!("Session metadata not found: {session_id}"))
+                StarMateError::NotFound(format!("Session metadata not found: {session_id}"))
             })?;
         let mut updated = original.clone();
         updated.session_name = session_name.to_string();
@@ -1778,7 +1778,7 @@ impl PersistenceManager {
         let skip_rollback = false;
 
         let rollback_error = if skip_rollback {
-            Some(OpenBitFunError::io(
+            Some(StarMateError::io(
                 "Injected session metadata rollback failure",
             ))
         } else {
@@ -1799,7 +1799,7 @@ impl PersistenceManager {
             return Err(write_error);
         }
 
-        Err(OpenBitFunError::OutcomeUnknown(format!(
+        Err(StarMateError::OutcomeUnknown(format!(
             "Session title persistence failed and rollback did not restore the previous metadata: session_id={session_id}, error={write_error}, rollback_error={}",
             rollback_error
                 .map(|error| error.to_string())
@@ -1811,8 +1811,8 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-        update: impl FnOnce(&mut SessionMetadata) -> OpenBitFunResult<()>,
-    ) -> OpenBitFunResult<bool> {
+        update: impl FnOnce(&mut SessionMetadata) -> StarMateResult<()>,
+    ) -> StarMateResult<bool> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -1828,8 +1828,8 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-        update: impl FnOnce(&mut SessionMetadata) -> OpenBitFunResult<()>,
-    ) -> OpenBitFunResult<bool> {
+        update: impl FnOnce(&mut SessionMetadata) -> StarMateResult<()>,
+    ) -> StarMateResult<bool> {
         let Some(mut metadata) = self
             .load_session_metadata(workspace_path, session_id)
             .await?
@@ -1847,7 +1847,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         mode: SessionMemoryMode,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -1858,7 +1858,7 @@ impl PersistenceManager {
             .load_session_metadata(workspace_path, session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!("Session metadata not found: {}", session_id))
+                StarMateError::NotFound(format!("Session metadata not found: {}", session_id))
             })?;
         metadata.memory_mode = mode;
         self.save_session_metadata_locked(workspace_path, &metadata)
@@ -1869,7 +1869,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -1880,7 +1880,7 @@ impl PersistenceManager {
             .load_session_metadata(workspace_path, session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!("Session metadata not found: {}", session_id))
+                StarMateError::NotFound(format!("Session metadata not found: {}", session_id))
             })?;
         let should_enqueue_phase2 = matches!(
             metadata.memory_mode,
@@ -1902,7 +1902,7 @@ impl PersistenceManager {
         &self,
         session_id: &str,
         input_watermark: i64,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let db = MemoryDatabase::new(self.path_manager.clone());
         db.initialize().await?;
         if db.phase2_selected_for_session(session_id).await? {
@@ -1916,7 +1916,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<SessionMetadata>> {
+    ) -> StarMateResult<Option<SessionMetadata>> {
         Self::validate_session_id(session_id)?;
         let metadata = self
             .session_metadata_store(workspace_path)
@@ -1950,7 +1950,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         use crate::external_session_import::deferred;
         let root = self.project_sessions_dir(workspace_path);
         let native = self
@@ -1979,7 +1979,7 @@ impl PersistenceManager {
         }
         let _writer = match self.lock_session_write_operation(workspace_path, session_id) {
             Ok(writer) => writer,
-            Err(OpenBitFunError::SessionInUse { .. }) if native.is_some() => return Ok(()),
+            Err(StarMateError::SessionInUse { .. }) if native.is_some() => return Ok(()),
             Err(error) => return Err(error),
         };
         let lock = self
@@ -2031,7 +2031,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<StoredSessionStateFile>> {
+    ) -> StarMateResult<Option<StoredSessionStateFile>> {
         self.read_json_optional::<StoredSessionStateFile>(
             &self.state_path(workspace_path, session_id),
         )
@@ -2043,7 +2043,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         state: &(impl serde::Serialize + Sync),
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         #[cfg(test)]
         {
             let mut fault = self
@@ -2052,7 +2052,7 @@ impl PersistenceManager {
                 .expect("session state fault lock");
             if fault.as_deref() == Some(session_id) {
                 *fault = None;
-                return Err(OpenBitFunError::io("Injected session state write failure"));
+                return Err(StarMateError::io("Injected session state write failure"));
             }
         }
         self.write_json_atomic(&self.state_path(workspace_path, session_id), state)
@@ -2063,7 +2063,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Vec<EvidenceLedgerEvent>> {
+    ) -> StarMateResult<Vec<EvidenceLedgerEvent>> {
         Self::validate_session_id(session_id)?;
         let path = self.evidence_ledger_path(workspace_path, session_id);
         let file = JsonFileStore
@@ -2072,7 +2072,7 @@ impl PersistenceManager {
             .map_err(Self::json_store_error)?;
         file.map(|file| {
             file.validated_events(session_id)
-                .map_err(|error| OpenBitFunError::parse(error.to_string()))
+                .map_err(|error| StarMateError::parse(error.to_string()))
         })
         .transpose()
         .map(Option::unwrap_or_default)
@@ -2082,7 +2082,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         event: &EvidenceLedgerEvent,
-    ) -> OpenBitFunResult<Vec<EvidenceLedgerEvent>> {
+    ) -> StarMateResult<Vec<EvidenceLedgerEvent>> {
         Self::validate_session_id(&event.session_id)?;
         let _session_write =
             self.lock_session_write_operation(workspace_path, &event.session_id)?;
@@ -2102,7 +2102,7 @@ impl PersistenceManager {
                 .expect("evidence ledger fault lock");
             if fault.as_deref() == Some(event.session_id.as_str()) {
                 *fault = None;
-                return Err(OpenBitFunError::io(
+                return Err(StarMateError::io(
                     "Injected evidence ledger write failure",
                 ));
             }
@@ -2119,14 +2119,14 @@ impl PersistenceManager {
             .map_err(Self::json_store_error)?
             .unwrap_or_else(|| PersistedEvidenceLedgerFile::new(event.session_id.clone()));
         file.append(event.clone())
-            .map_err(|error| OpenBitFunError::parse(error.to_string()))?;
+            .map_err(|error| StarMateError::parse(error.to_string()))?;
         file.schema_version = EVIDENCE_LEDGER_SCHEMA_VERSION;
         JsonFileStore
             .write_atomic_strict(&path, &file)
             .await
             .map_err(Self::json_store_error)?;
         file.validated_events(&event.session_id)
-            .map_err(|error| OpenBitFunError::parse(error.to_string()))
+            .map_err(|error| StarMateError::parse(error.to_string()))
     }
 
     pub(crate) async fn retain_evidence_ledger_events(
@@ -2134,7 +2134,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         surviving_turn_ids: &std::collections::HashSet<String>,
-    ) -> OpenBitFunResult<Option<Vec<EvidenceLedgerEvent>>> {
+    ) -> StarMateResult<Option<Vec<EvidenceLedgerEvent>>> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -2155,14 +2155,14 @@ impl PersistenceManager {
             .await
             .map_err(Self::json_store_error)?
         else {
-            return Err(OpenBitFunError::io(format!(
+            return Err(StarMateError::io(format!(
                 "Evidence ledger disappeared while retaining: {}",
                 path.display()
             )));
         };
         let retained = file
             .retain_turn_ids(session_id, surviving_turn_ids)
-            .map_err(|error| OpenBitFunError::parse(error.to_string()))?;
+            .map_err(|error| StarMateError::parse(error.to_string()))?;
         file.schema_version = EVIDENCE_LEDGER_SCHEMA_VERSION;
         JsonFileStore
             .write_atomic_strict(&path, &file)
@@ -2179,7 +2179,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         events: Vec<EvidenceLedgerEvent>,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let persistence_lock = self
             .get_session_persistence_lock(workspace_path, session_id)
@@ -2199,7 +2199,7 @@ impl PersistenceManager {
         // Validate before writing so a bad session_id on an event is caught.
         file.clone()
             .validated_events(session_id)
-            .map_err(|error| OpenBitFunError::parse(error.to_string()))?;
+            .map_err(|error| StarMateError::parse(error.to_string()))?;
         JsonFileStore
             .write_atomic_strict(&path, &file)
             .await
@@ -2211,7 +2211,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<SessionPromptCache>> {
+    ) -> StarMateResult<Option<SessionPromptCache>> {
         Self::validate_session_id(session_id)?;
         Ok(self
             .read_json_optional::<StoredSessionPromptCacheFile>(
@@ -2226,7 +2226,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         cache: &SessionPromptCache,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -2246,13 +2246,13 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         match fs::remove_file(self.prompt_cache_path(workspace_path, session_id)).await {
             Ok(()) => Ok(()),
             Err(error) if error.kind() == ErrorKind::NotFound => Ok(()),
-            Err(error) => Err(OpenBitFunError::io(format!(
+            Err(error) => Err(StarMateError::io(format!(
                 "Failed to delete prompt cache for session {}: {}",
                 session_id, error
             ))),
@@ -2263,7 +2263,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<SessionRevertState>> {
+    ) -> StarMateResult<Option<SessionRevertState>> {
         Self::validate_session_id(session_id)?;
         let state = self
             .read_json_optional::<SessionRevertState>(
@@ -2272,7 +2272,7 @@ impl PersistenceManager {
             .await?;
         if let Some(state) = state.as_ref() {
             if state.schema_version != SESSION_REVERT_SCHEMA_VERSION {
-                return Err(OpenBitFunError::Deserialization(format!(
+                return Err(StarMateError::Deserialization(format!(
                     "Unsupported Session revert schema version: session_id={}, version={}",
                     session_id, state.schema_version
                 )));
@@ -2286,7 +2286,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         state: &SessionRevertState,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         Box::pin(self.assert_native_history_mutation(workspace_path, session_id)).await?;
@@ -2301,13 +2301,13 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         match fs::remove_file(self.session_revert_path(workspace_path, session_id)).await {
             Ok(()) => Ok(()),
             Err(error) if error.kind() == ErrorKind::NotFound => Ok(()),
-            Err(error) => Err(OpenBitFunError::io(format!(
+            Err(error) => Err(StarMateError::io(format!(
                 "Failed to delete staged Session revert for {}: {}",
                 session_id, error
             ))),
@@ -2318,7 +2318,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<Vec<TokenAnchor>>> {
+    ) -> StarMateResult<Option<Vec<TokenAnchor>>> {
         Self::validate_session_id(session_id)?;
         Ok(self
             .read_json_optional::<StoredTokenAnchorsFile>(
@@ -2333,7 +2333,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         anchors: &[TokenAnchor],
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -2354,13 +2354,13 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         match fs::remove_file(self.token_anchors_path(workspace_path, session_id)).await {
             Ok(()) => Ok(()),
             Err(error) if error.kind() == ErrorKind::NotFound => Ok(()),
-            Err(error) => Err(OpenBitFunError::io(format!(
+            Err(error) => Err(StarMateError::io(format!(
                 "Failed to delete token anchors for session {}: {}",
                 session_id, error
             ))),
@@ -2375,7 +2375,7 @@ impl PersistenceManager {
         session_id: &str,
         turn_index: usize,
         messages: &[Message],
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -2401,7 +2401,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<Option<Vec<Message>>> {
+    ) -> StarMateResult<Option<Vec<Message>>> {
         Self::validate_session_id(session_id)?;
         let snapshot = self
             .read_json_optional::<StoredTurnContextSnapshotFile>(&self.context_snapshot_path(
@@ -2417,7 +2417,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<(usize, Vec<Message>)>> {
+    ) -> StarMateResult<Option<(usize, Vec<Message>)>> {
         self.load_latest_turn_context_snapshot_before(workspace_path, session_id, usize::MAX)
             .await
     }
@@ -2427,7 +2427,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         exclusive_turn_index: usize,
-    ) -> OpenBitFunResult<Option<(usize, Vec<Message>)>> {
+    ) -> StarMateResult<Option<(usize, Vec<Message>)>> {
         Self::validate_session_id(session_id)?;
         let started_at = Instant::now();
         let dir = self.snapshots_dir(workspace_path, session_id);
@@ -2439,11 +2439,11 @@ impl PersistenceManager {
         let mut latest: Option<usize> = None;
         let mut snapshot_file_count = 0usize;
         let mut rd = fs::read_dir(&dir).await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to read snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to read snapshots directory: {}", e))
         })?;
 
         while let Some(entry) = rd.next_entry().await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to iterate snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to iterate snapshots directory: {}", e))
         })? {
             let path = entry.path();
             if path.extension().and_then(|value| value.to_str()) != Some("json") {
@@ -2506,7 +2506,7 @@ impl PersistenceManager {
         session_id: &str,
         turn_index: usize,
         snapshot: &TurnSkillAgentSnapshot,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -2530,7 +2530,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<Option<TurnSkillAgentSnapshot>> {
+    ) -> StarMateResult<Option<TurnSkillAgentSnapshot>> {
         Self::validate_session_id(session_id)?;
         let stored = self
             .read_json_optional::<StoredTurnSkillAgentSnapshotFile>(
@@ -2545,7 +2545,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let dir = self.snapshots_dir(workspace_path, session_id);
@@ -2554,10 +2554,10 @@ impl PersistenceManager {
         }
 
         let mut rd = fs::read_dir(&dir).await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to read snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to read snapshots directory: {}", e))
         })?;
         while let Some(entry) = rd.next_entry().await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to iterate snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to iterate snapshots directory: {}", e))
         })? {
             let path = entry.path();
             if path.extension().and_then(|value| value.to_str()) != Some("json") {
@@ -2585,7 +2585,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         snapshot: &TurnSkillAgentSnapshot,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -2607,7 +2607,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Option<TurnSkillAgentSnapshot>> {
+    ) -> StarMateResult<Option<TurnSkillAgentSnapshot>> {
         Self::validate_session_id(session_id)?;
         let stored = self
             .read_json_optional::<StoredSkillAgentBaselineOverrideFile>(
@@ -2622,7 +2622,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let dir = self.snapshots_dir(workspace_path, session_id);
@@ -2631,10 +2631,10 @@ impl PersistenceManager {
         }
 
         let mut rd = fs::read_dir(&dir).await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to read snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to read snapshots directory: {}", e))
         })?;
         while let Some(entry) = rd.next_entry().await.map_err(|e| {
-            OpenBitFunError::io(format!("Failed to iterate snapshots directory: {}", e))
+            StarMateError::io(format!("Failed to iterate snapshots directory: {}", e))
         })? {
             let path = entry.path();
             if path.extension().and_then(|value| value.to_str()) != Some("json") {
@@ -2672,7 +2672,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session: &Session,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(&session.session_id)?;
         let _session_write =
             self.lock_session_write_operation(workspace_path, &session.session_id)?;
@@ -2680,7 +2680,7 @@ impl PersistenceManager {
 
         let sessions_dir = self.project_sessions_dir(workspace_path);
         fs::create_dir_all(&sessions_dir).await.map_err(|error| {
-            OpenBitFunError::io(format!(
+            StarMateError::io(format!(
                 "Failed to create sessions directory {}: {}",
                 sessions_dir.display(),
                 error
@@ -2696,13 +2696,13 @@ impl PersistenceManager {
         match fs::create_dir(&session_dir).await {
             Ok(()) => {}
             Err(error) if error.kind() == ErrorKind::AlreadyExists => {
-                return Err(OpenBitFunError::Validation(format!(
+                return Err(StarMateError::Validation(format!(
                     "Persisted session ID already exists: {}",
                     session.session_id
                 )));
             }
             Err(error) => {
-                return Err(OpenBitFunError::io(format!(
+                return Err(StarMateError::io(format!(
                     "Failed to claim session directory {}: {}",
                     session_dir.display(),
                     error
@@ -2727,7 +2727,7 @@ impl PersistenceManager {
                     "Failed to clean up partial session persistence: session_id={}, error={}",
                     session.session_id, cleanup_error
                 );
-                return Err(OpenBitFunError::SessionCreateCleanupRequired {
+                return Err(StarMateError::SessionCreateCleanupRequired {
                     session_id: session.session_id.clone(),
                     error: error.to_string(),
                     cleanup_error: cleanup_error.to_string(),
@@ -2747,7 +2747,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session: &Session,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let session_id = &session.session_id;
         Self::validate_session_id(session_id)?;
         let _writer = self.lock_session_write_operation(workspace_path, session_id)?;
@@ -2759,7 +2759,7 @@ impl PersistenceManager {
         let original_metadata = self
             .load_session_metadata(workspace_path, session_id)
             .await?
-            .ok_or_else(|| OpenBitFunError::NotFound(format!("Session not found: {session_id}")))?;
+            .ok_or_else(|| StarMateError::NotFound(format!("Session not found: {session_id}")))?;
         let state_path = self.state_path(workspace_path, session_id);
         let original_state = self
             .read_json_optional::<serde_json::Value>(&state_path)
@@ -2778,12 +2778,12 @@ impl PersistenceManager {
         };
         let object = state
             .as_object_mut()
-            .ok_or_else(|| OpenBitFunError::session("Invalid session state object"))?;
+            .ok_or_else(|| StarMateError::session("Invalid session state object"))?;
         let config = object
             .entry("config")
             .or_insert_with(|| serde_json::json!({}))
             .as_object_mut()
-            .ok_or_else(|| OpenBitFunError::session("Invalid session config object"))?;
+            .ok_or_else(|| StarMateError::session("Invalid session config object"))?;
         config.insert(
             "model_id".into(),
             serde_json::to_value(&session.config.model_id)?,
@@ -2864,7 +2864,7 @@ impl PersistenceManager {
                 .save_session_metadata_locked(workspace_path, &original_metadata)
                 .await;
             if state_rollback.is_err() || metadata_rollback.is_err() {
-                return Err(OpenBitFunError::OutcomeUnknown(format!(
+                return Err(StarMateError::OutcomeUnknown(format!(
                     "Session model update rollback failed: session_id={session_id}, error={error}, state={state_rollback:?}, metadata={metadata_rollback:?}"
                 )));
             }
@@ -2878,7 +2878,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session: &Session,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         #[cfg(feature = "external-sources")]
         Box::pin(self.assert_native_history_mutation(workspace_path, &session.session_id)).await?;
         Self::validate_session_id(&session.session_id)?;
@@ -2899,7 +2899,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session: &Session,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let existing_metadata = self
             .load_session_metadata(workspace_path, &session.session_id)
             .await?;
@@ -2927,7 +2927,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Session> {
+    ) -> StarMateResult<Session> {
         Self::validate_session_id(session_id)?;
         let (session, _) = self
             .load_session_with_turns(workspace_path, session_id)
@@ -2939,7 +2939,7 @@ impl PersistenceManager {
         metadata: SessionMetadata,
         stored_state: Option<StoredSessionStateFile>,
         turns: &[DialogTurnData],
-    ) -> OpenBitFunResult<Session> {
+    ) -> StarMateResult<Session> {
         let legacy_minimal = stored_state
             .as_ref()
             .is_some_and(|value| value.config.legacy_minimal_agent);
@@ -3023,13 +3023,13 @@ impl PersistenceManager {
         &self,
         storage_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Session> {
+    ) -> StarMateResult<Session> {
         Self::validate_session_id(session_id)?;
         let metadata = self
             .load_session_metadata(storage_path, session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!("Session metadata not found: {session_id}"))
+                StarMateError::NotFound(format!("Session metadata not found: {session_id}"))
             })?;
         let state = self
             .load_stored_session_state(storage_path, session_id)
@@ -3042,7 +3042,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<(Session, Vec<DialogTurnData>)> {
+    ) -> StarMateResult<(Session, Vec<DialogTurnData>)> {
         Self::validate_session_id(session_id)?;
         self.load_session_with_turns_timed(workspace_path, session_id)
             .await
@@ -3053,7 +3053,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<(Session, Vec<DialogTurnData>, SessionTurnLoadTiming)> {
+    ) -> StarMateResult<(Session, Vec<DialogTurnData>, SessionTurnLoadTiming)> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some((session, turns, _, timing)) =
@@ -3075,7 +3075,7 @@ impl PersistenceManager {
             .load_session_metadata(&request.workspace_path, &request.session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Session metadata not found: {}",
                     request.session_id
                 ))
@@ -3149,7 +3149,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         tail_turn_count: usize,
-    ) -> OpenBitFunResult<(Session, Vec<DialogTurnData>, usize)> {
+    ) -> StarMateResult<(Session, Vec<DialogTurnData>, usize)> {
         Self::validate_session_id(session_id)?;
         self.load_session_with_tail_turns_timed(workspace_path, session_id, tail_turn_count)
             .await
@@ -3161,7 +3161,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         tail_turn_count: usize,
-    ) -> OpenBitFunResult<(Session, Vec<DialogTurnData>, usize, SessionTurnLoadTiming)> {
+    ) -> StarMateResult<(Session, Vec<DialogTurnData>, usize, SessionTurnLoadTiming)> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some(view) = Box::pin(self.load_external_history_view(
@@ -3187,7 +3187,7 @@ impl PersistenceManager {
             .load_session_metadata(&request.workspace_path, &request.session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Session metadata not found: {}",
                     request.session_id
                 ))
@@ -3303,7 +3303,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         state: &SessionState,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         self.ensure_runtime_for_write(workspace_path).await?;
@@ -3338,7 +3338,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -3366,7 +3366,7 @@ impl PersistenceManager {
     pub async fn list_sessions(
         &self,
         workspace_path: &Path,
-    ) -> OpenBitFunResult<Vec<SessionSummary>> {
+    ) -> StarMateResult<Vec<SessionSummary>> {
         let metadata_list = self.list_session_metadata(workspace_path).await?;
         let mut summaries = Vec::with_capacity(metadata_list.len());
 
@@ -3455,7 +3455,7 @@ impl PersistenceManager {
         session_id: &str,
         loaded_turns: &[DialogTurnData],
         visible_total_turn_count: usize,
-    ) -> OpenBitFunResult<SessionTurnCatalog> {
+    ) -> StarMateResult<SessionTurnCatalog> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some(bundle) = Box::pin(self.external_history_for_loaded_turns(
@@ -3541,7 +3541,7 @@ impl PersistenceManager {
         physical_indices: Vec<usize>,
         loaded_turns: &[DialogTurnData],
         visible_total_turn_count: usize,
-    ) -> OpenBitFunResult<SessionTurnCatalog> {
+    ) -> StarMateResult<SessionTurnCatalog> {
         Ok(self
             .build_session_turn_catalog_projection_with_physical(
                 workspace_path,
@@ -3561,7 +3561,7 @@ impl PersistenceManager {
         physical_indices: Vec<usize>,
         loaded_turns: &[DialogTurnData],
         visible_total_turn_count: usize,
-    ) -> OpenBitFunResult<BuiltSessionTurnCatalogProjection> {
+    ) -> StarMateResult<BuiltSessionTurnCatalogProjection> {
         let cached = self
             .read_session_turn_catalog_cache(workspace_path, session_id)
             .await;
@@ -3619,7 +3619,7 @@ impl PersistenceManager {
     pub async fn load_session_turn_window(
         &self,
         request: &SessionTurnWindowRequest,
-    ) -> OpenBitFunResult<SessionTurnWindowResponse> {
+    ) -> StarMateResult<SessionTurnWindowResponse> {
         Self::validate_session_id(&request.session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some(window) = Box::pin(self.external_history_window(request)).await? {
@@ -3722,7 +3722,7 @@ impl PersistenceManager {
 
         for (turn, expected_index) in read_result.turns.iter().zip(selected_indices.iter()) {
             if turn.session_id != request.session_id || turn.turn_index != *expected_index {
-                return Err(OpenBitFunError::Validation(format!(
+                return Err(StarMateError::Validation(format!(
                     "Persisted Turn identity does not match its storage path: session_id={} expected_turn_index={} actual_session_id={} actual_turn_index={}",
                     request.session_id, expected_index, turn.session_id, turn.turn_index
                 )));
@@ -3786,7 +3786,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         turn: &DialogTurnData,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let cached = self
             .read_session_turn_catalog_cache(workspace_path, &turn.session_id)
             .await;
@@ -3872,7 +3872,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turns: &[DialogTurnData],
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         let next_catalog = build_turn_catalog(
             session_id,
             turns
@@ -3901,7 +3901,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         turn: &DialogTurnData,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(&turn.session_id)?;
         #[cfg(feature = "external-sources")]
         Box::pin(self.assert_native_history_mutation(workspace_path, &turn.session_id)).await?;
@@ -3913,7 +3913,7 @@ impl PersistenceManager {
                 .expect("dialog turn fault lock");
             if fault.as_deref() == Some(turn.session_id.as_str()) {
                 *fault = None;
-                return Err(OpenBitFunError::io("Injected dialog turn write failure"));
+                return Err(StarMateError::io("Injected dialog turn write failure"));
             }
         }
         let _session_write = self.lock_session_write_operation(workspace_path, &turn.session_id)?;
@@ -3927,7 +3927,7 @@ impl PersistenceManager {
             .load_session_metadata(workspace_path, &turn.session_id)
             .await?
             .ok_or_else(|| {
-                OpenBitFunError::NotFound(format!(
+                StarMateError::NotFound(format!(
                     "Session metadata not found: {}",
                     turn.session_id
                 ))
@@ -3961,13 +3961,13 @@ impl PersistenceManager {
             .await?
         {
             if revert.schema_version != SESSION_REVERT_SCHEMA_VERSION {
-                return Err(OpenBitFunError::Deserialization(format!(
+                return Err(StarMateError::Deserialization(format!(
                     "Unsupported Session revert schema version: session_id={}, version={}",
                     turn.session_id, revert.schema_version
                 )));
             }
             if turn.turn_index >= revert.boundary_turn {
-                return Err(OpenBitFunError::Validation(format!(
+                return Err(StarMateError::Validation(format!(
                     "Cannot persist a Turn over the staged Session suffix: session_id={}, turn_index={}, boundary_turn={}",
                     turn.session_id, turn.turn_index, revert.boundary_turn
                 )));
@@ -4009,7 +4009,7 @@ impl PersistenceManager {
                     .metadata
                     .get_or_insert_with(|| serde_json::json!({}));
                 if let Some(object) = metadata.as_object_mut() {
-                    object.insert(starmate_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(), serde_json::to_value(delivery).map_err(OpenBitFunError::Serialization)?);
+                    object.insert(starmate_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(), serde_json::to_value(delivery).map_err(StarMateError::Serialization)?);
                 }
             }
         }
@@ -4123,7 +4123,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<Option<DialogTurnData>> {
+    ) -> StarMateResult<Option<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some(bundle) =
@@ -4150,17 +4150,17 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Vec<(usize, PathBuf)>> {
+    ) -> StarMateResult<Vec<(usize, PathBuf)>> {
         self.session_layout(workspace_path)
             .list_indexed_turn_paths(session_id)
             .await
-            .map_err(|e| OpenBitFunError::io(format!("Failed to list dialog turn files: {}", e)))
+            .map_err(|e| StarMateError::io(format!("Failed to list dialog turn files: {}", e)))
     }
 
     async fn read_turn_paths(
         &self,
         indexed_paths: Vec<(usize, PathBuf)>,
-    ) -> OpenBitFunResult<ReadTurnPathsResult> {
+    ) -> StarMateResult<ReadTurnPathsResult> {
         let mut turns = Vec::with_capacity(indexed_paths.len());
         let mut missing_turn_file_count = 0usize;
         let mut max_turn_read_duration_ms = 0u64;
@@ -4200,7 +4200,7 @@ impl PersistenceManager {
         session_id: &str,
         total_turn_count: usize,
         requested_count: usize,
-    ) -> OpenBitFunResult<Option<ReadTurnPathsResult>> {
+    ) -> StarMateResult<Option<ReadTurnPathsResult>> {
         if requested_count == 0 {
             return Ok(Some(ReadTurnPathsResult {
                 turns: Vec::new(),
@@ -4228,7 +4228,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Vec<DialogTurnData>> {
+    ) -> StarMateResult<Vec<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         if let Some(bundle) =
@@ -4288,11 +4288,11 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Vec<DialogTurnData>> {
+    ) -> StarMateResult<Vec<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         let _session_write = match self.lock_session_write_operation(workspace_path, session_id) {
             Ok(lock) => Some(lock),
-            Err(OpenBitFunError::SessionInUse { .. }) => {
+            Err(StarMateError::SessionInUse { .. }) => {
                 debug!(
                     "Reading visible session history without the writer lease: session_id={}",
                     session_id
@@ -4313,11 +4313,11 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         before: Option<usize>,
-    ) -> OpenBitFunResult<(Vec<DialogTurnData>, Option<usize>)> {
+    ) -> StarMateResult<(Vec<DialogTurnData>, Option<usize>)> {
         Self::validate_session_id(session_id)?;
         let _writer = match self.lock_session_write_operation(workspace_path, session_id) {
             Ok(lock) => Some(lock),
-            Err(OpenBitFunError::SessionInUse { .. }) => None,
+            Err(StarMateError::SessionInUse { .. }) => None,
             Err(error) => return Err(error),
         };
         let boundary = self
@@ -4337,9 +4337,9 @@ impl PersistenceManager {
         let file = self
             .read_json_optional::<StoredDialogTurnFile>(&path)
             .await?
-            .ok_or_else(|| OpenBitFunError::NotFound("History changed during page read".into()))?;
+            .ok_or_else(|| StarMateError::NotFound("History changed during page read".into()))?;
         if file.turn.session_id != session_id || file.turn.turn_index != index {
-            return Err(OpenBitFunError::Validation(
+            return Err(StarMateError::Validation(
                 "History turn identity mismatch".into(),
             ));
         }
@@ -4356,11 +4356,11 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_id: &str,
-    ) -> OpenBitFunResult<Option<DialogTurnData>> {
+    ) -> StarMateResult<Option<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         let _session_write = match self.lock_session_write_operation(workspace_path, session_id) {
             Ok(lock) => Some(lock),
-            Err(OpenBitFunError::SessionInUse { .. }) => None,
+            Err(StarMateError::SessionInUse { .. }) => None,
             Err(error) => return Err(error),
         };
         let boundary_turn = self
@@ -4406,7 +4406,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<Vec<DialogTurnData>> {
+    ) -> StarMateResult<Vec<DialogTurnData>> {
         let boundary_turn = self
             .load_session_revert_state(workspace_path, session_id)
             .await?
@@ -4423,7 +4423,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         count: usize,
-    ) -> OpenBitFunResult<Vec<DialogTurnData>> {
+    ) -> StarMateResult<Vec<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         if count == 0 {
             return Ok(Vec::new());
@@ -4531,7 +4531,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         Self::validate_session_id(session_id)?;
         #[cfg(feature = "external-sources")]
         Box::pin(self.assert_native_history_mutation(workspace_path, session_id)).await?;
@@ -4562,7 +4562,7 @@ impl PersistenceManager {
             .delete_indexed_turn_paths_from(session_id, turn_index)
             .await
             .map_err(|e| {
-                OpenBitFunError::io(format!("Failed to delete dialog turn files: {}", e))
+                StarMateError::io(format!("Failed to delete dialog turn files: {}", e))
             })?;
 
         let turns = self.load_session_turns(workspace_path, session_id).await?;
@@ -4606,7 +4606,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         count: usize,
-    ) -> OpenBitFunResult<Vec<DialogTurnData>> {
+    ) -> StarMateResult<Vec<DialogTurnData>> {
         Self::validate_session_id(session_id)?;
         let turns = self
             .load_visible_session_turns(workspace_path, session_id)
@@ -4639,7 +4639,7 @@ impl PersistenceManager {
         boundary_turn_index: usize,
         compression_id: &str,
         trigger: &str,
-    ) -> OpenBitFunResult<Option<CompressionTranscriptArtifact>> {
+    ) -> StarMateResult<Option<CompressionTranscriptArtifact>> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let all_turns = self.load_session_turns(workspace_path, session_id).await?;
@@ -4673,7 +4673,7 @@ impl PersistenceManager {
             .ensure_compression_transcripts_dir(session_id)
             .await
             .map_err(|error| {
-                OpenBitFunError::io(format!(
+                StarMateError::io(format!(
                     "Failed to create compression transcript directory: {}",
                     error
                 ))
@@ -4702,7 +4702,7 @@ impl PersistenceManager {
                 },
             };
             let mut metadata_bytes = serde_json::to_vec_pretty(&metadata).map_err(|error| {
-                OpenBitFunError::serialization(format!(
+                StarMateError::serialization(format!(
                     "Failed to serialize compression transcript metadata: {}",
                     error
                 ))
@@ -4718,7 +4718,7 @@ impl PersistenceManager {
                 Ok(file) => file,
                 Err(error) if error.kind() == ErrorKind::AlreadyExists => continue,
                 Err(error) => {
-                    return Err(OpenBitFunError::io(format!(
+                    return Err(StarMateError::io(format!(
                         "Failed to reserve compression transcript {}: {}",
                         transcript_path.display(),
                         error
@@ -4739,7 +4739,7 @@ impl PersistenceManager {
                 }
                 Err(error) => {
                     let _ = fs::remove_file(&transcript_path).await;
-                    return Err(OpenBitFunError::io(format!(
+                    return Err(StarMateError::io(format!(
                         "Failed to reserve compression transcript metadata {}: {}",
                         meta_path.display(),
                         error
@@ -4759,7 +4759,7 @@ impl PersistenceManager {
                 drop(meta_file);
                 let _ = fs::remove_file(&transcript_path).await;
                 let _ = fs::remove_file(&meta_path).await;
-                return Err(OpenBitFunError::io(format!(
+                return Err(StarMateError::io(format!(
                     "Failed to write compression transcript pair: {}",
                     error
                 )));
@@ -4769,7 +4769,7 @@ impl PersistenceManager {
                 "artifacts/compression-transcripts/{}.txt",
                 stem
             ))
-            .map_err(|error| OpenBitFunError::Validation(error.to_string()))?;
+            .map_err(|error| StarMateError::Validation(error.to_string()))?;
             return Ok(Some(CompressionTranscriptArtifact {
                 uri,
                 index_range: rendered.index_range.clone(),
@@ -4778,7 +4778,7 @@ impl PersistenceManager {
             }));
         }
 
-        Err(OpenBitFunError::io(format!(
+        Err(StarMateError::io(format!(
             "Failed to allocate a unique compression transcript name after {} attempts",
             COMPRESSION_TRANSCRIPT_CREATE_ATTEMPTS
         )))
@@ -4789,7 +4789,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         start_turn_index: usize,
-    ) -> OpenBitFunResult<usize> {
+    ) -> StarMateResult<usize> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let dir = self.compression_transcripts_dir(workspace_path, session_id);
@@ -4798,14 +4798,14 @@ impl PersistenceManager {
         }
         let mut deleted = 0usize;
         let mut entries = fs::read_dir(&dir).await.map_err(|error| {
-            OpenBitFunError::io(format!(
+            StarMateError::io(format!(
                 "Failed to read compression transcript directory {}: {}",
                 dir.display(),
                 error
             ))
         })?;
         while let Some(entry) = entries.next_entry().await.map_err(|error| {
-            OpenBitFunError::io(format!(
+            StarMateError::io(format!(
                 "Failed to enumerate compression transcript directory {}: {}",
                 dir.display(),
                 error
@@ -4816,7 +4816,7 @@ impl PersistenceManager {
                 .is_some_and(|boundary| boundary >= start_turn_index)
             {
                 fs::remove_file(entry.path()).await.map_err(|error| {
-                    OpenBitFunError::io(format!(
+                    StarMateError::io(format!(
                         "Failed to delete compression transcript artifact {}: {}",
                         entry.path().display(),
                         error
@@ -4834,7 +4834,7 @@ impl PersistenceManager {
         source_session_id: &str,
         target_session_id: &str,
         end_turn_index: usize,
-    ) -> OpenBitFunResult<usize> {
+    ) -> StarMateResult<usize> {
         Self::validate_session_id(source_session_id)?;
         Self::validate_session_id(target_session_id)?;
         let _session_write =
@@ -4848,21 +4848,21 @@ impl PersistenceManager {
             .ensure_compression_transcripts_dir(target_session_id)
             .await
             .map_err(|error| {
-                OpenBitFunError::io(format!(
+                StarMateError::io(format!(
                     "Failed to create branched compression transcript directory: {}",
                     error
                 ))
             })?;
         let mut copied = 0usize;
         let mut entries = fs::read_dir(&source_dir).await.map_err(|error| {
-            OpenBitFunError::io(format!(
+            StarMateError::io(format!(
                 "Failed to read source compression transcript directory {}: {}",
                 source_dir.display(),
                 error
             ))
         })?;
         while let Some(entry) = entries.next_entry().await.map_err(|error| {
-            OpenBitFunError::io(format!(
+            StarMateError::io(format!(
                 "Failed to enumerate source compression transcripts: {}",
                 error
             ))
@@ -4874,7 +4874,7 @@ impl PersistenceManager {
                 fs::copy(entry.path(), target_dir.join(&file_name))
                     .await
                     .map_err(|error| {
-                        OpenBitFunError::io(format!(
+                        StarMateError::io(format!(
                             "Failed to copy compression transcript artifact {}: {}",
                             entry.path().display(),
                             error
@@ -4891,7 +4891,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         options: &SessionTranscriptExportOptions,
-    ) -> OpenBitFunResult<SessionTranscriptExport> {
+    ) -> StarMateResult<SessionTranscriptExport> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         if self
@@ -4899,7 +4899,7 @@ impl PersistenceManager {
             .await?
             .is_none()
         {
-            return Err(OpenBitFunError::NotFound(format!(
+            return Err(StarMateError::NotFound(format!(
                 "Session metadata not found: {}",
                 session_id
             )));
@@ -4970,7 +4970,7 @@ impl PersistenceManager {
         fs::write(&transcript_path, transcript_content)
             .await
             .map_err(|e| {
-                OpenBitFunError::io(format!(
+                StarMateError::io(format!(
                     "Failed to write transcript file {}: {}",
                     transcript_path.display(),
                     e
@@ -5015,7 +5015,7 @@ impl PersistenceManager {
         reference_workspace_path: &Path,
         reference_session_id: &str,
         reference_artifact_stem: &str,
-    ) -> OpenBitFunResult<MaterializedSessionReferenceTranscript> {
+    ) -> StarMateResult<MaterializedSessionReferenceTranscript> {
         Self::validate_session_id(source_session_id)?;
         Self::validate_session_id(reference_session_id)?;
         Self::validate_session_id(reference_artifact_stem)?;
@@ -5027,7 +5027,7 @@ impl PersistenceManager {
             .await?
             .is_none()
         {
-            return Err(OpenBitFunError::NotFound(format!(
+            return Err(StarMateError::NotFound(format!(
                 "Referenced session metadata not found: {}",
                 reference_session_id
             )));
@@ -5087,7 +5087,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<usize> {
+    ) -> StarMateResult<usize> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -5107,7 +5107,7 @@ impl PersistenceManager {
             let path = self.turn_path(workspace_path, session_id, turn.turn_index);
             if path.exists() {
                 fs::remove_file(&path).await.map_err(|e| {
-                    OpenBitFunError::io(format!("Failed to delete turn file: {}", e))
+                    StarMateError::io(format!("Failed to delete turn file: {}", e))
                 })?;
                 deleted += 1;
             }
@@ -5156,7 +5156,7 @@ impl PersistenceManager {
         workspace_path: &Path,
         session_id: &str,
         turn_index: usize,
-    ) -> OpenBitFunResult<usize> {
+    ) -> StarMateResult<usize> {
         Self::validate_session_id(session_id)?;
         let _session_write = self.lock_session_write_operation(workspace_path, session_id)?;
         let persistence_lock = self
@@ -5176,7 +5176,7 @@ impl PersistenceManager {
             let path = self.turn_path(workspace_path, session_id, turn.turn_index);
             if path.exists() {
                 fs::remove_file(&path).await.map_err(|e| {
-                    OpenBitFunError::io(format!("Failed to delete turn file: {}", e))
+                    StarMateError::io(format!("Failed to delete turn file: {}", e))
                 })?;
                 deleted += 1;
             }
@@ -5222,7 +5222,7 @@ impl PersistenceManager {
         &self,
         workspace_path: &Path,
         session_id: &str,
-    ) -> OpenBitFunResult<()> {
+    ) -> StarMateResult<()> {
         self.update_session_metadata_if_present(workspace_path, session_id, |metadata| {
             metadata.touch();
             Ok(())
@@ -5255,7 +5255,7 @@ mod tests {
         SessionRelationshipKind, SessionTranscriptExportOptions, SessionTurnCatalog,
         SessionTurnWindowResponse, StoredSessionIndexFile, TextItemData, UserMessageData,
     };
-    use crate::OpenBitFunError;
+    use crate::StarMateError;
     use starmate_runtime_ports::SessionTurnWindowRequest;
     use starmate_services_core::session::SessionWriteLock;
     use std::collections::HashSet;
@@ -5599,7 +5599,7 @@ mod tests {
             .collect::<Vec<_>>();
 
         assert_eq!(failures.len(), 1, "exactly one contender must fail");
-        assert!(matches!(failures[0], OpenBitFunError::Validation(_)));
+        assert!(matches!(failures[0], StarMateError::Validation(_)));
         let persisted = manager_a
             .load_session(workspace.path(), &session_id)
             .await
@@ -6239,7 +6239,7 @@ mod tests {
         assert!(
             matches!(
                 error,
-                OpenBitFunError::SessionInUse { session_id: ref locked }
+                StarMateError::SessionInUse { session_id: ref locked }
                     if locked == &session_id
             ),
             "expected SessionInUse, got {error:?}"

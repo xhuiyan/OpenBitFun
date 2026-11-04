@@ -11,23 +11,23 @@ pub use starmate_services_integrations::mcp::protocol::{
 };
 
 /// Parses the response result.
-pub fn parse_response_result<T>(response: &MCPResponse) -> crate::util::errors::OpenBitFunResult<T>
+pub fn parse_response_result<T>(response: &MCPResponse) -> crate::util::errors::StarMateResult<T>
 where
     T: serde::de::DeserializeOwned,
 {
     if let Some(error) = &response.error {
-        return Err(crate::util::errors::OpenBitFunError::MCPError(format!(
+        return Err(crate::util::errors::StarMateError::MCPError(format!(
             "MCP Error {}: {}",
             error.code, error.message
         )));
     }
 
     let result = response.result.as_ref().ok_or_else(|| {
-        crate::util::errors::OpenBitFunError::MCPError("Missing result in MCP response".to_string())
+        crate::util::errors::StarMateError::MCPError("Missing result in MCP response".to_string())
     })?;
 
     serde_json::from_value(result.clone()).map_err(|e| {
-        crate::util::errors::OpenBitFunError::Deserialization(format!(
+        crate::util::errors::StarMateError::Deserialization(format!(
             "Failed to parse MCP response: {}",
             e
         ))
