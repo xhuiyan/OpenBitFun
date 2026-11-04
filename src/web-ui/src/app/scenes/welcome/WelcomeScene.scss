@@ -12,7 +12,7 @@
   min-height: 0;
   overflow: hidden;
   container-type: inline-size;
-  background: var(--openbitfun-color-surface-scene);
+  background: var(--starmate-color-surface-scene);
 
   &__content {
     display: flex;
@@ -21,11 +21,11 @@
     justify-content: center;
     min-width: 0;
     min-height: 0;
-    padding: var(--openbitfun-space-6);
-    padding-block-end: max(var(--openbitfun-space-6), 12vh);
+    padding: var(--starmate-space-6);
+    padding-block-end: max(var(--starmate-space-6), 12vh);
     // Fade only transparent content. Animating the opaque scene background can
     // clear the sidebar material outside the shell's rounded clip in WebView2.
-    animation: welcome-scene-reveal var(--openbitfun-motion-duration-normal) var(--openbitfun-motion-easing-enter) both;
+    animation: welcome-scene-reveal var(--starmate-motion-duration-normal) var(--starmate-motion-easing-enter) both;
   }
 
   // The startup overlay owns this entrance, including the logo and text timing.
@@ -53,20 +53,20 @@
     width: 56px;
     height: 56px;
     flex-shrink: 0;
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
   }
 
   &__brand {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin: 0;
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-display-sm-font-family);
-    font-size: var(--openbitfun-type-display-sm-font-size);
-    font-weight: var(--openbitfun-type-display-sm-font-weight);
-    line-height: var(--openbitfun-type-display-sm-line-height);
-    letter-spacing: var(--openbitfun-type-display-sm-letter-spacing);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-display-sm-font-family);
+    font-size: var(--starmate-type-display-sm-font-size);
+    font-weight: var(--starmate-type-display-sm-font-weight);
+    line-height: var(--starmate-type-display-sm-line-height);
+    letter-spacing: var(--starmate-type-display-sm-letter-spacing);
     white-space: nowrap;
   }
 
@@ -81,12 +81,12 @@
     justify-content: center;
     max-width: 100%;
     margin: 0;
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-display-sm-font-family);
-    font-size: var(--openbitfun-type-display-sm-font-size);
-    font-weight: var(--openbitfun-type-body-lg-font-weight);
-    line-height: var(--openbitfun-type-display-sm-line-height);
-    letter-spacing: var(--openbitfun-type-display-sm-letter-spacing);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-display-sm-font-family);
+    font-size: var(--starmate-type-display-sm-font-size);
+    font-weight: var(--starmate-type-body-lg-font-weight);
+    line-height: var(--starmate-type-display-sm-line-height);
+    letter-spacing: var(--starmate-type-display-sm-letter-spacing);
   }
 
   &__phrase-slot {
@@ -136,12 +136,12 @@
 @container (max-width: 560px) {
   .welcome-scene {
     &__content {
-      padding-inline: var(--openbitfun-space-4);
+      padding-inline: var(--starmate-space-4);
     }
 
     &__brand,
     &__tagline {
-      font-size: var(--openbitfun-type-heading-display-font-size);
+      font-size: var(--starmate-type-heading-display-font-size);
     }
 
     &__logo {
@@ -155,7 +155,7 @@
   .welcome-scene {
     &__brand,
     &__tagline {
-      font-size: var(--openbitfun-type-flow-title-font-size);
+      font-size: var(--starmate-type-flow-title-font-size);
     }
 
     &__logo {

@@ -104,7 +104,7 @@
         // transparent corners.
         var bg = root.getAttribute('data-openbitfun-native-frame') === 'client'
           ? 'transparent'
-          : (root.style.backgroundColor || 'var(--openbitfun-color-surface-chrome)');
+          : (root.style.backgroundColor || 'var(--starmate-color-surface-chrome)');
         root.style.backgroundColor = bg;
         function paintBody() {
           if (document.body) document.body.style.backgroundColor = bg;
@@ -141,7 +141,7 @@
       }
       
       html {
-        background-color: var(--openbitfun-color-surface-chrome);
+        background-color: var(--starmate-color-surface-chrome);
       }
       
       body {
@@ -170,7 +170,7 @@
          shape and stop it from dimming the desktop behind the window. */
       html[data-openbitfun-native-frame='client'] .splash-screen {
         border-radius: 12px;
-        background: var(--openbitfun-color-surface-chrome);
+        background: var(--starmate-color-surface-chrome);
       }
 
       #openbitfun-startup-overlay {
@@ -218,20 +218,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: color-mix(in srgb, var(--openbitfun-color-surface-chrome) 90%, transparent);
-        color: var(--openbitfun-color-content-muted);
-        font-family: var(--openbitfun-font-family-sans);
+        background: color-mix(in srgb, var(--starmate-color-surface-chrome) 90%, transparent);
+        color: var(--starmate-color-content-muted);
+        font-family: var(--starmate-font-family-sans);
         font-size: 13px;
         pointer-events: none;
       }
 
       :root[data-contrast='high'] .splash-screen {
-        background: var(--openbitfun-color-surface-chrome);
+        background: var(--starmate-color-surface-chrome);
       }
 
       @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
         .splash-screen {
-          background: var(--openbitfun-color-surface-chrome);
+          background: var(--starmate-color-surface-chrome);
         }
       }
 
@@ -260,7 +260,7 @@
         top: 0;
         right: 0;
         z-index: 2;
-        height: var(--openbitfun-layout-toolbar-md-height);
+        height: var(--starmate-layout-toolbar-md-height);
         pointer-events: auto;
       }
 
@@ -293,7 +293,7 @@
         left: 50%;
         width: 120px;
         height: 120px;
-        background-color: var(--openbitfun-color-content-on-light);
+        background-color: var(--starmate-color-content-on-light);
         transform: translate(-50%, -50%);
         -webkit-mask: url('/brand/starmate-mark.svg') center / contain no-repeat;
         mask: url('/brand/starmate-mark.svg') center / contain no-repeat;
@@ -303,7 +303,7 @@
 
       [data-color-scheme="dark"] .splash-screen__logo,
       [data-color-scheme="dark"] .openbitfun-preload__logo {
-        background-color: var(--openbitfun-color-content-on-dark);
+        background-color: var(--starmate-color-content-on-dark);
       }
 
       .splash-screen__message {
@@ -312,29 +312,29 @@
         left: 50%;
         min-width: 220px;
         max-width: min(360px, calc(100vw - 48px));
-        color: var(--openbitfun-color-content-secondary);
-        font-family: var(--openbitfun-type-label-md-font-family);
-        font-size: var(--openbitfun-type-label-md-font-size);
-        font-weight: var(--openbitfun-type-label-md-font-weight);
-        line-height: var(--openbitfun-type-label-md-line-height);
-        letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+        color: var(--starmate-color-content-secondary);
+        font-family: var(--starmate-type-label-md-font-family);
+        font-size: var(--starmate-type-label-md-font-size);
+        font-weight: var(--starmate-type-label-md-font-weight);
+        line-height: var(--starmate-type-label-md-line-height);
+        letter-spacing: var(--starmate-type-label-md-letter-spacing);
         text-align: center;
         opacity: 0;
         transform: translate(-50%, -2px);
         transition:
-          opacity var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-decelerate),
-          transform var(--openbitfun-motion-duration-base) var(--openbitfun-motion-easing-decelerate);
+          opacity var(--starmate-motion-duration-base) var(--starmate-motion-easing-decelerate),
+          transform var(--starmate-motion-duration-base) var(--starmate-motion-easing-decelerate);
         pointer-events: none;
       }
 
       [data-color-scheme="dark"][data-contrast="standard"] .splash-screen__message {
-        color: color-mix(in srgb, var(--openbitfun-color-content-on-dark) 60%, transparent);
+        color: color-mix(in srgb, var(--starmate-color-content-on-dark) 60%, transparent);
       }
 
       .splash-screen__message--visible {
         opacity: 1;
         transform: translate(-50%, 0);
-        animation: splash-message-breathe 3.6s ease-in-out var(--openbitfun-motion-duration-base) infinite;
+        animation: splash-message-breathe 3.6s ease-in-out var(--starmate-motion-duration-base) infinite;
       }
 
       @keyframes splash-message-breathe {

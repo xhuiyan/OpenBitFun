@@ -91,7 +91,7 @@ describe('Mini App card presentation', () => {
 
     expect(source).toContain('<MarketList className={libraryListClassName} role="list"');
     expect(source).not.toContain('minCardWidth={640}');
-    expect(stylesheet).toMatch(/&__list \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);[\s\S]*?gap: var\(--openbitfun-space-4\);/);
+    expect(stylesheet).toMatch(/&__list \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);[\s\S]*?gap: var\(--starmate-space-4\);/);
     expect(stylesheet).toMatch(
       /&__list\.gallery-grid--skeleton \{[\s\S]*?height: auto;[\s\S]*?aspect-ratio: 16 \/ 9;/,
     );
@@ -102,7 +102,7 @@ describe('Mini App card presentation', () => {
     expect(stylesheet).toMatch(
       /@container miniapp-gallery-scene \(max-width: 600px\) \{\s*\.miniapp-gallery__list \{\s*grid-template-columns: minmax\(0, 1fr\);/,
     );
-    expect(stylesheet).toContain('border-radius: var(--openbitfun-layout-card-radius-lg);');
+    expect(stylesheet).toContain('border-radius: var(--starmate-layout-card-radius-lg);');
     expect(stylesheet).not.toContain('grid-template-columns: minmax(0, 224px) minmax(0, 1fr);');
   });
 
@@ -143,10 +143,10 @@ describe('Mini App card presentation', () => {
     expect(row).toContain('<Icon name="arrow-down" size="xs"');
     expect(row).toContain('<HardDrive size={13}');
     expect(stylesheet).toMatch(
-      /&__summary \{[\s\S]*?grid-template-rows: auto minmax\(0, 1fr\) var\(--openbitfun-type-meta-line-height\);[\s\S]*?block-size: 126px;[\s\S]*?padding: var\(--openbitfun-space-3\) var\(--openbitfun-space-5\);/,
+      /&__summary \{[\s\S]*?grid-template-rows: auto minmax\(0, 1fr\) var\(--starmate-type-meta-line-height\);[\s\S]*?block-size: 126px;[\s\S]*?padding: var\(--starmate-space-3\) var\(--starmate-space-5\);/,
     );
     expect(stylesheet).toMatch(
-      /&__meta \{[\s\S]*?align-self: end;[\s\S]*?block-size: var\(--openbitfun-type-meta-line-height\);/,
+      /&__meta \{[\s\S]*?align-self: end;[\s\S]*?block-size: var\(--starmate-type-meta-line-height\);/,
     );
     expect(stylesheet).toMatch(
       /&__actions \{[\s\S]*?align-self: end;[\s\S]*?align-items: center;/,

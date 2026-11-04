@@ -12,7 +12,7 @@
     inset: 0;
     z-index: 11;
     overflow: hidden;
-    background: var(--openbitfun-color-surface-scene);
+    background: var(--starmate-color-surface-scene);
     touch-action: none;
   }
 
@@ -22,7 +22,7 @@
 .history-session-skeleton {
   position: absolute;
   inset: 0;
-  color: var(--openbitfun-color-content-primary);
+  color: var(--starmate-color-content-primary);
   pointer-events: none;
 
   &__column {
@@ -34,22 +34,22 @@
 
   &__user {
     position: absolute;
-    top: var(--openbitfun-space-6);
-    right: var(--openbitfun-control-flow-chat-content-padding-inline);
+    top: var(--starmate-space-6);
+    right: var(--starmate-control-flow-chat-content-padding-inline);
     width: min(288px, 54%);
-    padding: var(--openbitfun-space-5);
+    padding: var(--starmate-space-5);
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
-    border-radius: var(--openbitfun-radius-xl);
-    background: var(--openbitfun-color-action-quiet-hover);
+    gap: var(--starmate-space-3);
+    border-radius: var(--starmate-radius-xl);
+    background: var(--starmate-color-action-quiet-hover);
 
     span {
       display: block;
-      height: var(--openbitfun-space-4);
+      height: var(--starmate-space-4);
       width: 82%;
-      border-radius: var(--openbitfun-radius-pill);
-      background: color-mix(in srgb, var(--openbitfun-color-content-primary) 18%, transparent);
+      border-radius: var(--starmate-radius-pill);
+      background: color-mix(in srgb, var(--starmate-color-content-primary) 18%, transparent);
     }
 
     span:last-child { width: 56%; opacity: 0.7; }
@@ -57,19 +57,19 @@
 
   &__group {
     position: absolute;
-    left: var(--openbitfun-control-flow-chat-content-padding-inline);
-    right: var(--openbitfun-control-flow-chat-content-padding-inline);
+    left: var(--starmate-control-flow-chat-content-padding-inline);
+    right: var(--starmate-control-flow-chat-content-padding-inline);
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   &__bar {
     display: block;
-    height: var(--openbitfun-space-6);
+    height: var(--starmate-space-6);
     flex-shrink: 0;
-    border-radius: var(--openbitfun-radius-pill);
-    background: color-mix(in srgb, var(--openbitfun-color-content-primary) 18%, transparent);
+    border-radius: var(--starmate-radius-pill);
+    background: color-mix(in srgb, var(--starmate-color-content-primary) 18%, transparent);
     transform-origin: left center;
   }
 
@@ -93,10 +93,10 @@
   }
 
   @media (max-width: 768px) {
-    &__user { right: var(--openbitfun-control-flow-chat-content-padding-inline-mobile); }
+    &__user { right: var(--starmate-control-flow-chat-content-padding-inline-mobile); }
     &__group {
-      left: var(--openbitfun-control-flow-chat-content-padding-inline-mobile);
-      right: var(--openbitfun-control-flow-chat-content-padding-inline-mobile);
+      left: var(--starmate-control-flow-chat-content-padding-inline-mobile);
+      right: var(--starmate-control-flow-chat-content-padding-inline-mobile);
     }
   }
 }
@@ -107,7 +107,7 @@
     mask-image: linear-gradient(105deg, currentColor 28%, color-mix(in srgb, currentColor 40%, transparent) 48%, currentColor 68%);
     mask-size: 230% 100%;
     mask-repeat: no-repeat;
-    animation: history-session-skeleton-light calc(var(--openbitfun-motion-duration-loop) * 5.5) ease-in-out infinite;
+    animation: history-session-skeleton-light calc(var(--starmate-motion-duration-loop) * 5.5) ease-in-out infinite;
   }
 
   [data-history-loading-phase='exiting'] .history-session-skeleton { animation-play-state: paused; }

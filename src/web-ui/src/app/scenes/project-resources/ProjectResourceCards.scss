@@ -3,7 +3,7 @@
   min-inline-size: 0;
   &__track {
     display: flex;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -17,27 +17,27 @@
     display: flex;
     min-inline-size: 0;
     // Match the Home device strip: two cards and part of the next one.
-    flex: 0 0 max(220px, calc((100% - var(--openbitfun-space-4) - var(--openbitfun-space-4)) / 2.3));
+    flex: 0 0 max(220px, calc((100% - var(--starmate-space-4) - var(--starmate-space-4)) / 2.3));
     max-inline-size: 100%;
     scroll-snap-align: start;
   }
   &__card { width: 100%; min-inline-size: 0; align-items: stretch;
-    border-radius: var(--openbitfun-layout-card-radius-lg); background: var(--openbitfun-color-surface-tertiary); }
+    border-radius: var(--starmate-layout-card-radius-lg); background: var(--starmate-color-surface-tertiary); }
   &__card > [data-openbitfun-part='actions'] {
-    inset-block-start: var(--openbitfun-space-2);
-    inset-inline-end: var(--openbitfun-space-2);
+    inset-block-start: var(--starmate-space-2);
+    inset-inline-end: var(--starmate-space-2);
     transform: none;
   }
-  &__add { display: flex; flex: 1 0 auto; align-items: center; justify-content: center; padding-inline: var(--openbitfun-space-4); }
+  &__add { display: flex; flex: 1 0 auto; align-items: center; justify-content: center; padding-inline: var(--starmate-space-4); }
   &__trigger {
     display: flex;
     flex: 1;
     align-items: center;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     width: 100%;
     min-inline-size: 0;
     min-block-size: 136px;
-    padding: var(--openbitfun-space-5);
+    padding: var(--starmate-space-5);
     border: 0;
     border-radius: inherit;
     color: inherit;
@@ -45,30 +45,30 @@
     font: inherit;
     text-align: start;
     cursor: pointer;
-    &:hover:not(:disabled) { background: var(--openbitfun-color-action-quiet-hover); }
+    &:hover:not(:disabled) { background: var(--starmate-color-action-quiet-hover); }
     &:disabled { cursor: default; }
   }
-  &__icon { display: flex; flex-shrink: 0; padding-block: var(--openbitfun-space-1); color: var(--openbitfun-color-content-secondary); }
-  &__copy { display: flex; flex: 1; flex-direction: column; min-inline-size: 0; gap: var(--openbitfun-space-2); }
+  &__icon { display: flex; flex-shrink: 0; padding-block: var(--starmate-space-1); color: var(--starmate-color-content-secondary); }
+  &__copy { display: flex; flex: 1; flex-direction: column; min-inline-size: 0; gap: var(--starmate-space-2); }
   &__name {
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-heading-card-font-family);
-    font-size: var(--openbitfun-type-heading-card-font-size);
-    font-weight: var(--openbitfun-type-heading-card-font-weight);
-    line-height: var(--openbitfun-type-heading-card-line-height);
-    letter-spacing: var(--openbitfun-type-heading-card-letter-spacing);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-heading-card-font-family);
+    font-size: var(--starmate-type-heading-card-font-size);
+    font-weight: var(--starmate-type-heading-card-font-weight);
+    line-height: var(--starmate-type-heading-card-line-height);
+    letter-spacing: var(--starmate-type-heading-card-letter-spacing);
   }
-  &__path, &__description { color: var(--openbitfun-color-content-secondary); font-size: var(--openbitfun-type-body-sm-font-size); line-height: var(--openbitfun-type-body-sm-line-height); }
-  &__status { display: flex; flex-wrap: wrap; gap: var(--openbitfun-space-2); }
+  &__path, &__description { color: var(--starmate-color-content-secondary); font-size: var(--starmate-type-body-sm-font-size); line-height: var(--starmate-type-body-sm-line-height); }
+  &__status { display: flex; flex-wrap: wrap; gap: var(--starmate-space-2); }
   &__scroll-control {
     position: absolute;
     inset-block-start: 50%;
     transform: translateY(-50%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
-    &--previous { inset-inline-start: var(--openbitfun-space-2); }
-    &--next { inset-inline-end: var(--openbitfun-space-2); }
+    transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
+    &--previous { inset-inline-start: var(--starmate-space-2); }
+    &--next { inset-inline-end: var(--starmate-space-2); }
   }
   &:is(:hover, :focus-within) &__scroll-control { opacity: 1; pointer-events: auto; }
 }

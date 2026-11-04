@@ -68,10 +68,10 @@ describe('Skills scene presentation', () => {
     const listSurfaceStart = stylesheet.indexOf('.skills-main__table {');
     const listSurfaceEnd = stylesheet.indexOf('\n}', listSurfaceStart);
 
-    expect(stylesheet).not.toContain('background: var(--openbitfun-color-surface-canvas);');
+    expect(stylesheet).not.toContain('background: var(--starmate-color-surface-canvas);');
     expect(stylesheet.slice(listSurfaceStart, listSurfaceEnd)).not.toContain('background:');
     expect(stylesheet.slice(listSurfaceStart, listSurfaceEnd)).not.toContain('border:');
-    expect(readSibling('./components/SkillCard.scss')).toContain('background: var(--openbitfun-color-action-quiet-hover);');
+    expect(readSibling('./components/SkillCard.scss')).toContain('background: var(--starmate-color-action-quiet-hover);');
   });
 
   it('aligns the groups with the shared page frame', () => {

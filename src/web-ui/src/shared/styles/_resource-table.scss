@@ -6,20 +6,20 @@
   min-inline-size: 0;
   flex-shrink: 0;
   overflow: hidden;
-  border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-  border-radius: var(--openbitfun-layout-field-group-radius);
+  border: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+  border-radius: var(--starmate-layout-field-group-radius);
 
   > .resource-table__row {
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
     align-items: center;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     min-inline-size: 0;
-    padding-block: var(--openbitfun-layout-field-group-row-padding-block);
-    padding-inline: var(--openbitfun-layout-field-group-row-padding-inline);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    padding-block: var(--starmate-layout-field-group-row-padding-block);
+    padding-inline: var(--starmate-layout-field-group-row-padding-inline);
+    font-size: var(--starmate-type-body-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
 
     > [role='cell'], > [role='columnheader'] {
       min-inline-size: 0;
@@ -28,16 +28,16 @@
   }
 
   > .resource-table__row + .resource-table__row {
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   > .resource-table__header {
-    padding-block: var(--openbitfun-space-3);
-    background: var(--openbitfun-color-surface-tertiary);
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-meta-font-size);
-    font-weight: var(--openbitfun-type-meta-font-weight);
-    line-height: var(--openbitfun-type-meta-line-height);
+    padding-block: var(--starmate-space-3);
+    background: var(--starmate-color-surface-tertiary);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    font-weight: var(--starmate-type-meta-font-weight);
+    line-height: var(--starmate-type-meta-line-height);
 
     > [role='columnheader']:last-child { text-align: center; }
   }

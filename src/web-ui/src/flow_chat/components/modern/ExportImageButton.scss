@@ -6,41 +6,41 @@
   overflow: visible;
   // Also bound captures whose source row has been virtualized away.
   width: 100vw;
-  max-width: var(--openbitfun-control-flow-chat-transcript-max-width);
+  max-width: var(--starmate-control-flow-chat-transcript-max-width);
 }
 
 .export-image-options {
   display: grid;
-  inline-size: calc(448px + var(--openbitfun-space-3));
+  inline-size: calc(448px + var(--starmate-space-3));
   max-inline-size: 100%;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-rows: 168px;
-  gap: var(--openbitfun-space-3);
+  gap: var(--starmate-space-3);
   margin-inline: auto;
 }
 
 .export-image-option-content {
   justify-content: center;
-  gap: var(--openbitfun-space-1);
+  gap: var(--starmate-space-1);
 }
 
 .export-image-option-card {
   min-block-size: 0;
   cursor: pointer;
-  transition: background-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+  transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
   @media (hover: hover) {
     &:hover {
-      background: var(--openbitfun-color-action-neutral-surface-hover);
+      background: var(--starmate-color-action-neutral-surface-hover);
     }
   }
 
   &:has(:focus-visible) {
-    background: var(--openbitfun-color-action-neutral-surface-hover);
+    background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   &:active {
-    background: var(--openbitfun-color-action-neutral-surface-pressed);
+    background: var(--starmate-color-action-neutral-surface-pressed);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -53,16 +53,16 @@
   inline-size: 100%;
   block-size: 104px;
   flex-shrink: 0;
-  color: var(--openbitfun-color-content-secondary);
+  color: var(--starmate-color-content-secondary);
 }
 
 .export-image-option-label {
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-label-md-font-family);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  font-weight: var(--openbitfun-type-label-md-font-weight);
-  line-height: var(--openbitfun-type-label-md-line-height);
-  letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-label-md-font-family);
+  font-size: var(--starmate-type-label-md-font-size);
+  font-weight: var(--starmate-type-label-md-font-weight);
+  line-height: var(--starmate-type-label-md-line-height);
+  letter-spacing: var(--starmate-type-label-md-letter-spacing);
   text-align: center;
 }
 
@@ -71,13 +71,13 @@
   @include transcriptLayout.reading-column;
 
   // Keep the live column and typography, with room for a standalone image frame.
-  padding-inline: clamp(var(--openbitfun-space-4), 4%, var(--openbitfun-space-8));
-  padding-block: var(--openbitfun-space-6);
-  background: var(--openbitfun-color-surface-scene);
+  padding-inline: clamp(var(--starmate-space-4), 4%, var(--starmate-space-8));
+  padding-block: var(--starmate-space-6);
+  background: var(--starmate-color-surface-scene);
   box-sizing: border-box;
-  font-family: var(--openbitfun-type-flow-body-font-family);
-  font-size: var(--openbitfun-type-flow-body-font-size);
-  line-height: var(--openbitfun-type-flow-body-line-height);
+  font-family: var(--starmate-type-flow-body-font-family);
+  font-size: var(--starmate-type-flow-body-font-size);
+  line-height: var(--starmate-type-flow-body-line-height);
   // The capture wrapper sets the live reading-column width.
   container-type: inline-size;
 
@@ -97,13 +97,13 @@
   &__header {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
-    margin-block-end: var(--openbitfun-space-8);
+    gap: var(--starmate-space-2);
+    margin-block-end: var(--starmate-space-8);
   }
 
   &__logo {
-    inline-size: var(--openbitfun-space-6);
-    block-size: var(--openbitfun-space-6);
+    inline-size: var(--starmate-space-6);
+    block-size: var(--starmate-space-6);
     flex-shrink: 0;
   }
 
@@ -117,47 +117,47 @@
   }
 
   &__title {
-    font-family: var(--openbitfun-type-label-md-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
-    color: var(--openbitfun-color-content-primary);
+    font-family: var(--starmate-type-label-md-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
+    color: var(--starmate-color-content-primary);
     display: inline-block;
   }
 
   &__timestamp {
     margin-inline-start: auto;
-    font-family: var(--openbitfun-type-flow-meta-font-family);
-    font-size: var(--openbitfun-type-flow-meta-font-size);
-    font-weight: var(--openbitfun-type-flow-meta-font-weight);
-    line-height: var(--openbitfun-type-flow-meta-line-height);
-    letter-spacing: var(--openbitfun-type-flow-meta-letter-spacing);
+    font-family: var(--starmate-type-flow-meta-font-family);
+    font-size: var(--starmate-type-flow-meta-font-size);
+    font-weight: var(--starmate-type-flow-meta-font-weight);
+    line-height: var(--starmate-type-flow-meta-line-height);
+    letter-spacing: var(--starmate-type-flow-meta-letter-spacing);
     font-variant-numeric: tabular-nums;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     display: inline-block;
     flex-shrink: 0;
   }
 
   // ===== User message =====
   &__user-section {
-    margin-block-end: var(--openbitfun-space-6);
+    margin-block-end: var(--starmate-space-6);
   }
 
   &__user-bubble {
     inline-size: fit-content;
-    max-inline-size: var(--openbitfun-control-flow-chat-user-message-max-width);
+    max-inline-size: var(--starmate-control-flow-chat-user-message-max-width);
     margin-inline: auto 0;
-    padding: var(--openbitfun-control-flow-chat-user-message-padding-block) var(--openbitfun-control-flow-chat-user-message-radius);
+    padding: var(--starmate-control-flow-chat-user-message-padding-block) var(--starmate-control-flow-chat-user-message-radius);
     border: none;
-    border-radius: var(--openbitfun-control-flow-chat-user-message-radius);
-    background: var(--openbitfun-color-action-quiet-hover);
-    font-family: var(--openbitfun-type-flow-control-font-family);
-    font-size: var(--openbitfun-type-flow-control-font-size);
-    font-weight: var(--openbitfun-type-flow-control-font-weight);
-    line-height: var(--openbitfun-type-flow-body-line-height);
-    letter-spacing: var(--openbitfun-type-flow-control-letter-spacing);
-    color: var(--openbitfun-color-content-primary);
+    border-radius: var(--starmate-control-flow-chat-user-message-radius);
+    background: var(--starmate-color-action-quiet-hover);
+    font-family: var(--starmate-type-flow-control-font-family);
+    font-size: var(--starmate-type-flow-control-font-size);
+    font-weight: var(--starmate-type-flow-control-font-weight);
+    line-height: var(--starmate-type-flow-body-line-height);
+    letter-spacing: var(--starmate-type-flow-control-letter-spacing);
+    color: var(--starmate-color-content-primary);
     white-space: pre-wrap !important;
     word-break: break-word;
     overflow-wrap: break-word;
@@ -177,7 +177,7 @@
   }
 
   &__text-item {
-    margin-bottom: var(--openbitfun-control-flow-chat-flow-item-gap);
+    margin-bottom: var(--starmate-control-flow-chat-flow-item-gap);
     
     // Ensure FlowTextBlock styles render correctly.
     .flow-text-block {
@@ -185,7 +185,7 @@
   }
 
   &__thinking-item {
-    margin-bottom: var(--openbitfun-control-flow-chat-flow-item-gap);
+    margin-bottom: var(--starmate-control-flow-chat-flow-item-gap);
   }
 
   &__thinking-item--expanded {
@@ -211,7 +211,7 @@
   }
 
   &__tool-item {
-    margin-bottom: var(--openbitfun-control-flow-chat-flow-item-gap);
+    margin-bottom: var(--starmate-control-flow-chat-flow-item-gap);
     // Long command summaries must respect the image's trailing inset.
     overflow: hidden;
     
@@ -225,19 +225,19 @@
 
   // ===== Footer =====
   &__footer {
-    margin-block-start: var(--openbitfun-space-4);
-    padding-block-start: var(--openbitfun-space-3);
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    margin-block-start: var(--starmate-space-4);
+    padding-block-start: var(--starmate-space-3);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--openbitfun-space-1);
-    font-family: var(--openbitfun-type-flow-meta-font-family);
-    font-size: var(--openbitfun-type-flow-meta-font-size);
-    font-weight: var(--openbitfun-type-flow-meta-font-weight);
-    line-height: var(--openbitfun-type-flow-meta-line-height);
-    letter-spacing: var(--openbitfun-type-flow-meta-letter-spacing);
-    color: var(--openbitfun-color-content-muted);
+    gap: var(--starmate-space-1);
+    font-family: var(--starmate-type-flow-meta-font-family);
+    font-size: var(--starmate-type-flow-meta-font-size);
+    font-weight: var(--starmate-type-flow-meta-font-weight);
+    line-height: var(--starmate-type-flow-meta-line-height);
+    letter-spacing: var(--starmate-type-flow-meta-letter-spacing);
+    color: var(--starmate-color-content-muted);
     white-space: nowrap;
     
     span {

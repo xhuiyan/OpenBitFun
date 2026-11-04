@@ -3,17 +3,17 @@
 .tool-definitions-preview {
   display: flex;
   flex-direction: column;
-  gap: var(--openbitfun-space-5);
+  gap: var(--starmate-space-5);
   height: 100%;
   min-width: 0;
   min-height: 0;
-  padding: var(--openbitfun-space-6);
+  padding: var(--starmate-space-6);
   box-sizing: border-box;
-  background: var(--openbitfun-color-surface-scene);
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-body-sm-font-family);
-  font-size: var(--openbitfun-type-body-sm-font-size);
-  line-height: var(--openbitfun-type-body-sm-line-height);
+  background: var(--starmate-color-surface-scene);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-body-sm-font-family);
+  font-size: var(--starmate-type-body-sm-font-size);
+  line-height: var(--starmate-type-body-sm-line-height);
 
   &__viewport {
     display: flex;
@@ -21,36 +21,36 @@
     flex: 1 1 auto;
     min-height: 0;
     min-width: 0;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
   }
 
   &__name,
   &__type,
   &__value {
     overflow-wrap: anywhere;
-    font-family: var(--openbitfun-type-code-sm-font-family);
-    font-size: var(--openbitfun-type-code-sm-font-size);
-    line-height: var(--openbitfun-type-code-sm-line-height);
+    font-family: var(--starmate-type-code-sm-font-family);
+    font-size: var(--starmate-type-code-sm-font-size);
+    line-height: var(--starmate-type-code-sm-line-height);
   }
 
-  &__name { font-weight: var(--openbitfun-type-label-selected-font-weight); }
-  &__type { color: var(--openbitfun-color-content-muted); }
-  &__value { font-size: var(--openbitfun-type-meta-font-size); }
+  &__name { font-weight: var(--starmate-type-label-selected-font-weight); }
+  &__type { color: var(--starmate-color-content-muted); }
+  &__value { font-size: var(--starmate-type-meta-font-size); }
   &__value-chip { max-inline-size: 100%; }
 
   &__optional {
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-meta-font-size);
-    line-height: var(--openbitfun-type-meta-line-height);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    line-height: var(--starmate-type-meta-line-height);
   }
 
   &__description {
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
-  &__text { margin: 0; color: var(--openbitfun-color-content-secondary); }
+  &__text { margin: 0; color: var(--starmate-color-content-secondary); }
 
   // Match the header indicator's inset once; nested schemas keep the same content edge.
   &__content { padding-inline: 0; }
@@ -58,16 +58,16 @@
   &__nested-trigger { padding-inline: 0; }
 
   &__header {
-    min-block-size: var(--openbitfun-control-height-lg);
+    min-block-size: var(--starmate-control-height-lg);
 
     // Reuse the usage report palette; color distinguishes entries, not execution status.
     @each $tone, $color in (
       'violet': var(--openbitfun-component-session-usage-output),
-      'green': var(--openbitfun-color-status-success-emphasis),
-      'amber': var(--openbitfun-color-status-warning-emphasis),
-      'magenta': color-mix(in srgb, var(--openbitfun-component-session-usage-output) 50%, var(--openbitfun-color-status-danger-emphasis)),
+      'green': var(--starmate-color-status-success-emphasis),
+      'amber': var(--starmate-color-status-warning-emphasis),
+      'magenta': color-mix(in srgb, var(--openbitfun-component-session-usage-output) 50%, var(--starmate-color-status-danger-emphasis)),
       'blue': var(--openbitfun-component-session-usage-input),
-      'rose': var(--openbitfun-color-status-danger-emphasis)
+      'rose': var(--starmate-color-status-danger-emphasis)
     ) {
       &--#{$tone} {
         @include detailDisclosure.header-tone($color);
@@ -75,27 +75,27 @@
     }
   }
 
-  &__nested { padding-block: var(--openbitfun-space-3); }
+  &__nested { padding-block: var(--starmate-space-3); }
 
   &__constraints {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--openbitfun-space-2) var(--openbitfun-space-5);
+    gap: var(--starmate-space-2) var(--starmate-space-5);
     margin: 0;
     min-width: 0;
-    font-size: var(--openbitfun-type-meta-font-size);
-    line-height: var(--openbitfun-type-meta-line-height);
+    font-size: var(--starmate-type-meta-font-size);
+    line-height: var(--starmate-type-meta-line-height);
   }
 
   &__constraint {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--openbitfun-space-1) var(--openbitfun-space-2);
+    gap: var(--starmate-space-1) var(--starmate-space-2);
     min-inline-size: 0;
     max-inline-size: 100%;
 
-    dt { color: var(--openbitfun-color-content-muted); overflow-wrap: anywhere; }
+    dt { color: var(--starmate-color-content-muted); overflow-wrap: anywhere; }
     dd { margin: 0; min-width: 0; max-inline-size: 100%; overflow-wrap: anywhere; }
   }
 }

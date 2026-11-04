@@ -3,7 +3,7 @@
   flex-shrink: 0;
   // Put the vertical inset inside the scroller so tab focus rings stay visible.
   padding-block: 0;
-  background: var(--openbitfun-color-surface-scene);
+  background: var(--starmate-color-surface-scene);
 
   &__strip {
     position: relative;
@@ -17,7 +17,7 @@
     display: flex;
     flex: 1;
     min-inline-size: 0;
-    padding-block: var(--openbitfun-layout-toolbar-sm-padding-block);
+    padding-block: var(--starmate-layout-toolbar-sm-padding-block);
     // Content continues beneath the floating capsule; the final item can still
     // scroll completely clear of it, including during keyboard navigation.
     padding-inline-end: var(--_canvas-tabs-overflow-inset);
@@ -27,7 +27,7 @@
     overscroll-behavior-x: contain;
     scrollbar-width: none;
     mask-image: linear-gradient(to right,
-      currentColor calc(100% - min(var(--_canvas-tabs-overflow-inset), var(--openbitfun-layout-toolbar-overflow-fade-extent))),
+      currentColor calc(100% - min(var(--_canvas-tabs-overflow-inset), var(--starmate-layout-toolbar-overflow-fade-extent))),
       transparent 100%);
 
     &::-webkit-scrollbar {
@@ -41,7 +41,7 @@
     inset-block: 0;
     display: flex;
     align-items: center;
-    padding-inline-start: var(--openbitfun-space-1);
+    padding-inline-start: var(--starmate-space-1);
     pointer-events: none;
 
     > .canvas-tab-panorama-wrapper { pointer-events: auto; }
@@ -53,13 +53,13 @@
     flex: 0 0 auto;
     align-items: center;
     max-inline-size: 100%;
-    transition: transform var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
   &__actions {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-layout-toolbar-group-gap-sm);
+    gap: var(--starmate-layout-toolbar-group-gap-sm);
     flex-shrink: 0;
   }
 }
@@ -73,10 +73,10 @@
 .canvas-tab-drop-indicator {
   position: absolute;
   inset-inline-start: 0;
-  inset-block: var(--openbitfun-space-1);
-  inline-size: var(--openbitfun-border-width-strong);
-  background: var(--openbitfun-color-accent-default);
-  border-radius: var(--openbitfun-radius-xs);
-  z-index: var(--openbitfun-layer-decoration);
+  inset-block: var(--starmate-space-1);
+  inline-size: var(--starmate-border-width-strong);
+  background: var(--starmate-color-accent-default);
+  border-radius: var(--starmate-radius-xs);
+  z-index: var(--starmate-layer-decoration);
   pointer-events: none;
 }

@@ -14,8 +14,8 @@
 // The initial creation pages keep their own content-sized layout.
 // Public Dialog anatomy (or the picker) owns internal scrolling.
 @mixin workspace-dialog-size {
-  $inline-size: min(var(--openbitfun-overlay-dialog-max-inline-size-large), calc(100vw - 2 * var(--openbitfun-overlay-dialog-viewport-gutter)));
-  $block-size: min(640px, calc(100vh - 2 * var(--openbitfun-overlay-dialog-viewport-gutter)));
+  $inline-size: min(var(--starmate-overlay-dialog-max-inline-size-large), calc(100vw - 2 * var(--starmate-overlay-dialog-viewport-gutter)));
+  $block-size: min(640px, calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter)));
 
   box-sizing: border-box;
   inline-size: $inline-size;
@@ -26,7 +26,7 @@
   max-block-size: $block-size;
 
   @supports (block-size: 100dvh) {
-    $block-size: min(640px, calc(100dvh - 2 * var(--openbitfun-overlay-dialog-viewport-gutter)));
+    $block-size: min(640px, calc(100dvh - 2 * var(--starmate-overlay-dialog-viewport-gutter)));
 
     block-size: $block-size;
     min-block-size: $block-size;

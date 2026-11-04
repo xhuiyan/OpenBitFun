@@ -9,11 +9,11 @@
 
   display: flex;
   align-items: center;
-  height: var(--openbitfun-layout-toolbar-md-height);
+  height: var(--starmate-layout-toolbar-md-height);
   min-width: 0;
   flex-shrink: 0;
-  padding: 0 var(--openbitfun-space-2);
-  gap: var(--openbitfun-space-1);
+  padding: 0 var(--starmate-space-2);
+  gap: var(--starmate-space-1);
   user-select: none;
 
   &--collapsed {
@@ -27,11 +27,11 @@
   &--macos {
     padding-left: 78px;
     padding-right: 2px;
-    transition: padding-left var(--openbitfun-motion-duration-content-swap) var(--openbitfun-motion-easing-standard);
+    transition: padding-left var(--starmate-motion-duration-content-swap) var(--starmate-motion-easing-standard);
 
     // AppKit drives this independently of resize/command completion.
     .openbitfun-app-layout--fullscreen-chrome & {
-      padding-left: var(--openbitfun-space-2);
+      padding-left: var(--starmate-space-2);
     }
   }
 
@@ -43,15 +43,15 @@
   &__title {
     flex: 1 1 0;
     min-width: 0;
-    margin-inline-start: var(--openbitfun-space-1);
+    margin-inline-start: var(--starmate-space-1);
     overflow: hidden;
     white-space: nowrap;
     text-align: start;
-    color: var(--openbitfun-color-content-primary);
-    font-family: var(--openbitfun-type-body-sm-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-primary);
+    font-family: var(--starmate-type-body-sm-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   &__btn,
@@ -64,17 +64,17 @@
     flex-shrink: 0;
     padding: 0;
     border: none;
-    border-radius: var(--openbitfun-radius-sm);
+    border-radius: var(--starmate-radius-sm);
     background: transparent;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     cursor: pointer;
     flex-shrink: 0;
-    transition: color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-                background var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+                background var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
     &:hover:not(.is-inactive) {
-      color: var(--openbitfun-color-content-primary);
-      background: var(--openbitfun-color-action-quiet-hover);
+      color: var(--starmate-color-content-primary);
+      background: var(--starmate-color-action-quiet-hover);
     }
 
     &.is-inactive {
@@ -83,11 +83,11 @@
     }
 
     &:active:not(.is-inactive) {
-      background: var(--openbitfun-color-action-neutral-surface-hover);
+      background: var(--starmate-color-action-neutral-surface-hover);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: -1px;
     }
   }
@@ -102,18 +102,18 @@
     border: none;
     border-radius: 4px;
     background: transparent;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     cursor: pointer;
-    transition: color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-                background var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+    transition: color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+                background var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
     &:hover {
-      color: var(--openbitfun-color-content-primary);
-      background: var(--openbitfun-color-action-quiet-hover);
+      color: var(--starmate-color-content-primary);
+      background: var(--starmate-color-action-quiet-hover);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: -1px;
     }
   }

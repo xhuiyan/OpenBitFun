@@ -33,7 +33,7 @@ describe('file search result presentation', () => {
 
   it('insets the divider below the results header evenly', () => {
     expect(stylesheet).toMatch(
-      /\.openbitfun-search-results__header\s*\{[^}]*position:\s*relative;[\s\S]*?&::after\s*\{[^}]*inset-inline:\s*var\(--openbitfun-space-2\);[^}]*bottom:\s*0;[^}]*z-index:\s*var\(--openbitfun-layer-decoration\);[^}]*height:\s*1px;[^}]*background:\s*var\(--openbitfun-color-border-default\);/s,
+      /\.openbitfun-search-results__header\s*\{[^}]*position:\s*relative;[\s\S]*?&::after\s*\{[^}]*inset-inline:\s*var\(--starmate-space-2\);[^}]*bottom:\s*0;[^}]*z-index:\s*var\(--starmate-layer-decoration\);[^}]*height:\s*1px;[^}]*background:\s*var\(--starmate-color-border-default\);/s,
     );
     expect(stylesheet).not.toMatch(
       /\.openbitfun-search-results__header\s*\{[^}]*border-bottom:/s,

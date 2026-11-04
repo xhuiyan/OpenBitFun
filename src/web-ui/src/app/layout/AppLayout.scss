@@ -17,7 +17,7 @@ html, body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  background: var(--openbitfun-color-surface-canvas);
+  background: var(--starmate-color-surface-canvas);
   overflow: hidden;
 }
 
@@ -43,7 +43,7 @@ html[data-openbitfun-native-frame='client'] .openbitfun-app-layout {
 
 html[data-openbitfun-native-frame='client'] #root {
   border-radius: 12px;
-  background: var(--openbitfun-color-surface-canvas);
+  background: var(--starmate-color-surface-canvas);
 }
 
 html[data-openbitfun-native-frame='client'][data-openbitfun-window-maximized] #root {
@@ -65,19 +65,19 @@ html[data-openbitfun-native-material='sidebar'] body {
   overflow: hidden;
 
   // Use theme background
-  background: var(--openbitfun-color-surface-canvas);
+  background: var(--starmate-color-surface-canvas);
 
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-body-sm-font-family);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-body-sm-font-family);
   position: relative;
 
   // Ensure layout stability
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  background: var(--openbitfun-color-surface-canvas);
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-body-sm-font-family);
+  background: var(--starmate-color-surface-canvas);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-body-sm-font-family);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,7 +101,7 @@ html[data-openbitfun-native-material='sidebar'] body {
 
   // ==================== Startup mode ====================
   &--startup-mode {
-    background: var(--openbitfun-color-surface-canvas);
+    background: var(--starmate-color-surface-canvas);
   }
 
   // ==================== Modifier - loading ====================
@@ -113,10 +113,10 @@ html[data-openbitfun-native-material='sidebar'] body {
   // ==================== Modifier - error ====================
   &--error {
     .openbitfun-app-header {
-      border-bottom-color: var(--openbitfun-color-status-danger-content);
+      border-bottom-color: var(--starmate-color-status-danger-content);
       background: linear-gradient(135deg,
-        var(--openbitfun-color-status-danger-surface) 0%,
-        var(--openbitfun-color-action-neutral-surface) 100%);
+        var(--starmate-color-status-danger-surface) 0%,
+        var(--starmate-color-action-neutral-surface) 100%);
     }
   }
 
@@ -177,33 +177,33 @@ html[data-openbitfun-native-material='sidebar'] body {
   @include surfaces.floating;
 
   position: fixed;
-  top: calc(env(safe-area-inset-top, 0px) + var(--openbitfun-space-2));
+  top: calc(env(safe-area-inset-top, 0px) + var(--starmate-space-2));
   left: 50%;
-  z-index: var(--openbitfun-layer-notification);
+  z-index: var(--starmate-layer-notification);
   display: inline-flex;
   align-items: center;
-  gap: var(--openbitfun-space-2);
+  gap: var(--starmate-space-2);
   max-width: min(560px, calc(100vw - 32px));
   min-height: 34px;
-  padding: var(--openbitfun-space-1) var(--openbitfun-space-3);
-  color: var(--openbitfun-color-content-primary);
+  padding: var(--starmate-space-1) var(--starmate-space-3);
+  color: var(--starmate-color-content-primary);
   pointer-events: none;
   transform: translateX(-50%);
 
   &__title {
     flex: 0 0 auto;
     min-width: 0;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-meta-line-height);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-meta-line-height);
     white-space: nowrap;
   }
 
   &__detail {
     min-width: 0;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    line-height: var(--openbitfun-type-meta-line-height);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
+    line-height: var(--starmate-type-meta-line-height);
     overflow: hidden;
     white-space: nowrap;
   }
@@ -228,7 +228,7 @@ html[data-openbitfun-native-material='sidebar'] body {
 // ==================== High-contrast mode ====================
 @media (prefers-contrast: high) {
   .openbitfun-app-layout {
-    background: var(--openbitfun-color-surface-scene);
+    background: var(--starmate-color-surface-scene);
   }
 }
 

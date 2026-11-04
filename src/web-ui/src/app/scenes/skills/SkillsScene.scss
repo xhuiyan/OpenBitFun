@@ -13,7 +13,7 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  color: var(--openbitfun-color-content-primary);
+  color: var(--starmate-color-content-primary);
 }
 
 .skills-scene__scroll {
@@ -26,37 +26,37 @@
   @include configLayout.content-frame;
   display: flex;
   flex-direction: column;
-  gap: var(--openbitfun-space-5);
-  padding-block: var(--openbitfun-space-5) var(--openbitfun-space-6);
+  gap: var(--starmate-space-5);
+  padding-block: var(--starmate-space-5) var(--starmate-space-6);
   container: skills-content / inline-size;
 }
 
 .skills-scene__title {
-  margin: 0 0 var(--openbitfun-space-2);
+  margin: 0 0 var(--starmate-space-2);
   text-align: center;
-  font-family: var(--openbitfun-type-heading-page-font-family);
-  font-size: var(--openbitfun-type-heading-page-font-size);
-  font-weight: var(--openbitfun-type-heading-page-font-weight);
-  line-height: var(--openbitfun-type-heading-page-line-height);
-  letter-spacing: var(--openbitfun-type-heading-page-letter-spacing);
+  font-family: var(--starmate-type-heading-page-font-family);
+  font-size: var(--starmate-type-heading-page-font-size);
+  font-weight: var(--starmate-type-heading-page-font-weight);
+  line-height: var(--starmate-type-heading-page-line-height);
+  letter-spacing: var(--starmate-type-heading-page-letter-spacing);
 }
 
 .skills-scene__actions {
   display: flex;
   justify-content: flex-end;
   flex-shrink: 0;
-  padding: var(--openbitfun-space-4) configLayout.$config-page-content-inline-padding 0;
+  padding: var(--starmate-space-4) configLayout.$config-page-content-inline-padding 0;
 }
 
 .skills-scene__market-button {
-  padding-inline: var(--openbitfun-space-3);
+  padding-inline: var(--starmate-space-3);
   border-color: transparent;
-  border-radius: var(--openbitfun-radius-base);
-  color: var(--openbitfun-color-content-secondary);
+  border-radius: var(--starmate-radius-base);
+  color: var(--starmate-color-content-secondary);
 
   &:is(:hover, :active):not(:disabled) {
-    border-color: var(--openbitfun-color-border-default);
-    color: var(--openbitfun-color-content-primary);
+    border-color: var(--starmate-color-border-default);
+    color: var(--starmate-color-content-primary);
     text-decoration: none;
   }
 }
@@ -64,7 +64,7 @@
 .skills-controls {
   display: flex;
   align-items: center;
-  gap: var(--openbitfun-space-3);
+  gap: var(--starmate-space-3);
   min-inline-size: 0;
 }
 
@@ -96,8 +96,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--openbitfun-space-4);
-  padding-block-end: var(--openbitfun-space-4);
+  gap: var(--starmate-space-4);
+  padding-block-end: var(--starmate-space-4);
 }
 
 .skills-content-header__identity {
@@ -115,18 +115,18 @@
 .skills-content-header__title {
   min-inline-size: 0;
   margin: 0;
-  font-family: var(--openbitfun-type-heading-dialog-font-family);
-  font-size: var(--openbitfun-type-heading-dialog-font-size);
-  font-weight: var(--openbitfun-type-heading-dialog-font-weight);
-  line-height: var(--openbitfun-type-heading-dialog-line-height);
-  letter-spacing: var(--openbitfun-type-heading-dialog-letter-spacing);
+  font-family: var(--starmate-type-heading-dialog-font-family);
+  font-size: var(--starmate-type-heading-dialog-font-size);
+  font-weight: var(--starmate-type-heading-dialog-font-weight);
+  line-height: var(--starmate-type-heading-dialog-line-height);
+  letter-spacing: var(--starmate-type-heading-dialog-letter-spacing);
 }
 
 .skills-content-header__description {
-  margin: var(--openbitfun-space-1) 0 0;
-  color: var(--openbitfun-color-content-muted);
-  font-size: var(--openbitfun-type-body-sm-font-size);
-  line-height: var(--openbitfun-type-body-sm-line-height);
+  margin: var(--starmate-space-1) 0 0;
+  color: var(--starmate-color-content-muted);
+  font-size: var(--starmate-type-body-sm-font-size);
+  line-height: var(--starmate-type-body-sm-line-height);
   overflow-wrap: anywhere;
 }
 
@@ -140,8 +140,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--openbitfun-space-3);
-  padding-block: var(--openbitfun-space-2) var(--openbitfun-space-3);
+  gap: var(--starmate-space-3);
+  padding-block: var(--starmate-space-2) var(--starmate-space-3);
 }
 
 // Installed skills use the overview's two-column item layout.
@@ -154,8 +154,8 @@
 .skills-main__loading {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--openbitfun-space-4) var(--openbitfun-space-6);
-  margin-inline: calc(-1 * var(--openbitfun-control-action-card-padding-inline));
+  gap: var(--starmate-space-4) var(--starmate-space-6);
+  margin-inline: calc(-1 * var(--starmate-control-action-card-padding-inline));
 }
 
 .skills-main__grid--paginated {
@@ -171,32 +171,32 @@
 .skills-card-skeleton {
   flex-shrink: 0;
   align-items: center;
-  min-block-size: var(--openbitfun-control-action-card-sm-min-block-size);
-  animation: skills-card-in 0.2s var(--openbitfun-motion-easing-decelerate) both;
+  min-block-size: var(--starmate-control-action-card-sm-min-block-size);
+  animation: skills-card-in 0.2s var(--starmate-motion-easing-decelerate) both;
   @include surface-stagger.animation-delay(32ms);
 }
 
 .skills-card-skeleton__icon,
 .skills-card-skeleton__line {
   display: block;
-  border-radius: var(--openbitfun-radius-xs);
-  background: var(--openbitfun-color-action-neutral-surface-hover);
+  border-radius: var(--starmate-radius-xs);
+  background: var(--starmate-color-action-neutral-surface-hover);
 }
 
 .skills-card-skeleton__icon {
   flex: none;
-  inline-size: var(--openbitfun-space-8);
-  block-size: var(--openbitfun-space-8);
-  border-radius: var(--openbitfun-radius-base);
+  inline-size: var(--starmate-space-8);
+  block-size: var(--starmate-space-8);
+  border-radius: var(--starmate-radius-base);
 }
 
 .skills-card-skeleton__line {
   inline-size: 100%;
-  block-size: var(--openbitfun-space-3);
+  block-size: var(--starmate-space-3);
 
   &--title {
     inline-size: 70%;
-    block-size: var(--openbitfun-space-4);
+    block-size: var(--starmate-space-4);
   }
 
   &--short {
@@ -212,18 +212,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--openbitfun-space-2);
-  margin-block-start: var(--openbitfun-space-4);
-  padding-block-start: var(--openbitfun-space-3);
-  border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+  gap: var(--starmate-space-2);
+  margin-block-start: var(--starmate-space-4);
+  padding-block-start: var(--starmate-space-3);
+  border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
 }
 
 .skills-pagination__summary,
 .skills-pagination__compact,
 .skills-pagination__gap {
-  color: var(--openbitfun-color-content-muted);
-  font-size: var(--openbitfun-type-meta-font-size);
-  line-height: var(--openbitfun-type-meta-line-height);
+  color: var(--starmate-color-content-muted);
+  font-size: var(--starmate-type-meta-font-size);
+  line-height: var(--starmate-type-meta-line-height);
   font-variant-numeric: tabular-nums;
 }
 
@@ -231,7 +231,7 @@
 .skills-pagination__pages {
   display: flex;
   align-items: center;
-  gap: var(--openbitfun-space-1);
+  gap: var(--starmate-space-1);
 }
 
 .skills-pagination__pages {
@@ -241,7 +241,7 @@
 }
 
 .skills-pagination__gap {
-  padding-inline: var(--openbitfun-space-2);
+  padding-inline: var(--starmate-space-2);
 }
 
 .skills-pagination__compact {
@@ -251,8 +251,8 @@
 }
 
 .skills-main__grid:focus-visible {
-  outline: var(--openbitfun-focus-width) solid var(--openbitfun-color-focus-ring);
-  outline-offset: var(--openbitfun-focus-offset);
+  outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
+  outline-offset: var(--starmate-focus-offset);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -267,15 +267,15 @@
   gap: 12px;
   min-height: 200px;
   padding: 32px;
-  font-size: var(--openbitfun-type-label-md-font-size);
-  color: var(--openbitfun-color-content-muted);
+  font-size: var(--starmate-type-label-md-font-size);
+  color: var(--starmate-color-content-muted);
   text-align: center;
 
-  border-radius: var(--openbitfun-layout-field-group-radius);
-  background: var(--openbitfun-color-surface-tertiary);
+  border-radius: var(--starmate-layout-field-group-radius);
+  background: var(--starmate-color-surface-tertiary);
 
   &--error {
-    color: var(--openbitfun-color-status-danger-content);
+    color: var(--starmate-color-status-danger-content);
   }
 }
 
@@ -284,7 +284,7 @@
   justify-content: center;
   gap: 12px;
   min-height: 160px;
-  color: var(--openbitfun-color-content-muted);
+  color: var(--starmate-color-content-muted);
   text-align: center;
 }
 
@@ -306,10 +306,10 @@
   display: flex;
   flex: none;
   min-inline-size: 0;
-  margin-block-end: var(--openbitfun-space-4);
-  font-size: var(--openbitfun-type-meta-font-size);
-  line-height: var(--openbitfun-type-meta-line-height);
-  color: var(--openbitfun-color-content-muted);
+  margin-block-end: var(--starmate-space-4);
+  font-size: var(--starmate-type-meta-font-size);
+  line-height: var(--starmate-type-meta-line-height);
+  color: var(--starmate-color-content-muted);
 }
 
 .skills-discover__state {
@@ -326,33 +326,33 @@
   min-inline-size: 0;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: var(--openbitfun-space-5);
+  gap: var(--starmate-space-5);
 
   &__availability {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__badges {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--openbitfun-space-2);
-    margin-block-start: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
+    margin-block-start: var(--starmate-space-2);
   }
 
   &__description-scroll {
     max-block-size: min(160px, 25vh);
     flex: 0 0 auto;
-    border-radius: var(--openbitfun-radius-sm);
+    border-radius: var(--starmate-radius-sm);
   }
 
   &__description-scroll,
   &__path {
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: 2px;
     }
   }
@@ -361,9 +361,9 @@
     margin: 0;
     overflow-wrap: anywhere;
     white-space: pre-wrap;
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 
   &__fields {
@@ -371,52 +371,52 @@
     min-inline-size: 0;
     margin: 0;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   &__description-scroll + &__fields {
-    padding-block-start: var(--openbitfun-space-4);
-    border-block-start: 1px solid var(--openbitfun-color-border-subtle);
+    padding-block-start: var(--starmate-space-4);
+    border-block-start: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__field {
     display: grid;
     grid-template-columns: minmax(0, 96px) minmax(0, 1fr);
     align-items: baseline;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
 
     dt,
     dd {
       min-inline-size: 0;
       margin: 0;
       overflow-wrap: anywhere;
-      font-size: var(--openbitfun-type-body-sm-font-size);
-      line-height: var(--openbitfun-type-body-sm-line-height);
+      font-size: var(--starmate-type-body-sm-font-size);
+      line-height: var(--starmate-type-body-sm-line-height);
     }
 
-    dt { color: var(--openbitfun-color-content-muted); }
-    dd { color: var(--openbitfun-color-content-secondary); }
+    dt { color: var(--starmate-color-content-muted); }
+    dd { color: var(--starmate-color-content-secondary); }
   }
 
   &__location {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__path {
     min-inline-size: 0;
     flex: 1;
-    border-radius: var(--openbitfun-radius-sm);
+    border-radius: var(--starmate-radius-sm);
     overflow-wrap: anywhere;
   }
 
   &__link {
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
     text-decoration: underline;
     text-underline-offset: 2px;
 
-    &:hover { color: var(--openbitfun-color-content-primary); }
+    &:hover { color: var(--starmate-color-content-primary); }
   }
 
   &__actions {
@@ -424,14 +424,14 @@
     min-inline-size: 0;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 }
 
 @media (max-width: 480px) {
   .skills-detail__field {
     grid-template-columns: minmax(0, 72px) minmax(0, 1fr);
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 }
 
@@ -481,25 +481,25 @@
 }
 
 .skills-main > .skills-main__empty {
-  margin-block: var(--openbitfun-space-4);
+  margin-block: var(--starmate-space-4);
 }
 
 .skill-scan-diagnostics {
-  margin-block-end: var(--openbitfun-space-4);
-  border: 1px solid var(--openbitfun-color-border-default);
-  border-radius: var(--openbitfun-radius-base);
-  padding: var(--openbitfun-space-3);
+  margin-block-end: var(--starmate-space-4);
+  border: 1px solid var(--starmate-color-border-default);
+  border-radius: var(--starmate-radius-base);
+  padding: var(--starmate-space-3);
 
   summary { cursor: pointer; }
-  p { margin-block: var(--openbitfun-space-2); }
+  p { margin-block: var(--starmate-space-2); }
 
-  &__content { padding-block-start: var(--openbitfun-space-2); }
+  &__content { padding-block-start: var(--starmate-space-2); }
   &__items {
     display: grid;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     padding: 0;
     list-style: none;
   }
   &__path { display: block; overflow-wrap: anywhere; }
-  &__actions { display: flex; flex-wrap: wrap; gap: var(--openbitfun-space-2); }
+  &__actions { display: flex; flex-wrap: wrap; gap: var(--starmate-space-2); }
 }

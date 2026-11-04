@@ -3,18 +3,18 @@
   display: flex;
   align-items: center;
   min-width: 0;
-  gap: var(--openbitfun-space-2);
+  gap: var(--starmate-space-2);
   overflow: hidden;
-  padding: var(--openbitfun-focus-width);
-  margin: calc(-1 * var(--openbitfun-focus-width));
+  padding: var(--starmate-focus-width);
+  margin: calc(-1 * var(--starmate-focus-width));
 
   &__probe { position: absolute; display: inline-flex; visibility: hidden; pointer-events: none; }
   &__item {
     flex: 0 0 auto;
-    inline-size: var(--openbitfun-control-height-lg);
-    block-size: var(--openbitfun-control-height-lg);
-    min-block-size: var(--openbitfun-control-height-lg);
-    border-radius: var(--openbitfun-radius-pill);
+    inline-size: var(--starmate-control-height-lg);
+    block-size: var(--starmate-control-height-lg);
+    min-block-size: var(--starmate-control-height-lg);
+    border-radius: var(--starmate-radius-pill);
     outline-color: transparent;
     background: transparent;
   }
@@ -38,15 +38,15 @@
         content: '';
         position: absolute;
         inset: 0;
-        inline-size: var(--openbitfun-control-icon-button-standard-size);
-        block-size: var(--openbitfun-control-icon-button-standard-size);
+        inline-size: var(--starmate-control-icon-button-standard-size);
+        block-size: var(--starmate-control-icon-button-standard-size);
         margin: auto;
-        border-radius: var(--openbitfun-radius-pill);
+        border-radius: var(--starmate-radius-pill);
         pointer-events: auto;
       }
     }
   }
   &__item > [data-openbitfun-part='actions'] [data-openbitfun-component='icon-button']:is(:hover, :focus-visible):not(:disabled) {
-    color: var(--openbitfun-color-status-success-content);
+    color: var(--starmate-color-status-success-content);
   }
 }

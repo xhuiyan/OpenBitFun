@@ -26,16 +26,16 @@ describe('Nursery gallery presentation', () => {
     const gallerySection = stylesheet.slice(galleryStart, galleryEnd);
 
     expect(gallerySection).toMatch(
-      /\.nursery-gallery \{\s+background: var\(--openbitfun-color-surface-scene\);/,
+      /\.nursery-gallery \{\s+background: var\(--starmate-color-surface-scene\);/,
     );
     expect(readSibling('./AssistantCard.tsx')).toContain('appearance="subtle"');
-    expect(gallerySection).toContain('background: var(--openbitfun-color-surface-tertiary);');
-    expect(gallerySection).toContain('color: var(--openbitfun-color-content-primary);');
-    expect(gallerySection).toContain('color: var(--openbitfun-color-content-muted);');
-    expect(gallerySection).not.toContain('border-color: var(--openbitfun-color-border-subtle);');
-    expect(gallerySection).not.toContain('--openbitfun-color-content-on-dark');
-    expect(gallerySection).not.toContain('--openbitfun-color-content-on-light');
-    expect(gallerySection).not.toContain('--openbitfun-color-overlay-scrim');
+    expect(gallerySection).toContain('background: var(--starmate-color-surface-tertiary);');
+    expect(gallerySection).toContain('color: var(--starmate-color-content-primary);');
+    expect(gallerySection).toContain('color: var(--starmate-color-content-muted);');
+    expect(gallerySection).not.toContain('border-color: var(--starmate-color-border-subtle);');
+    expect(gallerySection).not.toContain('--starmate-color-content-on-dark');
+    expect(gallerySection).not.toContain('--starmate-color-content-on-light');
+    expect(gallerySection).not.toContain('--starmate-color-overlay-scrim');
   });
 
   it('keeps assistant identity metadata close to its title', () => {
@@ -57,10 +57,10 @@ describe('Nursery gallery presentation', () => {
     expect(cardSection).toContain('&__main {');
     expect(cardSection).toContain('align-self: stretch;');
     expect(cardSection).not.toContain('min-height: 148px;');
-    expect(cardSection).toContain('background: var(--openbitfun-color-action-neutral-surface-hover);');
+    expect(cardSection).toContain('background: var(--starmate-color-action-neutral-surface-hover);');
     expect(cardSection).toContain('&__workspace-actions {');
-    expect(cardSection).not.toContain('border-color: var(--openbitfun-color-border-subtle);');
-    expect(cardSection).not.toContain('border-top: 1px solid var(--openbitfun-color-border-subtle);');
+    expect(cardSection).not.toContain('border-color: var(--starmate-color-border-subtle);');
+    expect(cardSection).not.toContain('border-top: 1px solid var(--starmate-color-border-subtle);');
     expect(cardSection).not.toContain('min-height: clamp(310px, 23.8vw, 366px);');
     expect(cardSection).not.toContain('height: 100%;');
     expect(cardSection).not.toContain('--assistant-card-action-bg');

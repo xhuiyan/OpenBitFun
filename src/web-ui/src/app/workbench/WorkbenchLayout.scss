@@ -20,7 +20,7 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  gap: var(--openbitfun-control-tab-group-gap);
+  gap: var(--starmate-control-tab-group-gap);
 
   // Scene and contextual tabs share one continuous row. A group consumes its
   // content width before the following group, rather than reserving half a pane.
@@ -42,7 +42,7 @@
     flex: 1;
     border-block-end: 0;
     padding-inline: 0;
-    column-gap: var(--openbitfun-layout-toolbar-group-gap-sm);
+    column-gap: var(--starmate-layout-toolbar-group-gap-sm);
     background: transparent;
   }
 }

@@ -67,12 +67,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--openbitfun-color-surface-scene);
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-body-sm-font-family);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  font-weight: var(--openbitfun-type-body-sm-font-weight);
-  line-height: var(--openbitfun-type-body-sm-line-height);
+  background: var(--starmate-color-surface-scene);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-body-sm-font-family);
+  font-size: var(--starmate-type-label-md-font-size);
+  font-weight: var(--starmate-type-body-sm-font-weight);
+  line-height: var(--starmate-type-body-sm-line-height);
   text-rendering: geometricPrecision;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -97,10 +97,10 @@ button {
   max-width: 860px;
   margin: 0 auto;
   padding: 12px;
-  border: 1px solid var(--openbitfun-color-border-default);
+  border: 1px solid var(--starmate-color-border-default);
   border-radius: 8px;
-  color: var(--openbitfun-color-content-muted);
-  background: color-mix(in srgb, var(--openbitfun-color-surface-panel) 72%, transparent);
+  color: var(--starmate-color-content-muted);
+  background: color-mix(in srgb, var(--starmate-color-surface-panel) 72%, transparent);
 }
 
 .openbitfun-canvas-stack {
@@ -122,14 +122,14 @@ html[data-openbitfun-canvas-design-mode] body {
 }
 
 [data-openbitfun-canvas-hovered='true'] {
-  outline: 2px solid var(--openbitfun-color-accent-default) !important;
+  outline: 2px solid var(--starmate-color-accent-default) !important;
   outline-offset: 2px !important;
 }
 
 .openbitfun-card {
-  border: 1px solid var(--openbitfun-color-border-subtle);
+  border: 1px solid var(--starmate-color-border-subtle);
   border-radius: 8px;
-  background: var(--openbitfun-color-surface-raised);
+  background: var(--starmate-color-surface-raised);
   overflow: hidden;
 }
 
@@ -140,11 +140,11 @@ html[data-openbitfun-canvas-design-mode] body {
   justify-content: space-between;
   gap: 10px;
   padding: 9px 12px;
-  border-bottom: 1px solid var(--openbitfun-color-border-subtle);
-  color: var(--openbitfun-color-content-primary);
-  font-size: var(--openbitfun-type-label-sm-font-size);
-  font-weight: var(--openbitfun-type-label-selected-font-weight);
-  line-height: var(--openbitfun-type-modifier-leading-dense-line-height);
+  border-bottom: 1px solid var(--starmate-color-border-subtle);
+  color: var(--starmate-color-content-primary);
+  font-size: var(--starmate-type-label-sm-font-size);
+  font-weight: var(--starmate-type-label-selected-font-weight);
+  line-height: var(--starmate-type-modifier-leading-dense-line-height);
 }
 
 .openbitfun-card-body {
@@ -157,9 +157,9 @@ html[data-openbitfun-canvas-design-mode] body {
   position: relative;
   border-radius: 8px;
   padding: 12px 14px 12px 16px;
-  border: 1px solid color-mix(in srgb, var(--openbitfun-color-border-subtle) 76%, transparent);
-  background: color-mix(in srgb, var(--openbitfun-color-surface-raised) 58%, transparent);
-  color: var(--openbitfun-color-content-primary);
+  border: 1px solid color-mix(in srgb, var(--starmate-color-border-subtle) 76%, transparent);
+  background: color-mix(in srgb, var(--starmate-color-surface-raised) 58%, transparent);
+  color: var(--starmate-color-content-primary);
 }
 
 .openbitfun-callout::before {
@@ -176,16 +176,16 @@ html[data-openbitfun-canvas-design-mode] body {
 
 .openbitfun-callout-title {
   margin-bottom: 6px;
-  color: var(--openbitfun-color-content-primary);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  font-weight: var(--openbitfun-type-label-selected-font-weight);
-  line-height: var(--openbitfun-type-meta-line-height);
+  color: var(--starmate-color-content-primary);
+  font-size: var(--starmate-type-label-md-font-size);
+  font-weight: var(--starmate-type-label-selected-font-weight);
+  line-height: var(--starmate-type-meta-line-height);
 }
 
 .openbitfun-callout-body {
-  color: var(--openbitfun-color-content-secondary);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  line-height: var(--openbitfun-type-support-line-height);
+  color: var(--starmate-color-content-secondary);
+  font-size: var(--starmate-type-label-md-font-size);
+  line-height: var(--starmate-type-support-line-height);
 }
 
 .openbitfun-callout-body > :first-child {
@@ -203,16 +203,16 @@ html[data-openbitfun-canvas-design-mode] body {
   border: 0;
   border-radius: 999px;
   padding: 3px 9px;
-  background: var(--openbitfun-color-action-neutral-surface);
-  color: var(--openbitfun-color-content-secondary);
-  font-size: var(--openbitfun-type-label-sm-font-size);
-  line-height: var(--openbitfun-type-body-sm-line-height);
+  background: var(--starmate-color-action-neutral-surface);
+  color: var(--starmate-color-content-secondary);
+  font-size: var(--starmate-type-label-sm-font-size);
+  line-height: var(--starmate-type-body-sm-line-height);
   white-space: nowrap;
 }
 
 .openbitfun-pill--active {
-  background: var(--openbitfun-color-action-secondary-hover);
-  color: var(--openbitfun-color-content-primary);
+  background: var(--starmate-color-action-secondary-hover);
+  color: var(--starmate-color-content-primary);
 }
 
 .openbitfun-button {
@@ -223,74 +223,74 @@ html[data-openbitfun-canvas-design-mode] body {
   padding: 0 11px;
   border: 0;
   border-radius: 6px;
-  background: var(--openbitfun-color-action-neutral-surface);
-  color: var(--openbitfun-color-content-secondary);
+  background: var(--starmate-color-action-neutral-surface);
+  color: var(--starmate-color-content-secondary);
   cursor: pointer;
 }
 
 .openbitfun-button:hover {
-  background: var(--openbitfun-color-action-neutral-surface-hover);
-  color: var(--openbitfun-color-content-primary);
+  background: var(--starmate-color-action-neutral-surface-hover);
+  color: var(--starmate-color-content-primary);
 }
 
 .openbitfun-button--primary {
-  background: var(--openbitfun-color-accent-default);
-  color: var(--openbitfun-color-content-on-dark);
+  background: var(--starmate-color-accent-default);
+  color: var(--starmate-color-content-on-dark);
 }
 
 .openbitfun-code {
   border-radius: 5px;
   padding: 1px 5px;
-  background: var(--openbitfun-color-action-neutral-surface);
-  color: var(--openbitfun-color-content-primary);
-  font-family:var(--openbitfun-type-code-md-font-family);
-  font-size: var(--openbitfun-type-label-md-font-size);
+  background: var(--starmate-color-action-neutral-surface);
+  color: var(--starmate-color-content-primary);
+  font-family:var(--starmate-type-code-md-font-family);
+  font-size: var(--starmate-type-label-md-font-size);
 }
 
 .openbitfun-table-wrap {
   overflow: auto;
-  border: 1px solid var(--openbitfun-color-border-subtle);
+  border: 1px solid var(--starmate-color-border-subtle);
   border-radius: 8px;
-  background: var(--openbitfun-color-surface-raised);
+  background: var(--starmate-color-surface-raised);
 }
 
 .openbitfun-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--openbitfun-type-label-sm-font-size);
+  font-size: var(--starmate-type-label-sm-font-size);
 }
 
 .openbitfun-table th,
 .openbitfun-table td {
   padding: 8px 10px;
-  border-bottom: 1px solid var(--openbitfun-color-border-subtle);
+  border-bottom: 1px solid var(--starmate-color-border-subtle);
   text-align: left;
   vertical-align: top;
 }
 
 .openbitfun-table th {
-  color: var(--openbitfun-color-content-primary);
-  font-weight: var(--openbitfun-type-label-selected-font-weight);
-  background: var(--openbitfun-color-surface-chrome);
+  color: var(--starmate-color-content-primary);
+  font-weight: var(--starmate-type-label-selected-font-weight);
+  background: var(--starmate-color-surface-chrome);
 }
 
 .openbitfun-table td {
-  color: var(--openbitfun-color-content-secondary);
+  color: var(--starmate-color-content-secondary);
 }
 
 .openbitfun-diff {
   overflow: auto;
-  background: color-mix(in srgb, var(--openbitfun-color-surface-canvas) 54%, transparent);
-  font-family: var(--openbitfun-type-code-md-font-family);
-  font-size: var(--openbitfun-type-label-sm-font-size);
-  font-weight: var(--openbitfun-type-body-sm-font-weight);
-  line-height: var(--openbitfun-type-support-line-height);
+  background: color-mix(in srgb, var(--starmate-color-surface-canvas) 54%, transparent);
+  font-family: var(--starmate-type-code-md-font-family);
+  font-size: var(--starmate-type-label-sm-font-size);
+  font-weight: var(--starmate-type-body-sm-font-weight);
+  line-height: var(--starmate-type-support-line-height);
 }
 
 .openbitfun-chart {
-  border: 1px solid var(--openbitfun-color-border-subtle);
+  border: 1px solid var(--starmate-color-border-subtle);
   border-radius: 8px;
-  background: var(--openbitfun-color-surface-raised);
+  background: var(--starmate-color-surface-raised);
   padding: 12px;
   min-width: 0;
 }
@@ -307,10 +307,10 @@ html[data-openbitfun-canvas-design-mode] body {
 .openbitfun-chart__title {
   min-width: 0;
   overflow: hidden;
-  color: var(--openbitfun-color-content-primary);
-  font-size: var(--openbitfun-type-label-sm-font-size);
-  font-weight: var(--openbitfun-type-label-selected-font-weight);
-  line-height: var(--openbitfun-type-modifier-leading-dense-line-height);
+  color: var(--starmate-color-content-primary);
+  font-size: var(--starmate-type-label-sm-font-size);
+  font-weight: var(--starmate-type-label-selected-font-weight);
+  line-height: var(--starmate-type-modifier-leading-dense-line-height);
   white-space: nowrap;
 }
 
@@ -318,8 +318,8 @@ html[data-openbitfun-canvas-design-mode] body {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 10px;
-  color: var(--openbitfun-color-content-muted);
-  font-size: var(--openbitfun-type-meta-font-size);
+  color: var(--starmate-color-content-muted);
+  font-size: var(--starmate-type-meta-font-size);
 }
 
 .openbitfun-chart__legend-item {
@@ -356,30 +356,30 @@ html[data-openbitfun-canvas-design-mode] body {
 }
 
 .openbitfun-canvas-toggle__label {
-  color: var(--openbitfun-color-content-primary);
-  font-size: var(--openbitfun-type-label-md-font-size);
+  color: var(--starmate-color-content-primary);
+  font-size: var(--starmate-type-label-md-font-size);
 }
 
 .openbitfun-canvas-toggle__description,
 .openbitfun-canvas-toggle__status {
-  color: var(--openbitfun-color-content-muted);
-  font-size: var(--openbitfun-type-label-sm-font-size);
+  color: var(--starmate-color-content-muted);
+  font-size: var(--starmate-type-label-sm-font-size);
 }
 
 .openbitfun-input,
 .openbitfun-textarea {
   width: 100%;
-  border: 1px solid var(--openbitfun-color-border-subtle);
+  border: 1px solid var(--starmate-color-border-subtle);
   border-radius: 6px;
-  background: var(--openbitfun-color-surface-subtle);
-  color: var(--openbitfun-color-content-primary);
+  background: var(--starmate-color-surface-subtle);
+  color: var(--starmate-color-content-primary);
   padding: 7px 9px;
   outline: none;
 }
 
 .openbitfun-input:focus,
 .openbitfun-textarea:focus {
-  border-color: color-mix(in srgb, var(--openbitfun-color-accent-default) 55%, var(--openbitfun-color-border-default));
+  border-color: color-mix(in srgb, var(--starmate-color-accent-default) 55%, var(--starmate-color-border-default));
 }
 
 .openbitfun-select {

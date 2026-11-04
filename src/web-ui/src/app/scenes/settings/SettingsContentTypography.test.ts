@@ -26,22 +26,22 @@ describe('Settings content typography', () => {
     expect(pageHeaderStyles).toContain('font-size: var(--starmate-type-body-lg-font-size);');
     expect(pageHeaderStyles).toContain('font-weight: var(--starmate-type-body-lg-font-weight);');
 
-    expect(layoutStyles).toContain('font-size: var(--openbitfun-type-heading-section-font-size);');
-    expect(layoutStyles).toContain('font-weight: var(--openbitfun-type-heading-section-font-weight);');
-    expect(layoutStyles).toContain('font-size: var(--openbitfun-type-body-sm-font-size);');
-    expect(layoutStyles).toContain('font-weight: var(--openbitfun-type-body-sm-font-weight);');
-    expect(layoutStyles).toContain('font-size: var(--openbitfun-type-label-selected-font-size);');
-    expect(layoutStyles).toContain('font-weight: var(--openbitfun-type-label-selected-font-weight);');
-    expect(layoutStyles).toContain('font-size: var(--openbitfun-type-support-font-size);');
-    expect(layoutStyles).toContain('line-height: var(--openbitfun-type-modifier-leading-support-line-height);');
+    expect(layoutStyles).toContain('font-size: var(--starmate-type-heading-section-font-size);');
+    expect(layoutStyles).toContain('font-weight: var(--starmate-type-heading-section-font-weight);');
+    expect(layoutStyles).toContain('font-size: var(--starmate-type-body-sm-font-size);');
+    expect(layoutStyles).toContain('font-weight: var(--starmate-type-body-sm-font-weight);');
+    expect(layoutStyles).toContain('font-size: var(--starmate-type-label-selected-font-size);');
+    expect(layoutStyles).toContain('font-weight: var(--starmate-type-label-selected-font-weight);');
+    expect(layoutStyles).toContain('font-size: var(--starmate-type-support-font-size);');
+    expect(layoutStyles).toContain('line-height: var(--starmate-type-modifier-leading-support-line-height);');
   });
 
   it('keeps legacy config form labels and helper copy on the same hierarchy', () => {
-    expect(formStyles).toContain('font-size: var(--openbitfun-type-label-selected-font-size);');
-    expect(formStyles).toContain('font-weight: var(--openbitfun-type-label-selected-font-weight);');
-    expect(formStyles).toContain('font-size: var(--openbitfun-type-support-font-size);');
-    expect(formStyles).toContain('line-height: var(--openbitfun-type-modifier-leading-support-line-height);');
-    expect(formStyles).toContain('color: var(--openbitfun-color-content-required-indicator);');
+    expect(formStyles).toContain('font-size: var(--starmate-type-label-selected-font-size);');
+    expect(formStyles).toContain('font-weight: var(--starmate-type-label-selected-font-weight);');
+    expect(formStyles).toContain('font-size: var(--starmate-type-support-font-size);');
+    expect(formStyles).toContain('line-height: var(--starmate-type-modifier-leading-support-line-height);');
+    expect(formStyles).toContain('color: var(--starmate-color-content-required-indicator);');
   });
 
   it('does not let individual settings pages shrink shared headings or subtitles', () => {

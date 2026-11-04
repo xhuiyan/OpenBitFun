@@ -36,7 +36,7 @@ describe('WorkspaceListSection layout styles', () => {
     const workspaceList = extractBlock(stylesheet, '&__workspace-list');
     const workspaceDropTarget = extractBlock(stylesheet, '&__workspace-drop-target');
 
-    expect(workspaceList).toContain('gap: var(--openbitfun-space-2);');
+    expect(workspaceList).toContain('gap: var(--starmate-space-2);');
     expect(workspaceDropTarget).toContain('gap: 0;');
   });
 
@@ -65,7 +65,7 @@ describe('WorkspaceListSection layout styles', () => {
     expect(workspaceGroup).toContain('min-width: 0;');
     expect(workspaceItem).toContain('min-width: 0;');
     expect(workspaceItem).toContain('max-width: 100%;');
-    expect(workspaceItem).toContain('gap: calc(var(--openbitfun-space-1) / 2);');
+    expect(workspaceItem).toContain('gap: calc(var(--starmate-space-1) / 2);');
     expect(workspaceCard).toContain('max-width: 100%;');
     expect(workspaceCard).toContain('overflow: hidden;');
     expect(workspaceIcon).toContain('width: var(--_nav-icon-size-prominent);');
@@ -93,7 +93,7 @@ describe('WorkspaceListSection layout styles', () => {
 
     expect(assistantItem).toContain('min-width: 0;');
     expect(assistantItem).toContain('max-width: 100%;');
-    expect(assistantItem).toContain('gap: calc(var(--openbitfun-space-1) / 2);');
+    expect(assistantItem).toContain('gap: calc(var(--starmate-space-1) / 2);');
     expect(assistantCard).toContain('max-width: 100%;');
     expect(assistantCard).toContain('min-height: 30px;');
     expect(assistantCard).toContain('overflow: hidden;');
@@ -207,7 +207,7 @@ describe('WorkspaceListSection layout styles', () => {
     expect(source).toContain('isVisible={!sessionsCollapsed}');
     expect(projectSessions).toContain('grid-template-rows: 1fr;');
     expect(projectSessions).toContain('grid-template-rows: 0fr;');
-    expect(projectSessions).toContain('grid-template-rows var(--openbitfun-motion-duration-normal)');
+    expect(projectSessions).toContain('grid-template-rows var(--starmate-motion-duration-normal)');
     expect(inner).toContain('min-block-size: 0;');
   });
 
@@ -224,17 +224,17 @@ describe('WorkspaceListSection layout styles', () => {
       "&__workspace-item[data-openbitfun-state~='remote'] &__workspace-item-name-btn",
     );
 
-    expect(remoteNameRow).toContain('gap: var(--openbitfun-space-2);');
+    expect(remoteNameRow).toContain('gap: var(--starmate-space-2);');
     expect(remoteNameButton).toContain('flex: 1 1 0;');
     expect(remoteNameButton).toContain('max-width: none;');
-    expect(remoteChip).toContain('gap: var(--openbitfun-space-2);');
+    expect(remoteChip).toContain('gap: var(--starmate-space-2);');
     // The folder name owns the row; the chip shrinks and stays bounded (#3517).
     expect(remoteChip).toContain('flex: 0 1 auto;');
     expect(remoteChip).toContain('min-width: 0;');
     expect(remoteChip).toContain('max-width: 45%;');
     expect(remoteChip).toContain('margin-left: auto;');
-    expect(remoteChip).toContain('padding: 0 var(--openbitfun-space-2);');
-    expect(remoteChip).toContain('border-radius: var(--openbitfun-radius-base);');
+    expect(remoteChip).toContain('padding: 0 var(--starmate-space-2);');
+    expect(remoteChip).toContain('border-radius: var(--starmate-radius-base);');
     // A connected chip stays neutral; the green status dot already reports it.
     expect(remoteChip).not.toContain('status-success-surface');
     expect(remoteHost).toContain('flex: 0 1 auto;');

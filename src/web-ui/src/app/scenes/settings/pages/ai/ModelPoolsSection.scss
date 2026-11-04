@@ -1,14 +1,14 @@
 .openbitfun-model-pools__empty {
   display: flex;
   align-items: center;
-  min-block-size: var(--openbitfun-control-height-sm);
-  color: var(--openbitfun-color-content-secondary);
+  min-block-size: var(--starmate-control-height-sm);
+  color: var(--starmate-color-content-secondary);
 }
 
 .openbitfun-model-pools__summary {
   display: flex;
   align-items: center;
-  gap: var(--openbitfun-space-2);
+  gap: var(--starmate-space-2);
   min-width: 0;
 }
 
@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--openbitfun-space-1);
+  gap: var(--starmate-space-1);
 }
 
 // Keep the row geometry stable and the controls reachable by keyboard or touch.
@@ -46,9 +46,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--openbitfun-space-2);
-  margin-block-start: var(--openbitfun-space-2);
-  padding: var(--openbitfun-space-1) var(--openbitfun-space-5);
+  gap: var(--starmate-space-2);
+  margin-block-start: var(--starmate-space-2);
+  padding: var(--starmate-space-1) var(--starmate-space-5);
 }
 
 .openbitfun-model-pools__member {
@@ -60,15 +60,15 @@
 .openbitfun-model-pools__member-summary {
   display: flex;
   flex-direction: column;
-  gap: var(--openbitfun-space-1);
+  gap: var(--starmate-space-1);
 }
 
 .openbitfun-model-pools__member-button {
-  padding-inline-start: var(--openbitfun-space-1);
+  padding-inline-start: var(--starmate-space-1);
 
   [data-openbitfun-part='leading-icon'] {
-    inline-size: var(--openbitfun-space-4);
-    block-size: var(--openbitfun-space-4);
+    inline-size: var(--starmate-space-4);
+    block-size: var(--starmate-space-4);
   }
 }
 
@@ -78,13 +78,13 @@
   justify-content: center;
   inline-size: 100%;
   block-size: 100%;
-  border-radius: var(--openbitfun-radius-pill);
-  background: var(--openbitfun-color-surface-panel);
-  color: var(--openbitfun-color-content-secondary);
-  font-family: var(--openbitfun-type-meta-font-family);
-  font-size: var(--openbitfun-type-meta-font-size);
-  font-weight: var(--openbitfun-type-meta-font-weight);
-  line-height: var(--openbitfun-type-meta-line-height);
+  border-radius: var(--starmate-radius-pill);
+  background: var(--starmate-color-surface-panel);
+  color: var(--starmate-color-content-secondary);
+  font-family: var(--starmate-type-meta-font-family);
+  font-size: var(--starmate-type-meta-font-size);
+  font-weight: var(--starmate-type-meta-font-weight);
+  line-height: var(--starmate-type-meta-line-height);
   font-variant-numeric: tabular-nums;
 }
 
@@ -92,7 +92,7 @@
   display: grid;
   inline-size: 100%;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--openbitfun-space-3);
+  gap: var(--starmate-space-3);
 }
 
 .openbitfun-model-pools__editor-row.openbitfun-config-page-row {
@@ -105,11 +105,11 @@
 
 .openbitfun-model-pools__name-row.openbitfun-config-page-row {
   grid-template-columns: max-content minmax(0, 1fr);
-  column-gap: var(--openbitfun-space-3);
+  column-gap: var(--starmate-space-3);
 
   @media (max-width: 520px) {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--openbitfun-space-2);
+    row-gap: var(--starmate-space-2);
   }
 }
 
@@ -126,24 +126,24 @@
 
 .openbitfun-model-pools__strategy-header {
   position: absolute;
-  inset-block-start: var(--openbitfun-space-2);
-  inset-inline-end: var(--openbitfun-space-2);
+  inset-block-start: var(--starmate-space-2);
+  inset-inline-end: var(--starmate-space-2);
 }
 
 .openbitfun-model-pools__strategy-content {
   flex: 1;
   justify-content: center;
-  gap: var(--openbitfun-space-2);
-  padding: var(--openbitfun-space-4);
+  gap: var(--starmate-space-2);
+  padding: var(--starmate-space-4);
   text-align: center;
 }
 
 .openbitfun-model-pools__strategy-title {
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-label-md-font-family);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  font-weight: var(--openbitfun-type-label-md-font-weight);
-  line-height: var(--openbitfun-type-label-md-line-height);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-label-md-font-family);
+  font-size: var(--starmate-type-label-md-font-size);
+  font-weight: var(--starmate-type-label-md-font-weight);
+  line-height: var(--starmate-type-label-md-line-height);
 }
 
 .openbitfun-model-pools__strategy-preview {
@@ -166,7 +166,7 @@
 }
 
 .openbitfun-model-pools__picker-body {
-  gap: var(--openbitfun-space-3);
+  gap: var(--starmate-space-3);
   overflow: hidden;
 
   > [data-openbitfun-component='search-field'] {
@@ -176,14 +176,14 @@
 
 .openbitfun-model-pools__picker-results {
   flex: 1 1 auto;
-  padding: var(--openbitfun-space-1);
+  padding: var(--starmate-space-1);
 }
 
 .openbitfun-model-pools__picker-options {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--openbitfun-space-2);
+  gap: var(--starmate-space-2);
 
   > [data-openbitfun-component='button'] {
     max-inline-size: 100%;
@@ -191,8 +191,8 @@
 
   > p {
     margin: 0;
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
   }
 }

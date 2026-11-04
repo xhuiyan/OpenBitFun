@@ -724,11 +724,11 @@ test("tool cards keep monospace in code evidence, separate from labels and prose
     new URL("../../../apps/design-lab/src/preview/FlowChatPreviewRegistry.css", import.meta.url),
     "utf8",
   );
-  assert.equal(previewStyles.match(/--openbitfun-type-code-md-font-family/g)?.length ?? 0, 1);
+  assert.equal(previewStyles.match(/--starmate-type-code-md-font-family/g)?.length ?? 0, 1);
   assert.doesNotMatch(previewStyles, /font-variant-numeric:\s*tabular-nums/);
   assert.match(
     previewStyles,
-    /\.flow-chat-tool-card-preview__diff\s*\{[^}]*font-family:\s*var\(--openbitfun-type-code-md-font-family\)/s,
+    /\.flow-chat-tool-card-preview__diff\s*\{[^}]*font-family:\s*var\(--starmate-type-code-md-font-family\)/s,
   );
 });
 

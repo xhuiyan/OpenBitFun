@@ -11,20 +11,20 @@
     height: 18px;
     padding: 0;
     border: none;
-    border-radius: var(--openbitfun-radius-base);
+    border-radius: var(--starmate-radius-base);
     background: transparent;
-    color: var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-flow-support-font-size);
+    color: var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-flow-support-font-size);
     cursor: pointer;
     outline: none;
 
     &:hover,
     &--open {
-      background: var(--openbitfun-color-action-neutral-surface-hover);
+      background: var(--starmate-color-action-neutral-surface-hover);
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--openbitfun-color-accent-default) 20%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--starmate-color-accent-default) 20%, transparent);
     }
 
     &:disabled {
@@ -37,16 +37,16 @@
     width: auto;
     min-width: 0;
     padding-inline: 2px;
-    border-radius: var(--openbitfun-radius-sm);
+    border-radius: var(--starmate-radius-sm);
   }
 
   &__trigger-label {
     min-width: 0;
     overflow: hidden;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-flow-control-font-size);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    line-height: var(--openbitfun-type-modifier-leading-none-line-height);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-flow-control-font-size);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    line-height: var(--starmate-type-modifier-leading-none-line-height);
     white-space: nowrap;
   }
 
@@ -54,7 +54,7 @@
     --reasoning-preset-menu-offset: -4px;
     --openbitfun-overlay-menu-inline-size: min(232px, calc(100vw - 16px));
 
-    z-index: var(--openbitfun-layer-popover);
+    z-index: var(--starmate-layer-popover);
     transform-origin: center top;
     transition:
       opacity 100ms ease,
@@ -92,10 +92,10 @@
   }
 
   &__title {
-    color: var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-flow-control-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-modifier-leading-dense-line-height);
+    color: var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-flow-control-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-modifier-leading-dense-line-height);
   }
 
   &__auto-row {
@@ -112,10 +112,10 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
-    color: var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-flow-control-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    line-height: var(--openbitfun-type-modifier-leading-dense-line-height);
+    color: var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-flow-control-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    line-height: var(--starmate-type-modifier-leading-dense-line-height);
     white-space: nowrap;
   }
 }

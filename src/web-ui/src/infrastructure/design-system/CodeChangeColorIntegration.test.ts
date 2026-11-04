@@ -26,7 +26,11 @@ describe('code-change color integration', () => {
       const source = readFileSync(new URL(relativePath, import.meta.url), 'utf8');
 
       for (const token of CODE_CHANGE_TOKENS) {
-        expect(source, `${relativePath} should consume ${token}`).toContain(token);
+        // TSX inline style lookups keep the canonical prefix for now; migrated
+        // stylesheets use the --starmate-* compatibility alias.
+        const suffix = token.replace(/^--openbitfun-/, '');
+        const pattern = new RegExp(`--(?:openbitfun|starmate)-${suffix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`);
+        expect(source, `${relativePath} should consume ${token}`).toMatch(pattern);
       }
     }
   });
@@ -39,13 +43,13 @@ describe('code-change color integration', () => {
     ]) {
       const source = readFileSync(new URL(relativePath, import.meta.url), 'utf8');
 
-      expect(source).not.toMatch(/--openbitfun-domain-git-(?:added|deleted|staged)/);
+      expect(source).not.toMatch(/--(?:openbitfun|starmate)-domain-git-(?:added|deleted|staged)/);
     }
   });
 
   it('uses dedicated diff colors for the inline code viewer', () => {
     const source = readFileSync(new URL('../../flow_chat/components/InlineDiffPreview.scss', import.meta.url), 'utf8');
-    expect(source).toContain('--openbitfun-color-code-diff-added-marker');
-    expect(source).toContain('--openbitfun-color-code-diff-removed-marker');
+    expect(source).toContain('--starmate-color-code-diff-added-marker');
+    expect(source).toContain('--starmate-color-code-diff-removed-marker');
   });
 });

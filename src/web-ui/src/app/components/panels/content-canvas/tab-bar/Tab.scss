@@ -15,17 +15,17 @@
   }
 
   &.is-file-deleted &__title {
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   &.is-dragging {
-    opacity: var(--openbitfun-opacity-disabled);
+    opacity: var(--starmate-opacity-disabled);
   }
 
   &__dirty-indicator {
-    margin-inline-start: var(--openbitfun-space-1);
-    font-size: var(--openbitfun-type-micro-font-size);
-    color: var(--openbitfun-color-status-warning-content);
+    margin-inline-start: var(--starmate-space-1);
+    font-size: var(--starmate-type-micro-font-size);
+    color: var(--starmate-color-status-warning-content);
   }
 
   // A pinned document always exposes its unpin control.

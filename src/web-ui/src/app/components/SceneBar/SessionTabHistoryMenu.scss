@@ -1,6 +1,6 @@
 .openbitfun-session-tab-history {
   --_session-history-source-width: 0px;
-  --_session-history-source-height: var(--openbitfun-control-tab-group-item-height-sm);
+  --_session-history-source-height: var(--starmate-control-tab-group-item-height-sm);
   --_session-history-source-left: 0px;
   --_session-history-source-top: 0px;
 
@@ -8,12 +8,12 @@
   inline-size: max(220px, var(--_session-history-source-width));
   padding: 0;
   border: 0;
-  border-radius: var(--openbitfun-radius-lg);
-  outline: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-  outline-offset: calc(-0.5 * var(--openbitfun-border-width-default));
-  color: var(--openbitfun-color-content-primary);
-  background: var(--openbitfun-color-surface-raised);
-  box-shadow: var(--openbitfun-shadow-overlay);
+  border-radius: var(--starmate-radius-lg);
+  outline: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+  outline-offset: calc(-0.5 * var(--starmate-border-width-default));
+  color: var(--starmate-color-content-primary);
+  background: var(--starmate-color-surface-raised);
+  box-shadow: var(--starmate-shadow-overlay);
   opacity: 1;
   translate: none;
   transition: none;
@@ -32,38 +32,38 @@
 
   &[data-state='entered'] {
     // Reveal both axes together; backwards fill releases the clip and shadow at rest.
-    animation: session-tab-history-expand var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-enter) backwards;
+    animation: session-tab-history-expand var(--starmate-motion-duration-fast) var(--starmate-motion-easing-enter) backwards;
   }
 
   &[data-state='exiting'] {
     pointer-events: none;
-    animation: session-tab-history-collapse var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-exit) both;
+    animation: session-tab-history-collapse var(--starmate-motion-duration-fast) var(--starmate-motion-easing-exit) both;
   }
 
   &__header {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-control-tab-group-item-gap);
+    gap: var(--starmate-control-tab-group-item-gap);
     inline-size: 100%;
     block-size: var(--_session-history-source-height);
-    padding: 0 var(--openbitfun-control-tab-group-item-padding-inline-sm);
+    padding: 0 var(--starmate-control-tab-group-item-padding-inline-sm);
     border: 0;
     border-radius: inherit;
     color: inherit;
     background: transparent;
-    font-family: var(--openbitfun-type-label-md-font-family);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    letter-spacing: var(--openbitfun-type-label-md-letter-spacing);
+    font-family: var(--starmate-type-label-md-font-family);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    letter-spacing: var(--starmate-type-label-md-letter-spacing);
     text-align: start;
     cursor: pointer;
   }
 
   &__rows {
-    padding: var(--openbitfun-space-1);
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
+    padding: var(--starmate-space-1);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -79,10 +79,10 @@
 
 @keyframes session-tab-history-expand {
   0% { clip-path: var(--_session-history-capsule); }
-  100% { clip-path: inset(0 round var(--openbitfun-radius-lg)); }
+  100% { clip-path: inset(0 round var(--starmate-radius-lg)); }
 }
 
 @keyframes session-tab-history-collapse {
-  0% { clip-path: inset(0 round var(--openbitfun-radius-lg)); }
+  0% { clip-path: inset(0 round var(--starmate-radius-lg)); }
   100% { clip-path: var(--_session-history-capsule); }
 }

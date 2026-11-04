@@ -1585,10 +1585,10 @@ describe('Session usage report i18n and theme guards', () => {
       .map(stylePath => fs.readFileSync(path.resolve(stylePath), 'utf8'))
       .join('\n');
 
-    expect(styleText).toContain('var(--openbitfun-color-content-primary)');
+    expect(styleText).toContain('var(--starmate-color-content-primary)');
     expect(styleText).toContain('width: auto;');
     expect(styleText).toContain('margin: 0.12rem 3rem');
-    expect(styleText).toContain('border: 1px solid color-mix(in srgb, var(--openbitfun-color-border-default)');
+    expect(styleText).toContain('border: 1px solid color-mix(in srgb, var(--starmate-color-border-default)');
     expect(styleText).toContain('grid-template-columns: repeat(3, minmax(116px, 1fr));');
     expect(styleText).not.toContain('text-overflow: ellipsis;');
     expect(styleText).not.toContain('grid-template-columns: repeat(4, minmax(116px, 1fr));');

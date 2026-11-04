@@ -23,17 +23,17 @@ $todos-compact-breakpoint: 600px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     min-width: 0;
     min-height: 96px;
-    padding-block: var(--openbitfun-space-5);
+    padding-block: var(--starmate-space-5);
     box-sizing: border-box;
   }
 
   &__head-main {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
   }
 
@@ -42,7 +42,7 @@ $todos-compact-breakpoint: 600px;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
   }
 
   &__head-text {
@@ -54,17 +54,17 @@ $todos-compact-breakpoint: 600px;
 
   &__title {
     margin: 0;
-    font-size: var(--openbitfun-type-heading-page-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-heading-page-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    color: var(--starmate-color-content-primary);
   }
 
   &__subtitle {
     margin: 0;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
+    color: var(--starmate-color-content-muted);
   }
 
   &__head-actions,
@@ -78,21 +78,21 @@ $todos-compact-breakpoint: 600px;
   &__head-actions {
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     flex: 0 0 auto;
   }
 
   &__month-navigation {
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   &__month-label {
     justify-content: center;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     min-width: 112px;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    color: var(--starmate-color-content-primary);
     font-variant-numeric: tabular-nums;
   }
 
@@ -105,13 +105,13 @@ $todos-compact-breakpoint: 600px;
   &__panes {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-12);
+    gap: var(--starmate-space-12);
   }
 
   &__pane {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-5);
+    gap: var(--starmate-space-5);
     min-width: 0;
     min-height: 0;
     box-sizing: border-box;
@@ -124,21 +124,21 @@ $todos-compact-breakpoint: 600px;
   &__pane-title,
   &__list-title {
     margin: 0;
-    font-size: var(--openbitfun-type-heading-section-font-size);
-    font-weight: var(--openbitfun-type-heading-section-font-weight);
-    line-height: var(--openbitfun-type-heading-section-line-height);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-heading-section-font-size);
+    font-weight: var(--starmate-type-heading-section-font-weight);
+    line-height: var(--starmate-type-heading-section-line-height);
+    color: var(--starmate-color-content-primary);
   }
 
   &__empty {
     margin: 0;
-    padding: var(--openbitfun-space-4) var(--openbitfun-space-3);
+    padding: var(--starmate-space-4) var(--starmate-space-3);
     text-align: center;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-md-font-size);
+    color: var(--starmate-color-content-muted);
     border: 0;
-    border-radius: var(--openbitfun-layout-field-group-radius);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-layout-field-group-radius);
+    background: var(--starmate-color-surface-tertiary);
     min-height: 96px;
     display: grid;
     place-items: center;
@@ -148,18 +148,18 @@ $todos-compact-breakpoint: 600px;
 
   &__overview {
     flex: 0 0 auto;
-    padding: var(--openbitfun-space-3);
+    padding: var(--starmate-space-3);
     border: 0;
-    border-radius: var(--openbitfun-layout-field-group-radius);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-layout-field-group-radius);
+    background: var(--starmate-color-surface-tertiary);
   }
 
   &__overview-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
-    color: var(--openbitfun-color-content-secondary);
+    gap: var(--starmate-space-2);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__overview-metrics {
@@ -169,14 +169,14 @@ $todos-compact-breakpoint: 600px;
 
   &__overview-metric {
     min-width: 0;
-    padding-inline: var(--openbitfun-space-2);
+    padding-inline: var(--starmate-space-2);
 
     &:first-child {
-      padding-left: var(--openbitfun-space-1);
+      padding-left: var(--starmate-space-1);
     }
 
     & + & {
-      border-left: 1px solid var(--openbitfun-color-border-subtle);
+      border-left: 1px solid var(--starmate-color-border-subtle);
     }
   }
 
@@ -188,26 +188,26 @@ $todos-compact-breakpoint: 600px;
   &__overview-value {
     display: flex;
     align-items: baseline;
-    gap: var(--openbitfun-space-1);
-    color: var(--openbitfun-color-content-primary);
+    gap: var(--starmate-space-1);
+    color: var(--starmate-color-content-primary);
 
     strong {
-      font-size: var(--openbitfun-type-flow-title-font-size);
-      font-weight: var(--openbitfun-type-label-sm-font-weight);
-      line-height: var(--openbitfun-type-label-md-line-height);
+      font-size: var(--starmate-type-flow-title-font-size);
+      font-weight: var(--starmate-type-label-sm-font-weight);
+      line-height: var(--starmate-type-label-md-line-height);
       font-variant-numeric: tabular-nums;
     }
 
     span {
-      font-size: var(--openbitfun-type-label-sm-font-size);
-      color: var(--openbitfun-color-content-muted);
+      font-size: var(--starmate-type-label-sm-font-size);
+      color: var(--starmate-color-content-muted);
     }
   }
 
   &__overview-label {
-    margin-top: var(--openbitfun-space-1);
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    color: var(--openbitfun-color-content-muted);
+    margin-top: var(--starmate-space-1);
+    font-size: var(--starmate-type-label-sm-font-size);
+    color: var(--starmate-color-content-muted);
   }
 
   // ── Task cards ────────────────────────────────────────────────────────────
@@ -215,59 +215,59 @@ $todos-compact-breakpoint: 600px;
   &__rows {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__row {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: stretch;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-height: 76px;
-    padding: var(--openbitfun-space-3);
+    padding: var(--starmate-space-3);
     box-sizing: border-box;
     border: 1px solid transparent;
-    border-radius: var(--openbitfun-layout-field-group-radius);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-layout-field-group-radius);
+    background: var(--starmate-color-surface-tertiary);
     cursor: pointer;
     transition:
-      background var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      box-shadow var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      background var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
     &:hover {
-      background: var(--openbitfun-color-action-quiet-hover);
-      border-color: var(--openbitfun-color-field-border-hover);
+      background: var(--starmate-color-action-quiet-hover);
+      border-color: var(--starmate-color-field-border-hover);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: 2px;
     }
 
     &--selected {
-      border-color: var(--openbitfun-color-accent-default);
-      background: var(--openbitfun-color-action-quiet-hover);
+      border-color: var(--starmate-color-accent-default);
+      background: var(--starmate-color-action-quiet-hover);
     }
 
     &--overdue {
       border-color: color-mix(
         in srgb,
-        var(--openbitfun-color-status-warning-content) 55%,
-        var(--openbitfun-color-border-subtle)
+        var(--starmate-color-status-warning-content) 55%,
+        var(--starmate-color-border-subtle)
       );
     }
 
     &--running {
       border-color: color-mix(
         in srgb,
-        var(--openbitfun-color-status-success-content) 55%,
-        var(--openbitfun-color-border-subtle)
+        var(--starmate-color-status-success-content) 55%,
+        var(--starmate-color-border-subtle)
       );
     }
 
     &--disabled {
-      opacity: var(--openbitfun-opacity-disabled);
+      opacity: var(--starmate-opacity-disabled);
     }
   }
 
@@ -278,9 +278,9 @@ $todos-compact-breakpoint: 600px;
     width: 36px;
     height: 36px;
     flex: 0 0 auto;
-    border-radius: var(--openbitfun-radius-base);
-    background: var(--openbitfun-color-action-quiet-hover);
-    color: var(--openbitfun-color-content-secondary);
+    border-radius: var(--starmate-radius-base);
+    background: var(--starmate-color-action-quiet-hover);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__row-body {
@@ -288,21 +288,21 @@ $todos-compact-breakpoint: 600px;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
   }
 
   &__row-title-line {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
   }
 
   &__row-name {
     min-width: 0;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    color: var(--starmate-color-content-primary);
     overflow: hidden;
     white-space: nowrap;
   }
@@ -310,32 +310,32 @@ $todos-compact-breakpoint: 600px;
   &__row-badge {
     flex: 0 0 auto;
     padding: 1px 6px;
-    border-radius: var(--openbitfun-radius-sm);
-    background: color-mix(in srgb, var(--openbitfun-color-accent-default) 16%, transparent);
-    color: var(--openbitfun-color-accent-default);
-    font-size: var(--openbitfun-type-meta-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    line-height: var(--openbitfun-type-body-sm-line-height);
+    border-radius: var(--starmate-radius-sm);
+    background: color-mix(in srgb, var(--starmate-color-accent-default) 16%, transparent);
+    color: var(--starmate-color-accent-default);
+    font-size: var(--starmate-type-meta-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    line-height: var(--starmate-type-body-sm-line-height);
     white-space: nowrap;
 
     &--warn {
-      background: color-mix(in srgb, var(--openbitfun-color-status-warning-content) 16%, transparent);
-      color: var(--openbitfun-color-status-warning-content);
+      background: color-mix(in srgb, var(--starmate-color-status-warning-content) 16%, transparent);
+      color: var(--starmate-color-status-warning-content);
     }
 
     &--running {
-      background: color-mix(in srgb, var(--openbitfun-color-status-success-content) 16%, transparent);
-      color: var(--openbitfun-color-status-success-content);
+      background: color-mix(in srgb, var(--starmate-color-status-success-content) 16%, transparent);
+      color: var(--starmate-color-status-success-content);
     }
   }
 
   &__row-meta {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     min-width: 0;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
+    color: var(--starmate-color-content-muted);
     overflow: hidden;
     white-space: nowrap;
   }
@@ -346,8 +346,8 @@ $todos-compact-breakpoint: 600px;
 
   &__row-error {
     margin: 0;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    color: var(--openbitfun-color-status-danger-content);
+    font-size: var(--starmate-type-label-sm-font-size);
+    color: var(--starmate-color-status-danger-content);
     word-break: break-word;
   }
 
@@ -356,14 +356,14 @@ $todos-compact-breakpoint: 600px;
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     flex: 0 0 auto;
   }
 
   &__row-action-buttons {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   // ── Inactive group ────────────────────────────────────────────────────────
@@ -371,16 +371,16 @@ $todos-compact-breakpoint: 600px;
   &__inactive {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
-    padding-top: var(--openbitfun-space-3);
-    border-top: 1px solid var(--openbitfun-color-border-subtle);
+    gap: var(--starmate-space-2);
+    padding-top: var(--starmate-space-3);
+    border-top: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__inactive-title {
     margin: 0;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    color: var(--starmate-color-content-muted);
   }
 
   // ── Calendar ──────────────────────────────────────────────────────────────
@@ -388,7 +388,7 @@ $todos-compact-breakpoint: 600px;
   &__calendar {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
     min-height: 0;
   }
@@ -398,14 +398,14 @@ $todos-compact-breakpoint: 600px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     flex: 0 0 auto;
   }
 
   &__calendar-actions {
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin-inline-start: auto;
     max-width: 100%;
   }
@@ -413,15 +413,15 @@ $todos-compact-breakpoint: 600px;
   &__calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__calendar-weekday {
     padding: 2px 0;
     text-align: center;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    font-weight: var(--openbitfun-type-body-sm-font-weight);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
+    font-weight: var(--starmate-type-body-sm-font-weight);
+    color: var(--starmate-color-content-muted);
   }
 
   &__calendar-grid {
@@ -430,7 +430,7 @@ $todos-compact-breakpoint: 600px;
     // Explicit equal tracks keep day cells consistent as the content frame resizes.
     aspect-ratio: 7.42 / 6;
     grid-template-rows: repeat(6, minmax(0, 1fr));
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     flex: 0 0 auto;
     min-height: 0;
   }
@@ -439,27 +439,27 @@ $todos-compact-breakpoint: 600px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     min-width: 0;
     min-height: 0;
-    padding: var(--openbitfun-space-2);
+    padding: var(--starmate-space-2);
     border: 1px solid transparent;
-    border-radius: var(--openbitfun-radius-base);
-    background: var(--openbitfun-color-surface-subtle);
+    border-radius: var(--starmate-radius-base);
+    background: var(--starmate-color-surface-subtle);
     text-align: left;
     cursor: pointer;
     overflow: hidden;
     transition:
-      background var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      box-shadow var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      background var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
     &:hover {
-      background: var(--openbitfun-color-action-quiet-hover);
+      background: var(--starmate-color-action-quiet-hover);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: 1px;
     }
 
@@ -468,21 +468,21 @@ $todos-compact-breakpoint: 600px;
     }
 
     &--today {
-      border-color: var(--openbitfun-color-border-strong);
-      box-shadow: inset 0 0 0 1px var(--openbitfun-color-border-subtle);
+      border-color: var(--starmate-color-border-strong);
+      box-shadow: inset 0 0 0 1px var(--starmate-color-border-subtle);
     }
 
     &--selected {
-      border-color: var(--openbitfun-color-accent-default);
-      background: var(--openbitfun-color-action-quiet-hover);
+      border-color: var(--starmate-color-accent-default);
+      background: var(--starmate-color-action-quiet-hover);
     }
   }
 
   &__calendar-daynum {
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
     font-variant-numeric: tabular-nums;
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__calendar-chips {
@@ -498,29 +498,29 @@ $todos-compact-breakpoint: 600px;
     gap: 4px;
     min-width: 0;
     padding: 2px 5px;
-    border-radius: var(--openbitfun-radius-sm);
-    background: color-mix(in srgb, var(--openbitfun-color-accent-default) 12%, transparent);
-    font-size: var(--openbitfun-type-meta-font-size);
-    line-height: var(--openbitfun-type-flow-support-line-height);
+    border-radius: var(--starmate-radius-sm);
+    background: color-mix(in srgb, var(--starmate-color-accent-default) 12%, transparent);
+    font-size: var(--starmate-type-meta-font-size);
+    line-height: var(--starmate-type-flow-support-line-height);
   }
 
   &__calendar-chip-time {
     flex: 0 0 auto;
     font-variant-numeric: tabular-nums;
-    color: var(--openbitfun-color-accent-default);
+    color: var(--starmate-color-accent-default);
   }
 
   &__calendar-chip-name {
     min-width: 0;
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
     overflow: hidden;
     white-space: nowrap;
   }
 
   &__calendar-more {
     padding-left: 4px;
-    font-size: var(--openbitfun-type-meta-font-size);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    color: var(--starmate-color-content-muted);
   }
 
   // ── Selected day detail ───────────────────────────────────────────────────
@@ -550,25 +550,25 @@ $todos-compact-breakpoint: 600px;
   &__day-detail {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-height: 0;
     overflow: visible;
-    padding-top: var(--openbitfun-space-4);
-    border-top: 1px solid var(--openbitfun-color-border-subtle);
+    padding-top: var(--starmate-space-4);
+    border-top: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__day-detail-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__day-detail-title {
     margin: 0;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    color: var(--starmate-color-content-primary);
   }
 
   // ── Task editor dialog ────────────────────────────────────────────────────
@@ -582,17 +582,17 @@ $todos-compact-breakpoint: 600px;
     min-height: 0;
     flex: 1 1 auto;
     container: todo-editor / inline-size;
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__editor-intro {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     min-width: 0;
-    padding: var(--openbitfun-space-4) var(--openbitfun-space-6);
-    padding-right: var(--openbitfun-space-12);
-    border-bottom: 1px solid var(--openbitfun-color-border-subtle);
+    padding: var(--starmate-space-4) var(--starmate-space-6);
+    padding-right: var(--starmate-space-12);
+    border-bottom: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__editor-intro-icon {
@@ -602,84 +602,84 @@ $todos-compact-breakpoint: 600px;
     width: 48px;
     height: 48px;
     flex: 0 0 auto;
-    border-radius: var(--openbitfun-radius-lg);
-    background: var(--openbitfun-color-surface-subtle);
-    color: var(--openbitfun-color-content-primary);
+    border-radius: var(--starmate-radius-lg);
+    background: var(--starmate-color-surface-subtle);
+    color: var(--starmate-color-content-primary);
   }
 
   &__editor-intro-copy {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     min-width: 0;
   }
 
   &__editor-title {
     margin: 0;
-    font-size: var(--openbitfun-type-flow-title-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-flow-title-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    color: var(--starmate-color-content-primary);
   }
 
   &__editor-description {
     margin: 0;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-md-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
+    color: var(--starmate-color-content-muted);
   }
 
   &__editor-body {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     min-height: 0;
-    padding: var(--openbitfun-space-4) var(--openbitfun-space-6);
+    padding: var(--starmate-space-4) var(--starmate-space-6);
   }
 
   &__editor-section {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
   }
 
   &__editor-section-title {
     margin: 0;
-    padding-left: var(--openbitfun-space-2);
-    border-left: 3px solid var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    line-height: var(--openbitfun-type-label-md-line-height);
-    color: var(--openbitfun-color-content-primary);
+    padding-left: var(--starmate-space-2);
+    border-left: 3px solid var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    line-height: var(--starmate-type-label-md-line-height);
+    color: var(--starmate-color-content-primary);
   }
 
   &__editor-grid {
     display: grid;
     grid-template-columns: 1.25fr 1.1fr 1fr 1fr 1.15fr;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__field-card {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     min-width: 0;
     min-height: 88px;
-    padding: var(--openbitfun-space-3);
+    padding: var(--starmate-space-3);
     box-sizing: border-box;
-    border: 1px solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-lg);
+    border: 1px solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-lg);
     background: transparent;
     transition:
-      border-color var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard),
-      box-shadow var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      border-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
+      box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
     &:focus-within {
-      border-color: var(--openbitfun-color-accent-default);
+      border-color: var(--starmate-color-accent-default);
       box-shadow: 0 0 0 3px color-mix(
         in srgb,
-        var(--openbitfun-color-accent-default) 10%,
+        var(--starmate-color-accent-default) 10%,
         transparent
       );
     }
@@ -689,31 +689,31 @@ $todos-compact-breakpoint: 600px;
   &__field-label {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    color: var(--openbitfun-color-content-secondary);
+    font-size: var(--starmate-type-label-sm-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    color: var(--starmate-color-content-secondary);
 
     svg {
       flex: 0 0 auto;
-      color: var(--openbitfun-color-content-muted);
+      color: var(--starmate-color-content-muted);
     }
   }
 
   &__field-note {
-    font-size: var(--openbitfun-type-meta-font-size);
-    line-height: var(--openbitfun-type-modifier-leading-ui-line-height);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    line-height: var(--starmate-type-modifier-leading-ui-line-height);
+    color: var(--starmate-color-content-muted);
   }
 
   &__field-static {
     display: flex;
     align-items: center;
     min-height: 36px;
-    border-bottom: 1px solid var(--openbitfun-color-border-subtle);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    color: var(--openbitfun-color-content-primary);
+    border-bottom: 1px solid var(--starmate-color-border-subtle);
+    font-size: var(--starmate-type-label-md-font-size);
+    color: var(--starmate-color-content-primary);
     overflow: hidden;
     white-space: nowrap;
   }
@@ -725,7 +725,7 @@ $todos-compact-breakpoint: 600px;
   &__interval {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(76px, 0.7fr);
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     align-items: center;
   }
 
@@ -737,13 +737,13 @@ $todos-compact-breakpoint: 600px;
   }
 
   &__workspace-option-label {
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
-    color: var(--openbitfun-color-content-secondary);
+    font-weight: var(--starmate-type-label-sm-font-weight);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__workspace-option-path {
-    font-size: var(--openbitfun-type-meta-font-size);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    color: var(--starmate-color-content-muted);
     overflow: hidden;
     white-space: nowrap;
   }
@@ -752,19 +752,19 @@ $todos-compact-breakpoint: 600px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.35fr);
     align-items: center;
-    gap: var(--openbitfun-space-4);
+    gap: var(--starmate-space-4);
     min-height: 68px;
-    padding: var(--openbitfun-space-3) var(--openbitfun-space-4);
+    padding: var(--starmate-space-3) var(--starmate-space-4);
     box-sizing: border-box;
-    border: 1px solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-lg);
-    background: var(--openbitfun-color-surface-subtle);
+    border: 1px solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-lg);
+    background: var(--starmate-color-surface-subtle);
   }
 
   &__editor-enable {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
     cursor: pointer;
   }
@@ -772,13 +772,13 @@ $todos-compact-breakpoint: 600px;
   &__editor-runtime-divider {
     width: 1px;
     height: 36px;
-    background: var(--openbitfun-color-border-subtle);
+    background: var(--starmate-color-border-subtle);
   }
 
   &__editor-smart {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
   }
 
@@ -789,9 +789,9 @@ $todos-compact-breakpoint: 600px;
     width: 32px;
     height: 32px;
     flex: 0 0 auto;
-    border-radius: var(--openbitfun-radius-pill);
-    background: var(--openbitfun-color-action-neutral-surface);
-    color: var(--openbitfun-color-content-primary);
+    border-radius: var(--starmate-radius-pill);
+    background: var(--starmate-color-action-neutral-surface);
+    color: var(--starmate-color-content-primary);
   }
 
   &__editor-enable-copy,
@@ -802,21 +802,21 @@ $todos-compact-breakpoint: 600px;
     min-width: 0;
 
     strong {
-      font-size: var(--openbitfun-type-label-md-font-size);
-      font-weight: var(--openbitfun-type-label-sm-font-weight);
-      color: var(--openbitfun-color-content-primary);
+      font-size: var(--starmate-type-label-md-font-size);
+      font-weight: var(--starmate-type-label-sm-font-weight);
+      color: var(--starmate-color-content-primary);
     }
 
     span {
-      font-size: var(--openbitfun-type-label-sm-font-size);
-      line-height: var(--openbitfun-type-body-sm-line-height);
-      color: var(--openbitfun-color-content-muted);
+      font-size: var(--starmate-type-label-sm-font-size);
+      line-height: var(--starmate-type-body-sm-line-height);
+      color: var(--starmate-color-content-muted);
     }
   }
 
   &__editor-advanced {
-    border: 1px solid var(--openbitfun-color-border-subtle);
-    border-radius: var(--openbitfun-radius-lg);
+    border: 1px solid var(--starmate-color-border-subtle);
+    border-radius: var(--starmate-radius-lg);
     background: transparent;
     overflow: hidden;
   }
@@ -825,31 +825,31 @@ $todos-compact-breakpoint: 600px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     width: 100%;
     min-height: 48px;
-    padding: 0 var(--openbitfun-space-4);
+    padding: 0 var(--starmate-space-4);
     border: 0;
     background: transparent;
-    color: var(--openbitfun-color-content-primary);
+    color: var(--starmate-color-content-primary);
     font: inherit;
-    font-size: var(--openbitfun-type-label-md-font-size);
-    font-weight: var(--openbitfun-type-label-sm-font-weight);
+    font-size: var(--starmate-type-label-md-font-size);
+    font-weight: var(--starmate-type-label-sm-font-weight);
     text-align: left;
     cursor: pointer;
 
     &:hover {
-      background: var(--openbitfun-color-surface-subtle);
+      background: var(--starmate-color-surface-subtle);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--openbitfun-color-accent-default);
+      outline: 2px solid var(--starmate-color-accent-default);
       outline-offset: -2px;
     }
 
     svg {
       flex: 0 0 auto;
-      transition: transform var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      transition: transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
     }
 
     &[aria-expanded='true'] svg {
@@ -860,39 +860,39 @@ $todos-compact-breakpoint: 600px;
   &__editor-advanced-panel {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--openbitfun-space-3);
-    padding: 0 var(--openbitfun-space-4) var(--openbitfun-space-4);
-    border-top: 1px solid var(--openbitfun-color-border-subtle);
+    gap: var(--starmate-space-3);
+    padding: 0 var(--starmate-space-4) var(--starmate-space-4);
+    border-top: 1px solid var(--starmate-color-border-subtle);
 
     > * {
-      margin-top: var(--openbitfun-space-4);
+      margin-top: var(--starmate-space-4);
     }
   }
 
   &__editor-advanced-note {
     grid-column: 1 / -1;
     margin-bottom: 0;
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    line-height: var(--openbitfun-type-body-sm-line-height);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
+    line-height: var(--starmate-type-body-sm-line-height);
+    color: var(--starmate-color-content-muted);
   }
 
   &__warning {
     margin: 0;
-    padding: var(--openbitfun-space-3) var(--openbitfun-space-4);
-    border: 1px solid color-mix(in srgb, var(--openbitfun-color-status-danger-content) 20%, transparent);
-    border-radius: var(--openbitfun-radius-base);
-    background: color-mix(in srgb, var(--openbitfun-color-status-danger-content) 6%, transparent);
-    font-size: var(--openbitfun-type-label-sm-font-size);
-    color: var(--openbitfun-color-status-danger-content);
+    padding: var(--starmate-space-3) var(--starmate-space-4);
+    border: 1px solid color-mix(in srgb, var(--starmate-color-status-danger-content) 20%, transparent);
+    border-radius: var(--starmate-radius-base);
+    background: color-mix(in srgb, var(--starmate-color-status-danger-content) 6%, transparent);
+    font-size: var(--starmate-type-label-sm-font-size);
+    color: var(--starmate-color-status-danger-content);
   }
 
   &__editor-actions {
     display: flex;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-3);
-    padding: var(--openbitfun-space-4) var(--openbitfun-space-6);
-    border-top: 1px solid var(--openbitfun-color-border-subtle);
+    gap: var(--starmate-space-3);
+    padding: var(--starmate-space-4) var(--starmate-space-6);
+    border-top: 1px solid var(--starmate-color-border-subtle);
     background: transparent;
 
     > * {
@@ -908,14 +908,14 @@ $todos-compact-breakpoint: 600px;
 .openbitfun-todos-editor-dialog {
   inline-size: min(960px, 84vw);
   max-inline-size: min(960px, 84vw);
-  max-block-size: min(760px, calc(100vh - 2 * var(--openbitfun-overlay-dialog-viewport-gutter)));
+  max-block-size: min(760px, calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter)));
 }
 
 .openbitfun-todos-editor-dialog__header {
   position: absolute;
-  inset-block-start: var(--openbitfun-space-3);
-  inset-inline-end: var(--openbitfun-space-3);
-  z-index: var(--openbitfun-layer-content);
+  inset-block-start: var(--starmate-space-3);
+  inset-inline-end: var(--starmate-space-3);
+  z-index: var(--starmate-layer-content);
   min-block-size: 0;
   padding: 0;
   border-block-end: 0;
@@ -948,7 +948,7 @@ $todos-compact-breakpoint: 600px;
     }
 
     &__overview-metric {
-      padding-inline: var(--openbitfun-space-2);
+      padding-inline: var(--starmate-space-2);
     }
 
     &__row {
@@ -962,7 +962,7 @@ $todos-compact-breakpoint: 600px;
     }
 
     &__calendar-grid {
-      gap: var(--openbitfun-space-1);
+      gap: var(--starmate-space-1);
     }
   }
 }
@@ -993,7 +993,7 @@ $todos-compact-breakpoint: 600px;
 
   .openbitfun-todos__editor-runtime {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   .openbitfun-todos__editor-runtime-divider {

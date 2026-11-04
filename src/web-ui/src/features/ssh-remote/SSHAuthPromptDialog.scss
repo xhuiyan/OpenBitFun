@@ -11,7 +11,7 @@
   }
 
   &__body {
-    padding-inline: var(--openbitfun-overlay-dialog-header-padding-inline);
+    padding-inline: var(--starmate-overlay-dialog-header-padding-inline);
   }
 
   &__field {
@@ -20,9 +20,9 @@
 
   &__advanced {
     min-inline-size: 0;
-    border-block-start: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-subtle);
-    padding-block-start: var(--openbitfun-space-2);
-    margin-block-end: var(--openbitfun-space-4);
+    border-block-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
+    padding-block-start: var(--starmate-space-2);
+    margin-block-end: var(--starmate-space-4);
   }
 
   &__advanced-content {
@@ -35,10 +35,10 @@
   }
 
   &__hint {
-    font-size: var(--openbitfun-type-label-md-font-size);
-    color: var(--openbitfun-color-content-secondary);
+    font-size: var(--starmate-type-label-md-font-size);
+    color: var(--starmate-color-content-secondary);
     margin: 0 0 16px;
-    line-height: var(--openbitfun-type-flow-support-line-height);
+    line-height: var(--starmate-type-flow-support-line-height);
   }
 
   &__actions {

@@ -13,7 +13,7 @@
   &__footer-left {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
     flex: 1 1 auto;
   }
@@ -23,8 +23,8 @@
   }
 
   &__hint {
-    font-size: var(--openbitfun-type-meta-font-size);
-    color: var(--openbitfun-color-content-muted);
+    font-size: var(--starmate-type-meta-font-size);
+    color: var(--starmate-color-content-muted);
     user-select: none;
     white-space: nowrap;
     overflow: hidden;

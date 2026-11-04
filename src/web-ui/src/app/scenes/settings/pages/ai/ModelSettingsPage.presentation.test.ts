@@ -55,7 +55,7 @@ describe('ModelSettingsPage presentation', () => {
     expect(compact).toContain('background: transparent');
     expect(compact).toContain('border: 0');
     expect(compact).toContain('grid-column: 1 / -1');
-    expect(compact).toContain('var(--openbitfun-type-label-md-font-size)');
+    expect(compact).toContain('var(--starmate-type-label-md-font-size)');
     expect(styles).toMatch(/&__account-pool-item\s*{[\s\S]*?flex-wrap: wrap;[\s\S]*?align-items: center;/);
   });
 
@@ -82,10 +82,10 @@ describe('ModelSettingsPage presentation', () => {
 
   it('keeps subscription actions right-aligned through the shared compact breakpoint', () => {
     expect(styles).toMatch(
-      /@container config-panel \(max-width: 520px\)\s*\{\s*&__cli-account\.openbitfun-config-page-row\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) auto;[\s\S]*?gap: var\(--openbitfun-space-4\);[\s\S]*?justify-content: flex-end;/,
+      /@container config-panel \(max-width: 520px\)\s*\{\s*&__cli-account\.openbitfun-config-page-row\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) auto;[\s\S]*?gap: var\(--starmate-space-4\);[\s\S]*?justify-content: flex-end;/,
     );
     expect(styles).toMatch(
-      /@container config-panel \(max-width: 360px\)\s*\{\s*&__cli-account\.openbitfun-config-page-row\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);[\s\S]*?gap: var\(--openbitfun-space-2\);[\s\S]*?justify-content: flex-start;/,
+      /@container config-panel \(max-width: 360px\)\s*\{\s*&__cli-account\.openbitfun-config-page-row\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);[\s\S]*?gap: var\(--starmate-space-2\);[\s\S]*?justify-content: flex-start;/,
     );
   });
 });

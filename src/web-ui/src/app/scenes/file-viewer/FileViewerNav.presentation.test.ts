@@ -75,9 +75,9 @@ describe('FileViewerNav surface ownership', () => {
     );
 
     expect(navRules.some(rule => rule.selectorText === '.openbitfun-file-viewer-nav__section::before')).toBe(false);
-    expect(sectionDivider.getPropertyValue('inset-inline')).toBe('var(--openbitfun-space-2)');
+    expect(sectionDivider.getPropertyValue('inset-inline')).toBe('var(--starmate-space-2)');
     expect(sectionDivider.height).toBe('0.5px');
-    expect(sectionDivider.background).toBe('var(--openbitfun-color-border-default)');
+    expect(sectionDivider.background).toBe('var(--starmate-color-border-default)');
     expect(navSource).toContain(
       'className="openbitfun-file-viewer-nav__section openbitfun-file-viewer-nav__section--terminals"',
     );
@@ -92,9 +92,9 @@ describe('FileViewerNav surface ownership', () => {
       filesPanelRules,
       '.openbitfun-files-panel__main-content--search::before',
     );
-    expect(searchDivider.getPropertyValue('inset-inline')).toBe('var(--openbitfun-space-2)');
+    expect(searchDivider.getPropertyValue('inset-inline')).toBe('var(--starmate-space-2)');
     expect(searchDivider.height).toBe('1px');
-    expect(searchDivider.background).toBe('var(--openbitfun-color-border-default)');
+    expect(searchDivider.background).toBe('var(--starmate-color-border-default)');
 
     const searchContainer = declarations(filesPanelRules, '.openbitfun-files-panel__search');
     expect(searchContainer.borderBottomWidth).toBe('');
@@ -108,10 +108,10 @@ describe('FileViewerNav surface ownership', () => {
     ] as const;
 
     for (const [divider, height] of dividers) {
-      expect(divider.getPropertyValue('inset-inline')).toBe('var(--openbitfun-space-2)');
+      expect(divider.getPropertyValue('inset-inline')).toBe('var(--starmate-space-2)');
       expect(divider.height).toBe(height);
-      expect(divider.background).toBe('var(--openbitfun-color-border-default)');
-      expect(divider.zIndex).toBe('var(--openbitfun-layer-decoration)');
+      expect(divider.background).toBe('var(--starmate-color-border-default)');
+      expect(divider.zIndex).toBe('var(--starmate-layer-decoration)');
       expect(divider.pointerEvents).toBe('none');
     }
   });

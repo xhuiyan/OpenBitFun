@@ -178,22 +178,22 @@
   &__zzz-glyph {
     fill: var(--openbitfun-pet-decor);
     font-family:
-      var(--openbitfun-type-body-sm-font-family);
-    font-weight: var(--openbitfun-type-heading-page-font-weight);
+      var(--starmate-type-body-sm-font-family);
+    font-weight: var(--starmate-type-heading-page-font-weight);
     opacity: 0;
 
     &--a {
-      font-size: var(--openbitfun-type-display-sm-font-size);
+      font-size: var(--starmate-type-display-sm-font-size);
       animation: openbitfun-zzz-rise 6.8s ease-in-out infinite;
     }
 
     &--b {
-      font-size: var(--openbitfun-type-display-md-font-size);
+      font-size: var(--starmate-type-display-md-font-size);
       animation: openbitfun-zzz-rise 6.8s ease-in-out -2.2s infinite;
     }
 
     &--c {
-      font-size: var(--openbitfun-type-display-xl-font-size);
+      font-size: var(--starmate-type-display-xl-font-size);
       animation: openbitfun-zzz-rise 6.8s ease-in-out -4.4s infinite;
     }
   }

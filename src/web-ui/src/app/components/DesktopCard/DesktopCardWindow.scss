@@ -17,27 +17,27 @@ body.openbitfun-desktop-card-window-body #root {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  border: var(--openbitfun-border-width-default) solid var(--openbitfun-color-border-default);
-  border-radius: var(--openbitfun-radius-lg);
-  color: var(--openbitfun-color-content-primary);
-  background: var(--openbitfun-color-surface-raised);
-  font-size: var(--openbitfun-type-label-md-font-size);
-  line-height: var(--openbitfun-type-body-sm-line-height);
+  border: var(--starmate-border-width-default) solid var(--starmate-color-border-default);
+  border-radius: var(--starmate-radius-lg);
+  color: var(--starmate-color-content-primary);
+  background: var(--starmate-color-surface-raised);
+  font-size: var(--starmate-type-label-md-font-size);
+  line-height: var(--starmate-type-body-sm-line-height);
   user-select: none;
 
-  &[data-tone='neutral'] { --openbitfun-desktop-card-tone: var(--openbitfun-color-content-secondary); }
-  &[data-tone='info'] { --openbitfun-desktop-card-tone: var(--openbitfun-color-status-info-content); }
-  &[data-tone='success'] { --openbitfun-desktop-card-tone: var(--openbitfun-color-status-success-content); }
-  &[data-tone='warning'] { --openbitfun-desktop-card-tone: var(--openbitfun-color-status-warning-content); }
-  &[data-tone='danger'] { --openbitfun-desktop-card-tone: var(--openbitfun-color-status-danger-content); }
+  &[data-tone='neutral'] { --openbitfun-desktop-card-tone: var(--starmate-color-content-secondary); }
+  &[data-tone='info'] { --openbitfun-desktop-card-tone: var(--starmate-color-status-info-content); }
+  &[data-tone='success'] { --openbitfun-desktop-card-tone: var(--starmate-color-status-success-content); }
+  &[data-tone='warning'] { --openbitfun-desktop-card-tone: var(--starmate-color-status-warning-content); }
+  &[data-tone='danger'] { --openbitfun-desktop-card-tone: var(--starmate-color-status-danger-content); }
 
   &__header {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
-    padding: var(--openbitfun-space-2) var(--openbitfun-space-2) var(--openbitfun-space-1) var(--openbitfun-space-3);
+    padding: var(--starmate-space-2) var(--starmate-space-2) var(--starmate-space-1) var(--starmate-space-3);
     cursor: grab;
 
     &:active { cursor: grabbing; }
@@ -57,20 +57,20 @@ body.openbitfun-desktop-card-window-body #root {
   }
 
   &__title {
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
+    font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
   &__subtitle,
   &__muted {
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
   }
 
   &__actions {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: var(--openbitfun-space-1);
+    gap: var(--starmate-space-1);
     opacity: 0.55;
     transition: opacity 120ms ease;
   }
@@ -84,18 +84,18 @@ body.openbitfun-desktop-card-window-body #root {
     flex-direction: column;
     min-height: 0;
     overflow: auto;
-    padding: var(--openbitfun-space-1) var(--openbitfun-space-3) var(--openbitfun-space-3);
+    padding: var(--starmate-space-1) var(--starmate-space-3) var(--starmate-space-3);
   }
 
   &__footer {
     flex: 0 0 auto;
     min-width: 0;
-    padding: 0 var(--openbitfun-space-3) var(--openbitfun-space-2);
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-micro-font-size);
+    padding: 0 var(--starmate-space-3) var(--starmate-space-2);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-micro-font-size);
 
-    &[data-state='error'] { color: var(--openbitfun-color-status-danger-content); }
-    &[data-state='warning'] { color: var(--openbitfun-color-status-warning-content); }
+    &[data-state='error'] { color: var(--starmate-color-status-danger-content); }
+    &[data-state='warning'] { color: var(--starmate-color-status-warning-content); }
   }
 
   &__empty {
@@ -103,9 +103,9 @@ body.openbitfun-desktop-card-window-body #root {
     flex: 1;
     align-items: center;
     justify-content: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin: 0;
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
     text-align: center;
   }
 
@@ -113,8 +113,8 @@ body.openbitfun-desktop-card-window-body #root {
     position: relative;
     block-size: 4px;
     overflow: hidden;
-    border-radius: var(--openbitfun-radius-pill);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-radius-pill);
+    background: var(--starmate-color-surface-tertiary);
 
     > span {
       display: block;
@@ -130,27 +130,27 @@ body.openbitfun-desktop-card-window-body #root {
     flex: 1;
     flex-direction: column;
     justify-content: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
 
     &[data-state='due'] {
-      .openbitfun-desktop-card__countdown-clock { color: var(--openbitfun-color-status-warning-content); }
+      .openbitfun-desktop-card__countdown-clock { color: var(--starmate-color-status-warning-content); }
     }
   }
 
   &__countdown-clock {
     display: flex;
     align-items: baseline;
-    gap: var(--openbitfun-space-2);
-    font-family: var(--openbitfun-type-heading-page-font-family);
-    font-size: var(--openbitfun-type-heading-page-font-size);
-    font-weight: var(--openbitfun-type-heading-page-font-weight);
-    line-height: var(--openbitfun-type-heading-page-line-height);
+    gap: var(--starmate-space-2);
+    font-family: var(--starmate-type-heading-page-font-family);
+    font-size: var(--starmate-type-heading-page-font-size);
+    font-weight: var(--starmate-type-heading-page-font-weight);
+    line-height: var(--starmate-type-heading-page-line-height);
     font-variant-numeric: tabular-nums;
   }
 
   &__countdown-days {
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-label-md-font-size);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-label-md-font-size);
   }
 
   &__countdown-message,
@@ -164,12 +164,12 @@ body.openbitfun-desktop-card-window-body #root {
   &__checklist {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin: 0;
     padding: 0;
     list-style: none;
 
-    > li[data-done='true'] { color: var(--openbitfun-color-content-muted); text-decoration: line-through; }
+    > li[data-done='true'] { color: var(--starmate-color-content-muted); text-decoration: line-through; }
   }
 
   &__progress {
@@ -177,21 +177,21 @@ body.openbitfun-desktop-card-window-body #root {
     flex: 1;
     flex-direction: column;
     justify-content: center;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__progress-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   &__progress-value {
-    font-family: var(--openbitfun-type-heading-page-font-family);
-    font-size: var(--openbitfun-type-heading-page-font-size);
-    font-weight: var(--openbitfun-type-heading-page-font-weight);
-    line-height: var(--openbitfun-type-heading-page-line-height);
+    font-family: var(--starmate-type-heading-page-font-family);
+    font-size: var(--starmate-type-heading-page-font-size);
+    font-weight: var(--starmate-type-heading-page-font-weight);
+    line-height: var(--starmate-type-heading-page-line-height);
     font-variant-numeric: tabular-nums;
   }
 
@@ -200,13 +200,13 @@ body.openbitfun-desktop-card-window-body #root {
   &__metrics {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     margin: 0;
 
     &[data-layout='grid'] {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--openbitfun-space-3) var(--openbitfun-space-4);
+      gap: var(--starmate-space-3) var(--starmate-space-4);
 
       .openbitfun-desktop-card__metric {
         flex-direction: column;
@@ -222,15 +222,15 @@ body.openbitfun-desktop-card-window-body #root {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
 
     dt {
       flex: 0 1 auto;
       min-width: 0;
       overflow: hidden;
-      color: var(--openbitfun-color-content-secondary);
-      font-size: var(--openbitfun-type-body-sm-font-size);
+      color: var(--starmate-color-content-secondary);
+      font-size: var(--starmate-type-body-sm-font-size);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -246,24 +246,24 @@ body.openbitfun-desktop-card-window-body #root {
     }
 
     &[data-emphasis='true'] dd {
-      font-family: var(--openbitfun-type-heading-page-font-family);
-      font-size: var(--openbitfun-type-heading-page-font-size);
-      font-weight: var(--openbitfun-type-heading-page-font-weight);
-      line-height: var(--openbitfun-type-heading-page-line-height);
+      font-family: var(--starmate-type-heading-page-font-family);
+      font-size: var(--starmate-type-heading-page-font-size);
+      font-weight: var(--starmate-type-heading-page-font-weight);
+      line-height: var(--starmate-type-heading-page-line-height);
     }
 
-    &[data-tone='accent'] dd { color: var(--openbitfun-color-accent-default); }
-    &[data-tone='info'] dd { color: var(--openbitfun-color-status-info-content); }
-    &[data-tone='success'] dd { color: var(--openbitfun-color-status-success-content); }
-    &[data-tone='warning'] dd { color: var(--openbitfun-color-status-warning-content); }
-    &[data-tone='danger'] dd { color: var(--openbitfun-color-status-danger-content); }
+    &[data-tone='accent'] dd { color: var(--starmate-color-accent-default); }
+    &[data-tone='info'] dd { color: var(--starmate-color-status-info-content); }
+    &[data-tone='success'] dd { color: var(--starmate-color-status-success-content); }
+    &[data-tone='warning'] dd { color: var(--starmate-color-status-warning-content); }
+    &[data-tone='danger'] dd { color: var(--starmate-color-status-danger-content); }
   }
 
   &__chart {
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
     min-height: 0;
     margin: 0;
@@ -276,24 +276,24 @@ body.openbitfun-desktop-card-window-body #root {
     stroke: currentColor;
     transition: stroke-dasharray 300ms ease, stroke-dashoffset 300ms ease;
 
-    &[data-shade='1'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 78%, var(--openbitfun-color-surface-raised)); }
-    &[data-shade='2'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 58%, var(--openbitfun-color-surface-raised)); }
-    &[data-shade='3'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 42%, var(--openbitfun-color-surface-raised)); }
-    &[data-shade='4'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 30%, var(--openbitfun-color-surface-raised)); }
-    &[data-shade='5'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 20%, var(--openbitfun-color-surface-raised)); }
-    &[data-tone='neutral'] { color: var(--openbitfun-color-content-muted); }
-    &[data-tone='accent'] { color: var(--openbitfun-color-accent-default); }
-    &[data-tone='info'] { color: var(--openbitfun-color-status-info-emphasis); }
-    &[data-tone='success'] { color: var(--openbitfun-color-status-success-emphasis); }
-    &[data-tone='warning'] { color: var(--openbitfun-color-status-warning-emphasis); }
-    &[data-tone='danger'] { color: var(--openbitfun-color-status-danger-emphasis); }
-    &[data-remainder='true'] { color: var(--openbitfun-color-surface-tertiary); }
+    &[data-shade='1'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 78%, var(--starmate-color-surface-raised)); }
+    &[data-shade='2'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 58%, var(--starmate-color-surface-raised)); }
+    &[data-shade='3'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 42%, var(--starmate-color-surface-raised)); }
+    &[data-shade='4'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 30%, var(--starmate-color-surface-raised)); }
+    &[data-shade='5'] { color: color-mix(in srgb, var(--openbitfun-desktop-card-tone) 20%, var(--starmate-color-surface-raised)); }
+    &[data-tone='neutral'] { color: var(--starmate-color-content-muted); }
+    &[data-tone='accent'] { color: var(--starmate-color-accent-default); }
+    &[data-tone='info'] { color: var(--starmate-color-status-info-emphasis); }
+    &[data-tone='success'] { color: var(--starmate-color-status-success-emphasis); }
+    &[data-tone='warning'] { color: var(--starmate-color-status-warning-emphasis); }
+    &[data-tone='danger'] { color: var(--starmate-color-status-danger-emphasis); }
+    &[data-remainder='true'] { color: var(--starmate-color-surface-tertiary); }
   }
 
   &__chart-row {
     display: flex;
     align-items: baseline;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
   }
 
@@ -301,8 +301,8 @@ body.openbitfun-desktop-card-window-body #root {
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -325,8 +325,8 @@ body.openbitfun-desktop-card-window-body #root {
     display: block;
     min-width: 0;
     overflow: hidden;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-micro-font-size);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-micro-font-size);
     text-overflow: ellipsis;
     white-space: nowrap;
     user-select: text;
@@ -334,8 +334,8 @@ body.openbitfun-desktop-card-window-body #root {
 
   &__chart-caption {
     margin-top: auto;
-    color: var(--openbitfun-color-content-secondary);
-    font-size: var(--openbitfun-type-body-sm-font-size);
+    color: var(--starmate-color-content-secondary);
+    font-size: var(--starmate-type-body-sm-font-size);
     overflow-wrap: anywhere;
     user-select: text;
   }
@@ -344,15 +344,15 @@ body.openbitfun-desktop-card-window-body #root {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--openbitfun-space-1) var(--openbitfun-space-2);
+    gap: var(--starmate-space-1) var(--starmate-space-2);
     min-width: 0;
   }
 
   &__chart-total {
-    font-family: var(--openbitfun-type-heading-page-font-family);
-    font-size: var(--openbitfun-type-heading-page-font-size);
-    font-weight: var(--openbitfun-type-heading-page-font-weight);
-    line-height: var(--openbitfun-type-heading-page-line-height);
+    font-family: var(--starmate-type-heading-page-font-family);
+    font-size: var(--starmate-type-heading-page-font-size);
+    font-weight: var(--starmate-type-heading-page-font-weight);
+    line-height: var(--starmate-type-heading-page-line-height);
     font-variant-numeric: tabular-nums;
     user-select: text;
   }
@@ -361,14 +361,14 @@ body.openbitfun-desktop-card-window-body #root {
   &__chart-legend {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  &__chart-legend { gap: var(--openbitfun-space-1); }
+  &__chart-legend { gap: var(--starmate-space-1); }
 
   &__chart-bar {
     display: flex;
@@ -380,8 +380,8 @@ body.openbitfun-desktop-card-window-body #root {
   &__chart-track {
     block-size: 6px;
     overflow: hidden;
-    border-radius: var(--openbitfun-radius-pill);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-radius-pill);
+    background: var(--starmate-color-surface-tertiary);
 
     > .openbitfun-desktop-card__chart-mark {
       display: block;
@@ -397,8 +397,8 @@ body.openbitfun-desktop-card-window-body #root {
     gap: 2px;
     block-size: 10px;
     overflow: hidden;
-    border-radius: var(--openbitfun-radius-pill);
-    background: var(--openbitfun-color-surface-tertiary);
+    border-radius: var(--starmate-radius-pill);
+    background: var(--starmate-color-surface-tertiary);
 
     > .openbitfun-desktop-card__chart-mark {
       flex: 0 0 auto;
@@ -412,14 +412,14 @@ body.openbitfun-desktop-card-window-body #root {
     align-self: center;
     inline-size: 8px;
     block-size: 8px;
-    border-radius: var(--openbitfun-radius-sm);
+    border-radius: var(--starmate-radius-sm);
   }
 
   &__chart-donut-layout {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
     min-width: 0;
 
     > .openbitfun-desktop-card__chart-legend {
@@ -446,9 +446,9 @@ body.openbitfun-desktop-card-window-body #root {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--openbitfun-space-3);
+    padding: var(--starmate-space-3);
     overflow: hidden;
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
+    font-weight: var(--starmate-type-label-selected-font-weight);
     font-variant-numeric: tabular-nums;
     text-align: center;
     white-space: nowrap;
@@ -473,7 +473,7 @@ body.openbitfun-desktop-card-window-body #root {
   &__chart-column-value,
   &__chart-column-label {
     overflow: hidden;
-    font-size: var(--openbitfun-type-micro-font-size);
+    font-size: var(--starmate-type-micro-font-size);
     text-align: center;
     text-overflow: clip;
     white-space: nowrap;
@@ -483,7 +483,7 @@ body.openbitfun-desktop-card-window-body #root {
 
   &__chart-column-label {
     min-block-size: 1lh;
-    color: var(--openbitfun-color-content-secondary);
+    color: var(--starmate-color-content-secondary);
   }
 
   &__chart-column-track {
@@ -495,7 +495,7 @@ body.openbitfun-desktop-card-window-body #root {
     > .openbitfun-desktop-card__chart-mark {
       inline-size: 100%;
       min-block-size: 1px;
-      border-radius: var(--openbitfun-radius-sm) var(--openbitfun-radius-sm) 0 0;
+      border-radius: var(--starmate-radius-sm) var(--starmate-radius-sm) 0 0;
       transition: block-size 300ms ease;
     }
   }
@@ -522,8 +522,8 @@ body.openbitfun-desktop-card-window-body #root {
   &__chart-axis {
     display: flex;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
-    font-size: var(--openbitfun-type-micro-font-size);
+    gap: var(--starmate-space-2);
+    font-size: var(--starmate-type-micro-font-size);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 
@@ -537,21 +537,21 @@ body.openbitfun-desktop-card-window-body #root {
   &__cron {
     display: flex;
     flex-direction: column;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
   }
 
   &__cron-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
     min-width: 0;
   }
 
   &__cron-name {
     min-width: 0;
     overflow: hidden;
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
+    font-weight: var(--starmate-type-label-selected-font-weight);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -569,7 +569,7 @@ body.openbitfun-desktop-card-window-body #root {
     flex: 1;
     flex-direction: column;
     justify-content: center;
-    gap: var(--openbitfun-space-3);
+    gap: var(--starmate-space-3);
 
     p { margin: 0; }
   }
@@ -577,7 +577,7 @@ body.openbitfun-desktop-card-window-body #root {
   &__confirm-actions {
     display: flex;
     justify-content: flex-end;
-    gap: var(--openbitfun-space-2);
+    gap: var(--starmate-space-2);
   }
 
   // Dependable edge targets for the OS resize loop on Windows and Linux,
@@ -587,7 +587,7 @@ body.openbitfun-desktop-card-window-body #root {
     --openbitfun-desktop-card-resize-corner: 10px;
 
     position: fixed;
-    z-index: var(--openbitfun-layer-floating);
+    z-index: var(--starmate-layer-floating);
 
     &[data-direction='North'],
     &[data-direction='South'] {

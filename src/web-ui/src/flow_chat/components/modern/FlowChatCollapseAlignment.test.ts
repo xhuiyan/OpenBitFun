@@ -67,7 +67,7 @@ describe('FlowChat collapse spacing', () => {
     expect(renderer).toContain('name="chevron-right" size="sm" className="explore-region__leading-icon--collapsed-hover"');
     expect(renderer).toContain('name="chevron-down" size="sm" className="explore-region__leading-icon--expanded"');
     expect(exploreStyles).toContain('background: transparent;');
-    expect(exploreStyles).not.toContain('background: var(--openbitfun-color-action-neutral-surface-hover);');
+    expect(exploreStyles).not.toContain('background: var(--starmate-color-action-neutral-surface-hover);');
     expect(exploreStyles).not.toContain('transform: rotate(');
   });
 
@@ -83,12 +83,12 @@ describe('FlowChat collapse spacing', () => {
       'margin-inline-start: 0;',
     );
     expect(extractBlock(subagentProjectionStyles, '.subagent-projection-container')).toContain(
-      'padding: var(--openbitfun-control-flow-chat-card-expanded-padding-block) var(--openbitfun-control-flow-chat-card-expanded-padding-inline);',
+      'padding: var(--starmate-control-flow-chat-card-expanded-padding-block) var(--starmate-control-flow-chat-card-expanded-padding-inline);',
     );
   });
 
   it('lets product-owned full-bleed footer surfaces consume the shared body inset', () => {
     const miniAppStyles = readSource('../../tool-cards/MiniAppToolDisplay.scss');
-    expect(miniAppStyles).not.toContain('margin-left: calc(-1 * var(--openbitfun-control-flow-chat-card-expanded-padding-inline))');
+    expect(miniAppStyles).not.toContain('margin-left: calc(-1 * var(--starmate-control-flow-chat-card-expanded-padding-inline))');
   });
 });

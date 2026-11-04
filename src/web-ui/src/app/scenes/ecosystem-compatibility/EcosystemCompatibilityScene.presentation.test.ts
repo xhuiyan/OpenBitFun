@@ -305,8 +305,8 @@ describe('ecosystem compatibility scene presentation contract', () => {
     const block = (name: string) => styles.slice(styles.indexOf(`&__${name} {`)).split('\n  }')[0];
 
     expect(block('notice')).not.toMatch(/(?:padding|border|background|font):/);
-    expect(block('batch-status')).toContain('var(--openbitfun-overlay-dialog-content-padding-lg)');
-    expect(block('content-expanded')).toContain('padding: 0 var(--openbitfun-space-4) var(--openbitfun-space-4)');
+    expect(block('batch-status')).toContain('var(--starmate-overlay-dialog-content-padding-lg)');
+    expect(block('content-expanded')).toContain('padding: 0 var(--starmate-space-4) var(--starmate-space-4)');
     expect(block('import-action')).toContain('flex-wrap: wrap');
     expect(block('metadata')).toContain('align-items: baseline');
     expect(block('metadata')).toContain('margin: 0');
@@ -327,8 +327,8 @@ describe('ecosystem compatibility scene presentation contract', () => {
   it('lets the page inherit the surrounding scene surface', () => {
     const styles = source('./EcosystemCompatibilityScene.scss');
 
-    expect(styles).not.toContain('background: var(--openbitfun-color-surface-scene);');
-    expect(styles).not.toContain('background: var(--openbitfun-color-surface-canvas);');
+    expect(styles).not.toContain('background: var(--starmate-color-surface-scene);');
+    expect(styles).not.toContain('background: var(--starmate-color-surface-canvas);');
   });
 
   it('keeps Oh My Pi and generic ACP agents out of the product catalog', () => {

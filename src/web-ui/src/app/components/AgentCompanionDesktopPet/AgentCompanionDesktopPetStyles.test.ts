@@ -42,21 +42,21 @@ describe('AgentCompanionDesktopPet styles', () => {
     const output = extractBlock(stylesheet, '&__bubble-output');
     const composerInput = extractBlock(stylesheet, '&__bubble-composer-input');
 
-    expect(bubble).toContain('background-color: var(--openbitfun-color-surface-raised);');
-    expect(bubble).toContain('color: var(--openbitfun-color-content-primary);');
+    expect(bubble).toContain('background-color: var(--starmate-color-surface-raised);');
+    expect(bubble).toContain('color: var(--starmate-color-content-primary);');
     // Status words are drawn as a glyph; the text stays for assistive tech only.
     expect(status).toContain('clip-path: inset(50%);');
     expect(extractBlock(stylesheet, '&__bubble-state')).toContain('color: var(--_bubble-light);');
     for (const state of ['running', 'waiting', 'attention', 'completed', 'error', 'interrupted']) {
       expect(readSource()).toMatch(new RegExp(`\\n  ${state}: Lucide\\w+,`));
     }
-    expect(output).toContain('color: var(--openbitfun-color-content-secondary);');
-    expect(composerInput).toContain('background: var(--openbitfun-color-field-background);');
-    expect(composerInput).toContain('color: var(--openbitfun-color-content-primary);');
-    expect(stylesheet).toContain('background: var(--openbitfun-color-surface-raised);');
+    expect(output).toContain('color: var(--starmate-color-content-secondary);');
+    expect(composerInput).toContain('background: var(--starmate-color-field-background);');
+    expect(composerInput).toContain('color: var(--starmate-color-content-primary);');
+    expect(stylesheet).toContain('background: var(--starmate-color-surface-raised);');
 
-    expect(stylesheet).not.toContain('--openbitfun-color-content-on-light');
-    expect(stylesheet).not.toContain('--openbitfun-color-content-on-dark');
+    expect(stylesheet).not.toContain('--starmate-color-content-on-light');
+    expect(stylesheet).not.toContain('--starmate-color-content-on-dark');
     expect(stylesheet).not.toMatch(
       /&__bubble--(?:attention|waiting|completed|error|interrupted)\s+&__bubble-status/,
     );
@@ -66,10 +66,10 @@ describe('AgentCompanionDesktopPet styles', () => {
     const stylesheet = readStylesheet();
 
     for (const [selector, surfaceToken] of [
-      ['&__bubble--attention', '--openbitfun-color-status-warning-surface'],
-      ['&__bubble--waiting', '--openbitfun-color-status-warning-surface'],
-      ['&__bubble--completed', '--openbitfun-color-status-success-surface'],
-      ['&__bubble--error,\n  &__bubble--interrupted', '--openbitfun-color-status-danger-surface'],
+      ['&__bubble--attention', '--starmate-color-status-warning-surface'],
+      ['&__bubble--waiting', '--starmate-color-status-warning-surface'],
+      ['&__bubble--completed', '--starmate-color-status-success-surface'],
+      ['&__bubble--error,\n  &__bubble--interrupted', '--starmate-color-status-danger-surface'],
     ] as const) {
       const state = extractBlock(stylesheet, selector);
       expect(state).toContain('background-image: linear-gradient(');

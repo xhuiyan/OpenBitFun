@@ -9,7 +9,7 @@
   min-height: 0;
   border: 0;
   border-radius: 0;
-  background: var(--openbitfun-color-surface-scene);
+  background: var(--starmate-color-surface-scene);
   box-shadow: none;
 
   &__clip {
@@ -117,7 +117,7 @@
   > .openbitfun-scene-viewport__clip { display: contents; }
   .openbitfun-scene-viewport__scene[hidden] { display: none; }
   .openbitfun-scene-viewport__scene {
-    background: var(--openbitfun-color-surface-scene);
+    background: var(--starmate-color-surface-scene);
   }
 }
 

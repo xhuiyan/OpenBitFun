@@ -60,7 +60,7 @@ describe('SceneTopBar', () => {
 
   it('uses the shell width without gutter compensation and shares the pane boundary', () => {
     expect(stylesheet).toContain('width: 100%;');
-    expect(stylesheet).toContain('inset-inline-start: calc(0px - var(--openbitfun-border-width-default))');
+    expect(stylesheet).toContain('inset-inline-start: calc(0px - var(--starmate-border-width-default))');
     expect(stylesheet).not.toContain('width: calc(100% +');
     expect(stylesheet).not.toContain('margin-inline-start: calc(0px -');
     expect(stylesheet).toContain(":has(.openbitfun-scene-top-bar__actions button, .openbitfun-scene-top-bar__actions [role='button'])");

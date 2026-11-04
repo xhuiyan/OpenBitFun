@@ -1,17 +1,17 @@
 .flow-chat-width-boundary {
   position: absolute;
-  inset-block: var(--openbitfun-space-12);
+  inset-block: var(--starmate-space-12);
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
-  z-index: var(--openbitfun-layer-overlay);
+  z-index: var(--starmate-layer-overlay);
 
   &[hidden] { display: none; }
 
   &__handle {
     position: absolute;
     inset-block: 0;
-    width: var(--openbitfun-space-3);
+    width: var(--starmate-space-3);
     transform: translateX(-50%);
     cursor: col-resize;
     touch-action: none;
@@ -28,25 +28,25 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--openbitfun-color-border-default);
+      background: var(--starmate-color-border-default);
       opacity: 0;
-      transition: opacity var(--openbitfun-motion-duration-fast) var(--openbitfun-motion-easing-standard);
+      transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
     }
 
     &::before {
       top: 50%;
       height: 50%;
-      width: var(--openbitfun-border-width-default);
+      width: var(--starmate-border-width-default);
       transform: translate(-50%, -50%);
     }
 
     &::after {
       top: 50%;
-      height: var(--openbitfun-space-8);
-      width: var(--openbitfun-border-width-strong);
-      border-radius: var(--openbitfun-radius-pill);
+      height: var(--starmate-space-8);
+      width: var(--starmate-border-width-strong);
+      border-radius: var(--starmate-radius-pill);
       transform: translate(-50%, -50%);
-      background: var(--openbitfun-color-content-secondary);
+      background: var(--starmate-color-content-secondary);
     }
 
     &:hover::before { opacity: 0.5; }
@@ -54,7 +54,7 @@
     &:focus-visible::before,
     &:focus-visible::after { opacity: 1; }
 
-    &:focus-visible::after { background: var(--openbitfun-color-focus-ring); }
+    &:focus-visible::after { background: var(--starmate-color-focus-ring); }
   }
 
   &[data-resizing] &__handle::before { opacity: 0.5; }

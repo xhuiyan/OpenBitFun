@@ -1,9 +1,9 @@
 .disabledTrigger {
   display: inline-flex;
-  border-radius: var(--openbitfun-radius-sm);
+  border-radius: var(--starmate-radius-sm);
 }
 
 .disabledTrigger:focus-visible {
-  outline: 2px solid var(--openbitfun-color-accent-default);
+  outline: 2px solid var(--starmate-color-accent-default);
   outline-offset: 2px;
 }

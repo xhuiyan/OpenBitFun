@@ -18,12 +18,12 @@
   margin: 0;
   border: 0;
   box-sizing: border-box;
-  color: var(--openbitfun-color-content-primary);
-  font-family: var(--openbitfun-type-flow-body-font-family);
-  font-size: var(--openbitfun-type-flow-body-font-size);
-  font-weight: var(--openbitfun-type-flow-body-font-weight);
-  line-height: var(--openbitfun-type-flow-body-line-height);
-  letter-spacing: var(--openbitfun-type-flow-body-letter-spacing);
+  color: var(--starmate-color-content-primary);
+  font-family: var(--starmate-type-flow-body-font-family);
+  font-size: var(--starmate-type-flow-body-font-size);
+  font-weight: var(--starmate-type-flow-body-font-weight);
+  line-height: var(--starmate-type-flow-body-line-height);
+  letter-spacing: var(--starmate-type-flow-body-letter-spacing);
 
   // Markdown owns its type roles and controls; plain responses share its body role.
   .text-content {
@@ -38,13 +38,13 @@
   &--runtime-status {
     display: flex;
     align-items: center;
-    gap: var(--openbitfun-control-flow-chat-control-gap);
-    min-height: var(--openbitfun-control-tool-card-ambient-row-min-block-size);
-    color: var(--openbitfun-color-content-secondary);
-    font-family: var(--openbitfun-type-flow-support-font-family);
-    font-size: var(--openbitfun-type-flow-support-font-size);
-    font-weight: var(--openbitfun-type-flow-support-font-weight);
-    line-height: var(--openbitfun-type-flow-support-line-height);
-    letter-spacing: var(--openbitfun-type-flow-support-letter-spacing);
+    gap: var(--starmate-control-flow-chat-control-gap);
+    min-height: var(--starmate-control-tool-card-ambient-row-min-block-size);
+    color: var(--starmate-color-content-secondary);
+    font-family: var(--starmate-type-flow-support-font-family);
+    font-size: var(--starmate-type-flow-support-font-size);
+    font-weight: var(--starmate-type-flow-support-font-weight);
+    line-height: var(--starmate-type-flow-support-line-height);
+    letter-spacing: var(--starmate-type-flow-support-letter-spacing);
   }
 }

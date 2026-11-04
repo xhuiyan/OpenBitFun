@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--openbitfun-color-overlay-scrim);
+  background: var(--starmate-color-overlay-scrim);
   backdrop-filter: blur(4px);
   z-index: 280;
   opacity: 1;
@@ -43,15 +43,15 @@
     align-items: center;
     justify-content: space-between;
     padding-block: 14px;
-    padding-inline: var(--openbitfun-overlay-dialog-header-padding-inline);
-    border-bottom: 1px solid var(--openbitfun-color-border-subtle);
+    padding-inline: var(--starmate-overlay-dialog-header-padding-inline);
+    border-bottom: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__header-title {
     margin: 0;
-    font-size: var(--openbitfun-type-body-lg-font-size);
-    font-weight: var(--openbitfun-type-label-selected-font-weight);
-    color: var(--openbitfun-color-content-primary);
+    font-size: var(--starmate-type-body-lg-font-size);
+    font-weight: var(--starmate-type-label-selected-font-weight);
+    color: var(--starmate-color-content-primary);
   }
 
   &__tool-btn {
@@ -63,12 +63,12 @@
     border: none;
     border-radius: 6px;
     background: transparent;
-    color: var(--openbitfun-color-content-muted);
+    color: var(--starmate-color-content-muted);
     cursor: pointer;
 
     &:hover:not(:disabled) {
-      background: var(--openbitfun-color-surface-subtle);
-      color: var(--openbitfun-color-content-primary);
+      background: var(--starmate-color-surface-subtle);
+      color: var(--starmate-color-content-primary);
     }
 
     &:disabled {
@@ -83,8 +83,8 @@
     align-items: center;
     gap: 6px;
     padding-block: 10px;
-    padding-inline: var(--openbitfun-overlay-dialog-header-padding-inline);
-    border-bottom: 1px solid var(--openbitfun-color-border-subtle);
+    padding-inline: var(--starmate-overlay-dialog-header-padding-inline);
+    border-bottom: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__path {
@@ -102,7 +102,7 @@
     flex: 1;
     min-height: 0;
     padding-block: 8px;
-    padding-inline: calc(var(--openbitfun-overlay-dialog-header-padding-inline) - var(--openbitfun-space-2));
+    padding-inline: calc(var(--starmate-overlay-dialog-header-padding-inline) - var(--starmate-space-2));
   }
 
   &__state {
@@ -111,11 +111,11 @@
     justify-content: center;
     gap: 8px;
     min-height: 160px;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-label-md-font-size);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-label-md-font-size);
 
     &--error {
-      color: var(--openbitfun-color-status-danger-content);
+      color: var(--starmate-color-status-danger-content);
       padding: 0 16px;
       text-align: center;
     }
@@ -142,18 +142,18 @@
     border: none;
     border-radius: 6px;
     background: transparent;
-    color: var(--openbitfun-color-content-primary);
-    font-size: var(--openbitfun-type-label-md-font-size);
-    padding: 8px var(--openbitfun-space-2);
+    color: var(--starmate-color-content-primary);
+    font-size: var(--starmate-type-label-md-font-size);
+    padding: 8px var(--starmate-space-2);
     cursor: pointer;
     text-align: left;
 
     &:hover {
-      background: var(--openbitfun-color-surface-subtle);
+      background: var(--starmate-color-surface-subtle);
     }
 
     &.is-selected {
-      background: var(--openbitfun-color-action-quiet-hover);
+      background: var(--starmate-color-action-quiet-hover);
     }
   }
 
@@ -164,8 +164,8 @@
     justify-content: space-between;
     gap: 12px;
     padding-block: 12px;
-    padding-inline: var(--openbitfun-overlay-dialog-header-padding-inline);
-    border-top: 1px solid var(--openbitfun-color-border-subtle);
+    padding-inline: var(--starmate-overlay-dialog-header-padding-inline);
+    border-top: 1px solid var(--starmate-color-border-subtle);
   }
 
   &__selected {
@@ -173,8 +173,8 @@
     min-width: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: var(--openbitfun-color-content-muted);
-    font-size: var(--openbitfun-type-label-sm-font-size);
+    color: var(--starmate-color-content-muted);
+    font-size: var(--starmate-type-label-sm-font-size);
   }
 
   &__actions {

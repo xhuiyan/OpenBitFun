@@ -102,8 +102,8 @@ describe('Truncated product text line boxes', () => {
     ['scenes/skills/components/SkillCard.scss', '.skills-card__desc'],
   ])('%s gives %s a font-relative, descender-safe line height', (filename, selector) => {
     const lineHeight = selector === '.skills-card__name'
-      ? 'var(--openbitfun-type-heading-card-line-height)'
-      : 'var(--openbitfun-type-body-sm-line-height)';
+      ? 'var(--starmate-type-heading-card-line-height)'
+      : 'var(--starmate-type-body-sm-line-height)';
     expect(compiledRules(filename)(selector)['line-height']).toBe(lineHeight);
   });
 
