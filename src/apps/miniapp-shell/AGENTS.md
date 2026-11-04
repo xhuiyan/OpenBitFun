@@ -107,10 +107,10 @@ node --test scripts/generate-miniapp-chat-styles.test.mjs
 pnpm --dir src/web-ui run icons:check
 pnpm --dir src/web-ui run test:run src/app/scenes/miniapps/components/MiniAppShell.test.ts src/app/scenes/miniapps/components/MiniAppTitlebar.test.tsx
 pnpm --dir src/web-ui run test:run src/app/scenes/miniapps/components/MiniAppShellChat.test.ts
-cargo test --locked -p openbitfun-miniapp-shell --profile miniapp-shell --bin openbitfun-miniapp-shell window_chrome
-cargo test --locked -p openbitfun-miniapp-shell --profile miniapp-shell --bin openbitfun-miniapp-shell host_tests
+cargo test --locked -p starmate-miniapp-shell --profile miniapp-shell --bin starmate-miniapp-shell window_chrome
+cargo test --locked -p starmate-miniapp-shell --profile miniapp-shell --bin starmate-miniapp-shell host_tests
 pnpm run prepare:miniapp-shell
-target/debug/openbitfun-miniapp-shell --miniapp-shell-info
+target/debug/starmate-miniapp-shell --miniapp-shell-info
 node --test scripts/prepare-miniapp-shell.test.mjs
 cargo test --locked -p openbitfun-miniapp-ipc
 cargo test --locked -p openbitfun-desktop --lib miniapp_desktop
@@ -125,5 +125,5 @@ After preparing a macOS shell, exercise the real temporary export and headless
 diagnostic with:
 
 ```bash
-STARMATE_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/openbitfun-miniapp-shell" cargo test --locked -p openbitfun-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
+STARMATE_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/starmate-miniapp-shell" cargo test --locked -p openbitfun-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
 ```

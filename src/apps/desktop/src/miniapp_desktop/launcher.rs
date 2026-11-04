@@ -284,9 +284,9 @@ pub(super) fn desktop_exec_arg(path: &Path) -> Result<String, String> {
 /// resources are an explicit packaging error; never copy the full Desktop host.
 pub(crate) fn shell_executable(host: &Path) -> Result<PathBuf, String> {
     let name = if cfg!(windows) {
-        "openbitfun-miniapp-shell.exe"
+        "starmate-miniapp-shell.exe"
     } else {
-        "openbitfun-miniapp-shell"
+        "starmate-miniapp-shell"
     };
     let path = host
         .parent()
@@ -568,9 +568,9 @@ mod tests {
             .unwrap_err()
             .contains("lightweight MiniApp shell is missing"));
         let name = if cfg!(windows) {
-            "openbitfun-miniapp-shell.exe"
+            "starmate-miniapp-shell.exe"
         } else {
-            "openbitfun-miniapp-shell"
+            "starmate-miniapp-shell"
         };
         let shell = root.path().join(name);
         std::fs::write(&shell, "window-only executable").unwrap();

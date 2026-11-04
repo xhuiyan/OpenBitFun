@@ -20,7 +20,7 @@ test('the standalone shell supplies an existing Windows resource icon', () => {
 });
 
 function fixture(t) {
-  const root = mkdtempSync(join(tmpdir(), 'openbitfun-miniapp-shell-'));
+  const root = mkdtempSync(join(tmpdir(), 'starmate-miniapp-shell-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   return root;
 }
@@ -147,12 +147,12 @@ test('the standalone shell dependency graph cannot link product runtime owners',
     { cwd: ROOT, encoding: 'utf8', windowsHide: true });
   assert.equal(result.status, 0, result.stderr);
   const packages = new Set(result.stdout.split('\n').map((line) => line.split(' ')[0]));
-  for (const forbidden of ['openbitfun-desktop', 'openbitfun-core', 'openbitfun-agent-runtime',
-    'openbitfun-services-integrations', 'openbitfun-product-capabilities', 'openbitfun-webdriver',
-    'openbitfun-tool-packs', 'openbitfun-ai-adapters', 'terminal-core', 'sherpa-onnx']) {
+  for (const forbidden of ['starmate-desktop', 'starmate-core', 'starmate-agent-runtime',
+    'starmate-services-integrations', 'starmate-product-capabilities', 'starmate-webdriver',
+    'starmate-tool-packs', 'starmate-ai-adapters', 'terminal-core', 'sherpa-onnx']) {
     assert.equal(packages.has(forbidden), false, `${forbidden} must remain in the shared host`);
   }
-  assert.ok(packages.has('openbitfun-miniapp-ipc'));
+  assert.ok(packages.has('starmate-miniapp-ipc'));
 });
 
 test('the resolved shell disables Tauri dev icon overrides independently of the Cargo profile', () => {

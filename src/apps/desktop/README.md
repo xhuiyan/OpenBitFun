@@ -227,7 +227,7 @@ automatically. After changing shell Rust/HTML during an existing development
 session, run `pnpm run prepare:miniapp-shell` before reopening the MiniApp.
 Direct Cargo Desktop builds need the same preparation once. Packaging uses
 Tauri's `externalBin` for platform placement and signing; raw builds require the
-adjacent `openbitfun-miniapp-shell` executable (`.exe` on Windows).
+adjacent `starmate-miniapp-shell` executable (`.exe` on Windows).
 
 An independent window displays its own Agent permission requests through the
 shared runtime mailbox. Legacy MiniApps that call `agent.cancelStaleRuns` on every

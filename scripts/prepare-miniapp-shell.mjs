@@ -7,7 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const SHELL_NAME = 'openbitfun-miniapp-shell';
+export const SHELL_NAME = 'starmate-miniapp-shell';
 // Built design-system entries the native-window projections import.
 const DESIGN_SYSTEM_CONSUMER_ENTRIES = [
   'design-system/packages/design-tokens/dist/index.js',

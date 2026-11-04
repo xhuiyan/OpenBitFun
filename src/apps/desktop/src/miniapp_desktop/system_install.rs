@@ -135,7 +135,7 @@ fn linux_entry_owned(text: &str, record: &LaunchRecord) -> bool {
         record.host_executable.clone(),
         record
             .host_executable
-            .with_file_name("openbitfun-miniapp-shell"),
+            .with_file_name("starmate-miniapp-shell"),
     ];
     candidates.iter().any(|binary| {
         let Ok(binary) = desktop_exec_arg(binary) else {
@@ -215,7 +215,7 @@ mod tests {
             record.host_executable.clone(),
             record
                 .host_executable
-                .with_file_name("openbitfun-miniapp-shell"),
+                .with_file_name("starmate-miniapp-shell"),
         ] {
             let text = format!(
                 "[Desktop Entry]\nExec={}\n",
