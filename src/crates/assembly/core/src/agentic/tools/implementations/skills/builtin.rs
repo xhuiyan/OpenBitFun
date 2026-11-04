@@ -488,7 +488,7 @@ mod tests {
         assert!(example.contains("cinematic animated-wallpaper"));
 
         let metadata = embedded_skill_text("create-openbitfun-skin/agents/openai.yaml");
-        assert!(metadata.contains("display_name: \"OpenBitFun Appearance Manual\""));
+        assert!(metadata.contains("display_name: \"StarMate Appearance Manual\""));
 
         let workflow =
             embedded_skill_text("create-openbitfun-skin/references/authoring-workflow.md");

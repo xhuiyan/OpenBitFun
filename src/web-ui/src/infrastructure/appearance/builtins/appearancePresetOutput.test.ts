@@ -450,47 +450,47 @@ describe('builtin appearance preset output', () => {
     }))).toMatchInlineSnapshot(`
       [
         {
-          "hash": "7a71a12624784e4fa3ca06b77e7ad1b8386d28e05e9a478f27fd3e682463a1ca",
+          "hash": "cfde4833bc6febca47a8ee559dbe8fcd3464a6a6658ed6f7cb7876e1d6f94e45",
           "id": "openbitfun-light",
           "type": "light",
         },
         {
-          "hash": "c7d60d578a7e71dbef355a5feb5588437a51d6af30aaca33bb2eb7f07f8e4554",
+          "hash": "e6228f9dc52570fb2897015bf93f63417224f7491b0b212776f9045bc2a00384",
           "id": "openbitfun-monochrome",
           "type": "light",
         },
         {
-          "hash": "fdd6c7693b7ad627e9d05842ebaaceaf342bd269d6a0d3a76ac3360b377dc830",
+          "hash": "da79198eeed334a53f6dbbf09ffccc4e517d3e31cd35edc03e810fdb63428a6f",
           "id": "openbitfun-slate",
           "type": "dark",
         },
         {
-          "hash": "c1fe8c49368e8ff96debaeba117ce40b22b2f9c48e2e5d86f372b8fd032380fe",
+          "hash": "eae65bea12bda70a4fe9cc06ec8bbf4a1d4cd5558e53006965ed78edbe2ae944",
           "id": "openbitfun-dark",
           "type": "dark",
         },
         {
-          "hash": "f1b0516be11dbd02eb1c3b204806e2212b3fa78d1fcf18912d2fee99f257d51d",
+          "hash": "848139cb1abe90f15fd830de847973951399fe1a74304fb790d4ebd99ec03648",
           "id": "openbitfun-midnight",
           "type": "dark",
         },
         {
-          "hash": "db979037b2785c346b5fa06905aa84db43bcb39217e123f26cd6aad2231248a8",
+          "hash": "8b3c68dae4b926dec4f2eb9a9f6f269be86ac63bc6ec7dd0edf18f53a3a4dee6",
           "id": "openbitfun-china-style",
           "type": "light",
         },
         {
-          "hash": "30a425ebcf4e4121e8a426c1dca981944d99b0523c21477cbe6c59b111e11b0e",
+          "hash": "16e9669e06115f51b008a864dbc895214f0d4d7bd788a7b76090168b680af72b",
           "id": "openbitfun-china-night",
           "type": "dark",
         },
         {
-          "hash": "b82c17ad7f03db017974d4a300294f4efd11bb06a56150c5217b24fa1be37614",
+          "hash": "c3c9cf20a941fdc94f91ed2707c17959f38863eef670185e490f3b48f0b4c712",
           "id": "openbitfun-cyber",
           "type": "dark",
         },
         {
-          "hash": "ab337e00902219e4b56980511d12d761b08f5fc6913329a8c5c555b44a652a1c",
+          "hash": "ae426310c63985afdf08c0028b224e86318e08959bbd44e14ef87cc0aec86816",
           "id": "openbitfun-tokyo-night",
           "type": "dark",
         },
