@@ -89,7 +89,7 @@ incremental = false
     bundle: { active: false, icon: ['icons/icon.ico'] },
   }));
   await mkdir(join(directory, 'icons'));
-  await copyFile(join(root, 'src/apps/desktop/icons/openbitfun-app-icon.ico'), join(directory, 'icons/icon.ico'));
+  await copyFile(join(root, 'src/apps/desktop/icons/starmate-app-icon.ico'), join(directory, 'icons/icon.ico'));
   await writeFile(join(directory, 'assets/index.html'), '<!doctype html><title>Hidden window material fixture</title>');
   await writeFile(join(directory, 'build.rs'), 'fn main() { tauri_build::build(); }\n');
   await copyFile(join(root, 'Cargo.lock'), join(directory, 'Cargo.lock'));

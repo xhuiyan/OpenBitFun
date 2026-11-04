@@ -1,11 +1,11 @@
 import type { ImgHTMLAttributes } from "react";
 import { classNames } from "../internal/classNames";
-import solidMark from "./assets/openbitfun-app-mark.png";
-import appIcon16 from "./assets/openbitfun-app-icon-16.png";
-import appIcon32 from "./assets/openbitfun-app-icon-32.png";
-import appIcon128 from "./assets/openbitfun-app-icon-128.png";
-import appIcon256 from "./assets/openbitfun-app-icon-256.png";
-import appIcon512 from "./assets/openbitfun-app-icon-512.png";
+import solidMark from "./assets/starmate-app-mark.png";
+import appIcon16 from "./assets/starmate-app-icon-16.png";
+import appIcon32 from "./assets/starmate-app-icon-32.png";
+import appIcon128 from "./assets/starmate-app-icon-128.png";
+import appIcon256 from "./assets/starmate-app-icon-256.png";
+import appIcon512 from "./assets/starmate-app-icon-512.png";
 import styles from "./brand.module.css";
 
 export interface StarMateArtworkProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes" | "width" | "height" | "alt" | "children"> {

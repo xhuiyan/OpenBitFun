@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="./png/openbitfun-wordmark.png" alt="StarMate" width="520" />
+<img src="./png/starmate-wordmark.png" alt="StarMate" width="520" />
 
 ### Built to keep going.
 
@@ -31,18 +31,18 @@ StarMate is a highly customizable, open-source agent workspace that keeps work m
 ---
 
 <p align="center">
-  <img src="./png/openbitfun-desktop.png" alt="The StarMate desktop home screen" width="49%" />
-  <img src="./png/openbitfun-desktop-session.png" alt="The StarMate desktop multi-agent session" width="49%" />
+  <img src="./png/starmate-desktop.png" alt="The StarMate desktop home screen" width="49%" />
+  <img src="./png/starmate-desktop-session.png" alt="The StarMate desktop multi-agent session" width="49%" />
   <br />
-  <img src="./png/openbitfun-desktop-settings.png" alt="The StarMate desktop settings screen" width="49%" />
-  <img src="./png/openbitfun-desktop-task-board.png" alt="The StarMate desktop task board" width="49%" />
+  <img src="./png/starmate-desktop-settings.png" alt="The StarMate desktop settings screen" width="49%" />
+  <img src="./png/starmate-desktop-task-board.png" alt="The StarMate desktop task board" width="49%" />
 </p>
 
 ## Four modes for the way you work
 
 **The Agent Harness shapes how a task gets done.** It plans steps, manages context, calls tools, coordinates agents, and brings their results together. Choose the mode that fits the task:
 
-![Four working modes: Minimal, Standard, Ultimate, and Creative](./png/openbitfun-harness-modes.png)
+![Four working modes: Minimal, Standard, Ultimate, and Creative](./png/starmate-harness-modes.png)
 
 | Mode | When to use it |
 | --- | --- |
@@ -59,7 +59,7 @@ StarMate is a highly customizable, open-source agent workspace that keeps work m
 
 **On mobile, switch between layouts for one, two, or three screens.** Focus on the conversation with a single screen, then unfold your phone to view conversations and files side by side. The interface adapts as the screen layout changes.
 
-![Switching between connected computers and remotely controlling the selected device from a phone](./png/openbitfun-multi-device.png)
+![Switching between connected computers and remotely controlling the selected device from a phone](./png/starmate-multi-device.png)
 
 <details>
 <summary>Connection and deployment details</summary>
@@ -99,13 +99,13 @@ In this **DeepSWE v1.1** evaluation, StarMate achieved:
 - **GLM-5.3-Flash**: **64.6%** pass rate, **42.9 minutes** median runtime (P50).
 - **DeepSeek-V4-Flash**: **56.6%** pass rate, **19.6 minutes** median runtime (P50).
 
-![DeepSWE v1.1 comparison: pass rate, runtime P50, and token P50](./png/openbitfun-deepswe-v1.1.png)
+![DeepSWE v1.1 comparison: pass rate, runtime P50, and token P50](./png/starmate-deepswe-v1.1.png)
 
 ## More to explore
 
 **These are just some of StarMate's features.** Explore more tools, workflows, and extensions as you put it to work on your own tasks.
 
-![A selection of StarMate's features](./png/openbitfun-feature-wall.jpg)
+![A selection of StarMate's features](./png/starmate-feature-wall.jpg)
 
 ## Where we're headed
 
@@ -149,7 +149,7 @@ Core code is licensed under the [MIT License](./LICENSE). Third-party dependenci
 
 Scan the QR code with WeChat to add us and request to join the StarMate community group.
 
-<img src="./png/openbitfun-community-wechat.png" alt="WeChat QR code for joining the StarMate community" width="360" />
+<img src="./png/starmate-community-wechat.png" alt="WeChat QR code for joining the StarMate community" width="360" />
 
 ## Star History
 

@@ -1,6 +1,6 @@
 # OpenBitFun application brand assets
 
-`source/openbitfun-mark.svg` is the transparent vector master for the current
+`source/starmate-mark.svg` is the transparent vector master for the current
 fine-line Logo used by startup and in-product brand surfaces. Its fifteen rounded
 hexagonal contours match the About dialog's static geometry. Motion and moving
 highlights are intentionally absent from static files. The SVG uses
@@ -8,10 +8,10 @@ highlights are intentionally absent from static files. The SVG uses
 
 The generator also maintains the existing transparent PNG paths:
 
-- `openbitfun-mark-dark.png` is the dark mark for light surfaces.
-- `openbitfun-mark-light.png` is the light mark for dark surfaces.
+- `starmate-mark-dark.png` is the dark mark for light surfaces.
+- `starmate-mark-light.png` is the light mark for dark surfaces.
 
-`source/openbitfun-app-mark.png` preserves the originally submitted silver
+`source/starmate-app-mark.png` preserves the originally submitted silver
 hexagonal application mark. Application, window, taskbar, Dock, tray, browser,
 installer, and mobile launcher icons use this artwork on the black rounded-square
 background with transparent corners. It is intentionally independent from the
@@ -29,7 +29,7 @@ shared PNGs, Windows ICO, Linux, web, and mobile artwork are unchanged.
 
 ## macOS icons
 
-`macos/openbitfun.icon` is the Icon Composer document for macOS 26 and newer,
+`macos/starmate.icon` is the Icon Composer document for macOS 26 and newer,
 including macOS 27. Its background is an opaque, full-bleed black fill and its
 foreground is the transparent silver mark projected from the same brand master.
 It has no baked outer mask, shadow, or Dock padding. macOS applies the enclosure
@@ -110,7 +110,7 @@ bundling checks also run `scripts/macos-icon-bundle.test.mjs`.
 
 Verification emails use the silver application mark on its black rounded-square
 background, generated at
-`src/miniapp-market-web/public/assets/openbitfun-email-app-icon.png`. The market build
+`src/miniapp-market-web/public/assets/starmate-email-app-icon.png`. The market build
 publishes this stable anonymous image path for email clients; it contains no
 recipient or verification data and does not require authentication.
 

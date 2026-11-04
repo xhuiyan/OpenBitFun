@@ -31,11 +31,11 @@ test('Windows autocrlf checkout preserves the committed macOS icon source digest
   const files = [
     '.gitattributes',
     'scripts/macos-icon-assets.mjs',
-    'assets/brand/macos/openbitfun.icon/icon.json',
-    'assets/brand/macos/openbitfun.icon/Assets/Mark.png',
+    'assets/brand/macos/starmate.icon/icon.json',
+    'assets/brand/macos/starmate.icon/Assets/Mark.png',
     'assets/brand/macos/legacy-canvas.json',
     'assets/brand/macos/generated.json',
-    'assets/brand/exports/openbitfun-app-icon.icns',
+    'assets/brand/exports/starmate-app-icon.icns',
   ];
   const git = (...args) => run('git', args, { cwd: directory });
   try {
@@ -148,7 +148,7 @@ test('Apple iconutil decodes all ten legacy/Retina representations with Dock mar
   try {
     const iconset = join(directory, 'fallback.iconset');
     run('/usr/bin/iconutil', ['--convert', 'iconset', '--output', iconset,
-      join(ROOT, 'assets/brand/exports/openbitfun-app-icon.icns')]);
+      join(ROOT, 'assets/brand/exports/starmate-app-icon.icns')]);
     const files = readdirSync(iconset).filter(file => file.endsWith('.png'));
     assert.equal(files.length, 10);
     for (const file of files) {

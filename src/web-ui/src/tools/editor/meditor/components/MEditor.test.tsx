@@ -133,7 +133,7 @@ describe('MEditorErrorBoundary', () => {
     { name: 'Monaco source HTML and Markdown metadata', withHtml: true, prefix: '', metadata: { 'vscode-editor-data': '{"version":1,"mode":"markdown"}' } },
     { name: 'Markdown editor metadata without HTML', withHtml: false, prefix: '', metadata: { 'vscode-editor-data': '{"version":1,"mode":"markdown"}' } },
   ])('renders README Markdown copied with $name', async ({ withHtml, prefix, metadata }) => {
-    const readme = '**English** · [中文](README.zh-CN.md)\n\n<div align="center">\n\n<img src="./png/openbitfun-wordmark.png" alt="OpenBitFun" width="520" />\n\n### Built to keep going.\n\nOpenBitFun is an agent workspace.\n\n</div>';
+    const readme = '**English** · [中文](README.zh-CN.md)\n\n<div align="center">\n\n<img src="./png/starmate-wordmark.png" alt="OpenBitFun" width="520" />\n\n### Built to keep going.\n\nOpenBitFun is an agent workspace.\n\n</div>';
     const { ref } = await renderEditor('');
     pasteClipboard(readme, withHtml ? prefix + sourceClipboardHtml(readme) : '', metadata);
     await act(async () => { await vi.dynamicImportSettled(); });

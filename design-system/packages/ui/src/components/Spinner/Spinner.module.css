@@ -51,7 +51,7 @@
 
   .artwork {
     background: currentColor;
-    mask: url("../../brand/assets/openbitfun-loading-mark.svg") center / contain no-repeat;
+    mask: url("../../brand/assets/starmate-loading-mark.svg") center / contain no-repeat;
   }
 
   .root[data-variant="bars"] {

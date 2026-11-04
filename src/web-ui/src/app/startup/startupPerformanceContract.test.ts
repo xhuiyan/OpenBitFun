@@ -54,12 +54,12 @@ describe('startup performance contract', () => {
   it('keeps the pre-React startup fallback vector-only', () => {
     const source = readSource('../../../index.html');
 
-    expect(source).toContain('<link rel="icon" type="image/png" href="/brand/openbitfun-app-icon.png" />');
+    expect(source).toContain('<link rel="icon" type="image/png" href="/brand/starmate-app-icon.png" />');
     expect(source).not.toContain('rel="preload" as="image"');
     expect(source).toContain('class="openbitfun-preload__logo"');
-    expect(source).toContain("url('/brand/openbitfun-mark.svg')");
-    expect(source).not.toContain('src="/brand/openbitfun-mark-dark-128.png"');
-    expect(source).not.toContain('src="/brand/openbitfun-mark-light-128.png"');
+    expect(source).toContain("url('/brand/starmate-mark.svg')");
+    expect(source).not.toContain('src="/brand/starmate-mark-dark-128.png"');
+    expect(source).not.toContain('src="/brand/starmate-mark-light-128.png"');
     expect(source).not.toContain('Loading workspace...');
     expect(source).not.toContain('openbitfun-preload__spinner');
     expect(source).not.toContain('aria-live="polite"');
@@ -70,7 +70,7 @@ describe('startup performance contract', () => {
   });
 
   it('keeps the startup mark as a reusable transparent vector asset', () => {
-    const asset = readSource('../../../public/brand/openbitfun-mark.svg');
+    const asset = readSource('../../../public/brand/starmate-mark.svg');
 
     expect(asset).toContain('viewBox="0 0 120 120"');
     expect(asset).toContain('fill="none"');

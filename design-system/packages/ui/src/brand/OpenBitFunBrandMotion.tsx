@@ -1,7 +1,7 @@
 import { useEffect, useRef, type CSSProperties, type SVGProps } from "react";
 import { classNames } from "../internal/classNames";
 import { startBrandPlayback } from "./brandPlayback";
-import markSource from "./assets/openbitfun-mark.svg?raw";
+import markSource from "./assets/starmate-mark.svg?raw";
 import styles from "./brand.module.css";
 
 const CONTOUR_COUNT = 15;

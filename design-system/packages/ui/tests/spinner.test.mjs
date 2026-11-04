@@ -89,7 +89,7 @@ test("logo motion keeps a continuous coupled cycle with a fixed double-hexagon s
     assert.ok(rotation(frames[index]) > rotation(frames[index - 1]), "rotation continues through the clear phase");
     assert.ok(scale(frames[index]) >= 0.974 && scale(frames[index]) <= 1.026);
   }
-  const mark = await readFile(new URL("../src/brand/assets/openbitfun-loading-mark.svg", import.meta.url), "utf8");
+  const mark = await readFile(new URL("../src/brand/assets/starmate-loading-mark.svg", import.meta.url), "utf8");
   assert.equal((mark.match(/<path\b/g) ?? []).length, 1);
   assert.match(mark, /fill-rule="evenodd"/);
   assert.equal((mark.match(/M/g) ?? []).length, 2, "both contours share the same transformed artwork");

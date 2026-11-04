@@ -61,7 +61,7 @@ pub(crate) fn icon_pixels(app_id: &str, svg: Option<&str>) -> Result<RgbaImage, 
         }
     }
     let mark = image::load_from_memory(include_bytes!(
-        "../../../../../assets/brand/exports/openbitfun-app-icon-256.png"
+        "../../../../../assets/brand/exports/starmate-app-icon-256.png"
     ))
     .map_err(|e| e.to_string())?
     .to_rgba8();

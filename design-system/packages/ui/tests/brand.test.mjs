@@ -43,10 +43,10 @@ test("brand marks are decorative by default and expose supplied accessible names
 test("published artwork embeds the same bytes as the application icon generator", async () => {
   const source = new URL("../src/brand/assets/", import.meta.url);
   const solid = renderToStaticMarkup(createElement(brand.StarMateSolidMark));
-  assert.ok(solid.includes((await readFile(new URL("openbitfun-app-mark.png", source))).toString("base64")));
+  assert.ok(solid.includes((await readFile(new URL("starmate-app-mark.png", source))).toString("base64")));
   const app = renderToStaticMarkup(createElement(brand.StarMateAppIcon));
   for (const size of [16, 32, 128, 256, 512]) {
-    assert.ok(app.includes((await readFile(new URL(`openbitfun-app-icon-${size}.png`, source))).toString("base64")));
+    assert.ok(app.includes((await readFile(new URL(`starmate-app-icon-${size}.png`, source))).toString("base64")));
   }
 });
 

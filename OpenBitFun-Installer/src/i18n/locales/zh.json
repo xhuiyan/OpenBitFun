@@ -46,7 +46,7 @@
     "modelName": "模型名称（如 deepseek-v4-flash）",
     "skip": "稍后配置",
     "nextTheme": "下一步：主题",
-    "description": "管理默认模型、模型服务、订阅账户、模型目录与网络连接",
+    "description": "连接模型服务，并选择各类任务使用的模型",
     "providerLabel": "选择模型提供商",
     "selectProvider": "或选择预设提供商",
     "customProvider": "自定义配置",
@@ -57,8 +57,8 @@
         "name": "星伴服务",
         "description": "星伴大模型平台",
         "urlOptions": {
-          "default": "Anthropic格式-默认",
-          "openai": "OpenAI兼容格式"
+          "default": "官方接口",
+          "openai": "官方接口"
         }
       },
       "gemini": {
@@ -73,40 +73,41 @@
         "name": "MiniMax",
         "description": "MiniMax 系列模型",
         "urlOptions": {
-          "default": "国内-Anthropic格式-默认",
-          "openai": "国内-OpenAI兼容格式",
-          "intl": "海外-Anthropic格式",
-          "intlOpenai": "海外-OpenAI兼容格式"
+          "default": "国内-默认",
+          "openai": "国内",
+          "intl": "海外",
+          "intlOpenai": "海外"
         }
       },
       "moonshot": {
         "name": "月之暗面",
         "description": "月之暗面 Kimi 系列模型",
         "urlOptions": {
-          "default": "国内-OpenAI格式-默认",
-          "anthropic": "国内-Anthropic格式",
-          "intl": "海外-OpenAI格式",
-          "intlAnthropic": "海外-Anthropic格式",
-          "kimiForCoding": "Kimi For Coding 套餐（模型 k3 / kimi-for-coding）"
+          "default": "国内-默认",
+          "anthropic": "国内",
+          "intl": "海外",
+          "intlAnthropic": "海外",
+          "kimiForCoding": "Kimi For Coding 套餐（模型 k3 / kimi-for-coding）",
+          "kimiForCodingAnthropic": "Kimi For Coding 套餐"
         }
       },
       "deepseek": {
         "name": "DeepSeek",
         "description": "DeepSeek 系列模型",
         "urlOptions": {
-          "default": "OpenAI格式-默认",
-          "anthropic": "Anthropic格式"
+          "default": "官方接口-默认",
+          "anthropic": "官方接口"
         }
       },
       "zhipu": {
         "name": "智谱AI",
         "description": "智谱AI GLM 系列模型",
         "urlOptions": {
-          "default": "国内-OpenAI格式-默认",
-          "anthropic": "国内-Anthropic格式",
+          "default": "国内-默认",
+          "anthropic": "国内",
           "codingPlan": "国内-Coding Plan",
-          "intl": "海外(Z.AI)-OpenAI格式",
-          "intlAnthropic": "海外(Z.AI)-Anthropic格式",
+          "intl": "海外(Z.AI)",
+          "intlAnthropic": "海外(Z.AI)",
           "intlCodingPlan": "海外(Z.AI)-Coding Plan"
         }
       },
@@ -114,10 +115,10 @@
         "name": "通义千问",
         "description": "阿里云百炼大模型平台",
         "urlOptions": {
-          "default": "国内-OpenAI格式-默认",
+          "default": "国内-默认",
           "codingPlan": "国内-Coding Plan",
-          "codingPlanAnthropic": "国内-Coding Plan-Anthropic格式",
-          "intl": "海外(国际站)-OpenAI格式",
+          "codingPlanAnthropic": "国内-Coding Plan",
+          "intl": "海外(国际站)",
           "intlCodingPlan": "海外-Coding Plan"
         }
       },
@@ -134,9 +135,9 @@
         "name": "硅基流动",
         "description": "硅基流动大模型平台",
         "urlOptions": {
-          "default": "国内-OpenAI格式-默认",
-          "anthropic": "国内-Anthropic格式",
-          "intl": "海外-OpenAI格式"
+          "default": "国内-默认",
+          "anthropic": "国内",
+          "intl": "海外"
         }
       },
       "nvidia": {
@@ -150,6 +151,33 @@
       "tokendance": {
         "name": "词元跳动",
         "description": "统一的大模型 API 网关"
+      },
+      "opencode-zen": {
+        "name": "OpenCode Zen",
+        "description": "OpenCode 模型服务，支持免费模型和按量付费 API Key。"
+      },
+      "opencode-go": {
+        "name": "OpenCode Go",
+        "description": "OpenCode 推出的模型订阅套餐"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "OpenAI GPT 与推理模型",
+        "urlOptions": {
+          "default": "官方接口",
+          "chatCompletions": "官方接口"
+        }
+      },
+      "xiaomi": {
+        "name": "Xiaomi MiMo",
+        "description": "小米 MiMo 系列模型，API 与 Token Plan 密钥不可混用",
+        "urlOptions": {
+          "default": "API-默认",
+          "responses": "API",
+          "anthropic": "API",
+          "tokenPlan": "国内 - Token Plan",
+          "tokenPlanAnthropic": "国内 - Token Plan"
+        }
       }
     },
     "modelNameSelectPlaceholder": "选择模型",
@@ -221,7 +249,7 @@
     "followSystem": "跟随系统",
     "themeNames": {
       "openbitfun-dark": "暗色",
-      "openbitfun-light": "亮色",
+      "openbitfun-light": "浅色",
       "openbitfun-midnight": "午夜",
       "openbitfun-china-style": "墨韵",
       "openbitfun-china-night": "墨夜",

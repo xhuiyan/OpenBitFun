@@ -345,7 +345,7 @@ pub fn set_unread_count(app: &AppHandle, count: u32) -> Result<(), String> {
 #[cfg(target_os = "macos")]
 fn macos_tray_icon() -> Result<tauri::image::Image<'static>, image::ImageError> {
     let mark = image::load_from_memory(include_bytes!(
-        "../../../../assets/brand/source/openbitfun-app-mark.png"
+        "../../../../assets/brand/source/starmate-app-mark.png"
     ))?
     .into_rgba8();
     // The solid source has a 51 px transparent border on its 512 px canvas.

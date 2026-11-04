@@ -9,11 +9,11 @@ import { COMPOSER_ICON, readMacosFallback } from './macos-icon-assets.mjs';
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(SCRIPT_DIR, '..');
 const SOURCE_DIR = path.join(ROOT_DIR, 'assets', 'brand', 'source');
-const SOURCE_SVG = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/openbitfun-mark.svg');
-const SOURCE_APP_MARK = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/openbitfun-app-mark.png');
+const SOURCE_SVG = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/starmate-mark.svg');
+const SOURCE_APP_MARK = path.join(ROOT_DIR, 'design-system/packages/ui/src/brand/assets/starmate-app-mark.png');
 const SOURCE_MARKS = {
-  dark: path.join(SOURCE_DIR, 'openbitfun-mark-dark.png'),
-  light: path.join(SOURCE_DIR, 'openbitfun-mark-light.png'),
+  dark: path.join(SOURCE_DIR, 'starmate-mark-dark.png'),
+  light: path.join(SOURCE_DIR, 'starmate-mark-light.png'),
 };
 
 const BRAND_SIZE = 512;
@@ -58,12 +58,12 @@ const LEGACY_APPLICATION_ASSETS = [
   'OpenBitFun-Installer/src-tauri/icons/icon.ico',
   'OpenBitFun-Installer/src-tauri/icons/icon.icns',
   'src/apps/mobile/harmonyos/AppScope/resources/base/media/openbitfun_icon.png',
-  'src/apps/mobile/harmonyos/AppScope/resources/base/media/openbitfun-app-icon.png',
+  'src/apps/mobile/harmonyos/AppScope/resources/base/media/starmate-app-icon.png',
   'src/apps/mobile/harmonyos/AppScope/resources/base/media/background.png',
   'src/apps/mobile/harmonyos/AppScope/resources/base/media/foreground.png',
   'src/apps/mobile/harmonyos/AppScope/resources/base/media/layered_image.json',
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/openbitfun_icon.png',
-  'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/openbitfun-app-icon.png',
+  'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/starmate-app-icon.png',
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/openbitfun-start-window.png',
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/background.png',
   'src/apps/mobile/harmonyos/entry/src/main/resources/base/media/foreground.png',
@@ -200,8 +200,8 @@ async function createAdaptiveForeground(applicationMark, size) {
 }
 
 async function generateWindowsIcon(applicationIcon, renderIcon) {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'openbitfun-tauri-icons-'));
-  const inputPath = path.join(tempDir, 'openbitfun-app-icon.png');
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'starmate-tauri-icons-'));
+  const inputPath = path.join(tempDir, 'starmate-app-icon.png');
   const tauriCliPath = path.join(ROOT_DIR, 'node_modules', '@tauri-apps', 'cli', 'tauri.js');
   try {
     await writeFile(inputPath, applicationIcon);
@@ -271,81 +271,81 @@ async function generateBrandAssets() {
 
   const exportDir = outputPath('assets', 'brand', 'exports');
   await mkdir(exportDir, { recursive: true });
-  await copyFile(SOURCE_SVG, path.join(exportDir, 'openbitfun-mark.svg'));
+  await copyFile(SOURCE_SVG, path.join(exportDir, 'starmate-mark.svg'));
   const legacySourceDir = outputPath('assets', 'brand', 'source');
   await mkdir(legacySourceDir, { recursive: true });
-  await copyFile(SOURCE_SVG, path.join(legacySourceDir, 'openbitfun-mark.svg'));
-  await copyFile(SOURCE_APP_MARK, path.join(legacySourceDir, 'openbitfun-app-mark.png'));
+  await copyFile(SOURCE_SVG, path.join(legacySourceDir, 'starmate-mark.svg'));
+  await copyFile(SOURCE_APP_MARK, path.join(legacySourceDir, 'starmate-app-mark.png'));
   const componentAssetDir = outputPath('design-system', 'packages', 'ui', 'src', 'brand', 'assets');
   await mkdir(componentAssetDir, { recursive: true });
   for (const size of [16, 32, 128, 256, 512]) {
-    await writePng(path.join(componentAssetDir, `openbitfun-app-icon-${size}.png`), await renderIcon(size));
+    await writePng(path.join(componentAssetDir, `starmate-app-icon-${size}.png`), await renderIcon(size));
   }
   for (const size of EXPORT_SIZES) {
     const dark = await renderMark(svg, size, '#202020');
     const light = await renderMark(svg, size, '#e8e8e8');
-    await writePng(path.join(exportDir, `openbitfun-mark-dark-${size}.png`), dark);
-    await writePng(path.join(exportDir, `openbitfun-mark-light-${size}.png`), light);
+    await writePng(path.join(exportDir, `starmate-mark-dark-${size}.png`), dark);
+    await writePng(path.join(exportDir, `starmate-mark-light-${size}.png`), light);
     await writePng(
-      path.join(exportDir, `openbitfun-app-icon-${size}.png`),
+      path.join(exportDir, `starmate-app-icon-${size}.png`),
       await renderIcon(size),
     );
   }
-  await writeFile(path.join(exportDir, 'openbitfun-app-icon.ico'), windowsIcon);
-  await writeFile(path.join(exportDir, 'openbitfun-app-icon.icns'), macosFallback);
+  await writeFile(path.join(exportDir, 'starmate-app-icon.ico'), windowsIcon);
+  await writeFile(path.join(exportDir, 'starmate-app-icon.icns'), macosFallback);
 
-  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'openbitfun-email-mark.png'), darkMarkSmall);
+  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'starmate-email-mark.png'), darkMarkSmall);
 
-  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'openbitfun-email-app-icon.png'), applicationIcon);
+  await writePng(outputPath('src', 'miniapp-market-web', 'public', 'assets', 'starmate-email-app-icon.png'), applicationIcon);
 
   await writePng(outputPath('src', 'crates', 'services', 'miniapp-market-service', 'src', 'email', 'app-icon.png'), applicationIcon);
 
   const webBrandDir = outputPath('src', 'web-ui', 'public', 'brand');
-  await writePng(path.join(webBrandDir, 'openbitfun-mark-dark.png'), darkMark);
-  await writePng(path.join(webBrandDir, 'openbitfun-mark-light.png'), lightMark);
-  await writePng(path.join(webBrandDir, 'openbitfun-mark-dark-128.png'), darkMarkSmall);
-  await writePng(path.join(webBrandDir, 'openbitfun-mark-light-128.png'), lightMarkSmall);
-  await writePng(path.join(webBrandDir, 'openbitfun-app-icon.png'), applicationIcon);
-  await writeFile(path.join(webBrandDir, 'openbitfun-mark.svg'), createReusableWebMark(svg), 'utf8');
+  await writePng(path.join(webBrandDir, 'starmate-mark-dark.png'), darkMark);
+  await writePng(path.join(webBrandDir, 'starmate-mark-light.png'), lightMark);
+  await writePng(path.join(webBrandDir, 'starmate-mark-dark-128.png'), darkMarkSmall);
+  await writePng(path.join(webBrandDir, 'starmate-mark-light-128.png'), lightMarkSmall);
+  await writePng(path.join(webBrandDir, 'starmate-app-icon.png'), applicationIcon);
+  await writeFile(path.join(webBrandDir, 'starmate-mark.svg'), createReusableWebMark(svg), 'utf8');
 
   const desktopIconDir = outputPath('src', 'apps', 'desktop', 'icons');
-  await writePng(path.join(desktopIconDir, 'openbitfun-app-icon.png'), applicationIconLarge);
-  await writePng(path.join(desktopIconDir, 'openbitfun-app-icon.ico'), windowsIcon);
-  await writePng(path.join(desktopIconDir, 'openbitfun-app-icon.icns'), macosFallback);
+  await writePng(path.join(desktopIconDir, 'starmate-app-icon.png'), applicationIconLarge);
+  await writePng(path.join(desktopIconDir, 'starmate-app-icon.ico'), windowsIcon);
+  await writePng(path.join(desktopIconDir, 'starmate-app-icon.icns'), macosFallback);
   for (const size of DESKTOP_HICOLOR_SIZES) {
     const icon = await renderIcon(size);
     await writePng(
-      outputPath('src', 'apps', 'desktop', 'icons', 'hicolor', `${size}x${size}`, 'apps', 'openbitfun-desktop.png'),
+      outputPath('src', 'apps', 'desktop', 'icons', 'hicolor', `${size}x${size}`, 'apps', 'starmate-desktop.png'),
       icon,
     );
   }
 
   const mobileWebAssetDir = outputPath('src', 'mobile-web', 'src', 'assets');
-  await writePng(path.join(mobileWebAssetDir, 'openbitfun-mark-dark.png'), darkMark);
-  await writePng(path.join(mobileWebAssetDir, 'openbitfun-mark-light.png'), lightMark);
+  await writePng(path.join(mobileWebAssetDir, 'starmate-mark-dark.png'), darkMark);
+  await writePng(path.join(mobileWebAssetDir, 'starmate-mark-light.png'), lightMark);
   await writePng(
-    outputPath('src', 'mobile-web', 'public', 'brand', 'openbitfun-app-icon.png'),
+    outputPath('src', 'mobile-web', 'public', 'brand', 'starmate-app-icon.png'),
     applicationIcon,
   );
   await writePng(
-    outputPath('src', 'apps', 'relay-server', 'static', 'brand', 'openbitfun-app-icon.png'),
+    outputPath('src', 'apps', 'relay-server', 'static', 'brand', 'starmate-app-icon.png'),
     applicationIcon,
   );
 
   const installerBrandDir = outputPath('OpenBitFun-Installer', 'src', 'assets');
-  await writePng(path.join(installerBrandDir, 'openbitfun-mark-dark.png'), darkMark);
-  await writePng(path.join(installerBrandDir, 'openbitfun-mark-light.png'), lightMark);
-  await writePng(path.join(installerBrandDir, 'openbitfun-app-icon.png'), applicationIcon);
+  await writePng(path.join(installerBrandDir, 'starmate-mark-dark.png'), darkMark);
+  await writePng(path.join(installerBrandDir, 'starmate-mark-light.png'), lightMark);
+  await writePng(path.join(installerBrandDir, 'starmate-app-icon.png'), applicationIcon);
   const installerIconDir = outputPath('OpenBitFun-Installer', 'src-tauri', 'icons');
-  await writePng(path.join(installerIconDir, 'openbitfun-app-icon.png'), applicationIconLarge);
-  await writePng(path.join(installerIconDir, 'openbitfun-app-icon.ico'), windowsIcon);
-  await writePng(path.join(installerIconDir, 'openbitfun-app-icon.icns'), macosFallback);
+  await writePng(path.join(installerIconDir, 'starmate-app-icon.png'), applicationIconLarge);
+  await writePng(path.join(installerIconDir, 'starmate-app-icon.ico'), windowsIcon);
+  await writePng(path.join(installerIconDir, 'starmate-app-icon.icns'), macosFallback);
 
   for (const directory of [webBrandDir, installerBrandDir,
     outputPath('src', 'mobile-web', 'public', 'brand'),
     outputPath('src', 'apps', 'relay-server', 'static', 'brand')]) {
     for (const size of [16, 32]) {
-      await writePng(path.join(directory, `openbitfun-app-icon-${size}.png`), await renderIcon(size));
+      await writePng(path.join(directory, `starmate-app-icon-${size}.png`), await renderIcon(size));
     }
   }
 
@@ -360,31 +360,31 @@ async function generateBrandAssets() {
   }
 
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'AppIcon.appiconset', 'openbitfun-app-icon.png'),
+    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'AppIcon.appiconset', 'starmate-app-icon.png'),
     // App Store icons must be opaque; iOS applies its own corner mask.
     await sharp(applicationIconLarge).flatten({ background: '#000000' }).png().toBuffer(),
   );
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'StarMateMark.imageset', 'openbitfun-mark-light.png'),
+    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'StarMateMark.imageset', 'starmate-mark-light.png'),
     lightMark,
   );
 
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'harmonyos', 'AppScope', 'resources', 'base', 'media', 'openbitfun_app_icon.png'),
+    outputPath('src', 'apps', 'mobile', 'harmonyos', 'AppScope', 'resources', 'base', 'media', 'starmate_app_icon.png'),
     applicationIconLarge,
   );
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'openbitfun_app_icon.png'),
+    outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'starmate_app_icon.png'),
     applicationIconLarge,
   );
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'openbitfun_start_window.png'),
+    outputPath('src', 'apps', 'mobile', 'harmonyos', 'entry', 'src', 'main', 'resources', 'base', 'media', 'starmate_start_window.png'),
     await resizePng(lightMark, 144),
   );
 
   await removeLegacyApplicationAssets();
 
-  console.log('Generated OpenBitFun application brand assets.');
+  console.log('Generated StarMate application brand assets.');
 }
 
 await generateBrandAssets();

@@ -12,9 +12,9 @@
     "targets": "all",
     "publisher": "StarMate Team",
     "icon": [
-      "icons/openbitfun-app-icon.icns",
-      "icons/openbitfun-app-icon.ico",
-      "icons/openbitfun-app-icon.png"
+      "icons/starmate-app-icon.icns",
+      "icons/starmate-app-icon.ico",
+      "icons/starmate-app-icon.png"
     ],
     "resources": {
       "../../../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md"

@@ -288,8 +288,8 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
             // Cache-bust to avoid stale decoded copies when re-exporting.
             const colorScheme = document.documentElement.getAttribute('data-color-scheme');
             const logoPath = colorScheme === 'dark'
-              ? '/brand/openbitfun-mark-light.png'
-              : '/brand/openbitfun-mark-dark.png';
+              ? '/brand/starmate-mark-light.png'
+              : '/brand/starmate-mark-dark.png';
             img.src = `${logoPath}?t=${Date.now()}`;
           }),
           3_000,
