@@ -85,7 +85,7 @@ const AssistantSessionCreateMenu: React.FC<AssistantSessionCreateMenuProps> = ({
       data-openbitfun-component="nav-panel"
       data-openbitfun-part="assistantSessionActions"
       data-openbitfun-state={menuOpen ? 'open' : undefined}
-    >
+     data-starmate-component="nav-panel" data-starmate-part="assistantSessionActions" data-starmate-state={menuOpen ? 'open' : undefined} >
       <div className={`openbitfun-nav-panel__assistant-session-split-button${menuOpen ? ' is-active' : ''}`}>
         <Tooltip content={createPrimaryLabel} placement="right" followCursor>
           <button

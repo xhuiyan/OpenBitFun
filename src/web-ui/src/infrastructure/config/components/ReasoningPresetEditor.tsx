@@ -290,17 +290,17 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
       data-openbitfun-component="reasoning-preset-editor"
       data-openbitfun-part="root"
       data-testid="settings-reasoning-preset-editor"
-    >
+     data-starmate-component="reasoning-preset-editor" data-starmate-part="root" >
       <section
         className="openbitfun-reasoning-preset-editor__section"
         data-openbitfun-component="reasoning-preset-editor"
         data-openbitfun-part="section"
-      >
+       data-starmate-component="reasoning-preset-editor" data-starmate-part="section" >
         <div
           className="openbitfun-reasoning-preset-editor__primary-settings"
           data-openbitfun-component="reasoning-preset-editor"
           data-openbitfun-part="primarySettings"
-        >
+         data-starmate-component="reasoning-preset-editor" data-starmate-part="primarySettings" >
           <div className="openbitfun-reasoning-preset-editor__primary-setting">
             <span className="openbitfun-reasoning-preset-editor__primary-setting-label">
               {t('reasoningPresets.catalogSource')}
@@ -346,7 +346,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
             className="openbitfun-reasoning-preset-editor__models-dev-binding"
             data-openbitfun-component="reasoning-preset-editor"
             data-openbitfun-part="binding"
-          >
+           data-starmate-component="reasoning-preset-editor" data-starmate-part="binding" >
             <div className="openbitfun-reasoning-preset-editor__models-dev-search">
               <div className="openbitfun-reasoning-preset-editor__models-dev-search-field">
                 <div className="openbitfun-reasoning-preset-editor__models-dev-search-input">
@@ -410,7 +410,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
                             : `${modelsDevSearchLayout.width}px`,
                           visibility: modelsDevSearchLayout ? 'visible' : 'hidden',
                         }}
-                      >
+                       data-starmate-placement={modelsDevSearchLayout?.placement ?? 'bottom'} >
                         <Listbox
                           aria-label={t('reasoningPresets.catalogSearchResults')}
                           className="openbitfun-reasoning-preset-editor__models-dev-search-list"
@@ -498,7 +498,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
             data-openbitfun-component="reasoning-preset-editor"
             data-openbitfun-part="unavailableWarning"
             role="status"
-          >
+           data-starmate-component="reasoning-preset-editor" data-starmate-part="unavailableWarning" >
             <AlertTriangle size={16} aria-hidden="true" />
             <div>
               <strong>{t('reasoningPresets.unavailableTitle')}</strong>
@@ -519,7 +519,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
             className="openbitfun-reasoning-preset-editor__generated"
             data-openbitfun-component="reasoning-preset-editor"
             data-openbitfun-part="generated"
-          >
+           data-starmate-component="reasoning-preset-editor" data-starmate-part="generated" >
             <div className="openbitfun-reasoning-preset-editor__generated-title">
               {t('reasoningPresets.generatedTitle')}
             </div>
@@ -538,12 +538,12 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
         className="openbitfun-reasoning-preset-editor__section"
         data-openbitfun-component="reasoning-preset-editor"
         data-openbitfun-part="section"
-      >
+       data-starmate-component="reasoning-preset-editor" data-starmate-part="section" >
         <div
           className="openbitfun-reasoning-preset-editor__header"
           data-openbitfun-component="reasoning-preset-editor"
           data-openbitfun-part="header"
-        >
+         data-starmate-component="reasoning-preset-editor" data-starmate-part="header" >
           <div className="openbitfun-reasoning-preset-editor__section-title-group">
             <div className="openbitfun-reasoning-preset-editor__section-title">
               {t('reasoningPresets.customTitle')}
@@ -570,7 +570,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
             className="openbitfun-reasoning-preset-editor__empty"
             data-openbitfun-component="reasoning-preset-editor"
             data-openbitfun-part="empty"
-          >
+           data-starmate-component="reasoning-preset-editor" data-starmate-part="empty" >
             {t('reasoningPresets.empty')}
           </div>
         ) : (
@@ -578,7 +578,7 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
             className="openbitfun-reasoning-preset-editor__list"
             data-openbitfun-component="reasoning-preset-editor"
             data-openbitfun-part="list"
-          >
+           data-starmate-component="reasoning-preset-editor" data-starmate-part="list" >
             {presets.map((preset, presetIndex) => {
               const expanded = expandedPresetIndex === presetIndex;
               const actions = preset.actions ?? [];
@@ -601,12 +601,12 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
                   data-openbitfun-part="preset"
                   data-openbitfun-state={expanded ? 'expanded' : undefined}
                   data-expanded={expanded ? 'true' : 'false'}
-                >
+                 data-starmate-component="reasoning-preset-editor" data-starmate-part="preset" data-starmate-state={expanded ? 'expanded' : undefined} >
                   <div
                     className="openbitfun-reasoning-preset-editor__row-summary"
                     data-openbitfun-component="reasoning-preset-editor"
                     data-openbitfun-part="presetSummary"
-                  >
+                   data-starmate-component="reasoning-preset-editor" data-starmate-part="presetSummary" >
                     <IconButton
                       type="button"
                       className="openbitfun-reasoning-preset-editor__row-toggle"
@@ -709,13 +709,13 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
                       className="openbitfun-reasoning-preset-editor__row-editor"
                       data-openbitfun-component="reasoning-preset-editor"
                       data-openbitfun-part="presetEditor"
-                    >
+                     data-starmate-component="reasoning-preset-editor" data-starmate-part="presetEditor" >
                       {usesSinglePatchEditor ? (
                         <div
                           className="openbitfun-reasoning-preset-editor__patch-editor"
                           data-openbitfun-component="reasoning-preset-editor"
                           data-openbitfun-part="patchEditor"
-                        >
+                         data-starmate-component="reasoning-preset-editor" data-starmate-part="patchEditor" >
                           <div className="openbitfun-reasoning-preset-editor__patch-heading">
                             <span className="openbitfun-reasoning-preset-editor__patch-title">
                               {t('reasoningPresets.settingPatch')}
@@ -749,12 +749,12 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
                           className="openbitfun-reasoning-preset-editor__legacy"
                           data-openbitfun-component="reasoning-preset-editor"
                           data-openbitfun-part="legacy"
-                        >
+                         data-starmate-component="reasoning-preset-editor" data-starmate-part="legacy" >
                           <div
                             className="openbitfun-reasoning-preset-editor__legacy-notice"
                             data-openbitfun-component="reasoning-preset-editor"
                             data-openbitfun-part="legacyNotice"
-                          >
+                           data-starmate-component="reasoning-preset-editor" data-starmate-part="legacyNotice" >
                             <AlertTriangle size={16} aria-hidden="true" />
                             <div className="openbitfun-reasoning-preset-editor__legacy-copy">
                               <strong>{t('reasoningPresets.legacyTitle')}</strong>
@@ -778,14 +778,14 @@ export const ReasoningPresetEditor: React.FC<ReasoningPresetEditorProps> = ({
                             className="openbitfun-reasoning-preset-editor__actions"
                             data-openbitfun-component="reasoning-preset-editor"
                             data-openbitfun-part="actions"
-                          >
+                           data-starmate-component="reasoning-preset-editor" data-starmate-part="actions" >
                             {actions.map((action, actionIndex) => (
                               <div
                                 key={`${presetIndex}:legacy:${actionIndex}`}
                                 className="openbitfun-reasoning-preset-editor__action"
                                 data-openbitfun-component="reasoning-preset-editor"
                                 data-openbitfun-part="action"
-                              >
+                               data-starmate-component="reasoning-preset-editor" data-starmate-part="action" >
                                 <span className="openbitfun-reasoning-preset-editor__legacy-action-type">
                                   {action.type === 'effort'
                                     ? t('reasoningPresets.settingEffort')

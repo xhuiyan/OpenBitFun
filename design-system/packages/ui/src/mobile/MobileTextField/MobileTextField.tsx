@@ -39,9 +39,9 @@ export const MobileTextField = forwardRef<HTMLInputElement, MobileTextFieldProps
         data-openbitfun-component="mobile-text-field"
         data-disabled={disabled ? "true" : "false"}
         data-invalid={resolvedInvalid ? "true" : "false"}
-      >
+       data-starmate-component="mobile-text-field" >
         {leading !== undefined && leading !== null && (
-          <span aria-hidden="true" className={styles.slot} data-openbitfun-part="leading">
+          <span aria-hidden="true" className={styles.slot} data-openbitfun-part="leading" data-starmate-part="leading" >
             {leading}
           </span>
         )}
@@ -54,7 +54,7 @@ export const MobileTextField = forwardRef<HTMLInputElement, MobileTextFieldProps
           type={type}
         />
         {trailing !== undefined && trailing !== null && (
-          <span className={styles.slot} data-openbitfun-part="trailing">
+          <span className={styles.slot} data-openbitfun-part="trailing" data-starmate-part="trailing" >
             {trailing}
           </span>
         )}

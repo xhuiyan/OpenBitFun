@@ -887,7 +887,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
         data-openbitfun-part="error"
         className="openbitfun-remote-connect__error-group"
         role="alert"
-      >
+       data-starmate-component="remote-connect-dialog" data-starmate-part="error" >
         <Icon glyph={CircleAlert} size="sm" tone="danger" />
         <p className="openbitfun-remote-connect__error">{error}</p>
       </div>
@@ -925,7 +925,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
       data-openbitfun-component="remote-connect-dialog"
       data-openbitfun-part="status"
       data-openbitfun-state={connected ? 'connected' : undefined}
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="status" data-starmate-state={connected ? 'connected' : undefined} >
       <StatusPill tone={statusState === 'ready' && connected ? 'success' : 'neutral'}>
         {connectionStatusLabel(connected)}
       </StatusPill>
@@ -951,13 +951,13 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
       data-openbitfun-part="body"
       data-openbitfun-state={connected ? 'connected' : undefined}
       className="openbitfun-remote-connect__body"
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="body" data-starmate-state={connected ? 'connected' : undefined} >
       <section
         className="openbitfun-remote-connect__bot-card"
         data-openbitfun-component="remote-connect-dialog"
         data-openbitfun-part="botCard"
         aria-label={botLabel(botTab) ?? undefined}
-      >
+       data-starmate-component="remote-connect-dialog" data-starmate-part="botCard" >
         {children}
       </section>
     </div>
@@ -1312,7 +1312,10 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
       ].filter(Boolean).join(' ') || undefined}
       onClick={() => handleViewChange(view)}
       disabled={disabled}
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="overviewAction" data-starmate-group={view} data-starmate-state={[
+        state,
+        disabled && 'disabled',
+      ].filter(Boolean).join(' ') || undefined} >
       <span className="openbitfun-remote-connect__overview-action-icon" aria-hidden="true">
         {icon}
       </span>
@@ -1337,13 +1340,13 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
       className="openbitfun-remote-connect__overview"
       data-openbitfun-component="remote-connect-dialog"
       data-openbitfun-part="overview"
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="overview" >
       <section
         className="openbitfun-remote-connect__overview-section"
         data-openbitfun-component="remote-connect-dialog"
         data-openbitfun-part="overviewSection"
         aria-labelledby="remote-connect-my-devices-title"
-      >
+       data-starmate-component="remote-connect-dialog" data-starmate-part="overviewSection" >
         <div className="openbitfun-remote-connect__overview-section-heading">
           <h3 id="remote-connect-my-devices-title" className="openbitfun-remote-connect__overview-section-title">
             <span
@@ -1351,7 +1354,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
               data-openbitfun-component="remote-connect-dialog"
               data-openbitfun-part="sectionMarker"
               aria-hidden="true"
-            />
+             data-starmate-component="remote-connect-dialog" data-starmate-part="sectionMarker" />
             {t('remoteConnect.controlOtherDevicesTitle')}
           </h3>
         </div>
@@ -1376,7 +1379,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
         data-openbitfun-component="remote-connect-dialog"
         data-openbitfun-part="overviewSection"
         aria-labelledby="remote-connect-access-title"
-      >
+       data-starmate-component="remote-connect-dialog" data-starmate-part="overviewSection" >
         <div className="openbitfun-remote-connect__overview-section-heading">
           <h3 id="remote-connect-access-title" className="openbitfun-remote-connect__overview-section-title">
             <span
@@ -1384,7 +1387,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
               data-openbitfun-component="remote-connect-dialog"
               data-openbitfun-part="sectionMarker"
               aria-hidden="true"
-            />
+             data-starmate-component="remote-connect-dialog" data-starmate-part="sectionMarker" />
             {t('remoteConnect.connectThisDeviceTitle')}
           </h3>
           <p className="openbitfun-remote-connect__overview-section-description">
@@ -1438,7 +1441,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
         className="openbitfun-remote-connect__view-header"
         data-openbitfun-component="remote-connect-dialog"
         data-openbitfun-part="viewHeader"
-      >
+       data-starmate-component="remote-connect-dialog" data-starmate-part="viewHeader" >
         {activeView !== 'overview' && (
           <Button
             className="openbitfun-remote-connect__back"
@@ -1538,17 +1541,17 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
             data-openbitfun-component="remote-connect-dialog"
             data-openbitfun-part="root"
             data-openbitfun-view={activeView}
-          >
+           data-starmate-component="remote-connect-dialog" data-starmate-part="root" data-starmate-view={activeView} >
           <aside
             className="openbitfun-remote-connect__sidebar"
             data-openbitfun-component="remote-connect-dialog"
             data-openbitfun-part="sidebar"
-          >
+           data-starmate-component="remote-connect-dialog" data-starmate-part="sidebar" >
             <div
               className="openbitfun-remote-connect__sidebar-brand"
               data-openbitfun-component="remote-connect-dialog"
               data-openbitfun-part="sidebarBrand"
-            >
+             data-starmate-component="remote-connect-dialog" data-starmate-part="sidebarBrand" >
               <span className="openbitfun-remote-connect__sidebar-icon" aria-hidden="true">
                 <MonitorSmartphone size={18} strokeWidth={1.75} />
               </span>
@@ -1580,7 +1583,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
             data-openbitfun-component="remote-connect-dialog"
             data-openbitfun-part="main"
             aria-labelledby="remote-connect-center-title"
-          >
+           data-starmate-component="remote-connect-dialog" data-starmate-part="main" >
             {renderViewHeader()}
 
             {activeView === 'network' ? (
@@ -1589,7 +1592,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
                 data-openbitfun-component="remote-connect-dialog"
                 data-openbitfun-part="subtabs"
                 data-openbitfun-group="network"
-              >
+               data-starmate-component="remote-connect-dialog" data-starmate-part="subtabs" data-starmate-group="network" >
                 <TabGroup
                   aria-label={t('remoteConnect.mobileBrowserTitle')}
                   className="openbitfun-remote-connect__tab-group"
@@ -1606,7 +1609,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
                 data-openbitfun-component="remote-connect-dialog"
                 data-openbitfun-part="subtabs"
                 data-openbitfun-group="bot"
-              >
+               data-starmate-component="remote-connect-dialog" data-starmate-part="subtabs" data-starmate-group="bot" >
                 <TabGroup
                   aria-label={t('remoteConnect.chatAppsTitle')}
                   className="openbitfun-remote-connect__tab-group"
@@ -1631,7 +1634,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
                 data-openbitfun-group="account"
                 role="region"
                 aria-labelledby="remote-connect-view-title"
-              >
+               data-starmate-component="remote-connect-dialog" data-starmate-part="panel" data-starmate-group="account" >
                 <AccountPanel onCloseDialog={handleDialogClose} />
               </div>
             ) : activeView === 'network' ? (
@@ -1640,7 +1643,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
                 data-openbitfun-component="remote-connect-dialog"
                 data-openbitfun-part="panel"
                 data-openbitfun-group="network"
-              >
+               data-starmate-component="remote-connect-dialog" data-starmate-part="panel" data-starmate-group="network" >
                 <div
                   id="remote-connect-network-tabpanel"
                   role="tabpanel"
@@ -1655,7 +1658,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
                 data-openbitfun-component="remote-connect-dialog"
                 data-openbitfun-part="panel"
                 data-openbitfun-group="bot"
-              >
+               data-starmate-component="remote-connect-dialog" data-starmate-part="panel" data-starmate-group="bot" >
                 <div
                   id="remote-connect-bot-tabpanel"
                   role="tabpanel"

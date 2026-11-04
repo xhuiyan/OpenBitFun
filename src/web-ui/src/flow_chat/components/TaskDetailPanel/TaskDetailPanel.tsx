@@ -484,13 +484,13 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
 
   if (!toolItem) {
     return (
-      <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="root" data-openbitfun-state="empty" className="task-detail-panel task-detail-panel--empty">
-        <div className="task-detail-panel__header" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="header">
+      <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="root" data-openbitfun-state="empty" className="task-detail-panel task-detail-panel--empty" data-starmate-product-component="task-detail-panel" data-starmate-product-part="root" data-starmate-state="empty" >
+        <div className="task-detail-panel__header" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="header" data-starmate-product-component="task-detail-panel" data-starmate-product-part="header" >
           <Toolbar size="sm" leading={<OverflowText className="task-detail-panel__header-title">
             {t('toolCards.taskDetailPanel.untitled')}
           </OverflowText>} />
         </div>
-        <div className="task-detail-panel__empty-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="empty">
+        <div className="task-detail-panel__empty-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="empty" data-starmate-product-component="task-detail-panel" data-starmate-product-part="empty" >
           {t('toolCards.taskDetailPanel.noData')}
         </div>
       </div>
@@ -512,8 +512,8 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
       : t('toolCards.taskDetailPanel.stopSubagent');
 
   return (
-    <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="root" className="task-detail-panel">
-      <div className="task-detail-panel__header" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="header">
+    <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="root" className="task-detail-panel" data-starmate-product-component="task-detail-panel" data-starmate-product-part="root" >
+      <div className="task-detail-panel__header" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="header" data-starmate-product-component="task-detail-panel" data-starmate-product-part="header" >
         <Toolbar size="sm" leading={(
           <div className="task-detail-panel__header-main">
             <SubagentDelegationAvatar sessionId={subagentSessionId} name={agentName} pending={isRunning} size={24} motion={false} showStatus={false} />
@@ -523,7 +523,7 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
             {modelName && <OverflowText className="task-detail-panel__header-model">{modelName}</OverflowText>}
           </div>
         )} trailing={(
-          <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="actions">
+          <div data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="actions" data-starmate-product-component="task-detail-panel" data-starmate-product-part="actions" >
             <ToolbarGroup>
               <ToolTimeoutIndicator
                 startTime={toolItem?.startTime}
@@ -552,7 +552,7 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
       </div>
 
       {isFailed && (
-        <div className="task-detail-panel__error-banner" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="errorBanner" data-openbitfun-state="error">
+        <div className="task-detail-panel__error-banner" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="errorBanner" data-openbitfun-state="error" data-starmate-product-component="task-detail-panel" data-starmate-product-part="errorBanner" data-starmate-state="error" >
           <Icon glyph={AlertCircle} size="sm" className="task-detail-panel__error-banner-icon" />
           <span className="task-detail-panel__error-banner-text">{getErrorMessage()}</span>
         </div>
@@ -563,9 +563,9 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
         className="task-detail-panel__content"
         data-openbitfun-product-component="task-detail-panel"
         data-openbitfun-product-part="content"
-      >
+       data-starmate-product-component="task-detail-panel" data-starmate-product-part="content" >
         {rc ? (
-          <Disclosure className="task-detail-panel__reviewer-section" contentInnerClassName="task-detail-panel__details-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="reviewer" summary={t('toolCards.taskDetailPanel.reviewerContextLabel')}>
+          <Disclosure className="task-detail-panel__reviewer-section" contentInnerClassName="task-detail-panel__details-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="reviewer" summary={t('toolCards.taskDetailPanel.reviewerContextLabel')} data-starmate-product-component="task-detail-panel" data-starmate-product-part="reviewer" >
             <div className="task-detail-panel__reviewer-context">
               <div className="task-detail-panel__reviewer-role" style={{ color: rc.accentColor }}>
                 {tAgents(`reviewTeams.members.${rc.definitionKey}.role`, {
@@ -589,20 +589,20 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
             </div>
           </Disclosure>
         ) : taskInput?.prompt && taskInput.prompt !== 'Not provided' && (
-          <Disclosure className="task-detail-panel__prompt-section" contentInnerClassName="task-detail-panel__details-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="prompt" summary={t('toolCards.taskDetailPanel.promptLabel')}>
+          <Disclosure className="task-detail-panel__prompt-section" contentInnerClassName="task-detail-panel__details-content" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="prompt" summary={t('toolCards.taskDetailPanel.promptLabel')} data-starmate-product-component="task-detail-panel" data-starmate-product-part="prompt" >
             <div className="task-detail-panel__prompt-content">{taskInput.prompt}</div>
           </Disclosure>
         )}
 
         {stopError && (
-          <div className="task-detail-panel__error" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="error" data-openbitfun-state="error">
+          <div className="task-detail-panel__error" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="error" data-openbitfun-state="error" data-starmate-product-component="task-detail-panel" data-starmate-product-part="error" data-starmate-state="error" >
             <Icon glyph={AlertCircle} size="sm" />
             <span>{stopError}</span>
           </div>
         )}
 
         {subagentItems.length > 0 && (
-          <div className="task-detail-panel__execution" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="execution">
+          <div className="task-detail-panel__execution" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="execution" data-starmate-product-component="task-detail-panel" data-starmate-product-part="execution" >
             {subagentSessionId && (
               <SubagentProjectionView
                 parentTaskToolId={toolItem.id}
@@ -617,7 +617,7 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
         )}
 
         {hasPendingSubagentRender && (
-          <div className="task-detail-panel__loading task-detail-panel__loading--inline" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="loading" data-openbitfun-state="loading">
+          <div className="task-detail-panel__loading task-detail-panel__loading--inline" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="loading" data-openbitfun-state="loading" data-starmate-product-component="task-detail-panel" data-starmate-product-part="loading" data-starmate-state="loading" >
             <Spinner size="sm" />
             <span>
               {t('toolCards.taskDetailPanel.loadingMore')}
@@ -626,7 +626,7 @@ export const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ data }) => {
         )}
 
         {((isRunning || !isSnapshotHydrated) && subagentItems.length === 0) && (
-          <div className="task-detail-panel__loading" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="loading" data-openbitfun-state="loading">
+          <div className="task-detail-panel__loading" data-openbitfun-product-component="task-detail-panel" data-openbitfun-product-part="loading" data-openbitfun-state="loading" data-starmate-product-component="task-detail-panel" data-starmate-product-part="loading" data-starmate-state="loading" >
             <Spinner size="md" />
             <span>
               {isSnapshotHydrated

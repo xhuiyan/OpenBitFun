@@ -1748,7 +1748,7 @@ export const RichTextInput = React.forwardRef<HTMLDivElement, RichTextInputProps
         onCompositionEnd={handleCompositionEnd}
         data-placeholder={placeholder}
         suppressContentEditableWarning
-      />
+       data-starmate-component="rich-text-input" data-starmate-part="root" data-starmate-state={[isFocused ? 'focused' : '', disabled ? 'disabled' : ''].filter(Boolean).join(' ') || undefined} />
       <Dialog
         initialFocusRef={largePasteTextareaRef}
         onOpenChange={(open) => {

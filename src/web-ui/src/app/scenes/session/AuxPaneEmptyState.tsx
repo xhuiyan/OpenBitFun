@@ -35,7 +35,7 @@ export function AuxPaneEmptyState({ workspacePath, sessionId }: { workspacePath?
       resourceScope: { surfaceId: scope.surfaceId, workspaceId: target.id, workspacePath: target.rootPath, remoteConnectionId: target.connectionId },
     } }));
   };
-  return <div className="openbitfun-aux-pane__empty-state" data-openbitfun-component="aux-pane" data-openbitfun-part="emptyState">
+  return <div className="openbitfun-aux-pane__empty-state" data-openbitfun-component="aux-pane" data-openbitfun-part="emptyState" data-starmate-component="aux-pane" data-starmate-part="emptyState" >
     <Empty className="openbitfun-aux-pane__empty-content" imageSize="lg" icon={<Icon name="playing-cards-fan" />}
       title={<OverflowText>{(target && workspaceName) || t('canvas.empty.title')}</OverflowText>}
       description={canOpen ? undefined : t(target ? 'canvas.empty.workspaceUnavailable' : 'canvas.empty.selectWorkspace')}

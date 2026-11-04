@@ -49,7 +49,7 @@ export function ModelPoolMemberPicker({ models, value, disabled, onValueChange }
           aria-label={t('pool.search')} placeholder={t('pool.search')} size="sm" />
         <ScrollArea className="openbitfun-model-pools__picker-results">
           <div className="openbitfun-model-pools__picker-options"
-            data-openbitfun-component="model-settings" data-openbitfun-part="poolPickerOptions">
+            data-openbitfun-component="model-settings" data-openbitfun-part="poolPickerOptions" data-starmate-component="model-settings" data-starmate-part="poolPickerOptions" >
             {visibleOptions.map(option => {
               const modelId = String(option.value);
               const isSelected = selected.has(modelId);

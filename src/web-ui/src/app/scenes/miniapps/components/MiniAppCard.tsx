@@ -85,17 +85,17 @@ const MiniAppCard: React.FC<MiniAppCardProps> = ({
       tabIndex={0}
       onKeyDown={handleCardKeyDown}
       aria-label={localizedName}
-    >
+     data-starmate-component="mini-app-card" data-starmate-part="root" >
       <div className="miniapp-card__main">
-        <div className="miniapp-card__header" data-openbitfun-component="mini-app-card" data-openbitfun-part="header">
-          <div className="miniapp-card__icon-area" data-openbitfun-component="mini-app-card" data-openbitfun-part="iconArea">
-            <div className="miniapp-card__icon" data-openbitfun-component="mini-app-card" data-openbitfun-part="icon">
+        <div className="miniapp-card__header" data-openbitfun-component="mini-app-card" data-openbitfun-part="header" data-starmate-component="mini-app-card" data-starmate-part="header" >
+          <div className="miniapp-card__icon-area" data-openbitfun-component="mini-app-card" data-openbitfun-part="iconArea" data-starmate-component="mini-app-card" data-starmate-part="iconArea" >
+            <div className="miniapp-card__icon" data-openbitfun-component="mini-app-card" data-openbitfun-part="icon" data-starmate-component="mini-app-card" data-starmate-part="icon" >
               {renderMiniAppIcon(app.icon || 'box', 40)}
             </div>
           </div>
           <div className="miniapp-card__header-actions">
             {(isRunning || isCustomizing) && (
-              <span className="miniapp-card__status-dots" data-openbitfun-component="mini-app-card" data-openbitfun-part="status" aria-hidden="true">
+              <span className="miniapp-card__status-dots" data-openbitfun-component="mini-app-card" data-openbitfun-part="status" aria-hidden="true" data-starmate-component="mini-app-card" data-starmate-part="status" >
                 {isRunning && <span className="miniapp-card__run-dot" />}
                 {isCustomizing && <span className="miniapp-card__customize-dot" />}
               </span>
@@ -111,22 +111,22 @@ const MiniAppCard: React.FC<MiniAppCardProps> = ({
         </div>
 
         <div className="miniapp-card__content">
-          <div className="miniapp-card__title-group" data-openbitfun-component="mini-app-card" data-openbitfun-part="title">
-            <OverflowText className="miniapp-card__name" data-openbitfun-component="mini-app-card" data-openbitfun-part="name">{localizedName}</OverflowText>
+          <div className="miniapp-card__title-group" data-openbitfun-component="mini-app-card" data-openbitfun-part="title" data-starmate-component="mini-app-card" data-starmate-part="title" >
+            <OverflowText className="miniapp-card__name" data-openbitfun-component="mini-app-card" data-openbitfun-part="name" data-starmate-component="mini-app-card" data-starmate-part="name" >{localizedName}</OverflowText>
           </div>
 
-          <div className="miniapp-card__body" data-openbitfun-component="mini-app-card" data-openbitfun-part="body">
+          <div className="miniapp-card__body" data-openbitfun-component="mini-app-card" data-openbitfun-part="body" data-starmate-component="mini-app-card" data-starmate-part="body" >
             {localizedDescription ? (
-              <div className="miniapp-card__desc" data-openbitfun-component="mini-app-card" data-openbitfun-part="description">
+              <div className="miniapp-card__desc" data-openbitfun-component="mini-app-card" data-openbitfun-part="description" data-starmate-component="mini-app-card" data-starmate-part="description" >
                 <OverflowText lines={3} className="miniapp-card__desc-inner">{localizedDescription}</OverflowText>
               </div>
             ) : null}
           </div>
         </div>
 
-        <div className="miniapp-card__footer" data-openbitfun-component="mini-app-card" data-openbitfun-part="footer">
-          <div className="miniapp-card__tags" data-openbitfun-component="mini-app-card" data-openbitfun-part="tags">
-            <span className="miniapp-card__tag" data-openbitfun-component="mini-app-card" data-openbitfun-part="version"><OverflowText>
+        <div className="miniapp-card__footer" data-openbitfun-component="mini-app-card" data-openbitfun-part="footer" data-starmate-component="mini-app-card" data-starmate-part="footer" >
+          <div className="miniapp-card__tags" data-openbitfun-component="mini-app-card" data-openbitfun-part="tags" data-starmate-component="mini-app-card" data-starmate-part="tags" >
+            <span className="miniapp-card__tag" data-openbitfun-component="mini-app-card" data-openbitfun-part="version" data-starmate-component="mini-app-card" data-starmate-part="version" ><OverflowText>
               V{marketReleaseNumber ?? app.version}
             </OverflowText></span>
             {displayedTags.map((tag) => (
@@ -142,7 +142,7 @@ const MiniAppCard: React.FC<MiniAppCardProps> = ({
               </OverflowText></span>
             ) : null}
           </div>
-          <div className="miniapp-card__actions" data-openbitfun-component="mini-app-card" data-openbitfun-part="actions" onClick={(event) => event.stopPropagation()}>
+          <div className="miniapp-card__actions" data-openbitfun-component="mini-app-card" data-openbitfun-part="actions" onClick={(event) => event.stopPropagation()} data-starmate-component="mini-app-card" data-starmate-part="actions" >
             {isRunning && onStop ? (
               <IconButton
                 aria-label={t('card.stop')}

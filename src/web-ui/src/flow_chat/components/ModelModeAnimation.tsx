@@ -226,7 +226,7 @@ export const ModelModeAnimation: React.FC<ModelModeAnimationProps> = ({ mode }) 
     preserveAspectRatio="none"
     aria-hidden="true"
     focusable="false"
-  >
+   data-starmate-component="model-selector" data-starmate-part="modeMaterial" >
     <ModeNebula />
     {mode === 'smart' ? <SmartStarfield /> : <BatteryMaterial />}
   </svg>

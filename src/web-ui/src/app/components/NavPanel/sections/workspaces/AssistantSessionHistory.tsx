@@ -72,7 +72,7 @@ export default function AssistantSessionHistory({ workspace, isActive }: Props) 
       : !preference?.supported ? t('nav.sessions.defaultUnsupported') : undefined;
 
   return (
-    <div className="assistant-session-history" data-openbitfun-component="sessions-section" data-openbitfun-part="root">
+    <div className="assistant-session-history" data-openbitfun-component="sessions-section" data-openbitfun-part="root" data-starmate-component="sessions-section" data-starmate-part="root" >
       {loadFailed && (
         <Button variant="text" size="sm" onClick={() => { void loadPreference(); }}>
           {t('nav.sessions.defaultReadFailed')}

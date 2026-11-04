@@ -35,7 +35,7 @@ export function UsageActivityGrid({ points, timeZone, now }: UsageActivityGridPr
   };
 
   return (
-    <div className="openbitfun-usage-stats__activity" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="root">
+    <div className="openbitfun-usage-stats__activity" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="root" data-starmate-component="usage-activity-grid" data-starmate-part="root" >
       <div
         className="openbitfun-usage-stats__activity-grid"
         data-openbitfun-component="usage-activity-grid"
@@ -43,7 +43,7 @@ export function UsageActivityGrid({ points, timeZone, now }: UsageActivityGridPr
         role="group"
         aria-label={t('activity.title')}
         style={{ gridTemplateColumns: `max-content repeat(${activity.weekCount}, minmax(0, 1fr))` }}
-      >
+       data-starmate-component="usage-activity-grid" data-starmate-part="grid" >
         {activity.days.map((day, index) => {
           // Omit a short leading/trailing month label to avoid collisions.
           if (!day.inRange || (day.date.getUTCDate() !== 1 && day !== visibleDays[0])) return null;
@@ -95,14 +95,14 @@ export function UsageActivityGrid({ points, timeZone, now }: UsageActivityGridPr
                 onFocus={() => setFocusedDate(day.key)}
                 onKeyDown={event => moveFocus(event, visibleDays.indexOf(day))}
                 style={{ gridColumn: Math.floor(index / 7) + 2, gridRow: index % 7 + 2 }}
-              />
+               data-starmate-component="usage-activity-grid" data-starmate-part="day" />
             </Tooltip>
           );
         })}
       </div>
-      <div className="openbitfun-usage-stats__activity-footer" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="footer">
+      <div className="openbitfun-usage-stats__activity-footer" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="footer" data-starmate-component="usage-activity-grid" data-starmate-part="footer" >
         <span>{t('activity.total', { tokens: formatTokenCount(activity.totalTokens, formatNumber) })}</span>
-        <div className="openbitfun-usage-stats__activity-legend" aria-hidden="true" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="legend">
+        <div className="openbitfun-usage-stats__activity-legend" aria-hidden="true" data-openbitfun-component="usage-activity-grid" data-openbitfun-part="legend" data-starmate-component="usage-activity-grid" data-starmate-part="legend" >
           <span>{t('activity.less')}</span>
           {[0, 1, 2, 3, 4].map(level => (
             <span key={level} className="openbitfun-usage-stats__activity-day" data-level={level} />

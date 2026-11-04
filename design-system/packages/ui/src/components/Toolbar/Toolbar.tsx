@@ -48,21 +48,21 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar
       data-has-center={hasCenter ? "true" : "false"}
       data-size={size}
       ref={ref}
-    >
+     data-starmate-component="toolbar" >
       {leading !== undefined && leading !== null && (
         <div
           className={styles.leading}
           data-openbitfun-part="leading"
           data-overflow={leadingOverflow}
-        >
+         data-starmate-part="leading" >
           {leading}
         </div>
       )}
       {hasCenter && (
-        <div className={styles.center} data-openbitfun-part="center">{center}</div>
+        <div className={styles.center} data-openbitfun-part="center" data-starmate-part="center" >{center}</div>
       )}
       {trailing !== undefined && trailing !== null && (
-        <div className={styles.trailing} data-openbitfun-part="trailing">{trailing}</div>
+        <div className={styles.trailing} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</div>
       )}
     </div>
   );
@@ -77,7 +77,7 @@ export const ToolbarGroup = forwardRef<HTMLDivElement, ToolbarGroupProps>(
         data-openbitfun-part="group"
         data-gap={gap}
         ref={ref}
-      >
+       data-starmate-part="group" >
         {children}
       </div>
     );
@@ -87,7 +87,7 @@ export const ToolbarGroup = forwardRef<HTMLDivElement, ToolbarGroupProps>(
 export const ToolbarBadge = forwardRef<HTMLSpanElement, ToolbarBadgeProps>(
   function ToolbarBadge({ children, className, ...props }, ref) {
     return (
-      <NumberBadge {...props} className={classNames(styles.badge, className)} data-openbitfun-part="badge" ref={ref} value={children} />
+      <NumberBadge {...props} className={classNames(styles.badge, className)} data-openbitfun-part="badge" ref={ref} value={children}  data-starmate-part="badge" />
     );
   },
 );
@@ -101,7 +101,7 @@ export const ToolbarSeparator = forwardRef<HTMLSpanElement, ToolbarSeparatorProp
         className={classNames(styles.separator, className)}
         data-openbitfun-part="separator"
         ref={ref}
-      />
+       data-starmate-part="separator" />
     );
   },
 );

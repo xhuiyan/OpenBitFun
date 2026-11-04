@@ -8,9 +8,9 @@ export function ConversationExcerptQuote({ excerpt, action }: { excerpt: Convers
   const quote = useMemo(() => excerptText(excerpt).replace(/\s+/g, ' ').trim(), [excerpt]);
   return <div className="conversation-excerpt__source">
     <div className="conversation-excerpt__quote"
-      data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="quote">
+      data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="quote" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="quote" >
       <span className="conversation-excerpt__quote-text"
-        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="quoteText">{quote}</span>
+        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="quoteText" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="quoteText" >{quote}</span>
     </div>
     {action}
   </div>;

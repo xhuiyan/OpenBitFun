@@ -104,7 +104,7 @@ export const RunCodeToolCard: React.FC<ToolCardProps> = ({
       data-openbitfun-adapter="run-code-tool-card"
       ref={cardRootRef}
       data-tool-card-id={toolId ?? ''}
-    >
+     data-starmate-adapter="run-code-tool-card" >
       <RunCodeToolCardView
         status={status}
         isExpanded={isExpanded}

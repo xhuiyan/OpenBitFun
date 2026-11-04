@@ -62,7 +62,7 @@ export function ModelBillingDetails({ model, onClose, onSaved }: Props) {
   return <Dialog open size="md" closeOnEscape={!saving} closeOnPointerOutside={false} onOpenChange={open => { if (!open && !saving) onClose(); }}>
     <DialogHeader><DialogHeading><DialogTitle>{t('billing.details')}</DialogTitle></DialogHeading><DialogClose disabled={saving} /></DialogHeader>
     <DialogBody>
-      <div className="model-billing__editor" data-testid="model-billing-editor" data-openbitfun-component="model-billing" data-openbitfun-part="editor">
+      <div className="model-billing__editor" data-testid="model-billing-editor" data-openbitfun-component="model-billing" data-openbitfun-part="editor" data-starmate-component="model-billing" data-starmate-part="editor" >
         <div className="model-billing__identity">
           <strong className="model-billing__model-title">{model.model_name} · {model.name}</strong>
           <p className="model-billing__hint">{t('billing.quoteHint')}</p>

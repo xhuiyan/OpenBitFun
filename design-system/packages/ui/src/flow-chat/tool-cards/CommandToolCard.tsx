@@ -148,14 +148,14 @@ function CommandPreview({ children, empty, testId }: {
         event.stopPropagation();
         if (!event.repeat) setExpanded(value => !value);
       } : undefined}
-    >
+     data-starmate-part="commandPreview" >
       <code
         ref={commandRef}
         className={classNames(styles.command, styles.expandedCommand)}
         data-openbitfun-part="command"
         data-empty={empty ? "true" : "false"}
         data-testid={testId}
-      >
+       data-starmate-part="command" >
         <span ref={textRef} className={styles.commandText}>{children}</span>
       </code>
     </div>
@@ -248,11 +248,11 @@ export function CommandToolCard({
   };
 
   const details = hasDetails ? (
-    <div className={styles.details} data-openbitfun-part="details">
+    <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
       {(hasCommand || hasOutputFrame) && (
         <div className={styles.contentSection}>
           {hasCommand && (
-            <div className={styles.commandRow} data-openbitfun-part="commandRow" data-tool-card-action-scope>
+            <div className={styles.commandRow} data-openbitfun-part="commandRow" data-tool-card-action-scope data-starmate-part="commandRow" >
               <CommandPreview empty={!resolvedCommand} testId={expanded ? commandTestId : undefined}>
                 {resolvedCommand ?? emptyCommand}
               </CommandPreview>
@@ -270,17 +270,17 @@ export function CommandToolCard({
                 data-openbitfun-part="outputFrame"
                 data-density={outputDensity}
                 data-sizing={outputSizing}
-              >
+               data-starmate-part="outputFrame" >
                 {output
-                  ? <div className={styles.output} data-openbitfun-part="output">{output}</div>
-                  : <div className={styles.waiting} data-openbitfun-part="waiting">{waitingContent}</div>}
+                  ? <div className={styles.output} data-openbitfun-part="output" data-starmate-part="output" >{output}</div>
+                  : <div className={styles.waiting} data-openbitfun-part="waiting" data-starmate-part="waiting" >{waitingContent}</div>}
               </div>
             </ToolCardSection>
           )}
         </div>
       )}
       {hasFooter && (
-        <div className={styles.footer} data-openbitfun-part="footer">
+        <div className={styles.footer} data-openbitfun-part="footer" data-starmate-part="footer" >
           <div className={styles.footerRow}>
             {footerItems.map((item, index) => (
               <span
@@ -314,15 +314,15 @@ export function CommandToolCard({
       data-openbitfun-part="command"
       data-empty={resolvedCommand ? "false" : "true"}
       data-testid={commandTestId}
-    ><OverflowText overflowStyle="ellipsis">
+     data-starmate-part="command" ><OverflowText overflowStyle="ellipsis">
       {resolvedCommand ?? emptyCommand}
     </OverflowText></code>
   );
   const statusContent = (statusSummary || statusLabel) ? (
-    <span className={styles.statusSummary} data-openbitfun-part="statusSummary">
+    <span className={styles.statusSummary} data-openbitfun-part="statusSummary" data-starmate-part="statusSummary" >
       {statusSummary}
       {statusLabel && (
-        <span className={styles.statusLabel} data-openbitfun-part="statusLabel" data-tone={statusTone}>
+        <span className={styles.statusLabel} data-openbitfun-part="statusLabel" data-tone={statusTone} data-starmate-part="statusLabel" >
           {statusTone === "success" && <Icon className={styles.resultIcon} glyph={Check} size="sm" />}
           {statusLabel}
         </span>
@@ -341,7 +341,7 @@ export function CommandToolCard({
       data-openbitfun-component="command-tool-card"
       data-openbitfun-part="root"
       data-openbitfun-status={status}
-    >
+     data-starmate-component="command-tool-card" data-starmate-part="root" data-starmate-status={status} >
       {ambient ? (
         <>
           <AmbientToolCard

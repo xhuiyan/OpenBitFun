@@ -331,7 +331,7 @@ function FrameworkPreview({
           isExpanded={isExpanded}
           onClick={toggleExpanded}
           status={status}
-        />
+         data-starmate-preview-state={previewState} />
       </div>
     );
   }
@@ -380,7 +380,7 @@ function FrameworkPreview({
         onToggle={toggleExpanded}
         requiresConfirmation={state === "confirmation"}
         status={status}
-      />
+       data-starmate-preview-state={previewState} />
     </div>
   );
 }
@@ -405,7 +405,7 @@ function ReadFilePreview({ interactive, state }: PreviewProps) {
         interactive={interactive}
         onOpen={interactive ? () => undefined : undefined}
         status={status}
-      />
+       data-starmate-preview-state={state === "hover" ? "hover" : undefined} />
     </div>
   );
 }
@@ -429,7 +429,7 @@ function ContextCompressionPreview({ state }: PreviewProps) {
           ? t("components.preview.flowChat.contextSummary")
           : undefined}
         title={t("components.preview.flowChat.contextCompression")}
-      />
+       data-starmate-preview-state={state === "hover" ? "hover" : undefined} />
     </div>
   );
 }
@@ -502,7 +502,7 @@ function FileOperationPreview({ interactive, specimen, state }: PreviewProps) {
         statusDetail={state === "loading"
           ? t("components.preview.flowChat.fileLoading")
           : undefined}
-      />
+       data-starmate-preview-state={state === "hover" ? "hover" : undefined} />
     </div>
   );
 }
@@ -594,7 +594,7 @@ function SearchPreview({
         ]}
         status={status}
         summary={summary}
-      />
+       data-starmate-preview-state={state === "hover" ? "hover" : undefined} />
     </div>
   );
 }

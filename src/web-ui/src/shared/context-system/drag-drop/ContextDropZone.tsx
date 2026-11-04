@@ -276,7 +276,7 @@ export const ContextDropZone: React.FC<ContextDropZoneProps> = ({
       data-openbitfun-component="context-list"
       data-openbitfun-part="dropZone"
       data-openbitfun-state={`${isDragOver ? 'drag-over ' : ''}${canAccept ? 'can-accept' : ''}`.trim() || undefined}
-    >
+     data-starmate-component="context-list" data-starmate-part="dropZone" data-starmate-state={`${isDragOver ? 'drag-over ' : ''}${canAccept ? 'can-accept' : ''}`.trim() || undefined} >
       {children}
     </div>
   );

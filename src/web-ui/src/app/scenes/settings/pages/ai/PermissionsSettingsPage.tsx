@@ -170,7 +170,7 @@ const PermissionsSettingsPage: React.FC = () => {
   }, [loadPageData, seed.loaded]);
 
   return (
-    <SettingsPage pageId="ai.permissions" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="permissions">
+    <SettingsPage pageId="ai.permissions" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="permissions" data-starmate-component="runtime-settings" data-starmate-part="root" data-starmate-view="permissions" >
       {loadError ? (
         <ConfigRetryState message={t('loading.failed')} retryLabel={t('loading.retry')} onRetry={() => void loadPageData()} />
       ) : isLoading ? (
@@ -188,7 +188,7 @@ const PermissionsSettingsPage: React.FC = () => {
                 : t('permissionPolicy.askDescription')} ${t('permissionPolicy.modeDescription')}`}
             align="center"
           >
-            <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+            <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
               <Select
                 size="sm"
                 value={resolveToolPermissionMode(toolPermissionConfig)}
@@ -220,7 +220,7 @@ const PermissionsSettingsPage: React.FC = () => {
             description={t('permissionPolicy.globalRulesDescription')}
             align="center"
           >
-            <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+            <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
               <Button
                 type="button"
                 size="sm"

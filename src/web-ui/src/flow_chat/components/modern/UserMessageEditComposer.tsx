@@ -69,7 +69,7 @@ const UserMessageEditActions: React.FC<UserMessageEditActionsProps> = ({
           onClick={onCancel}
           size="sm"
           variant="secondary"
-        >
+         data-starmate-action="cancel" data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="action" >
           {cancelLabel}
         </Button>
         <Button
@@ -82,12 +82,12 @@ const UserMessageEditActions: React.FC<UserMessageEditActionsProps> = ({
           onClick={onSubmit}
           size="sm"
           variant="primary"
-        >
+         data-starmate-action="submit" data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="action" >
           {submitLabel}
         </Button>
       </>
     )}
-  />
+   data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="actions" />
 );
 
 function hasEditableInlineReference(value: string): boolean {
@@ -214,13 +214,13 @@ const RichUserMessageEditComposer: React.FC<RichUserMessageEditComposerProps> = 
           onCancel={onCancel}
         />
       )}
-    >
+     data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="root" data-starmate-mode="rich" data-starmate-state={isSubmitting ? 'submitting' : undefined} >
       <div
         ref={contextPickerAnchorRef}
         className="user-message-edit-composer__rich-input"
         data-openbitfun-product-component="user-message-edit-composer"
         data-openbitfun-product-part="input"
-      >
+       data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="input" >
         <ConversationExcerptAttachments contexts={contexts} onRemove={handleRemoveContext}
           onUpdate={(id, comment) => setContexts(current => current.map(context =>
             context.id === id && context.type === 'conversation-excerpt' ? { ...context, comment } : context))} />
@@ -358,7 +358,7 @@ export const UserMessageEditComposer: React.FC<UserMessageEditComposerProps> = (
           onCancel={onCancel}
         />
       )}
-    >
+     data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="root" data-starmate-mode="plain" data-starmate-state={isSubmitting ? 'submitting' : undefined} >
       <textarea
         data-openbitfun-product-component="user-message-edit-composer"
         data-openbitfun-product-part="input"
@@ -371,7 +371,7 @@ export const UserMessageEditComposer: React.FC<UserMessageEditComposerProps> = (
         placeholder={placeholder}
         disabled={isSubmitting}
         className="user-message-edit-composer__textarea"
-      />
+       data-starmate-product-component="user-message-edit-composer" data-starmate-product-part="input" />
     </Composer>
   );
 };

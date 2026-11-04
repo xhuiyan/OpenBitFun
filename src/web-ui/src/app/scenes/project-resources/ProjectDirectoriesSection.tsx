@@ -30,7 +30,7 @@ export function ProjectDirectoriesSection({ workspace, fileAccess, onBrowse, onM
   ];
   const hasRelatedDirectories = directories.length > 1;
   return <section className="project-resources__section" aria-labelledby={titleId}
-    data-openbitfun-scene="project-resources" data-openbitfun-part="materials">
+    data-openbitfun-scene="project-resources" data-openbitfun-part="materials" data-starmate-scene="project-resources" data-starmate-part="materials" >
     <div className="project-resources__section-header">
       <h2 id={titleId}>{t('directories.title')}</h2>
       <div className="project-resources__section-actions">

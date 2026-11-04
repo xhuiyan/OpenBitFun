@@ -114,26 +114,26 @@ const WelcomeScene: React.FC = () => {
       data-startup-entry={startupEntry ? '' : undefined}
       data-startup-pending={startupPending ? '' : undefined}
       aria-labelledby="welcome-scene-title"
-    >
-      <div className="welcome-scene__content" data-openbitfun-scene="welcome" data-openbitfun-part="content">
+     data-starmate-scene="welcome" data-starmate-part="root" >
+      <div className="welcome-scene__content" data-openbitfun-scene="welcome" data-openbitfun-part="content" data-starmate-scene="welcome" data-starmate-part="content" >
         <div
           className="welcome-scene__greeting"
           data-openbitfun-scene="welcome"
           data-openbitfun-part="greeting"
-        >
+         data-starmate-scene="welcome" data-starmate-part="greeting" >
           <h1
             id="welcome-scene-title"
             className="welcome-scene__brand"
             data-openbitfun-scene="welcome"
             data-openbitfun-part="title"
-          >
+           data-starmate-scene="welcome" data-starmate-part="title" >
             <span
               className="welcome-scene__logo"
               data-openbitfun-scene="welcome"
               data-openbitfun-part="logo"
               data-startup-logo-target=""
               aria-hidden="true"
-            >
+             data-starmate-scene="welcome" data-starmate-part="logo" >
               <StarMateMark style={{ width: '100%', height: '100%' }} />
             </span>
             <span className="welcome-scene__brand-name" data-startup-reveal="">
@@ -146,7 +146,7 @@ const WelcomeScene: React.FC = () => {
             data-openbitfun-part="subtitle"
             data-startup-reveal=""
             aria-label={phrases[YOUR_WORD_INDEX]}
-          >
+           data-starmate-scene="welcome" data-starmate-part="subtitle" >
             <span className="welcome-scene__phrase-slot" aria-hidden="true">
               {/* Reserve the longest phrase so the brand never shifts while typing. */}
               {phrases.map((phrase, index) => (

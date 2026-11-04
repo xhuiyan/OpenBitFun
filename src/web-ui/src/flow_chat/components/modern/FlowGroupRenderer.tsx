@@ -52,22 +52,22 @@ interface FlowGroupView {
 const flowGroupViews = {
   'file-edit': {
     render: (props, context) => <FileEditGroupView {...props} {...context} />,
-    Item: props => <div {...props} data-openbitfun-component="file-edit-group" data-openbitfun-part="item" />,
+    Item: props => <div {...props} data-openbitfun-component="file-edit-group" data-openbitfun-part="item"  data-starmate-component="file-edit-group" data-starmate-part="item" />,
   },
   explore: {
     render: props => <FlowGroup {...props} leading={<Icon name="route" size="sm" />}
-      data-openbitfun-component="explore-group" data-openbitfun-part="root" data-testid="chat-explore-group" />,
-    Item: props => <div {...props} data-openbitfun-component="explore-group" data-openbitfun-part="item" />,
+      data-openbitfun-component="explore-group" data-openbitfun-part="root" data-testid="chat-explore-group"  data-starmate-component="explore-group" data-starmate-part="root" />,
+    Item: props => <div {...props} data-openbitfun-component="explore-group" data-openbitfun-part="item"  data-starmate-component="explore-group" data-starmate-part="item" />,
   },
   context: {
     render: props => <FlowGroup {...props} leading={<Icon name="layers-plus" size="sm" />}
-      data-openbitfun-component="context-load-group" data-openbitfun-part="root" data-testid="chat-context-load-group" />,
-    Item: props => <div {...props} data-openbitfun-component="context-load-group" data-openbitfun-part="item" />,
+      data-openbitfun-component="context-load-group" data-openbitfun-part="root" data-testid="chat-context-load-group"  data-starmate-component="context-load-group" data-starmate-part="root" />,
+    Item: props => <div {...props} data-openbitfun-component="context-load-group" data-openbitfun-part="item"  data-starmate-component="context-load-group" data-starmate-part="item" />,
   },
   interface: {
     render: props => <FlowGroup {...props} leading={<Icon name="scan-eye" size="sm" />}
-      data-openbitfun-component="interface-observation-group" data-openbitfun-part="root" data-testid="chat-interface-observation-group" />,
-    Item: props => <div {...props} data-openbitfun-component="interface-observation-group" data-openbitfun-part="item" />,
+      data-openbitfun-component="interface-observation-group" data-openbitfun-part="root" data-testid="chat-interface-observation-group"  data-starmate-component="interface-observation-group" data-starmate-part="root" />,
+    Item: props => <div {...props} data-openbitfun-component="interface-observation-group" data-openbitfun-part="item"  data-starmate-component="interface-observation-group" data-starmate-part="item" />,
   },
 } satisfies Record<FlowGroupCategory, FlowGroupView>;
 

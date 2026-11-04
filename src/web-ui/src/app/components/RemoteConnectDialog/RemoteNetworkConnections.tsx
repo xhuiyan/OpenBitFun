@@ -43,7 +43,7 @@ export function RemoteNetworkConnections({
       data-openbitfun-component="remote-connect-dialog"
       data-openbitfun-part="connections"
       aria-label={title}
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="connections" >
       <div className="openbitfun-remote-connect__card-header">
         <span className="openbitfun-remote-connect__card-header-icon" aria-hidden="true">{icon}</span>
         <div className="openbitfun-remote-connect__card-header-copy">

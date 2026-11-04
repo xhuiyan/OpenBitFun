@@ -67,16 +67,16 @@ const GitNav: React.FC = () => {
       data-openbitfun-component="git-nav"
       data-openbitfun-part="root"
       className="openbitfun-git-scene-nav"
-    >
+     data-starmate-component="git-nav" data-starmate-part="root" >
       <NavigationPanelHeader className="openbitfun-git-nav__panel-header">
-        <div className="openbitfun-git-scene-nav__header" data-openbitfun-component="git-nav" data-openbitfun-part="header">
-          <OverflowText className="openbitfun-git-scene-nav__title" data-openbitfun-component="git-nav" data-openbitfun-part="title">{t('title')}</OverflowText>
+        <div className="openbitfun-git-scene-nav__header" data-openbitfun-component="git-nav" data-openbitfun-part="header" data-starmate-component="git-nav" data-starmate-part="header" >
+          <OverflowText className="openbitfun-git-scene-nav__title" data-openbitfun-component="git-nav" data-openbitfun-part="title" data-starmate-component="git-nav" data-starmate-part="title" >{t('title')}</OverflowText>
         </div>
       </NavigationPanelHeader>
       <NavigationPanelBody>
         <NavigationPanelContent className="openbitfun-git-nav__panel-content">
           {isRepository && (
-            <div className="openbitfun-git-scene-nav__status" data-openbitfun-component="git-nav" data-openbitfun-part="status">
+            <div className="openbitfun-git-scene-nav__status" data-openbitfun-component="git-nav" data-openbitfun-part="status" data-starmate-component="git-nav" data-starmate-part="status" >
           <div className="openbitfun-git-scene-nav__branch-row">
             <Icon name="git" size="xs" aria-hidden />
             <OverflowText className="openbitfun-git-scene-nav__branch-name" title={currentBranch ?? undefined}>
@@ -97,7 +97,7 @@ const GitNav: React.FC = () => {
               )}
             </div>
           )}
-        <div className="openbitfun-git-scene-nav__actions-row" data-openbitfun-component="git-nav" data-openbitfun-part="actions">
+        <div className="openbitfun-git-scene-nav__actions-row" data-openbitfun-component="git-nav" data-openbitfun-part="actions" data-starmate-component="git-nav" data-starmate-part="actions" >
             <Tooltip content={t('actions.refresh')}>
               <IconButton
                 size="sm"

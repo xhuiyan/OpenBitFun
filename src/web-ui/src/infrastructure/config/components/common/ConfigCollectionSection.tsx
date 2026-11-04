@@ -29,23 +29,23 @@ export const ConfigCollectionSection: React.FC<ConfigCollectionSectionProps> = (
       description={description}
       className={`openbitfun-config-collection-section ${hasEditor ? 'openbitfun-config-collection-section--with-editor' : ''} ${className}`}
     >
-      <div className="openbitfun-config-collection-section__content" data-openbitfun-component="config" data-openbitfun-part="collectionSection">
+      <div className="openbitfun-config-collection-section__content" data-openbitfun-component="config" data-openbitfun-part="collectionSection" data-starmate-component="config" data-starmate-part="collectionSection" >
         {toolbar && (
-          <div className="openbitfun-config-collection-section__toolbar" data-openbitfun-component="config" data-openbitfun-part="collectionToolbar">
+          <div className="openbitfun-config-collection-section__toolbar" data-openbitfun-component="config" data-openbitfun-part="collectionToolbar" data-starmate-component="config" data-starmate-part="collectionToolbar" >
             {toolbar}
           </div>
         )}
         {editor && (
-          <div className="openbitfun-config-collection-section__editor" data-openbitfun-component="config" data-openbitfun-part="collectionEditor">
+          <div className="openbitfun-config-collection-section__editor" data-openbitfun-component="config" data-openbitfun-part="collectionEditor" data-starmate-component="config" data-starmate-part="collectionEditor" >
             {editor}
           </div>
         )}
         {filters && (
-          <div className="openbitfun-config-collection-section__filters" data-openbitfun-component="config" data-openbitfun-part="collectionFilters">
+          <div className="openbitfun-config-collection-section__filters" data-openbitfun-component="config" data-openbitfun-part="collectionFilters" data-starmate-component="config" data-starmate-part="collectionFilters" >
             {filters}
           </div>
         )}
-        <div className="openbitfun-config-collection-section__list" data-openbitfun-component="config" data-openbitfun-part="collectionList">
+        <div className="openbitfun-config-collection-section__list" data-openbitfun-component="config" data-openbitfun-part="collectionList" data-starmate-component="config" data-starmate-part="collectionList" >
           {children}
         </div>
       </div>

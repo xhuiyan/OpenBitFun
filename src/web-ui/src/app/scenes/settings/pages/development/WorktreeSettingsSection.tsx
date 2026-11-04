@@ -745,7 +745,7 @@ const WorktreeSettingsSection: React.FC = () => {
             data-openbitfun-component="worktree-settings"
             data-openbitfun-part="project"
             key={project.projectWorkspacePath}
-          >
+           data-starmate-component="worktree-settings" data-starmate-part="project" >
             <header className="openbitfun-worktree-settings__project-header">
               <div className="openbitfun-worktree-settings__project-identity">
                 <h4>{workspaceName(project.projectWorkspacePath)}</h4>
@@ -761,7 +761,7 @@ const WorktreeSettingsSection: React.FC = () => {
               className="openbitfun-worktree-settings__worktree-list"
               data-openbitfun-component="worktree-settings"
               data-openbitfun-part="worktreeList"
-            >
+             data-starmate-component="worktree-settings" data-starmate-part="worktreeList" >
               {project.worktrees.map(worktree => renderWorktree(project, worktree))}
             </div>
           </section>
@@ -792,7 +792,7 @@ const WorktreeSettingsSection: React.FC = () => {
       className="openbitfun-worktree-settings"
       data-openbitfun-component="worktree-settings"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="worktree-settings" data-starmate-part="root" >
       <ConfigPageSectionStack>
         {renderSettings()}
         <ConfigPageSection
@@ -829,7 +829,7 @@ const WorktreeSettingsSection: React.FC = () => {
               && 'openbitfun-worktree-settings__results--refreshing',
             ].filter(Boolean).join(' ')}
             aria-busy={projectsLoading}
-          >
+           data-starmate-component="worktree-settings" data-starmate-part="results" >
             {projectsLoading && projectsInitialized && (
               <>
                 <div

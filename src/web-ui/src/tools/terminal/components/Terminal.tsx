@@ -937,14 +937,14 @@ const Terminal = forwardRef<TerminalRef, TerminalProps>(({
       data-session-id={sessionId}
       data-testid="shell-command-item"
       data-command-id={sessionId}
-    >
+     data-starmate-component="terminal-tool" data-starmate-part="root" >
       <div 
         ref={containerRef} 
         className="openbitfun-terminal__container"
         data-openbitfun-component="terminal-tool"
         data-openbitfun-part="terminal"
         data-testid="shell-command-output"
-      />
+       data-starmate-component="terminal-tool" data-starmate-part="terminal" />
     </div>
   );
 });

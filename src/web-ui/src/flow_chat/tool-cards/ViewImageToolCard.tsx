@@ -76,7 +76,7 @@ export const ViewImageToolCard: React.FC<ToolCardProps> = ({ toolItem, onExpand 
   const title = fileName(path);
   const imageCount = toolItem.toolResult?.imageAttachments?.length;
   return (
-    <div data-openbitfun-adapter="view-image" ref={cardRootRef} data-tool-card-id={toolId ?? ''}>
+    <div data-openbitfun-adapter="view-image" ref={cardRootRef} data-tool-card-id={toolId ?? ''} data-starmate-adapter="view-image" >
       <ViewImageToolCardView
         status={status}
         isExpanded={isExpanded}

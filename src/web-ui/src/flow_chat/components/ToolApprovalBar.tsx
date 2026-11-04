@@ -24,9 +24,9 @@ export const ToolApprovalBar: React.FC<ToolApprovalBarProps> = ({
   }
 
   return (
-    <div data-openbitfun-component="tool-approval-bar" data-openbitfun-part="root" className="tool-approval-bar" role="group" aria-label={t('toolCards.approval.ariaLabel')}>
-      <div data-openbitfun-component="tool-approval-bar" data-openbitfun-part="main" className="tool-approval-bar__main">
-        <OverflowText data-openbitfun-component="tool-approval-bar" data-openbitfun-part="message" className="tool-approval-bar__message">{t('toolCards.approval.waiting')}</OverflowText>
+    <div data-openbitfun-component="tool-approval-bar" data-openbitfun-part="root" className="tool-approval-bar" role="group" aria-label={t('toolCards.approval.ariaLabel')} data-starmate-component="tool-approval-bar" data-starmate-part="root" >
+      <div data-openbitfun-component="tool-approval-bar" data-openbitfun-part="main" className="tool-approval-bar__main" data-starmate-component="tool-approval-bar" data-starmate-part="main" >
+        <OverflowText data-openbitfun-component="tool-approval-bar" data-openbitfun-part="message" className="tool-approval-bar__message" data-starmate-component="tool-approval-bar" data-starmate-part="message" >{t('toolCards.approval.waiting')}</OverflowText>
         <AcpPermissionActions
           toolItem={toolItem}
           presentation="text"

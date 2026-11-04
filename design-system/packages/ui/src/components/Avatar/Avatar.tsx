@@ -9,12 +9,12 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> { child
 export function Avatar({ alt = "", children, className, icon, onError, shape = "circle", size = "md", src, ...props }: AvatarProps) {
   const [imageFailed, setImageFailed] = useState(false);
   return (
-    <span {...props} className={classNames(styles.root, className)} data-openbitfun-component="avatar" data-openbitfun-shape={shape} data-size={size}>
+    <span {...props} className={classNames(styles.root, className)} data-openbitfun-component="avatar" data-openbitfun-shape={shape} data-size={size} data-starmate-component="avatar" data-starmate-shape={shape} >
       {src && !imageFailed
-        ? <img alt={alt} className={styles.image} data-openbitfun-part="image" onError={() => { setImageFailed(true); onError?.(); }} src={src} />
+        ? <img alt={alt} className={styles.image} data-openbitfun-part="image" onError={() => { setImageFailed(true); onError?.(); }} src={src}  data-starmate-part="image" />
         : icon !== undefined
-          ? <span className={styles.content} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">{icon}</span>
-          : <span className={styles.content} data-openbitfun-part="text">{children}</span>}
+          ? <span className={styles.content} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >{icon}</span>
+          : <span className={styles.content} data-openbitfun-part="text" data-starmate-part="text" >{children}</span>}
     </span>
   );
 }
@@ -23,5 +23,5 @@ export function AvatarGroup({ children, className, maxCount = 5, ...props }: Ava
   const items = Children.toArray(children);
   const visible = maxCount > 0 ? items.slice(0, maxCount) : items;
   const hiddenCount = Math.max(0, items.length - visible.length);
-  return <div {...props} className={classNames(styles.group, className)} data-openbitfun-component="avatar-group">{visible}{hiddenCount > 0 && <Avatar aria-label={`${hiddenCount} more`}>+{hiddenCount}</Avatar>}</div>;
+  return <div {...props} className={classNames(styles.group, className)} data-openbitfun-component="avatar-group" data-starmate-component="avatar-group" >{visible}{hiddenCount > 0 && <Avatar aria-label={`${hiddenCount} more`}>+{hiddenCount}</Avatar>}</div>;
 }

@@ -173,7 +173,7 @@ function UsageDistribution({ stats }: { stats: UsageStatistics }) {
       )}
       data-openbitfun-component="usage-statistics-config"
       data-openbitfun-part="distributions"
-    >
+     data-starmate-component="usage-statistics-config" data-starmate-part="distributions" >
       <ConfigPageRow label={t('filter.inputLabel')} align="center">
         <Input
           size="sm"
@@ -354,10 +354,10 @@ function UsageDetails({ stats, timeZone }: { stats: UsageStatistics; timeZone: s
       title={t('details.title')}
       data-openbitfun-component="usage-statistics-config"
       data-openbitfun-part="details"
-    >
+     data-starmate-component="usage-statistics-config" data-starmate-part="details" >
       {stats.trend.length > 0 && (
         <ConfigPageRow label={t('trend.title')} description={t('trend.summary')} multiline>
-          <div data-openbitfun-component="usage-statistics-config" data-openbitfun-part="trendPanel">
+          <div data-openbitfun-component="usage-statistics-config" data-openbitfun-part="trendPanel" data-starmate-component="usage-statistics-config" data-starmate-part="trendPanel" >
             <TrendChart stats={stats} timeZone={timeZone} />
           </div>
         </ConfigPageRow>
@@ -447,7 +447,7 @@ const UsageStatisticsSettingsPage: React.FC = () => {
       className="openbitfun-usage-stats"
       data-openbitfun-component="usage-statistics-config"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="usage-statistics-config" data-starmate-part="root" >
       <ConfigPageHeader
         title={t('title')}
         extra={(
@@ -467,7 +467,7 @@ const UsageStatisticsSettingsPage: React.FC = () => {
             title={t('overview.title')}
             data-openbitfun-component="usage-statistics-config"
             data-openbitfun-part="overview"
-          >
+           data-starmate-component="usage-statistics-config" data-starmate-part="overview" >
             <ConfigPageRow label={t('timeRange.label')} align="center">
               <Select
                 size="sm"
@@ -482,7 +482,7 @@ const UsageStatisticsSettingsPage: React.FC = () => {
             {loading ? (
               <ConfigLoadingState label={t('loading')} variant="statistics" />
             ) : empty ? (
-              <div data-openbitfun-component="usage-statistics-config" data-openbitfun-part="empty">
+              <div data-openbitfun-component="usage-statistics-config" data-openbitfun-part="empty" data-starmate-component="usage-statistics-config" data-starmate-part="empty" >
                 <Empty
                   icon={<BarChart3 aria-hidden />}
                   title={t(timeRange === 'all' ? 'empty.title' : 'empty.periodTitle')}
@@ -496,7 +496,7 @@ const UsageStatisticsSettingsPage: React.FC = () => {
                     className="openbitfun-usage-stats__metric-value"
                     data-openbitfun-component="usage-statistics-config"
                     data-openbitfun-part="summary"
-                  >
+                   data-starmate-component="usage-statistics-config" data-starmate-part="summary" >
                     <strong>{formatTokens(visibleStats.totalTokens, formatNumber)}</strong>
                   </span>
                 </ConfigPageRow>

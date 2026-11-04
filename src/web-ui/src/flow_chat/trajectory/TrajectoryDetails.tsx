@@ -38,7 +38,7 @@ function ValueView({ value }: { value: unknown }) {
     const text = String(value);
     const hit = query ? text.toLowerCase().indexOf(query) : -1;
     const start = hit >= limit ? Math.max(0, hit - 200) : 0;
-    return <Stack gap="2"><pre className="trajectory-details__value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="value">
+    return <Stack gap="2"><pre className="trajectory-details__value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="value" data-starmate-product-component="session-trajectory" data-starmate-product-part="value" >
       {start > 0 && '…'}<HighlightedText text={text.slice(start, start + limit)} />
     </pre>{text.length > start + limit && <Button size="xs" variant="text"
       onClick={() => setLimit(amount => amount + 16000)}>{t('trajectory.showMore')}</Button>}</Stack>;
@@ -57,8 +57,8 @@ function ValueTree({ value }: { value: object }) {
     return [...matching, ...keys.filter(key => !found.has(key))];
   }, [value, query]);
   if (!keys.length) return <code className="trajectory-details__inline-value" data-openbitfun-product-component="session-trajectory"
-    data-openbitfun-product-part="inlineValue">{Array.isArray(value) ? '[]' : '{}'}</code>;
-  return <FieldGroup appearance="plain" dividers className="trajectory-details__tree" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="tree">
+    data-openbitfun-product-part="inlineValue" data-starmate-product-component="session-trajectory" data-starmate-product-part="inlineValue" >{Array.isArray(value) ? '[]' : '{}'}</code>;
+  return <FieldGroup appearance="plain" dividers className="trajectory-details__tree" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="tree" data-starmate-product-component="session-trajectory" data-starmate-product-part="tree" >
     {keys.slice(0, limit).map(key => <ValueBranch key={key} name={key} value={(value as Record<string, unknown>)[key]} />)}
     {keys.length > limit && <Button size="xs" variant="text" onClick={() => setLimit(count => count + 50)}>{t('trajectory.showMore')}</Button>}
   </FieldGroup>;
@@ -68,54 +68,54 @@ function ValueBranch({ name, value }: { name: string; value: unknown }) {
   const query = useContext(QueryContext).trim().toLowerCase();
   const short = value === null || typeof value !== 'object' && String(value).length <= 160;
   const type = value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
-  const label = <span className="trajectory-details__field-label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="fieldLabel">
-    <code className="trajectory-details__name" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="name"><HighlightedText text={name} /></code>
-    {value !== undefined && <code className="trajectory-details__type" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="type">{type}</code>}
+  const label = <span className="trajectory-details__field-label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="fieldLabel" data-starmate-product-component="session-trajectory" data-starmate-product-part="fieldLabel" >
+    <code className="trajectory-details__name" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="name" data-starmate-product-component="session-trajectory" data-starmate-product-part="name" ><HighlightedText text={name} /></code>
+    {value !== undefined && <code className="trajectory-details__type" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="type" data-starmate-product-component="session-trajectory" data-starmate-product-part="type" >{type}</code>}
   </span>;
   if (short) return <FieldRow align="start" padding="none" className="trajectory-details__attribute"
-    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="attribute">
+    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="attribute" data-starmate-product-component="session-trajectory" data-starmate-product-part="attribute" >
     <dl className="trajectory-details__field" data-layout={typeof value === 'string' && (value.length > 64 || value.includes('\n')) ? 'stacked' : 'inline'}
-      data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="field">
+      data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="field" data-starmate-product-component="session-trajectory" data-starmate-product-part="field" >
       <dt>{label}</dt>
-      <dd><code className="trajectory-details__inline-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="inlineValue">
+      <dd><code className="trajectory-details__inline-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="inlineValue" data-starmate-product-component="session-trajectory" data-starmate-product-part="inlineValue" >
         <HighlightedText text={value === undefined ? t('trajectory.notRecorded') : value === '' ? '""' : String(value)} />
       </code></dd>
     </dl>
   </FieldRow>;
   return <FieldRow align="start" padding="none" className="trajectory-details__attribute"
-    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="attribute">
+    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="attribute" data-starmate-product-component="session-trajectory" data-starmate-product-part="attribute" >
     <Disclosure summary={label} defaultOpen={!!query && (name.toLowerCase().includes(query) || trajectoryValueMatches(value, query))}
       className="trajectory-details__branch" headerClassName="trajectory-details__nested-header"
       triggerClassName="trajectory-details__nested-trigger" contentInnerClassName="trajectory-details__nested-content"
       data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="branch"
-      unmountOnClose><ValueView value={value} /></Disclosure>
+      unmountOnClose data-starmate-product-component="session-trajectory" data-starmate-product-part="branch" ><ValueView value={value} /></Disclosure>
   </FieldRow>;
 }
 function DetailSection({ title, section, children }: {
   title: string; section?: 'parameters' | 'result'; children: ReactNode;
 }) {
   return <Disclosure summary={<span className="trajectory-details__section-title" data-openbitfun-product-component="session-trajectory"
-    data-openbitfun-product-part="sectionTitle">{title}</span>} defaultOpen unmountOnClose className="trajectory-details__section"
+    data-openbitfun-product-part="sectionTitle" data-starmate-product-component="session-trajectory" data-starmate-product-part="sectionTitle" >{title}</span>} defaultOpen unmountOnClose className="trajectory-details__section"
     headerClassName="trajectory-details__section-header" triggerClassName="trajectory-details__section-trigger"
     contentInnerClassName="trajectory-details__section-content"
-    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="section" data-trajectory-section={section}>
+    data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="section" data-trajectory-section={section} data-starmate-product-component="session-trajectory" data-starmate-product-part="section" >
     <Stack gap="2">{children}</Stack>
   </Disclosure>;
 }
 function TimingSummary({ values }: { values: string[][] }) {
-  return <dl className="trajectory-details__timing" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="timing">
+  return <dl className="trajectory-details__timing" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="timing" data-starmate-product-component="session-trajectory" data-starmate-product-part="timing" >
     {values.map(([label, value]) => <div key={label} className="trajectory-details__timing-item">
-      <dt className="trajectory-details__label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="label">{label}</dt>
-      <dd className="trajectory-details__fact-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="factValue">{value}</dd>
+      <dt className="trajectory-details__label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="label" data-starmate-product-component="session-trajectory" data-starmate-product-part="label" >{label}</dt>
+      <dd className="trajectory-details__fact-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="factValue" data-starmate-product-component="session-trajectory" data-starmate-product-part="factValue" >{value}</dd>
     </div>)}
   </dl>;
 }
 function DetailFields({ values }: { values: string[][] }) {
   return <FieldGroup appearance="plain" dividers>{values.map(([label, value]) => <FieldRow key={label} align="start" padding="none"
-    className="trajectory-details__fact" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="fact">
+    className="trajectory-details__fact" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="fact" data-starmate-product-component="session-trajectory" data-starmate-product-part="fact" >
     <div className="trajectory-details__fact-content">
-      <span className="trajectory-details__label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="label">{label}</span>
-      <span className="trajectory-details__fact-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="factValue">{value}</span>
+      <span className="trajectory-details__label" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="label" data-starmate-product-component="session-trajectory" data-starmate-product-part="label" >{label}</span>
+      <span className="trajectory-details__fact-value" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="factValue" data-starmate-product-component="session-trajectory" data-starmate-product-part="factValue" >{value}</span>
     </div>
   </FieldRow>)}</FieldGroup>;
 }
@@ -197,18 +197,18 @@ export function TrajectoryDetails({ sessionId, surfaceId, node, query }: Traject
   const fields = [[t('trajectory.started'), node.timestamp ? formatDate(node.timestamp, { dateStyle: 'medium', timeStyle: 'medium' }) : missing],
     ...timing.filter(([, value], index) => node.kind !== 'user' && (index === 0 || value !== missing
       && (node.kind === 'tool' ? index <= 4 : index >= 5)))];
-  return <div className="trajectory-details" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="details">
-    <div className="trajectory-details__header" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="header">
+  return <div className="trajectory-details" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="details" data-starmate-product-component="session-trajectory" data-starmate-product-part="details" >
+    <div className="trajectory-details__header" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="header" data-starmate-product-component="session-trajectory" data-starmate-product-part="header" >
     <PageHeader level={2} size="sm" className="trajectory-details__identity" title={<span className="trajectory-details__heading"
-      data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="heading">
+      data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="heading" data-starmate-product-component="session-trajectory" data-starmate-product-part="heading" >
       <OverflowText>{node.label || (node.kind === 'user' ? t('trajectory.user') : t('trajectory.model'))}</OverflowText>
-      <span className="trajectory-details__turn" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="turn">{t('trajectory.turn', { turn: node.turnOrdinal + 1 })}</span>
+      <span className="trajectory-details__turn" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="turn" data-starmate-product-component="session-trajectory" data-starmate-product-part="turn" >{t('trajectory.turn', { turn: node.turnOrdinal + 1 })}</span>
     </span>}
       leading={<Icon size="sm" name={node.kind === 'tool' ? 'terminal' : node.kind === 'user' ? 'user' : 'message-square'} />}
       action={<StatusPill tone={statusPresentation.tone}>{statusPresentation.label}</StatusPill>} />
     <TimingSummary values={fields} />
     </div>
-    <ScrollArea ref={viewportRef} className="trajectory-details__viewport" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="viewport">
+    <ScrollArea ref={viewportRef} className="trajectory-details__viewport" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="viewport" data-starmate-product-component="session-trajectory" data-starmate-product-part="viewport" >
       <QueryContext.Provider value={query}>
       <Stack gap="4">
         {query && <Alert tone="info" message={t('trajectory.query', { query })} />}
@@ -243,13 +243,13 @@ export function TrajectoryRangeDetails({ sessionId, surfaceId, range, viewId }: 
   const metrics = [[t('trajectory.user'), formatNumber(range.counts.user)], [t('trajectory.model'), formatNumber(range.counts.model)],
     [t('trajectory.tool'), formatNumber(range.counts.tool)], [t('trajectory.errors'), formatNumber(range.counts.errors)],
     [t('trajectory.modelTotal'), duration(range.modelMs)], [t('trajectory.toolTotal'), duration(range.toolMs)]];
-  return <div className="trajectory-details" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="details">
-    <div className="trajectory-details__header" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="header">
+  return <div className="trajectory-details" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="details" data-starmate-product-component="session-trajectory" data-starmate-product-part="details" >
+    <div className="trajectory-details__header" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="header" data-starmate-product-component="session-trajectory" data-starmate-product-part="header" >
     <PageHeader level={2} size="sm" title={t('trajectory.rangeDetails')}
       description={t('trajectory.rangeTurns', { start: range.start.turnOrdinal + 1, end: range.end.turnOrdinal + 1 })} />
     <TimingSummary values={metrics.slice(4)} />
     </div>
-    <ScrollArea className="trajectory-details__viewport" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="viewport">
+    <ScrollArea className="trajectory-details__viewport" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="viewport" data-starmate-product-component="session-trajectory" data-starmate-product-part="viewport" >
       <Stack gap="4">
         <DetailSection title={t('trajectory.overview')}><DetailFields values={metrics.slice(0, 4)} /></DetailSection>
         <Alert tone="info" message={t('trajectory.parallelTime')} />

@@ -144,8 +144,8 @@ const MEditorSourceFallback = forwardRef<EditorInstance, MEditorProps>((props, r
           onSave?.(currentValueRef.current)
         }
       }}
-    >
-      <div className="m-editor-notice" data-openbitfun-component="m-editor" data-openbitfun-part="notice" role="status">
+     data-starmate-component="m-editor" data-starmate-part="root" >
+      <div className="m-editor-notice" data-openbitfun-component="m-editor" data-openbitfun-part="notice" role="status" data-starmate-component="m-editor" data-starmate-part="notice" >
         {t('editor.markdownEditor.notice.sourcePreviewFallback')}
       </div>
       <textarea
@@ -428,12 +428,12 @@ const MEditorInner = forwardRef<EditorInstance, MEditorProps>((props, ref) => {
       onFocusCapture={handleFocusCapture}
       onBlurCapture={handleBlurCapture}
       tabIndex={-1}
-    >
-      {toolbar && <div data-openbitfun-component="m-editor" data-openbitfun-part="toolbar" className="m-editor-toolbar">{t('editor.meditor.toolbarPlaceholder')}</div>}
+     data-starmate-component="m-editor" data-starmate-part="root" >
+      {toolbar && <div data-openbitfun-component="m-editor" data-openbitfun-part="toolbar" className="m-editor-toolbar" data-starmate-component="m-editor" data-starmate-part="toolbar" >{t('editor.meditor.toolbarPlaceholder')}</div>}
       
-      <div data-openbitfun-component="m-editor" data-openbitfun-part="content" className="m-editor-content">
+      <div data-openbitfun-component="m-editor" data-openbitfun-part="content" className="m-editor-content" data-starmate-component="m-editor" data-starmate-part="content" >
         {effectiveMode === 'edit' && (
-          <div data-openbitfun-component="m-editor" data-openbitfun-part="editPanel" className="m-editor-edit-panel">
+          <div data-openbitfun-component="m-editor" data-openbitfun-part="editPanel" className="m-editor-edit-panel" data-starmate-component="m-editor" data-starmate-part="editPanel" >
             <EditArea
               ref={textareaRef}
               value={value}
@@ -448,7 +448,7 @@ const MEditorInner = forwardRef<EditorInstance, MEditorProps>((props, ref) => {
         )}
 
         {effectiveMode === 'ir' && (
-          <div data-openbitfun-component="m-editor" data-openbitfun-part="irPanel" className="m-editor-ir-panel">
+          <div data-openbitfun-component="m-editor" data-openbitfun-part="irPanel" className="m-editor-ir-panel" data-starmate-component="m-editor" data-starmate-part="irPanel" >
             <TiptapEditor
               ref={tiptapEditorRef}
               value={value}

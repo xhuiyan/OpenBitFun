@@ -74,7 +74,7 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
   let body: React.ReactNode = null;
   if (errorMessage && !installed) {
     body = (
-      <div data-openbitfun-component="update" data-openbitfun-part="alert">
+      <div data-openbitfun-component="update" data-openbitfun-part="alert" data-starmate-component="update" data-starmate-part="alert" >
         <Alert
           tone="error"
           message={errorMessage}
@@ -91,7 +91,7 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
           data-openbitfun-component="update"
           data-openbitfun-part="alert"
           role="status"
-        >
+         data-starmate-component="update" data-starmate-part="alert" >
           <span className="openbitfun-update-progress__status-icon" aria-hidden="true">
             <Icon name="check-circle" size="md" tone="success" />
           </span>
@@ -99,13 +99,13 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
             <p className="openbitfun-update-progress__version">
               {t('update.readyVersion', { version: version ?? '' })}
             </p>
-            <div data-openbitfun-component="update" data-openbitfun-part="restartHint">
+            <div data-openbitfun-component="update" data-openbitfun-part="restartHint" data-starmate-component="update" data-starmate-part="restartHint" >
               <DialogDescription>{t('update.installWarning')}</DialogDescription>
             </div>
           </div>
         </div>
         {errorMessage ? (
-          <div data-openbitfun-component="update" data-openbitfun-part="alert">
+          <div data-openbitfun-component="update" data-openbitfun-part="alert" data-starmate-component="update" data-starmate-part="alert" >
             <Alert tone="error" message={errorMessage} showIcon />
           </div>
         ) : null}
@@ -123,7 +123,7 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
           aria-label={t('update.downloadingTitle')}
           data-openbitfun-component="update"
           data-openbitfun-part="progressBar"
-        >
+         data-starmate-component="update" data-starmate-part="progressBar" >
           <div
             className={
               pct != null
@@ -134,14 +134,14 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
             data-openbitfun-component="update"
             data-openbitfun-part="progressFill"
             data-openbitfun-state={pct == null ? 'indeterminate' : undefined}
-          />
+           data-starmate-component="update" data-starmate-part="progressFill" data-starmate-state={pct == null ? 'indeterminate' : undefined} />
         </div>
-        <p className="openbitfun-update-progress__hint" data-openbitfun-component="update" data-openbitfun-part="progressHint">
+        <p className="openbitfun-update-progress__hint" data-openbitfun-component="update" data-openbitfun-part="progressHint" data-starmate-component="update" data-starmate-part="progressHint" >
           {pct != null
             ? t('update.progressPercent', { percent: String(pct) })
             : t('update.progressUnknown')}
         </p>
-        <p className="openbitfun-update-progress__restart" data-openbitfun-component="update" data-openbitfun-part="restartHint">{t('update.restartHint')}</p>
+        <p className="openbitfun-update-progress__restart" data-openbitfun-component="update" data-openbitfun-part="restartHint" data-starmate-component="update" data-starmate-part="restartHint" >{t('update.restartHint')}</p>
       </>
     );
   }
@@ -167,7 +167,7 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
           data-openbitfun-component="update"
           data-openbitfun-part="progressRoot"
           data-openbitfun-status={error ? 'error' : installed ? 'installed' : 'downloading'}
-        >
+         data-starmate-component="update" data-starmate-part="progressRoot" data-starmate-status={error ? 'error' : installed ? 'installed' : 'downloading'} >
           {body}
         </div>
       </DialogBody>
@@ -177,7 +177,7 @@ export const UpdateInstallProgressModal: React.FC<UpdateInstallProgressModalProp
             className="openbitfun-update-progress__actions"
             data-openbitfun-component="update"
             data-openbitfun-part="actions"
-          >
+           data-starmate-component="update" data-starmate-part="actions" >
             {errorMessage && onDownloadAgain ? (
               <Button variant="outline" size="md" disabled={installing} onClick={onDownloadAgain}>
                 {t('update.downloadAgain')}

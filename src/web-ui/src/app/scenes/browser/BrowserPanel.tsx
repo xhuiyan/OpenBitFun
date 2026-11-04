@@ -165,8 +165,8 @@ const BrowserPanel: React.FC<BrowserPanelProps> = ({ isActive, initialUrl, openR
   }, [addContext, evalInWebview, getCurrentUrl, getWebviewLabel, hasWebview, isInspectorActive, isTauri, stopInspector]);
 
   return (
-    <div data-openbitfun-component="browser-panel" data-openbitfun-part="root" data-openbitfun-state={isLoading ? 'loading' : ''} className="browser-panel" data-testid="browser-panel">
-      <form data-openbitfun-component="browser-panel" data-openbitfun-part="toolbar" className="browser-panel__toolbar" onSubmit={handleSubmit} data-testid="browser-panel-title">
+    <div data-openbitfun-component="browser-panel" data-openbitfun-part="root" data-openbitfun-state={isLoading ? 'loading' : ''} className="browser-panel" data-testid="browser-panel" data-starmate-component="browser-panel" data-starmate-part="root" data-starmate-state={isLoading ? 'loading' : ''} >
+      <form data-openbitfun-component="browser-panel" data-openbitfun-part="toolbar" className="browser-panel__toolbar" onSubmit={handleSubmit} data-testid="browser-panel-title" data-starmate-component="browser-panel" data-starmate-part="toolbar" >
         <IconButton
           type="button"
           size="sm"
@@ -191,7 +191,7 @@ const BrowserPanel: React.FC<BrowserPanelProps> = ({ isActive, initialUrl, openR
           icon={<Icon name={isLoading ? 'xmark' : 'refresh'} size="lg" />}
           data-testid="browser-refresh-button"
         />
-        <div data-openbitfun-component="browser-panel" data-openbitfun-part="address" className="browser-panel__address">
+        <div data-openbitfun-component="browser-panel" data-openbitfun-part="address" className="browser-panel__address" data-starmate-component="browser-panel" data-starmate-part="address" >
           <Input
             className="browser-panel__address-field"
             type="text"
@@ -219,13 +219,13 @@ const BrowserPanel: React.FC<BrowserPanelProps> = ({ isActive, initialUrl, openR
       </form>
 
       {error ? (
-        <div data-openbitfun-component="browser-panel" data-openbitfun-part="error" className="browser-panel__error" data-testid="browser-error-message">
+        <div data-openbitfun-component="browser-panel" data-openbitfun-part="error" className="browser-panel__error" data-testid="browser-error-message" data-starmate-component="browser-panel" data-starmate-part="error" >
           <AlertTriangle size={16} />
           <span>{error}</span>
         </div>
       ) : null}
 
-      <div data-openbitfun-component="browser-panel" data-openbitfun-part="content" className="browser-panel__content" data-testid="browser-page-frame">
+      <div data-openbitfun-component="browser-panel" data-openbitfun-part="content" className="browser-panel__content" data-testid="browser-page-frame" data-starmate-component="browser-panel" data-starmate-part="content" >
         {!isTauri ? (
           <iframe
             data-openbitfun-component="browser-panel"
@@ -234,7 +234,7 @@ const BrowserPanel: React.FC<BrowserPanelProps> = ({ isActive, initialUrl, openR
             src={currentUrl}
             title="Embedded Browser Panel"
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"
-          />
+           data-starmate-component="browser-panel" data-starmate-part="iframe" />
         ) : (
           <div
             ref={viewportRef}
@@ -242,9 +242,9 @@ const BrowserPanel: React.FC<BrowserPanelProps> = ({ isActive, initialUrl, openR
             data-openbitfun-part="webviewHost"
             className="browser-panel__webview-host"
             data-webview-label={webviewLabel}
-          >
+           data-starmate-component="browser-panel" data-starmate-part="webviewHost" >
             {!browser.previewUrl && (
-              <div data-openbitfun-component="browser-panel" data-openbitfun-part="placeholder" className="browser-panel__webview-placeholder">
+              <div data-openbitfun-component="browser-panel" data-openbitfun-part="placeholder" className="browser-panel__webview-placeholder" data-starmate-component="browser-panel" data-starmate-part="placeholder" >
                 <Icon name="browser" size="lg" />
                 <OverflowText data-testid="browser-current-url">{currentUrl}</OverflowText>
               </div>

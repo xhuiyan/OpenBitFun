@@ -24,5 +24,5 @@ export const ToolGroup = forwardRef<HTMLDivElement, ToolGroupProps>(function Too
     itemCount={itemCount ?? counts.read + counts.search + counts.command}
     data-read-count={variant === 'explore' ? String(counts.read) : undefined}
     data-search-count={variant === 'explore' ? String(counts.search) : undefined}
-    data-command-count={variant === 'explore' ? String(counts.command) : undefined} />;
+    data-command-count={variant === 'explore' ? String(counts.command) : undefined}  data-starmate-component={component} />;
 });

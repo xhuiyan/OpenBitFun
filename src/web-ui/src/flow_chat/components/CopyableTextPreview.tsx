@@ -29,7 +29,7 @@ export const CopyableTextPreview = React.forwardRef<HTMLElement, CopyableTextPre
   const { t } = useTranslation('flow-chat');
   const content = text?.trim()
     ? text
-    : <span className="copyable-text-preview__empty" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="empty">{emptyText}</span>;
+    : <span className="copyable-text-preview__empty" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="empty" data-starmate-component="copyable-text-preview" data-starmate-part="empty" >{emptyText}</span>;
   const resolvedClassName = `copyable-text-preview${multiline ? ' copyable-text-preview--multiline' : ''}${className ? ` ${className}` : ''}`;
   const preview = multiline ? content : (
     <OverflowText title={tooltipContent ? '' : undefined}>{content}</OverflowText>
@@ -45,11 +45,11 @@ export const CopyableTextPreview = React.forwardRef<HTMLElement, CopyableTextPre
   });
   const copyTooltip = copied ? t('toolCards.common.copied') : t('toolCards.common.copy');
   const node = as === 'code' ? (
-    <code ref={ref} className={resolvedClassName} {...restProps} data-openbitfun-component="copyable-text-preview" data-openbitfun-part="root">
+    <code ref={ref} className={resolvedClassName} {...restProps} data-openbitfun-component="copyable-text-preview" data-openbitfun-part="root" data-starmate-component="copyable-text-preview" data-starmate-part="root" >
       {preview}
     </code>
   ) : (
-    <span ref={ref} className={resolvedClassName} {...restProps} data-openbitfun-component="copyable-text-preview" data-openbitfun-part="root">
+    <span ref={ref} className={resolvedClassName} {...restProps} data-openbitfun-component="copyable-text-preview" data-openbitfun-part="root" data-starmate-component="copyable-text-preview" data-starmate-part="root" >
       {preview}
     </span>
   );
@@ -61,8 +61,8 @@ export const CopyableTextPreview = React.forwardRef<HTMLElement, CopyableTextPre
   return (
     <Tooltip
       content={
-        <div className="copyable-text-preview-tooltip-content" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="tooltipContent">
-          <span className="copyable-text-preview-tooltip-content__text" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="tooltipText">{tooltipContent}</span>
+        <div className="copyable-text-preview-tooltip-content" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="tooltipContent" data-starmate-component="copyable-text-preview" data-starmate-part="tooltipContent" >
+          <span className="copyable-text-preview-tooltip-content__text" data-openbitfun-component="copyable-text-preview" data-openbitfun-part="tooltipText" data-starmate-component="copyable-text-preview" data-starmate-part="tooltipText" >{tooltipContent}</span>
           {copyText && (
             <Tooltip content={copyTooltip}>
               <IconButton
@@ -75,7 +75,7 @@ export const CopyableTextPreview = React.forwardRef<HTMLElement, CopyableTextPre
                 onClick={copy}
                 icon={copied ? <Icon name="check-line" size="xs" /> : <Icon name="duplicate" size="xs" />}
                 aria-label={copyTooltip}
-              />
+               data-starmate-component="copyable-text-preview" data-starmate-part="copyAction" data-starmate-state={copied ? 'copied' : undefined} />
             </Tooltip>
           )}
         </div>

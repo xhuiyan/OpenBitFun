@@ -134,12 +134,12 @@ export function ComputerUseControlCard() {
     : snapshot.mode === 'foreground' ? t('computerControl.foreground') : t('computerControl.background');
 
   return <OverlayLayer passive>
-    <div className="computer-control-card" data-openbitfun-component="computer-control" data-openbitfun-part="root">
+    <div className="computer-control-card" data-openbitfun-component="computer-control" data-openbitfun-part="root" data-starmate-component="computer-control" data-starmate-part="root" >
     <Card appearance="raised" padding="md" gap="sm" radius="md" className="computer-control-card__panel"
-      data-openbitfun-native-webview-occlusion>
+      data-openbitfun-native-webview-occlusion data-starmate-native-webview-occlusion >
       <CardHeader>{t('computerControl.title')}</CardHeader>
       <CardBody className="computer-control-card__body">
-        <p role="status" className="computer-control-card__status" data-openbitfun-component="computer-control" data-openbitfun-part="status">
+        <p role="status" className="computer-control-card__status" data-openbitfun-component="computer-control" data-openbitfun-part="status" data-starmate-component="computer-control" data-starmate-part="status" >
           {current?.error ? t('computerControl.unavailable') : snapshot.state === 'awaiting_share' ? t('computerSharing.selectApp') : mode}
         </p>
         {snapshot.target && <OverflowText>{snapshot.sharing?.target_label || snapshot.target}</OverflowText>}
@@ -157,14 +157,14 @@ export function ComputerUseControlCard() {
             mutation.current += 1;
             setView(previous => !acceptsUpdate(previous?.snapshot, next) ? previous : { epoch: scope.epoch, snapshot: next });
           }} />}
-        {expanded && !snapshot.sharing && current?.frame && <div className="computer-control-card__preview" data-openbitfun-component="computer-control" data-openbitfun-part="preview">
+        {expanded && !snapshot.sharing && current?.frame && <div className="computer-control-card__preview" data-openbitfun-component="computer-control" data-openbitfun-part="preview" data-starmate-component="computer-control" data-starmate-part="preview" >
           <img src={`data:${current.frame.mime_type};base64,${current.frame.image_base64}`}
             alt={t('computerControl.previewAlt')} />
           {pointer && <PreviewCursor key={`${identity}:${snapshot.target}:${snapshot.target_revision ?? 0}`}
             x={pointer.x} y={pointer.y} />}
           {clickFeedback && <span className="computer-control-card__click"
             data-openbitfun-component="computer-control" data-openbitfun-part="click"
-            style={{ left: `${clickFeedback.x * 100}%`, top: `${clickFeedback.y * 100}%` }} aria-hidden="true" />}
+            style={{ left: `${clickFeedback.x * 100}%`, top: `${clickFeedback.y * 100}%` }} aria-hidden="true"  data-starmate-component="computer-control" data-starmate-part="click" />}
         </div>}
         {expanded && !snapshot.sharing && !current?.frame && <p role="status">{t('computerControl.previewUnavailable')}</p>}
       </CardBody>

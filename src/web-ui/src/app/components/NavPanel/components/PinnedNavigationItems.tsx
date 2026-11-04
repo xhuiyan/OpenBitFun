@@ -37,9 +37,9 @@ export default function PinnedNavigationItems({ navigation }: { navigation: Retu
     return <Tooltip key={id} content={reason ? t(reason) : label} placement="right" followCursor>
       {id === 'builtin.todos'
         ? <NavigationPanelItem {...itemProps} data-openbitfun-component="nav-panel" data-openbitfun-part="todoEntry"
-            data-openbitfun-action="todos" data-testid="nav-todos-btn">{label}</NavigationPanelItem>
+            data-openbitfun-action="todos" data-testid="nav-todos-btn" data-starmate-component="nav-panel" data-starmate-part="todoEntry" data-starmate-action="todos" >{label}</NavigationPanelItem>
         : <NavigationPanelItem {...itemProps} data-openbitfun-component="nav-panel" data-openbitfun-part="topAction"
-            data-openbitfun-action={id} data-testid={`nav-${id}`}>{label}</NavigationPanelItem>}
+            data-openbitfun-action={id} data-testid={`nav-${id}`} data-starmate-component="nav-panel" data-starmate-part="topAction" data-starmate-action={id} >{label}</NavigationPanelItem>}
     </Tooltip>;
   })}</>;
 }

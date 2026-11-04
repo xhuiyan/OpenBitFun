@@ -483,13 +483,13 @@ export const RemoteFileBrowser: React.FC<RemoteFileBrowserProps> = ({
   const browser = (
     <Dialog ref={surfaceRef} open size="lg" className="remote-file-browser" onOpenChange={() => onCancel()}>
       {/* Keep product Appearance parts on neutral wrappers; Dialog owns modal anatomy. */}
-      <div className="remote-file-browser__layout" data-openbitfun-component="ssh-remote" data-openbitfun-part="browserOverlay">
-      <div className="remote-file-browser__layout" data-openbitfun-component="ssh-remote" data-openbitfun-part="browser">
+      <div className="remote-file-browser__layout" data-openbitfun-component="ssh-remote" data-openbitfun-part="browserOverlay" data-starmate-component="ssh-remote" data-starmate-part="browserOverlay" >
+      <div className="remote-file-browser__layout" data-openbitfun-component="ssh-remote" data-openbitfun-part="browser" data-starmate-component="ssh-remote" data-starmate-part="browser" >
         {/* Header */}
-        <div data-openbitfun-component="ssh-remote" data-openbitfun-part="browserHeader">
+        <div data-openbitfun-component="ssh-remote" data-openbitfun-part="browserHeader" data-starmate-component="ssh-remote" data-starmate-part="browserHeader" >
           <DialogHeader separator>
             <DialogHeading><DialogTitle>{t('ssh.remote.selectWorkspace')}</DialogTitle></DialogHeading>
-            <span data-openbitfun-component="ssh-remote" data-openbitfun-part="browserClose">
+            <span data-openbitfun-component="ssh-remote" data-openbitfun-part="browserClose" data-starmate-component="ssh-remote" data-starmate-part="browserClose" >
               <DialogClose aria-label={t('actions.close')} />
             </span>
           </DialogHeader>
@@ -504,7 +504,7 @@ export const RemoteFileBrowser: React.FC<RemoteFileBrowserProps> = ({
           data-openbitfun-part="breadcrumb"
           orientation="horizontal"
           scrollbarVisibility="hidden"
-        >
+         data-starmate-component="ssh-remote" data-starmate-part="breadcrumb" >
           {isEditingPath ? (
             <Input
               ref={pathInputRef}
@@ -565,7 +565,7 @@ export const RemoteFileBrowser: React.FC<RemoteFileBrowserProps> = ({
         </ScrollArea>
 
         {/* Toolbar */}
-        <div className="remote-file-browser__toolbar" data-openbitfun-component="ssh-remote" data-openbitfun-part="toolbar">
+        <div className="remote-file-browser__toolbar" data-openbitfun-component="ssh-remote" data-openbitfun-part="toolbar" data-starmate-component="ssh-remote" data-starmate-part="toolbar" >
           <IconButton
             className="remote-file-browser__toolbar-btn"
             onClick={() => loadDirectory(currentPath)}
@@ -613,7 +613,7 @@ export const RemoteFileBrowser: React.FC<RemoteFileBrowserProps> = ({
         )}
 
         {/* File List */}
-        <ScrollArea className="remote-file-browser__content" data-openbitfun-component="ssh-remote" data-openbitfun-part="content">
+        <ScrollArea className="remote-file-browser__content" data-openbitfun-component="ssh-remote" data-openbitfun-part="content" data-starmate-component="ssh-remote" data-starmate-part="content" >
           {error && (
             <div className="remote-file-browser__error" role="alert">
               <span>{error}</span>
@@ -839,7 +839,7 @@ export const RemoteFileBrowser: React.FC<RemoteFileBrowserProps> = ({
         />
 
         {/* Footer */}
-        <div data-openbitfun-component="ssh-remote" data-openbitfun-part="footer">
+        <div data-openbitfun-component="ssh-remote" data-openbitfun-part="footer" data-starmate-component="ssh-remote" data-starmate-part="footer" >
         <DialogFooter separator className="remote-file-browser__footer">
           <div className="remote-file-browser__footer-info">
             {!selectDirectoriesOnly && selectedPath ? (

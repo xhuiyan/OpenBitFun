@@ -69,7 +69,7 @@ test("ActionItem can reserve an empty leading gutter for aligned lists", () => {
     createElement(ActionItem, { reserveLeadingSpace: true }, "Aligned item"),
   );
 
-  assert.match(markup, /data-openbitfun-part="leading"><\/span>/);
+  assert.match(markup, /data-openbitfun-part="leading"[^>]*><\/span>/);
 });
 
 test("ActionItem exposes a danger tone for destructive rows", () => {

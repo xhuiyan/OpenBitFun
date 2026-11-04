@@ -394,7 +394,7 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>(function Icon({
       ref={ref}
       role={label ? "img" : undefined}
       style={iconStyle}
-    >
+     data-starmate-component="icon" data-starmate-name={name} data-starmate-source={asset ? "catalog" : "line"} data-starmate-artwork={name && name !== "progress-25" && name !== "turn" ? "monochrome" : undefined} data-starmate-tone={tone} >
       {Glyph ? (
         <Glyph
           aria-hidden="true"

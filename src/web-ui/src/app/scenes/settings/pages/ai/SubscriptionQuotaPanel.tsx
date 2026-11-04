@@ -76,16 +76,16 @@ export function SubscriptionQuotaPanel({ provider, accountId = provider, identit
       {date(meter.expires_at) && <time dateTime={new Date(meter.expires_at! * 1000).toISOString()}>{t('quota.expiresAt', { time: date(meter.expires_at) })}</time>}
     </div>;
     const meterContent = (
-      <div className={styles.meter} data-openbitfun-component="model-settings" data-openbitfun-part="quotaMeter" key={meter.id} data-tone={tone} data-secondary={meter.secondary || undefined} tabIndex={inline ? 0 : undefined}>
+      <div className={styles.meter} data-openbitfun-component="model-settings" data-openbitfun-part="quotaMeter" key={meter.id} data-tone={tone} data-secondary={meter.secondary || undefined} tabIndex={inline ? 0 : undefined} data-starmate-component="model-settings" data-starmate-part="quotaMeter" >
         <div className={styles.meterHeading}><span>{name}</span></div>
-        <div className={styles.value} data-openbitfun-component="model-settings" data-openbitfun-part="quotaValue" aria-label={compact || inline ? t('quota.remainingFor', { name }) : undefined}>
+        <div className={styles.value} data-openbitfun-component="model-settings" data-openbitfun-part="quotaValue" aria-label={compact || inline ? t('quota.remainingFor', { name }) : undefined} data-starmate-component="model-settings" data-starmate-part="quotaValue" >
           <strong>{meter.unlimited ? t('quota.unlimited') : left !== undefined ? number(left) : remaining !== undefined ? percent(remaining) : t('quota.noValue')}</strong>
           {!meter.unlimited && left !== undefined && unit && <span className={styles.unit}>{unit}</span>}
           {!compact && !inline && !meter.unlimited && (left !== undefined || remaining !== undefined) && <span className={styles.remainingLabel}>{t('quota.remaining')}</span>}
         </div>
         {remaining !== undefined && <div className={styles.track} data-openbitfun-component="model-settings" data-openbitfun-part="quotaTrack" role="progressbar" aria-label={t('quota.remainingFor', { name })}
           aria-valuemin={0} aria-valuemax={100} aria-valuenow={remaining} aria-valuetext={percent(remaining)}
-          title={t('quota.usedPercent', { value: percent(100 - remaining) })}>
+          title={t('quota.usedPercent', { value: percent(100 - remaining) })} data-starmate-component="model-settings" data-starmate-part="quotaTrack" >
           {inline ? Array.from({ length: 24 }, (_, index) => (
             <span key={index} aria-hidden="true" data-filled={index < Math.ceil(remaining * 24 / 100)} />
           )) : <span style={{ inlineSize: `${remaining}%` }} />}
@@ -103,7 +103,7 @@ export function SubscriptionQuotaPanel({ provider, accountId = provider, identit
       : <StatusPill tone="neutral">{snapshot.plan}</StatusPill>) : null;
   const content = (
     <>
-      <div className={styles.header} data-openbitfun-component="model-settings" data-openbitfun-part="quotaHeader">
+      <div className={styles.header} data-openbitfun-component="model-settings" data-openbitfun-part="quotaHeader" data-starmate-component="model-settings" data-starmate-part="quotaHeader" >
         {headerLeading}
         <div className={styles.title}>
           {accountLabel ? <span className={styles.accountLabel}>{accountLabel}</span> : null}
@@ -150,7 +150,7 @@ export function SubscriptionQuotaPanel({ provider, accountId = provider, identit
         {meters.filter(meter => meter.secondary).map(renderMeter)}
       </div>}
       {snapshot?.unlimited_credits && <p className={styles.notice}>{t('quota.unlimitedCredits')}</p>}
-      {!inline && snapshot?.display?.version === 1 && date(snapshot.display.expires_at) && <footer className={styles.footer} data-openbitfun-component="model-settings" data-openbitfun-part="quotaFooter">
+      {!inline && snapshot?.display?.version === 1 && date(snapshot.display.expires_at) && <footer className={styles.footer} data-openbitfun-component="model-settings" data-openbitfun-part="quotaFooter" data-starmate-component="model-settings" data-starmate-part="quotaFooter" >
         <time dateTime={new Date(snapshot.display.expires_at! * 1000).toISOString()}>{t('quota.planUntil', { time: date(snapshot.display.expires_at) })}</time>
       </footer>}
     </>
@@ -158,7 +158,7 @@ export function SubscriptionQuotaPanel({ provider, accountId = provider, identit
   const panel = (
     <section className={`${styles.quota} ${compact ? styles.compact : ''} ${inline ? styles.inline : ''}`} aria-label={t('quota.title')}
       data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionQuota"
-      aria-busy={query.loading} data-testid="subscription-quota" data-provider={provider} data-state={initialLoading ? 'loading' : snapshot?.state || 'unknown'}>
+      aria-busy={query.loading} data-testid="subscription-quota" data-provider={provider} data-state={initialLoading ? 'loading' : snapshot?.state || 'unknown'} data-starmate-component="model-settings" data-starmate-part="subscriptionQuota" >
       {compact || inline ? content : <Card appearance="subtle" padding="sm">{content}</Card>}
     </section>
   );

@@ -90,7 +90,7 @@ export const ChatInputBoostSubmenu: React.FC<ChatInputBoostSubmenuProps> = ({
           event.stopPropagation();
           openFlyout(true);
         }}
-      >
+       data-starmate-component="chat-input" data-starmate-part="boostSubmenuTrigger" data-starmate-state={open ? 'open' : undefined} >
         {label}
       </MenuItem>
       {open ? createOverlayPortal(
@@ -115,7 +115,7 @@ export const ChatInputBoostSubmenu: React.FC<ChatInputBoostSubmenuProps> = ({
             setOpen(false);
             requestAnimationFrame(() => triggerRef.current?.focus());
           }}
-          >
+           data-starmate-component="chat-input" data-starmate-part="boostSubmenuPanel" data-starmate-state="open" data-starmate-placement={layout ? `${layout.placement}-${layout.alignment}` : 'right-start'} >
             {children}
         </Menu>,
         getAppearanceOverlayHost(),

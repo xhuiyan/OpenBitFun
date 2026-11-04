@@ -115,7 +115,7 @@ const SceneTopBar: React.FC<SceneTopBarProps> = ({
           className="openbitfun-scene-top-bar__actions"
           data-openbitfun-scene="workbench"
           data-openbitfun-part="sceneActions"
-        />
+         data-starmate-scene="workbench" data-starmate-part="sceneActions" />
       </>}
       size="md"
       trailing={<>
@@ -133,7 +133,7 @@ const SceneTopBar: React.FC<SceneTopBarProps> = ({
               className="openbitfun-scene-top-bar__window-controls"
               data-openbitfun-component="scene-bar"
               data-openbitfun-part="controls"
-            >
+             data-starmate-component="scene-bar" data-starmate-part="controls" >
               <WindowControls
                 onMinimize={onMinimize!}
                 onToggleMaximize={onMaximize!}
@@ -144,7 +144,7 @@ const SceneTopBar: React.FC<SceneTopBarProps> = ({
           </>
         ) : null}
       </>}
-    />
+     data-starmate-scene="workbench" data-starmate-part="topBar" />
   );
 };
 

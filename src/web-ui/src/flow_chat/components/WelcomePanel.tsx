@@ -115,7 +115,7 @@ export function WelcomeModeSelector({ profile, disabled, pending, onSelect, onEx
           setFocusProfile(target);
         }
       }}
-    >
+     data-starmate-product-component="welcome-panel" data-starmate-product-part="modeChoices" data-starmate-state={expanded ? 'open' : undefined} >
       {HARNESS_IDS.map(id => {
         const current = profile === id;
         return (
@@ -144,14 +144,14 @@ export function WelcomeModeSelector({ profile, disabled, pending, onSelect, onEx
                   onSelect(id);
                 }
               }}
-            >
+             data-starmate-product-component="welcome-panel" data-starmate-product-part="modeOption" >
               <span className="welcome-panel__mode-mark"
                 data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="modeIcon"
-                data-harness-profile={id} aria-hidden>
+                data-harness-profile={id} aria-hidden data-starmate-product-component="welcome-panel" data-starmate-product-part="modeIcon" >
                 <Icon name={HARNESS_PRESENTATION[id].icon} size="lg" />
               </span>
               <span className="welcome-panel__mode-name"
-                data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="modeName">
+                data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="modeName" data-starmate-product-component="welcome-panel" data-starmate-product-part="modeName" >
                 {name(id)}
               </span>
             </button>
@@ -395,11 +395,11 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
 
   return (
     <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="root" className={`welcome-panel ${className}`}
-      style={{ height: `max(0px, calc(100% - ${inputOverlayInsetPx}px))` }}>
-      <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="content" className="welcome-panel__content">
+      style={{ height: `max(0px, calc(100% - ${inputOverlayInsetPx}px))` }} data-starmate-product-component="welcome-panel" data-starmate-product-part="root" >
+      <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="content" className="welcome-panel__content" data-starmate-product-component="welcome-panel" data-starmate-product-part="content" >
         {/* Greeting */}
         <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="greeting"
-          className="welcome-panel__greeting" data-mode-expanded={isModeExpanded}>
+          className="welcome-panel__greeting" data-mode-expanded={isModeExpanded} data-starmate-product-component="welcome-panel" data-starmate-product-part="greeting" >
           {harnessProfile ? (
             <WelcomeModeSelector profile={harnessProfile} disabled={!canSelectMode}
               pending={isModeChangePending} onSelect={handleSelectMode}
@@ -410,19 +410,19 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
             data-openbitfun-product-part="modeIcon"
             data-harness-profile={harnessProfile ?? 'other'}
             aria-hidden
-          >
+           data-starmate-product-component="welcome-panel" data-starmate-product-part="modeIcon" >
             {isClawSession
               ? <AssistantAvatar size="lg" className="welcome-panel__assistant-avatar" />
               : <Icon name="user" size="lg" />}
           </span>}
           <div ref={captionRef} className="welcome-panel__caption" aria-hidden={isModeExpanded}
-            data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="caption">
+            data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="caption" data-starmate-product-component="welcome-panel" data-starmate-product-part="caption" >
             <PageHeader
               ref={captionContentRef}
               className="welcome-panel__caption-content"
               align="start"
               size="display"
-              title={<span data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="heading">
+              title={<span data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="heading" data-starmate-product-component="welcome-panel" data-starmate-product-part="heading" >
                 {showWorkspaceHeading ? (
                   <Trans
                     i18nKey="welcome.openingWorkspace"
@@ -442,7 +442,7 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
                           aria-haspopup="menu"
                           aria-expanded={workspaceMenuOpen && canSelectWorkspace}
                           title={tCommon('header.selectProjectDirectory')}
-                        >
+                         data-starmate-product-component="welcome-panel" data-starmate-product-part="workspaceAction" data-starmate-state={workspaceMenuOpen ? 'open' : undefined} >
                           {workspaceName}
                         </button>
                       ),
@@ -464,17 +464,17 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
           aria-label={tCommon('header.selectProjectDirectory')}
           data-openbitfun-product-component="welcome-panel"
           data-openbitfun-product-part="workspaceMenu"
-        />
+         data-starmate-product-component="welcome-panel" data-starmate-product-part="workspaceMenu" />
 
         {showDetails && (
           <div className={`welcome-panel__details${greeting.subtitle ? ' welcome-panel__details--with-tagline' : ''}`}>
             {greeting.subtitle && (
-              <p data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="tagline" className="welcome-panel__tagline">{greeting.subtitle}</p>
+              <p data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="tagline" className="welcome-panel__tagline" data-starmate-product-component="welcome-panel" data-starmate-product-part="tagline" >{greeting.subtitle}</p>
             )}
-            <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="divider" className="welcome-panel__divider" />
+            <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="divider" className="welcome-panel__divider"  data-starmate-product-component="welcome-panel" data-starmate-product-part="divider" />
 
             {showNarrative && (
-              <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="narrative" className="welcome-panel__narrative">
+              <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="narrative" className="welcome-panel__narrative" data-starmate-product-component="welcome-panel" data-starmate-product-part="narrative" >
                 <p className="welcome-panel__narrative-text">
                   {t('welcome.noWorkspaceHint')}
                   <Button labelBehavior="static" variant="text"
@@ -484,7 +484,7 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
                     className="welcome-panel__inline-btn welcome-panel__inline-btn--interactive"
                     onClick={() => { void handleOpenOtherFolder(); }}
                     disabled={isSelectingWorkspace}
-                  >
+                   data-starmate-product-component="welcome-panel" data-starmate-product-part="openWorkspaceAction" >
                     {t('welcome.openOne')}
                   </Button>
                   {' '}{t('welcome.toStart')}
@@ -494,7 +494,7 @@ export const WelcomePanel: React.FC<WelcomePanelProps> = ({
 
             {/* Cowork examples */}
             {isCoworkSession && (
-              <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="cowork" className="welcome-panel__cowork">
+              <div data-openbitfun-product-component="welcome-panel" data-openbitfun-product-part="cowork" className="welcome-panel__cowork" data-starmate-product-component="welcome-panel" data-starmate-product-part="cowork" >
                 <CoworkExampleCards resetKey={0} onSelectPrompt={p => handleQuickActionClick(p)} />
               </div>
             )}

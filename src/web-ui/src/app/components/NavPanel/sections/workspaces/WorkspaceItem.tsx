@@ -838,7 +838,11 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
       data-testid="nav-workspace-item"
       data-workspace-id={workspace.id}
       data-workspace-kind={workspace.workspaceKind}
-      data-workspace-active={isSelected ? 'true' : 'false'}>
+      data-workspace-active={isSelected ? 'true' : 'false'} data-starmate-product-component="workspace-item" data-starmate-product-part="root" data-starmate-variant="assistant" data-starmate-state={[
+        isSelected && 'active',
+        isDragging && 'dragging',
+        workspaceIsRemote && 'remote',
+      ].filter(Boolean).join(' ')} >
         <div
           data-openbitfun-product-component="workspace-item"
           data-openbitfun-product-part="card"
@@ -852,7 +856,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
           style={{ cursor: 'pointer' }}
           data-testid="nav-workspace-card"
           data-workspace-id={workspace.id}
-        >
+         data-starmate-product-component="workspace-item" data-starmate-product-part="card" >
           <button
             data-openbitfun-product-component="workspace-item"
             data-openbitfun-product-part="action"
@@ -862,8 +866,8 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
             aria-label={t('nav.sessions.openAssistant')}
             data-testid="nav-assistant-open-latest"
             data-workspace-id={workspace.id}
-          >
-            <span className="openbitfun-nav-panel__assistant-item-avatar" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="icon" aria-hidden="true">
+           data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
+            <span className="openbitfun-nav-panel__assistant-item-avatar" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="icon" aria-hidden="true" data-starmate-product-component="workspace-item" data-starmate-product-part="icon" >
               <AssistantAvatar size={22} name={workspaceDisplayName} />
             </span>
           </button>
@@ -878,12 +882,12 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
               onClick={e => { e.stopPropagation(); void handleOpenLatestAssistantSession(); }}
               data-testid="nav-workspace-name-btn"
               data-workspace-id={workspace.id}
-            >
-              <OverflowText className="openbitfun-nav-panel__assistant-item-label" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="label">{workspaceDisplayName}</OverflowText>
+             data-starmate-product-component="workspace-item" data-starmate-product-part="name" >
+              <OverflowText className="openbitfun-nav-panel__assistant-item-label" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="label" data-starmate-product-component="workspace-item" data-starmate-product-part="label" >{workspaceDisplayName}</OverflowText>
             </ActionItem>
           </Tooltip>
 
-          <div className="openbitfun-nav-panel__assistant-item-menu" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="menu" ref={menuRef} onClick={e => e.stopPropagation()}>
+          <div className="openbitfun-nav-panel__assistant-item-menu" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="menu" ref={menuRef} onClick={e => e.stopPropagation()} data-starmate-product-component="workspace-item" data-starmate-product-part="menu" >
             <div ref={menuAnchorRef}>
               <button
                 data-openbitfun-product-component="workspace-item"
@@ -893,7 +897,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 onClick={handleMenuTriggerClick}
                 data-testid="nav-workspace-menu-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
                 <Icon name="more" size="xs" />
               </button>
             </div>
@@ -909,7 +913,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 aria-controls={assistantHistoryId}
                 data-testid="nav-assistant-history-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
                 <Icon glyph={assistantHistoryOpen ? ChevronUp : History} size="xs" />
               </button>
             </Tooltip>
@@ -923,7 +927,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 aria-label={t('nav.workspaces.actions.newSession')}
                 data-testid="nav-workspace-new-session-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
                 <Icon glyph={MessageCirclePlus} size="xs" />
               </button>
             </Tooltip>
@@ -1020,7 +1024,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
           data-openbitfun-product-part="sessions"
           data-testid="nav-assistant-session-region"
           data-workspace-id={workspace.id}
-        >
+         data-starmate-product-component="workspace-item" data-starmate-product-part="sessions" >
           {assistantHistoryOpen && (
             <Suspense fallback={null}>
               <AssistantSessionHistory workspace={workspace} isActive={isActive} />
@@ -1103,7 +1107,12 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
     data-testid="nav-workspace-item"
     data-workspace-id={workspace.id}
     data-workspace-kind={workspace.workspaceKind}
-    data-workspace-active={isSelected ? 'true' : 'false'}>
+    data-workspace-active={isSelected ? 'true' : 'false'} data-starmate-product-component="workspace-item" data-starmate-product-part="root" data-starmate-variant="workspace" data-starmate-state={[
+      isSelected && 'active',
+      isDragging && 'dragging',
+      sessionsCollapsed && 'collapsed',
+      workspaceIsRemote && 'remote',
+    ].filter(Boolean).join(' ')} >
       <div
         data-openbitfun-product-component="workspace-item"
         data-openbitfun-product-part="card"
@@ -1117,7 +1126,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
         style={{ cursor: 'pointer' }}
         data-testid="nav-workspace-card"
         data-workspace-id={workspace.id}
-      >
+       data-starmate-product-component="workspace-item" data-starmate-product-part="card" >
         <button
           data-openbitfun-product-component="workspace-item"
           data-openbitfun-product-part="collapse"
@@ -1128,8 +1137,8 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
           aria-expanded={!sessionsCollapsed}
           data-testid="nav-workspace-sessions-toggle"
           data-workspace-id={workspace.id}
-        >
-          <span className="openbitfun-nav-panel__workspace-item-icon" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="icon" aria-hidden="true">
+         data-starmate-product-component="workspace-item" data-starmate-product-part="collapse" >
+          <span className="openbitfun-nav-panel__workspace-item-icon" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="icon" aria-hidden="true" data-starmate-product-component="workspace-item" data-starmate-product-part="icon" >
             <WorkspaceIcon workspace={workspace} expanded={!sessionsCollapsed} />
           </span>
         </button>
@@ -1148,7 +1157,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                   onClick={e => { e.stopPropagation(); handleCollapseToggle(); }}
                   data-testid="nav-workspace-name-btn"
                   data-workspace-id={workspace.id}
-                >
+                 data-starmate-product-component="workspace-item" data-starmate-product-part="name" >
                   <span className="openbitfun-nav-panel__workspace-item-name-line">
                     <OverflowText
                       behavior="marquee"
@@ -1156,14 +1165,14 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                       data-openbitfun-product-component="workspace-item"
                       data-openbitfun-product-part="label"
                       title=""
-                    >
+                     data-starmate-product-component="workspace-item" data-starmate-product-part="label" >
                       {workspaceDisplayName}
                     </OverflowText>
                     {relatedPathCount > 0 ? (
                       <StatusPill className="openbitfun-nav-panel__workspace-item-badge" tone="neutral"
                         leading={<Icon glyph={Link2} size="xs" />}
                         aria-label={t('nav.workspaces.relatedPaths.badge', { count: relatedPathCount })}
-                        data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="badge">
+                        data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="badge" data-starmate-product-component="workspace-item" data-starmate-product-part="badge" >
                         {formatNumber(relatedPathCount)}
                       </StatusPill>
                     ) : null}
@@ -1194,7 +1203,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                       }}
                       data-testid="nav-workspace-search-index-btn"
                       data-workspace-id={workspace.id}
-                    />
+                     data-starmate-product-component="workspace-item" data-starmate-product-part="indexIndicator" />
                   </Tooltip>
                   <Dialog
                     open={searchIndexModalOpen}
@@ -1209,7 +1218,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                     </DialogHeader>
                     <DialogBody>
                       <div className="openbitfun-nav-panel__workspace-index-modal-content">
-                    <div className={`openbitfun-nav-panel__workspace-index-tooltip is-${searchIndexIndicator.tone}`} data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="indexPanel">
+                    <div className={`openbitfun-nav-panel__workspace-index-tooltip is-${searchIndexIndicator.tone}`} data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="indexPanel" data-starmate-product-component="workspace-item" data-starmate-product-part="indexPanel" >
                       <div className="openbitfun-nav-panel__workspace-index-tooltip-header">
                         <div className="openbitfun-nav-panel__workspace-index-tooltip-heading">
                           <span className={`openbitfun-nav-panel__workspace-index-tooltip-dot is-${searchIndexIndicator.tone}`} aria-hidden="true" />
@@ -1311,7 +1320,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                     aria-label={remoteMeta.ariaLabel}
                     data-testid="nav-workspace-remote-meta"
                     data-remote-status={remoteMeta.status}
-                  >
+                   data-starmate-product-component="workspace-item" data-starmate-product-part="remoteStatus" >
                     <span
                       className={`openbitfun-nav-panel__workspace-item-status-dot is-${remoteMeta.status}`}
                       aria-hidden="true"
@@ -1332,7 +1341,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
         </div>
 
         <div className="openbitfun-nav-panel__workspace-item-actions" onClick={e => e.stopPropagation()}>
-          <div className="openbitfun-nav-panel__workspace-item-menu" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="menu" ref={menuRef}>
+          <div className="openbitfun-nav-panel__workspace-item-menu" data-openbitfun-product-component="workspace-item" data-openbitfun-product-part="menu" ref={menuRef} data-starmate-product-component="workspace-item" data-starmate-product-part="menu" >
             <div ref={menuAnchorRef}>
               <button
                 data-openbitfun-product-component="workspace-item"
@@ -1343,7 +1352,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 onClick={handleMenuTriggerClick}
                 data-testid="nav-workspace-menu-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="menuTrigger" data-starmate-state={menuOpen ? 'open' : undefined} >
                 <Icon name="more" size="xs" />
               </button>
             </div>
@@ -1357,7 +1366,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 aria-label={t('nav.workspaces.actions.projectResources')}
                 data-testid="nav-workspace-project-resources-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
                 <Icon glyph={Settings2} size="xs" />
               </button>
             </Tooltip>
@@ -1371,7 +1380,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
                 aria-label={t('nav.sessions.newSession')}
                 data-testid="nav-workspace-new-session-btn"
                 data-workspace-id={workspace.id}
-              >
+               data-starmate-product-component="workspace-item" data-starmate-product-part="action" >
                 <Icon glyph={MessageCirclePlus} size="xs" />
               </button>
             </Tooltip>
@@ -1486,7 +1495,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
         aria-hidden={sessionsCollapsed || undefined}
         data-testid="nav-workspace-session-region"
         data-workspace-id={workspace.id}
-      >
+       data-starmate-product-component="workspace-item" data-starmate-product-part="sessions" >
         <div className="openbitfun-nav-panel__workspace-item-sessions-inner">
           <SessionsSection
             workspaceId={workspace.id}

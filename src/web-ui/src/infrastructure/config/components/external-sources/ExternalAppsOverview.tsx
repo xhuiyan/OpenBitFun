@@ -44,7 +44,7 @@ export const ExternalAppsOverview: React.FC<ExternalAppsOverviewProps> = ({
           data-openbitfun-product-component="external-sources-config"
           data-openbitfun-product-part="application"
           data-openbitfun-ecosystem={application.ecosystemId}
-        >
+         data-starmate-product-component="external-sources-config" data-starmate-product-part="application" data-starmate-ecosystem={application.ecosystemId} >
           <OverflowText className="openbitfun-external-sources-config__app-name">
             {application.displayName}
           </OverflowText>
@@ -59,7 +59,7 @@ export const ExternalAppsOverview: React.FC<ExternalAppsOverviewProps> = ({
                   name: application.displayName,
                 })}
                 onClick={() => onOpenAttention(application.ecosystemId)}
-              >
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="appAttention" >
                 <CircleAlert size={16} aria-hidden="true" />
               </button>
             </Tooltip>
@@ -82,7 +82,7 @@ export const ExternalAppsOverview: React.FC<ExternalAppsOverviewProps> = ({
                   onOpenPolicy();
                 }
               : undefined}
-          >
+           data-starmate-product-component="external-sources-config" data-starmate-product-part="applicationToggle" >
             <Switch
               checked={application.enabled}
               disabled={!canMutate || busy || !policiesEnabled}

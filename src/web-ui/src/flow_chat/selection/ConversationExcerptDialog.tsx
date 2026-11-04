@@ -53,24 +53,24 @@ export function ConversationExcerptDialog({ target, label, open, onOpenChange }:
     <IconButton variant="quiet" size="xs" icon={<Icon name="arrow-up-right" />}
       className="conversation-excerpt__locate" aria-label={locateLabel}
       data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="locate"
-      disabled={!available} onClick={locate} />
+      disabled={!available} onClick={locate}  data-starmate-product-component="conversation-excerpt" data-starmate-product-part="locate" />
   </Tooltip>;
   return <Dialog open={open} onOpenChange={onOpenChange} size="sm" className="conversation-excerpt__dialog"
     initialFocusRef={target.mode === 'edit' ? inputRef : undefined}
     data-flowchat-selection-ignore="true" data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="dialog"
-    onKeyDown={event => event.stopPropagation()}>
+    onKeyDown={event => event.stopPropagation()} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="dialog" >
     <DialogHeader>
       <DialogHeading><DialogTitle>{label}</DialogTitle></DialogHeading>
       <DialogClose />
     </DialogHeader>
     <DialogBody>
       <div className="conversation-excerpt__editor"
-        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="editor">
+        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="editor" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="editor" >
         {target.mode === 'edit' ? <ConversationExcerptEditor excerpt={target.excerpt} comment={comment} onCommentChange={setComment}
           inputRef={inputRef} onSubmit={save} quoteAction={locateAction} /> : <>
           <ConversationExcerptQuote excerpt={target.excerpt} action={locateAction} />
           {target.excerpt.comment?.trim() && <ScrollArea className="conversation-excerpt__comment" tabIndex={0} aria-label={label}
-            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="comment">
+            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="comment" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="comment" >
             {target.excerpt.comment}
           </ScrollArea>}
         </>}

@@ -36,7 +36,7 @@ export function ZcodeSubscriptionGroup({ accounts, busy, accountCount = 0, canAd
       )}
     >
       {choosingRegion && (
-        <div className={styles.regionChoice} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionRegion">
+        <div className={styles.regionChoice} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionRegion" data-starmate-component="model-settings" data-starmate-part="subscriptionRegion" >
           <ConfigPageRow label={t('subscriptionAuth.chooseRegion')}
             description={t('subscriptionAuth.chooseRegionHint')}
             className="openbitfun-model-settings__cli-account" align="center">

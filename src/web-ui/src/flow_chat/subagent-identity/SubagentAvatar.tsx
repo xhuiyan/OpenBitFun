@@ -66,7 +66,7 @@ export const SubagentAvatar: React.FC<SubagentAvatarProps> = ({
       role={decorative ? undefined : 'img'}
       aria-hidden={decorative ? 'true' : undefined}
       aria-label={decorative ? undefined : accessibleName}
-    >
+     data-starmate-component="subagent-avatar" data-starmate-part="root" data-starmate-avatar-id={presentation.avatarId} data-starmate-state={status} >
       {motion && artwork ? <span key={presentation.avatarId} className="subagent-avatar__art" aria-hidden="true"
         data-subagent-motion-art="true" dangerouslySetInnerHTML={{ __html: artwork }} /> : <span className="subagent-avatar__art" aria-hidden="true">
         <img src={avatar.src} alt="" draggable={false} />

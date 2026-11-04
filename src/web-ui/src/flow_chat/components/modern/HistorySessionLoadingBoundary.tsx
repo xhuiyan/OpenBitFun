@@ -148,7 +148,7 @@ export function HistorySessionLoadingBoundary({
   }, [identity, loading, hasTranscript, disabled]);
 
   const skeleton = (
-    <div className="history-session-skeleton" aria-hidden="true" data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historySkeleton">
+    <div className="history-session-skeleton" aria-hidden="true" data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historySkeleton" data-starmate-component="modern-flow-chat" data-starmate-part="historySkeleton" >
       <div className="history-session-skeleton__column">
         <div className="history-session-skeleton__user"><span /><span /></div>
         <div className="history-session-skeleton__group history-session-skeleton__group--first">
@@ -182,17 +182,17 @@ export function HistorySessionLoadingBoundary({
         style={{ opacity: covering ? 0 : undefined }}
         data-openbitfun-component="modern-flow-chat"
         data-openbitfun-part="historyContent"
-      >
+       data-starmate-component="modern-flow-chat" data-starmate-part="historyContent" >
         {children}
       </FlowChatOpeningBoundary>
       {covering && (intent ? (
-        <div {...overlayProps} data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOpenIntent">
+        <div {...overlayProps} data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOpenIntent" data-starmate-component="modern-flow-chat" data-starmate-part="historyOpenIntent" >
           {skeleton}
           {/* Keep saved appearance packages readable after retiring the visible spinner. */}
-          <span hidden data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOpenIntentSpinner" />
+          <span hidden data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOpenIntentSpinner"  data-starmate-component="modern-flow-chat" data-starmate-part="historyOpenIntentSpinner" />
         </div>
       ) : (
-        <div {...overlayProps} data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOverlay">
+        <div {...overlayProps} data-openbitfun-component="modern-flow-chat" data-openbitfun-part="historyOverlay" data-starmate-component="modern-flow-chat" data-starmate-part="historyOverlay" >
           {skeleton}
         </div>
       ))}

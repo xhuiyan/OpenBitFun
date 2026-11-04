@@ -175,7 +175,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         left: popoverLayout?.left ?? 0,
         visibility: popoverLayout ? 'visible' : 'hidden',
       }}
-    >
+     data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="menu" >
       <MenuSection
         actions={canGoBack ? [{
           icon: <Icon name="arrow-left" size="xs" />,
@@ -198,7 +198,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             data-openbitfun-product-part="loading"
             className="editor-breadcrumb-dropdown__loading"
             role="status"
-          >
+           data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="loading" >
             <Loader2 size={14} className="editor-breadcrumb-dropdown__spinner" />
             <span>Loading...</span>
           </div>
@@ -208,7 +208,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             data-openbitfun-product-part="empty"
             className="editor-breadcrumb-dropdown__empty"
             role="status"
-          >
+           data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="empty" >
             Empty directory
           </div>
         ) : (
@@ -422,7 +422,7 @@ export const EditorBreadcrumb: React.FC<EditorBreadcrumbProps> = ({
   }
 
   return (
-    <nav className={`editor-breadcrumb ${className}`} data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="root">
+    <nav className={`editor-breadcrumb ${className}`} data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="root" data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="root" >
       {displaySegments.map((segment, index) => {
         const isEllipsis = 'isEllipsis' in segment && segment.isEllipsis;
         const pathSegment = segment as PathSegment;
@@ -431,11 +431,11 @@ export const EditorBreadcrumb: React.FC<EditorBreadcrumbProps> = ({
         return (
           <React.Fragment key={isEllipsis ? 'ellipsis' : pathSegment.fullPath}>
             {index > 0 && (
-              <Icon name="chevron-right" size="2xs" data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="separator" className="editor-breadcrumb__separator" />
+              <Icon name="chevron-right" size="2xs" data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="separator" className="editor-breadcrumb__separator"  data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="separator" />
             )}
             
             {isEllipsis ? (
-              <span data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="item" className="editor-breadcrumb__item editor-breadcrumb__item--ellipsis">
+              <span data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="item" className="editor-breadcrumb__item editor-breadcrumb__item--ellipsis" data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="item" >
                 {segment.name}
               </span>
             ) : (
@@ -451,15 +451,15 @@ export const EditorBreadcrumb: React.FC<EditorBreadcrumbProps> = ({
                       : 'editor-breadcrumb__item--folder'
                   } editor-breadcrumb__item--clickable ${isDropdownOpen ? 'editor-breadcrumb__item--active' : ''}`}
                   onClick={(e) => handleSegmentClick(pathSegment, e)}
-                >
-                  <span data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="itemIcon" className="editor-breadcrumb__item-icon">
+                 data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="item" data-starmate-state={isDropdownOpen ? 'active' : undefined} >
+                  <span data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="itemIcon" className="editor-breadcrumb__item-icon" data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="itemIcon" >
                     {pathSegment.isFile ? (
                       getFileIconComponent(pathSegment.name)
                     ) : (
                       <Icon name="folder" size="xs" />
                     )}
                   </span>
-                  <OverflowText data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="itemText" className="editor-breadcrumb__item-text">
+                  <OverflowText data-openbitfun-product-component="editor-breadcrumb" data-openbitfun-product-part="itemText" className="editor-breadcrumb__item-text" data-starmate-product-component="editor-breadcrumb" data-starmate-product-part="itemText" >
                     {pathSegment.name}
                   </OverflowText>
                 </span>

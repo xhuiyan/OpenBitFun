@@ -1377,7 +1377,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
       data-openbitfun-product-part="sourceMembers"
       role="group"
       aria-label={t('sources.toggleLabel', { name: group.displayName })}
-    >
+     data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceMembers" >
       {group.members.map((member) => {
         const capabilityLabel = member.capability === 'source'
           ? group.displayName
@@ -1399,7 +1399,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                 </span>
               ) : null}
               {member.lifecycle !== 'available' ? (
-                <span className={`openbitfun-external-sources-config__state is-${member.lifecycle}`} data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="state">
+                <span className={`openbitfun-external-sources-config__state is-${member.lifecycle}`} data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="state" data-starmate-product-component="external-sources-config" data-starmate-product-part="state" >
                   {t(`lifecycle.${member.lifecycle}`)}
                 </span>
               ) : null}
@@ -1487,7 +1487,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
               {t('safeMode.activeNotice')}
             </>
           )}
-        />
+         data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
       ) : null}
     </ConfigPageSection>
   ) : null;
@@ -1498,7 +1498,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
       data-openbitfun-product-component="external-sources-config"
       data-openbitfun-product-part="root"
       data-presentation={presentation}
-    >
+     data-starmate-product-component="external-sources-config" data-starmate-product-part="root" >
       <ConfigPageHeader
         title={pageTitle}
         subtitle={pageSubtitle}
@@ -1550,7 +1550,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     ) : null}
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             </ConfigPageSection>
           </>
         ) : (
@@ -1646,10 +1646,10 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     ) : null}
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             ) : null}
             {snapshot && hostReadOnly ? (
-              <div className="openbitfun-external-sources-config__host-mode" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="hostMode" role="status">
+              <div className="openbitfun-external-sources-config__host-mode" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="hostMode" role="status" data-starmate-product-component="external-sources-config" data-starmate-product-part="hostMode" >
                 <ShieldCheck size={16} aria-hidden="true" />
                 <span>{t(readOnlyHintKey)}</span>
               </div>
@@ -1667,7 +1667,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     <div>{t('recoveryActions.reconnect_host')}</div>
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             ) : null}
             {operationStatus ? (
               <Alert
@@ -1682,7 +1682,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     {operationStatus}
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             ) : null}
             {safeModeEnabled ? safeModeSection : null}
             {snapshot && !governancePresentation ? (
@@ -1722,7 +1722,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                 data-openbitfun-product-part="policyCard"
                 title={t('policy.title')}
                 description={externalAttentionCount > 0 ? (
-                  <span data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policySummary">
+                  <span data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policySummary" data-starmate-product-component="external-sources-config" data-starmate-product-part="policySummary" >
                     <Button
                       type="button"
                       variant="outline"
@@ -1750,7 +1750,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     })}
                   />
                 )}
-              >
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="policyCard" >
                 {policyIncompatible ? (
                   <div
                     className="openbitfun-external-sources-config__policy-recovery"
@@ -1758,7 +1758,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     data-openbitfun-product-part="policyRecovery"
                     role="alert"
                     data-external-attention="true"
-                  >
+                   data-starmate-product-component="external-sources-config" data-starmate-product-part="policyRecovery" >
                     <AlertTriangle size={16} aria-hidden="true" />
                     <span>{t('policy.recoveryRequired')}</span>
                     <Button
@@ -1783,7 +1783,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     data-openbitfun-product-part="policyRecovery"
                     role="alert"
                     data-external-attention="true"
-                  >
+                   data-starmate-product-component="external-sources-config" data-starmate-product-part="policyRecovery" >
                     <AlertTriangle size={16} aria-hidden="true" />
                     <span>{t('policy.unknownStatus')}</span>
                   </div>
@@ -1868,7 +1868,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                 mcps: opencodeGroups.reduce((sum, g) => sum + g.counts.mcps, 0),
                               })}</span>
                             </div>
-                            <div className="openbitfun-external-sources-config__policy-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policyActions">
+                            <div className="openbitfun-external-sources-config__policy-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policyActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="policyActions" >
                               <Select
                                 className="openbitfun-external-sources-config__policy-select"
                                 size="sm"
@@ -1943,8 +1943,8 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                         name: group.displayName,
                                         count: group.diagnostics.length,
                                       })}
-                                    >
-                                      <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics">
+                                     data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" >
+                                      <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics" data-starmate-product-component="external-sources-config" data-starmate-product-part="diagnostics" >
                                         {group.diagnostics.map((diagnostic) => (
                                             <li key={externalSourceDiagnosticKey(diagnostic)}>
                                               <span>{t(`diagnostics.category.${sourceDiagnosticCategory(diagnostic.code)}`)}</span>
@@ -2002,7 +2002,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                         {t(`opencode.capability.${capabilityId}.effect`)}
                                       </span>
                                       {riskText && riskText !== riskKey ? (
-                                        <span className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning">
+                                        <span className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                                           {riskText}
                                         </span>
                                       ) : null}
@@ -2072,12 +2072,12 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                   data-openbitfun-product-component="external-sources-config"
                   data-openbitfun-product-part="ecosystemCard"
                   data-external-ecosystem={ecosystem.ecosystemId}
-                >
-                  <div className="openbitfun-external-sources-config__ecosystem-heading" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemHeading">
+                 data-starmate-product-component="external-sources-config" data-starmate-product-part="ecosystemCard" >
+                  <div className="openbitfun-external-sources-config__ecosystem-heading" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemHeading" data-starmate-product-component="external-sources-config" data-starmate-product-part="ecosystemHeading" >
                     <div>
-                      <div className="openbitfun-external-sources-config__ecosystem-name" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemName">
+                      <div className="openbitfun-external-sources-config__ecosystem-name" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemName" data-starmate-product-component="external-sources-config" data-starmate-product-part="ecosystemName" >
                         {ecosystem.descriptor.displayName}
-                        <span className={`openbitfun-external-sources-config__ecosystem-state is-${ecosystem.state}`} data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemState">
+                        <span className={`openbitfun-external-sources-config__ecosystem-state is-${ecosystem.state}`} data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="ecosystemState" data-starmate-product-component="external-sources-config" data-starmate-product-part="ecosystemState" >
                           {ecosystem.state === 'checking' ? <CircleDashed size={13} aria-hidden="true" /> : null}
                           {ecosystem.state === 'attention' ? <AlertTriangle size={13} aria-hidden="true" /> : null}
                           {ecosystem.state === 'ready' ? <Icon name="check-circle" size="xs" aria-hidden="true" /> : null}
@@ -2087,7 +2087,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                       </div>
                     </div>
                   </div>
-                  <div className="openbitfun-external-sources-config__policy-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policyActions">
+                  <div className="openbitfun-external-sources-config__policy-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="policyActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="policyActions" >
                     <Select
                       className="openbitfun-external-sources-config__policy-select"
                       size="sm"
@@ -2225,7 +2225,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     {agentChangeNotice.message}
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             ) : null}
             {catalogDiagnostics.length > 0 ? (
               <Disclosure
@@ -2236,8 +2236,8 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                 data-external-attention={catalogDiagnostics
                   .some((diagnostic) => diagnostic.severity !== 'info') ? 'true' : undefined}
                 summary={t('diagnostics.summary', { count: catalogDiagnostics.length })}
-              >
-                <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics">
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" >
+                <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics" data-starmate-product-component="external-sources-config" data-starmate-product-part="diagnostics" >
                   {catalogDiagnostics.map((diagnostic) => (
                     <li key={externalSourceDiagnosticKey(diagnostic)}>
                       <span>{t(`diagnostics.category.${sourceDiagnosticCategory(diagnostic.code)}`)}</span>
@@ -2258,7 +2258,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                     {t('checkingNonBlocking')}
                   </>
                 )}
-              />
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" />
             ) : null}
 
             {(snapshot?.mcpApprovalRequests?.length ?? 0) > 0 ? (
@@ -2279,11 +2279,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                       data-external-attention="true"
                       data-external-ecosystem={source?.record.ecosystemId}
                       key={request.decisionKey}
-                    >
-                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle">
+                     data-starmate-product-component="external-sources-config" data-starmate-product-part="toolCard" >
+                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolTitle" >
                       {request.definition.name}
                     </div>
-                    <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail">
+                    <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolDetail" >
                       <span>{t('mcp.source', {
                         source: source?.record.displayName ?? t('mcp.externalSource'),
                       })}</span>
@@ -2324,10 +2324,10 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                       className="openbitfun-external-sources-config__tool-warning"
                       data-openbitfun-product-component="external-sources-config"
                       data-openbitfun-product-part="toolWarning"
-                    >
+                     data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                       {t('mcpApprovals.warning')}
                     </div>
-                    <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                    <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                       <Button
                         variant="fill"
                         size="sm"
@@ -2366,7 +2366,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
               <ConfigPageSection
                 title={t('mcp.title')}
                 extra={(
-                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="mcp">
+                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="mcp" data-starmate-bulk-capability="mcp" >
                     {(snapshot?.mcpApprovalRequests?.length ?? 0) > 0 ? (
                       <Button variant="primary" size="sm" aria-describedby="external-mcp-bulk-risk" disabled={!policyCompatible || busyKey !== null || !hostCapabilities.canApproveRuntime} onClick={() => void setMcpServersEnabled(true)}>
                         {t('bulkActions.enablePending', { count: snapshot?.mcpApprovalRequests?.length ?? 0 })}
@@ -2407,7 +2407,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         ].filter(Boolean).join(' · ')}
                         align="center"
                       >
-                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl">
+                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl" data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceControl" >
                           <span
                             className={`openbitfun-external-sources-config__state is-${state}`}
                             data-openbitfun-product-component="external-sources-config"
@@ -2416,7 +2416,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                             data-external-ecosystem={state === 'approval_required'
                               ? source?.record.ecosystemId
                               : undefined}
-                          >
+                           data-starmate-product-component="external-sources-config" data-starmate-product-part="state" >
                             {t(`mcpState.${state}`)}
                           </span>
                           <Button
@@ -2445,8 +2445,8 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         </div>
                       </ConfigPageRow>
                       {reviewing ? (
-                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard">
-                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail">
+                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolCard" >
+                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolDetail" >
                             <span>{t('mcp.source', {
                               source: source?.record.displayName ?? t('mcp.externalSource'),
                             })}</span>
@@ -2497,7 +2497,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                             <span>{t('mcp.changePolicy')}</span>
                           </div>
                           {canEnable ? (
-                            <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                            <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                               <Button
                                 variant="primary"
                                 size="sm"
@@ -2537,11 +2537,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         sourceEcosystemId(snapshot, candidate.source)
                       )),
                     )}
-                  >
-                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle">
+                   data-starmate-product-component="external-sources-config" data-starmate-product-part="conflict" >
+                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictTitle" >
                       {t('mcpConflicts.serverName', { name: conflict.serverName })}
                     </div>
-                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions">
+                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictOptions" >
                       {conflict.candidates.map((candidate) => {
                         const selected = conflict.selectedCandidateId === candidate.candidateId;
                         const externalServer = candidate.external
@@ -2561,7 +2561,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         const reviewingExternal = reviewingMcpConflictKey === conflictReviewKey;
                         const detailId = `mcp-conflict-detail-${candidate.candidateId.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
                         return (
-                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId}>
+                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId} data-starmate-product-component="external-sources-config" data-starmate-product-part="candidate" >
                             <Button
                               variant={selected ? 'fill' : 'outline'}
                               size="sm"
@@ -2590,7 +2590,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                   : t('mcpConflicts.review', { name: candidate.displayName })
                                 : candidate.displayName}
                             </Button>
-                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState">
+                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateState" >
                               {!candidate.available
                                 ? t(candidate.external
                                   ? 'mcpConflicts.unavailable'
@@ -2600,7 +2600,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                   : t('common.availableChoice')}
                             </span>
                             {!candidate.available && candidate.unavailableReason ? (
-                              <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState">
+                              <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateState" >
                                 {candidate.unavailableReason}
                               </span>
                             ) : null}
@@ -2610,7 +2610,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                 data-openbitfun-product-component="external-sources-config"
                                 data-openbitfun-product-part="candidateDetail"
                                 id={detailId}
-                              >
+                               data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateDetail" >
                                 <span>{t('mcp.source', {
                                   source: externalSource?.record.displayName
                                     ?? t('mcp.externalSource'),
@@ -2660,11 +2660,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                     names: externalServer.definition.headerNames.join(', '),
                                   })}</span>
                                 ) : null}
-                                <span className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning">
+                                <span className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                                   {t('mcpApprovals.warning')}
                                 </span>
                                 {reviewingExternal && !selected && candidate.available ? (
-                                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                                     <Button
                                       variant="primary"
                                       size="sm"
@@ -2691,7 +2691,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         );
                       })}
                     </div>
-                    <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint">
+                    <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictHint" >
                       {conflict.selectedCandidateId
                         ? t('mcpConflicts.currentSelection')
                         : t('mcpConflicts.pending')}
@@ -2706,7 +2706,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
               && mcpConflicts.length === 0
               && !snapshot?.discoveryPending ? (
               <ConfigPageSection title={t('mcp.title')}>
-                <div className="openbitfun-external-sources-config__mcp-empty" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="empty">
+                <div className="openbitfun-external-sources-config__mcp-empty" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="empty" data-starmate-product-component="external-sources-config" data-starmate-product-part="empty" >
                   <span>{t('mcp.empty')}</span>
                   <span>{t('mcp.emptyGuidance')}</span>
                   <span>· {t('mcp.emptyLocation.userGlobal')}</span>
@@ -2815,7 +2815,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
               <ConfigPageSection
                 title={t('agents.title')}
                 extra={(
-                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="subagent">
+                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="subagent" data-starmate-bulk-capability="subagent" >
                     {(snapshot?.pendingSubagentApprovals?.length ?? 0) > 0 ? (
                       <Button variant="primary" size="sm" aria-describedby="external-subagent-bulk-risk" disabled={!policyCompatible || busyKey !== null || !hostCapabilities.canApproveRuntime} onClick={() => void setSubagentsEnabled(true)}>
                         {t('bulkActions.enablePending', { count: snapshot?.pendingSubagentApprovals?.length ?? 0 })}
@@ -2863,7 +2863,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         description={`${agent.providerLabel} · ${agent.logicalId} · ${externalAgentEffectiveModelLabel(agent.effectiveModelLabel, agent.modelBindingMethod, t)} · ${t(`agents.role.${agent.mode ?? 'subagent'}`)}`}
                         align="center"
                       >
-                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl">
+                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl" data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceControl" >
                           <span
                             className={`openbitfun-external-sources-config__state is-${state}`}
                             data-openbitfun-product-component="external-sources-config"
@@ -2877,7 +2877,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                   ))?.record.ecosystemId)
                                   .find(Boolean)
                               : undefined}
-                          >
+                           data-starmate-product-component="external-sources-config" data-starmate-product-part="state" >
                             {t(`agentState.${state}`)}
                           </span>
                           <Button
@@ -2902,11 +2902,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         </div>
                       </ConfigPageRow>
                       {reviewing ? (
-                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard">
-                          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle">
+                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolCard" >
+                          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolTitle" >
                             {t('agents.reviewTitle', { name: agent.displayName })}
                           </div>
-                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail">
+                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolDetail" >
                             <span>{agent.description || t('agents.noDescription')}</span>
                             <span>{t('agents.requestedModel', {
                               model: externalAgentRequestedModelLabel(agent.requestedModel, t),
@@ -2964,11 +2964,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                             })}
                           </div>
                           {canEnable ? (
-                            <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning">
+                            <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                               {t('agents.approvalWarning')}
                             </div>
                           ) : null}
-                          <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                          <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                             <Button
                               variant="fill"
                               size="sm"
@@ -3021,11 +3021,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                       data-openbitfun-product-part="conflict"
                       key={conflict.conflictKey}
                       data-external-attention={!conflict.selectedCandidateId ? 'true' : undefined}
-                    >
-                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle">
+                     data-starmate-product-component="external-sources-config" data-starmate-product-part="conflict" >
+                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictTitle" >
                       {t('agentConflicts.agentName', { name: conflict.logicalId })}
                     </div>
-                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions">
+                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictOptions" >
                       {conflict.candidates.map((candidate) => {
                         const selected = conflict.selectedCandidateId === candidate.candidateId;
                         const externalAgent = candidate.external
@@ -3034,7 +3034,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                           ))
                           : undefined;
                         return (
-                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId}>
+                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId} data-starmate-product-component="external-sources-config" data-starmate-product-part="candidate" >
                             <Button
                               variant={selected ? 'fill' : 'outline'}
                               size="sm"
@@ -3052,7 +3052,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                 {candidate.sourceLabel}
                               </span>
                             </Button>
-                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState">
+                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateState" >
                               {t(selected
                                 ? selectedChoiceUnavailable
                                   ? 'common.selectedUnavailable'
@@ -3062,7 +3062,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                   : 'common.availableChoice')}
                             </span>
                             {externalAgent ? (
-                              <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail">
+                              <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateDetail" >
                                 <span>{t('agents.model', { model: externalAgentEffectiveModelLabel(externalAgent.effectiveModelLabel, externalAgent.modelBindingMethod, t) })}</span>
                                 <span>{t('agents.tools', { tools: externalAgent.effectiveToolLabels.join(', ') || t('agents.noTools') })}</span>
                                 <span>{t('agents.executionDomain')}</span>
@@ -3118,7 +3118,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         {t('agentConflicts.disableAll')}
                       </Button>
                     </div>
-                    <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint">
+                    <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictHint" >
                       {conflict.selectedCandidateId === DISABLED_SUBAGENT_CONFLICT_CHOICE
                         ? t('agentConflicts.keptUnavailable')
                         : conflict.selectedCandidateId
@@ -3158,11 +3158,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                       data-external-attention="true"
                       data-external-ecosystem={source?.record.ecosystemId}
                       key={request.decisionKey}
-                    >
-                      <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle">
+                     data-starmate-product-component="external-sources-config" data-starmate-product-part="toolCard" >
+                      <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolTitle" >
                         {request.sourceDisplayName}: {request.toolNames.join(', ')}
                       </div>
-                      <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail">
+                      <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolDetail" >
                         <span title={source?.record.location ?? request.sourceLocation}>
                           {t('toolApprovals.sourceRoot', {
                             location: source?.record.location ?? request.sourceLocation,
@@ -3204,10 +3204,10 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                           })}
                         </span>
                       </div>
-                      <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning">
+                      <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                         {t('toolApprovals.warning')}
                       </div>
-                      <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                      <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                         <Button
                           variant="fill"
                           size="sm"
@@ -3251,7 +3251,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
               <ConfigPageSection
                 title={t('tools.title')}
                 extra={(
-                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="tool">
+                  <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-bulk-capability="tool" data-starmate-bulk-capability="tool" >
                     {(snapshot?.toolApprovalRequests?.length ?? 0) > 0 ? (
                       <Button variant="primary" size="sm" aria-describedby="external-tool-bulk-risk" disabled={!policyCompatible || busyKey !== null || !hostCapabilities.canApproveRuntime} onClick={() => void setToolTargetsEnabled(true)}>
                         {t('bulkActions.enablePending', { count: snapshot?.toolApprovalRequests?.length ?? 0 })}
@@ -3296,7 +3296,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                           || abbreviatedLocation(tool.definition.modulePath)}
                         align="center"
                       >
-                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl">
+                        <div className="openbitfun-external-sources-config__source-control" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceControl" data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceControl" >
                           <span
                             className={`openbitfun-external-sources-config__state is-${tool.activation.state}`}
                             data-openbitfun-product-component="external-sources-config"
@@ -3304,7 +3304,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                             data-external-attention={tool.activation.state === 'approval_required'
                               ? 'true'
                               : undefined}
-                          >
+                           data-starmate-product-component="external-sources-config" data-starmate-product-part="state" >
                             {t(`toolState.${tool.activation.state}`)}
                           </span>
                           <Button
@@ -3333,14 +3333,14 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                         </div>
                       </ConfigPageRow>
                       {reviewing ? (
-                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard">
-                          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle">
+                        <div className="openbitfun-external-sources-config__tool-card" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolCard" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolCard" >
+                          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolTitle" >
                             {t('tools.reviewTitle', {
                               name: tool.definition.name,
                               source: source?.record.displayName ?? tool.definition.id.target.source.providerId,
                             })}
                           </div>
-                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail">
+                          <div className="openbitfun-external-sources-config__tool-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolDetail" >
                             <span title={source?.record.location}>
                               {t('toolApprovals.sourceRoot', {
                                 location: source?.record.location ?? t('common.unknown'),
@@ -3389,11 +3389,11 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                             </span>
                           </div>
                           {enableable ? (
-                            <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning">
+                            <div className="openbitfun-external-sources-config__tool-warning" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolWarning" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolWarning" >
                               {t('toolApprovals.warning')}
                             </div>
                           ) : null}
-                          <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions">
+                          <div className="openbitfun-external-sources-config__tool-actions" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="toolActions" data-starmate-product-component="external-sources-config" data-starmate-product-part="toolActions" >
                             <Button
                               variant="fill"
                               size="sm"
@@ -3473,15 +3473,15 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                           sourceEcosystemId(snapshot, candidate.source)
                         )),
                       )}
-                    >
-                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle">
+                     data-starmate-product-component="external-sources-config" data-starmate-product-part="conflict" >
+                    <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictTitle" >
                       {t('toolConflicts.toolName', { name: conflict.toolName })}
                     </div>
-                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions">
+                    <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictOptions" >
                       {conflict.candidates.map((candidate) => {
                         const selected = conflict.selectedCandidateId === candidate.candidateId;
                         return (
-                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId}>
+                          <div className="openbitfun-external-sources-config__candidate" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidate" key={candidate.candidateId} data-starmate-product-component="external-sources-config" data-starmate-product-part="candidate" >
                             <Button
                               variant={selected ? 'fill' : 'outline'}
                               size="sm"
@@ -3498,7 +3498,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                 {t(`toolCandidateKind.${candidate.kind}`)}
                               </span>
                             </Button>
-                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState">
+                            <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateState" >
                               {t(selected
                                 ? selectedChoiceUnavailable
                                   ? 'common.selectedUnavailable'
@@ -3507,7 +3507,7 @@ const ExternalSourcesConfig: React.FC<ExternalSourcesConfigProps> = ({
                                   ? 'common.notSelected'
                                   : 'common.availableChoice')}
                             </span>
-                            <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail">
+                            <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateDetail" >
                               {candidate.sourceLocation
                                 ? abbreviatedLocation(candidate.sourceLocation)
                                 : candidate.providerId}

@@ -73,7 +73,7 @@ export const SessionUsagePanel: React.FC<SessionUsagePanelProps> = ({
 
   if (isLoading || error) {
     return (
-      <div className="session-usage-panel session-usage-panel--status" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root">
+      <div className="session-usage-panel session-usage-panel--status" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" data-starmate-product-component="session-usage-panel" data-starmate-product-part="root" >
         {isLoading ? (
           <LoadingState role="status" aria-live="polite">{t('usage.loading.title')}</LoadingState>
         ) : (
@@ -85,8 +85,8 @@ export const SessionUsagePanel: React.FC<SessionUsagePanelProps> = ({
 
   if (!report) {
     return (
-      <ScrollArea data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" data-openbitfun-state="fallback" className="session-usage-panel session-usage-panel--fallback">
-        <div className="session-usage-panel__fallback-toolbar" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="header">
+      <ScrollArea data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" data-openbitfun-state="fallback" className="session-usage-panel session-usage-panel--fallback" data-starmate-product-component="session-usage-panel" data-starmate-product-part="root" data-starmate-state="fallback" >
+        <div className="session-usage-panel__fallback-toolbar" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="header" data-starmate-product-component="session-usage-panel" data-starmate-product-part="header" >
           <Tooltip content={copied ? t('usage.actions.copied') : t('usage.actions.copyMarkdown')}>
             <IconButton
               size="sm"
@@ -103,7 +103,7 @@ export const SessionUsagePanel: React.FC<SessionUsagePanelProps> = ({
 
   if (isUnusedSession(report)) {
     return (
-      <div className="session-usage-panel session-usage-panel--status" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root">
+      <div className="session-usage-panel session-usage-panel--status" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" data-starmate-product-component="session-usage-panel" data-starmate-product-part="root" >
         <SessionUsageEmptyState />
       </div>
     );
@@ -114,7 +114,7 @@ export const SessionUsagePanel: React.FC<SessionUsagePanelProps> = ({
     ? getUsageFileNameFromPath(effectiveWorkspacePath.trim())
     : t('usage.unavailable');
   return (
-    <ScrollArea data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" className="session-usage-panel">
+    <ScrollArea data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="root" className="session-usage-panel" data-starmate-product-component="session-usage-panel" data-starmate-product-part="root" >
       <div className="session-usage-panel__intro">
         <p className="session-usage-panel__eyebrow">{reportTitle}</p>
         <PageHeader
@@ -134,7 +134,7 @@ export const SessionUsagePanel: React.FC<SessionUsagePanelProps> = ({
               />
             </Tooltip>
           }
-        />
+         data-starmate-product-component="session-usage-panel" data-starmate-product-part="header" />
       </div>
 
       <SessionUsageSummary report={report} workspaceName={workspaceName}

@@ -57,7 +57,7 @@ export default function WorkspaceTerminals({ terminals, busy, selectedId, onSele
     ];
   };
   return (
-    <div className="openbitfun-file-viewer-nav__terminal-list" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalList" aria-busy={loading}>
+    <div className="openbitfun-file-viewer-nav__terminal-list" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalList" aria-busy={loading} data-starmate-component="file-viewer-nav" data-starmate-part="terminalList" >
       {entries.map(entry => {
         const cwd = entry.cwd ?? entry.workingDirectory;
         const state = error ? 'unknown' : getShellEntryState(entry);
@@ -67,23 +67,23 @@ export default function WorkspaceTerminals({ terminals, busy, selectedId, onSele
           <div key={entry.id} className={`openbitfun-file-viewer-nav__terminal-row${selectedId === entry.sessionId ? ' is-selected' : ''}`}
             data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalRow"
             data-testid="workspace-terminal" data-session-id={entry.sessionId}
-            onContextMenu={event => showResourceMenu(event, menuItems(entry), true)}>
+            onContextMenu={event => showResourceMenu(event, menuItems(entry), true)} data-starmate-component="file-viewer-nav" data-starmate-part="terminalRow" >
             <button type="button" data-overflow-trigger className="openbitfun-file-viewer-nav__terminal-open"
               data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalOpen"
               aria-label={label} aria-pressed={selectedId === entry.sessionId} disabled={busy || Boolean(error) || state === 'unknown' || state === 'stopping'}
-              onClick={() => open(entry)}>
+              onClick={() => open(entry)} data-starmate-component="file-viewer-nav" data-starmate-part="terminalOpen" >
               <Icon name="terminal" size="sm" />
               <span className="openbitfun-file-viewer-nav__terminal-text">
                 <OverflowText>{entry.name}</OverflowText>
-                <span className="openbitfun-file-viewer-nav__terminal-meta" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalMeta">
+                <span className="openbitfun-file-viewer-nav__terminal-meta" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalMeta" data-starmate-component="file-viewer-nav" data-starmate-part="terminalMeta" >
                   <span className="openbitfun-file-viewer-nav__source">{t(entry.source === 'agent' ? 'nav.resources.agent' : 'nav.resources.manual')}</span>
                   {cwd && <OverflowText title={cwd}>{cwd}</OverflowText>}
                 </span>
               </span>
               <span className="openbitfun-file-viewer-nav__status" data-status={state}
-                data-openbitfun-component="file-viewer-nav" data-openbitfun-part="status">{status}</span>
+                data-openbitfun-component="file-viewer-nav" data-openbitfun-part="status" data-starmate-component="file-viewer-nav" data-starmate-part="status" >{status}</span>
             </button>
-            <div className="openbitfun-file-viewer-nav__terminal-actions" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalActions">
+            <div className="openbitfun-file-viewer-nav__terminal-actions" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="terminalActions" data-starmate-component="file-viewer-nav" data-starmate-part="terminalActions" >
               {entry.isPersisted && ['saved', 'exited', 'error'].includes(state) && (
                 <Tooltip content={t('nav.shell.context.start')}>
                   <IconButton size="xs" aria-label={t('nav.shell.context.start')} icon={<Play size={12} />}
@@ -98,7 +98,7 @@ export default function WorkspaceTerminals({ terminals, busy, selectedId, onSele
         );
       })}
       {!loading && entries.length === 0 && !error && (
-        <p className="openbitfun-file-viewer-nav__empty" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="empty">{t('nav.resources.noTerminals')}</p>
+        <p className="openbitfun-file-viewer-nav__empty" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="empty" data-starmate-component="file-viewer-nav" data-starmate-part="empty" >{t('nav.resources.noTerminals')}</p>
       )}
     </div>
   );

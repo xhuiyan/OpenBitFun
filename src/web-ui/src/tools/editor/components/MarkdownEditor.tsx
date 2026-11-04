@@ -607,7 +607,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
 
   if (loading) {
     return (
-      <div className={`openbitfun-markdown-editor-loading ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="loading" data-openbitfun-state="loading">
+      <div className={`openbitfun-markdown-editor-loading ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="loading" data-openbitfun-state="loading" data-starmate-product-component="markdown-editor" data-starmate-product-part="loading" data-starmate-state="loading" >
         <LoadingState size="md">{t('editor.markdownEditor.loadingFile')}</LoadingState>
       </div>
     );
@@ -615,7 +615,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
 
   if (error) {
     return (
-      <div className={`openbitfun-markdown-editor-error ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="error" data-openbitfun-state="error">
+      <div className={`openbitfun-markdown-editor-error ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="error" data-openbitfun-state="error" data-starmate-product-component="markdown-editor" data-starmate-product-part="error" data-starmate-state="error" >
         <Empty
           role="alert"
           imageSize="sm"
@@ -632,7 +632,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   }
 
   return (
-    <div className={`openbitfun-markdown-editor ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="root" data-openbitfun-view={viewMode}>
+    <div className={`openbitfun-markdown-editor ${className}`} data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="root" data-openbitfun-view={viewMode} data-starmate-product-component="markdown-editor" data-starmate-product-part="root" data-starmate-view={viewMode} >
       <Toolbar
         className="openbitfun-markdown-editor__mode-toolbar"
         data-openbitfun-product-component="markdown-editor"
@@ -656,7 +656,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
           />
         )}
         trailing={(
-          <ToolbarGroup data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="actions">
+          <ToolbarGroup data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="actions" data-starmate-product-component="markdown-editor" data-starmate-product-part="actions" >
             <IconButton
               type="button"
               size="sm"
@@ -671,8 +671,8 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
             />
           </ToolbarGroup>
         )}
-      />
-      <div className="openbitfun-markdown-editor__body" data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="body">
+       data-starmate-product-component="markdown-editor" data-starmate-product-part="toolbar" />
+      <div className="openbitfun-markdown-editor__body" data-openbitfun-product-component="markdown-editor" data-openbitfun-product-part="body" data-starmate-product-component="markdown-editor" data-starmate-product-part="body" >
         <MEditor
           ref={editorRef}
           value={content}

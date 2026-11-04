@@ -15,8 +15,8 @@ test("Empty exposes media, copy, and action anatomy", () => {
 
   assert.match(markup, /data-openbitfun-component="empty"/);
   assert.match(markup, /data-openbitfun-part="media"/);
-  assert.match(markup, /data-openbitfun-part="title">No items yet/);
-  assert.match(markup, /data-openbitfun-part="description">Created items will appear here\./);
+  assert.match(markup, /data-openbitfun-part="title"[^>]*>No items yet/);
+  assert.match(markup, /data-openbitfun-part="description"[^>]*>Created items will appear here\./);
   assert.match(markup, /data-openbitfun-part="actions"/);
 });
 

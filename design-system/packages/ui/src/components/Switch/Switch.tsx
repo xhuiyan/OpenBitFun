@@ -28,7 +28,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     <span
       className={classNames(styles.switch, className)}
       data-openbitfun-component="switch"
-    >
+     data-starmate-component="switch" >
       <input
         {...props}
         {...fieldAccessibility}

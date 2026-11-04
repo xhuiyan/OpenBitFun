@@ -37,7 +37,7 @@ const TerminalScene: React.FC<TerminalSceneProps> = ({ isActive = true }) => {
       data-openbitfun-scene="terminal"
       data-openbitfun-part="root"
       data-openbitfun-state={isActive ? undefined : 'inactive'}
-    >
+     data-starmate-scene="terminal" data-starmate-part="root" data-starmate-state={isActive ? undefined : 'inactive'} >
       {activeSessionId ? (
         <ConnectedTerminal
           key={activeSessionId}
@@ -50,7 +50,7 @@ const TerminalScene: React.FC<TerminalSceneProps> = ({ isActive = true }) => {
           closeBehavior="detach"
         />
       ) : (
-        <div className="openbitfun-terminal-scene__empty" data-testid="shell-command-list" data-openbitfun-scene="terminal" data-openbitfun-part="empty">
+        <div className="openbitfun-terminal-scene__empty" data-testid="shell-command-list" data-openbitfun-scene="terminal" data-openbitfun-part="empty" data-starmate-scene="terminal" data-starmate-part="empty" >
           <CatalogIcon name="terminal" size="lg" className="openbitfun-terminal-scene__empty-icon" style={{ width: 32, height: 32 }} />
           <p className="openbitfun-terminal-scene__empty-hint" data-testid="shell-panel-title">{t('emptyState')}</p>
         </div>

@@ -95,5 +95,5 @@ function MarketImageContent({
     onError={event => {
       if (!retryOriginalMarketImage(event.currentTarget, source)) onError?.(event);
     }}
-  />;
+   data-starmate-component="gallery-layout" data-starmate-part="marketImage" />;
 }

@@ -682,7 +682,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ className = '' }) => {
           data-openbitfun-part="root"
           data-openbitfun-state="toolbar"
           data-openbitfun-background-media={backgroundMedia?.url ? 'video' : undefined}
-        >
+         data-starmate-component="app-layout" data-starmate-part="root" data-starmate-state="toolbar" data-starmate-background-media={backgroundMedia?.url ? 'video' : undefined} >
           <AppearanceBackgroundMediaLayer
             media={backgroundMedia}
             revision={currentAppearance?.revision}
@@ -708,7 +708,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ className = '' }) => {
         data-openbitfun-part="root"
         data-openbitfun-state={isFullscreen ? 'fullscreen' : undefined}
         data-openbitfun-background-media={backgroundMedia?.url ? 'video' : undefined}
-      >
+       data-starmate-component="app-layout" data-starmate-part="root" data-starmate-state={isFullscreen ? 'fullscreen' : undefined} data-starmate-background-media={backgroundMedia?.url ? 'video' : undefined} >
         <AppearanceBackgroundMediaLayer
           media={backgroundMedia}
           revision={currentAppearance?.revision}
@@ -722,14 +722,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ className = '' }) => {
             data-openbitfun-part="windowModeHint"
             role="status"
             aria-live="polite"
-          >
-            <span className="openbitfun-window-mode-hint__title" data-openbitfun-component="app-layout" data-openbitfun-part="windowModeTitle">{windowModeHint.title}</span>
-            <OverflowText className="openbitfun-window-mode-hint__detail" data-openbitfun-component="app-layout" data-openbitfun-part="windowModeDetail">{windowModeHint.detail}</OverflowText>
+           data-starmate-component="app-layout" data-starmate-part="windowModeHint" >
+            <span className="openbitfun-window-mode-hint__title" data-openbitfun-component="app-layout" data-openbitfun-part="windowModeTitle" data-starmate-component="app-layout" data-starmate-part="windowModeTitle" >{windowModeHint.title}</span>
+            <OverflowText className="openbitfun-window-mode-hint__detail" data-openbitfun-component="app-layout" data-openbitfun-part="windowModeDetail" data-starmate-component="app-layout" data-starmate-part="windowModeDetail" >{windowModeHint.detail}</OverflowText>
           </div>
         )}
 
         {/* Main content — always render WorkspaceBody; WelcomeScene in viewport handles no-workspace state */}
-        <main className="openbitfun-app-main-workspace" data-testid="app-main-content" data-openbitfun-component="app-layout" data-openbitfun-part="main">
+        <main className="openbitfun-app-main-workspace" data-testid="app-main-content" data-openbitfun-component="app-layout" data-openbitfun-part="main" data-starmate-component="app-layout" data-starmate-part="main" >
           <WorkspaceBody
             onMinimize={canUseNativeWindowControls && !isMacOS ? handleMinimize : undefined}
             onMaximize={canUseNativeWindowControls ? handleMaximize : undefined}

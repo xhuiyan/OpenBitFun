@@ -78,11 +78,11 @@ export function ConversationExcerptAttachments({ contexts, onUpdate, onRemove, i
   const countLabel = t('selection.count', { count: formatNumber(excerpts.length) });
   return <div data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="attachments"
     className={`conversation-excerpt__attachments${inline ? ' conversation-excerpt__attachments--inline' : ''}`}
-    data-flowchat-selection-ignore="true">
+    data-flowchat-selection-ignore="true" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="attachments" >
     <div ref={anchorRef} className="conversation-excerpt__chip"
       data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="chip"
       onMouseEnter={show} onMouseLeave={scheduleHide}
-      onBlur={event => { if (!contains(event.relatedTarget)) close(); }}>
+      onBlur={event => { if (!contains(event.relatedTarget)) close(); }} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="chip" >
       <Button ref={triggerRef} variant="text" size="sm" className="conversation-excerpt__attachment"
         data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="attachment"
         leadingIcon={<Icon name="session" />} aria-label={countLabel} aria-haspopup="dialog"
@@ -91,7 +91,7 @@ export function ConversationExcerptAttachments({ contexts, onUpdate, onRemove, i
           if (event.key === 'ArrowDown' && open) {
             event.preventDefault(); event.stopPropagation(); popoverRef.current?.querySelector('button')?.focus();
           }
-        }}>{countLabel}</Button>
+        }} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="attachment" >{countLabel}</Button>
       <IconButton size="xs" shape="circle" aria-label={t('selection.remove')} icon={<Icon name="xmark" />}
         onClick={() => { close(); excerpts.forEach(excerpt => onRemove(excerpt.id)); }} />
     </div>
@@ -101,21 +101,21 @@ export function ConversationExcerptAttachments({ contexts, onUpdate, onRemove, i
       data-flowchat-selection-ignore="true" data-openbitfun-native-webview-occlusion
       style={{ left: layout?.left ?? 0, top: layout?.top ?? 0, visibility: layout ? 'visible' : 'hidden' }}
       onMouseEnter={cancelHide} onMouseLeave={scheduleHide}
-      onBlur={event => { if (!contains(event.relatedTarget)) close(); }}>
+      onBlur={event => { if (!contains(event.relatedTarget)) close(); }} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="details" data-starmate-native-webview-occlusion >
       {excerpts.map(excerpt => {
         const number = excerptNumber(excerpt);
         const label = number ? t('selection.numbered', { number: formatNumber(number) }) : t('selection.annotation');
         return <div key={excerpt.id} className="conversation-excerpt__detail"
-          data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detail">
+          data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detail" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="detail" >
           <span className="conversation-excerpt__detail-number"
-            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailNumber">{number ? `${formatNumber(number)}.` : ''}</span>
+            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailNumber" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="detailNumber" >{number ? `${formatNumber(number)}.` : ''}</span>
           <div className="conversation-excerpt__detail-text"
-            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailText">
+            data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailText" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="detailText" >
             <span className="conversation-excerpt__detail-label"
-              data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailLabel">{t('context.selection')}</span>
+              data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailLabel" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="detailLabel" >{t('context.selection')}</span>
             <div>{excerptText(excerpt)}</div>
             {excerpt.comment?.trim() && <><span className="conversation-excerpt__detail-label"
-              data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailLabel">{t('selection.annotation')}</span>
+              data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="detailLabel" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="detailLabel" >{t('selection.annotation')}</span>
               <div>{excerpt.comment}</div></>}
           </div>
           <IconButton size="sm" aria-label={label} title={t('selection.editAnnotation')} icon={<Icon name="edit" />}
@@ -139,10 +139,10 @@ export function ConversationExcerptPreview({ excerpt, superscript = false, origi
   const [dialog, setDialog] = useState<ExcerptDialogState | null>(null);
   const openDialog = () => setDialog({ open: true, target: conversationExcerptDialogTarget(excerpt, origin) });
   return <span data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="preview"
-    className="conversation-excerpt__preview" data-flowchat-selection-ignore="true" onClick={event => event.stopPropagation()}>
+    className="conversation-excerpt__preview" data-flowchat-selection-ignore="true" onClick={event => event.stopPropagation()} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="preview" >
     {superscript ? <Button size="xs" variant="primary" labelBehavior="static" className="conversation-excerpt__superscript"
       data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="superscript"
-      aria-label={label} title={excerpt.comment || label} onClick={openDialog} aria-haspopup="dialog">{numberLabel ?? label}</Button>
+      aria-label={label} title={excerpt.comment || label} onClick={openDialog} aria-haspopup="dialog" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="superscript" >{numberLabel ?? label}</Button>
       : <Button size="xs" variant="text" aria-label={label} title={excerpt.comment || label}
         onClick={openDialog} aria-haspopup="dialog">{label}</Button>}
     {dialog && <ConversationExcerptDialog target={dialog.target} label={label} open={dialog.open}

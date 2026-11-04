@@ -663,7 +663,7 @@ const GenericFileOperationToolCard: React.FC<FileOperationToolCardProps> = ({
       data-action={fileChangeAction}
       data-path={currentFilePath}
       data-expanded={isCardContentExpanded ? 'true' : 'false'}
-    >
+     data-starmate-adapter="file-operation-tool-card" >
       <FileOperationCardView
         actionLabel={revisionLabel ?? actionLabel}
         actionTestId="chat-file-change-action"

@@ -134,7 +134,7 @@ export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(function TabGr
       data-size={size}
       ref={ref}
       role="tablist"
-    >
+     data-starmate-component="tab-group" data-starmate-part="root" >
       {items.map((item, index) => {
         const selected = item.value === selectedValue;
         const hasEndAction = item.endAction !== undefined && item.endAction !== null;
@@ -147,7 +147,7 @@ export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(function TabGr
             data-has-end-action={hasEndAction ? "true" : "false"}
             data-has-icon={hasIcon ? "true" : "false"}
             key={item.value}
-          >
+           data-starmate-part="item" >
             <button
               {...item.tabProps}
               aria-controls={item.panelId}
@@ -166,9 +166,9 @@ export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(function TabGr
               role="tab"
               tabIndex={selected ? 0 : -1}
               type="button"
-            >
+             data-starmate-part="tab" data-starmate-value={item.value} >
               {hasIcon && (
-                <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">
+                <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >
                   {item.icon}
                 </span>
               )}
@@ -178,22 +178,22 @@ export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(function TabGr
                   className={styles.label}
                   data-openbitfun-part="label"
                   transitionKey={item.labelTransitionKey}
-                >
+                 data-starmate-part="label" >
                   {item.label}
                 </RollingText>
               ) : (
-                <OverflowText behavior="marquee" className={styles.label} data-openbitfun-part="label">
+                <OverflowText behavior="marquee" className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >
                   {item.label}
                 </OverflowText>
               )}
               {item.labelSuffix != null && (
-                <span className={styles.labelSuffix} data-openbitfun-part="labelSuffix">
+                <span className={styles.labelSuffix} data-openbitfun-part="labelSuffix" data-starmate-part="labelSuffix" >
                   {item.labelSuffix}
                 </span>
               )}
             </button>
             {hasEndAction && (
-              <FloatingAction className={styles.endAction} data-openbitfun-part="endAction">
+              <FloatingAction className={styles.endAction} data-openbitfun-part="endAction" data-starmate-part="endAction" >
                 {item.endAction}
               </FloatingAction>
             )}

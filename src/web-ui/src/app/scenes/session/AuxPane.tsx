@@ -156,7 +156,7 @@ const AuxPane = forwardRef<AuxPaneRef, AuxPaneProps>(
     }, []);
 
     return (
-      <div data-openbitfun-component="aux-pane" data-openbitfun-part="root" className="openbitfun-aux-pane">
+      <div data-openbitfun-component="aux-pane" data-openbitfun-part="root" className="openbitfun-aux-pane" data-starmate-component="aux-pane" data-starmate-part="root" >
         <ContentCanvas
           externalToolbar={externalToolbar}
           workspacePath={workspacePath}

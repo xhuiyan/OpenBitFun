@@ -160,7 +160,7 @@ export const NavigationTransitionBoundary: React.FC<NavigationTransitionBoundary
       {...rootProps}
       data-motion="presence"
       data-view-transition-phase={pendingTransition?.phase}
-    >
+     data-starmate-component="navigation-transition-boundary" data-starmate-part="root" >
       {pendingTransition ? (
         <div
           key={pendingTransition.outgoingKey}
@@ -169,7 +169,7 @@ export const NavigationTransitionBoundary: React.FC<NavigationTransitionBoundary
           data-openbitfun-component="navigation-transition-boundary"
           data-openbitfun-part="layer"
           {...{ inert: '' }}
-        >
+         data-starmate-component="navigation-transition-boundary" data-starmate-part="layer" >
           {pendingTransition.children}
         </div>
       ) : null}
@@ -178,7 +178,7 @@ export const NavigationTransitionBoundary: React.FC<NavigationTransitionBoundary
         className={currentClassName}
         data-openbitfun-component="navigation-transition-boundary"
         data-openbitfun-part="layer"
-      >
+       data-starmate-component="navigation-transition-boundary" data-starmate-part="layer" >
         {children}
       </div>
     </div>

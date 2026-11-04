@@ -94,7 +94,7 @@ const PhaseGroup: React.FC<{ markers: PhaseMarker[] }> = ({ markers }) => {
       className="deep-research-protocol__phase-list"
       data-openbitfun-component="deep-research-protocol"
       data-openbitfun-part="phaseList"
-    >
+     data-starmate-component="deep-research-protocol" data-starmate-part="phaseList" >
       {markers.map((marker, index) => {
         const presentation = PHASE_PRESENTATION[marker.phaseId];
         const complete = marker.phaseId === 'complete';
@@ -150,20 +150,20 @@ const SubquestionGroup: React.FC<{ markers: SubquestionMarker[] }> = ({ markers 
           className="deep-research-protocol__list"
           data-openbitfun-component="deep-research-protocol"
           data-openbitfun-part="list"
-        >
+         data-starmate-component="deep-research-protocol" data-starmate-part="list" >
           {markers.map(marker => (
             <li
               className="deep-research-protocol__list-item"
               data-openbitfun-component="deep-research-protocol"
               data-openbitfun-part="listItem"
               key={marker.id}
-            >
+             data-starmate-component="deep-research-protocol" data-starmate-part="listItem" >
               <StatusPill tone="neutral">{marker.id}</StatusPill>
               <span
                 className="deep-research-protocol__item-title"
                 data-openbitfun-component="deep-research-protocol"
                 data-openbitfun-part="itemTitle"
-              >
+               data-starmate-component="deep-research-protocol" data-starmate-part="itemTitle" >
                 {marker.title}
               </span>
             </li>
@@ -198,7 +198,7 @@ const CitationGroup: React.FC<{ markers: CitationMarker[] }> = ({ markers }) => 
               className="deep-research-protocol__summary"
               data-openbitfun-component="deep-research-protocol"
               data-openbitfun-part="summary"
-            >
+             data-starmate-component="deep-research-protocol" data-starmate-part="summary" >
               {corroborated && <span>{corroborated}</span>}
               <StatusPill tone="info">{t('deepResearchProtocol.citations.count', { count })}</StatusPill>
             </span>
@@ -232,14 +232,14 @@ const VerdictGroup: React.FC<{ markers: VerdictMarker[] }> = ({ markers }) => {
           className="deep-research-protocol__list"
           data-openbitfun-component="deep-research-protocol"
           data-openbitfun-part="list"
-        >
+         data-starmate-component="deep-research-protocol" data-starmate-part="list" >
           {markers.map(marker => (
             <li
               className="deep-research-protocol__list-item"
               data-openbitfun-component="deep-research-protocol"
               data-openbitfun-part="listItem"
               key={marker.subquestionId}
-            >
+             data-starmate-component="deep-research-protocol" data-starmate-part="listItem" >
               <StatusPill tone="neutral">{marker.subquestionId}</StatusPill>
               <StatusPill tone={verdictTone(marker.status)}>
                 {verdictLabel(marker.status, t)}
@@ -248,7 +248,7 @@ const VerdictGroup: React.FC<{ markers: VerdictMarker[] }> = ({ markers }) => {
                 className="deep-research-protocol__confidence"
                 data-openbitfun-component="deep-research-protocol"
                 data-openbitfun-part="confidence"
-              >
+               data-starmate-component="deep-research-protocol" data-starmate-part="confidence" >
                 {t('deepResearchProtocol.verdicts.confidence', {
                   value: formatNumber(marker.confidence, {
                     style: 'percent',
@@ -290,7 +290,7 @@ export const DeepResearchProtocolGroup: React.FC<DeepResearchProtocolGroupProps>
       className="deep-research-protocol__group"
       data-openbitfun-component="deep-research-protocol"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="deep-research-protocol" data-starmate-part="root" >
       {content}
     </div>
   );

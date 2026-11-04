@@ -301,7 +301,7 @@ const WorkspaceRelatedPathsManager: React.FC<WorkspaceRelatedPathsDialogProps> =
             data-openbitfun-component="workspace-related-paths-dialog"
             data-openbitfun-part="root"
             aria-busy={saving}
-          >
+           data-starmate-component="workspace-related-paths-dialog" data-starmate-part="root" >
             <div className="workspace-related-paths-dialog__toolbar">{addDirectoryButton}</div>
             <div className="workspace-related-paths-dialog__list">
               <div role="table" className="workspace-related-paths-dialog__table" aria-label={t('nav.workspaces.relatedPaths.dialog.title')}>
@@ -426,12 +426,12 @@ const WorkspaceRelatedPathsManager: React.FC<WorkspaceRelatedPathsDialogProps> =
           data-openbitfun-component="workspace-related-paths-dialog"
           data-openbitfun-part="footer"
           className="workspace-related-paths-dialog__footer"
-        >
+         data-starmate-component="workspace-related-paths-dialog" data-starmate-part="footer" >
           <div
             data-openbitfun-component="workspace-related-paths-dialog"
             data-openbitfun-part="footerActions"
             className="workspace-related-paths-dialog__footer-actions"
-          >
+           data-starmate-component="workspace-related-paths-dialog" data-starmate-part="footerActions" >
             <Button type="button" variant="fill" size="sm" onClick={onClose} disabled={saving}>
               {t('actions.cancel')}
             </Button>

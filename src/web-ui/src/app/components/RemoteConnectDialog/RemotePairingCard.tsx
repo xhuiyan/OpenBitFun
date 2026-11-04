@@ -22,7 +22,7 @@ export function RemotePairingCard({ qrUrl, pairingCode, owner, connected = false
       className={`openbitfun-remote-connect__pairing-card${qrUrl ? '' : ' openbitfun-remote-connect__pairing-card--compact'}`}
       data-openbitfun-component="remote-connect-dialog"
       data-openbitfun-part="pairingCard"
-    >
+     data-starmate-component="remote-connect-dialog" data-starmate-part="pairingCard" >
       {(qrUrl || pairingCode) && (
         <div className="openbitfun-remote-connect__pairing-visual">
           {qrUrl && (

@@ -45,10 +45,10 @@ export function VoiceCallPanel({
 
   return (
     <section {...props} className={classNames(styles.root, presentation === 'embedded' && styles.embedded, className)} aria-label={title}
-      data-openbitfun-component="voice-call-panel" data-openbitfun-part="root" data-openbitfun-phase={phase}>
+      data-openbitfun-component="voice-call-panel" data-openbitfun-part="root" data-openbitfun-phase={phase} data-starmate-component="voice-call-panel" data-starmate-part="root" data-starmate-phase={phase} >
       <VoiceCallHeader title={title} labels={labels} phase={phase} onBack={onBack} onClose={onClose} />
 
-      <div className={styles.visualizer} data-openbitfun-part="visualizer">
+      <div className={styles.visualizer} data-openbitfun-part="visualizer" data-starmate-part="visualizer" >
         <VoiceParticleLogo readAudio={readAudio} active={phase === "live" || phase === "connecting"} />
       </div>
 

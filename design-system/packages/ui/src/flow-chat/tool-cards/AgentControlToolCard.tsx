@@ -69,25 +69,25 @@ export function AgentControlToolCard({
   const label = [action, title, preview?.agentType, preview?.model, preview && summary, statusLabel, openAgentLabel]
     .filter(value => typeof value === 'string').join(' · ');
   const tooltipContent = preview ? (
-    <div className={styles.preview} data-openbitfun-part="agentPreview">
+    <div className={styles.preview} data-openbitfun-part="agentPreview" data-starmate-part="agentPreview" >
       <div className={styles.previewHeader}>
-        <span className={styles.previewAvatar} data-openbitfun-icon-slot="true" aria-hidden="true">
+        <span className={styles.previewAvatar} data-openbitfun-icon-slot="true" aria-hidden="true" data-starmate-icon-slot="true" >
           {preview.avatar ?? avatar ?? <Icon glyph={UserRound} size="lg" />}
         </span>
         <div className={styles.previewTitle}>
-          <strong className={styles.previewName} data-openbitfun-part="previewName">{agentName}</strong>
+          <strong className={styles.previewName} data-openbitfun-part="previewName" data-starmate-part="previewName" >{agentName}</strong>
           {statusLabel && <span className={styles.previewCaption}>{statusLabel}</span>}
         </div>
       </div>
       <dl className={styles.previewMetadata}>
         <dt>{preview.labels.agentType}</dt>
-        <dd data-openbitfun-part="previewAgentType">{preview.agentType}</dd>
+        <dd data-openbitfun-part="previewAgentType" data-starmate-part="previewAgentType" >{preview.agentType}</dd>
         <dt>{preview.labels.model}</dt>
-        <dd data-openbitfun-part="previewModel">{preview.model}</dd>
+        <dd data-openbitfun-part="previewModel" data-starmate-part="previewModel" >{preview.model}</dd>
       </dl>
       <div className={styles.previewTask}>
         <span className={styles.previewCaption}>{preview.labels.description}</span>
-        <p className={styles.previewDescription} data-openbitfun-part="previewDescription">{summary}</p>
+        <p className={styles.previewDescription} data-openbitfun-part="previewDescription" data-starmate-part="previewDescription" >{summary}</p>
       </div>
     </div>
   ) : label || title;
@@ -106,7 +106,7 @@ export function AgentControlToolCard({
         data-openbitfun-status={status}
         data-openbitfun-state={state}
         data-openbitfun-expandable="false"
-      >
+       data-starmate-tool-card="agent-control" data-starmate-component="flow-chat-tool-card" data-starmate-part="root" data-starmate-attention="prominent" data-starmate-status={status} data-starmate-state={state} data-starmate-expandable="false" >
         <Tooltip content={tooltipContent} interactive={Boolean(preview)} placement="bottom" trigger="hover-focus">
         <button
           type="button"
@@ -125,37 +125,37 @@ export function AgentControlToolCard({
           data-openbitfun-status={status}
           data-overflow-trigger
           data-testid={openAgentTestId}
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="surface" data-starmate-affordance="open-panel-right" data-starmate-attention="prominent" data-starmate-interactive={onOpenAgent ? 'true' : 'false'} data-starmate-state={state} data-starmate-status={status} >
           <span className={styles.content}>
-            <span className={styles.avatar} data-openbitfun-icon-slot="true" data-openbitfun-part="avatar" aria-hidden="true">
+            <span className={styles.avatar} data-openbitfun-icon-slot="true" data-openbitfun-part="avatar" aria-hidden="true" data-starmate-icon-slot="true" data-starmate-part="avatar" >
               {avatar ?? <Icon glyph={UserRound} size="lg" />}
             </span>
             <span className={styles.details}>
               <span className={styles.name}>
-                <OverflowText className={styles.title} data-openbitfun-part="agentSummary">{displayTitle}</OverflowText>
+                <OverflowText className={styles.title} data-openbitfun-part="agentSummary" data-starmate-part="agentSummary" >{displayTitle}</OverflowText>
                 {statusLabel && running ? (
                   <OverflowText className={classNames(styles.status, styles.runningStatus)}
-                    behavior="marquee" data-openbitfun-part="agentStatus" data-status={status}>
+                    behavior="marquee" data-openbitfun-part="agentStatus" data-status={status} data-starmate-part="agentStatus" >
                     <ShimmerText>{statusLabel}</ShimmerText>
                   </OverflowText>
                 ) : statusLabel && preview ? (
                   <span className={styles.statusDot} data-openbitfun-part="agentStatus"
-                    data-tone={tone} data-status={status} aria-hidden="true" />
+                    data-tone={tone} data-status={status} aria-hidden="true"  data-starmate-part="agentStatus" />
                 ) : statusLabel ? (
-                  <OverflowText className={styles.status} data-openbitfun-part="agentStatus" data-tone={tone}>
+                  <OverflowText className={styles.status} data-openbitfun-part="agentStatus" data-tone={tone} data-starmate-part="agentStatus" >
                     {statusLabel}
                   </OverflowText>
                 ) : !['completed', 'confirmed', 'cancelled', 'rejected'].includes(status) ? (
                   <ToolCardStatusSlot size={12} status={status} />
                 ) : null}
-                <Icon name="arrow-up-right" size="xs" className={styles.openIcon} data-openbitfun-icon="open-panel-right" />
+                <Icon name="arrow-up-right" size="xs" className={styles.openIcon} data-openbitfun-icon="open-panel-right"  data-starmate-icon="open-panel-right" />
               </span>
               {preview && (
                 <span className={styles.metadata}>
                   <OverflowText className={styles.agentType} data-openbitfun-part="agentType"
-                    aria-label={preview.labels.agentType}>{preview.agentType}</OverflowText>
+                    aria-label={preview.labels.agentType} data-starmate-part="agentType" >{preview.agentType}</OverflowText>
                   <OverflowText className={styles.model} data-openbitfun-part="agentModel"
-                    aria-label={preview.labels.model}>{preview.model}</OverflowText>
+                    aria-label={preview.labels.model} data-starmate-part="agentModel" >{preview.model}</OverflowText>
                 </span>
               )}
             </span>

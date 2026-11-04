@@ -80,15 +80,15 @@ function SearchResultsToolCardBase({
   const inlineResults = toolCard === "glob-search";
   const hasDetails = details.length > 0 || results.length > 0 || Boolean(resultContent || resultText);
   const expandedContent = hasDetails ? (
-    <div className={styles.searchDetails} data-openbitfun-part="searchDetails">
+    <div className={styles.searchDetails} data-openbitfun-part="searchDetails" data-starmate-part="searchDetails" >
       {details.length > 0 && (
-        <div className={styles.details} data-openbitfun-part="details">
+        <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
           {details.map((detail, index) => (
             <span
               className={styles.detail}
               data-openbitfun-part="detail"
               key={index}
-            >
+             data-starmate-part="detail" >
               <span className={styles.detailLabel}>{detail.label}</span>
               <span className={styles.detailValue}>{detail.value}</span>
             </span>
@@ -98,14 +98,14 @@ function SearchResultsToolCardBase({
 
       <ScrollArea className={styles.resultViewport} edgeFade="vertical" overscrollBehaviorY="auto">
       {resultContent ?? (resultText && (
-        <pre className={styles.resultText} data-variant={toolCard === "web-search" ? "prose" : "code"} data-openbitfun-part="resultText">{resultText}</pre>
+        <pre className={styles.resultText} data-variant={toolCard === "web-search" ? "prose" : "code"} data-openbitfun-part="resultText" data-starmate-part="resultText" >{resultText}</pre>
       ))}
 
       {results.length > 0 && (
-        <div className={styles.results} data-openbitfun-part="results">
+        <div className={styles.results} data-openbitfun-part="results" data-starmate-part="results" >
           {results.map((result) => (
-            <div className={styles.result} data-openbitfun-part="result" key={result.key}>
-              <span className={styles.resultIcon} data-openbitfun-icon-slot="true"><ResultIcon kind={result.icon} /></span>
+            <div className={styles.result} data-openbitfun-part="result" key={result.key} data-starmate-part="result" >
+              <span className={styles.resultIcon} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" ><ResultIcon kind={result.icon} /></span>
               <span className={styles.resultBody}>
                 {result.onOpen ? (
                   <button
@@ -133,7 +133,7 @@ function SearchResultsToolCardBase({
             </div>
           ))}
           {moreResultsLabel && (
-            <div className={styles.overflowLabel} data-openbitfun-part="overflowLabel">
+            <div className={styles.overflowLabel} data-openbitfun-part="overflowLabel" data-starmate-part="overflowLabel" >
               {moreResultsLabel}
             </div>
           )}
@@ -165,7 +165,7 @@ function SearchResultsToolCardBase({
       isExpanded={Boolean(isExpanded && hasDetails)}
       onClick={hasDetails && onToggle ? onToggle : undefined}
       status={status}
-    />
+     data-starmate-tool-card={toolCard} />
   );
 }
 
@@ -189,16 +189,16 @@ function GrepSearchResults({ blocks }: { blocks: readonly GrepSearchResultBlock[
       className={styles.grepResults}
       data-openbitfun-part="grepResults"
       style={{ "--_grep-line-number-width": `${lineNumberDigits}ch` } as CSSProperties}
-    >
+     data-starmate-part="grepResults" >
       {blocks.map((block, blockIndex) => {
         if (block.kind === "text") {
-          return <pre className={styles.resultText} data-openbitfun-part="resultText" key={blockIndex}>{block.text}</pre>;
+          return <pre className={styles.resultText} data-openbitfun-part="resultText" key={blockIndex} data-starmate-part="resultText" >{block.text}</pre>;
         }
 
         const filenameStart = Math.max(block.path.lastIndexOf("/"), block.path.lastIndexOf("\\")) + 1;
         return (
-          <figure className={styles.grepFile} data-openbitfun-part="grepFile" key={blockIndex}>
-            <figcaption className={styles.grepFilePath} data-openbitfun-part="grepFilePath">
+          <figure className={styles.grepFile} data-openbitfun-part="grepFile" key={blockIndex} data-starmate-part="grepFile" >
+            <figcaption className={styles.grepFilePath} data-openbitfun-part="grepFilePath" data-starmate-part="grepFilePath" >
               <span className={styles.grepDirectory}>{block.path.slice(0, filenameStart)}</span>
               <span className={styles.grepFilename}>{block.path.slice(filenameStart)}</span>
             </figcaption>
@@ -213,9 +213,9 @@ function GrepSearchResults({ blocks }: { blocks: readonly GrepSearchResultBlock[
                     data-kind={line.kind}
                     data-gap-before={gapBefore || undefined}
                     key={lineIndex}
-                  >
-                    <span className={styles.grepLineNumber} data-openbitfun-part="grepLineNumber">{line.lineNumber}</span>
-                    <pre className={styles.grepLineContent} data-openbitfun-part="grepLineContent">{line.text}</pre>
+                   data-starmate-part="grepLine" >
+                    <span className={styles.grepLineNumber} data-openbitfun-part="grepLineNumber" data-starmate-part="grepLineNumber" >{line.lineNumber}</span>
+                    <pre className={styles.grepLineContent} data-openbitfun-part="grepLineContent" data-starmate-part="grepLineContent" >{line.text}</pre>
                   </div>
                 );
               })}

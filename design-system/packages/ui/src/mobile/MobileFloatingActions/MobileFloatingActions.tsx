@@ -20,9 +20,9 @@ export const MobileFloatingActions = forwardRef<HTMLDivElement, MobileFloatingAc
         className={classNames(styles.root, className)}
         data-openbitfun-component="mobile-floating-actions"
         ref={ref}
-      >
-        <div className={styles.leading} data-openbitfun-part="leading">{leading}</div>
-        <div className={styles.trailing} data-openbitfun-part="trailing">{trailing}</div>
+       data-starmate-component="mobile-floating-actions" >
+        <div className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</div>
+        <div className={styles.trailing} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</div>
       </div>
     );
   },

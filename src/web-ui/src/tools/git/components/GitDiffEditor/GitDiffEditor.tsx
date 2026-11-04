@@ -158,7 +158,7 @@ export const GitDiffEditor: React.FC<GitDiffEditorProps> = ({
       data-openbitfun-component="git-tool"
       data-openbitfun-part="diffEditor"
       onKeyDownCapture={handleContainerKeyDown}
-    >
+     data-starmate-component="git-tool" data-starmate-part="diffEditor" >
       {error && (
         <div className="git-diff-editor__error">
           <Icon name="xmark" size="md" />

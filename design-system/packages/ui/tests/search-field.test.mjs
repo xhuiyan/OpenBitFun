@@ -79,7 +79,7 @@ test("SearchField only exposes its footer in the panel variant and preserves inp
   const panel = renderToStaticMarkup(createElement(SearchField, { ...props, variant: "panel" }));
   assert.match(panel, /data-openbitfun-component="search-field" data-variant="panel"/);
   assert.match(panel, /<input[^>]*aria-label="Search messages"[^>]*type="search"[^>]*value="device"/);
-  assert.match(panel, /data-openbitfun-part="footer"><span role="status">1 \/ 7 results<\/span>/);
+  assert.match(panel, /data-openbitfun-part="footer"[^>]*><span role="status">1 \/ 7 results<\/span>/);
   assert.doesNotMatch(panel, /<input[^>]*(?:footer|variant)=/);
 
   for (const variant of ["default", "embedded"]) {

@@ -22,7 +22,7 @@ export function AgentCapabilityCards({ entries, onOpen }: {
   if (!entries.length) return null;
   return (
     <div className="agent-detail-dialog__capability-cards" role="group" aria-label={t('agentsOverview.detail.configuration')}
-      data-testid="agent-detail-capability-cards" data-openbitfun-scene="agents" data-openbitfun-part="capabilityCards">
+      data-testid="agent-detail-capability-cards" data-openbitfun-scene="agents" data-openbitfun-part="capabilityCards" data-starmate-scene="agents" data-starmate-part="capabilityCards" >
       {entries.map(entry => (
         <Card key={entry.key} appearance="subtle" padding="md" gap="sm"
           className="agent-detail-dialog__capability-card" role="button" tabIndex={0}

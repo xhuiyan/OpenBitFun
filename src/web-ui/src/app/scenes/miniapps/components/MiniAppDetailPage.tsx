@@ -44,7 +44,7 @@ export function MiniAppDetailPage({
       data-openbitfun-component="miniapp-gallery-view"
       data-openbitfun-part="detail"
       data-testid="miniapp-detail-page"
-    >
+     data-starmate-component="miniapp-gallery-view" data-starmate-part="detail" >
       <header className="miniapp-detail-page__hero">
         <div className="miniapp-detail-page__icon" aria-hidden="true">{icon}</div>
         <div className="miniapp-detail-page__identity">

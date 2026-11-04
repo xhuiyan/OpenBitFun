@@ -159,8 +159,8 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
             className="openbitfun-thread-goal-menu"
             data-openbitfun-component="thread-goal-dialogs"
             data-openbitfun-part="menu"
-          >
-            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="header" className="openbitfun-thread-goal-menu__header">
+           data-starmate-component="thread-goal-dialogs" data-starmate-part="menu" >
+            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="header" className="openbitfun-thread-goal-menu__header" data-starmate-component="thread-goal-dialogs" data-starmate-part="header" >
               <span className={statusBadgeClass(goal.status)}>
                 <Icon glyph={Target} size="sm" aria-hidden />
                 {statusLabel}
@@ -170,11 +170,11 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
               ) : null}
             </div>
 
-            <section data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="section" className="openbitfun-thread-goal-menu__section" aria-labelledby="thread-goal-objective">
+            <section data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="section" className="openbitfun-thread-goal-menu__section" aria-labelledby="thread-goal-objective" data-starmate-component="thread-goal-dialogs" data-starmate-part="section" >
               <h3 id="thread-goal-objective" className="openbitfun-thread-goal-menu__section-title">
                 {t('threadGoal.objectiveLabel')}
               </h3>
-              <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="objective" className="openbitfun-thread-goal-menu__objective">{goal.objective}</p>
+              <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="objective" className="openbitfun-thread-goal-menu__objective" data-starmate-component="thread-goal-dialogs" data-starmate-part="objective" >{goal.objective}</p>
             </section>
 
             {showWorkflow ? (
@@ -185,7 +185,7 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
                 <h3 id="thread-goal-workflow" className="openbitfun-thread-goal-menu__section-title">
                   {t('threadGoal.workflow.title')}
                 </h3>
-                <ol data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="workflow" className="openbitfun-thread-goal-menu__workflow">
+                <ol data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="workflow" className="openbitfun-thread-goal-menu__workflow" data-starmate-component="thread-goal-dialogs" data-starmate-part="workflow" >
                   {workflowSteps.map(step => (
                     <li
                       data-openbitfun-component="thread-goal-dialogs"
@@ -195,7 +195,7 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
                         'openbitfun-thread-goal-menu__workflow-step',
                         `openbitfun-thread-goal-menu__workflow-step--${step.state}`,
                       ].join(' ')}
-                    >
+                     data-starmate-component="thread-goal-dialogs" data-starmate-part="workflowItem" >
                       <span
                         className={[
                           'openbitfun-thread-goal-menu__workflow-marker',
@@ -215,8 +215,8 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
               </section>
             ) : null}
 
-            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="footer" className="openbitfun-thread-goal-menu__footer">
-              <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-menu__actions">
+            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="footer" className="openbitfun-thread-goal-menu__footer" data-starmate-component="thread-goal-dialogs" data-starmate-part="footer" >
+              <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-menu__actions" data-starmate-component="thread-goal-dialogs" data-starmate-part="actions" >
                 {controller.availableActions.map(action => (
                   <Button
                     key={action}
@@ -231,7 +231,7 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
                   </Button>
                 ))}
               </div>
-              <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="hint" className="openbitfun-thread-goal-menu__hint">{commandHint}</p>
+              <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="hint" className="openbitfun-thread-goal-menu__hint" data-starmate-component="thread-goal-dialogs" data-starmate-part="hint" >{commandHint}</p>
             </div>
           </div>
         ) : (
@@ -240,9 +240,9 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
             data-openbitfun-component="thread-goal-dialogs"
             data-openbitfun-part="menu"
             data-openbitfun-state="empty"
-          >
-            <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="hint" className="openbitfun-thread-goal-menu__hint">{t('threadGoal.menuEmpty')}</p>
-            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-menu__actions">
+           data-starmate-component="thread-goal-dialogs" data-starmate-part="menu" data-starmate-state="empty" >
+            <p data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="hint" className="openbitfun-thread-goal-menu__hint" data-starmate-component="thread-goal-dialogs" data-starmate-part="hint" >{t('threadGoal.menuEmpty')}</p>
+            <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-menu__actions" data-starmate-component="thread-goal-dialogs" data-starmate-part="actions" >
               <Button
                 type="button"
                 variant="primary"
@@ -276,7 +276,7 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
           className="openbitfun-thread-goal-edit"
           data-openbitfun-component="thread-goal-dialogs"
           data-openbitfun-part="edit"
-        >
+         data-starmate-component="thread-goal-dialogs" data-starmate-part="edit" >
           <p className="openbitfun-thread-goal-edit__hint">{t('threadGoal.editHint')}</p>
           <Textarea
             value={draft}
@@ -286,7 +286,7 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
             disabled={disabled}
             placeholder={t('threadGoal.editPlaceholder')}
           />
-          <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-edit__actions">
+          <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-edit__actions" data-starmate-component="thread-goal-dialogs" data-starmate-part="actions" >
             <Button type="button" variant="fill" size="sm" onClick={controller.closeEdit}>
               {t('threadGoal.editCancel')}
             </Button>
@@ -320,12 +320,12 @@ export const ThreadGoalDialogs: React.FC<ThreadGoalDialogsProps> = ({
           className="openbitfun-thread-goal-resume"
           data-openbitfun-component="thread-goal-dialogs"
           data-openbitfun-part="resume"
-        >
+         data-starmate-component="thread-goal-dialogs" data-starmate-part="resume" >
           <p className="openbitfun-thread-goal-resume__subtitle">
             {t('threadGoal.resumeSubtitle', { objective: goal?.objective ?? '' })}
           </p>
           <p className="openbitfun-thread-goal-resume__hint">{t('threadGoal.resumeHint')}</p>
-          <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-resume__actions">
+          <div data-openbitfun-component="thread-goal-dialogs" data-openbitfun-part="actions" className="openbitfun-thread-goal-resume__actions" data-starmate-component="thread-goal-dialogs" data-starmate-part="actions" >
             <Button
               type="button"
               variant="fill"

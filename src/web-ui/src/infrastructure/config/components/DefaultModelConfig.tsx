@@ -48,11 +48,11 @@ export const DefaultModelConfig: React.FC<DefaultModelConfigProps> = ({
   const { buildModelOption } = useModelSelectPresentation();
   const controlsDisabled = loading || disabled || models.length === 0;
   const pendingPlaceholder = loading ? (
-    <span data-openbitfun-component="default-model-config" data-openbitfun-part="loading" data-openbitfun-state="loading">
+    <span data-openbitfun-component="default-model-config" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="default-model-config" data-starmate-part="loading" data-starmate-state="loading" >
       {t('loading')}
     </span>
   ) : disabled ? t('messages.loadFailed') : models.length === 0 ? (
-    <span data-openbitfun-component="default-model-config" data-openbitfun-part="empty" data-openbitfun-state="empty">
+    <span data-openbitfun-component="default-model-config" data-openbitfun-part="empty" data-openbitfun-state="empty" data-starmate-component="default-model-config" data-starmate-part="empty" data-starmate-state="empty" >
       {t('empty.noModels')}
     </span>
   ) : undefined;
@@ -148,7 +148,7 @@ export const DefaultModelConfig: React.FC<DefaultModelConfigProps> = ({
   ));
 
   return (
-    <div className={`default-model-config${compact ? ' default-model-config--compact' : ''}`} data-openbitfun-component="default-model-config" data-openbitfun-part="root" aria-busy={loading}>
+    <div className={`default-model-config${compact ? ' default-model-config--compact' : ''}`} data-openbitfun-component="default-model-config" data-openbitfun-part="root" aria-busy={loading} data-starmate-component="default-model-config" data-starmate-part="root" >
       <ConfigPageRow
         label={renderSlotLabel(t('core.primary.label'), t('core.primary.description'))}
         required
@@ -166,7 +166,7 @@ export const DefaultModelConfig: React.FC<DefaultModelConfigProps> = ({
           options={enabledModels.map(buildModelOption)}
           disabled={controlsDisabled || enabledModels.length === 0}
           size="sm"
-        />
+         data-starmate-component="default-model-config" data-starmate-part="primaryModel" />
       </ConfigPageRow>
 
       <ConfigPageRow
@@ -187,7 +187,7 @@ export const DefaultModelConfig: React.FC<DefaultModelConfigProps> = ({
             ...enabledModels.map(buildModelOption),
           ]}
           size="sm"
-        />
+         data-starmate-component="default-model-config" data-starmate-part="lightweightModel" />
       </ConfigPageRow>
 
       <ConfigPageRow label={renderSlotLabel(t('core.economy.label'), t('core.economy.description'))} multiline={compact} align="center">
@@ -216,7 +216,7 @@ export const DefaultModelConfig: React.FC<DefaultModelConfigProps> = ({
             ...imageUnderstandingModels.map(buildModelOption),
           ]}
           size="sm"
-        />
+         data-starmate-component="default-model-config" data-starmate-part="embeddingModel" />
       </ConfigPageRow>
 
       {imageGenerationSlot}

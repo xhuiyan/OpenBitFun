@@ -18,7 +18,7 @@ export function WorkspaceIconGlyphs({ value, color, remote, disabled, supported,
       <DialogHeading className="workspace-icon-editor__heading"><DialogTitle>{t('nav.workspaces.icon.chooseIcon')}</DialogTitle></DialogHeading>
       <DialogClose className="workspace-icon-editor__close" />
     </DialogHeader>
-    <DialogBody><div className="workspace-icon-editor__glyphs" data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="glyphs">
+    <DialogBody><div className="workspace-icon-editor__glyphs" data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="glyphs" data-starmate-component="workspace-icon-editor" data-starmate-part="glyphs" >
       <SegmentedControl value={group} onValueChange={setGroup} tone="neutral" aria-label={t('nav.workspaces.icon.builtinIcons')}
         options={[{ value: 'work', label: t('nav.workspaces.icon.workIcons') }, { value: 'life', label: t('nav.workspaces.icon.lifeIcons') }]} />
       <div className="workspace-icon-editor__glyph-grid" role="group" aria-label={t('nav.workspaces.icon.builtinIcons')}>

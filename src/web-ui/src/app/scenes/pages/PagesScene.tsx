@@ -689,7 +689,7 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
   );
 
   return (
-    <GalleryLayout className="pages-scene" data-testid="pages-scene" data-openbitfun-scene="pages" data-openbitfun-part="root">
+    <GalleryLayout className="pages-scene" data-testid="pages-scene" data-openbitfun-scene="pages" data-openbitfun-part="root" data-starmate-scene="pages" data-starmate-part="root" >
       <GalleryPageHeader
         data-openbitfun-scene="pages"
         data-openbitfun-part="header"
@@ -710,11 +710,11 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
             )}
           </div>
         ) : null}
-      />
+       data-starmate-scene="pages" data-starmate-part="header" />
 
-      <div className="pages-scene__content" data-openbitfun-scene="pages" data-openbitfun-part="content">
+      <div className="pages-scene__content" data-openbitfun-scene="pages" data-openbitfun-part="content" data-starmate-scene="pages" data-starmate-part="content" >
         {loadError && pages.length > 0 && (
-          <div className="pages-scene__refresh-error" role="alert" data-testid="pages-refresh-error" data-openbitfun-scene="pages" data-openbitfun-part="error">
+          <div className="pages-scene__refresh-error" role="alert" data-testid="pages-refresh-error" data-openbitfun-scene="pages" data-openbitfun-part="error" data-starmate-scene="pages" data-starmate-part="error" >
             <span>{t('loadFailed')}</span>
             <small><OverflowText>{loadError}</OverflowText></small>
             <Button variant="outline" size="sm" onClick={() => void loadPages()}>
@@ -732,7 +732,7 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
             role="status"
             aria-busy="true"
             aria-label={t('loading')}
-          >
+           data-starmate-scene="pages" data-starmate-part="loading" >
             {[0, 1, 2].map((index) => (
               <div className="pages-scene__card pages-scene__card--skeleton" key={index}>
                 <div className="pages-scene__skeleton-head">
@@ -760,7 +760,7 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
               </Button>
             )}
             testId="pages-sign-in-required"
-          />
+           data-starmate-scene="pages" data-starmate-part="empty" />
         ) : loadError && pages.length === 0 ? (
           <GalleryEmpty
             data-openbitfun-scene="pages"
@@ -770,7 +770,7 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
             isError
             action={<Button variant="outline" size="sm" onClick={() => void loadPages()}>{t('actions.retry')}</Button>}
             testId="pages-error"
-          />
+           data-starmate-scene="pages" data-starmate-part="error" />
         ) : pages.length === 0 ? (
           <GalleryEmpty
             data-openbitfun-scene="pages"
@@ -778,9 +778,9 @@ const PagesScene: React.FC<PagesSceneProps> = ({ isActive = true }) => {
             icon={{ glyph: PanelsTopLeft }}
             message={<>{t('empty')}<small>{t('emptyHint')}</small></>}
             testId="pages-empty"
-          />
+           data-starmate-scene="pages" data-starmate-part="empty" />
         ) : (
-          <div className="pages-scene__grid" role="list" data-openbitfun-scene="pages" data-openbitfun-part="list">
+          <div className="pages-scene__grid" role="list" data-openbitfun-scene="pages" data-openbitfun-part="list" data-starmate-scene="pages" data-starmate-part="list" >
             {pages.map((page) => {
               const versions = versionsBySlug[page.slug] ?? [];
               const expanded = expandedSlugs.has(page.slug);

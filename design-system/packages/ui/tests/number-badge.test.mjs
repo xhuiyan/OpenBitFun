@@ -20,7 +20,7 @@ test("ToolbarBadge preserves its slot hook and delegates to NumberBadge", () => 
   assert.match(markup, /data-openbitfun-part="badge"/);
   assert.match(markup, /data-openbitfun-component="number-badge"/);
   assert.match(markup, /product-count/);
-  assert.match(markup, /data-openbitfun-part="value">18<\/span>/);
+  assert.match(markup, /data-openbitfun-part="value"[^>]*>18<\/span>/);
 });
 
 test("NumberBadge uses a 24px filled surface and 11px control typography without clipping", async () => {

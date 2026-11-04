@@ -50,12 +50,12 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({
       data-openbitfun-tone={tone}
       ref={ref}
       role={role ?? "alert"}
-    >
-      {showIcon && <span className={styles.icon} data-openbitfun-part="icon"><Icon name={toneIcons[tone]} size="sm" /></span>}
-      <span className={styles.content} data-openbitfun-part="content">
-        {title !== undefined && <span className={styles.title} data-openbitfun-part="title">{title}</span>}
-        <span className={styles.message} data-openbitfun-part="message">{message}</span>
-        {description !== undefined && <span className={styles.description} data-openbitfun-part="description">{description}</span>}
+     data-starmate-component="alert" data-starmate-tone={tone} >
+      {showIcon && <span className={styles.icon} data-openbitfun-part="icon" data-starmate-part="icon" ><Icon name={toneIcons[tone]} size="sm" /></span>}
+      <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
+        {title !== undefined && <span className={styles.title} data-openbitfun-part="title" data-starmate-part="title" >{title}</span>}
+        <span className={styles.message} data-openbitfun-part="message" data-starmate-part="message" >{message}</span>
+        {description !== undefined && <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{description}</span>}
       </span>
       {closable && (
         <IconButton

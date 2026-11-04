@@ -31,10 +31,10 @@ export const Capsule = forwardRef<HTMLSpanElement, CapsuleProps>(function Capsul
   return (
     <span {...props} className={classNames(actionStyles.host, styles.root, className)}
       data-openbitfun-component="capsule" data-layout={layout} data-size={size} data-split-sizing={layout === "split" ? splitSizing : undefined}
-      data-action-placement={action != null ? actionPlacement : undefined} data-overflow-trigger ref={ref}>
+      data-action-placement={action != null ? actionPlacement : undefined} data-overflow-trigger ref={ref} data-starmate-component="capsule" >
       {children}
       {action != null && <FloatingAction data-openbitfun-part="action"
-        className={actionPlacement === "reserved" ? styles.reservedAction : undefined}>{action}</FloatingAction>}
+        className={actionPlacement === "reserved" ? styles.reservedAction : undefined} data-starmate-part="action" >{action}</FloatingAction>}
     </span>
   );
 });

@@ -171,14 +171,14 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
   }, []);
 
   const renderUserTab = useCallback(() => (
-    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content">
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content" data-starmate-component="git-settings-view" data-starmate-part="content" >
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.user.title')}</h4>
         <p className="openbitfun-git-settings-view__section-description">
           {t('settingsView.sections.user.description')}
         </p>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
           <label className="openbitfun-git-settings-view__form-label">
             <Icon name="user" size="md" />
             {t('settingsView.sections.user.nameLabel')}
@@ -192,7 +192,7 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
           />
         </div>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
           <label className="openbitfun-git-settings-view__form-label">
             <Mail size={16} />
             {t('settingsView.sections.user.emailLabel')}
@@ -210,11 +210,11 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
   ), [config.user, updateUserConfig, t]);
 
   const renderRepositoryTab = useCallback(() => (
-    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content">
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content" data-starmate-component="git-settings-view" data-starmate-part="content" >
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.editor.title')}</h4>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
           <Field label={t('settingsView.sections.editor.defaultEditorLabel')} controlWidth="fill">
             <Select
               options={[
@@ -231,10 +231,10 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
         </div>
       </div>
 
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.lineEndings.title')}</h4>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
           <Field label={t('settingsView.sections.lineEndings.autocrlfLabel')} controlWidth="fill">
             <Select
               options={[
@@ -249,15 +249,15 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
         </div>
       </div>
 
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.remotes.title')}</h4>
         
         {Object.entries(config.remote).map(([name, remote]) => (
-          <div data-openbitfun-component="git-settings-view" data-openbitfun-part="configItem" key={name} className="openbitfun-git-settings-view__config-item">
+          <div data-openbitfun-component="git-settings-view" data-openbitfun-part="configItem" key={name} className="openbitfun-git-settings-view__config-item" data-starmate-component="git-settings-view" data-starmate-part="configItem" >
             <div className="openbitfun-git-settings-view__config-info">
               <div className="openbitfun-git-settings-view__config-key">{name}</div>
             </div>
-            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
               <label className="openbitfun-git-settings-view__form-label">{t('settingsView.sections.remotes.urlLabel')}</label>
               <Input
                 className="openbitfun-git-settings-view__form-input"
@@ -274,11 +274,11 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
   ), [config.core, config.remote, updateCoreConfig, updateRemoteConfig, t]);
 
   const renderAdvancedTab = useCallback(() => (
-    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content">
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+    <ScrollArea data-openbitfun-component="git-settings-view" data-openbitfun-part="content" className="openbitfun-git-settings-view__content" data-starmate-component="git-settings-view" data-starmate-part="content" >
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.core.title')}</h4>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
           <Checkbox
             checked={config.core.ignorecase}
             onChange={(e) => updateCoreConfig('ignorecase', e.target.checked)}
@@ -288,17 +288,17 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
         </div>
       </div>
 
-      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section">
+      <div data-openbitfun-component="git-settings-view" data-openbitfun-part="section" className="openbitfun-git-settings-view__section" data-starmate-component="git-settings-view" data-starmate-part="section" >
         <h4 className="openbitfun-git-settings-view__section-title">{t('settingsView.sections.branch.title')}</h4>
         
         {Object.entries(config.branch).map(([branchName, branchConfig]) => (
-          <div data-openbitfun-component="git-settings-view" data-openbitfun-part="configItem" key={branchName} className="openbitfun-git-settings-view__config-item">
+          <div data-openbitfun-component="git-settings-view" data-openbitfun-part="configItem" key={branchName} className="openbitfun-git-settings-view__config-item" data-starmate-component="git-settings-view" data-starmate-part="configItem" >
             <div className="openbitfun-git-settings-view__config-info">
               <div className="openbitfun-git-settings-view__config-key">
                 {t('settingsView.sections.branch.branchLabel', { branch: branchName })}
               </div>
             </div>
-            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
               <label className="openbitfun-git-settings-view__form-label">{t('settingsView.sections.branch.remoteLabel')}</label>
               <Input
                 className="openbitfun-git-settings-view__form-input"
@@ -307,7 +307,7 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
                 readOnly
               />
             </div>
-            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group">
+            <div data-openbitfun-component="git-settings-view" data-openbitfun-part="formGroup" className="openbitfun-git-settings-view__form-group" data-starmate-component="git-settings-view" data-starmate-part="formGroup" >
               <label className="openbitfun-git-settings-view__form-label">{t('settingsView.sections.branch.mergeLabel')}</label>
               <Input
                 className="openbitfun-git-settings-view__form-input"
@@ -331,8 +331,8 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
 
   if (loading) {
     return (
-      <div className={`openbitfun-git-settings-view openbitfun-git-settings-view--loading ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root" data-openbitfun-state="loading">
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="loading" className="openbitfun-git-settings-view__empty-state">
+      <div className={`openbitfun-git-settings-view openbitfun-git-settings-view--loading ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="git-settings-view" data-starmate-part="root" data-starmate-state="loading" >
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="loading" className="openbitfun-git-settings-view__empty-state" data-starmate-component="git-settings-view" data-starmate-part="loading" >
           <Icon name="refresh" size="lg" className="openbitfun-git-settings-view__loading-spinner" />
           <p>{t('settingsView.loading')}</p>
         </div>
@@ -342,8 +342,8 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
 
   if (error && !config.user.name) {
     return (
-      <div className={`openbitfun-git-settings-view openbitfun-git-settings-view--error ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root" data-openbitfun-state="error">
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="error" className="openbitfun-git-settings-view__empty-state">
+      <div className={`openbitfun-git-settings-view openbitfun-git-settings-view--error ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root" data-openbitfun-state="error" data-starmate-component="git-settings-view" data-starmate-part="root" data-starmate-state="error" >
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="error" className="openbitfun-git-settings-view__empty-state" data-starmate-component="git-settings-view" data-starmate-part="error" >
           <Icon name="settings" size="lg" />
           <h3>{t('settingsView.loadFailedTitle')}</h3>
           <p className="openbitfun-git-settings-view__error-message">{error}</p>
@@ -356,14 +356,14 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
   }
 
   return (
-    <div className={`openbitfun-git-settings-view ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root">
-      <div className="openbitfun-git-settings-view__header" data-openbitfun-component="git-settings-view" data-openbitfun-part="header">
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="headerLeft" className="openbitfun-git-settings-view__header-left">
+    <div className={`openbitfun-git-settings-view ${className}`} data-openbitfun-component="git-settings-view" data-openbitfun-part="root" data-starmate-component="git-settings-view" data-starmate-part="root" >
+      <div className="openbitfun-git-settings-view__header" data-openbitfun-component="git-settings-view" data-openbitfun-part="header" data-starmate-component="git-settings-view" data-starmate-part="header" >
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="headerLeft" className="openbitfun-git-settings-view__header-left" data-starmate-component="git-settings-view" data-starmate-part="headerLeft" >
           <Icon name="settings" size="lg" />
           <h3>{t('settingsView.title')}</h3>
         </div>
         
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="headerRight" className="openbitfun-git-settings-view__header-right">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="headerRight" className="openbitfun-git-settings-view__header-right" data-starmate-component="git-settings-view" data-starmate-part="headerRight" >
           <IconButton
             aria-label={t('settingsView.refresh')}
             onClick={loadConfig}
@@ -386,7 +386,7 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
       </div>
 
       {error && (
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="status" data-openbitfun-state="error" className="openbitfun-git-settings-view__status-banner openbitfun-git-settings-view__status-banner--error">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="status" data-openbitfun-state="error" className="openbitfun-git-settings-view__status-banner openbitfun-git-settings-view__status-banner--error" data-starmate-component="git-settings-view" data-starmate-part="status" data-starmate-state="error" >
           <Icon name="xmark" size="sm" />
           <span>{error}</span>
           <IconButton
@@ -400,7 +400,7 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
       )}
       
       {success && (
-        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="status" className="openbitfun-git-settings-view__status-banner openbitfun-git-settings-view__status-banner--success">
+        <div data-openbitfun-component="git-settings-view" data-openbitfun-part="status" className="openbitfun-git-settings-view__status-banner openbitfun-git-settings-view__status-banner--success" data-starmate-component="git-settings-view" data-starmate-part="status" >
           <Icon name="check-line" size="sm" />
           <span>{success}</span>
           <IconButton
@@ -413,7 +413,7 @@ const GitSettingsView: React.FC<GitSettingsViewProps> = ({
         </div>
       )}
 
-      <div className="openbitfun-git-settings-view__tabs" data-openbitfun-component="git-settings-view" data-openbitfun-part="tabs">
+      <div className="openbitfun-git-settings-view__tabs" data-openbitfun-component="git-settings-view" data-openbitfun-part="tabs" data-starmate-component="git-settings-view" data-starmate-part="tabs" >
         <TabGroup
           className="openbitfun-git-settings-view__tab-list"
           items={tabItems}

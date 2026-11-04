@@ -77,11 +77,11 @@ export default function WorkbenchLayout({ workspacePath, children, ...windowProp
   };
 
   const renderTabs = (location: WorkbenchPane) => <div className="openbitfun-workbench-layout__pane-tabs"
-    data-openbitfun-scene="workbench" data-openbitfun-part="paneTabs">
+    data-openbitfun-scene="workbench" data-openbitfun-part="paneTabs" data-starmate-scene="workbench" data-starmate-part="paneTabs" >
     {(location === 'primary' || hasSecondaryScenes) && <SceneBar pane={location} showDropHint={false} />}
     {location === canvasPane && <div className="openbitfun-workbench-layout__canvas-tabs" data-openbitfun-scene="workbench" data-openbitfun-part="canvasTabs" data-shortcut-scope="canvas"
       onPointerDownCapture={() => useSceneStore.getState().selectCanvas()}
-      onFocusCapture={() => useSceneStore.getState().selectCanvas()}>
+      onFocusCapture={() => useSceneStore.getState().selectCanvas()} data-starmate-scene="workbench" data-starmate-part="canvasTabs" >
       <CanvasToolbarHost />
     </div>}
   </div>;
@@ -132,7 +132,7 @@ export default function WorkbenchLayout({ workspacePath, children, ...windowProp
       </ToolbarGroup>}
     />;
   return <WorkbenchResizeContext.Provider value={resizeState}><CanvasToolbarProvider>
-    <div className="openbitfun-workbench-layout__body" data-openbitfun-scene="workbench" data-openbitfun-part="contentLayout">
+    <div className="openbitfun-workbench-layout__body" data-openbitfun-scene="workbench" data-openbitfun-part="contentLayout" data-starmate-scene="workbench" data-starmate-part="contentLayout" >
       <SplitView header={header}
         mode={pane.mode === 'chat-only' ? 'primary' : pane.mode === 'content-only' ? 'secondary' : 'split'}
         layout={pane.displayMode} secondarySide={pane.contentSide}
@@ -151,7 +151,7 @@ export default function WorkbenchLayout({ workspacePath, children, ...windowProp
           onPointerDownCapture={() => useSceneStore.getState().focusPane(canvasPane)}
           onFocusCapture={() => useSceneStore.getState().focusPane(canvasPane)}>
           {/* Keep the skin address while the canvas moves between stable surface slots. */}
-          <div className="openbitfun-workbench-layout__auxiliary" data-openbitfun-scene="session" data-openbitfun-part="auxiliary">
+          <div className="openbitfun-workbench-layout__auxiliary" data-openbitfun-scene="session" data-openbitfun-part="auxiliary" data-starmate-scene="session" data-starmate-part="auxiliary" >
             <AuxPane workspacePath={workspacePath} externalToolbar isSceneActive={canvasVisible}
               terminalResizeSuspended={resizeState.measurementSuspended}
               resizeSuspended={resizeState.measurementSuspended} />

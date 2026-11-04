@@ -411,7 +411,7 @@ function WorkspaceProjectPermissionsContent({
     </DialogHeader>
     <DialogBody>
       <form id={additionFormId} className="workspace-project-permissions-dialog__add-form" onSubmit={event => void submitAddition(event)}
-        data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="addForm">
+        data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="addForm" data-starmate-component="workspace-project-permissions-dialog" data-starmate-part="addForm" >
         {ruleFields(addition.rule, update => {
           setAddition(value => value ? { ...value, rule: { ...value.rule, ...update } } : null);
           setAdditionError(null);
@@ -426,7 +426,7 @@ function WorkspaceProjectPermissionsContent({
     </DialogFooter>
   </Dialog>;
 
-  return <div className="workspace-project-permissions-dialog" data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="root">
+  return <div className="workspace-project-permissions-dialog" data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="root" data-starmate-component="workspace-project-permissions-dialog" data-starmate-part="root" >
     {presentation === 'inline' && <>
       <div className="workspace-project-permissions-dialog__heading">
         <h2>{t('projectPermissions.title')}</h2>
@@ -475,7 +475,7 @@ function WorkspaceProjectPermissionsContent({
             </div>
 
             {draftRules.map((rule, index) => <React.Fragment key={rule.localId}>
-              <div role="row" className="resource-table__row workspace-project-permissions-dialog__row" data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="rule">
+              <div role="row" className="resource-table__row workspace-project-permissions-dialog__row" data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="rule" data-starmate-component="workspace-project-permissions-dialog" data-starmate-part="rule" >
                 <div role="cell"><OverflowText>{rule.action || t('projectPermissions.action')}</OverflowText></div>
                 <div role="cell"><OverflowText title={rule.resource}>{rule.resource || t('projectPermissions.resource')}</OverflowText></div>
                 <div role="cell">{effectPill(rule.effect)}</div><div role="cell">{t('projectPermissions.rulesTitle')}</div>
@@ -495,7 +495,7 @@ function WorkspaceProjectPermissionsContent({
               {editingRuleId === rule.localId && <div role="row" className="resource-table__row resource-table__details workspace-project-permissions-dialog__editor-row"><div role="cell" aria-colspan={5}>{editor(rule)}</div></div>}
             </React.Fragment>)}
             {permissionGrants.map(grant => <div role="row" key={`grant:${grant.action}:${grant.resource}`} className="resource-table__row workspace-project-permissions-dialog__row"
-              data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="grant">
+              data-openbitfun-component="workspace-project-permissions-dialog" data-openbitfun-part="grant" data-starmate-component="workspace-project-permissions-dialog" data-starmate-part="grant" >
               <div role="cell"><OverflowText>{grant.action}</OverflowText></div><div role="cell"><OverflowText title={grant.resource}>{grant.resource}</OverflowText></div>
               <div role="cell">{effectPill('allow')}</div><div role="cell" title={formatDate(grant.createdAtMs, { dateStyle: 'medium', timeStyle: 'short' })}>{t('projectPermissions.grantsTitle')}</div>
               <div role="cell"><div className="workspace-project-permissions-dialog__row-actions">
@@ -509,7 +509,7 @@ function WorkspaceProjectPermissionsContent({
         </div>
       </DialogBody>
       <DialogFooter separator data-openbitfun-component="workspace-project-permissions-dialog"
-        data-openbitfun-part="footer" className="workspace-project-permissions-dialog__footer">
+        data-openbitfun-part="footer" className="workspace-project-permissions-dialog__footer" data-starmate-component="workspace-project-permissions-dialog" data-starmate-part="footer" >
         {rulesDirty ? <>
           <span className="workspace-project-permissions-dialog__pending">{t('projectPermissions.unsaved')}</span>
           <Button type="button" size="sm" variant="fill" onClick={handleDiscardRules} disabled={isBusy}>{t('projectPermissions.cancel')}</Button>

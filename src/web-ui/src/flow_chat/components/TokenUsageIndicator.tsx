@@ -43,18 +43,18 @@ export const TokenUsageIndicator: React.FC<TokenUsageIndicatorProps> = ({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={percentage}
-    >
-      <div data-openbitfun-component="token-usage-indicator" data-openbitfun-part="track" className="openbitfun-token-usage__progress-track">
+     data-starmate-component="token-usage-indicator" data-starmate-part="root" data-starmate-level={statusClass} >
+      <div data-openbitfun-component="token-usage-indicator" data-openbitfun-part="track" className="openbitfun-token-usage__progress-track" data-starmate-component="token-usage-indicator" data-starmate-part="track" >
         <div 
           data-openbitfun-component="token-usage-indicator"
           data-openbitfun-part="fill"
           className="openbitfun-token-usage__progress-fill"
           style={{ '--token-usage-progress': percentage / 100 } as React.CSSProperties}
-        />
+         data-starmate-component="token-usage-indicator" data-starmate-part="fill" />
       </div>
       
-      <div data-openbitfun-component="token-usage-indicator" data-openbitfun-part="hover" className="openbitfun-token-usage__hover-content">
-        <span data-openbitfun-component="token-usage-indicator" data-openbitfun-part="percentage" className="openbitfun-token-usage__percentage">{percentage}%</span>
+      <div data-openbitfun-component="token-usage-indicator" data-openbitfun-part="hover" className="openbitfun-token-usage__hover-content" data-starmate-component="token-usage-indicator" data-starmate-part="hover" >
+        <span data-openbitfun-component="token-usage-indicator" data-openbitfun-part="percentage" className="openbitfun-token-usage__percentage" data-starmate-component="token-usage-indicator" data-starmate-part="percentage" >{percentage}%</span>
       </div>
     </div>
   );

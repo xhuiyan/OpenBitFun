@@ -11,7 +11,7 @@ export function ProjectResourceSummary({ title, value, description, listTitle, b
   onOpen: () => void;
   children: ReactNode;
 }) {
-  return <div data-openbitfun-scene="project-resources" data-openbitfun-part="summary">
+  return <div data-openbitfun-scene="project-resources" data-openbitfun-part="summary" data-starmate-scene="project-resources" data-starmate-part="summary" >
     <Card appearance="subtle" radius="lg" clip>
       <div className="project-resource-summary">
         <button type="button"

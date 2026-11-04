@@ -41,8 +41,8 @@ export const ExternalSourceSection: React.FC<ExternalSourceSectionProps> = ({
               className="openbitfun-external-sources-config__source-group"
               label={group.displayName}
               description={(
-                <div className="openbitfun-external-sources-config__source-description" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceGroup">
-                  <span className="openbitfun-external-sources-config__source-origin" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceDescription">
+                <div className="openbitfun-external-sources-config__source-description" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceGroup" data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceGroup" >
+                  <span className="openbitfun-external-sources-config__source-origin" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="sourceDescription" data-starmate-product-component="external-sources-config" data-starmate-product-part="sourceDescription" >
                     <span
                       className="openbitfun-external-sources-config__source-location"
                       title={group.location}
@@ -97,8 +97,8 @@ export const ExternalSourceSection: React.FC<ExternalSourceSectionProps> = ({
                   name: group.displayName,
                   count: userDiagnostics.length,
                 })}
-              >
-                <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics">
+               data-starmate-product-component="external-sources-config" data-starmate-product-part="notice" >
+                <ul className="openbitfun-external-sources-config__diagnostics" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="diagnostics" data-starmate-product-component="external-sources-config" data-starmate-product-part="diagnostics" >
                   {userDiagnostics.map((diagnostic) => (
                     <li key={externalSourceDiagnosticKey(diagnostic)}>
                       <span>{t(`diagnostics.category.${sourceDiagnosticCategory(diagnostic.code)}`)}</span>

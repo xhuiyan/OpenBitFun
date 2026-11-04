@@ -69,7 +69,7 @@ function ExportImagePreview({ expandThinking }: { expandThinking: boolean }) {
       viewBox="0 0 180 112"
       aria-hidden="true"
       focusable="false"
-    >
+     data-starmate-product-component="export-image" data-starmate-product-part="optionPreview" >
       <rect x="18" y="8" width="144" height="96" rx="8" fill="var(--openbitfun-color-surface-scene)" stroke="var(--openbitfun-color-border-default)" strokeWidth="var(--openbitfun-border-width-default)" />
       <g fill="currentColor">
         <circle cx="34" cy="20" r="4" />
@@ -113,8 +113,8 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
   const presentation = parseComposerPresentation(dialogTurn.userMessage?.metadata?.composerPresentation);
 
   return (
-    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="root" className="export-content">
-      <div className="export-content__header" data-openbitfun-product-component="export-image" data-openbitfun-product-part="header">
+    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="root" className="export-content" data-starmate-product-component="export-image" data-starmate-product-part="root" >
+      <div className="export-content__header" data-openbitfun-product-component="export-image" data-openbitfun-product-part="header" data-starmate-product-component="export-image" data-starmate-product-part="header" >
         {/* Placeholder reserves space for the logo. The actual logo is drawn
             onto the final image via canvas compositing to avoid issues with
             embedding <img>/data URLs inside an SVG foreignObject. */}
@@ -123,15 +123,15 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
           data-openbitfun-product-component="export-image"
           data-openbitfun-product-part="logo"
           aria-label="StarMate"
-        />
-        <div className="export-content__title" data-openbitfun-product-component="export-image" data-openbitfun-product-part="title">StarMate</div>
-        <div className="export-content__timestamp" data-openbitfun-product-component="export-image" data-openbitfun-product-part="timestamp">
+         data-starmate-product-component="export-image" data-starmate-product-part="logo" />
+        <div className="export-content__title" data-openbitfun-product-component="export-image" data-openbitfun-product-part="title" data-starmate-product-component="export-image" data-starmate-product-part="title" >StarMate</div>
+        <div className="export-content__timestamp" data-openbitfun-product-component="export-image" data-openbitfun-product-part="timestamp" data-starmate-product-component="export-image" data-starmate-product-part="timestamp" >
           {i18nService.formatDate(new Date())}
         </div>
       </div>
 
       {dialogTurn.userMessage?.content && (
-        <div className="export-content__user-section" data-openbitfun-product-component="export-image" data-openbitfun-product-part="user">
+        <div className="export-content__user-section" data-openbitfun-product-component="export-image" data-openbitfun-product-part="user" data-starmate-product-component="export-image" data-starmate-product-part="user" >
           <div className="export-content__user-bubble">
             {hasComposerPresentationReferences(presentation)
               ? <UserMessagePresentationContent presentation={presentation} />
@@ -140,10 +140,10 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
         </div>
       )}
 
-      <div className="export-content__ai-section" data-openbitfun-product-component="export-image" data-openbitfun-product-part="assistant">
+      <div className="export-content__ai-section" data-openbitfun-product-component="export-image" data-openbitfun-product-part="assistant" data-starmate-product-component="export-image" data-starmate-product-part="assistant" >
         
         {dialogTurn.modelRounds.map((modelRound) => (
-          <div key={modelRound.id} className="export-content__model-round" data-openbitfun-product-component="export-image" data-openbitfun-product-part="round">
+          <div key={modelRound.id} className="export-content__model-round" data-openbitfun-product-component="export-image" data-openbitfun-product-part="round" data-starmate-product-component="export-image" data-starmate-product-part="round" >
             {[...modelRound.items]
               .sort((a, b) => a.timestamp - b.timestamp)
               .map((item) => {
@@ -151,7 +151,7 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
                   const textItem = item as FlowTextItem;
                   if (textItem.content && textItem.content.trim()) {
                     return (
-                      <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="text" key={item.id} className="export-content__text-item">
+                      <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="text" key={item.id} className="export-content__text-item" data-starmate-product-component="export-image" data-starmate-product-part="text" >
                         <FlowTextBlock 
                           textItem={{
                             ...textItem,
@@ -165,7 +165,7 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
                   if (!expandThinking) return null;
                   const thinkingItem = item as FlowThinkingItem;
                   return (
-                    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="thinking" key={item.id} className="export-content__thinking-item export-content__thinking-item--expanded">
+                    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="thinking" key={item.id} className="export-content__thinking-item export-content__thinking-item--expanded" data-starmate-product-component="export-image" data-starmate-product-part="thinking" >
                       <ModelThinkingDisplay
                         thinkingItem={{
                           ...thinkingItem,
@@ -180,7 +180,7 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
                 } else if (item.type === 'tool') {
                   const toolItem = item as FlowToolItem;
                   return (
-                    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="tool" key={item.id} className="export-content__tool-item">
+                    <div data-openbitfun-product-component="export-image" data-openbitfun-product-part="tool" key={item.id} className="export-content__tool-item" data-starmate-product-component="export-image" data-starmate-product-part="tool" >
                       <FlowToolCard toolItem={toolItem} />
                     </div>
                   );
@@ -191,7 +191,7 @@ export const ExportContent: React.FC<ExportContentProps> = ({ dialogTurn, expand
         ))}
       </div>
 
-      <div className="export-content__footer" data-openbitfun-product-component="export-image" data-openbitfun-product-part="footer">
+      <div className="export-content__footer" data-openbitfun-product-component="export-image" data-openbitfun-product-part="footer" data-starmate-product-component="export-image" data-starmate-product-part="footer" >
         <span>{i18nService.t('flow-chat:exportImage.poweredBy')}</span>
         <span className="export-content__footer-brand">StarMate</span>
       </div>
@@ -503,7 +503,7 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
             aria-expanded={isDialogOpen}
             aria-label={isExporting ? t('exportImage.exporting') : t('exportImage.exportToImage')}
             icon={<Icon name="image" size="sm" />}
-          />
+           data-starmate-product-component="export-image" data-starmate-product-part="trigger" data-starmate-state={isExporting ? 'exporting' : undefined} />
         </Tooltip>
       )}
       <Dialog
@@ -537,7 +537,7 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
               setExpandThinking(next);
               (next ? thinkingOptionRef : compactOptionRef).current?.focus({ preventScroll: true });
             }}
-          >
+           data-starmate-product-component="export-image" data-starmate-product-part="options" >
             <Card
               className="export-image-option-card"
               appearance="neutral"
@@ -548,7 +548,7 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
                 setExpandThinking(false);
                 compactOptionRef.current?.focus({ preventScroll: true });
               }}
-            >
+             data-starmate-product-component="export-image" data-starmate-product-part="optionCard" >
               <CardHeader actions={(
                 <Checkbox
                   ref={compactOptionRef}
@@ -558,9 +558,9 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
                   data-testid="export-image-compact"
                 />
               )} />
-              <CardBody align="center" className="export-image-option-content" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionContent">
+              <CardBody align="center" className="export-image-option-content" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionContent" data-starmate-product-component="export-image" data-starmate-product-part="optionContent" >
                 <ExportImagePreview expandThinking={false} />
-                <span className="export-image-option-label" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionLabel">{t('exportImage.collapsedThinking')}</span>
+                <span className="export-image-option-label" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionLabel" data-starmate-product-component="export-image" data-starmate-product-part="optionLabel" >{t('exportImage.collapsedThinking')}</span>
               </CardBody>
             </Card>
             <Card
@@ -573,7 +573,7 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
                 setExpandThinking(true);
                 thinkingOptionRef.current?.focus({ preventScroll: true });
               }}
-            >
+             data-starmate-product-component="export-image" data-starmate-product-part="optionCard" >
               <CardHeader actions={(
                 <Checkbox
                   ref={thinkingOptionRef}
@@ -583,9 +583,9 @@ export const ExportImageButton: React.FC<ExportImageButtonProps> = ({
                   data-testid="export-image-thinking"
                 />
               )} />
-              <CardBody align="center" className="export-image-option-content" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionContent">
+              <CardBody align="center" className="export-image-option-content" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionContent" data-starmate-product-component="export-image" data-starmate-product-part="optionContent" >
                 <ExportImagePreview expandThinking />
-                <span className="export-image-option-label" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionLabel">{t('exportImage.expandedThinking')}</span>
+                <span className="export-image-option-label" data-openbitfun-product-component="export-image" data-openbitfun-product-part="optionLabel" data-starmate-product-component="export-image" data-starmate-product-part="optionLabel" >{t('exportImage.expandedThinking')}</span>
               </CardBody>
             </Card>
           </div>

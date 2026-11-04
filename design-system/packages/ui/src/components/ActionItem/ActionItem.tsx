@@ -65,7 +65,7 @@ export const ActionItem = forwardRef<HTMLButtonElement, ActionItemProps>(functio
       data-openbitfun-component="action-item"
       data-openbitfun-tone={tone}
       data-disabled={disabled ? "true" : "false"}
-    >
+     data-starmate-component="action-item" data-starmate-tone={tone} >
       <button data-overflow-trigger
         {...props}
         className={classNames(styles.trigger, triggerClassName)}
@@ -73,30 +73,30 @@ export const ActionItem = forwardRef<HTMLButtonElement, ActionItemProps>(functio
         disabled={disabled}
         ref={ref}
         type={type}
-      >
+       data-starmate-part="trigger" >
         {hasLeadingArea && (
-          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
             {leading}
           </span>
         )}
         {labelBehavior === "static" ? (
-          <span className={classNames(styles.label, styles.staticLabel)} data-openbitfun-part="label">{children}</span>
+          <span className={classNames(styles.label, styles.staticLabel)} data-openbitfun-part="label" data-starmate-part="label" >{children}</span>
         ) : (
-          <OverflowText className={styles.label} data-openbitfun-part="label">{children}</OverflowText>
+          <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</OverflowText>
         )}
         {metadata !== undefined && metadata !== null && (
-          <span className={styles.metadata} data-openbitfun-part="metadata">
+          <span className={styles.metadata} data-openbitfun-part="metadata" data-starmate-part="metadata" >
             {metadata}
           </span>
         )}
         {shortcut !== undefined && shortcut !== null && (
-          <span aria-hidden="true" className={styles.shortcut} data-openbitfun-part="shortcut">
+          <span aria-hidden="true" className={styles.shortcut} data-openbitfun-part="shortcut" data-starmate-part="shortcut" >
             {shortcut}
           </span>
         )}
       </button>
       {(actions.length > 0 || actionContent != null) && (
-        <span className={styles.actions} data-openbitfun-part="actions">
+        <span className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >
           {actionContent}
           {actions.map((action) => (
               <IconButton

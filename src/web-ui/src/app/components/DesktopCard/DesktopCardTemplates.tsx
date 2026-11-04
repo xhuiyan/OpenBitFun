@@ -41,7 +41,7 @@ export function CountdownTemplate({ template, onDismiss }: {
   const parts = countdownParts(template.targetAtMs, template.startedAtMs, now);
   return (
     <div className="openbitfun-desktop-card__countdown" data-state={parts.due ? 'due' : 'running'}
-      data-openbitfun-component="desktop-card" data-openbitfun-part="countdown">
+      data-openbitfun-component="desktop-card" data-openbitfun-part="countdown" data-starmate-component="desktop-card" data-starmate-part="countdown" >
       <div className="openbitfun-desktop-card__countdown-clock" role="timer" aria-live={parts.due ? 'assertive' : 'off'}>
         {parts.due ? t('desktopCard.countdown.due') : (
           <>
@@ -71,7 +71,7 @@ export function ChecklistTemplate({ template, onToggle }: {
     return <p className="openbitfun-desktop-card__empty">{t('desktopCard.checklist.empty')}</p>;
   }
   return (
-    <ul className="openbitfun-desktop-card__checklist" data-openbitfun-component="desktop-card" data-openbitfun-part="checklist">
+    <ul className="openbitfun-desktop-card__checklist" data-openbitfun-component="desktop-card" data-openbitfun-part="checklist" data-starmate-component="desktop-card" data-starmate-part="checklist" >
       {template.items.map(item => (
         <li key={item.id} data-done={item.done ? 'true' : undefined}>
           <Checkbox size="sm" checked={item.done === true} label={item.text}
@@ -83,7 +83,7 @@ export function ChecklistTemplate({ template, onToggle }: {
 }
 
 export function NoteTemplate({ template }: { template: TemplateOf<'note'> }) {
-  return <p className="openbitfun-desktop-card__note" data-openbitfun-component="desktop-card" data-openbitfun-part="note">{template.text}</p>;
+  return <p className="openbitfun-desktop-card__note" data-openbitfun-component="desktop-card" data-openbitfun-part="note" data-starmate-component="desktop-card" data-starmate-part="note" >{template.text}</p>;
 }
 
 export function ProgressTemplate({ template, data, formatters }: {
@@ -93,7 +93,7 @@ export function ProgressTemplate({ template, data, formatters }: {
 }) {
   const state = progressState(template, data);
   return (
-    <div className="openbitfun-desktop-card__progress" data-openbitfun-component="desktop-card" data-openbitfun-part="progress">
+    <div className="openbitfun-desktop-card__progress" data-openbitfun-component="desktop-card" data-openbitfun-part="progress" data-starmate-component="desktop-card" data-starmate-part="progress" >
       <div className="openbitfun-desktop-card__progress-head">
         <span className="openbitfun-desktop-card__progress-value">
           {state.ratio === null ? '—' : formatters.formatNumber(state.ratio, { style: 'percent', maximumFractionDigits: 0 })}
@@ -121,7 +121,7 @@ export function MetricsTemplate({ template, data, formatters }: {
   const layout = template.layout === 'grid' ? 'grid' : 'list';
   return (
     <dl className="openbitfun-desktop-card__metrics" data-layout={layout}
-      data-openbitfun-component="desktop-card" data-openbitfun-part="metrics">
+      data-openbitfun-component="desktop-card" data-openbitfun-part="metrics" data-starmate-component="desktop-card" data-starmate-part="metrics" >
       {template.items.map((item, index) => {
         const raw = metricRawValue(item, data);
         const hint = metricHint(item, data);
@@ -356,7 +356,7 @@ export function ChartTemplate({ template, data, formatters }: {
   const summary = series.points.map(point => `${props.label(point)} ${props.value(point.value)}`).join(', ');
   return (
     <figure className="openbitfun-desktop-card__chart" data-chart={template.chart} role="group" aria-label={summary}
-      data-openbitfun-component="desktop-card" data-openbitfun-part="chart">
+      data-openbitfun-component="desktop-card" data-openbitfun-part="chart" data-starmate-component="desktop-card" data-starmate-part="chart" >
       {template.chart === 'bar' && <ChartBars {...props} />}
       {template.chart === 'column' && <ChartColumns {...props} />}
       {template.chart === 'line' && <ChartLine {...props} />}
@@ -424,7 +424,7 @@ export function CronJobTemplate({ template, formatters }: {
   const lastRun = job.state.lastRunFinishedAtMs ?? job.state.lastRunStartedAtMs ?? null;
   const lastStatus = job.state.lastRunStatus ?? null;
   return (
-    <div className="openbitfun-desktop-card__cron" data-openbitfun-component="desktop-card" data-openbitfun-part="cron">
+    <div className="openbitfun-desktop-card__cron" data-openbitfun-component="desktop-card" data-openbitfun-part="cron" data-starmate-component="desktop-card" data-starmate-part="cron" >
       <div className="openbitfun-desktop-card__cron-head">
         <span className="openbitfun-desktop-card__cron-name">{job.name}</span>
         <StatusPill tone={job.enabled ? 'success' : 'neutral'}>

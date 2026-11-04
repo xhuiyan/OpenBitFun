@@ -57,13 +57,13 @@ export const ProgressNotification: React.FC<ProgressNotificationProps> = ({ noti
       data-openbitfun-component="notification"
       data-openbitfun-part="progressItem"
       data-openbitfun-state={status || undefined}
-    >
+     data-starmate-component="notification" data-starmate-part="progressItem" data-starmate-state={status || undefined} >
       
       <div
         className="progress-notification__icon"
         data-openbitfun-component="notification"
         data-openbitfun-part="progressIcon"
-      >
+       data-starmate-component="notification" data-starmate-part="progressIcon" >
         {getStatusIcon()}
       </div>
 
@@ -83,13 +83,13 @@ export const ProgressNotification: React.FC<ProgressNotificationProps> = ({ noti
 
         
         {shouldShowProgressBar && (
-          <div className="progress-notification__progress-bar" data-openbitfun-component="notification" data-openbitfun-part="progressBar">
+          <div className="progress-notification__progress-bar" data-openbitfun-component="notification" data-openbitfun-part="progressBar" data-starmate-component="notification" data-starmate-part="progressBar" >
             <div
               className="progress-notification__progress-fill"
               data-openbitfun-component="notification"
               data-openbitfun-part="progressFill"
               style={{ transform: `scaleX(${Math.max(0, Math.min(100, progress)) / 100})` }}
-            />
+             data-starmate-component="notification" data-starmate-part="progressFill" />
           </div>
         )}
       </div>

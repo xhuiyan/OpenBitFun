@@ -240,11 +240,11 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
         data-openbitfun-state={state}
         ref={ref}
         role={state === "error" ? "alert" : "status"}
-      >
-        <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon">
+       data-starmate-component="ask-user" data-starmate-part="root" data-starmate-state={state} >
+        <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon" data-starmate-icon-slot="true" data-starmate-part="status-icon" >
           <StatusIcon state={state} />
         </span>
-        <span className={styles.statusText} data-openbitfun-part="status-label">
+        <span className={styles.statusText} data-openbitfun-part="status-label" data-starmate-part="status-label" >
           {statusLabel}
         </span>
       </div>
@@ -260,20 +260,20 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
         data-openbitfun-part="root"
         data-openbitfun-state={state}
         ref={ref}
-      >
-        <dl className={styles.answerList} data-openbitfun-part="answers">
+       data-starmate-component="ask-user" data-starmate-part="root" data-starmate-state={state} >
+        <dl className={styles.answerList} data-openbitfun-part="answers" data-starmate-part="answers" >
           {questions.map((question) => (
-            <div className={styles.answerPair} data-openbitfun-part="answer-pair" key={question.id}>
-              <dt className={styles.answeredQuestion} data-openbitfun-part="answered-question">
+            <div className={styles.answerPair} data-openbitfun-part="answer-pair" key={question.id} data-starmate-part="answer-pair" >
+              <dt className={styles.answeredQuestion} data-openbitfun-part="answered-question" data-starmate-part="answered-question" >
                 {question.prompt}
               </dt>
-              <dd className={styles.answer} data-openbitfun-part="answer">
+              <dd className={styles.answer} data-openbitfun-part="answer" data-starmate-part="answer" >
                 {(answers[question.id] ?? []).map((value) => {
                   const answer = value === question.customOption?.value
                     ? customAnswers[question.id]?.trim()
                     : question.options.find((option) => option.value === value)?.label ?? value;
                   if (answer === undefined || answer === null || answer === "") return null;
-                  return <div data-openbitfun-part="answer-value" key={value}>{answer}</div>;
+                  return <div data-openbitfun-part="answer-value" key={value} data-starmate-part="answer-value" >{answer}</div>;
                 })}
               </dd>
             </div>
@@ -296,7 +296,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
       data-openbitfun-part="header-icon"
       name="message-circle-question"
       size="md"
-    />
+     data-starmate-part="header-icon" />
   );
   const hasWaitCountdown = waitTiming?.onCancel !== undefined
     && waitTiming.remainingLabel !== undefined
@@ -305,7 +305,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
     && waitTiming.settledLabel !== null;
   const waitNode = hasWaitCountdown && waitTiming
     ? (
-      <span className={styles.waitTiming} data-counting="true" data-openbitfun-part="wait-timing">
+      <span className={styles.waitTiming} data-counting="true" data-openbitfun-part="wait-timing" data-starmate-part="wait-timing" >
         <Tooltip content={waitTiming.hint} disabled={!waitTiming.hint} placement="top">
           <Button
             aria-label={waitTiming.cancelLabel}
@@ -323,8 +323,8 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
     )
     : hasSettledWait && waitTiming
       ? (
-        <span className={styles.waitTiming} data-counting="false" data-openbitfun-part="wait-timing">
-          <span className={styles.waitSettled} data-openbitfun-part="wait-settled">
+        <span className={styles.waitTiming} data-counting="false" data-openbitfun-part="wait-timing" data-starmate-part="wait-timing" >
+          <span className={styles.waitSettled} data-openbitfun-part="wait-settled" data-starmate-part="wait-settled" >
             {waitTiming.settledLabel}
           </span>
         </span>
@@ -343,7 +343,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
       data-openbitfun-state={state}
       data-disabled={disabled ? "true" : "false"}
       ref={ref}
-    >
+     data-starmate-component="ask-user" data-starmate-expanded={resolvedExpanded ? "true" : "false"} data-starmate-has-summary={hasSummary ? "true" : "false"} data-starmate-paginated={paginated ? "true" : "false"} data-starmate-part="root" data-starmate-state={state} >
       {disclosure && !resolvedExpanded ? (
         <button data-overflow-trigger
           aria-controls={detailsId}
@@ -352,12 +352,12 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
           data-openbitfun-part="disclosure"
           onClick={() => setExpanded(true)}
           type="button"
-        >
+         data-starmate-part="disclosure" >
           <span className={styles.headerLeading}>
             {headerIcon}
             <OverflowText>{disclosure.label}</OverflowText>
           </span>
-          <span className={styles.summaryAction} data-openbitfun-icon-slot="true">
+          <span className={styles.summaryAction} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >
             <Icon name="chevron-down" size="md" />
           </span>
         </button>
@@ -369,34 +369,34 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
           data-openbitfun-part="summary"
           onClick={() => setExpanded(!resolvedExpanded)}
           type="button"
-        >
+         data-starmate-part="summary" >
           <span className={styles.summaryLeading}>
-            <span className={styles.summaryIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="summary-icon">
+            <span className={styles.summaryIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="summary-icon" data-starmate-icon-slot="true" data-starmate-part="summary-icon" >
               <Icon name="check-circle" size="md" />
             </span>
             <span className={styles.summaryCopy}>
-              <span className={styles.summaryLabel} data-openbitfun-part="summary-label">
+              <span className={styles.summaryLabel} data-openbitfun-part="summary-label" data-starmate-part="summary-label" >
                 {summaryLabel}
               </span>
               {summaryDetail !== undefined && summaryDetail !== null && (
                 <>
                   <span aria-hidden="true" className={styles.summaryArrow}>→</span>
-                  <OverflowText className={styles.summaryDetail} data-openbitfun-part="summary-detail">
+                  <OverflowText className={styles.summaryDetail} data-openbitfun-part="summary-detail" data-starmate-part="summary-detail" >
                     {summaryDetail}
                   </OverflowText>
                 </>
               )}
             </span>
           </span>
-          <span className={styles.summaryAction} data-openbitfun-icon-slot="true" data-openbitfun-part="summary-action">
+          <span className={styles.summaryAction} data-openbitfun-icon-slot="true" data-openbitfun-part="summary-action" data-starmate-icon-slot="true" data-starmate-part="summary-action" >
             {resolvedExpanded
               ? <Icon name="chevron-up" size="md" />
               : <Icon name="chevron-down" size="md" />}
           </span>
         </button>
       ) : paginated && navigation ? (
-        <div className={styles.navigation} data-openbitfun-part="navigation">
-          <div className={styles.header} data-disclosure={disclosure ? "true" : undefined} data-openbitfun-part="header">
+        <div className={styles.navigation} data-openbitfun-part="navigation" data-starmate-part="navigation" >
+          <div className={styles.header} data-disclosure={disclosure ? "true" : undefined} data-openbitfun-part="header" data-starmate-part="header" >
             {disclosure && (
               <button
                 aria-controls={detailsId}
@@ -406,15 +406,15 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                 data-openbitfun-part="collapse"
                 onClick={() => setExpanded(false)}
                 type="button"
-              />
+               data-starmate-part="collapse" />
             )}
             <span className={styles.headerLeading}>
               {headerIcon}
-              <span className={styles.questionCount} data-openbitfun-part="question-count" id={`${instanceId}-progress`}>
+              <span className={styles.questionCount} data-openbitfun-part="question-count" id={`${instanceId}-progress`} data-starmate-part="question-count" >
                 {navigation.progressLabel(activeQuestionIndex + 1, questions.length)}
               </span>
               {activeQuestion?.label !== undefined && activeQuestion.label !== null && activeQuestion.label !== "" && (
-                <OverflowText className={styles.headerSubject} data-openbitfun-part="question-label">
+                <OverflowText className={styles.headerSubject} data-openbitfun-part="question-label" data-starmate-part="question-label" >
                   {activeQuestion.label}
                 </OverflowText>
               )}
@@ -423,7 +423,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
               {waitNode}
               {headerTrailing}
               {activeQuestionIndex > 0 && (
-                <span data-openbitfun-part="back">
+                <span data-openbitfun-part="back" data-starmate-part="back" >
                   <Button
                     disabled={interactionDisabled}
                     leadingIcon={<Icon name="arrow-left" size="sm" />}
@@ -436,7 +436,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                 </span>
               )}
               {disclosure && (
-                <span className={styles.summaryAction} data-openbitfun-icon-slot="true">
+                <span className={styles.summaryAction} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >
                   <Icon name="chevron-up" size="md" />
                 </span>
               )}
@@ -448,10 +448,10 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
             data-openbitfun-part="progress"
             max={questions.length}
             value={activeQuestionIndex + 1}
-          />
+           data-starmate-part="progress" />
         </div>
       ) : header !== undefined && header !== null || disclosure ? (
-        <div className={styles.header} data-disclosure={disclosure ? "true" : undefined} data-openbitfun-part="header">
+        <div className={styles.header} data-disclosure={disclosure ? "true" : undefined} data-openbitfun-part="header" data-starmate-part="header" >
           {disclosure && (
             <button
               aria-controls={detailsId}
@@ -461,7 +461,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
               data-openbitfun-part="collapse"
               onClick={() => setExpanded(false)}
               type="button"
-            />
+             data-starmate-part="collapse" />
           )}
           <span className={styles.headerLeading}>
             {headerIcon}
@@ -471,7 +471,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
             <span className={styles.headerTrailing}>{waitNode}{headerTrailing}</span>
           )}
           {disclosure && (
-            <span className={styles.summaryAction} data-openbitfun-icon-slot="true">
+            <span className={styles.summaryAction} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >
               <Icon name="chevron-up" size="md" />
             </span>
           )}
@@ -484,10 +484,10 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
         data-openbitfun-part="details"
         hidden={Boolean(disclosure && !resolvedExpanded)}
         id={detailsId}
-      >
+       data-starmate-part="details" >
         {(!disclosure || resolvedExpanded) && (
         <div className={styles.detailsInner}>
-          <div className={styles.body} data-openbitfun-part="body">
+          <div className={styles.body} data-openbitfun-part="body" data-starmate-part="body" >
             {questions.map((question, questionIndex) => {
               if (paginated && questionIndex !== activeQuestionIndex) return null;
               const multiple = question.selectionMode === "multiple";
@@ -505,21 +505,21 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                   data-openbitfun-part="question"
                   disabled={interactionDisabled}
                   key={question.id}
-                >
+                 data-starmate-part="question" >
                   <legend
                     className={styles.prompt}
                     data-openbitfun-part="prompt"
                     ref={paginated ? promptRef : undefined}
                     tabIndex={paginated ? -1 : undefined}
-                  >
+                   data-starmate-part="prompt" >
                     {question.prompt}
                   </legend>
                   {question.description && (
-                    <div className={styles.questionDescription} data-openbitfun-part="question-description" id={`${instanceId}-${questionIndex}-hint`}>
+                    <div className={styles.questionDescription} data-openbitfun-part="question-description" id={`${instanceId}-${questionIndex}-hint`} data-starmate-part="question-description" >
                       {question.description}
                     </div>
                   )}
-                  <div className={styles.options} data-openbitfun-part="options">
+                  <div className={styles.options} data-openbitfun-part="options" data-starmate-part="options" >
                     {question.options.map((option, optionIndex) => {
                       const optionId = `${instanceId}-${questionIndex}-${optionIndex}`;
                       const selected = selectedValues.includes(option.value);
@@ -530,7 +530,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                           data-openbitfun-part="option"
                           data-selected={selected ? "true" : "false"}
                           key={option.value}
-                        >
+                         data-starmate-part="option" >
                           <SelectionControl
                             checked={selected}
                             className={styles.optionSelector}
@@ -547,11 +547,11 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                             value={option.value}
                           >
                             <span className={styles.optionCopy}>
-                              <span className={styles.optionLabel} data-openbitfun-part="label">
+                              <span className={styles.optionLabel} data-openbitfun-part="label" data-starmate-part="label" >
                                 {option.label}
                               </span>
                               {option.description !== undefined && option.description !== null && (
-                                <span className={styles.optionDescription} data-openbitfun-part="description">
+                                <span className={styles.optionDescription} data-openbitfun-part="description" data-starmate-part="description" >
                                   {option.description}
                                 </span>
                               )}
@@ -574,7 +574,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                           data-openbitfun-part="option"
                           data-custom="true"
                           data-selected={customSelected ? "true" : "false"}
-                        >
+                         data-starmate-part="option" >
                           <SelectionControl
                             checked={customSelected}
                             className={styles.optionSelector}
@@ -591,20 +591,20 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
                             value={customOption.value}
                           >
                             <span className={styles.optionCopy}>
-                              <span className={styles.optionLabel} data-openbitfun-part="label">
+                              <span className={styles.optionLabel} data-openbitfun-part="label" data-starmate-part="label" >
                                 {customOption.label}
                               </span>
                               {!customSelected
                                 && customOption.description !== undefined
                                 && customOption.description !== null && (
-                                  <span className={styles.optionDescription} data-openbitfun-part="description">
+                                  <span className={styles.optionDescription} data-openbitfun-part="description" data-starmate-part="description" >
                                     {customOption.description}
                                   </span>
                                 )}
                             </span>
                           </SelectionControl>
                           {customSelected && (
-                            <span className={styles.customInput} data-openbitfun-part="custom-input">
+                            <span className={styles.customInput} data-openbitfun-part="custom-input" data-starmate-part="custom-input" >
                               <Input
                                 aria-label={inputLabel}
                                 autoFocus={!interactionDisabled}
@@ -652,11 +652,11 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
               className={styles.feedback}
               data-openbitfun-part="feedback"
               role={state === "error" ? "alert" : "status"}
-            >
-              <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon">
+             data-starmate-part="feedback" >
+              <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon" data-starmate-icon-slot="true" data-starmate-part="status-icon" >
                 <StatusIcon state={state} />
               </span>
-              <span className={styles.statusText} data-openbitfun-part="status-label">
+              <span className={styles.statusText} data-openbitfun-part="status-label" data-starmate-part="status-label" >
                 {statusLabel}
               </span>
             </div>
@@ -666,9 +666,9 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
       </div>
 
       {showFooter && resolvedExpanded && (
-        <div className={styles.footer} data-openbitfun-part="footer">
+        <div className={styles.footer} data-openbitfun-part="footer" data-starmate-part="footer" >
           {paginated && navigation && activeQuestion?.selectionMode === "multiple" && (
-            <span aria-live="polite" className={styles.counter} data-openbitfun-part="selection-count">
+            <span aria-live="polite" className={styles.counter} data-openbitfun-part="selection-count" data-starmate-part="selection-count" >
               {navigation.selectionLabel(
                 selectedCount,
                 activeQuestion.options.length + (activeQuestion.customOption ? 1 : 0),
@@ -676,17 +676,17 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
             </span>
           )}
           {statusLabel !== undefined && statusLabel !== null && !showFeedback && (
-            <span className={styles.status} data-openbitfun-part="status" role="status">
-              <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon">
+            <span className={styles.status} data-openbitfun-part="status" role="status" data-starmate-part="status" >
+              <span className={styles.statusIcon} data-openbitfun-icon-slot="true" data-openbitfun-part="status-icon" data-starmate-icon-slot="true" data-starmate-part="status-icon" >
                 <StatusIcon state={state} />
               </span>
-              <span className={styles.statusText} data-openbitfun-part="status-label">
+              <span className={styles.statusText} data-openbitfun-part="status-label" data-starmate-part="status-label" >
                 {statusLabel}
               </span>
             </span>
           )}
           {paginated && navigation && !isLastQuestion ? (
-            <span className={styles.submit} data-openbitfun-part="next">
+            <span className={styles.submit} data-openbitfun-part="next" data-starmate-part="next" >
               <Button
                 disabled={interactionDisabled || !currentAnswered}
                 onClick={() => goToQuestion(activeQuestionIndex + 1)}
@@ -697,7 +697,7 @@ export const AskUser = forwardRef<HTMLDivElement, AskUserProps>(function AskUser
               </Button>
             </span>
           ) : submitLabel !== undefined && submitLabel !== null && (
-            <span className={styles.submit} data-openbitfun-part="submit">
+            <span className={styles.submit} data-openbitfun-part="submit" data-starmate-part="submit" >
               <Button
                 disabled={interactionDisabled || submitDisabled}
                 loading={state === "submitting"}

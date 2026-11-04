@@ -85,7 +85,7 @@ const AgentHarnessOverview: React.FC<{
           aria-label={t('harnessZone.title')}
           data-openbitfun-scene="agents"
           data-openbitfun-part="harnessPresentation"
-        >
+         data-starmate-scene="agents" data-starmate-part="harnessPresentation" >
           {HARNESS_STRATEGIES.map(({ id, icon, gear }) => {
             const agent = agents.find(candidate => candidate.id === id);
 
@@ -106,7 +106,7 @@ const AgentHarnessOverview: React.FC<{
                   data-openbitfun-profile={id}
                   data-harness-gear={gear}
                   data-testid={`agents-harness-${id}`}
-                >
+                 data-starmate-component="harness-profile-step" data-starmate-part="root" data-starmate-profile={id} >
                   <Icon name={icon} size="lg" className="openbitfun-agents-scene__harness-profile-icon" />
                   <strong className="openbitfun-agents-scene__harness-profile-name">
                     {t(`harnessZone.profiles.${id}.name`)}

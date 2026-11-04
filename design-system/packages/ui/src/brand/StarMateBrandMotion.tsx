@@ -234,7 +234,7 @@ export function StarMateBrandMotion({ active = true, size = 192, label, variant 
       aria-label={label}
       aria-hidden={label ? undefined : true}
       focusable="false"
-    >
+     data-starmate-component="openbitfun-brand-motion" data-starmate-part="root" data-starmate-active={active} data-starmate-variant={variant} >
       {variant === "construction" ? <>
         <path d={markSilhouette} fill="currentColor" fillRule="evenodd" stroke="none" opacity={0.12} />
         {markContours.map((path, index) => (

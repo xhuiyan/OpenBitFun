@@ -225,7 +225,7 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
       aria-busy={responding || undefined}
       data-testid="chat-input-approval-band"
       data-approval-scope={effectiveScope}
-    >
+     data-starmate-component="permission-request-panel" data-starmate-part="root" data-starmate-state={[responding && 'responding', error && 'error'].filter(Boolean).join(' ')} >
       <Card
         appearance="raised"
         padding="sm"
@@ -235,7 +235,7 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
         <div
           data-openbitfun-component="permission-request-panel"
           data-openbitfun-part="request"
-        >
+         data-starmate-component="permission-request-panel" data-starmate-part="request" >
           <CardHeader
             align="center"
             leading={<Icon glyph={ShieldAlert} size="sm" tone="warning" />}
@@ -295,7 +295,7 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
             data-openbitfun-component="permission-request-panel"
             data-openbitfun-part="risk"
             className="openbitfun-chat-input-approval__note"
-          >
+           data-starmate-component="permission-request-panel" data-starmate-part="risk" >
             <Alert tone="warning" message={risk} />
           </div>
         ) : null}
@@ -304,7 +304,7 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
             data-openbitfun-component="permission-request-panel"
             data-openbitfun-part="error"
             className="openbitfun-chat-input-approval__note"
-          >
+           data-starmate-component="permission-request-panel" data-starmate-part="error" >
             <Alert tone="error" message={t('permission.responseFailed')} />
           </div>
         ) : null}
@@ -315,7 +315,7 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
             data-openbitfun-component="permission-request-panel"
             data-openbitfun-part="grantScope"
             className="openbitfun-chat-input-approval__grant-note"
-          >
+           data-starmate-component="permission-request-panel" data-starmate-part="grantScope" >
             {t('permission.allowAlwaysCommandDescription')}
           </p>
         ) : null}
@@ -323,13 +323,13 @@ export const ChatInputApprovalBand: React.FC<ChatInputApprovalBandProps> = ({
         <div
           data-openbitfun-component="permission-request-panel"
           data-openbitfun-part="actions"
-        >
+         data-starmate-component="permission-request-panel" data-starmate-part="actions" >
           <CardFooter align="between" className="openbitfun-chat-input-approval__actions">
             {canAnswerAll ? (
               <div
                 data-openbitfun-component="permission-request-panel"
                 data-openbitfun-part="scope"
-              >
+               data-starmate-component="permission-request-panel" data-starmate-part="scope" >
                 <SegmentedControl
                   aria-label={t('permission.scopeLabel')}
                   data-testid="chat-input-approval-scope"

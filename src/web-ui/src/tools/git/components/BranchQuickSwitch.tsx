@@ -462,12 +462,12 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
       aria-modal={false}
       aria-label={t('quickSwitch.menuLabel')}
       onKeyDown={handleListKeyDown}
-    >
+     data-starmate-product-component="branch-quick-switch" data-starmate-product-part="root" >
       <div
         className="branch-quick-switch__search"
         data-openbitfun-product-component="branch-quick-switch"
         data-openbitfun-product-part="search"
-      >
+       data-starmate-product-component="branch-quick-switch" data-starmate-product-part="search" >
         <SearchField
           ref={inputRef}
           className="branch-quick-switch__input-field"
@@ -489,7 +489,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
           onCompositionEnd={() => setInputCompositionActive(false)}
           data-openbitfun-product-component="branch-quick-switch"
           data-openbitfun-product-part="input"
-        />
+         data-starmate-product-component="branch-quick-switch" data-starmate-product-part="input" />
         <IconButton
           ref={refreshButtonRef}
           aria-label={t('quickSwitch.refresh')}
@@ -518,7 +518,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
             className="branch-quick-switch__loading"
             data-openbitfun-product-component="branch-quick-switch"
             data-openbitfun-product-part="loading"
-          >
+           data-starmate-product-component="branch-quick-switch" data-starmate-product-part="loading" >
             <Loader2 size={16} className="branch-quick-switch__spinner" aria-hidden />
             <span>{t('quickSwitch.loading')}</span>
           </ListboxEmpty>
@@ -528,7 +528,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
             data-openbitfun-product-component="branch-quick-switch"
             data-openbitfun-product-part="empty"
             aria-live="polite"
-          >
+           data-starmate-product-component="branch-quick-switch" data-starmate-product-part="empty" >
             {t('quickSwitch.errors.loadFailed')}
           </ListboxEmpty>
         ) : filteredBranches.length === 0 ? (
@@ -536,7 +536,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
             className="branch-quick-switch__empty"
             data-openbitfun-product-component="branch-quick-switch"
             data-openbitfun-product-part="empty"
-          >
+           data-starmate-product-component="branch-quick-switch" data-starmate-product-part="empty" >
             {searchTerm ? t('empty.noMatchingBranches') : t('empty.noBranches')}
           </ListboxEmpty>
         ) : (
@@ -557,7 +557,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
               onClick={() => void handleSwitchBranch(branch.name)}
               selected={branch.current}
               value={branch.name}
-            >
+             data-starmate-state={branch.current ? 'current' : undefined} >
               {branch.name}
             </ListboxOption>
           ))
@@ -584,7 +584,7 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
             left: `${popoverLayout?.left ?? 0}px`,
             visibility: popoverLayout ? 'visible' : 'hidden',
           }}
-        >
+         data-starmate-native-webview-occlusion data-starmate-placement={popoverLayout?.placement ?? 'top'} >
           {popover}
         </div>,
         getAppearanceOverlayHost(),

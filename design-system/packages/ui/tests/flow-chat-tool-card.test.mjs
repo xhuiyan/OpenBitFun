@@ -143,7 +143,7 @@ test('Grep excerpts separate file paths, line numbers and escaped code while ret
   assert.equal((html.match(/data-openbitfun-part="grepLineNumber"/g) ?? []).length, 3);
   assert.match(html, /data-kind="context"/);
   assert.match(html, /data-gap-before="true"/);
-  assert.match(html, /data-openbitfun-part="grepLineContent">  &lt;needle value=&quot;a:12:b&quot; \/&gt;<\/pre>/);
+  assert.match(html, /data-openbitfun-part="grepLineContent"[^>]*>  &lt;needle value=&quot;a:12:b&quot; \/&gt;<\/pre>/);
   assert.match(html, /Output truncated for session preview/);
   assert.doesNotMatch(html, /legacy fallback/);
   assert.doesNotMatch(html, /src\/app\.ts:9:/);
@@ -152,7 +152,7 @@ test('Grep excerpts separate file paths, line numbers and escaped code while ret
     status: 'completed', summary: 'needle', isExpanded: true,
     resultText: 'src/app.ts:12', onToggle() {},
   }));
-  assert.match(fallback, /data-openbitfun-part="resultText">src\/app\.ts:12<\/pre>/);
+  assert.match(fallback, /data-openbitfun-part="resultText"[^>]*>src\/app\.ts:12<\/pre>/);
 });
 
 test('Grep shares the widest line-number track across files and preserves a minimum gutter', () => {
@@ -271,8 +271,8 @@ test("flow-chat entry publishes the ambient and prominent framework anatomy", ()
   assert.doesNotMatch(prominentMarkup, /data-openbitfun-part="header"/);
   assert.match(prominentMarkup, /data-openbitfun-part="extra"/);
   assert.match(prominentMarkup, /data-openbitfun-part="changeSummary"/);
-  assert.match(prominentMarkup, /data-openbitfun-change="added">\+6/);
-  assert.match(prominentMarkup, /data-openbitfun-change="removed">-0/);
+  assert.match(prominentMarkup, /data-openbitfun-change="added"[^>]*>\+6/);
+  assert.match(prominentMarkup, /data-openbitfun-change="removed"[^>]*>-0/);
   assert.match(prominentMarkup, /data-openbitfun-part="actionRegion"/);
   assert.match(prominentMarkup, /data-openbitfun-part="actions"/);
   assert.match(prominentMarkup, /data-openbitfun-part="copyButton"/);
@@ -845,8 +845,8 @@ test("standard FlowChat tool views publish their concrete component contracts", 
   assert.match(commandMarkup, /57 tests passed/);
   assert.match(deleteMarkup, /data-openbitfun-operation="delete"/);
   assert.match(deleteMarkup, /data-openbitfun-attention="prominent"/);
-  assert.match(deleteMarkup, /data-openbitfun-part="action"><span[^>]*data-overflow="false"[^>]*><span[^>]*data-overflow-content="">Delete file<\/span><\/span><\/span>/);
-  assert.match(deleteMarkup, /data-openbitfun-part="content">/);
+  assert.match(deleteMarkup, /data-openbitfun-part="action"[^>]*><span[^>]*data-overflow="false"[^>]*><span[^>]*data-overflow-content=""[^>]*>Delete file<\/span><\/span><\/span>/);
+  assert.match(deleteMarkup, /data-openbitfun-part="content"[^>]*>/);
   assert.match(editMarkup, /data-openbitfun-operation="edit"/);
   assert.match(editMarkup, /data-openbitfun-attention="prominent"/);
   assert.match(editMarkup, /\+ migrated view/);
@@ -1061,8 +1061,8 @@ test("file diff summary matches the compact file-operation information hierarchy
   assert.match(markup, />index\.ts<\/span>/);
   assert.match(markup, /data-openbitfun-part="changeSummary"/);
   assert.match(markup, /aria-label="12 additions and 0 deletions"/);
-  assert.match(markup, /data-openbitfun-change="added">\+12/);
-  assert.match(markup, /data-openbitfun-change="removed">-0/);
+  assert.match(markup, /data-openbitfun-change="added"[^>]*>\+12/);
+  assert.match(markup, /data-openbitfun-change="removed"[^>]*>-0/);
   assert.doesNotMatch(markup, /Git HEAD|data-openbitfun-part="diffType"/);
   assert.ok(pathRule, "file-diff path rule should exist");
   assert.match(pathRule, /var\(--starmate-color-content-secondary\)/);

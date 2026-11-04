@@ -119,10 +119,10 @@ export function ColorPicker({ id, className, value: controlledValue, defaultValu
         setEditing(false); inputRef.current?.blur();
       }
       else if (expanded) { event.stopPropagation(); changeOpen(false); swatchRef.current?.focus(); }
-    }}>
-    <div className={styles.control} data-openbitfun-part="control">
+    }} data-starmate-component="color-picker" data-starmate-part="root" >
+    <div className={styles.control} data-openbitfun-part="control" data-starmate-part="control" >
       <button ref={swatchRef} type="button" className={styles.swatch} data-openbitfun-part="swatch" aria-label={labels.palette}
-        aria-expanded={expanded} aria-controls={paletteId} disabled={disabled} onClick={() => changeOpen(!expanded)} />
+        aria-expanded={expanded} aria-controls={paletteId} disabled={disabled} onClick={() => changeOpen(!expanded)}  data-starmate-part="swatch" />
       <Input className={styles.hex} shape="pill" size="lg" aria-label={labels.color} value={value} ref={inputRef}
         placeholder="#RRGGBB" maxLength={7} invalid={!valid} disabled={disabled} spellCheck={false} autoComplete="off"
         onFocus={() => setEditing(true)} onBlur={() => {
@@ -143,11 +143,11 @@ export function ColorPicker({ id, className, value: controlledValue, defaultValu
           onClick={() => {
             if (editing) finishEdit();
             else { inputRef.current?.focus(); inputRef.current?.select(); }
-          }}><Icon name={editing ? 'check-line' : 'edit'} size="sm" /></button>} />
+          }} data-starmate-part="edit" ><Icon name={editing ? 'check-line' : 'edit'} size="sm" /></button>} />
     </div>
-    <div id={paletteId} className={styles.expansion} hidden={!expanded} data-openbitfun-part="expansion">
-      <div className={styles.palette} role="group" aria-label={labels.palette} data-openbitfun-part="palette">
-        <div className={styles.wheel} data-openbitfun-part="wheel">
+    <div id={paletteId} className={styles.expansion} hidden={!expanded} data-openbitfun-part="expansion" data-starmate-part="expansion" >
+      <div className={styles.palette} role="group" aria-label={labels.palette} data-openbitfun-part="palette" data-starmate-part="palette" >
+        <div className={styles.wheel} data-openbitfun-part="wheel" data-starmate-part="wheel" >
           {colorPetals.map((petal, index) => {
             const inner = index >= 12;
             const angle = (-90 + (inner ? index - 12 : index) * (inner ? 60 : 30)) * Math.PI / 180;
@@ -155,7 +155,7 @@ export function ColorPicker({ id, className, value: controlledValue, defaultValu
             const petalHex = hslToHex(petal);
             return <button key={index} type="button" className={styles.petal} data-openbitfun-part="petal"
               style={{ left: `${50 + radius * Math.cos(angle)}%`, top: `${50 + radius * Math.sin(angle)}%`, backgroundColor: petalHex, '--_color-picker-petal-index': index } as CSSProperties}
-              disabled={disabled} aria-label={petalHex} aria-pressed={hex === petalHex} onClick={() => choose(petal)} />;
+              disabled={disabled} aria-label={petalHex} aria-pressed={hex === petalHex} onClick={() => choose(petal)}  data-starmate-part="petal" />;
           })}
         </div>
         <div className={styles.lightness} role="slider" tabIndex={disabled ? -1 : 0} aria-label={labels.lightness}
@@ -172,7 +172,7 @@ export function ColorPicker({ id, className, value: controlledValue, defaultValu
             if (dragRef.current?.id !== event.pointerId) return;
             move(event); dragRef.current = undefined; event.currentTarget.releasePointerCapture(event.pointerId);
           }} onPointerCancel={event => { if (dragRef.current?.id === event.pointerId) dragRef.current = undefined; }}
-          onLostPointerCapture={event => { if (dragRef.current?.id === event.pointerId) dragRef.current = undefined; }}>
+          onLostPointerCapture={event => { if (dragRef.current?.id === event.pointerId) dragRef.current = undefined; }} data-starmate-part="lightness" >
           <svg className={styles.track} viewBox="0 0 336 280" aria-hidden="true" focusable="false">
             <defs><linearGradient id={rampId} x1="0" y1={arcTop.y} x2="0" y2={arcBottom.y} gradientUnits="userSpaceOnUse">
               <stop offset="0" stopColor={hslToHex({ ...hsl, lightness: 100 })} />
@@ -182,7 +182,7 @@ export function ColorPicker({ id, className, value: controlledValue, defaultValu
             <path d={arc} fill="none" stroke={`url(#${rampId})`} strokeWidth="18" strokeLinecap="round" />
             <path className={styles.hitTrack} d={arc} fill="none" strokeWidth="40" />
           </svg>
-          <span className={styles.thumb} data-openbitfun-part="thumb" style={{ left: `${thumb.x / 336 * 100}%`, top: `${thumb.y / 280 * 100}%` }} />
+          <span className={styles.thumb} data-openbitfun-part="thumb" style={{ left: `${thumb.x / 336 * 100}%`, top: `${thumb.y / 280 * 100}%` }}  data-starmate-part="thumb" />
         </div>
       </div>
     </div>

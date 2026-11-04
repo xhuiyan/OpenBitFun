@@ -146,12 +146,12 @@ export const ReasoningIntensityControl: React.FC<ReasoningIntensityControlProps>
       data-presentation={presentation}
       data-reasoning-mode={selectedValue === 'auto' ? 'auto' : 'manual'}
       data-disabled={locked ? 'true' : undefined}
-    >
+     data-starmate-component="model-selector" data-starmate-part="reasoningSlider" >
       <div
         className="openbitfun-reasoning-control__value"
         data-openbitfun-component="model-selector"
         data-openbitfun-part="reasoningSliderValue"
-      >
+       data-starmate-component="model-selector" data-starmate-part="reasoningSliderValue" >
         <div
           className="openbitfun-reasoning-control__summary"
           aria-hidden={expanded}
@@ -194,7 +194,7 @@ export const ReasoningIntensityControl: React.FC<ReasoningIntensityControlProps>
             data-openbitfun-part="reasoningSliderInput"
             aria-busy={pending || undefined}
             onKeyDown={handleChoiceKeyDown}
-          >
+           data-starmate-component="model-selector" data-starmate-part="reasoningSliderInput" >
             <SegmentedControl
               className="openbitfun-reasoning-control__segments"
               data-wrap={choices.length > 5 ? 'true' : undefined}
@@ -215,9 +215,9 @@ export const ReasoningIntensityControl: React.FC<ReasoningIntensityControlProps>
       </div>
       {/* Keep existing skin part IDs valid without rendering decorative layers. */}
       <span hidden aria-hidden="true">
-        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderSky" />
-        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderNebula" />
-        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderAurora" />
+        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderSky"  data-starmate-component="model-selector" data-starmate-part="reasoningSliderSky" />
+        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderNebula"  data-starmate-component="model-selector" data-starmate-part="reasoningSliderNebula" />
+        <span data-openbitfun-component="model-selector" data-openbitfun-part="reasoningSliderAurora"  data-starmate-component="model-selector" data-starmate-part="reasoningSliderAurora" />
       </span>
     </div>
   );

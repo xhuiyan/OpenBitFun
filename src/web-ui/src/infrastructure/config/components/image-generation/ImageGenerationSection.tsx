@@ -68,7 +68,7 @@ export function ImageGenerationModelCard({ settings, service, actions }: Props &
   const label = imageModelLabel(service);
   return <div className="openbitfun-model-settings__pool-item" data-openbitfun-component="model-settings"
     data-openbitfun-part="modelItem" data-openbitfun-state={!service.enabled ? 'disabled' : undefined}
-    data-testid="settings-image-model-row" data-model-id={service.id}>
+    data-testid="settings-image-model-row" data-model-id={service.id} data-starmate-component="model-settings" data-starmate-part="modelItem" data-starmate-state={!service.enabled ? 'disabled' : undefined} >
     <Card appearance="subtle" padding="md" gap="sm" className="openbitfun-model-settings__pool-card">
       <CardHeader className="openbitfun-model-settings__pool-card-header" contentAlign="start" title={
         <div className="openbitfun-model-settings__pool-card-title"><OverflowText>{label}</OverflowText>

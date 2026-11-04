@@ -41,13 +41,13 @@ export const MobileTag = forwardRef<HTMLButtonElement, MobileTagProps>(
         data-size={size}
         ref={ref}
         type={type}
-      >
+       data-starmate-component="mobile-tag" >
         {leading !== undefined && leading !== null && (
-          <span aria-hidden="true" className={styles.leading} data-openbitfun-part="leading">{leading}</span>
+          <span aria-hidden="true" className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</span>
         )}
-        <span className={styles.label} data-openbitfun-part="label">{children}</span>
+        <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</span>
         {trailing !== undefined && trailing !== null && (
-          <span className={styles.trailing} data-openbitfun-part="trailing">{trailing}</span>
+          <span className={styles.trailing} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</span>
         )}
       </button>
     );

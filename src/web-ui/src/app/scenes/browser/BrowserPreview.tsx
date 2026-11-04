@@ -13,6 +13,6 @@ export function BrowserPreview({ src, bounds }: { src: string | null; bounds: Br
       alt=""
       aria-hidden="true"
       draggable={false}
-    />
+     data-starmate-component="browser-preview" data-starmate-part="image" />
   ) : null;
 }

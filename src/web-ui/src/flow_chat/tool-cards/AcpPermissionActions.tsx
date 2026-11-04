@@ -76,7 +76,7 @@ export const AcpPermissionActions: React.FC<AcpPermissionActionsProps> = ({
   }
 
   return (
-    <span data-openbitfun-component="acp-permission-actions" data-openbitfun-part="root" data-openbitfun-presentation={presentation} className={`acp-permission-actions acp-permission-actions--${presentation} ${className}`}>
+    <span data-openbitfun-component="acp-permission-actions" data-openbitfun-part="root" data-openbitfun-presentation={presentation} className={`acp-permission-actions acp-permission-actions--${presentation} ${className}`} data-starmate-component="acp-permission-actions" data-starmate-part="root" data-starmate-presentation={presentation} >
       {options.map((option) => {
         const approve = isApprovalKind(option.kind);
         const label = fallbackLabel(option.kind, t);
@@ -105,7 +105,7 @@ export const AcpPermissionActions: React.FC<AcpPermissionActionsProps> = ({
               disabled={disabled}
               title={tooltip}
               aria-label={tooltip}
-            >
+             data-starmate-decision={approve ? 'allow' : 'reject'} >
               {label}
             </Button>
           );
@@ -125,7 +125,7 @@ export const AcpPermissionActions: React.FC<AcpPermissionActionsProps> = ({
               disabled={disabled}
               icon={optionIcon(option.kind)}
               aria-label={tooltip}
-            />
+             data-starmate-component="acp-permission-actions" data-starmate-part="action" data-starmate-decision={approve ? 'allow' : 'reject'} />
           </Tooltip>
         );
       })}

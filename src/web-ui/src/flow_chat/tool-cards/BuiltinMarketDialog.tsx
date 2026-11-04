@@ -21,9 +21,9 @@ export default function BuiltinMarketDialog({ kind, open, onClose, onExited }: {
       <DialogHeaderActions><AccountIdentityControls /><DialogClose /></DialogHeaderActions>
     </DialogHeader>
     <DialogBody><ScrollArea><Suspense fallback={t('toolCards.default.executing')}>
-      {kind === 'miniapps' ? <div className="miniapp-gallery-scene" data-openbitfun-scene="miniapp-gallery" data-openbitfun-part="root">
+      {kind === 'miniapps' ? <div className="miniapp-gallery-scene" data-openbitfun-scene="miniapp-gallery" data-openbitfun-part="root" data-starmate-scene="miniapp-gallery" data-starmate-part="root" >
         <div className="miniapp-gallery-scene__content"><MiniAppSubmissionsView /></div>
-      </div> : <div className="appearance-market" data-openbitfun-component="appearance-settings" data-openbitfun-part="marketDialog">
+      </div> : <div className="appearance-market" data-openbitfun-component="appearance-settings" data-openbitfun-part="marketDialog" data-starmate-component="appearance-settings" data-starmate-part="marketDialog" >
         <AppearanceMarketWorkflows workflow="submissions" />
       </div>}
     </Suspense></ScrollArea></DialogBody>

@@ -21,7 +21,7 @@ vi.mock('@/infrastructure/api/service-api/PermissionAPI', () => ({ permissionAPI
   listProjectGrants: mocks.grants, getProjectRules: mocks.rules,
 } }));
 vi.mock('./useProjectResources', () => ({ useProjectResources: mocks.load }));
-vi.mock('./ProjectDefaultsSection', () => ({ ProjectDefaultsSection: () => <section data-openbitfun-part="defaults" aria-label="defaults.title" /> }));
+vi.mock('./ProjectDefaultsSection', () => ({ ProjectDefaultsSection: () => <section data-openbitfun-part="defaults" aria-label="defaults.title"  data-starmate-part="defaults" /> }));
 vi.mock('@/shared/services/FileTabManager', () => ({ fileTabManager: { openFile: mocks.openFile } }));
 vi.mock('@/app/stores/navSceneStore', () => ({ useNavSceneStore: { getState: () => ({ openWorkspaceResources: mocks.browse, closeNavScene: vi.fn() }) } }));
 vi.mock('../agents/components/CreateAgentDialog', () => ({ default: (props: unknown) => { mocks.agentDialog(props); return <div data-testid="agent-dialog" />; } }));

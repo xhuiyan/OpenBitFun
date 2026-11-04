@@ -84,7 +84,7 @@ vi.mock('@starmate/ui', () => ({
   IconButton: ({ icon: _icon, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { icon?: React.ReactNode }) => (
     <button {...props} />
   ),
-  Icon: ({ name }: { name: string }) => <span data-openbitfun-name={name} />,
+  Icon: ({ name }: { name: string }) => <span data-openbitfun-name={name}  data-starmate-name={name} />,
   Input: ({
     onValueChange,
     size: _size,

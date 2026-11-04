@@ -17,7 +17,7 @@ export const MobileLink = forwardRef<HTMLAnchorElement, MobileLinkProps>(
         data-appearance={appearance}
         data-openbitfun-component="mobile-link"
         ref={ref}
-      />
+       data-starmate-component="mobile-link" />
     );
   },
 );

@@ -221,9 +221,9 @@ const MainNav: React.FC = () => {
       className="openbitfun-nav-panel__main-nav"
     >
       <NavigationPanelHeader className="openbitfun-nav-panel__main-nav-header">
-        <div data-openbitfun-component="nav-panel" data-openbitfun-part="brandHeader" className="openbitfun-nav-panel__brand-header">
-        <div className="openbitfun-nav-panel__utility-row" data-openbitfun-component="nav-panel" data-openbitfun-part="utilityRow">
-          <div className="openbitfun-nav-panel__brand-search" data-openbitfun-component="nav-panel" data-openbitfun-part="search">
+        <div data-openbitfun-component="nav-panel" data-openbitfun-part="brandHeader" className="openbitfun-nav-panel__brand-header" data-starmate-component="nav-panel" data-starmate-part="brandHeader" >
+        <div className="openbitfun-nav-panel__utility-row" data-openbitfun-component="nav-panel" data-openbitfun-part="utilityRow" data-starmate-component="nav-panel" data-starmate-part="utilityRow" >
+          <div className="openbitfun-nav-panel__brand-search" data-openbitfun-component="nav-panel" data-openbitfun-part="search" data-starmate-component="nav-panel" data-starmate-part="search" >
             <Tooltip content={t('nav.search.triggerTooltip')} placement="right" followCursor>
               <button data-overflow-trigger
                 type="button"
@@ -233,7 +233,7 @@ const MainNav: React.FC = () => {
                 onClick={() => openGlobalSearch()}
                 aria-label={t('nav.search.triggerTooltip')}
                 data-testid="nav-search-trigger"
-              >
+               data-starmate-component="nav-panel" data-starmate-part="searchTrigger" >
                 <span className="openbitfun-nav-panel__search-trigger__icon" aria-hidden="true">
                   <span className="openbitfun-nav-panel__search-trigger__icon-inner">
                     <Icon name="search" size="xs" />
@@ -258,7 +258,7 @@ const MainNav: React.FC = () => {
       <NavigationPanelBody className="openbitfun-nav-panel__sections" ref={sectionsScrollRef} scrollbarVisibility="hidden">
         <NavigationPanelContent className="openbitfun-nav-panel__main-nav-content">
         <div data-testid="nav-sections" className="openbitfun-nav-panel__sections-slot">
-        <div data-openbitfun-component="nav-panel" data-openbitfun-part="topActions" className="openbitfun-nav-panel__top-actions">
+        <div data-openbitfun-component="nav-panel" data-openbitfun-part="topActions" className="openbitfun-nav-panel__top-actions" data-starmate-component="nav-panel" data-starmate-part="topActions" >
           <Tooltip content={t('nav.items.personalOverview')} placement="right" followCursor>
             <NavigationPanelItem
               className="openbitfun-nav-panel__top-action-item openbitfun-nav-panel__top-action-item--root"
@@ -272,7 +272,7 @@ const MainNav: React.FC = () => {
               data-testid="nav-personal-overview"
               leading={<span className="openbitfun-nav-panel__top-action-icon-slot"><Icon glyph={House} size="sm" /></span>}
               selected={isOverviewActive}
-            >
+             data-starmate-component="nav-panel" data-starmate-part="topAction" data-starmate-action="personal-overview" data-starmate-state={isOverviewActive ? 'active' : ''} >
               {t('nav.items.personalOverview')}
             </NavigationPanelItem>
           </Tooltip>
@@ -282,7 +282,7 @@ const MainNav: React.FC = () => {
         </div>
 
         {/* Unified sessions */}
-        <div className="openbitfun-nav-panel__section" data-openbitfun-component="nav-panel" data-openbitfun-part="section" data-openbitfun-section="sessions">
+        <div className="openbitfun-nav-panel__section" data-openbitfun-component="nav-panel" data-openbitfun-part="section" data-openbitfun-section="sessions" data-starmate-component="nav-panel" data-starmate-part="section" data-starmate-section="sessions" >
           <StickySectionHeader scrollRootRef={sectionsScrollRef} contentRef={sessionContentRef}>
             <SectionHeader
               label={t('nav.items.sessions')}
@@ -309,7 +309,7 @@ const MainNav: React.FC = () => {
               }
             />
           </StickySectionHeader>
-          <div ref={sessionContentRef} className="openbitfun-nav-panel__items" data-openbitfun-component="nav-panel" data-openbitfun-part="sectionContent">
+          <div ref={sessionContentRef} className="openbitfun-nav-panel__items" data-openbitfun-component="nav-panel" data-openbitfun-part="sectionContent" data-starmate-component="nav-panel" data-starmate-part="sectionContent" >
             <WorkspaceListSection variant="all" scrollRootRef={sectionsScrollRef} />
           </div>
         </div>

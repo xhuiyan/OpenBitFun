@@ -240,7 +240,7 @@ export const CronToolCard: React.FC<ToolCardProps> = React.memo(({ toolItem }) =
           : undefined;
 
   return (
-    <div ref={cardRootRef} data-openbitfun-adapter="cron" data-tool-card-id={toolId ?? ''}>
+    <div ref={cardRootRef} data-openbitfun-adapter="cron" data-tool-card-id={toolId ?? ''} data-starmate-adapter="cron" >
       <CronToolCardView
         status={status}
         isExpanded={isExpanded}

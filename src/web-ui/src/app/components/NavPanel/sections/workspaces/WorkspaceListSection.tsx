@@ -381,7 +381,7 @@ const WorkspaceListSection: React.FC<WorkspaceListSectionProps> = ({ variant, sc
         onDragOver={draggable ? handleDragOver(workspace.id) : undefined}
         onDragLeave={draggable ? handleDragLeave(workspace.id) : undefined}
         onDrop={draggable ? (event) => { void handleDrop(workspace.id)(event); } : undefined}
-      >
+       data-starmate-component="workspace-list-section" data-starmate-part="item" data-starmate-state={isSelected ? 'selected' : undefined} >
         <WorkspaceItem
           workspace={workspace}
           remoteBadge={remoteBadges.get(workspace.id)}
@@ -404,7 +404,7 @@ const WorkspaceListSection: React.FC<WorkspaceListSectionProps> = ({ variant, sc
           } : undefined}
         />
         {dropTarget?.workspaceId === workspace.id ? (
-          <div data-openbitfun-component="workspace-list-section" data-openbitfun-part="dropLine" className="openbitfun-nav-panel__workspace-drop-line" aria-hidden="true" />
+          <div data-openbitfun-component="workspace-list-section" data-openbitfun-part="dropLine" className="openbitfun-nav-panel__workspace-drop-line" aria-hidden="true"  data-starmate-component="workspace-list-section" data-starmate-part="dropLine" />
         ) : null}
       </div>
     );
@@ -415,7 +415,7 @@ const WorkspaceListSection: React.FC<WorkspaceListSectionProps> = ({ variant, sc
       className={`openbitfun-nav-panel__workspace-list${draggedWorkspaceId ? ' is-dragging' : ''}`}
       data-testid="nav-workspace-list"
       data-workspace-list={variant}
-    >
+     data-starmate-component="workspace-list-section" data-starmate-part="root" data-starmate-state={draggedWorkspaceId ? 'dragging' : undefined} >
       {workspaces.length === 0 ? (
         <div
           data-openbitfun-component="workspace-list-section"
@@ -423,7 +423,7 @@ const WorkspaceListSection: React.FC<WorkspaceListSectionProps> = ({ variant, sc
           className="openbitfun-nav-panel__workspace-list-empty"
           data-testid="nav-workspace-list-empty"
           data-workspace-list={variant}
-        >
+         data-starmate-component="workspace-list-section" data-starmate-part="empty" >
           {emptyLabel}
         </div>
       ) : (

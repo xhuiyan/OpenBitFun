@@ -212,7 +212,7 @@ export const OverflowText = forwardRef<HTMLElement, OverflowTextProps>(
         style={resolvedStyle}
       >
         {behavior === "marquee" || ((textOnly || overflowStyle === "ellipsis") && lines === undefined) ? (
-          <span className={styles.content} data-openbitfun-part="content" data-overflow-content="" ref={contentRef}>
+          <span className={styles.content} data-openbitfun-part="content" data-overflow-content="" ref={contentRef} data-starmate-part="content" >
             {children}
           </span>
         ) : children}

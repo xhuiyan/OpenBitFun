@@ -53,9 +53,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
     <div data-openbitfun-component="splash-screen" data-openbitfun-part="root" data-openbitfun-state={isExiting ? 'exiting' : ''}
       className={`splash-screen${isExiting ? ' splash-screen--exiting' : ''}`}
       aria-hidden={!showDelayedMessage}
-    >
-      <div className="splash-screen__center" data-openbitfun-component="splash-screen" data-openbitfun-part="center">
-        <div className="splash-screen__logo-wrap" data-openbitfun-component="splash-screen" data-openbitfun-part="logo">
+     data-starmate-component="splash-screen" data-starmate-part="root" data-starmate-state={isExiting ? 'exiting' : ''} >
+      <div className="splash-screen__center" data-openbitfun-component="splash-screen" data-openbitfun-part="center" data-starmate-component="splash-screen" data-starmate-part="center" >
+        <div className="splash-screen__logo-wrap" data-openbitfun-component="splash-screen" data-openbitfun-part="logo" data-starmate-component="splash-screen" data-starmate-part="logo" >
           <StarMateMark className="splash-screen__logo" motion="breathe" active={!isExiting} />
         </div>
         {showDelayedMessage && delayedMessage && !isExiting && (
@@ -65,7 +65,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
             data-openbitfun-part="message"
             role="status"
             aria-live="polite"
-          >
+           data-starmate-component="splash-screen" data-starmate-part="message" >
             {delayedMessage}
           </div>
         )}

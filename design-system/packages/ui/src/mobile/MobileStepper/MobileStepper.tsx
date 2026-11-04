@@ -62,16 +62,16 @@ export function MobileStepper({
       data-disabled={disabled ? "true" : "false"}
       data-invalid={invalid ? "true" : "false"}
       data-openbitfun-component="mobile-stepper"
-    >
+     data-starmate-component="mobile-stepper" >
       {(label !== undefined && label !== null) && (
-        <span className={styles.copy} data-openbitfun-part="copy">
-          <span className={styles.label} data-openbitfun-part="label">{label}</span>
+        <span className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+          <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{label}</span>
           {description !== undefined && description !== null && (
-            <span className={styles.description} data-openbitfun-part="description">{description}</span>
+            <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{description}</span>
           )}
         </span>
       )}
-      <span className={styles.control} data-openbitfun-part="control">
+      <span className={styles.control} data-openbitfun-part="control" data-starmate-part="control" >
         <button
           aria-label={decrementLabel}
           className={styles.button}
@@ -79,7 +79,7 @@ export function MobileStepper({
           disabled={disabled || atMin}
           onClick={() => commit(current - step)}
           type="button"
-        >
+         data-starmate-part="decrement" >
           <Minus aria-hidden="true" />
         </button>
         <span className={styles.value}>
@@ -96,9 +96,9 @@ export function MobileStepper({
             role="spinbutton"
             type="text"
             value={current}
-          />
+           data-starmate-part="value" />
           {unit !== undefined && unit !== null && (
-            <span className={styles.unit} data-openbitfun-part="unit">{unit}</span>
+            <span className={styles.unit} data-openbitfun-part="unit" data-starmate-part="unit" >{unit}</span>
           )}
         </span>
         <button
@@ -108,7 +108,7 @@ export function MobileStepper({
           disabled={disabled || atMax}
           onClick={() => commit(current + step)}
           type="button"
-        >
+         data-starmate-part="increment" >
           <Plus aria-hidden="true" />
         </button>
       </span>

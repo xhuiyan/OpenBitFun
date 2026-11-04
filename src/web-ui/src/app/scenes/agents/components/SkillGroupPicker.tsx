@@ -122,7 +122,7 @@ export const SkillGroupPicker: React.FC<SkillGroupPickerProps> = ({
   }, [groups, t]);
 
   return (
-    <div data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="root" className="skill-group-picker" data-testid={testId}>
+    <div data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="root" className="skill-group-picker" data-testid={testId} data-starmate-product-component="skill-group-picker" data-starmate-product-part="root" >
       <Toolbar
         bordered={false}
         data-openbitfun-product-component="skill-group-picker"
@@ -130,17 +130,17 @@ export const SkillGroupPicker: React.FC<SkillGroupPickerProps> = ({
         leading={<span className="skill-group-picker__selected-count">
           {t('agentsOverview.selectionSaveHint')}
         </span>}
-      />
-      <div className="skill-group-picker__sections" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="sections">
+       data-starmate-product-component="skill-group-picker" data-starmate-product-part="head" />
+      <div className="skill-group-picker__sections" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="sections" data-starmate-product-component="skill-group-picker" data-starmate-product-part="sections" >
         {sections.map(([sectionLabel, sectionGroups]) => (
           <FormSection key={sectionLabel} headingAs="h4" title={sectionLabel}
-            data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="section">
+            data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="section" data-starmate-product-component="skill-group-picker" data-starmate-product-part="section" >
             {sectionGroups.map((group) => {
               const selectedInGroup = selectedGroupSkillCount(group, selectedSkillKeys);
               const allSelected = isGroupEnabled(group, selectedSkillKeys);
               return (
-                <FieldGroup data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="group" key={group.id}>
-                  <FieldRow data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="groupHeader">
+                <FieldGroup data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="group" key={group.id} data-starmate-product-component="skill-group-picker" data-starmate-product-part="group" >
+                  <FieldRow data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="groupHeader" data-starmate-product-component="skill-group-picker" data-starmate-product-part="groupHeader" >
                     <div className="skill-group-picker__group-head">
                       <div className="skill-group-picker__group-title-wrap">
                         <OverflowText className="skill-group-picker__group-name">{group.label}</OverflowText>
@@ -153,7 +153,7 @@ export const SkillGroupPicker: React.FC<SkillGroupPickerProps> = ({
                           </span>
                         )}
                       </div>
-                      <div className="skill-group-picker__group-actions" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="groupActions">
+                      <div className="skill-group-picker__group-actions" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="groupActions" data-starmate-product-component="skill-group-picker" data-starmate-product-part="groupActions" >
                         {selectedInGroup > 0 && !allSelected ? (
                           <Button
                             variant="text"
@@ -187,7 +187,7 @@ export const SkillGroupPicker: React.FC<SkillGroupPickerProps> = ({
                     </div>
                   </FieldRow>
                   <FieldRow align="start">
-                    <div className="skill-group-picker__token-grid" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="tokenGrid">
+                    <div className="skill-group-picker__token-grid" data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="tokenGrid" data-starmate-product-component="skill-group-picker" data-starmate-product-part="tokenGrid" >
                       {group.skills.map((skill) => {
                         const selected = selectedSkillKeys.includes(skill.key);
                         const tooltipFields = skillTooltipFields(skill, t, true);
@@ -215,7 +215,7 @@ export const SkillGroupPicker: React.FC<SkillGroupPickerProps> = ({
                                 skill.description,
                                 tooltipFields,
                               )}
-                            />
+                             data-starmate-product-component="skill-group-picker" data-starmate-product-part="token" data-starmate-state={selected ? 'selected' : undefined} />
                           </AgentCapabilityTooltip>
                         );
                       })}
@@ -244,14 +244,14 @@ export const SkillGroupSummary: React.FC<SkillGroupSummaryProps> = ({
   }), [selectedSkillKeys, skills, t, userGroups]);
 
   if (groups.length === 0) {
-    return <span data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="empty" className="skill-group-summary__empty">{t('agentsOverview.noSkills')}</span>;
+    return <span data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="empty" className="skill-group-summary__empty" data-starmate-product-component="skill-group-picker" data-starmate-product-part="empty" >{t('agentsOverview.noSkills')}</span>;
   }
 
   return (
-    <div data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="summary" className="skill-group-summary">
+    <div data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="summary" className="skill-group-summary" data-starmate-product-component="skill-group-picker" data-starmate-product-part="summary" >
       {groups.map((group) => (
         <FormSection key={group.id} headingAs="h4" title={group.label}
-          data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="summaryGroup">
+          data-openbitfun-product-component="skill-group-picker" data-openbitfun-product-part="summaryGroup" data-starmate-product-component="skill-group-picker" data-starmate-product-part="summaryGroup" >
           <div className="skill-group-summary__skills">
             {group.skills.map((skill) => {
               const tooltipFields = skillTooltipFields(skill, t);

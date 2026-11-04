@@ -500,8 +500,8 @@ export const DiffEditor: React.FC<DiffEditorProps> = ({
     if (!enableCustomToolbar) return null;
 
     return (
-      <div className="diff-editor-toolbar" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbar">
-        <div className="diff-editor-toolbar__info" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbarInfo">
+      <div className="diff-editor-toolbar" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbar" data-starmate-component="diff-editor" data-starmate-part="toolbar" >
+        <div className="diff-editor-toolbar__info" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbarInfo" data-starmate-component="diff-editor" data-starmate-part="toolbarInfo" >
           <span className="diff-editor-toolbar__stats">
             {diffStats.additions > 0 && (
               <span className="diff-editor-toolbar__stat diff-editor-toolbar__stat--add">
@@ -522,7 +522,7 @@ export const DiffEditor: React.FC<DiffEditorProps> = ({
           )}
         </div>
         
-        <div className="diff-editor-toolbar__actions" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbarActions">
+        <div className="diff-editor-toolbar__actions" data-openbitfun-component="diff-editor" data-openbitfun-part="toolbarActions" data-starmate-component="diff-editor" data-starmate-part="toolbarActions" >
           <Tooltip content={t('editor.diffEditor.prevChange')} placement="top">
             <IconButton
               className="diff-editor-toolbar__btn"
@@ -558,10 +558,10 @@ export const DiffEditor: React.FC<DiffEditorProps> = ({
   };
 
   return (
-    <div className={`diff-editor-container ${className}`} data-openbitfun-component="diff-editor" data-openbitfun-part="root">
+    <div className={`diff-editor-container ${className}`} data-openbitfun-component="diff-editor" data-openbitfun-part="root" data-starmate-component="diff-editor" data-starmate-part="root" >
       {renderToolbar()}
       
-      <div className="diff-editor-wrapper" data-openbitfun-component="diff-editor" data-openbitfun-part="content">
+      <div className="diff-editor-wrapper" data-openbitfun-component="diff-editor" data-openbitfun-part="content" data-starmate-component="diff-editor" data-starmate-part="content" >
         <div 
           ref={containerRef} 
           className="diff-editor-content"
@@ -576,13 +576,13 @@ export const DiffEditor: React.FC<DiffEditorProps> = ({
       </div>
 
       {loading && (
-        <div className="diff-editor-loading-overlay" data-openbitfun-component="diff-editor" data-openbitfun-part="loading" data-openbitfun-state="loading">
+        <div className="diff-editor-loading-overlay" data-openbitfun-component="diff-editor" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="diff-editor" data-starmate-part="loading" data-starmate-state="loading" >
           <LoadingState size="md">{t('editor.diffEditor.loading')}</LoadingState>
         </div>
       )}
 
       {error && (
-        <div className="diff-editor-error" data-openbitfun-component="diff-editor" data-openbitfun-part="error" data-openbitfun-state="error">
+        <div className="diff-editor-error" data-openbitfun-component="diff-editor" data-openbitfun-part="error" data-openbitfun-state="error" data-starmate-component="diff-editor" data-starmate-part="error" data-starmate-state="error" >
           <AlertCircle size={32} className="diff-editor-error__icon" />
           <p className="diff-editor-error__message">{error}</p>
           {filePath && (

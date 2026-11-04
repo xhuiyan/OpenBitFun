@@ -312,7 +312,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
       data-openbitfun-part="root"
       data-openbitfun-presentation={presentation}
       data-openbitfun-profile={knownSelectedProfile}
-    >
+     data-starmate-component="harness-selector" data-starmate-part="root" data-starmate-presentation={presentation} data-starmate-profile={knownSelectedProfile} >
       <Tooltip content={triggerTooltip}>
         {presentation === 'menu-item' ? (
           <MenuItem
@@ -342,7 +342,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
               />
             )}
             data-testid="harness-profile-selector"
-          >
+           data-starmate-component="harness-selector" data-starmate-part="trigger" data-starmate-state={triggerState} >
             {triggerLabel}
           </MenuItem>
         ) : (
@@ -362,7 +362,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
             disabled={disabled}
             onClick={handleTriggerClick}
             data-testid="harness-profile-selector"
-          >
+           data-starmate-component="harness-selector" data-starmate-part="trigger" data-starmate-state={triggerState} >
             <OverflowText className="openbitfun-harness-selector__trigger-value">{triggerLabel}</OverflowText>
           </button>
         )}
@@ -396,7 +396,9 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
           autoFocusFirstItem
           onMouseDown={event => event.stopPropagation()}
           onKeyDown={handleMenuKeyDown}
-        >
+         data-starmate-component="harness-selector" data-starmate-part="menu" data-starmate-state="open" data-starmate-page={page} data-starmate-placement={presentation === 'menu-item'
+            ? 'side'
+            : menuLayout?.placement ?? 'top'} >
           <MenuSection>
             {page === 'profiles' ? (
               <>
@@ -416,7 +418,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
                       data-openbitfun-part="profile"
                       data-openbitfun-profile={id}
                       data-openbitfun-state={state}
-                    >
+                     data-starmate-component="harness-selector" data-starmate-part="profile" data-starmate-profile={id} data-starmate-state={state} >
                       <MenuItem
                         role={creatingNewSession ? 'menuitem' : 'menuitemradio'}
                         checked={!creatingNewSession && connected}
@@ -438,7 +440,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
                         )}
                         onClick={() => handleSelectProfile(id)}
                         data-testid={`harness-profile-${id}`}
-                      >
+                       data-starmate-profile={id} data-starmate-state={state} >
                         {name}
                       </MenuItem>
                     </span>
@@ -476,7 +478,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
                       data-openbitfun-part="agent"
                       data-openbitfun-agent-id={agent.id}
                       data-openbitfun-state={state}
-                    >
+                     data-starmate-component="harness-selector" data-starmate-part="agent" data-starmate-agent-id={agent.id} data-starmate-state={state} >
                       <MenuItem
                         role={creatingNewSession ? 'menuitem' : 'menuitemradio'}
                         checked={!creatingNewSession && connected}
@@ -493,7 +495,7 @@ export const HarnessProfileSelector: React.FC<HarnessProfileSelectorProps> = ({
                         )}
                         onClick={() => handleSelectAgent(agent)}
                         data-testid={`harness-agent-${agent.id}`}
-                      >
+                       data-starmate-agent-id={agent.id} data-starmate-state={state} >
                         {agent.name}
                       </MenuItem>
                     </span>

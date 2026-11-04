@@ -100,12 +100,12 @@ const ExternalMcpDetail: React.FC<{
   value: string;
   code?: boolean;
 }> = ({ label, value, code = false }) => (
-  <div className="openbitfun-mcp-tools__server-detail-item" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailItem">
-    <span className="openbitfun-mcp-tools__server-detail-label" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailLabel">{label}:</span>
+  <div className="openbitfun-mcp-tools__server-detail-item" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailItem" data-starmate-component="external-mcp-overview" data-starmate-part="detailItem" >
+    <span className="openbitfun-mcp-tools__server-detail-label" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailLabel" data-starmate-component="external-mcp-overview" data-starmate-part="detailLabel" >{label}:</span>
     {code ? (
-      <code className="openbitfun-mcp-tools__server-detail-value" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailValue">{value}</code>
+      <code className="openbitfun-mcp-tools__server-detail-value" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailValue" data-starmate-component="external-mcp-overview" data-starmate-part="detailValue" >{value}</code>
     ) : (
-      <span className="openbitfun-mcp-tools__server-detail-value" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailValue">{value}</span>
+      <span className="openbitfun-mcp-tools__server-detail-value" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="detailValue" data-starmate-component="external-mcp-overview" data-starmate-part="detailValue" >{value}</span>
     )}
   </div>
 );
@@ -383,14 +383,14 @@ const ExternalMcpOverview: React.FC = () => {
           {scopeLabel(sourceRecord?.scope)}
         </span>
         {sourceStatus ? (
-          <span className={`openbitfun-mcp-tools__status-badge ${sourceStatus === 'degraded' ? 'is-error' : ''}`} data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state={sourceStatus === 'degraded' ? 'error' : 'stale'}>
+          <span className={`openbitfun-mcp-tools__status-badge ${sourceStatus === 'degraded' ? 'is-error' : ''}`} data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state={sourceStatus === 'degraded' ? 'error' : 'stale'} data-starmate-component="external-mcp-overview" data-starmate-part="statusBadge" data-starmate-state={sourceStatus === 'degraded' ? 'error' : 'stale'} >
             {t(`external.status.${sourceStatus}`)}
           </span>
         ) : null}
       </>
     );
     const details = (
-      <div className="openbitfun-mcp-tools__server-details" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="serverDetails">
+      <div className="openbitfun-mcp-tools__server-details" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="serverDetails" data-starmate-component="external-mcp-overview" data-starmate-part="serverDetails" >
         <ExternalMcpDetail label={t('external.details.source')} value={sourceRecord?.displayName ?? ecosystemLabel} />
         <ExternalMcpDetail label={t('external.details.scope')} value={scopeLabel(sourceRecord?.scope)} />
         <ExternalMcpDetail
@@ -431,24 +431,24 @@ const ExternalMcpOverview: React.FC = () => {
       title={t('external.title')}
       description={t('external.description')}
       titleSuffix={snapshot ? (
-        <span className="openbitfun-mcp-tools__external-summary" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="summary">
+        <span className="openbitfun-mcp-tools__external-summary" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="summary" data-starmate-component="external-mcp-overview" data-starmate-part="summary" >
           {snapshot.discoveryPending ? (
-            <span className="openbitfun-mcp-tools__status-badge is-pending" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="pending">
+            <span className="openbitfun-mcp-tools__status-badge is-pending" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="pending" data-starmate-component="external-mcp-overview" data-starmate-part="statusBadge" data-starmate-state="pending" >
               {t('external.status.checking')}
             </span>
           ) : null}
           {hostReadOnly ? (
-            <span className="openbitfun-mcp-tools__status-badge is-muted" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="muted">
+            <span className="openbitfun-mcp-tools__status-badge is-muted" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="muted" data-starmate-component="external-mcp-overview" data-starmate-part="statusBadge" data-starmate-state="muted" >
               {t('external.status.readOnly')}
             </span>
           ) : null}
           {loadFailed && snapshot ? (
-            <span className="openbitfun-mcp-tools__status-badge is-pending" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="pending">
+            <span className="openbitfun-mcp-tools__status-badge is-pending" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="pending" data-starmate-component="external-mcp-overview" data-starmate-part="statusBadge" data-starmate-state="pending" >
               {t('external.status.stale')}
             </span>
           ) : null}
           {hasMcpDiagnostics ? (
-            <span className="openbitfun-mcp-tools__status-badge is-error" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="error">
+            <span className="openbitfun-mcp-tools__status-badge is-error" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="statusBadge" data-openbitfun-state="error" data-starmate-component="external-mcp-overview" data-starmate-part="statusBadge" data-starmate-state="error" >
               {t('external.status.degraded')}
             </span>
           ) : null}
@@ -476,13 +476,13 @@ const ExternalMcpOverview: React.FC = () => {
           </Tooltip>
         </>
       )}
-    >
+     data-starmate-component="external-mcp-overview" data-starmate-part="root" >
       {entries.length > 0 && !hostReadOnly && importSupported ? (
-        <div className="openbitfun-mcp-tools__import" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="import" data-testid="external-mcp-import">
+        <div className="openbitfun-mcp-tools__import" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="import" data-testid="external-mcp-import" data-starmate-component="external-mcp-overview" data-starmate-part="import" >
           {importPlan ? (
-            <div className="openbitfun-mcp-tools__import-plan" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importPlan">
+            <div className="openbitfun-mcp-tools__import-plan" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importPlan" data-starmate-component="external-mcp-overview" data-starmate-part="importPlan" >
               <p>{t('external.import.confirm', { count: selectedImportItems.length })}</p>
-              <ScrollArea className="openbitfun-mcp-tools__import-list" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importList">
+              <ScrollArea className="openbitfun-mcp-tools__import-list" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importList" data-starmate-component="external-mcp-overview" data-starmate-part="importList" >
               <ul>
                 {eligibleImportItems.map((item) => {
                   const catalogEntry = mcpEntryByCandidateId.get(item.candidateId);
@@ -496,7 +496,7 @@ const ExternalMcpOverview: React.FC = () => {
                   const candidateScopeLabel = scopeLabel(source?.record.scope);
                   return (
                     <li key={item.candidateId}>
-                      <div className="openbitfun-mcp-tools__import-option" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOption">
+                      <div className="openbitfun-mcp-tools__import-option" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOption" data-starmate-component="external-mcp-overview" data-starmate-part="importOption" >
                         <Checkbox
                           className="openbitfun-mcp-tools__import-control"
                           checked={selectedImportCandidateIds.has(item.candidateId)}
@@ -504,11 +504,11 @@ const ExternalMcpOverview: React.FC = () => {
                           onCheckedChange={() => toggleImportCandidate(item.candidateId)}
                           aria-label={`${item.displayName}, ${ecosystemLabel}, ${candidateScopeLabel}`}
                           label={(
-                            <span className="openbitfun-mcp-tools__import-option-content" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOptionContent">
+                            <span className="openbitfun-mcp-tools__import-option-content" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOptionContent" data-starmate-component="external-mcp-overview" data-starmate-part="importOptionContent" >
                               <span>
                                 {item.displayName} → {item.proposedNativeId}
                               </span>
-                              <span className="openbitfun-mcp-tools__import-option-meta" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOptionMeta">
+                              <span className="openbitfun-mcp-tools__import-option-meta" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importOptionMeta" data-starmate-component="external-mcp-overview" data-starmate-part="importOptionMeta" >
                                 <span className="openbitfun-collection-item__badge openbitfun-mcp-tools__external-source-badge">
                                   {ecosystemLabel}
                                 </span>
@@ -525,7 +525,7 @@ const ExternalMcpOverview: React.FC = () => {
                 })}
               </ul>
               </ScrollArea>
-              <div className="openbitfun-mcp-tools__import-actions" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importActions">
+              <div className="openbitfun-mcp-tools__import-actions" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="importActions" data-starmate-component="external-mcp-overview" data-starmate-part="importActions" >
                 <Button variant="primary" size="sm" disabled={importBusy || selectedImportItems.length === 0} onClick={() => void applyImport()}>
                   {t('external.import.apply')}
                 </Button>
@@ -543,13 +543,13 @@ const ExternalMcpOverview: React.FC = () => {
         </div>
       ) : null}
       {scopedLoading && !snapshot ? (
-        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty"><p>{t('external.loading')}</p></div>
+        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" data-starmate-component="external-mcp-overview" data-starmate-part="empty" ><p>{t('external.loading')}</p></div>
       ) : loadFailed && !snapshot ? (
-        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" role="status"><p>{t('external.unavailable')}</p></div>
+        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" role="status" data-starmate-component="external-mcp-overview" data-starmate-part="empty" ><p>{t('external.unavailable')}</p></div>
       ) : snapshot?.discoveryPending && entries.length === 0 ? (
-        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" role="status"><p>{t('external.loading')}</p></div>
+        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" role="status" data-starmate-component="external-mcp-overview" data-starmate-part="empty" ><p>{t('external.loading')}</p></div>
       ) : entries.length === 0 ? (
-        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty"><p>{t('external.empty')}</p></div>
+        <div className="openbitfun-collection-empty" data-openbitfun-component="external-mcp-overview" data-openbitfun-part="empty" data-starmate-component="external-mcp-overview" data-starmate-part="empty" ><p>{t('external.empty')}</p></div>
       ) : entries.map(renderEntry)}
     </ConfigPageSection>
   );

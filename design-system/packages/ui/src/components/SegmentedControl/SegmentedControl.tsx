@@ -143,7 +143,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         ref={ref}
         role={interaction === "radio" ? "radiogroup" : "group"}
         data-interaction={interaction}
-      >
+       data-starmate-component="segmented-control" data-starmate-part="root" >
         {options.map((option, index) => {
           const selected = option.value === selectedValue;
           return (
@@ -163,15 +163,15 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
               role={interaction === "radio" ? "radio" : undefined}
               tabIndex={interaction === "buttons" || selected ? 0 : -1}
               type="button"
-            >
+             data-starmate-part="segment" data-starmate-value={option.value} >
               {option.icon && (
-                <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">
+                <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >
                   {option.icon}
                 </span>
               )}
               {labelBehavior === "static"
-                ? <span className={styles.label} data-openbitfun-part="label">{option.label}</span>
-                : <OverflowText className={styles.label} data-openbitfun-part="label">{option.label}</OverflowText>}
+                ? <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{option.label}</span>
+                : <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{option.label}</OverflowText>}
             </button>
           );
         })}

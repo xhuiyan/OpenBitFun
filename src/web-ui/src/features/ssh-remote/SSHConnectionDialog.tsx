@@ -953,15 +953,15 @@ export const SSHConnectionDialog: React.FC<SSHConnectionDialogProps> = ({
           <DialogClose />
         </DialogHeader>
         <DialogBody inset="none">
-        <div className="ssh-connection-dialog" data-openbitfun-component="ssh-remote" data-openbitfun-part="connection">
+        <div className="ssh-connection-dialog" data-openbitfun-component="ssh-remote" data-openbitfun-part="connection" data-starmate-component="ssh-remote" data-starmate-part="connection" >
           {error && (
-            <div className="ssh-connection-dialog__error-banner" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionError">
+            <div className="ssh-connection-dialog__error-banner" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionError" data-starmate-component="ssh-remote" data-starmate-part="connectionError" >
               <div className="ssh-connection-dialog__source-status" role="alert">{error}</div>
               <IconButton size="xs" variant="quiet" icon={<Icon name="xmark" size="xs" />} aria-label={t('actions.close')} onClick={dismissError} />
             </div>
           )}
 
-          <ScrollArea scrollbarVisibility="hidden" className="ssh-connection-dialog__scroll" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionContent">
+          <ScrollArea scrollbarVisibility="hidden" className="ssh-connection-dialog__scroll" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionContent" data-starmate-component="ssh-remote" data-starmate-part="connectionContent" >
           {!fixedSource && <div className="ssh-connection-dialog__source">
             <WorkspaceSourceSelector value={formData.targetType}
               allowHostDirectory={false} disabled={sourceBusy}
@@ -1003,8 +1003,8 @@ export const SSHConnectionDialog: React.FC<SSHConnectionDialogProps> = ({
                 />
                 </div>
               )}
-            >
-              <ScrollArea scrollbarVisibility="hidden" className="ssh-connection-dialog__saved-list" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionList">
+             data-starmate-component="ssh-remote" data-starmate-part="connectionSection" >
+              <ScrollArea scrollbarVisibility="hidden" className="ssh-connection-dialog__saved-list" data-openbitfun-component="ssh-remote" data-openbitfun-part="connectionList" data-starmate-component="ssh-remote" data-starmate-part="connectionList" >
                 <WorkspaceChoiceCapsules label={t('ssh.remote.savedConnections')} value={selectedConnectionId}
                   disabled={sourceBusy} onValueChange={setSelectedConnectionId}
                   onEdit={id => {
@@ -1054,7 +1054,7 @@ export const SSHConnectionDialog: React.FC<SSHConnectionDialogProps> = ({
                     key={configHost.host}
                     data-openbitfun-component="ssh-remote"
                     data-openbitfun-part="connectionItem"
-                  >
+                   data-starmate-component="ssh-remote" data-starmate-part="connectionItem" >
                     <Capsule size="xs"><Button variant="fill" size="xs"
                       onClick={() => handleFillFromConfig(configHost)}
                       disabled={isConnecting || status === 'connecting'}
@@ -1082,7 +1082,7 @@ export const SSHConnectionDialog: React.FC<SSHConnectionDialogProps> = ({
             className="ssh-connection-dialog__form"
             data-openbitfun-component="ssh-remote"
             data-openbitfun-part="connectionForm"
-          >
+           data-starmate-component="ssh-remote" data-starmate-part="connectionForm" >
             {isRemoteContainer && !fixedSource && !editOnly && (
               <Field label={t('workspaceSource.containerConnection')} controlWidth="fill">
                 <Select size="md" value={formData.targetType} disabled={sourceBusy}
@@ -1569,7 +1569,7 @@ export const SSHConnectionDialog: React.FC<SSHConnectionDialogProps> = ({
           className="ssh-connection-dialog__actions"
           data-openbitfun-component="ssh-remote"
           data-openbitfun-part="connectionActions"
-        >
+         data-starmate-component="ssh-remote" data-starmate-part="connectionActions" >
             {showNewConnection && <Button
               variant="outline"
               size="sm"

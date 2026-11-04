@@ -55,8 +55,8 @@ const CurrentSessionTitle: React.FC<CurrentSessionTitleProps> = ({ onCreateSessi
   const newSessionLabel = t('session.newCode');
 
   return (
-    <div data-openbitfun-component="current-session-title" data-openbitfun-part="root" className="openbitfun-current-session-title">
-      <OverflowText data-openbitfun-component="current-session-title" data-openbitfun-part="title" className="openbitfun-current-session-title__text">{title}</OverflowText>
+    <div data-openbitfun-component="current-session-title" data-openbitfun-part="root" className="openbitfun-current-session-title" data-starmate-component="current-session-title" data-starmate-part="root" >
+      <OverflowText data-openbitfun-component="current-session-title" data-openbitfun-part="title" className="openbitfun-current-session-title__text" data-starmate-component="current-session-title" data-starmate-part="title" >{title}</OverflowText>
       <SessionTitleNumber number={activeSession ? titleNumbers.get(activeSession.sessionId) : undefined} />
       <Tooltip content={newSessionLabel} placement="bottom">
         <button
@@ -65,7 +65,7 @@ const CurrentSessionTitle: React.FC<CurrentSessionTitleProps> = ({ onCreateSessi
           className="openbitfun-current-session-title__create-btn"
           onClick={handleCreateSession}
           aria-label={newSessionLabel}
-        >
+         data-starmate-component="current-session-title" data-starmate-part="create" >
           <Icon name="plus" size="md" />
         </button>
       </Tooltip>

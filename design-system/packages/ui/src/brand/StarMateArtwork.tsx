@@ -19,7 +19,7 @@ export interface StarMateArtworkProps extends Omit<ImgHTMLAttributes<HTMLImageEl
 export function StarMateSolidMark({ label, size, className, style, ...props }: StarMateArtworkProps) {
   return <img {...props} src={solidMark} alt={label ?? ""} width={512} height={512}
     className={classNames(styles.artwork, className)} style={{ width: size, ...style }}
-    data-openbitfun-component="openbitfun-solid-mark" data-openbitfun-part="root" />;
+    data-openbitfun-component="openbitfun-solid-mark" data-openbitfun-part="root"  data-starmate-component="openbitfun-solid-mark" data-starmate-part="root" />;
 }
 
 /** The same generated silver-on-black artwork used by installed applications. */
@@ -28,5 +28,5 @@ export function StarMateAppIcon({ label, size, className, style, ...props }: Sta
     srcSet={`${appIcon16} 16w, ${appIcon32} 32w, ${appIcon128} 128w, ${appIcon256} 256w, ${appIcon512} 512w`}
     sizes={size === undefined ? "64px" : `${size}px`} alt={label ?? ""} width={256} height={256}
     className={classNames(styles.artwork, className)} style={{ width: size, ...style }}
-    data-openbitfun-component="openbitfun-app-icon" data-openbitfun-part="root" />;
+    data-openbitfun-component="openbitfun-app-icon" data-openbitfun-part="root"  data-starmate-component="openbitfun-app-icon" data-starmate-part="root" />;
 }

@@ -169,7 +169,7 @@ export function ConversationExcerptFloatingEditor({ rootRef, selection, initialG
       data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="dialog"
       style={{ left: rect?.left ?? 0, top: rect?.top ?? 0, width: rect?.width, height: rect?.height,
         visibility: rect ? 'visible' : 'hidden' }}
-      onKeyDown={event => { if (event.key !== 'Escape' && event.key !== 'Tab') event.stopPropagation(); }}>
+      onKeyDown={event => { if (event.key !== 'Escape' && event.key !== 'Tab') event.stopPropagation(); }} data-starmate-native-webview-occlusion data-starmate-product-component="conversation-excerpt" data-starmate-product-part="dialog" >
       <div className="conversation-excerpt__floating-header">
         <button type="button" className="conversation-excerpt__drag" aria-label={t('selection.moveEditor')}
           title={t('selection.moveEditor')} onPointerDown={event => start(event, 'move')} onPointerMove={move}
@@ -181,7 +181,7 @@ export function ConversationExcerptFloatingEditor({ rootRef, selection, initialG
         <IconButton size="sm" aria-label={t('selection.cancel')} title={t('selection.cancel')} icon={<Icon name="xmark" />} onClick={close} />
       </div>
       <div className="conversation-excerpt__editor conversation-excerpt__floating-body"
-        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="editor">
+        data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="editor" data-starmate-product-component="conversation-excerpt" data-starmate-product-part="editor" >
         <ConversationExcerptEditor excerpt={selection.excerpt} comment={comment} onCommentChange={onCommentChange}
           inputRef={inputRef} onSubmit={onSubmit} fill />
       </div>

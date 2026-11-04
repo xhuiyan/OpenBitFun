@@ -182,8 +182,8 @@ const DateTimePickerPopover: React.FC<DateTimePickerPopoverProps> = ({
         if (next && !event.currentTarget.contains(next) && !anchorRef.current?.contains(next)) onClose();
       }}
       style={{ top: position.top, left: position.left }}
-    >
-      <header className="openbitfun-datetime-picker__head" data-openbitfun-component="datetime-picker" data-openbitfun-part="head">
+     data-starmate-component="datetime-picker" data-starmate-part="root" >
+      <header className="openbitfun-datetime-picker__head" data-openbitfun-component="datetime-picker" data-openbitfun-part="head" data-starmate-component="datetime-picker" data-starmate-part="head" >
         <IconButton
           type="button"
           size="sm"
@@ -209,7 +209,7 @@ const DateTimePickerPopover: React.FC<DateTimePickerPopoverProps> = ({
         ))}
       </div>
 
-      <div className="openbitfun-datetime-picker__grid" role="grid" aria-label={formatDate(anchorDate, { year: 'numeric', month: 'long' })} data-openbitfun-component="datetime-picker" data-openbitfun-part="grid">
+      <div className="openbitfun-datetime-picker__grid" role="grid" aria-label={formatDate(anchorDate, { year: 'numeric', month: 'long' })} data-openbitfun-component="datetime-picker" data-openbitfun-part="grid" data-starmate-component="datetime-picker" data-starmate-part="grid" >
         {Array.from({ length: 6 }, (_, week) => (
           <div role="row" className="openbitfun-datetime-picker__week" key={week}>
           {grid.slice(week * 7, week * 7 + 7).map(day => {
@@ -238,7 +238,7 @@ const DateTimePickerPopover: React.FC<DateTimePickerPopoverProps> = ({
               onKeyDown={event => handleDayKeyDown(event, day)}
               onFocus={() => setFocusedDayMs(day.getTime())}
               onClick={() => selectDay(day)}
-            >
+             data-starmate-component="datetime-picker" data-starmate-part="day" data-starmate-state={isSelected ? 'selected' : isToday ? 'today' : undefined} >
               {formatNumber(day.getDate(), { useGrouping: false })}
             </button>
             </div>
@@ -248,7 +248,7 @@ const DateTimePickerPopover: React.FC<DateTimePickerPopoverProps> = ({
         ))}
       </div>
 
-      <footer className="openbitfun-datetime-picker__foot" data-openbitfun-component="datetime-picker" data-openbitfun-part="foot">
+      <footer className="openbitfun-datetime-picker__foot" data-openbitfun-component="datetime-picker" data-openbitfun-part="foot" data-starmate-component="datetime-picker" data-starmate-part="foot" >
         <Button size="sm" variant="outline" onClick={() => selectDay(new Date())}>
           {t('dateTimeField.now')}
         </Button>

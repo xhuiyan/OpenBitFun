@@ -425,13 +425,13 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
         data-search-view={drilldownGroup ?? 'overview'}
         data-testid={variant === 'embedded' ? 'embedded-global-search' : undefined}
         onKeyDownCapture={handleRootKeyDownCapture}
-      >
+       data-starmate-component="global-search" data-starmate-part="root" >
         <header className="global-search__header">
           <div
             className="global-search__query-system-shell"
             data-openbitfun-component="global-search"
             data-openbitfun-part="query"
-          >
+           data-starmate-component="global-search" data-starmate-part="query" >
             <SearchField
               ref={inputRef}
               className="global-search__query global-search__query--system"
@@ -474,7 +474,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
             />
           </div>
 
-          <div className="global-search__scope-bar" data-openbitfun-component="global-search" data-openbitfun-part="scopeBar">
+          <div className="global-search__scope-bar" data-openbitfun-component="global-search" data-openbitfun-part="scopeBar" data-starmate-component="global-search" data-starmate-part="scopeBar" >
             <TabGroup
               className="global-search__scopes"
               size="sm"
@@ -503,7 +503,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
           data-openbitfun-part="results"
           data-search-state={parsedQuery.query ? 'query' : 'default'}
           data-search-view={drilldownGroup ?? 'overview'}
-        >
+         data-starmate-component="global-search" data-starmate-part="results" >
           {navigableItems.length === 0 ? (
             <div role="row"><div role="gridcell">
               <div className="global-search__empty" role="status">
@@ -531,7 +531,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
                 data-testid={groupDetailPage
                   ? `${testIdPrefix}-group-page-${groupId}`
                   : `${testIdPrefix}-group-${groupId}`}
-              >
+               data-starmate-component="global-search" data-starmate-part="group" >
                 <div role="row"><div role="columnheader">
                 {groupDetailPage ? (
                   <div className="global-search__detail-header">
@@ -636,7 +636,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
                           )}
                           selected={selected}
                           size="sm"
-                        >
+                         data-starmate-state={selected ? 'selected' : undefined} >
                           <span className="global-search__action-card-title-row">
                             <span>{item.title}</span>
                             {item.badge ? <span className="global-search__badge">{item.badge}</span> : null}
@@ -657,7 +657,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
                           leading={<Icon {...itemIcon} />}
                           selected={selected}
                           size="md"
-                        >
+                         data-starmate-state={selected ? 'selected' : undefined} >
                           <span className="global-search__action-card-title-row">
                             <span>{item.title}</span>
                             {item.badge ? <span className="global-search__badge">{item.badge}</span> : null}
@@ -676,7 +676,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
                         data-openbitfun-component="global-search"
                         data-openbitfun-part="result"
                         data-openbitfun-state={selected ? 'selected' : undefined}
-                      >
+                       data-starmate-component="global-search" data-starmate-part="result" data-starmate-state={selected ? 'selected' : undefined} >
                         <span className="global-search__result-icon" aria-hidden="true">
                           <Icon {...itemIcon} size="md" />
                         </span>
@@ -696,7 +696,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
         {(Boolean(parsedQuery.query)
           || Boolean(drilldownGroup)
           || snapshot.diagnostics.length > 0) ? (
-        <footer className="global-search__footer" data-openbitfun-component="global-search" data-openbitfun-part="footer">
+        <footer className="global-search__footer" data-openbitfun-component="global-search" data-openbitfun-part="footer" data-starmate-component="global-search" data-starmate-part="footer" >
           {snapshot.diagnostics.length > 0 ? (
             <div
               className="global-search__diagnostics"
@@ -740,7 +740,7 @@ export const GlobalSearchContent: React.FC<GlobalSearchContentProps> = ({
                       top: diagnosticsLayout?.top ?? 0,
                       visibility: diagnosticsLayout ? 'visible' : 'hidden',
                     }}
-                  >
+                   data-starmate-native-webview-occlusion >
                     <div className="global-search__diagnostic-target">
                       {tCommon('nav.search.diagnosticTarget', { host: hostLabel })}
                     </div>

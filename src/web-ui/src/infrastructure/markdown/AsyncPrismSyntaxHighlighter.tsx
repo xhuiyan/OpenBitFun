@@ -41,7 +41,7 @@ const AppearanceCodePre = React.forwardRef<HTMLPreElement, React.HTMLAttributes<
       ref={ref}
       data-openbitfun-component="markdown"
       data-openbitfun-part="codePre"
-    />
+     data-starmate-component="markdown" data-starmate-part="codePre" />
   ),
 );
 AppearanceCodePre.displayName = 'AppearanceCodePre';
@@ -177,13 +177,13 @@ export const AsyncPrismSyntaxHighlighter: React.FC<AsyncPrismSyntaxHighlighterPr
           style={customStyle}
           data-openbitfun-component="markdown"
           data-openbitfun-part="codePre"
-        >
+         data-starmate-component="markdown" data-starmate-part="codePre" >
           <code
             {...codeTagProps}
             style={codeTagProps?.style}
             data-openbitfun-component="markdown"
             data-openbitfun-part="codeContent"
-          >
+           data-starmate-component="markdown" data-starmate-part="codeContent" >
             {children}
           </code>
         </pre>

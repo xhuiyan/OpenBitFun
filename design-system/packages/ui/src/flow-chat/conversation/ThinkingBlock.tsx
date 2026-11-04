@@ -113,11 +113,11 @@ export const ThinkingBlock = forwardRef<HTMLDivElement, ThinkingBlockProps>(func
     data-thinking-motion={handoff.motionReady ? undefined : 'initial'}
     style={{ ...style, '--_thinking-handoff-top': handoff.top } as CSSProperties}
     className={`flow-thinking-item ${reasoningKind} ${expanded ? 'expanded' : 'collapsed'} ${className}`.trim()}
-  >
+   data-starmate-component="model-thinking-display" data-starmate-part="root" data-starmate-context={context} data-starmate-state={[expanded && 'expanded', visuallyStreaming && 'streaming'].filter(Boolean).join(' ')} >
     <div className="thinking-header-slot">
       <div data-openbitfun-component="model-thinking-display" data-openbitfun-part="header"
         className="thinking-collapsed-header"
-      >
+       data-starmate-component="model-thinking-display" data-starmate-part="header" >
         {/* Keep one tooltip owner across docking; retained click focus must not
             reopen a title fallback when the disclosure changes state. */}
         <span className="thinking-annotation-line thinking-annotation-line--before" aria-hidden="true" />
@@ -129,7 +129,7 @@ export const ThinkingBlock = forwardRef<HTMLDivElement, ThinkingBlockProps>(func
             aria-expanded={hasStreamingDisclosure ? streamingExpanded : !onOpenDetails && onToggle ? expanded : undefined}
             aria-controls={hasStreamingDisclosure || (!onOpenDetails && onToggle) ? contentId : undefined}
             onClick={onActivate}
-            icon={<span className="thinking-leading-icon" data-openbitfun-component="model-thinking-display" data-openbitfun-part="leadingIcon">
+            icon={<span className="thinking-leading-icon" data-openbitfun-component="model-thinking-display" data-openbitfun-part="leadingIcon" data-starmate-component="model-thinking-display" data-starmate-part="leadingIcon" >
               <ThinkingIndicator active={streaming} size="sm"
                 className={onOpenDetails || streaming ? undefined : 'thinking-leading-icon__default'} />
               {!onOpenDetails && !streaming && <>
@@ -142,20 +142,20 @@ export const ThinkingBlock = forwardRef<HTMLDivElement, ThinkingBlockProps>(func
         <span className="thinking-annotation-line thinking-annotation-line--after" aria-hidden="true" />
         <label data-overflow-trigger className="thinking-label-target" htmlFor={toggleId}>
           <OverflowText data-openbitfun-component="model-thinking-display" data-openbitfun-part="label"
-            className="thinking-label" title={docked ? '' : reasoningKind === 'summary' && !expanded ? label : undefined}>{handoff.label}</OverflowText>
+            className="thinking-label" title={docked ? '' : reasoningKind === 'summary' && !expanded ? label : undefined} data-starmate-component="model-thinking-display" data-starmate-part="label" >{handoff.label}</OverflowText>
         </label>
       </div>
     </div>
     <div id={contentId} aria-hidden={!expanded} {...inertProps(!expanded)}
       ref={expandContainerRef}
       className={`thinking-expand-container${expanded ? ' thinking-expand-container--open' : ''}`}
-      data-openbitfun-component="model-thinking-display" data-openbitfun-part="expandContainer">
+      data-openbitfun-component="model-thinking-display" data-openbitfun-part="expandContainer" data-starmate-component="model-thinking-display" data-starmate-part="expandContainer" >
       {mountContent && <div className={`thinking-content-wrapper ${scrollState.hasScroll ? 'has-scroll' : ''} ${scrollState.atTop ? 'at-top' : ''} ${scrollState.atBottom ? 'at-bottom' : ''}`}
-        data-openbitfun-component="model-thinking-display" data-openbitfun-part="contentWrapper">
+        data-openbitfun-component="model-thinking-display" data-openbitfun-part="contentWrapper" data-starmate-component="model-thinking-display" data-starmate-part="contentWrapper" >
         <div {...contentProps} ref={contentRef} data-openbitfun-component="model-thinking-display"
           data-openbitfun-part="content" data-testid="chat-thinking-content" data-status={status}
           aria-hidden={compactViewport || undefined} {...inertProps(Boolean(compactViewport))}
-          data-streaming={streaming ? 'true' : 'false'} className={`thinking-content expanded ${contentProps?.className ?? ''}`.trim()}>
+          data-streaming={streaming ? 'true' : 'false'} className={`thinking-content expanded ${contentProps?.className ?? ''}`.trim()} data-starmate-component="model-thinking-display" data-starmate-part="content" >
           <div className="thinking-content-body">{children}</div>
         </div>
       </div>}

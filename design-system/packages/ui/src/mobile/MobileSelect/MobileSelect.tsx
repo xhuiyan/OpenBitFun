@@ -84,12 +84,12 @@ export function MobileSelect({
       data-invalid={invalid ? "true" : "false"}
       data-open={open ? "true" : "false"}
       data-openbitfun-component="mobile-select"
-    >
+     data-starmate-component="mobile-select" >
       {label !== undefined && label !== null && (
-        <span className={styles.copy} data-openbitfun-part="copy">
-          <span className={styles.label} data-openbitfun-part="label">{label}</span>
+        <span className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+          <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{label}</span>
           {description !== undefined && description !== null && (
-            <span className={styles.description} data-openbitfun-part="description">{description}</span>
+            <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{description}</span>
           )}
         </span>
       )}
@@ -103,8 +103,8 @@ export function MobileSelect({
         disabled={disabled}
         onClick={() => setSheetOpen(true)}
         type="button"
-      >
-        <span className={styles.value} data-openbitfun-part="value" data-placeholder={selectedOption ? "false" : "true"}>
+       data-starmate-part="field" >
+        <span className={styles.value} data-openbitfun-part="value" data-placeholder={selectedOption ? "false" : "true"} data-starmate-part="value" >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown aria-hidden="true" className={styles.chevron} />

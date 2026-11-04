@@ -25,7 +25,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@starmate/ui', () => ({
-  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name} />,
+  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name}  data-starmate-component="icon" data-starmate-name={name} />,
   OverflowText: ({ children, behavior: _behavior, marqueeActive: _marqueeActive, ...props }: any) => <span {...props}>{children}</span>,
   IconButton: ({ icon, loading: _loading, size: _size, variant: _variant, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & {
     icon?: ReactNode;

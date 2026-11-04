@@ -27,7 +27,7 @@ vi.mock('react-i18next', () => ({
 vi.mock('@starmate/ui', async importOriginal => ({
   IconButton: (await importOriginal<typeof import('@starmate/ui')>()).IconButton,
   Icon: ({ name, className }: { name: string; className?: string }) => (
-    <span className={className} data-openbitfun-component="icon" data-openbitfun-name={name} />
+    <span className={className} data-openbitfun-component="icon" data-openbitfun-name={name}  data-starmate-component="icon" data-starmate-name={name} />
   ),
   Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));

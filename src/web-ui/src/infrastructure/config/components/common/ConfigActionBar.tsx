@@ -43,7 +43,7 @@ export const ConfigActionBar: React.FC<ConfigActionBarProps> = ({
       className={['openbitfun-config-action-bar', className].filter(Boolean).join(' ')}
       data-openbitfun-component="config"
       data-openbitfun-part="actionBar"
-    >
+     data-starmate-component="config" data-starmate-part="actionBar" >
       <ConfigFieldStatus status={status} message={statusMessage} />
       {status !== 'saved' ? (
         <div className="openbitfun-config-action-bar__actions">

@@ -38,12 +38,12 @@ export function ModelBillingSummary({ primary, fast, selected, disabled, compact
     if (billing.kind === 'api') return t('billing.api');
     return t('billing.unknown');
   };
-  return <div className="model-billing" data-compact={compact} data-comparison={comparison.status} data-testid="model-billing-summary" data-openbitfun-component="model-billing" data-openbitfun-part="root">
+  return <div className="model-billing" data-compact={compact} data-comparison={comparison.status} data-testid="model-billing-summary" data-openbitfun-component="model-billing" data-openbitfun-part="root" data-starmate-component="model-billing" data-starmate-part="root" >
     {compact ? <MenuList><MenuItem data-testid="model-billing-toggle" aria-label={t('billing.details')} aria-describedby={summaryId}
       aria-expanded={expanded} onClick={() => setExpanded(!expanded)} labelBehavior="static"
       leading={<Icon glyph={comparison.status === 'fastHigher' ? TriangleAlert : Wallet} />}
       metadata={<Icon name={expanded ? 'chevron-down' : 'chevron-right'} size="sm" />}>
-      <span className="model-billing__compact-summary" data-openbitfun-component="model-billing" data-openbitfun-part="compactSummary">
+      <span className="model-billing__compact-summary" data-openbitfun-component="model-billing" data-openbitfun-part="compactSummary" data-starmate-component="model-billing" data-starmate-part="compactSummary" >
         <span>{t('billing.title')}</span><span id={summaryId} className="model-billing__compact-status" role="status">{compactStatus}</span>
       </span>
     </MenuItem></MenuList> : <div className="model-billing__heading"><strong>{t('billing.title')}</strong>

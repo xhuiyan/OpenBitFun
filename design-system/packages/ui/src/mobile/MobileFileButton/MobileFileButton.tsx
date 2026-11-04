@@ -30,7 +30,7 @@ export const MobileFileButton = forwardRef<HTMLInputElement, MobileFileButtonPro
         className={classNames(styles.root, className)}
         data-openbitfun-component="mobile-file-button"
         data-loading={loading ? "true" : "false"}
-      >
+       data-starmate-component="mobile-file-button" >
         {loading
           ? <span aria-hidden="true" className={styles.spinner} />
           : leading && <span className={styles.slot}>{leading}</span>}

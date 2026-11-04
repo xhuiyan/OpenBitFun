@@ -119,7 +119,7 @@ export const FlowGroup = forwardRef<HTMLDivElement, FlowGroupProps>(function Flo
     data-file-revisions={fileRevision ? 'true' : undefined}
     data-collected={itemCount > 1 ? 'true' : 'false'} data-item-count={itemCount}
     className={['explore-region', 'explore-region--collapsible', expanded ? 'explore-region--expanded' : 'explore-region--collapsed',
-      streaming && 'explore-region--streaming', bounded && 'explore-region--bounded', fileRevision && fileRevisionStyles.group, className].filter(Boolean).join(' ')}>
+      streaming && 'explore-region--streaming', bounded && 'explore-region--bounded', fileRevision && fileRevisionStyles.group, className].filter(Boolean).join(' ')} data-starmate-component={component} data-starmate-part="root" data-starmate-state={expanded ? 'expanded' : undefined} >
     {fileRevision ? <FileRevisionSummary file={fileRevision} itemCount={itemCount} expanded={expanded}
       onToggle={onExpandedChange ? handleToggle : undefined} contentId={contentId}
       description={[summaryDescription ?? summary, fileRevision.statusLabel, fileRevision.changeSummary?.label].filter(Boolean).join(' · ')} component={component} testId={testId} />
@@ -133,7 +133,7 @@ export const FlowGroup = forwardRef<HTMLDivElement, FlowGroupProps>(function Flo
             if (onExpandedChange && event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
               event.preventDefault(); handleToggle();
             }
-          }} data-testid={`${testId}-toggle`} data-group-kind={kind} data-expanded={expanded ? 'true' : 'false'}>
+          }} data-testid={`${testId}-toggle`} data-group-kind={kind} data-expanded={expanded ? 'true' : 'false'} data-starmate-component={component} data-starmate-part="header" >
           <span className="explore-region__summary-surface">
             <span aria-hidden="true" data-capsule-skin className="explore-region__skin" />
             <StatusPill tone="neutral" className="explore-region__pill" leading={
@@ -143,7 +143,7 @@ export const FlowGroup = forwardRef<HTMLDivElement, FlowGroupProps>(function Flo
                 <Icon name="chevron-down" size="sm" className="explore-region__leading-icon--expanded" />
               </span>
             }>
-              <span data-openbitfun-component={component} data-openbitfun-part="summary" className="explore-region__summary">
+              <span data-openbitfun-component={component} data-openbitfun-part="summary" className="explore-region__summary" data-starmate-component={component} data-starmate-part="summary" >
                 {summaryItems?.length ? summaryItems.map((item, index) => <Fragment key={index}>
                   {index > 0 && <span aria-hidden="true" className="explore-region__separator"> · </span>}
                   <span className="explore-region__summary-item">{item.label}{' '}<span className="explore-region__count">{item.count}</span></span>
@@ -154,19 +154,19 @@ export const FlowGroup = forwardRef<HTMLDivElement, FlowGroupProps>(function Flo
         </div>
       </Tooltip>
       {expanded && browser && <div data-openbitfun-component={component} data-openbitfun-part="controls"
-        className="explore-region__controls" onFocusCapture={browser.onInteract}>
+        className="explore-region__controls" onFocusCapture={browser.onInteract} data-starmate-component={component} data-starmate-part="controls" >
         <FlowGroupBrowser browser={browser} />
       </div>}
     </div>}
     {!externalContent && <FlowChatCollapse isOpen={expanded} id={contentId}
       data-openbitfun-component={component} data-openbitfun-part="contentWrapper"
       className="explore-region__content-wrapper"
-      innerClassName="explore-region__content-inner">
+      innerClassName="explore-region__content-inner" data-starmate-component={component} data-starmate-part="contentWrapper" >
       <Content {...contentProps} ref={contentRef}
         {...(bounded ? { edgeFade: 'vertical' as const, overscrollBehaviorY: 'auto' as const } : {})}
         data-openbitfun-component={component} data-openbitfun-part="content"
         className="explore-region__content" onScroll={onContentScroll ?? contentProps?.onScroll}
-        data-testid={`${testId}-content`} data-group-kind={kind} data-expanded={expanded ? 'true' : 'false'}>
+        data-testid={`${testId}-content`} data-group-kind={kind} data-expanded={expanded ? 'true' : 'false'} data-starmate-component={component} data-starmate-part="content" >
         {browser?.empty && <div className="explore-region__empty">{browser.emptyLabel}</div>}
         {children}
       </Content>

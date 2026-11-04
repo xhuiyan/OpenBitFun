@@ -389,8 +389,8 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
 
   if (!planData && loadError && status === 'completed') {
     return (
-      <div data-openbitfun-component="create-plan-display" data-openbitfun-part="root" className="create-plan-display status-error">
-        <div className="create-plan-header" data-openbitfun-component="create-plan-display" data-openbitfun-part="header">
+      <div data-openbitfun-component="create-plan-display" data-openbitfun-part="root" className="create-plan-display status-error" data-starmate-component="create-plan-display" data-starmate-part="root" >
+        <div className="create-plan-header" data-openbitfun-component="create-plan-display" data-openbitfun-part="header" data-starmate-component="create-plan-display" data-starmate-part="header" >
           <button data-overflow-trigger
             type="button"
             className="create-plan-header-main create-plan-header-main--clickable"
@@ -402,13 +402,13 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
             </div>
           </button>
         </div>
-        <div className="create-plan-content" data-openbitfun-component="create-plan-display" data-openbitfun-part="content">
-          <div className="plan-content-left" data-openbitfun-component="create-plan-display" data-openbitfun-part="overview">
+        <div className="create-plan-content" data-openbitfun-component="create-plan-display" data-openbitfun-part="content" data-starmate-component="create-plan-display" data-starmate-part="content" >
+          <div className="plan-content-left" data-openbitfun-component="create-plan-display" data-openbitfun-part="overview" data-starmate-component="create-plan-display" data-starmate-part="overview" >
             <h3 className="plan-title">{t('toolCards.plan.invalidFormat')}</h3>
             <p className="plan-overview">{t('toolCards.plan.invalidFormatDescription')}</p>
           </div>
         </div>
-        <div className="create-plan-footer" data-openbitfun-component="create-plan-display" data-openbitfun-part="footer">
+        <div className="create-plan-footer" data-openbitfun-component="create-plan-display" data-openbitfun-part="footer" data-starmate-component="create-plan-display" data-starmate-part="footer" >
           <Button variant="outline" size="sm" type="button" onClick={handleViewPlan}>
             {t('toolCards.plan.viewPlan')}
           </Button>
@@ -422,8 +422,8 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
 
   if (!planData) {
     return (
-      <div data-openbitfun-component="create-plan-display" data-openbitfun-part="loading" data-openbitfun-state="loading" className={`create-plan-display create-plan-display--loading create-plan-display--loading-shimmer status-${status}`}>
-        <div className="create-plan-header create-plan-header--loading-shimmer" data-openbitfun-component="create-plan-display" data-openbitfun-part="header">
+      <div data-openbitfun-component="create-plan-display" data-openbitfun-part="loading" data-openbitfun-state="loading" className={`create-plan-display create-plan-display--loading create-plan-display--loading-shimmer status-${status}`} data-starmate-component="create-plan-display" data-starmate-part="loading" data-starmate-state="loading" >
+        <div className="create-plan-header create-plan-header--loading-shimmer" data-openbitfun-component="create-plan-display" data-openbitfun-part="header" data-starmate-component="create-plan-display" data-starmate-part="header" >
           <span>{t('toolCards.plan.loadingPlan')}</span>
         </div>
       </div>
@@ -435,13 +435,13 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
       ref={cardRootRef}
       data-tool-card-id={toolCardId ?? ''}
       className={`create-plan-display status-${status}${isLoading ? ' create-plan-display--plan-generating' : ''}`}
-    >
+     data-starmate-component="create-plan-display" data-starmate-part="root" >
       <div
         className={`create-plan-header${isLoading ? ' create-plan-header--loading-shimmer' : ''}`}
         data-openbitfun-component="create-plan-display"
         data-openbitfun-part="header"
         data-tool-card-action-scope
-      >
+       data-starmate-component="create-plan-display" data-starmate-part="header" >
         <Tooltip content={t('toolCards.plan.clickToOpenPlan')}>
           <button data-overflow-trigger
             type="button"
@@ -449,7 +449,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
             data-openbitfun-component="create-plan-display"
             data-openbitfun-part="headerMain"
             onClick={handleViewPlan}
-          >
+           data-starmate-component="create-plan-display" data-starmate-part="headerMain" >
             <div className="header-left">
               <div className="file-icon-wrapper">
                 <Icon glyph={ClipboardList} size="sm" />
@@ -494,8 +494,8 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
         </ToolCardActions>
       </div>
 
-      <div className="create-plan-content" data-openbitfun-component="create-plan-display" data-openbitfun-part="content">
-        <div className="plan-content-left" data-openbitfun-component="create-plan-display" data-openbitfun-part="overview">
+      <div className="create-plan-content" data-openbitfun-component="create-plan-display" data-openbitfun-part="content" data-starmate-component="create-plan-display" data-starmate-part="content" >
+        <div className="plan-content-left" data-openbitfun-component="create-plan-display" data-openbitfun-part="overview" data-starmate-component="create-plan-display" data-starmate-part="overview" >
           <p className="plan-overview" title={planFilePath}>{planFileName}</p>
           <p className="plan-overview">{planData.overview}</p>
         </div>
@@ -513,7 +513,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
       </div>
 
       {planData.todos && planData.todos.length > 0 && isTodosExpanded && (
-        <div className="create-plan-todos create-plan-todos--expanded" data-openbitfun-component="create-plan-display" data-openbitfun-part="todos" data-openbitfun-state="expanded">
+        <div className="create-plan-todos create-plan-todos--expanded" data-openbitfun-component="create-plan-display" data-openbitfun-part="todos" data-openbitfun-state="expanded" data-starmate-component="create-plan-display" data-starmate-part="todos" data-starmate-state="expanded" >
           <ScrollArea className="todos-list" edgeFade="vertical" overscrollBehaviorY="auto">
             {todoRenderItems.map(({ todo, key }) => (
               <div
@@ -521,8 +521,8 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
                 className={`todo-item status-${todo.status || 'pending'}`}
                 data-openbitfun-component="create-plan-display"
                 data-openbitfun-part="todo"
-              >
-                <span className="todo-icon-slot" data-openbitfun-icon-slot="true" aria-hidden="true">
+               data-starmate-component="create-plan-display" data-starmate-part="todo" >
+                <span className="todo-icon-slot" data-openbitfun-icon-slot="true" aria-hidden="true" data-starmate-icon-slot="true" >
                   {todo.status === 'completed' && (
                     <Icon name="check-circle" size="xs" className="todo-icon todo-icon--completed" />
                   )}
@@ -543,7 +543,7 @@ export const PlanDisplay: React.FC<PlanDisplayProps> = ({
         </div>
       )}
 
-      <div className={`create-plan-footer${isLoading ? ' create-plan-footer--generating-only' : ''}`} data-openbitfun-component="create-plan-display" data-openbitfun-part="footer">
+      <div className={`create-plan-footer${isLoading ? ' create-plan-footer--generating-only' : ''}`} data-openbitfun-component="create-plan-display" data-openbitfun-part="footer" data-starmate-component="create-plan-display" data-starmate-part="footer" >
         <Button
           type="button"
           variant="primary"

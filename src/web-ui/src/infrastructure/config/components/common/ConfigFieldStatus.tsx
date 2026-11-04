@@ -25,7 +25,7 @@ export const ConfigFieldStatus: React.FC<ConfigFieldStatusProps> = ({
       data-openbitfun-status={status}
       role={status === 'error' ? 'alert' : 'status'}
       aria-live={status === 'error' ? 'assertive' : 'polite'}
-    >
+     data-starmate-component="config" data-starmate-part="fieldStatus" data-starmate-status={status} >
       <span className="openbitfun-config-field-status__marker" aria-hidden="true" />
       <span>{message ?? t(`changeStatus.${status}`)}</span>
     </div>

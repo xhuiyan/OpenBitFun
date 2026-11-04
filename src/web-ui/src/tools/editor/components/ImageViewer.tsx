@@ -202,11 +202,11 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
       data-openbitfun-component="image-viewer"
       data-openbitfun-part="root"
       data-openbitfun-state={expanded ? 'fullscreen' : undefined}
-    >
+     data-starmate-native-webview-occlusion={expanded || undefined} data-starmate-component="image-viewer" data-starmate-part="root" data-starmate-state={expanded ? 'fullscreen' : undefined} >
       <Toolbar
         className="openbitfun-image-viewer__toolbar"
         leading={
-          <div data-openbitfun-component="image-viewer" data-openbitfun-part="info" className="openbitfun-image-viewer__info">
+          <div data-openbitfun-component="image-viewer" data-openbitfun-part="info" className="openbitfun-image-viewer__info" data-starmate-component="image-viewer" data-starmate-part="info" >
             <OverflowText className="openbitfun-image-viewer__filename">{fileName || filePath.split(/[/\\]/).pop()}</OverflowText>
             {originCurrent && imageDimensions && (
               <span className="openbitfun-image-viewer__dimensions">
@@ -293,23 +293,23 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
         }
       />
 
-      <div data-openbitfun-component="image-viewer" data-openbitfun-part="container" className="openbitfun-image-viewer__container">
+      <div data-openbitfun-component="image-viewer" data-openbitfun-part="container" className="openbitfun-image-viewer__container" data-starmate-component="image-viewer" data-starmate-part="container" >
         {(!originCurrent || loading) && (
-          <div data-openbitfun-component="image-viewer" data-openbitfun-part="loading" className="openbitfun-image-viewer__loading">
+          <div data-openbitfun-component="image-viewer" data-openbitfun-part="loading" className="openbitfun-image-viewer__loading" data-starmate-component="image-viewer" data-starmate-part="loading" >
             <div className="openbitfun-image-viewer__spinner" />
             <p>{t('editor.common.loading')}</p>
           </div>
         )}
 
         {originCurrent && error && (
-          <div data-openbitfun-component="image-viewer" data-openbitfun-part="error" className="openbitfun-image-viewer__error">
+          <div data-openbitfun-component="image-viewer" data-openbitfun-part="error" className="openbitfun-image-viewer__error" data-starmate-component="image-viewer" data-starmate-part="error" >
             <p>{error}</p>
             <p className="openbitfun-image-viewer__error-path">{filePath}</p>
           </div>
         )}
 
         {originCurrent && !loading && !error && imageUrl && (
-          <div data-openbitfun-component="image-viewer" data-openbitfun-part="imageWrapper" className="openbitfun-image-viewer__image-wrapper">
+          <div data-openbitfun-component="image-viewer" data-openbitfun-part="imageWrapper" className="openbitfun-image-viewer__image-wrapper" data-starmate-component="image-viewer" data-starmate-part="imageWrapper" >
             <img
               src={imageUrl}
               alt={fileName || filePath}
@@ -321,12 +321,12 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
               }}
               onLoad={handleImageLoad}
               onError={handleImageError}
-            />
+             data-starmate-component="image-viewer" data-starmate-part="image" />
           </div>
         )}
         
         {originCurrent && !loading && !error && !imageUrl && (
-          <div data-openbitfun-component="image-viewer" data-openbitfun-part="error" className="openbitfun-image-viewer__error">
+          <div data-openbitfun-component="image-viewer" data-openbitfun-part="error" className="openbitfun-image-viewer__error" data-starmate-component="image-viewer" data-starmate-part="error" >
             <p>{t('editor.imageViewer.imageUrlEmpty')}</p>
           </div>
         )}

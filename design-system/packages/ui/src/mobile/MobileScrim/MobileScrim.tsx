@@ -17,7 +17,7 @@ export const MobileScrim = forwardRef<HTMLButtonElement, MobileScrimProps>(
         data-visible={visible ? "true" : "false"}
         ref={ref}
         type={type}
-      />
+       data-starmate-component="mobile-scrim" />
     );
   },
 );

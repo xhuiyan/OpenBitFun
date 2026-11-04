@@ -125,7 +125,7 @@ export const VirtualItemRenderer = React.memo<VirtualItemRendererProps>(
 
         case 'image-analyzing':
           return (
-            <div data-openbitfun-component="virtual-item" data-openbitfun-part="imageAnalyzing" className="model-round-item model-round-item--streaming">
+            <div data-openbitfun-component="virtual-item" data-openbitfun-part="imageAnalyzing" className="model-round-item model-round-item--streaming" data-starmate-component="virtual-item" data-starmate-part="imageAnalyzing" >
               <AmbientToolCard
                 status="running"
                 header={
@@ -139,7 +139,7 @@ export const VirtualItemRenderer = React.memo<VirtualItemRendererProps>(
           );
 
         default:
-          return <div data-openbitfun-component="virtual-item" data-openbitfun-part="placeholder" style={{ minHeight: '1px' }} />;
+          return <div data-openbitfun-component="virtual-item" data-openbitfun-part="placeholder" style={{ minHeight: '1px' }}  data-starmate-component="virtual-item" data-starmate-part="placeholder" />;
       }
     })();
     
@@ -165,7 +165,7 @@ export const VirtualItemRenderer = React.memo<VirtualItemRendererProps>(
         data-virtual-item-key={getVirtualItemStableKey(item)}
         data-virtual-index={index}
         data-item-index={index}
-      >
+       data-starmate-component="virtual-item" data-starmate-part="root" data-starmate-state={[isSearchMatch && 'searchMatch', isSearchCurrent && 'searchCurrent'].filter(Boolean).join(' ')} >
         {content || <div style={{ minHeight: '1px' }} />}
         <ConversationExcerptMarkers wrapper={wrapper} turnId={item.turnId} />
         <span
@@ -183,7 +183,7 @@ export const VirtualItemRenderer = React.memo<VirtualItemRendererProps>(
               '--_flowchat-focus-marker-height': `${itemFocus.markerHeight}px`,
             } : {}),
           } as React.CSSProperties : undefined}
-        />
+         data-starmate-component="virtual-item" data-starmate-part="searchLine" data-starmate-state={itemFocus ? 'itemFocus' : undefined} />
       </div>
     );
   },

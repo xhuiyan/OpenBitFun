@@ -46,15 +46,15 @@ function ActivityItemContent({
   return (
     <>
       {leading !== undefined && leading !== null && (
-        <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+        <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
           {leading}
         </span>
       )}
-      <span className={styles.content} data-openbitfun-part="content">
+      <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
         {label !== undefined && label !== null && (
-          <OverflowText className={styles.label} data-openbitfun-part="label">{label}</OverflowText>
+          <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{label}</OverflowText>
         )}
-        <OverflowText className={styles.description} data-openbitfun-part="description">{children}</OverflowText>
+        <OverflowText className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{children}</OverflowText>
       </span>
     </>
   );
@@ -91,7 +91,7 @@ export const ActivityItem = forwardRef<HTMLSpanElement, ActivityItemProps>(
         data-disabled={disabled ? "true" : "false"}
         data-has-detail={hasDetail ? "true" : "false"}
         ref={ref}
-      >
+       data-starmate-component="activity-item" >
         {onActivate ? (
           <button
             data-overflow-trigger
@@ -100,19 +100,19 @@ export const ActivityItem = forwardRef<HTMLSpanElement, ActivityItemProps>(
             disabled={disabled}
             onClick={onActivate}
             type="button"
-          >
+           data-starmate-part="trigger" >
             {content}
           </button>
         ) : (
-          <span className={styles.body} data-openbitfun-part="body">{content}</span>
+          <span className={styles.body} data-openbitfun-part="body" data-starmate-part="body" >{content}</span>
         )}
         {metadata !== undefined && metadata !== null && (
-          <span className={styles.metadata} data-openbitfun-part="metadata">{metadata}</span>
+          <span className={styles.metadata} data-openbitfun-part="metadata" data-starmate-part="metadata" >{metadata}</span>
         )}
         {actions.length > 0 && (
           <>
-            <span aria-hidden="true" className={styles.divider} data-openbitfun-part="divider" />
-            <span className={styles.actions} data-openbitfun-part="actions">
+            <span aria-hidden="true" className={styles.divider} data-openbitfun-part="divider"  data-starmate-part="divider" />
+            <span className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >
               {actions.map((action) => (
                 <IconButton
                   aria-label={action.label}
@@ -129,7 +129,7 @@ export const ActivityItem = forwardRef<HTMLSpanElement, ActivityItemProps>(
           </>
         )}
         {hasDetail && (
-          <span className={styles.detail} data-openbitfun-part="detail">{detail}</span>
+          <span className={styles.detail} data-openbitfun-part="detail" data-starmate-part="detail" >{detail}</span>
         )}
       </span>
     );
@@ -144,9 +144,9 @@ export const ChangeCount = forwardRef<HTMLSpanElement, ChangeCountProps>(
         className={classNames(styles.changeCount, className)}
         data-openbitfun-component="change-count"
         ref={ref}
-      >
-        <span className={styles.additions} data-openbitfun-part="additions">+{Math.abs(additions)}</span>
-        <span className={styles.deletions} data-openbitfun-part="deletions">-{Math.abs(deletions)}</span>
+       data-starmate-component="change-count" >
+        <span className={styles.additions} data-openbitfun-part="additions" data-starmate-part="additions" >+{Math.abs(additions)}</span>
+        <span className={styles.deletions} data-openbitfun-part="deletions" data-starmate-part="deletions" >-{Math.abs(deletions)}</span>
       </span>
     );
   },

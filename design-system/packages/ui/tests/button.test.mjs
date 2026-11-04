@@ -27,7 +27,7 @@ test("static labels retain native button semantics without adding overflow machi
   assert.match(markup, /name="action"/);
   assert.match(markup, /value="history"/);
   assert.match(markup, /title="History details"/);
-  assert.match(markup, /data-openbitfun-part="label">Show previous attempts<\/span>/);
+  assert.match(markup, /data-openbitfun-part="label"[^>]*>Show previous attempts<\/span>/);
   assert.match(markup, /data-openbitfun-part="leading-icon"/);
   assert.doesNotMatch(markup, /data-overflow-behavior|data-overflow-content|data-overflow-tooltip/);
   const pending = renderToStaticMarkup(createElement(Button, {

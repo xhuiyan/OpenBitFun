@@ -20,9 +20,9 @@ export function WorkspaceIconArt({ color = 'default', glyph, image, remote = fal
   const artwork = customGlyph ?? (remote ? Server : Folder);
   const showFolderTransition = expanded !== undefined && !remote && !customGlyph;
   return <span className="openbitfun-workspace-icon" data-openbitfun-component="workspace-icon" data-openbitfun-part="root"
-    style={{ width: size, height: size, color: iconColorStyle(color) }} aria-hidden="true">
+    style={{ width: size, height: size, color: iconColorStyle(color) }} aria-hidden="true" data-starmate-component="workspace-icon" data-starmate-part="root" >
     {image && failedImage !== image ? (
-      <img data-openbitfun-component="workspace-icon" data-openbitfun-part="image" src={image} alt="" draggable={false} decoding="async" onError={() => setFailedImage(image)} />
+      <img data-openbitfun-component="workspace-icon" data-openbitfun-part="image" src={image} alt="" draggable={false} decoding="async" onError={() => setFailedImage(image)}  data-starmate-component="workspace-icon" data-starmate-part="image" />
     ) : showFolderTransition ? (
       <span className="openbitfun-workspace-icon__folder">
         <Icon glyph={Folder} size="sm" className="openbitfun-workspace-icon__folder-layer" data-active={!expanded} />

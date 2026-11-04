@@ -213,9 +213,9 @@ export const ContentCanvas: React.FC<ContentCanvasProps> = ({
     }
 
     return (
-      <div data-openbitfun-component="content-canvas" data-openbitfun-part="main" className="canvas-content-canvas__main">
+      <div data-openbitfun-component="content-canvas" data-openbitfun-part="main" className="canvas-content-canvas__main" data-starmate-component="content-canvas" data-starmate-part="main" >
         {/* Editor area */}
-        <div className="canvas-content-canvas__editor" data-openbitfun-component="content-canvas" data-openbitfun-part="editor">
+        <div className="canvas-content-canvas__editor" data-openbitfun-component="content-canvas" data-openbitfun-part="editor" data-starmate-component="content-canvas" data-starmate-part="editor" >
           <EditorArea
             workspacePath={workspacePath}
             activeSessionId={activeSessionId}
@@ -242,7 +242,7 @@ export const ContentCanvas: React.FC<ContentCanvasProps> = ({
             onClose={handleAnchorClose}
           >
             {/* Anchor content (e.g., terminal) renders here */}
-            <div className="canvas-content-canvas__anchor-content" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorContent">
+            <div className="canvas-content-canvas__anchor-content" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorContent" data-starmate-component="content-canvas" data-starmate-part="anchorContent" >
             </div>
           </AnchorZone>
         )}
@@ -257,7 +257,7 @@ export const ContentCanvas: React.FC<ContentCanvasProps> = ({
       data-openbitfun-mode={mode}
       data-openbitfun-state={layout.isMaximized ? 'maximized' : ''}
       data-shortcut-scope="canvas"
-    >
+     data-starmate-component="content-canvas" data-starmate-part="root" data-starmate-mode={mode} data-starmate-state={layout.isMaximized ? 'maximized' : ''} >
       {/* Main content */}
       {renderContent()}
 

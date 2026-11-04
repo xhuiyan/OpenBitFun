@@ -51,18 +51,18 @@ export const Composer = forwardRef<HTMLFieldSetElement, ComposerProps>(
         data-invalid={resolvedInvalid ? "true" : "false"}
         disabled={resolvedDisabled}
         ref={ref}
-      >
+       data-starmate-component="composer" >
         {contextBar !== undefined && contextBar !== null && (
-          <div className={styles.context} data-openbitfun-part="context">
+          <div className={styles.context} data-openbitfun-part="context" data-starmate-part="context" >
             {contextBar}
           </div>
         )}
-        <div className={styles.surface} data-openbitfun-part="surface">
-          <div className={styles.editor} data-openbitfun-part="editor">
+        <div className={styles.surface} data-openbitfun-part="surface" data-starmate-part="surface" >
+          <div className={styles.editor} data-openbitfun-part="editor" data-starmate-part="editor" >
             {children}
           </div>
           {toolbar !== undefined && toolbar !== null && (
-            <div className={styles.toolbar} data-openbitfun-part="toolbar">
+            <div className={styles.toolbar} data-openbitfun-part="toolbar" data-starmate-part="toolbar" >
               {toolbar}
             </div>
           )}
@@ -85,19 +85,19 @@ function renderComposerBar({
       className={classNames(styles.bar, className)}
       data-openbitfun-part={part}
       ref={ref}
-    >
+     data-starmate-part={part} >
       {leading !== undefined && leading !== null && (
-        <div className={styles.barLeading} data-openbitfun-part="bar-leading">
+        <div className={styles.barLeading} data-openbitfun-part="bar-leading" data-starmate-part="bar-leading" >
           {leading}
         </div>
       )}
       {children !== undefined && children !== null && (
-        <div className={styles.barContent} data-openbitfun-part="bar-content">
+        <div className={styles.barContent} data-openbitfun-part="bar-content" data-starmate-part="bar-content" >
           {children}
         </div>
       )}
       {trailing !== undefined && trailing !== null && (
-        <div className={styles.barTrailing} data-openbitfun-part="bar-trailing">
+        <div className={styles.barTrailing} data-openbitfun-part="bar-trailing" data-starmate-part="bar-trailing" >
           {trailing}
         </div>
       )}
@@ -126,7 +126,7 @@ export const ComposerDivider = forwardRef<HTMLSpanElement, ComposerDividerProps>
         className={classNames(styles.divider, className)}
         data-openbitfun-part="divider"
         ref={ref}
-      />
+       data-starmate-part="divider" />
     );
   },
 );

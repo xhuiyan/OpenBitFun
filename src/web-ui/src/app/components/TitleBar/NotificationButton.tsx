@@ -104,16 +104,16 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
       type="button"
       aria-label={t('nav.notifications')}
       data-testid="notification-button"
-    >
+     data-starmate-component="notification-button" data-starmate-part="root" >
       {activeNotification ? (
         <>
-          <div className="openbitfun-notification-btn__progress" data-openbitfun-component="notification-button" data-openbitfun-part="progress">
+          <div className="openbitfun-notification-btn__progress" data-openbitfun-component="notification-button" data-openbitfun-part="progress" data-starmate-component="notification-button" data-starmate-part="progress" >
             {activeNotification.variant === 'loading' ? (
-              <div className="openbitfun-notification-btn__loading-icon" data-openbitfun-component="notification-button" data-openbitfun-part="loadingIcon">
+              <div className="openbitfun-notification-btn__loading-icon" data-openbitfun-component="notification-button" data-openbitfun-part="loadingIcon" data-starmate-component="notification-button" data-starmate-part="loadingIcon" >
                 <LucideLoaderCircle width="12" height="12" stroke="currentColor" className="openbitfun-notification-btn__spinner" aria-hidden="true" />
               </div>
             ) : (
-              <div className="openbitfun-notification-btn__progress-icon" data-openbitfun-component="notification-button" data-openbitfun-part="progressIcon">
+              <div className="openbitfun-notification-btn__progress-icon" data-openbitfun-component="notification-button" data-openbitfun-part="progressIcon" data-starmate-component="notification-button" data-starmate-part="progressIcon" >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" opacity="0.2" />
@@ -127,7 +127,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
                 </svg>
               </div>
             )}
-            <span className="openbitfun-notification-btn__progress-text" data-openbitfun-component="notification-button" data-openbitfun-part="progressText">
+            <span className="openbitfun-notification-btn__progress-text" data-openbitfun-component="notification-button" data-openbitfun-part="progressText" data-starmate-component="notification-button" data-starmate-part="progressText" >
               {activeNotification.variant === 'loading'
                 ? activeNotification.message
                 : (() => {
@@ -147,13 +147,13 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
             data-openbitfun-component="notification-button"
             data-openbitfun-part="tooltip"
             style={{ transform: `translateX(calc(-50% + ${tooltipOffset}px))` }}
-          >
+           data-starmate-component="notification-button" data-starmate-part="tooltip" >
             <div
               className="openbitfun-notification-btn__tooltip-content"
               data-openbitfun-component="notification-button"
               data-openbitfun-part="tooltipContent"
               style={{ '--tooltip-offset': `${tooltipOffset}px` } as React.CSSProperties}
-            >
+             data-starmate-component="notification-button" data-starmate-part="tooltipContent" >
               {activeNotification.title}
             </div>
           </div>

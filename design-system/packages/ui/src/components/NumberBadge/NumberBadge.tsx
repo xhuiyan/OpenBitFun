@@ -18,8 +18,8 @@ export const NumberBadge = forwardRef<HTMLSpanElement, NumberBadgeProps>(functio
       className={classNames(styles.root, className)}
       data-openbitfun-component="number-badge"
       ref={ref}
-    >
-      <span className={styles.value} data-openbitfun-part="value">{value}</span>
+     data-starmate-component="number-badge" >
+      <span className={styles.value} data-openbitfun-part="value" data-starmate-part="value" >{value}</span>
     </span>
   );
 });

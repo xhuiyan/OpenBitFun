@@ -98,7 +98,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
         data-openbitfun-part="root"
         data-openbitfun-phase={controller.phase}
         data-openbitfun-state="active"
-      >
+       data-starmate-component="composer-voice-input" data-starmate-part="root" data-starmate-phase={controller.phase} data-starmate-state="active" >
         <span
           className="openbitfun-chat-input__voice-setup-pill"
           data-openbitfun-component="composer-voice-input"
@@ -106,13 +106,13 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
           role="group"
           aria-label={controller.setupMessage}
           aria-busy={downloading}
-        >
+         data-starmate-component="composer-voice-input" data-starmate-part="setupPill" >
           <span
             className="openbitfun-chat-input__voice-setup-icon"
             data-openbitfun-component="composer-voice-input"
             data-openbitfun-part="status"
             aria-hidden="true"
-          >
+           data-starmate-component="composer-voice-input" data-starmate-part="status" >
             {downloading
               ? <Icon glyph={Loader2} size="sm" className="openbitfun-chat-input__voice-spinner" />
               : <Icon name="arrow-down" size="sm" />}
@@ -121,7 +121,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             className="openbitfun-chat-input__voice-setup-copy"
             data-openbitfun-component="composer-voice-input"
             data-openbitfun-part="setupMessage"
-          >
+           data-starmate-component="composer-voice-input" data-starmate-part="setupMessage" >
             <OverflowText>{controller.setupMessage}</OverflowText>
             {downloading ? (
               <span className="openbitfun-chat-input__voice-setup-progress" aria-hidden="true">
@@ -130,7 +130,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             ) : null}
           </span>
           {setupRequired ? (
-            <span data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="install">
+            <span data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="install" data-starmate-component="composer-voice-input" data-starmate-part="action" data-starmate-action="install" >
               <Button
                 className="openbitfun-chat-input__voice-setup-action"
                 variant="primary"
@@ -144,7 +144,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
               </Button>
             </span>
           ) : null}
-          <span data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="dismiss">
+          <span data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="dismiss" data-starmate-component="composer-voice-input" data-starmate-part="action" data-starmate-action="dismiss" >
             <Tooltip content={controller.setupCancelTooltip}>
               <IconButton
                 aria-label={controller.setupCancelTooltip}
@@ -184,7 +184,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
         data-openbitfun-part="root"
         data-openbitfun-phase={controller.phase}
         data-openbitfun-state={['active', controller.lowVolumeWarning && 'low-volume'].filter(Boolean).join(' ')}
-      >
+       data-starmate-component="composer-voice-input" data-starmate-part="root" data-starmate-phase={controller.phase} data-starmate-state={['active', controller.lowVolumeWarning && 'low-volume'].filter(Boolean).join(' ')} >
         <span
           aria-label={controller.tooltip}
           aria-busy={preparing || transcribing}
@@ -192,14 +192,14 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
           data-openbitfun-component="composer-voice-input"
           data-openbitfun-part="pill"
           role="group"
-        >
+         data-starmate-component="composer-voice-input" data-starmate-part="pill" >
           <span
             className="openbitfun-chat-input__voice-pill-status"
             data-openbitfun-component="composer-voice-input"
             data-openbitfun-part="status"
             title={controller.lowVolumeWarning ? controller.lowVolumeTooltip : undefined}
             aria-hidden="true"
-          >
+           data-starmate-component="composer-voice-input" data-starmate-part="status" >
             {preparing ? (
               <Icon glyph={Loader2} size="xs" className="openbitfun-chat-input__voice-spinner" />
             ) : controller.lowVolumeWarning ? (
@@ -209,7 +209,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             )}
           </span>
 
-          <span className="openbitfun-chat-input__voice-pill-time" data-openbitfun-component="composer-voice-input" data-openbitfun-part="time" aria-hidden="true">
+          <span className="openbitfun-chat-input__voice-pill-time" data-openbitfun-component="composer-voice-input" data-openbitfun-part="time" aria-hidden="true" data-starmate-component="composer-voice-input" data-starmate-part="time" >
             {formatElapsedTime(elapsedSeconds)}
           </span>
 
@@ -218,7 +218,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             data-openbitfun-component="composer-voice-input"
             data-openbitfun-part="timeline"
             aria-hidden="true"
-          >
+           data-starmate-component="composer-voice-input" data-starmate-part="timeline" >
             {visibleTimelineSamples.map((sample, index) => {
               const scale = Math.max(0.12, Math.min(1, 0.12 + sample * 0.88));
               return (
@@ -231,14 +231,14 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
                     opacity: sample === 0 ? 0.32 : 0.82,
                     transform: `scaleY(${scale})`,
                   }}
-                />
+                 data-starmate-component="composer-voice-input" data-starmate-part="timelineBar" />
               );
             })}
           </span>
 
-          <span className="openbitfun-chat-input__voice-pill-divider" data-openbitfun-component="composer-voice-input" data-openbitfun-part="divider" aria-hidden="true" />
+          <span className="openbitfun-chat-input__voice-pill-divider" data-openbitfun-component="composer-voice-input" data-openbitfun-part="divider" aria-hidden="true"  data-starmate-component="composer-voice-input" data-starmate-part="divider" />
 
-          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="cancel" data-openbitfun-state={transcribing ? 'disabled' : undefined}>
+          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="cancel" data-openbitfun-state={transcribing ? 'disabled' : undefined} data-starmate-component="composer-voice-input" data-starmate-part="action" data-starmate-action="cancel" data-starmate-state={transcribing ? 'disabled' : undefined} >
             <Tooltip content={controller.cancelTooltip}>
               <ChatComposerActionButton
                 aria-label={controller.cancelTooltip}
@@ -254,7 +254,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             </Tooltip>
           </span>
 
-          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="transcribe" data-openbitfun-state={controlsDisabled ? 'disabled' : undefined}>
+          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="transcribe" data-openbitfun-state={controlsDisabled ? 'disabled' : undefined} data-starmate-component="composer-voice-input" data-starmate-part="action" data-starmate-action="transcribe" data-starmate-state={controlsDisabled ? 'disabled' : undefined} >
             <Tooltip content={controlsDisabled ? controller.tooltip : controller.transcribeTooltip}>
               <ChatComposerActionButton
                 aria-label={controlsDisabled ? controller.tooltip : controller.transcribeTooltip}
@@ -274,7 +274,7 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
             </Tooltip>
           </span>
 
-          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="send" data-openbitfun-state={controlsDisabled ? 'disabled' : undefined}>
+          <span className="openbitfun-chat-input__voice-pill-action-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="action" data-openbitfun-action="send" data-openbitfun-state={controlsDisabled ? 'disabled' : undefined} data-starmate-component="composer-voice-input" data-starmate-part="action" data-starmate-action="send" data-starmate-state={controlsDisabled ? 'disabled' : undefined} >
             <Tooltip content={controlsDisabled ? controller.tooltip : controller.sendTooltip}>
               <ChatComposerActionButton
                 aria-label={controlsDisabled ? controller.tooltip : controller.sendTooltip}
@@ -300,8 +300,8 @@ export function ComposerVoiceInputButton({ controller }: ComposerVoiceInputButto
   }
 
   return (
-    <span className="openbitfun-chat-input__voice-cluster" data-openbitfun-component="composer-voice-input" data-openbitfun-part="root" data-openbitfun-phase="idle">
-      <span className="openbitfun-chat-input__voice-control-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="control" data-openbitfun-state={controller.disabled ? 'disabled' : undefined}>
+    <span className="openbitfun-chat-input__voice-cluster" data-openbitfun-component="composer-voice-input" data-openbitfun-part="root" data-openbitfun-phase="idle" data-starmate-component="composer-voice-input" data-starmate-part="root" data-starmate-phase="idle" >
+      <span className="openbitfun-chat-input__voice-control-shell" data-openbitfun-component="composer-voice-input" data-openbitfun-part="control" data-openbitfun-state={controller.disabled ? 'disabled' : undefined} data-starmate-component="composer-voice-input" data-starmate-part="control" data-starmate-state={controller.disabled ? 'disabled' : undefined} >
         <Tooltip content={controller.tooltip}>
           <IconButton
             aria-label={controller.tooltip}

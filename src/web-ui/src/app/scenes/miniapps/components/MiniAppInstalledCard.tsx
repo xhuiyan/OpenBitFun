@@ -54,7 +54,7 @@ export default function MiniAppInstalledCard({
 
   return (
     <article className="miniapp-installed-card" role="listitem" data-market-key={itemKey}
-      data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="item">
+      data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="item" data-starmate-component="miniapp-gallery-view" data-starmate-part="item" >
       <ActionCard
         className="miniapp-installed-card__surface"
         triggerClassName="miniapp-installed-card__content"
@@ -73,8 +73,8 @@ export default function MiniAppInstalledCard({
               setMenuOpen((open) => !open);
             } },
         ]}
-        body={<span className="miniapp-installed-card__copy" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="summary">
-          <span className="miniapp-installed-card__title" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="title">
+        body={<span className="miniapp-installed-card__copy" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="summary" data-starmate-component="miniapp-gallery-view" data-starmate-part="summary" >
+          <span className="miniapp-installed-card__title" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="title" data-starmate-component="miniapp-gallery-view" data-starmate-part="title" >
             <OverflowText behavior="marquee">{name}</OverflowText>
             {activityStatuses.map(status => <StatusPill key={`${status.tone}:${status.label}`} tone={status.tone}>{status.label}</StatusPill>)}
           </span>

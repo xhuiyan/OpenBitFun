@@ -167,7 +167,7 @@ export const BuiltinToolCard: React.FC<ToolCardProps> = ({ toolItem, sessionId, 
     requiresConfirmation: needsConfirmation, isExpanded, onDetailsChange: dispatchToolCardToggle,
     onToggle: () => applyExpandedState(isExpanded, !isExpanded, setExpanded, { onExpand }),
   };
-  return <div ref={cardRootRef} data-openbitfun-adapter="builtin-semantic" data-tool-card-id={toolItem.id}>
+  return <div ref={cardRootRef} data-openbitfun-adapter="builtin-semantic" data-tool-card-id={toolItem.id} data-starmate-adapter="builtin-semantic" >
     {model.family === 'agent-roster' ? <AgentRosterToolCard {...common} deleting={name === 'AgentDelete'} />
       : model.family === 'marketplace-publish' ? <MarketplacePublishToolCard {...common} appearance={name === 'PublishAppearance'} />
         : model.family === 'mcp-resource' ? <McpResourceToolCard {...common} kind={name === 'ListMCPResources' ? 'resources'

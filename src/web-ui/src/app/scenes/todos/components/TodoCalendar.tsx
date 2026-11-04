@@ -65,15 +65,15 @@ const TodoCalendar: React.FC<TodoCalendarProps> = ({
       data-openbitfun-scene="todos"
       data-openbitfun-part="calendar"
       data-testid="todos-calendar"
-    >
-      <header className="openbitfun-todos__calendar-head" data-openbitfun-scene="todos" data-openbitfun-part="calendarHead">
+     data-starmate-scene="todos" data-starmate-part="calendar" >
+      <header className="openbitfun-todos__calendar-head" data-openbitfun-scene="todos" data-openbitfun-part="calendarHead" data-starmate-scene="todos" data-starmate-part="calendarHead" >
         <h3 className="openbitfun-todos__pane-title">{t('calendar.title')}</h3>
         <div className="openbitfun-todos__calendar-actions">
           <div
             className="openbitfun-todos__month-navigation"
             data-openbitfun-scene="todos"
             data-openbitfun-part="monthNavigation"
-          >
+           data-starmate-scene="todos" data-starmate-part="monthNavigation" >
             <Tooltip content={t('calendar.previousMonth')}>
               <IconButton
                 type="button"
@@ -116,7 +116,7 @@ const TodoCalendar: React.FC<TodoCalendarProps> = ({
         ))}
       </div>
 
-      <div className="openbitfun-todos__calendar-grid" role="grid" data-openbitfun-scene="todos" data-openbitfun-part="calendarGrid">
+      <div className="openbitfun-todos__calendar-grid" role="grid" data-openbitfun-scene="todos" data-openbitfun-part="calendarGrid" data-starmate-scene="todos" data-starmate-part="calendarGrid" >
         {grid.map((day) => {
           const dayKey = localDayKey(day.getTime());
           const dayOccurrences = byDay.get(dayKey) ?? [];
@@ -151,7 +151,7 @@ const TodoCalendar: React.FC<TodoCalendarProps> = ({
                 t('calendar.dayCount', { total: dayOccurrences.length })
               }`}
               onClick={() => onSelectDay(isSelected ? null : dayKey)}
-            >
+             data-starmate-scene="todos" data-starmate-part="calendarCell" data-starmate-state={cellState || undefined} >
               <span className="openbitfun-todos__calendar-daynum">{day.getDate()}</span>
               <span className="openbitfun-todos__calendar-chips">
                 {dayOccurrences.slice(0, MAX_CHIPS_PER_DAY).map((occurrence, index) => (

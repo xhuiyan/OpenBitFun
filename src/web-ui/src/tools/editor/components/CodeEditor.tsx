@@ -2223,7 +2223,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       onKeyDownCapture={handleContainerKeyDown}
       onCompositionStartCapture={() => setComposing(true)}
       onCompositionEndCapture={() => setComposing(false)}
-    >
+     data-starmate-component="editor-tool" data-starmate-part="root" data-starmate-state={[
+        loading && showLoadingOverlay && 'loading',
+        error && 'error',
+        largeFileMode && 'large-file',
+      ].filter(Boolean).join(' ') || undefined} >
       {showBreadcrumb && (
         <EditorBreadcrumb
           filePath={filePath}
@@ -2231,7 +2235,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         />
       )}
       
-      <div className="code-editor-tool__content" data-shortcut-scope="editor" data-openbitfun-component="editor-tool" data-openbitfun-part="content">
+      <div className="code-editor-tool__content" data-shortcut-scope="editor" data-openbitfun-component="editor-tool" data-openbitfun-part="content" data-starmate-component="editor-tool" data-starmate-part="content" >
         <div 
           ref={containerRef} 
           style={{ 
@@ -2245,13 +2249,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       </div>
 
       {loading && showLoadingOverlay && (
-        <div className="code-editor-tool__loading-overlay" data-openbitfun-component="editor-tool" data-openbitfun-part="loading">
+        <div className="code-editor-tool__loading-overlay" data-openbitfun-component="editor-tool" data-openbitfun-part="loading" data-starmate-component="editor-tool" data-starmate-part="loading" >
           <LoadingState size="md">{loadingOverlayText}</LoadingState>
         </div>
       )}
 
       {error && (
-        <div className="code-editor-tool__error-overlay" data-openbitfun-component="editor-tool" data-openbitfun-part="error">
+        <div className="code-editor-tool__error-overlay" data-openbitfun-component="editor-tool" data-openbitfun-part="error" data-starmate-component="editor-tool" data-starmate-part="error" >
           <AlertCircle className="code-editor-tool__error-icon" />
           <p className="code-editor-tool__error-message">{error}</p>
           <Button
@@ -2265,7 +2269,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       )}
 
       {saving && (
-        <div className="code-editor-tool__saving-indicator" data-openbitfun-component="editor-tool" data-openbitfun-part="saving">
+        <div className="code-editor-tool__saving-indicator" data-openbitfun-component="editor-tool" data-openbitfun-part="saving" data-starmate-component="editor-tool" data-starmate-part="saving" >
           {t('editor.codeEditor.saving')}
         </div>
       )}

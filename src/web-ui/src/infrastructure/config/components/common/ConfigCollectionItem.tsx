@@ -65,7 +65,7 @@ export const ConfigCollectionItem: React.FC<ConfigCollectionItemProps> = ({
       data-openbitfun-component="config"
       data-openbitfun-part="collectionItem"
       {...rootProps}
-    >
+     data-starmate-component="config" data-starmate-part="collectionItem" >
       <Disclosure
         className="openbitfun-collection-item__disclosure"
         summary={label}
@@ -84,14 +84,14 @@ export const ConfigCollectionItem: React.FC<ConfigCollectionItemProps> = ({
             data-openbitfun-component="config"
             data-openbitfun-part="collectionRow"
             onClick={handleRowClick}
-          >
-            <div className="openbitfun-config-page-row__meta" data-openbitfun-component="config" data-openbitfun-part="collectionMeta">
+           data-starmate-component="config" data-starmate-part="collectionRow" >
+            <div className="openbitfun-config-page-row__meta" data-openbitfun-component="config" data-openbitfun-part="collectionMeta" data-starmate-component="config" data-starmate-part="collectionMeta" >
               <div
                 className={`openbitfun-config-page-row__label openbitfun-collection-item__label ${
                   badgePlacement === 'below' ? 'openbitfun-collection-item__label--stacked' : ''
                 }`}
               >
-                <OverflowText id={labelId} className="openbitfun-collection-item__name" data-openbitfun-component="config" data-openbitfun-part="collectionName">{label}</OverflowText>
+                <OverflowText id={labelId} className="openbitfun-collection-item__name" data-openbitfun-component="config" data-openbitfun-part="collectionName" data-starmate-component="config" data-starmate-part="collectionName" >{label}</OverflowText>
                 {badge && (
                   <span
                     className={`openbitfun-collection-item__badges ${
@@ -105,7 +105,7 @@ export const ConfigCollectionItem: React.FC<ConfigCollectionItemProps> = ({
                 )}
               </div>
             </div>
-            <div className="openbitfun-config-page-row__control" data-openbitfun-component="config" data-openbitfun-part="collectionControl">
+            <div className="openbitfun-config-page-row__control" data-openbitfun-component="config" data-openbitfun-part="collectionControl" data-starmate-component="config" data-starmate-part="collectionControl" >
               <div className="openbitfun-collection-item__control">
                 {control}
                 {hasDetails ? (
@@ -124,7 +124,7 @@ export const ConfigCollectionItem: React.FC<ConfigCollectionItemProps> = ({
           </div>
         )}
       >
-        <div className="openbitfun-collection-item__details" data-openbitfun-component="config" data-openbitfun-part="collectionDetails">{details}</div>
+        <div className="openbitfun-collection-item__details" data-openbitfun-component="config" data-openbitfun-part="collectionDetails" data-starmate-component="config" data-starmate-part="collectionDetails" >{details}</div>
       </Disclosure>
     </div>
   );

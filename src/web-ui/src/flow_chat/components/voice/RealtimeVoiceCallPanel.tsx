@@ -46,5 +46,5 @@ export function RealtimeVoiceCallPanel({ onClose, onBack, embedded = false }: Re
     onToggleMute={controller.toggleMute}
     onOpenSettings={controller.openSettings}
     onEnd={controller.end}
-  />;
+   data-starmate-product-component="realtime-voice-call" data-starmate-product-part="root" data-starmate-phase={controller.phase} data-starmate-state={[controller.phase, controller.taskPhase?.replace(/_/g, '-')].filter(Boolean).join(' ')} />;
 }

@@ -131,16 +131,16 @@ const ActionFormModal: React.FC<ActionFormModalProps> = ({ isOpen, target, onClo
         <DialogClose disabled={saving} />
       </DialogHeader>
       <DialogBody>
-        <div className="quick-actions-config__modal-body" onKeyDown={handleKeyDown} data-openbitfun-component="quick-actions-config" data-openbitfun-part="dialog">
+        <div className="quick-actions-config__modal-body" onKeyDown={handleKeyDown} data-openbitfun-component="quick-actions-config" data-openbitfun-part="dialog" data-starmate-component="quick-actions-config" data-starmate-part="dialog" >
           {target && (
-            <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="dialogIcon" className="quick-actions-config__modal-icon-preview">
+            <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="dialogIcon" className="quick-actions-config__modal-icon-preview" data-starmate-component="quick-actions-config" data-starmate-part="dialogIcon" >
               <div className="quick-actions-config__modal-action-icon">
                 {getActionIcon(target.id, 18)}
               </div>
             </div>
           )}
 
-          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="field" className="quick-actions-config__modal-field">
+          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="field" className="quick-actions-config__modal-field" data-starmate-component="quick-actions-config" data-starmate-part="field" >
             <label className="quick-actions-config__modal-label" htmlFor="qa-label">
               {t('modal.labelField')}
             </label>
@@ -154,7 +154,7 @@ const ActionFormModal: React.FC<ActionFormModalProps> = ({ isOpen, target, onClo
             />
           </div>
 
-          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="field" className="quick-actions-config__modal-field">
+          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="field" className="quick-actions-config__modal-field" data-starmate-component="quick-actions-config" data-starmate-part="field" >
             <label className="quick-actions-config__modal-label" htmlFor="qa-prompt">
               {t('modal.promptField')}
             </label>
@@ -178,7 +178,7 @@ const ActionFormModal: React.FC<ActionFormModalProps> = ({ isOpen, target, onClo
         data-openbitfun-component="quick-actions-config"
         data-openbitfun-part="dialogFooter"
         className="quick-actions-config__modal-footer"
-      >
+       data-starmate-component="quick-actions-config" data-starmate-part="dialogFooter" >
         <Button variant="fill" size="sm" onClick={requestClose} disabled={saving}>
           {t('modal.cancel')}
         </Button>
@@ -214,17 +214,17 @@ const ActionRow: React.FC<ActionRowProps> = ({ action, onToggle, onEdit, onDelet
   const actionText = resolveQuickActionText(action, t);
 
   return (
-    <div className="quick-actions-config__row" data-openbitfun-component="quick-actions-config" data-openbitfun-part="row">
-      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowIcon" className="quick-actions-config__row-icon">
+    <div className="quick-actions-config__row" data-openbitfun-component="quick-actions-config" data-openbitfun-part="row" data-starmate-component="quick-actions-config" data-starmate-part="row" >
+      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowIcon" className="quick-actions-config__row-icon" data-starmate-component="quick-actions-config" data-starmate-part="rowIcon" >
         {getActionIcon(action.id)}
       </div>
 
-      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowBody" className="quick-actions-config__row-body">
+      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowBody" className="quick-actions-config__row-body" data-starmate-component="quick-actions-config" data-starmate-part="rowBody" >
         <div className="quick-actions-config__row-label">{actionText.label}</div>
         <div className="quick-actions-config__row-prompt"><OverflowText>{actionText.prompt}</OverflowText></div>
       </div>
 
-      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowControls" className="quick-actions-config__row-controls">
+      <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="rowControls" className="quick-actions-config__row-controls" data-starmate-component="quick-actions-config" data-starmate-part="rowControls" >
         <Switch
           checked={action.enabled}
           onChange={() => onToggle(action.id)}
@@ -364,7 +364,7 @@ const QuickActionsSettingsSection: React.FC = () => {
 
   if (loading || loadFailed) {
     return (
-      <div id={sectionAnchor} className="quick-actions-config" data-openbitfun-component="quick-actions-config" data-openbitfun-part="root">
+      <div id={sectionAnchor} className="quick-actions-config" data-openbitfun-component="quick-actions-config" data-openbitfun-part="root" data-starmate-component="quick-actions-config" data-starmate-part="root" >
         <ConfigPageSectionStack>
           {loading ? (
             <ConfigLoadingState label={t('loading')} />
@@ -384,13 +384,13 @@ const QuickActionsSettingsSection: React.FC = () => {
   const customActions = actions.filter(a => !BUILTIN_IDS.has(a.id));
 
   return (
-    <div id={sectionAnchor} className="quick-actions-config" data-openbitfun-component="quick-actions-config" data-openbitfun-part="root">
+    <div id={sectionAnchor} className="quick-actions-config" data-openbitfun-component="quick-actions-config" data-openbitfun-part="root" data-starmate-component="quick-actions-config" data-starmate-part="root" >
 
-      <ConfigPageSectionStack data-openbitfun-component="quick-actions-config" data-openbitfun-part="content" className="quick-actions-config__content">
+      <ConfigPageSectionStack data-openbitfun-component="quick-actions-config" data-openbitfun-part="content" className="quick-actions-config__content" data-starmate-component="quick-actions-config" data-starmate-part="content" >
 
         {/* ── Built-in actions ──────────────────────────────────────────── */}
         <ConfigPageSection title={t('sections.builtin.title')}>
-          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="list" className="quick-actions-config__list">
+          <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="list" className="quick-actions-config__list" data-starmate-component="quick-actions-config" data-starmate-part="list" >
             {builtinActions.map(action => (
               <ActionRow
                 key={action.id}
@@ -423,7 +423,7 @@ const QuickActionsSettingsSection: React.FC = () => {
           }
         >
           {customActions.length > 0 && (
-            <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="list" className="quick-actions-config__list">
+            <div data-openbitfun-component="quick-actions-config" data-openbitfun-part="list" className="quick-actions-config__list" data-starmate-component="quick-actions-config" data-starmate-part="list" >
               {customActions.map(action => (
                 <ActionRow
                   key={action.id}

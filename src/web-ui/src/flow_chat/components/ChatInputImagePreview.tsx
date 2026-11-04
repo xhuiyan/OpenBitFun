@@ -58,7 +58,7 @@ export function ChatInputImagePreview({ image, surfaceEpoch }: {
       >
         <img className="openbitfun-chat-input__image-chip-thumb"
           data-openbitfun-component="chat-input" data-openbitfun-part="imagePreview"
-          src={source} alt={image.imageName} onError={() => setError(image.imageName)} />
+          src={source} alt={image.imageName} onError={() => setError(image.imageName)}  data-starmate-component="chat-input" data-starmate-part="imagePreview" />
       </button>
       <ImageLightbox
         image={previewRequested && previewSource ? { source: previewSource, alt: image.imageName } : null}
@@ -70,7 +70,7 @@ export function ChatInputImagePreview({ image, surfaceEpoch }: {
       data-openbitfun-component="chat-input" data-openbitfun-part="imagePreview"
       role={error ? 'img' : undefined}
       aria-label={error ? t('editor.imageViewer.loadImageFailedWithMessage', { message: error }) : undefined}
-      title={error ? t('editor.imageViewer.loadImageFailedWithMessage', { message: error }) : image.imageName}>
+      title={error ? t('editor.imageViewer.loadImageFailedWithMessage', { message: error }) : image.imageName} data-starmate-component="chat-input" data-starmate-part="imagePreview" >
       <Icon name="image" size="sm" />
     </div>
   );

@@ -216,9 +216,9 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
           !line.startsWith('--- ') && !line.startsWith('+++ ')) {
         lineNumber++;
         diffLines.push(
-          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="diffLine" key={index} className={`openbitfun-git-diff-view__diff-line openbitfun-git-diff-view__diff-line--${lineType}`}>
-            <span data-openbitfun-component="git-diff-view" data-openbitfun-part="lineNumber" className="openbitfun-git-diff-view__line-number">{lineNumber}</span>
-            <span data-openbitfun-component="git-diff-view" data-openbitfun-part="lineContent" className="openbitfun-git-diff-view__line-content">{content}</span>
+          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="diffLine" key={index} className={`openbitfun-git-diff-view__diff-line openbitfun-git-diff-view__diff-line--${lineType}`} data-starmate-component="git-diff-view" data-starmate-part="diffLine" >
+            <span data-openbitfun-component="git-diff-view" data-openbitfun-part="lineNumber" className="openbitfun-git-diff-view__line-number" data-starmate-component="git-diff-view" data-starmate-part="lineNumber" >{lineNumber}</span>
+            <span data-openbitfun-component="git-diff-view" data-openbitfun-part="lineContent" className="openbitfun-git-diff-view__line-content" data-starmate-component="git-diff-view" data-starmate-part="lineContent" >{content}</span>
           </div>
         );
       }
@@ -236,8 +236,8 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
 
   if (loading) {
     return (
-      <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root" data-openbitfun-state="loading">
-        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="loading" className="openbitfun-git-diff-view__loading-state">
+      <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="git-diff-view" data-starmate-part="root" data-starmate-state="loading" >
+        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="loading" className="openbitfun-git-diff-view__loading-state" data-starmate-component="git-diff-view" data-starmate-part="loading" >
           <div className="openbitfun-git-diff-view__loading-spinner" />
           <p>{t('diffView.loading')}</p>
         </div>
@@ -247,8 +247,8 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
 
   if (error) {
     return (
-      <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root" data-openbitfun-state="error">
-        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="error" className="openbitfun-git-diff-view__error-state">
+      <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root" data-openbitfun-state="error" data-starmate-component="git-diff-view" data-starmate-part="root" data-starmate-state="error" >
+        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="error" className="openbitfun-git-diff-view__error-state" data-starmate-component="git-diff-view" data-starmate-part="error" >
           <FileText size={48} />
           <h3>{t('diffView.loadFailedTitle')}</h3>
           <p>{error}</p>
@@ -261,9 +261,9 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
   }
 
   return (
-    <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root">
-      <div className="openbitfun-git-diff-view__header" data-openbitfun-component="git-diff-view" data-openbitfun-part="header">
-        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="headerLeft" className="openbitfun-git-diff-view__header-left">
+    <div className={`openbitfun-git-diff-view ${className}`} data-openbitfun-component="git-diff-view" data-openbitfun-part="root" data-starmate-component="git-diff-view" data-starmate-part="root" >
+      <div className="openbitfun-git-diff-view__header" data-openbitfun-component="git-diff-view" data-openbitfun-part="header" data-starmate-component="git-diff-view" data-starmate-part="header" >
+        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="headerLeft" className="openbitfun-git-diff-view__header-left" data-starmate-component="git-diff-view" data-starmate-part="headerLeft" >
           {sourceCommit && targetCommit && (
             <span className="openbitfun-git-diff-view__commit-range">
               {sourceCommit.substring(0, 7)}...{targetCommit.substring(0, 7)}
@@ -288,7 +288,7 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
           )}
         </div>
         
-        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="headerRight" className="openbitfun-git-diff-view__header-right">
+        <div data-openbitfun-component="git-diff-view" data-openbitfun-part="headerRight" className="openbitfun-git-diff-view__header-right" data-starmate-component="git-diff-view" data-starmate-part="headerRight" >
           <div className="openbitfun-git-diff-view__view-options">
             <IconButton
               aria-label={allExpanded ? t('diffView.collapseAll') : t('diffView.expandAll')}
@@ -309,9 +309,9 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
         </div>
       </div>
 
-      <div className="openbitfun-git-diff-view__content" data-openbitfun-component="git-diff-view" data-openbitfun-part="content">
+      <div className="openbitfun-git-diff-view__content" data-openbitfun-component="git-diff-view" data-openbitfun-part="content" data-starmate-component="git-diff-view" data-starmate-part="content" >
         {error ? (
-          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="error" data-openbitfun-state="error" className="openbitfun-git-diff-view__error-state">
+          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="error" data-openbitfun-state="error" className="openbitfun-git-diff-view__error-state" data-starmate-component="git-diff-view" data-starmate-part="error" data-starmate-state="error" >
             <div className="error-icon">
               <AlertCircle size={20} />
             </div>
@@ -323,21 +323,21 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
             </Button>
           </div>
         ) : loading ? (
-          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="loading" data-openbitfun-state="loading" className="openbitfun-git-diff-view__loading-state">
+          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="loading" data-openbitfun-state="loading" className="openbitfun-git-diff-view__loading-state" data-starmate-component="git-diff-view" data-starmate-part="loading" data-starmate-state="loading" >
             <div className="openbitfun-git-diff-view__loading-spinner" />
             <p>{t('diffView.loadingData')}</p>
           </div>
         ) : diffFiles.length > 0 ? (
-          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileList" className="openbitfun-git-diff-view__file-list">
+          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileList" className="openbitfun-git-diff-view__file-list" data-starmate-component="git-diff-view" data-starmate-part="fileList" >
             {diffFiles.map((file, index) => (
-              <div data-openbitfun-component="git-diff-view" data-openbitfun-part="file" data-openbitfun-state={file.expanded ? 'expanded' : undefined} key={file.path} className="openbitfun-git-diff-view__file-item">
+              <div data-openbitfun-component="git-diff-view" data-openbitfun-part="file" data-openbitfun-state={file.expanded ? 'expanded' : undefined} key={file.path} className="openbitfun-git-diff-view__file-item" data-starmate-component="git-diff-view" data-starmate-part="file" data-starmate-state={file.expanded ? 'expanded' : undefined} >
                 <div data-overflow-trigger
                   data-openbitfun-component="git-diff-view"
                   data-openbitfun-part="fileHeader"
                   className="openbitfun-git-diff-view__file-header"
                   onClick={() => toggleFileExpansion(index)}
-                >
-                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileInfo" className="openbitfun-git-diff-view__file-info">
+                 data-starmate-component="git-diff-view" data-starmate-part="fileHeader" >
+                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileInfo" className="openbitfun-git-diff-view__file-info" data-starmate-component="git-diff-view" data-starmate-part="fileInfo" >
                     <span className={`openbitfun-git-diff-view__expand-icon ${file.expanded ? 'openbitfun-git-diff-view__expand-icon--expanded' : ''}`}>
                       {file.expanded ? <Icon name="chevron-down" size="md" /> : <Icon name="chevron-right" size="md" />}
                     </span>
@@ -355,7 +355,7 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
                     )}
                   </div>
                   
-                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileStats" className="openbitfun-git-diff-view__file-stats">
+                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="fileStats" className="openbitfun-git-diff-view__file-stats" data-starmate-component="git-diff-view" data-starmate-part="fileStats" >
                     {file.additions > 0 && (
                       <span className="openbitfun-git-diff-view__additions">
                         <Icon name="plus" size="xs" />
@@ -372,7 +372,7 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
                 </div>
                 
                 {file.expanded && (
-                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="diffContent" className="openbitfun-git-diff-view__diff-content">
+                  <div data-openbitfun-component="git-diff-view" data-openbitfun-part="diffContent" className="openbitfun-git-diff-view__diff-content" data-starmate-component="git-diff-view" data-starmate-part="diffContent" >
                     {renderDiffContent(file.diff)}
                   </div>
                 )}
@@ -380,7 +380,7 @@ const GitDiffView: React.FC<GitDiffViewProps> = ({
             ))}
           </div>
         ) : (
-          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="empty" className="openbitfun-git-diff-view__empty-state">
+          <div data-openbitfun-component="git-diff-view" data-openbitfun-part="empty" className="openbitfun-git-diff-view__empty-state" data-starmate-component="git-diff-view" data-starmate-part="empty" >
             <FileText size={48} />
             <h3>{t('diffView.empty.title')}</h3>
             <p>

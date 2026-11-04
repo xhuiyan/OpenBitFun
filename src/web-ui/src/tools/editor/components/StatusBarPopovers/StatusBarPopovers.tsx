@@ -89,9 +89,9 @@ export const GoToLinePopover: React.FC<GoToLinePopoverProps> = ({
       style={{ top, left }}
       role="dialog"
       aria-label={t('editor.statusBar.goToLine')}
-    >
-      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint">{t('editor.statusBar.goToLineHint')}</div>
-      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="inputWrap" className="status-bar-popover__input-wrap">
+     data-starmate-component="status-bar-popover" data-starmate-part="root" data-starmate-popover="line" >
+      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint" data-starmate-component="status-bar-popover" data-starmate-part="hint" >{t('editor.statusBar.goToLineHint')}</div>
+      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="inputWrap" className="status-bar-popover__input-wrap" data-starmate-component="status-bar-popover" data-starmate-part="inputWrap" >
         <Input
           data-openbitfun-component="status-bar-popover"
           data-openbitfun-part="input"
@@ -103,7 +103,7 @@ export const GoToLinePopover: React.FC<GoToLinePopoverProps> = ({
           onKeyDown={handleKeyDown}
           placeholder={t('editor.statusBar.goToLinePlaceholder')}
           size="sm"
-        />
+         data-starmate-component="status-bar-popover" data-starmate-part="input" />
       </div>
     </div>,
     getAppearanceOverlayHost()
@@ -156,8 +156,8 @@ export const IndentPopover: React.FC<IndentPopoverProps> = ({
       style={{ top, left }}
       role="dialog"
       aria-label={t('editor.statusBar.indentSettings')}
-    >
-      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint">{t('editor.statusBar.selectIndent')}</div>
+     data-starmate-component="status-bar-popover" data-starmate-part="root" data-starmate-popover="indent" >
+      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint" data-starmate-component="status-bar-popover" data-starmate-part="hint" >{t('editor.statusBar.selectIndent')}</div>
       <Listbox
         autoFocusOption
         aria-label={t('editor.statusBar.selectIndent')}
@@ -217,8 +217,8 @@ export const EncodingPopover: React.FC<EncodingPopoverProps> = ({
       style={{ top, left }}
       role="dialog"
       aria-label={t('editor.statusBar.fileEncoding')}
-    >
-      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint">{t('editor.statusBar.selectEncoding')}</div>
+     data-starmate-component="status-bar-popover" data-starmate-part="root" data-starmate-popover="encoding" >
+      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint" data-starmate-component="status-bar-popover" data-starmate-part="hint" >{t('editor.statusBar.selectEncoding')}</div>
       <Listbox
         autoFocusOption
         aria-label={t('editor.statusBar.selectEncoding')}
@@ -329,8 +329,8 @@ export const LanguagePopover: React.FC<LanguagePopoverProps> = ({
       style={{ top, left, maxHeight: 320 }}
       role="dialog"
       aria-label={t('editor.statusBar.selectLanguageMode')}
-    >
-      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint">{t('editor.statusBar.selectLanguageModeHint')}</div>
+     data-starmate-component="status-bar-popover" data-starmate-part="root" data-starmate-popover="language" >
+      <div data-openbitfun-component="status-bar-popover" data-openbitfun-part="hint" className="status-bar-popover__hint" data-starmate-component="status-bar-popover" data-starmate-part="hint" >{t('editor.statusBar.selectLanguageModeHint')}</div>
       <Listbox
         autoFocusOption
         aria-label={t('editor.statusBar.selectLanguageModeHint')}

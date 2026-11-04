@@ -314,7 +314,7 @@ const MemorySettingsSection: React.FC = () => {
         className="openbitfun-memories-config"
         data-openbitfun-component="config"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="config" data-starmate-part="root" >
         <ConfigPageSectionStack>
           {loading ? (
             <ConfigLoadingState label={t('messages.loading')} />
@@ -338,7 +338,7 @@ const MemorySettingsSection: React.FC = () => {
       className="openbitfun-memories-config"
       data-openbitfun-component="config"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="config" data-starmate-part="root" >
       <ConfigPageSectionStack>
         <ConfigPageSection
           title={t('sections.basic.title')}

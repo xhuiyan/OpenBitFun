@@ -56,10 +56,10 @@ export function SubscriptionCapsuleList({ children, label, moreLabel, onMore }: 
   }, [children, moreLabel]);
 
   return <ul ref={listRef} className={`openbitfun-model-settings__import-summary ${styles.list}`} aria-label={label}
-    data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionCapsules">
+    data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionCapsules" data-starmate-component="model-settings" data-starmate-part="subscriptionCapsules" >
     {children}
     <li ref={moreRef} className="openbitfun-model-settings__import-item" data-testid="settings-subscription-more"
-      data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionMore">
+      data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionMore" data-starmate-component="model-settings" data-starmate-part="subscriptionMore" >
       <Button size="sm" variant="outline" aria-haspopup="dialog" onClick={onMore}>{moreLabel}</Button>
     </li>
   </ul>;

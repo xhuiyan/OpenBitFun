@@ -486,8 +486,8 @@ const ConnectedTerminal: React.FC<ConnectedTerminalProps> = memo(({
 
   if (isLoading) {
     return (
-      <div className={`openbitfun-terminal ${className}`} data-testid="shell-command-list" data-openbitfun-component="terminal-tool" data-openbitfun-part="root" data-openbitfun-state="loading">
-        <div className="openbitfun-terminal__loading" data-testid="shell-command-status" data-command-status="loading" data-openbitfun-component="terminal-tool" data-openbitfun-part="loading">
+      <div className={`openbitfun-terminal ${className}`} data-testid="shell-command-list" data-openbitfun-component="terminal-tool" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="terminal-tool" data-starmate-part="root" data-starmate-state="loading" >
+        <div className="openbitfun-terminal__loading" data-testid="shell-command-status" data-command-status="loading" data-openbitfun-component="terminal-tool" data-openbitfun-part="loading" data-starmate-component="terminal-tool" data-starmate-part="loading" >
           <div className="openbitfun-terminal__loading-spinner" />
           <span className="openbitfun-terminal__loading-text">Connecting to terminal...</span>
         </div>
@@ -497,8 +497,8 @@ const ConnectedTerminal: React.FC<ConnectedTerminalProps> = memo(({
 
   if (error) {
     return (
-      <div className={`openbitfun-terminal ${className}`} data-testid="shell-command-list" data-openbitfun-component="terminal-tool" data-openbitfun-part="root" data-openbitfun-state="error">
-        <div className="openbitfun-terminal__error" data-testid="shell-command-status" data-command-status="error" data-openbitfun-component="terminal-tool" data-openbitfun-part="error">
+      <div className={`openbitfun-terminal ${className}`} data-testid="shell-command-list" data-openbitfun-component="terminal-tool" data-openbitfun-part="root" data-openbitfun-state="error" data-starmate-component="terminal-tool" data-starmate-part="root" data-starmate-state="error" >
+        <div className="openbitfun-terminal__error" data-testid="shell-command-status" data-command-status="error" data-openbitfun-component="terminal-tool" data-openbitfun-part="error" data-starmate-component="terminal-tool" data-starmate-part="error" >
           <AlertCircle className="openbitfun-terminal__error-icon" size={32} />
           <span className="openbitfun-terminal__error-message">{error}</span>
           <Button
@@ -524,9 +524,9 @@ const ConnectedTerminal: React.FC<ConnectedTerminalProps> = memo(({
       data-openbitfun-component="terminal-tool"
       data-openbitfun-part="root"
       data-openbitfun-state={isExited ? 'exited' : 'running'}
-    >
+     data-starmate-component="terminal-tool" data-starmate-part="root" data-starmate-state={isExited ? 'exited' : 'running'} >
       {showToolbar && (
-        <div className="openbitfun-terminal__toolbar" data-openbitfun-component="terminal-tool" data-openbitfun-part="toolbar">
+        <div className="openbitfun-terminal__toolbar" data-openbitfun-component="terminal-tool" data-openbitfun-part="toolbar" data-starmate-component="terminal-tool" data-starmate-part="toolbar" >
           <div className="openbitfun-terminal__toolbar-left">
             <Icon name="terminal" size="sm" />
             <span className="openbitfun-terminal__toolbar-title" data-testid="shell-panel-title">
@@ -580,7 +580,7 @@ const ConnectedTerminal: React.FC<ConnectedTerminalProps> = memo(({
           isExited ? 'openbitfun-terminal__statusbar--exited' : ''
         } ${
           error ? 'openbitfun-terminal__statusbar--error' : ''
-        }`} data-openbitfun-component="terminal-tool" data-openbitfun-part="statusBar">
+        }`} data-openbitfun-component="terminal-tool" data-openbitfun-part="statusBar" data-starmate-component="terminal-tool" data-starmate-part="statusBar" >
           <div className="openbitfun-terminal__statusbar-left">
             <span
               className="openbitfun-terminal__statusbar-item"

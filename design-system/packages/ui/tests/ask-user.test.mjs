@@ -46,7 +46,7 @@ test("AskUser replaces the completed form and legacy summary with only the quest
   assert.match(markup, /data-openbitfun-component="ask-user"/);
   assert.match(markup, /data-openbitfun-state="completed"/);
   assert.match(markup, /<dt[^>]*>OpenBitFun has three versions — which would you like me to pull\?/);
-  assert.match(markup, /data-openbitfun-part="answer-value">v0\.2\.19-beta\.1 \(Recommended\)/);
+  assert.match(markup, /data-openbitfun-part="answer-value"[^>]*>v0\.2\.19-beta\.1 \(Recommended\)/);
   assert.doesNotMatch(markup, /<(?:button|input|fieldset|progress|svg)\b/);
   assert.doesNotMatch(markup, /1 question answered|Choose version:|v0\.2\.18|basic testing/);
 });
@@ -67,10 +67,10 @@ test("AskUser shows all submitted questions, multiple selections, and custom ans
   }));
 
   assert.equal((markup.match(/data-openbitfun-part="answer-pair"/g) ?? []).length, 2);
-  assert.match(markup, /data-openbitfun-part="answer-value">v0\.2\.19-beta\.1 \(Recommended\)/);
-  assert.match(markup, /data-openbitfun-part="answer-value">v0\.2\.17/);
+  assert.match(markup, /data-openbitfun-part="answer-value"[^>]*>v0\.2\.19-beta\.1 \(Recommended\)/);
+  assert.match(markup, /data-openbitfun-part="answer-value"[^>]*>v0\.2\.17/);
   assert.match(markup, /<dt[^>]*>Anything else\?/);
-  assert.match(markup, /data-openbitfun-part="answer-value">First line\nSecond line/);
+  assert.match(markup, /data-openbitfun-part="answer-value"[^>]*>First line\nSecond line/);
   assert.doesNotMatch(markup, /<(?:button|input|fieldset|progress|svg)\b|Other|Submit|Question header/);
 });
 

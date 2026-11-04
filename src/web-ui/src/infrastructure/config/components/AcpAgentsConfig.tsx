@@ -457,7 +457,7 @@ function CapabilityStatusPill({
       leading={icon}
       title={title}
       tone={tone}
-    >
+     data-starmate-state={item ? (item.installed ? 'installed' : 'missing') : checking ? 'checking' : 'unknown'} >
       {label}
     </StatusPill>
   );
@@ -479,7 +479,7 @@ function AgentStatusPill({
       leading={status === 'checking' ? <Spinner size="xs" /> : undefined}
       title={title}
       tone={agentStatusTone(status)}
-    >
+     data-starmate-state={status} >
       {label}
     </StatusPill>
   );
@@ -1353,7 +1353,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
         className={layoutClassName}
         data-openbitfun-component="acp-agents-config"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="acp-agents-config" data-starmate-part="root" >
         {presentation === 'page' ? <ConfigPageHeader title={t('title')} /> : null}
         <Content className={contentClassName}>
           {loading ? (
@@ -1376,7 +1376,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
       data-openbitfun-component="acp-agents-config"
       data-openbitfun-part="root"
       data-openbitfun-view={activeView}
-    >
+     data-starmate-component="acp-agents-config" data-starmate-part="root" data-starmate-view={activeView} >
       {presentation === 'page' ? <ConfigPageHeader
         title={t('title')}
         extra={documentationAction}
@@ -1388,7 +1388,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
         data-openbitfun-part="content"
         aria-busy={saving}
         {...(saving ? { inert: '' } : {})}
-      >
+       data-starmate-component="acp-agents-config" data-starmate-part="content" >
         <div className="openbitfun-acp-agents__view-controls">
           <TabGroup
             className="openbitfun-acp-agents__tabs"
@@ -1398,7 +1398,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
             items={viewTabs}
             onValueChange={handleViewChange}
             value={activeView}
-          />
+           data-starmate-component="acp-agents-config" data-starmate-part="tabs" />
           <ToolbarGroup className="openbitfun-acp-agents__toolbar-actions">
             {presentation === 'dialog' ? documentationAction : null}
             {dirty && activeView !== 'json' ? (
@@ -1438,7 +1438,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
           className="openbitfun-acp-agents__manager"
           data-openbitfun-component="acp-agents-config"
           data-openbitfun-part="manager"
-        >
+         data-starmate-component="acp-agents-config" data-starmate-part="manager" >
           {activeView === 'json' && (
             <ConfigPageSection
               title={t('json.title')}
@@ -1471,12 +1471,12 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                 rows={16}
                 spellCheck={false}
                 disabled={saving}
-              />
+               data-starmate-component="acp-agents-config" data-starmate-part="jsonEditor" />
               <div
                 className="openbitfun-acp-agents__json-actions"
                 data-openbitfun-component="acp-agents-config"
                 data-openbitfun-part="jsonActions"
-              >
+               data-starmate-component="acp-agents-config" data-starmate-part="jsonActions" >
                 <Button variant="fill" size="sm" onClick={() => {
                   setJsonConfig(jsonBaseline);
                   setJsonDirty(false);
@@ -1512,7 +1512,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
             className="openbitfun-acp-agents__toolbar"
             data-openbitfun-component="acp-agents-config"
             data-openbitfun-part="toolbar"
-          >
+           data-starmate-component="acp-agents-config" data-starmate-part="toolbar" >
             <SearchField
               className="openbitfun-acp-agents__search"
               value={registrySearch}
@@ -1535,11 +1535,11 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
           </div>
           <FieldGroup appearance="subtle" dividers={false} fieldSurface="ambient">
           {loading ? (
-            <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty">
+            <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty" data-starmate-component="acp-agents-config" data-starmate-part="empty" >
               {t('clients.loading')}
             </div>
           ) : registryPresets.length === 0 && visibleCustomClientRows.length === 0 ? (
-            <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty">
+            <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty" data-starmate-component="acp-agents-config" data-starmate-part="empty" >
               {t('registry.empty')}
             </div>
           ) : (
@@ -1547,7 +1547,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
               className="openbitfun-acp-agents__registry-list"
               data-openbitfun-component="acp-agents-config"
               data-openbitfun-part="registryList"
-            >
+             data-starmate-component="acp-agents-config" data-starmate-part="registryList" >
               {registryPresets.map(preset => {
                 const clientConfig = config.acpClients[preset.id] ?? defaultConfigForPreset(preset);
                 const requirementProbe = probesById.get(preset.id);
@@ -1604,12 +1604,12 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                     className="openbitfun-acp-agents__registry-row"
                     data-openbitfun-component="acp-agents-config"
                     data-openbitfun-part="registryRow"
-                  >
+                   data-starmate-component="acp-agents-config" data-starmate-part="registryRow" >
                     <div
                       className="openbitfun-acp-agents__registry-main"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="registryMain"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="registryMain" >
                       <span className="openbitfun-acp-agents__registry-icon">
                         <Icon name="user" size="md" />
                       </span>
@@ -1624,14 +1624,14 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                       className="openbitfun-acp-agents__status-cell"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="status"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="status" >
                       <AgentStatusPill status={status} label={statusLabel} title={statusTitle} />
                     </div>
                     <div
                       className="openbitfun-acp-agents__confirmation-cell"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="confirmation"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="confirmation" >
                       {showSelect ? (
                         <Select
                           className="openbitfun-acp-agents__confirmation-select"
@@ -1746,12 +1746,12 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                     className="openbitfun-acp-agents__registry-row"
                     data-openbitfun-component="acp-agents-config"
                     data-openbitfun-part="registryRow"
-                  >
+                   data-starmate-component="acp-agents-config" data-starmate-part="registryRow" >
                     <div
                       className="openbitfun-acp-agents__registry-main"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="registryMain"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="registryMain" >
                       <span className="openbitfun-acp-agents__registry-icon">
                         <Icon name="user" size="md" />
                       </span>
@@ -1766,14 +1766,14 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                       className="openbitfun-acp-agents__status-cell"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="status"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="status" >
                       <AgentStatusPill status={status} label={statusLabel} title={statusTitle} />
                     </div>
                     <div
                       className="openbitfun-acp-agents__confirmation-cell"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="confirmation"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="confirmation" >
                       {status === 'enabled' || status === 'ready' ? (
                         <Select
                           className="openbitfun-acp-agents__confirmation-select"
@@ -1830,7 +1830,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
             ) : undefined}
           >
             {visibleRemoteConnectionRows.length === 0 ? (
-              <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty">
+              <div className="openbitfun-acp-agents__empty" data-openbitfun-component="acp-agents-config" data-openbitfun-part="empty" data-starmate-component="acp-agents-config" data-starmate-part="empty" >
                 {t(remoteConnectionRows.length === 0 ? 'remote.empty' : 'remote.emptyVisible')}
               </div>
             ) : (
@@ -1838,7 +1838,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                 className="openbitfun-acp-agents__remote-list"
                 data-openbitfun-component="acp-agents-config"
                 data-openbitfun-part="remoteList"
-              >
+               data-starmate-component="acp-agents-config" data-starmate-part="remoteList" >
                 {visibleRemoteConnectionRows.map(connection => {
                   const hostLabel = [connection.username, connection.host]
                     .filter(Boolean)
@@ -1911,17 +1911,17 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                       className="openbitfun-acp-agents__remote-server"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="remoteServer"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="remoteServer" >
                       <div
                         className="openbitfun-acp-agents__remote-head"
                         data-openbitfun-component="acp-agents-config"
                         data-openbitfun-part="remoteHeader"
-                      >
+                       data-starmate-component="acp-agents-config" data-starmate-part="remoteHeader" >
                         <div
                           className="openbitfun-acp-agents__registry-main"
                           data-openbitfun-component="acp-agents-config"
                           data-openbitfun-part="registryMain"
-                        >
+                         data-starmate-component="acp-agents-config" data-starmate-part="registryMain" >
                           <span className="openbitfun-acp-agents__registry-icon">
                             <Server size={16} />
                           </span>
@@ -1980,7 +1980,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                         className="openbitfun-acp-agents__remote-agent-list"
                         data-openbitfun-component="acp-agents-config"
                         data-openbitfun-part="remoteAgents"
-                      >
+                       data-starmate-component="acp-agents-config" data-starmate-part="remoteAgents" >
                         {remoteRows.map(row => {
                           const statusLabel = getStatusLabel({
                             status: row.status,
@@ -2013,12 +2013,12 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                               className="openbitfun-acp-agents__registry-row openbitfun-acp-agents__registry-row--remote"
                               data-openbitfun-component="acp-agents-config"
                               data-openbitfun-part="registryRow"
-                            >
+                             data-starmate-component="acp-agents-config" data-starmate-part="registryRow" >
                               <div
                                 className="openbitfun-acp-agents__registry-main"
                                 data-openbitfun-component="acp-agents-config"
                                 data-openbitfun-part="registryMain"
-                              >
+                               data-starmate-component="acp-agents-config" data-starmate-part="registryMain" >
                                 <span className="openbitfun-acp-agents__registry-icon">
                                   <Icon name="user" size="md" />
                                 </span>
@@ -2031,7 +2031,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                                 className="openbitfun-acp-agents__capabilities"
                                 data-openbitfun-component="acp-agents-config"
                                 data-openbitfun-part="capabilities"
-                              >
+                               data-starmate-component="acp-agents-config" data-starmate-part="capabilities" >
                                 <CapabilityStatusPill
                                   icon={<Icon name="terminal" size="xs" />}
                                   item={row.requirementProbe?.tool}
@@ -2057,14 +2057,14 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                                 className="openbitfun-acp-agents__status-cell"
                                 data-openbitfun-component="acp-agents-config"
                                 data-openbitfun-part="status"
-                              >
+                               data-starmate-component="acp-agents-config" data-starmate-part="status" >
                                 <AgentStatusPill status={row.status} label={statusLabel} title={statusTitle} />
                               </div>
                               <div
                                 className="openbitfun-acp-agents__confirmation-cell"
                                 data-openbitfun-component="acp-agents-config"
                                 data-openbitfun-part="confirmation"
-                              >
+                               data-starmate-component="acp-agents-config" data-starmate-part="confirmation" >
                                 {canInstallCli ? (
                                   <Button
                                     variant="outline"
@@ -2142,7 +2142,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                 className="openbitfun-acp-agents__hidden-remote-list"
                 data-openbitfun-component="acp-agents-config"
                 data-openbitfun-part="hiddenRemoteList"
-              >
+               data-starmate-component="acp-agents-config" data-starmate-part="hiddenRemoteList" >
                 {hiddenRemoteConnectionRows.map(connection => {
                   const hostLabel = [connection.username, connection.host]
                     .filter(Boolean)
@@ -2153,7 +2153,7 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
                       className="openbitfun-acp-agents__hidden-remote-row"
                       data-openbitfun-component="acp-agents-config"
                       data-openbitfun-part="hiddenRemoteRow"
-                    >
+                     data-starmate-component="acp-agents-config" data-starmate-part="hiddenRemoteRow" >
                       <div className="openbitfun-acp-agents__registry-main">
                         <span className="openbitfun-acp-agents__registry-icon">
                           <Server size={16} />

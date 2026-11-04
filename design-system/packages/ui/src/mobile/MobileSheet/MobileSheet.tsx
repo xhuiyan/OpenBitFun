@@ -107,7 +107,7 @@ export const MobileSheet = forwardRef<HTMLDivElement, MobileSheetProps>(
           data-openbitfun-component="mobile-sheet"
           data-openbitfun-part="overlay"
           data-state={exiting ? "exiting" : "open"}
-        >
+         data-starmate-component="mobile-sheet" data-starmate-part="overlay" >
           <div
             {...surfaceProps}
             {...inertProps(!open)}
@@ -123,22 +123,22 @@ export const MobileSheet = forwardRef<HTMLDivElement, MobileSheetProps>(
             ref={setSurfaceRef}
             role="dialog"
             tabIndex={-1}
-          >
-            {showHandle && <div aria-hidden="true" className={styles.handle} data-openbitfun-part="handle" />}
-            <header className={styles.header} data-openbitfun-part="header">
-              <div className={styles.heading} data-openbitfun-part="heading">
+           data-starmate-component="mobile-sheet" data-starmate-part="surface" >
+            {showHandle && <div aria-hidden="true" className={styles.handle} data-openbitfun-part="handle"  data-starmate-part="handle" />}
+            <header className={styles.header} data-openbitfun-part="header" data-starmate-part="header" >
+              <div className={styles.heading} data-openbitfun-part="heading" data-starmate-part="heading" >
                 <h2 className={styles.title} id={titleId}>{title}</h2>
                 {description !== undefined && description !== null && (
                   <p className={styles.description} id={descriptionId}>{description}</p>
                 )}
               </div>
               {headerAction !== undefined && headerAction !== null && (
-                <div className={styles.headerAction} data-openbitfun-part="header-action">{headerAction}</div>
+                <div className={styles.headerAction} data-openbitfun-part="header-action" data-starmate-part="header-action" >{headerAction}</div>
               )}
             </header>
-            <div className={styles.body} data-openbitfun-part="body">{children}</div>
+            <div className={styles.body} data-openbitfun-part="body" data-starmate-part="body" >{children}</div>
             {footer !== undefined && footer !== null && (
-              <footer className={styles.footer} data-openbitfun-part="footer">{footer}</footer>
+              <footer className={styles.footer} data-openbitfun-part="footer" data-starmate-part="footer" >{footer}</footer>
             )}
           </div>
         </div>

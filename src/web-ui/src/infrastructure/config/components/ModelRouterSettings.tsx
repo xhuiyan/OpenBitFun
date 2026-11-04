@@ -308,7 +308,7 @@ export function ModelRouterSettings({ models, onClose, onSaved, onManageModels, 
   return <Dialog open preset="panel" closeOnEscape={!saving} closeOnPointerOutside={false} onOpenChange={open => { if (!open && !saving) onClose(); }}>
     <DialogHeader><DialogHeading><DialogTitle>{t('router.title')}</DialogTitle></DialogHeading><DialogClose disabled={saving} /></DialogHeader>
     <DialogBody>
-      <div className="model-router-settings" data-openbitfun-component="model-router-settings" data-openbitfun-part="root">
+      <div className="model-router-settings" data-openbitfun-component="model-router-settings" data-openbitfun-part="root" data-starmate-component="model-router-settings" data-starmate-part="root" >
         <div className="model-router-settings__models">
           {(['primary', 'economy'] as const).map(role => <Field key={role} label={tModels(`core.${role}.label`)} controlWidth="fill">
             <Combobox size="sm" aria-label={tModels(`core.${role}.label`)} value={roleDraft?.[role] ?? ''}
@@ -354,8 +354,8 @@ export function ModelRouterSettings({ models, onClose, onSaved, onManageModels, 
           </Field>
         </div>
         {(!available || message || currentChecks) && <div className="model-router-settings__status" role="status" aria-label={t('router.status')}
-          data-openbitfun-component="model-router-settings" data-openbitfun-part="status">
-          <span className="model-router-settings__status-label" data-openbitfun-component="model-router-settings" data-openbitfun-part="statusLabel">{t('router.status')}</span>
+          data-openbitfun-component="model-router-settings" data-openbitfun-part="status" data-starmate-component="model-router-settings" data-starmate-part="status" >
+          <span className="model-router-settings__status-label" data-openbitfun-component="model-router-settings" data-openbitfun-part="statusLabel" data-starmate-component="model-router-settings" data-starmate-part="statusLabel" >{t('router.status')}</span>
           {(message || !available) && <span>{message || t('router.notOpen')}</span>}
           {currentChecks && CHECK_ROLES.map(role => <div className="model-router-settings__check" key={role} data-model-routing-check={role}>
             <span>{role === 'router' ? t('router.connectionChecks.router') : tModels(`core.${role}.label`)}</span>

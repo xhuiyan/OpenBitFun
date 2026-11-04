@@ -207,8 +207,8 @@ export const TrajectoryExplorer = forwardRef<TrajectoryExplorerRef, TrajectoryEx
     onKeyDown={event => {
       if (event.nativeEvent.isComposing || event.keyCode === 229) return;
       if (event.key === 'Escape') { event.stopPropagation(); onClose(); }
-    }}>
-    <div className="trajectory__body" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="body">
+    }} data-starmate-product-component="session-trajectory" data-starmate-product-part="root" >
+    <div className="trajectory__body" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="body" data-starmate-product-component="session-trajectory" data-starmate-product-part="body" >
       <div className="trajectory__labels"><span>{t('trajectory.user')}</span><span>{t('trajectory.model')}</span><span>{t('trajectory.tool')}</span></div>
       <div ref={rail} className="trajectory__rail" role="listbox" aria-label={t('trajectory.title')}
         aria-busy={busy || showLoading} tabIndex={0} data-keyboard-preview={railFocused && keyboardPreview}
@@ -261,12 +261,12 @@ export const TrajectoryExplorer = forwardRef<TrajectoryExplorerRef, TrajectoryEx
             : Math.min(nodes.length - 1, Math.max(0, focusedIndex + (event.key === 'ArrowLeft' ? -1 : 1)));
           if (event.shiftKey) commitRange(bounds?.[0] ?? focusedIndex, index);
           setFocused(trajectoryNodeKey(nodes[index]));
-        }}>
+        }} data-starmate-product-component="session-trajectory" data-starmate-product-part="rail" >
         <div className="trajectory__track" style={{ width: nodes.length * NODE_WIDTH }}>
           <div ref={referenceLine} hidden aria-hidden="true" className="trajectory__reference-line"
-            data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="referenceLine" />
+            data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="referenceLine"  data-starmate-product-component="session-trajectory" data-starmate-product-part="referenceLine" />
           {bounds && <div className="trajectory__range" style={{ left: bounds[0] * NODE_WIDTH, width: (bounds[1] - bounds[0] + 1) * NODE_WIDTH }}
-            data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="range">
+            data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="range" data-starmate-product-component="session-trajectory" data-starmate-product-part="range" >
             {(['start', 'end'] as const).map(edge => <div key={edge} className={`trajectory__range-handle trajectory__range-handle--${edge}`}
               role="slider" tabIndex={0} data-range-edge={edge} aria-label={edge === 'start' ? t('trajectory.rangeStart') : t('trajectory.rangeEnd')}
               aria-valuemin={1} aria-valuemax={nodes.length} aria-valuenow={(edge === 'start' ? bounds[0] : bounds[1]) + 1}
@@ -284,7 +284,7 @@ export const TrajectoryExplorer = forwardRef<TrajectoryExplorerRef, TrajectoryEx
             const label = t('trajectory.node', { turn: node.turnOrdinal + 1, name: node.label || kindLabel(node) });
             const nodeStatus = trajectoryStatus(node.status, t);
             return <Tooltip key={key} placement="bottom" active={railFocused && focused !== undefined && start + index === focusedIndex} content={
-              <Stack gap="2" className="trajectory__tooltip" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="tooltip">
+              <Stack gap="2" className="trajectory__tooltip" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="tooltip" data-starmate-product-component="session-trajectory" data-starmate-product-part="tooltip" >
                 <strong>{node.label || kindLabel(node)}</strong>
                 <Stack direction="horizontal" align="center" gap="2" wrap>
                   <span>{kindLabel(node)} · {t('trajectory.turn', { turn: node.turnOrdinal + 1 })}</span>
@@ -306,14 +306,14 @@ export const TrajectoryExplorer = forwardRef<TrajectoryExplorerRef, TrajectoryEx
                   if (suppressClick.current) { suppressClick.current = false; return; }
                   if (event.shiftKey) { commitRange(Math.max(0, selectedIndex), start + index); return; }
                   void select(node);
-                }}><span /></button>
+                }} data-starmate-product-component="session-trajectory" data-starmate-product-part="node" ><span /></button>
             </Tooltip>;
           })}
         </div>
       </div>
       {showLoading && <Spinner className="trajectory__loading" aria-label={t('trajectory.loading')} />}
     </div>
-    {status && <div className="trajectory__status" role="status" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="status">
+    {status && <div className="trajectory__status" role="status" data-openbitfun-product-component="session-trajectory" data-openbitfun-product-part="status" data-starmate-product-component="session-trajectory" data-starmate-product-part="status" >
       {status}{error && <Button size="xs" variant="text" onClick={retry}>{t('trajectory.retry')}</Button>}
     </div>}
   </section>;

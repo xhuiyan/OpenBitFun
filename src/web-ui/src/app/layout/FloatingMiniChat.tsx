@@ -90,7 +90,7 @@ function DockConversationView({ entry, active, onCollapse, renderHeader, onVoice
   } : { kind: entry.kind, surfaceId: entry.surfaceId, sessionId: entry.sessionId,
     workspaceId: session.workspaceId ?? session.config.workspaceId, workspacePath: session.workspacePath || '' }, [entry, session, appName]);
   const unavailable = <div className="openbitfun-fmc__miniapp-session-pending" role="status"
-    data-openbitfun-component="floating-mini-chat" data-openbitfun-part="pending">{t(
+    data-openbitfun-component="floating-mini-chat" data-openbitfun-part="pending" data-starmate-component="floating-mini-chat" data-starmate-part="pending" >{t(
       entry.kind === 'miniapp' && claim && claim.token === entry.claimToken
         && claim.surfaceId === entry.surfaceId && !claim.sessionId ? 'dock.loading' : 'dock.unavailable',
     )}</div>;
@@ -242,7 +242,7 @@ export function FloatingMiniChat() {
     void dropConversationInDock(event.dataTransfer);
   };
   const renderHeader = (modeSwitch: ReactNode) => <>
-      <div className={['openbitfun-fmc__header', active?.kind === 'control' && entries.length === 1 && 'openbitfun-fmc__header--identity'].filter(Boolean).join(' ')} data-openbitfun-component="floating-mini-chat" data-openbitfun-part="header">
+      <div className={['openbitfun-fmc__header', active?.kind === 'control' && entries.length === 1 && 'openbitfun-fmc__header--identity'].filter(Boolean).join(' ')} data-openbitfun-component="floating-mini-chat" data-openbitfun-part="header" data-starmate-component="floating-mini-chat" data-starmate-part="header" >
         <div className="openbitfun-fmc__mode-switch">{modeSwitch}</div>
         {entries.length > 1 ? <TabGroup className="openbitfun-fmc__tabs" size="sm" value={activeKey} onValueChange={dock.select}
           aria-label={t('dock.tabs')} items={entries.map(entry => ({ value: dockConversationKey(entry), label: label(entry),
@@ -265,7 +265,7 @@ export function FloatingMiniChat() {
           onClick={() => openMiniAppFromConversation(active)} />}
         <IconButton size="sm" icon={<Minus size={15} />} aria-label={t('dock.collapse')} onClick={collapse} />
       </div>
-      {live && !(active?.kind === 'control' && activeKey === callKey) && <div className="openbitfun-fmc__call-status" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="callStatus">
+      {live && !(active?.kind === 'control' && activeKey === callKey) && <div className="openbitfun-fmc__call-status" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="callStatus" data-starmate-component="floating-mini-chat" data-starmate-part="callStatus" >
         <button type="button" onClick={() => {
           const target = voice.target;
           if (!target) return;
@@ -282,7 +282,7 @@ export function FloatingMiniChat() {
     data-openbitfun-state={dock.open ? 'open' : undefined}
     data-openbitfun-communication-mode={immersiveVoice ? 'voice' : 'chat'}
     onDragOver={event => { if (isConversationTransfer(event.dataTransfer)) { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; setDrop(true); dock.setOpen(true); } }}
-    onDragLeave={event => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDrop(false); }} onDrop={acceptDrop}>
+    onDragLeave={event => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDrop(false); }} onDrop={acceptDrop} data-starmate-component="floating-mini-chat" data-starmate-part="root" data-starmate-mode="chat" data-starmate-state={dock.open ? 'open' : undefined} data-starmate-communication-mode={immersiveVoice ? 'voice' : 'chat'} >
     {!sessionVisible && <LauncherButton className="openbitfun-fmc__button" aria-expanded={dock.open} aria-label={t('dock.open')}
       onClick={() => dock.setOpen(true)} onPointerDown={event => { if (event.button === 0) dock.setOpen(true); }}>
       {live ? <Phone size={16} /> : tv('voiceCall.call.launcherCompactLabel')}
@@ -290,15 +290,15 @@ export function FloatingMiniChat() {
     <div ref={panelRef} role="dialog" aria-modal="false" aria-label={t('dock.open')} aria-hidden={!dock.open} data-motion="presence"
       {...(!dock.open ? { inert: '' } : {})}
       className={['openbitfun-fmc__panel', dock.open && 'openbitfun-fmc__panel--open', drop && 'openbitfun-fmc__panel--drop'].filter(Boolean).join(' ')}
-      data-openbitfun-component="floating-mini-chat" data-openbitfun-part="panel">
-      <div className="openbitfun-fmc__body" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="body">
+      data-openbitfun-component="floating-mini-chat" data-openbitfun-part="panel" data-starmate-component="floating-mini-chat" data-starmate-part="panel" >
+      <div className="openbitfun-fmc__body" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="body" data-starmate-component="floating-mini-chat" data-starmate-part="body" >
         {(!active || active.kind === 'control' && !flow.sessions.has(active.sessionId)) && renderHeader(null)}
         {entries.filter(entry => (visited.has(dockConversationKey(entry)) || dockConversationKey(entry) === activeKey) && (entry.kind !== 'control' || flow.sessions.has(entry.sessionId))).map(entry => <div
           key={dockConversationKey(entry)} hidden={dockConversationKey(entry) !== activeKey}
           className="openbitfun-fmc__view">
           <DockConversationView entry={entry} active={dock.open && dockConversationKey(entry) === activeKey} onCollapse={collapse} renderHeader={renderHeader} onVoiceViewChange={onVoiceViewChange} />
         </div>)}
-        {(!active || active.kind === 'control' && !flow.sessions.has(active.sessionId)) && <div className="openbitfun-fmc__miniapp-session-pending" role="status" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="pending">
+        {(!active || active.kind === 'control' && !flow.sessions.has(active.sessionId)) && <div className="openbitfun-fmc__miniapp-session-pending" role="status" data-openbitfun-component="floating-mini-chat" data-openbitfun-part="pending" data-starmate-component="floating-mini-chat" data-starmate-part="pending" >
           {error ? <><span>{t('dock.loadFailed')}</span><span>{error}</span><Button onClick={() => setRetry(value => value + 1)}>{t('dock.retry')}</Button></> : t('dock.loading')}
         </div>}
       </div>

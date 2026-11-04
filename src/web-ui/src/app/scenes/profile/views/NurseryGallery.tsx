@@ -158,7 +158,7 @@ const NurseryGallery: React.FC = () => {
       className="nursery-gallery"
       data-openbitfun-component="nursery-gallery"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="nursery-gallery" data-starmate-part="root" >
       <PageHeader
         className="nursery-gallery__header"
         level={2}
@@ -168,7 +168,7 @@ const NurseryGallery: React.FC = () => {
         description={t('nursery.gallery.subtitle')}
       />
 
-      <div className="gallery-zones" data-openbitfun-component="nursery-gallery" data-openbitfun-part="content">
+      <div className="gallery-zones" data-openbitfun-component="nursery-gallery" data-openbitfun-part="content" data-starmate-component="nursery-gallery" data-starmate-part="content" >
         <GalleryZone
           id="nursery-assistants-zone"
           className="nursery-gallery__assistant-zone"
@@ -271,7 +271,7 @@ const NurseryGallery: React.FC = () => {
                   role="listitem"
                   data-openbitfun-component="nursery-gallery"
                   data-openbitfun-part="createCard"
-                >
+                 data-starmate-component="nursery-gallery" data-starmate-part="createCard" >
                   <Button
                     className="nursery-gallery__create-button"
                     variant="fill"

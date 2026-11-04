@@ -89,12 +89,12 @@ const TodoItemRow: React.FC<TodoItemRowProps> = ({
           onEdit(job);
         }
       }}
-    >
-      <div className="openbitfun-todos__row-icon" data-openbitfun-scene="todos" data-openbitfun-part="rowIcon">
+     data-starmate-scene="todos" data-starmate-part="row" data-starmate-state={rowState || undefined} >
+      <div className="openbitfun-todos__row-icon" data-openbitfun-scene="todos" data-openbitfun-part="rowIcon" data-starmate-scene="todos" data-starmate-part="rowIcon" >
         <CalendarClock size={19} aria-hidden="true" />
       </div>
 
-      <div className="openbitfun-todos__row-body" data-openbitfun-scene="todos" data-openbitfun-part="rowBody">
+      <div className="openbitfun-todos__row-body" data-openbitfun-scene="todos" data-openbitfun-part="rowBody" data-starmate-scene="todos" data-starmate-part="rowBody" >
         <div className="openbitfun-todos__row-title-line">
           <OverflowText className="openbitfun-todos__row-name">{job.name}</OverflowText>
           {isRunning ? (
@@ -102,11 +102,11 @@ const TodoItemRow: React.FC<TodoItemRowProps> = ({
               className="openbitfun-todos__row-badge openbitfun-todos__row-badge--running"
               data-openbitfun-scene="todos"
               data-openbitfun-part="rowBadge"
-            >
+             data-starmate-scene="todos" data-starmate-part="rowBadge" >
               {t('shared:statuses.running')}
             </span>
           ) : isNextRun ? (
-            <span className="openbitfun-todos__row-badge" data-openbitfun-scene="todos" data-openbitfun-part="rowBadge">
+            <span className="openbitfun-todos__row-badge" data-openbitfun-scene="todos" data-openbitfun-part="rowBadge" data-starmate-scene="todos" data-starmate-part="rowBadge" >
               {t('badges.nextRun')}
             </span>
           ) : null}
@@ -115,7 +115,7 @@ const TodoItemRow: React.FC<TodoItemRowProps> = ({
               className="openbitfun-todos__row-badge openbitfun-todos__row-badge--warn"
               data-openbitfun-scene="todos"
               data-openbitfun-part="rowBadge"
-            >
+             data-starmate-scene="todos" data-starmate-part="rowBadge" >
               {t('badges.overdue')}
             </span>
           ) : null}
@@ -134,7 +134,7 @@ const TodoItemRow: React.FC<TodoItemRowProps> = ({
           ) : null}
         </OverflowText></div>
         {job.state.lastError ? (
-          <p className="openbitfun-todos__row-error" data-openbitfun-scene="todos" data-openbitfun-part="rowError">
+          <p className="openbitfun-todos__row-error" data-openbitfun-scene="todos" data-openbitfun-part="rowError" data-starmate-scene="todos" data-starmate-part="rowError" >
             {job.state.lastError}
           </p>
         ) : null}
@@ -146,7 +146,7 @@ const TodoItemRow: React.FC<TodoItemRowProps> = ({
         data-openbitfun-part="rowActions"
         onClick={(event) => event.stopPropagation()}
         role="presentation"
-      >
+       data-starmate-scene="todos" data-starmate-part="rowActions" >
         <Switch
           checked={job.enabled}
           aria-label={t('actions.toggleEnabled')}

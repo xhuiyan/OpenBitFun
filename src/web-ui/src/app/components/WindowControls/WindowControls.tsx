@@ -58,7 +58,7 @@ export const WindowControls: React.FC<WindowControlsProps> = ({
       data-openbitfun-component="window-controls"
       data-openbitfun-part="root"
       data-openbitfun-state={[disabled && 'disabled', maximized && 'maximized'].filter(Boolean).join(' ') || undefined}
-    >
+     data-starmate-component="window-controls" data-starmate-part="root" data-starmate-state={[disabled && 'disabled', maximized && 'maximized'].filter(Boolean).join(' ') || undefined} >
       <Tooltip content={t('window.minimize')} placement="bottom">
         <button
           type="button"

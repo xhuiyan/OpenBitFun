@@ -192,9 +192,9 @@ export const ComputerUseToolCard: React.FC<ToolCardProps> = ({ toolItem, onExpan
   const renderExpandedContent = () => {
     if (status === 'error') {
       return (
-        <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="content" className="compact-result-content computer-use-tool-card__content">
+        <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="content" className="compact-result-content computer-use-tool-card__content" data-starmate-component="computer-use-tool-card" data-starmate-part="content" >
           {permissionDenied ? (
-            <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="permissionDenied" className="computer-use-tool-card__permission-denied">
+            <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="permissionDenied" className="computer-use-tool-card__permission-denied" data-starmate-component="computer-use-tool-card" data-starmate-part="permissionDenied" >
               <p>{t('toolCards.computerUse.permissionDeniedHint')}</p>
               <Button
                 type="button"
@@ -215,25 +215,25 @@ export const ComputerUseToolCard: React.FC<ToolCardProps> = ({ toolItem, onExpan
     }
 
     return (
-      <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="expanded" className="computer-use-tool-card__expanded">
-        <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row">
+      <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="expanded" className="computer-use-tool-card__expanded" data-starmate-component="computer-use-tool-card" data-starmate-part="expanded" >
+        <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row" data-starmate-component="computer-use-tool-card" data-starmate-part="row" >
           <span className="computer-use-tool-card__row-label">{t('toolCards.computerUse.actionLabel')}</span>
           <code>{parsed.action}</code>
         </div>
         {parsed.appName && (
-          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row">
+          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row" data-starmate-component="computer-use-tool-card" data-starmate-part="row" >
             <span className="computer-use-tool-card__row-label">{t('toolCards.computerUse.appLabel')}</span>
             <span>{parsed.appName}</span>
           </div>
         )}
         {parsed.target && (
-          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row">
+          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="row" className="computer-use-tool-card__row" data-starmate-component="computer-use-tool-card" data-starmate-part="row" >
             <span className="computer-use-tool-card__row-label">{t('toolCards.computerUse.targetLabel')}</span>
             <span>{parsed.target}</span>
           </div>
         )}
         {parsed.loopWarningSuggestion && (
-          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="loopWarning" className="computer-use-tool-card__loop-warning">
+          <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="loopWarning" className="computer-use-tool-card__loop-warning" data-starmate-component="computer-use-tool-card" data-starmate-part="loopWarning" >
             <Icon glyph={AlertTriangle} size="xs" />
             <span>{parsed.loopWarningSuggestion}</span>
           </div>
@@ -243,7 +243,7 @@ export const ComputerUseToolCard: React.FC<ToolCardProps> = ({ toolItem, onExpan
   };
 
   return (
-    <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="root" data-openbitfun-state={[isExpanded && 'expanded', status === 'error' && 'failed'].filter(Boolean).join(' ')} ref={cardRootRef} data-tool-card-id={toolId ?? ''}>
+    <div data-openbitfun-component="computer-use-tool-card" data-openbitfun-part="root" data-openbitfun-state={[isExpanded && 'expanded', status === 'error' && 'failed'].filter(Boolean).join(' ')} ref={cardRootRef} data-tool-card-id={toolId ?? ''} data-starmate-component="computer-use-tool-card" data-starmate-part="root" data-starmate-state={[isExpanded && 'expanded', status === 'error' && 'failed'].filter(Boolean).join(' ')} >
       <AmbientToolCard
         status={status}
         isExpanded={isExpanded}

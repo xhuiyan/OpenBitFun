@@ -23,7 +23,7 @@ export const ConfigMessage: React.FC<ConfigMessageProps> = ({
       className={['openbitfun-config-message', className].filter(Boolean).join(' ')}
       data-openbitfun-component="config"
       data-openbitfun-part="message"
-    >
+     data-starmate-component="config" data-starmate-part="message" >
       <Alert tone={message.type} message={message.text} />
     </div>
   );

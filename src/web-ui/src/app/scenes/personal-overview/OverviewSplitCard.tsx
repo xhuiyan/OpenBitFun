@@ -28,7 +28,7 @@ function PaneContent({ title, value, description, children, centerSummary }: Sec
 
 export function OverviewSplitCard({ children }: { children: ReactNode }) {
   return <Card appearance="subtle" radius="lg" clip>
-    <div className="overview-split-card__grid" data-openbitfun-scene="personal-overview" data-openbitfun-part="catalog">{children}</div>
+    <div className="overview-split-card__grid" data-openbitfun-scene="personal-overview" data-openbitfun-part="catalog" data-starmate-scene="personal-overview" data-starmate-part="catalog" >{children}</div>
   </Card>;
 }
 

@@ -84,44 +84,44 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field({
       data-orientation={orientation}
       data-required={isRequired ? "true" : "false"}
       ref={ref}
-    >
-      <span className={styles.content} data-openbitfun-part="content">
-        <span className={styles.labelRow} data-openbitfun-part="label-row">
+     data-starmate-component="field" >
+      <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
+        <span className={styles.labelRow} data-openbitfun-part="label-row" data-starmate-part="label-row" >
           <label className={styles.label} htmlFor={controlId}>
             <span>{label}</span>
             {isRequired && (
-              <span aria-hidden="true" className={styles.required} data-openbitfun-part="required">
+              <span aria-hidden="true" className={styles.required} data-openbitfun-part="required" data-starmate-part="required" >
                 *
               </span>
             )}
           </label>
           {labelAction !== undefined && labelAction !== null && (
-            <span className={styles.labelAction} data-openbitfun-part="label-action">
+            <span className={styles.labelAction} data-openbitfun-part="label-action" data-starmate-part="label-action" >
               {labelAction}
             </span>
           )}
         </span>
         {descriptionId !== undefined && (
-          <span className={styles.description} data-openbitfun-part="description" id={descriptionId}>
+          <span className={styles.description} data-openbitfun-part="description" id={descriptionId} data-starmate-part="description" >
             {description}
           </span>
         )}
       </span>
-      <span className={styles.control} data-openbitfun-part="control">
+      <span className={styles.control} data-openbitfun-part="control" data-starmate-part="control" >
         {controlLeading !== undefined && controlLeading !== null && (
-          <span className={styles.controlAdornment} data-openbitfun-part="control-leading">
+          <span className={styles.controlAdornment} data-openbitfun-part="control-leading" data-starmate-part="control-leading" >
             {controlLeading}
           </span>
         )}
         <FieldAccessibilityProvider>{control}</FieldAccessibilityProvider>
         {controlTrailing !== undefined && controlTrailing !== null && (
-          <span className={styles.controlAdornment} data-openbitfun-part="control-trailing">
+          <span className={styles.controlAdornment} data-openbitfun-part="control-trailing" data-starmate-part="control-trailing" >
             {controlTrailing}
           </span>
         )}
       </span>
       {hasError && (
-        <span className={styles.error} data-openbitfun-part="error" id={errorId}>
+        <span className={styles.error} data-openbitfun-part="error" id={errorId} data-starmate-part="error" >
           {error}
         </span>
       )}

@@ -23,7 +23,7 @@ import type { SettingsPageId } from './settingsTypes';
 function SettingsSceneLoading({ pageId }: { pageId: SettingsPageId }) {
   const { t } = useTranslation('common');
   return (
-    <SettingsPage pageId={pageId} data-openbitfun-scene="settings" data-openbitfun-part="loading">
+    <SettingsPage pageId={pageId} data-openbitfun-scene="settings" data-openbitfun-part="loading" data-starmate-scene="settings" data-starmate-part="loading" >
       <ConfigLoadingState label={t('app.loading')} rows={5} />
     </SettingsPage>
   );
@@ -71,7 +71,7 @@ const SettingsScene: React.FC<SettingsSceneProps> = ({ isActive = true }) => {
       data-openbitfun-scene="settings"
       data-openbitfun-part="root"
       data-openbitfun-page={activePageId}
-    >
+     data-starmate-scene="settings" data-starmate-part="root" data-starmate-page={activePageId} >
       <div ref={contentRef} className="openbitfun-settings-scene__content-wrapper">
         <div
           key={`${scope.epoch}:${activePageId}`}
@@ -79,7 +79,7 @@ const SettingsScene: React.FC<SettingsSceneProps> = ({ isActive = true }) => {
           data-openbitfun-scene="settings"
           data-openbitfun-part="content"
           data-openbitfun-page={activePageId}
-        >
+         data-starmate-scene="settings" data-starmate-part="content" data-starmate-page={activePageId} >
           {failed ? (
             <SettingsPage pageId={activePageId}>
               <ConfigRetryState

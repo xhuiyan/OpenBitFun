@@ -3,7 +3,7 @@ import { NurseryView } from './views';
 import './ProfileScene.scss';
 
 const ProfileScene: React.FC = () => (
-  <div className="openbitfun-profile-scene" data-openbitfun-scene="profile" data-openbitfun-part="root">
+  <div className="openbitfun-profile-scene" data-openbitfun-scene="profile" data-openbitfun-part="root" data-starmate-scene="profile" data-starmate-part="root" >
     <NurseryView />
   </div>
 );

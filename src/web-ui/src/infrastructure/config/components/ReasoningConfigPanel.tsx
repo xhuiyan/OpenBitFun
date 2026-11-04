@@ -118,12 +118,12 @@ export const ReasoningConfigPanel: React.FC<ReasoningConfigPanelProps> = ({
       className="openbitfun-reasoning-config-panel"
       data-openbitfun-component="reasoning-config-panel"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="reasoning-config-panel" data-starmate-part="root" >
       <ScrollArea
         className="openbitfun-reasoning-config-panel__body"
         data-openbitfun-component="reasoning-config-panel"
         data-openbitfun-part="body"
-      >
+       data-starmate-component="reasoning-config-panel" data-starmate-part="body" >
         <ReasoningPresetEditor
           value={draft}
           generatedProjection={activeGeneratedProjection}
@@ -137,14 +137,14 @@ export const ReasoningConfigPanel: React.FC<ReasoningConfigPanelProps> = ({
         className="openbitfun-reasoning-config-panel__footer"
         data-openbitfun-component="reasoning-config-panel"
         data-openbitfun-part="footer"
-      >
+       data-starmate-component="reasoning-config-panel" data-starmate-part="footer" >
         {invalid && (
           <div
             className="openbitfun-reasoning-config-panel__error"
             data-openbitfun-component="reasoning-config-panel"
             data-openbitfun-part="error"
             role="alert"
-          >
+           data-starmate-component="reasoning-config-panel" data-starmate-part="error" >
             <AlertTriangle size={14} aria-hidden="true" />
             <span>{t('reasoningPresets.validationError')}</span>
           </div>
@@ -153,7 +153,7 @@ export const ReasoningConfigPanel: React.FC<ReasoningConfigPanelProps> = ({
           className="openbitfun-reasoning-config-panel__actions"
           data-openbitfun-component="reasoning-config-panel"
           data-openbitfun-part="actions"
-        >
+         data-starmate-component="reasoning-config-panel" data-starmate-part="actions" >
           <Button variant="fill" onClick={onCancel}>
             {t('actions.cancel')}
           </Button>

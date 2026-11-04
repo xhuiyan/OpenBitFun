@@ -54,7 +54,7 @@ export const SessionStatusIndicator = memo(function SessionStatusIndicator({
       data-status={status.kind}
       role="img"
       aria-label={label}
-    >
+     data-starmate-component="sessions-section" data-starmate-part="status" >
       <Icon
         {...('glyph' in appearance
           ? { glyph: appearance.glyph }

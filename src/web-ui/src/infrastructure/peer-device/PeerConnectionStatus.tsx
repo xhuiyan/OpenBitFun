@@ -35,12 +35,12 @@ export const PeerConnectionStatus: React.FC = () => {
       className="peer-connection-status"
       data-openbitfun-component="peer-device"
       data-openbitfun-part="connectionStatus"
-    >
+     data-starmate-component="peer-device" data-starmate-part="connectionStatus" >
       <div
         className="peer-connection-status__content"
         data-openbitfun-component="peer-device"
         data-openbitfun-part="connectionStatusContent"
-      >
+       data-starmate-component="peer-device" data-starmate-part="connectionStatusContent" >
         <Tooltip content={t('peerConnection.reconnecting', { name: peer.peerMode.deviceName })}>
           <span className="peer-connection-status__label" role="status" aria-live="polite">
             <WifiOff size={13} aria-hidden="true" />

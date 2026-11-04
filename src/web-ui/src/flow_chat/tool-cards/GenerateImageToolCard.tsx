@@ -85,7 +85,7 @@ export const GenerateImageToolCard: React.FC<ToolCardProps> = ({ toolItem, onExp
       data-openbitfun-adapter="generate-image"
       data-tool-card-id={toolItem.id}
       data-tool-card-kind="generate-image"
-    >
+     data-starmate-adapter="generate-image" >
       <ImageAnalysisToolCard {...card} />
     </div>
   );

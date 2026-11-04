@@ -213,9 +213,9 @@ const MiniAppScene: React.FC<MiniAppSceneProps> = ({ appId }) => {
       data-openbitfun-scene="miniapp"
       data-openbitfun-part="root"
       data-openbitfun-state={customizeOpen ? 'customizing' : undefined}
-    >
+     data-starmate-scene="miniapp" data-starmate-part="root" data-starmate-state={customizeOpen ? 'customizing' : undefined} >
       <SceneChromeContribution sceneId={`miniapp:${appId}`}>
-        <div className="miniapp-scene__header-actions" data-openbitfun-scene="miniapp" data-openbitfun-part="header">
+        <div className="miniapp-scene__header-actions" data-openbitfun-scene="miniapp" data-openbitfun-part="header" data-starmate-scene="miniapp" data-starmate-part="header" >
           <MiniAppChromeActions actions={app?.chrome?.titlebar?.actions ?? []} locale={currentLanguage}
             disabled={!contentReady || loading} onAction={actionId => chromeActionRef.current?.(actionId)} />
           {hasConversation && <MiniAppActionTooltip content={t('scene.conversation')} disabled={!composerClaim?.sessionId}>
@@ -239,15 +239,15 @@ const MiniAppScene: React.FC<MiniAppSceneProps> = ({ appId }) => {
       <div className={[
         'miniapp-scene__content',
         customizeOpen && app && 'miniapp-scene__content--customizing',
-      ].filter(Boolean).join(' ')} data-openbitfun-scene="miniapp" data-openbitfun-part="content">
+      ].filter(Boolean).join(' ')} data-openbitfun-scene="miniapp" data-openbitfun-part="content" data-starmate-scene="miniapp" data-starmate-part="content" >
         {loading && !app && (
-          <div className="miniapp-scene__loading" data-openbitfun-scene="miniapp" data-openbitfun-part="loading">
+          <div className="miniapp-scene__loading" data-openbitfun-scene="miniapp" data-openbitfun-part="loading" data-starmate-scene="miniapp" data-starmate-part="loading" >
             <Loader2 size={28} className="miniapp-scene__spinning" strokeWidth={1.5} />
             <span>{t('scene.loading')}</span>
           </div>
         )}
         {error && !app && (
-          <div className="miniapp-scene__error" data-openbitfun-scene="miniapp" data-openbitfun-part="error">
+          <div className="miniapp-scene__error" data-openbitfun-scene="miniapp" data-openbitfun-part="error" data-starmate-scene="miniapp" data-starmate-part="error" >
             <AlertTriangle size={32} strokeWidth={1.5} />
             <p>{t('scene.loadFailed', { error })}</p>
             <Button variant="outline" size="sm" onClick={() => void load(appId)}>
@@ -256,7 +256,7 @@ const MiniAppScene: React.FC<MiniAppSceneProps> = ({ appId }) => {
           </div>
         )}
         {app && (
-          <div className="miniapp-scene__runner-shell" data-openbitfun-scene="miniapp" data-openbitfun-part="runner">
+          <div className="miniapp-scene__runner-shell" data-openbitfun-scene="miniapp" data-openbitfun-part="runner" data-starmate-scene="miniapp" data-starmate-part="runner" >
             {loading && (
               <div className="miniapp-scene__refresh-overlay" role="status" aria-live="polite">
                 <Loader2 size={20} className="miniapp-scene__spinning" strokeWidth={1.5} />
@@ -271,7 +271,7 @@ const MiniAppScene: React.FC<MiniAppSceneProps> = ({ appId }) => {
               chromeActionRef={chromeActionRef}
             />
             {customizePreview && (
-              <div className="miniapp-scene__preview-stage" role="region" aria-label={t('customize.previewTitle')} data-openbitfun-scene="miniapp" data-openbitfun-part="preview">
+              <div className="miniapp-scene__preview-stage" role="region" aria-label={t('customize.previewTitle')} data-openbitfun-scene="miniapp" data-openbitfun-part="preview" data-starmate-scene="miniapp" data-starmate-part="preview" >
                 <div className="miniapp-scene__preview-stage-header">
                   <div>
                     <span className="miniapp-scene__preview-stage-title">{t('customize.previewTitle')}</span>
@@ -298,7 +298,7 @@ const MiniAppScene: React.FC<MiniAppSceneProps> = ({ appId }) => {
           </div>
         )}
         {customizeNotice && (
-          <div className="miniapp-scene__customize-notice" role="status" data-openbitfun-scene="miniapp" data-openbitfun-part="notice">
+          <div className="miniapp-scene__customize-notice" role="status" data-openbitfun-scene="miniapp" data-openbitfun-part="notice" data-starmate-scene="miniapp" data-starmate-part="notice" >
             <Icon name="check-circle" size="md" />
             <span>{customizeNotice}</span>
           </div>

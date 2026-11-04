@@ -7,6 +7,6 @@ export function SessionTitleNumber({ number }: { number?: string }) {
       className="openbitfun-session-title-number"
       data-openbitfun-component="session-title-number"
       data-openbitfun-part="root"
-    >{number}</span>
+     data-starmate-component="session-title-number" data-starmate-part="root" >{number}</span>
   ) : null;
 }

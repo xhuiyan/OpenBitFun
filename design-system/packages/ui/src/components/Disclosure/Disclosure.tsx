@@ -104,7 +104,7 @@ const CustomDisclosure = forwardRef<HTMLElement, CustomDisclosureProps>(
         data-disabled={disabled ? "true" : "false"}
         data-open={resolvedOpen ? "true" : "false"}
         ref={ref}
-      >
+       data-starmate-component="disclosure" >
         {renderHeader ? renderHeader({
           'aria-controls': contentId,
           'aria-expanded': resolvedOpen,
@@ -112,7 +112,7 @@ const CustomDisclosure = forwardRef<HTMLElement, CustomDisclosureProps>(
           id: triggerId,
           onClick: toggle,
           type: 'button',
-        }) : <div className={classNames(styles.header, headerClassName)} data-openbitfun-part="header">
+        }) : <div className={classNames(styles.header, headerClassName)} data-openbitfun-part="header" data-starmate-part="header" >
           <button data-overflow-trigger
             aria-controls={contentId}
             aria-expanded={resolvedOpen}
@@ -122,25 +122,25 @@ const CustomDisclosure = forwardRef<HTMLElement, CustomDisclosureProps>(
             onClick={toggle}
             type="button"
           >
-            <span aria-hidden="true" className={styles.indicator} data-openbitfun-part="indicator">
+            <span aria-hidden="true" className={styles.indicator} data-openbitfun-part="indicator" data-starmate-part="indicator" >
               <Icon name="chevron-right" size="sm" />
             </span>
             {leading !== undefined && leading !== null && (
-              <span aria-hidden="true" className={styles.leading} data-openbitfun-part="leading">
+              <span aria-hidden="true" className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >
                 {leading}
               </span>
             )}
-            <span className={styles.heading} data-openbitfun-part="heading">
-              <OverflowText className={styles.summary} data-openbitfun-part="summary">{summary}</OverflowText>
+            <span className={styles.heading} data-openbitfun-part="heading" data-starmate-part="heading" >
+              <OverflowText className={styles.summary} data-openbitfun-part="summary" data-starmate-part="summary" >{summary}</OverflowText>
               {description !== undefined && description !== null && (
-                <span className={styles.description} data-openbitfun-part="description">
+                <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
                   {description}
                 </span>
               )}
             </span>
           </button>
           {actions !== undefined && actions !== null && (
-            <span className={styles.actions} data-openbitfun-part="actions">{actions}</span>
+            <span className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >{actions}</span>
           )}
         </div>}
         {(!unmountOnClose || resolvedOpen || retained) && <div
@@ -152,8 +152,8 @@ const CustomDisclosure = forwardRef<HTMLElement, CustomDisclosureProps>(
           data-openbitfun-part="content"
           id={contentId}
           role="region"
-        >
-          <div className={classNames(styles.contentInner, contentInnerClassName)} data-openbitfun-part="content-inner">
+         data-starmate-part="content" >
+          <div className={classNames(styles.contentInner, contentInnerClassName)} data-openbitfun-part="content-inner" data-starmate-part="content-inner" >
             {children}
           </div>
         </div>}
@@ -176,8 +176,8 @@ export const Disclosure = forwardRef<HTMLElement, DisclosureProps>(
             if (typeof ref === "function") ref(element);
             else if (ref) ref.current = element;
           }}
-        >
-          <summary data-openbitfun-part="summary">{summary}</summary>
+         data-starmate-component="disclosure" >
+          <summary data-openbitfun-part="summary" data-starmate-part="summary" >{summary}</summary>
           {children}
         </details>
       );

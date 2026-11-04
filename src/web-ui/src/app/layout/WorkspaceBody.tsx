@@ -81,16 +81,16 @@ const WorkspaceBody: React.FC<WorkspaceBodyProps> = ({
       data-openbitfun-scene="workbench"
       data-openbitfun-part="workspace"
       data-openbitfun-state={isNavCollapsed ? 'collapsed' : undefined}
-    >
+     data-starmate-scene="workbench" data-starmate-part="workspace" data-starmate-state={isNavCollapsed ? 'collapsed' : undefined} >
       <div
         className="openbitfun-workspace-body__material"
         data-openbitfun-scene="workbench"
         data-openbitfun-part="workspaceMaterial"
         data-openbitfun-theme-scope="chrome"
         aria-hidden="true"
-      />
+       data-starmate-scene="workbench" data-starmate-part="workspaceMaterial" data-starmate-theme-scope="chrome" />
       {isNavCollapsed && (
-        <div className="openbitfun-workspace-body__collapsed-nav" data-openbitfun-scene="workbench" data-openbitfun-part="collapsedNav">
+        <div className="openbitfun-workspace-body__collapsed-nav" data-openbitfun-scene="workbench" data-openbitfun-part="collapsedNav" data-starmate-scene="workbench" data-starmate-part="collapsedNav" >
           <NavBar isCollapsed onExpandNav={toggleLeftPanel} onMaximize={onMaximize} />
         </div>
       )}
@@ -105,10 +105,10 @@ const WorkspaceBody: React.FC<WorkspaceBodyProps> = ({
         data-openbitfun-part="navArea"
         data-openbitfun-theme-scope="chrome"
         data-openbitfun-state={isNavCollapsed ? 'collapsed' : undefined}
-      >
+       data-starmate-scene="workbench" data-starmate-part="navArea" data-starmate-theme-scope="chrome" data-starmate-state={isNavCollapsed ? 'collapsed' : undefined} >
         <NavBar onExpandNav={toggleLeftPanel} onMaximize={onMaximize} />
         <NavPanel className="openbitfun-workspace-body__nav-panel" />
-        <div data-openbitfun-creation-slot="sidebar-footer" />
+        <div data-openbitfun-creation-slot="sidebar-footer"  data-starmate-creation-slot="sidebar-footer" />
       </div>
 
       <TerminalActionBridge />
@@ -131,7 +131,7 @@ const WorkspaceBody: React.FC<WorkspaceBodyProps> = ({
           data-openbitfun-scene="workbench"
           data-openbitfun-part="navDivider"
           data-openbitfun-theme-scope="chrome"
-        >
+         data-starmate-scene="workbench" data-starmate-part="navDivider" data-starmate-theme-scope="chrome" >
           <svg className="openbitfun-workspace-body__nav-grip" viewBox="0 0 48 120" aria-hidden="true" focusable="false">
             <path ref={navGripRef} d="M 24 44 L 24 76" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
           </svg>
@@ -139,15 +139,15 @@ const WorkspaceBody: React.FC<WorkspaceBodyProps> = ({
       )}
 
       {/* Right: visual scene surface + any shell-level overlay */}
-      <div className="openbitfun-workspace-body__scene-area" data-openbitfun-scene="workbench" data-openbitfun-part="sceneArea">
+      <div className="openbitfun-workspace-body__scene-area" data-openbitfun-scene="workbench" data-openbitfun-part="sceneArea" data-starmate-scene="workbench" data-starmate-part="sceneArea" >
         <div
           ref={sceneSurfaceRef}
           className="openbitfun-workspace-body__scene-surface"
           data-openbitfun-scene="workbench"
           data-openbitfun-part="sceneSurface"
-        >
+         data-starmate-scene="workbench" data-starmate-part="sceneSurface" >
           <SceneChromeProvider activeSceneId={activeSceneId}>
-            <div data-openbitfun-creation-slot="scene-header" />
+            <div data-openbitfun-creation-slot="scene-header"  data-starmate-creation-slot="scene-header" />
             <WorkbenchLayout
               workspacePath={currentWorkspace?.rootPath}
               onMinimize={onMinimize}
@@ -160,7 +160,7 @@ const WorkspaceBody: React.FC<WorkspaceBodyProps> = ({
                 isEntering={isEntering}
               />
             </WorkbenchLayout>
-            <div data-openbitfun-creation-slot="scene-footer" />
+            <div data-openbitfun-creation-slot="scene-footer"  data-starmate-creation-slot="scene-footer" />
           </SceneChromeProvider>
         </div>
         {sceneOverlay}

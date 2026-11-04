@@ -95,8 +95,8 @@ test("ChangeCount formats positive additions and deletions with distinct parts",
   );
 
   assert.match(markup, /data-openbitfun-component="change-count"/);
-  assert.match(markup, /data-openbitfun-part="additions">\+6<\/span>/);
-  assert.match(markup, /data-openbitfun-part="deletions">-2<\/span>/);
+  assert.match(markup, /data-openbitfun-part="additions"[^>]*>\+6<\/span>/);
+  assert.match(markup, /data-openbitfun-part="deletions"[^>]*>-2<\/span>/);
 });
 
 test("ActivityItem styles use public activity, code-change, and focus tokens", async () => {

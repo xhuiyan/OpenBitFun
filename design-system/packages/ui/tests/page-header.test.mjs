@@ -19,7 +19,7 @@ test("PageHeader decouples heading semantics from visual size", () => {
   assert.match(markup, /data-level="2"/);
   assert.match(markup, /data-size="display"/);
   assert.match(markup, /<h2[^>]*data-openbitfun-part="heading"[^>]*>Appearance<\/h2>/);
-  assert.match(markup, /data-openbitfun-part="description">Interface language and visual appearance<\/span>/);
+  assert.match(markup, /data-openbitfun-part="description"[^>]*>Interface language and visual appearance<\/span>/);
 });
 
 test("PageHeader exposes alignment and action content independently", () => {

@@ -143,7 +143,7 @@ export const FlowToolCard: React.FC<FlowToolCardProps> = React.memo(({
       data-capsule-row={capsuleEligible && !staticAgentWaitCapsule && !capsuleExpanded && !interruptionNote && !['error', 'cancelled', 'rejected'].includes(effectiveToolItem.status) ? 'true' : undefined}
       data-openbitfun-attention={config.attention}
       data-openbitfun-presentation={config.presentation}
-    >
+     data-starmate-component="flow-tool-card" data-starmate-part="root" data-starmate-state={permissionPending ? 'permission-pending' : undefined} data-starmate-attention={config.attention} data-starmate-presentation={config.presentation} >
       <FlowChatCardReaderProvider itemKey={capsuleKey}>
       <FlowToolCardErrorBoundary
         toolItem={effectiveToolItem}
@@ -176,7 +176,7 @@ export const FlowToolCard: React.FC<FlowToolCardProps> = React.memo(({
           data-openbitfun-component="flow-tool-card"
           data-openbitfun-part="note"
           role="note"
-        >
+         data-starmate-component="flow-tool-card" data-starmate-part="note" >
           {interruptionNote}
         </div>
       )}

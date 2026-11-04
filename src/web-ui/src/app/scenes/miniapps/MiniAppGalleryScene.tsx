@@ -55,7 +55,7 @@ const MiniAppGalleryScene: React.FC<MiniAppGallerySceneProps> = ({ initialDetail
   );
 
   return (
-    <div className="miniapp-gallery-scene" data-openbitfun-scene="miniapp-gallery" data-openbitfun-part="root">
+    <div className="miniapp-gallery-scene" data-openbitfun-scene="miniapp-gallery" data-openbitfun-part="root" data-starmate-scene="miniapp-gallery" data-starmate-part="root" >
       <div className="miniapp-gallery-scene__content">
         <Suspense fallback={null}>
           {activeTab === 'submissions'

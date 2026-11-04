@@ -22,7 +22,7 @@ export function ToolProcessingDots({
       data-openbitfun-part="processing"
       data-size={size}
       role="presentation"
-    >
+     data-starmate-component="flow-chat-tool-card" data-starmate-part="processing" >
       <StarMateBrandMotion variant="construction" size={size} />
     </span>
   );

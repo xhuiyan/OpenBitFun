@@ -44,13 +44,13 @@ export const StatusPill = forwardRef<HTMLSpanElement, StatusPillProps>(
         data-shape={shape}
         data-emphasis={emphasis ? "true" : "false"}
         ref={ref}
-      >
+       data-starmate-component="status-pill" >
         {leading !== undefined && leading !== null && (
-          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
             {leading}
           </span>
         )}
-        <OverflowText className={styles.label} data-openbitfun-part="label">{children}</OverflowText>
+        <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</OverflowText>
       </span>
     );
   },

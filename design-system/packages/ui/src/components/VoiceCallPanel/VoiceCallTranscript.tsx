@@ -95,18 +95,18 @@ export function VoiceCallTranscript({ entries, status, header, className, compac
       followsLatest.current = element.scrollHeight - element.clientHeight - element.scrollTop < 24;
       captureAnchor();
       if (scrollingUp) requestEarlier();
-    }}>
-    <div ref={contentRef} className={styles.entries} data-openbitfun-part="entries">
+    }} data-starmate-component="voice-call-panel" data-starmate-part="conversation" data-starmate-presentation={presentation} >
+    <div ref={contentRef} className={styles.entries} data-openbitfun-part="entries" data-starmate-part="entries" >
       {header}
       {entries.map(entry => <div key={entry.id} data-transcript-id={entry.id} className={styles.entry}>
-        <div className={styles[entry.role]} data-openbitfun-part={entry.role === "status" ? "status" : `${entry.role}Transcript`}>
+        <div className={styles[entry.role]} data-openbitfun-part={entry.role === "status" ? "status" : `${entry.role}Transcript`} data-starmate-part={entry.role === "status" ? "status" : `${entry.role}Transcript`} >
           {entry.content}
         </div>
-        {entry.activity && <div className={styles.activity} data-openbitfun-part="entryActivity" data-role={entry.role}>
+        {entry.activity && <div className={styles.activity} data-openbitfun-part="entryActivity" data-role={entry.role} data-starmate-part="entryActivity" >
           {entry.activity}
         </div>}
       </div>)}
-      {status && <div className={styles.status} role="status" data-openbitfun-part="status">{status}</div>}
+      {status && <div className={styles.status} role="status" data-openbitfun-part="status" data-starmate-part="status" >{status}</div>}
     </div>
   </div>;
 }

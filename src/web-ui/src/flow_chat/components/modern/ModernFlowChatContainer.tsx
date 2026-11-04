@@ -2732,7 +2732,7 @@ export const ModernFlowChatContainer: React.FC<ModernFlowChatContainerProps> = (
         data-session-id={activeSession?.sessionId ?? ''}
         data-openbitfun-component="modern-flow-chat"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="modern-flow-chat" data-starmate-part="root" >
         <FlowChatSelectionBar rootRef={chatScopeRef} sessionId={activeSession?.sessionId} active={isViewportActive}
           onSelectionIntent={() => virtualListRef.current?.notifyUserSelectionIntent()} />
         <FlowChatHeader
@@ -2803,7 +2803,7 @@ export const ModernFlowChatContainer: React.FC<ModernFlowChatContainerProps> = (
           onContextMenuCapture={blockHistoryOverlayActivation}
           onMouseDownCapture={blockHistoryOverlayActivation}
           onPointerDownCapture={blockHistoryOverlayActivation}
-        >
+         data-starmate-component="modern-flow-chat" data-starmate-part="messages" >
           <HistorySessionLoadingBoundary
             identity={historyLoadingIdentity}
             loading={showHistoryLoadingLayer || showHistoryOpenIntentOverlay || shouldBlockHistoryInitialContentInteraction}

@@ -33,22 +33,22 @@ export const TurnCompletionNoticeItem: React.FC<TurnCompletionNoticeItemProps> =
       ].join(' ')}
       role="note"
       aria-label={t(notice.titleKey)}
-    >
-      <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="icon" className="turn-completion-notice__icon" aria-hidden="true">
+     data-starmate-component="turn-completion-notice" data-starmate-part="root" data-starmate-tone={notice.tone} >
+      <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="icon" className="turn-completion-notice__icon" aria-hidden="true" data-starmate-component="turn-completion-notice" data-starmate-part="icon" >
         {getNoticeIcon(notice.tone)}
       </div>
-      <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="content" className="turn-completion-notice__content">
-        <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="text" className="turn-completion-notice__text">
-          <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="title" className="turn-completion-notice__title">{t(notice.titleKey)}</span>
+      <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="content" className="turn-completion-notice__content" data-starmate-component="turn-completion-notice" data-starmate-part="content" >
+        <div data-openbitfun-component="turn-completion-notice" data-openbitfun-part="text" className="turn-completion-notice__text" data-starmate-component="turn-completion-notice" data-starmate-part="text" >
+          <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="title" className="turn-completion-notice__title" data-starmate-component="turn-completion-notice" data-starmate-part="title" >{t(notice.titleKey)}</span>
           {body ? (
             <>
               <span className="turn-completion-notice__separator" aria-hidden="true">·</span>
-              <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="body" className="turn-completion-notice__body">{body}</span>
+              <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="body" className="turn-completion-notice__body" data-starmate-component="turn-completion-notice" data-starmate-part="body" >{body}</span>
             </>
           ) : null}
         </div>
-        <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="reason" className="turn-completion-notice__reason">
-          <code data-openbitfun-component="turn-completion-notice" data-openbitfun-part="reasonCode" className="turn-completion-notice__reason-code">{notice.reasonCode}</code>
+        <span data-openbitfun-component="turn-completion-notice" data-openbitfun-part="reason" className="turn-completion-notice__reason" data-starmate-component="turn-completion-notice" data-starmate-part="reason" >
+          <code data-openbitfun-component="turn-completion-notice" data-openbitfun-part="reasonCode" className="turn-completion-notice__reason-code" data-starmate-component="turn-completion-notice" data-starmate-part="reasonCode" >{notice.reasonCode}</code>
         </span>
       </div>
     </div>

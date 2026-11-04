@@ -34,15 +34,15 @@ export const AgentCapabilityTooltip: React.FC<AgentCapabilityTooltipProps> = ({
           className="agent-capability-tooltip__body"
           data-openbitfun-component="agent-capability-tooltip"
           data-openbitfun-part="body"
-        >
-          <div data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="title" className={`agent-capability-tooltip__title${titleMonospace ? ' is-monospace' : ''}`}>
+         data-starmate-component="agent-capability-tooltip" data-starmate-part="body" >
+          <div data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="title" className={`agent-capability-tooltip__title${titleMonospace ? ' is-monospace' : ''}`} data-starmate-component="agent-capability-tooltip" data-starmate-part="title" >
             {title}
           </div>
-          {description ? <div className="agent-capability-tooltip__description" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="description">{description}</div> : null}
+          {description ? <div className="agent-capability-tooltip__description" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="description" data-starmate-component="agent-capability-tooltip" data-starmate-part="description" >{description}</div> : null}
           {visibleFields.length > 0 ? (
-            <dl className="agent-capability-tooltip__fields" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="fields">
+            <dl className="agent-capability-tooltip__fields" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="fields" data-starmate-component="agent-capability-tooltip" data-starmate-part="fields" >
               {visibleFields.map((field) => (
-                <div key={field.label} className="agent-capability-tooltip__field" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="field">
+                <div key={field.label} className="agent-capability-tooltip__field" data-openbitfun-component="agent-capability-tooltip" data-openbitfun-part="field" data-starmate-component="agent-capability-tooltip" data-starmate-part="field" >
                   <dt>{field.label}</dt>
                   <dd className={field.monospace ? 'is-monospace' : undefined}>{field.value}</dd>
                 </div>

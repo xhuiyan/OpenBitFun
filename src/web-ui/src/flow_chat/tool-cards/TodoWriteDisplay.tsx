@@ -110,7 +110,7 @@ export const TodoWriteDisplay: React.FC<ToolCardProps> = ({
     <div data-openbitfun-adapter="todo-write"
       ref={cardRootRef}
       data-tool-card-id={toolId ?? ''}
-    >
+     data-starmate-adapter="todo-write" >
       <TodoToolCardView
         status={status}
         isExpanded={isExpanded && hasTodos}

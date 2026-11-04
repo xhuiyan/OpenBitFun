@@ -100,7 +100,7 @@ export function FlowChatWidthBoundary({
     <div className="flow-chat-width-boundary"
       data-openbitfun-component="chat-pane" data-openbitfun-part="widthBoundary"
       data-resizing={draftWidth !== null || undefined}
-      style={{ width }} hidden={!active || maxWidth <= MIN_FLOW_CHAT_WIDTH}>
+      style={{ width }} hidden={!active || maxWidth <= MIN_FLOW_CHAT_WIDTH} data-starmate-component="chat-pane" data-starmate-part="widthBoundary" >
       {(['left', 'right'] as const).map(side => (
         <div key={side} className={`flow-chat-width-boundary__handle flow-chat-width-boundary__handle--${side}`}
           data-openbitfun-component="chat-pane" data-openbitfun-part="widthHandle"
@@ -158,7 +158,7 @@ export function FlowChatWidthBoundary({
             event.stopPropagation();
             flowChatWidthStore.getState().setPreferredWidth(clamp(next, maxWidth));
           }}
-        />
+         data-starmate-component="chat-pane" data-starmate-part="widthHandle" />
       ))}
     </div>
   );

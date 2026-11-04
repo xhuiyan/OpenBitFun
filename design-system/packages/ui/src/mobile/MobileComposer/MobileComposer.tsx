@@ -50,9 +50,9 @@ export const MobileComposer = forwardRef<HTMLDivElement, MobileComposerProps>(
         data-expanded={expanded ? "true" : "false"}
         data-interactive={interactive ? "true" : "false"}
         ref={ref}
-      >
+       data-starmate-component="mobile-composer" >
         {leading !== undefined && leading !== null && (
-          <div className={styles.leading} data-openbitfun-part="leading">{leading}</div>
+          <div className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</div>
         )}
         <div
           aria-label={interactive ? ariaLabel : undefined}
@@ -62,14 +62,14 @@ export const MobileComposer = forwardRef<HTMLDivElement, MobileComposerProps>(
           onKeyDown={handleKeyDown}
           role={interactive ? "button" : undefined}
           tabIndex={interactive ? 0 : undefined}
-        >
+         data-starmate-part="editor" >
           {children}
         </div>
-        <div className={styles.toolbar} data-openbitfun-part="toolbar">
-          <div className={styles.startActions} data-openbitfun-part="start-actions">
+        <div className={styles.toolbar} data-openbitfun-part="toolbar" data-starmate-part="toolbar" >
+          <div className={styles.startActions} data-openbitfun-part="start-actions" data-starmate-part="start-actions" >
             {startActions}
           </div>
-          <div className={styles.endActions} data-openbitfun-part="end-actions">
+          <div className={styles.endActions} data-openbitfun-part="end-actions" data-starmate-part="end-actions" >
             {endActions}
           </div>
         </div>

@@ -63,9 +63,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
       data-invalid={isInvalid ? "true" : "false"}
       data-shape={shape}
       data-size={size}
-    >
+     data-starmate-component="input" >
       {leading !== undefined && leading !== null && (
-        <span className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">{leading}</span>
+        <span className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >{leading}</span>
       )}
       <input
         {...props}
@@ -97,7 +97,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
         type={type}
       />
       {trailing !== undefined && trailing !== null && (
-        <span className={styles.trailing} data-openbitfun-icon-slot="true" data-openbitfun-part="trailing">{trailing}</span>
+        <span className={styles.trailing} data-openbitfun-icon-slot="true" data-openbitfun-part="trailing" data-starmate-icon-slot="true" data-starmate-part="trailing" >{trailing}</span>
       )}
     </span>
   );

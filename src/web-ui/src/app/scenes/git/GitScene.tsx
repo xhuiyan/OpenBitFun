@@ -111,7 +111,7 @@ const GitScene: React.FC<GitSceneProps> = ({
   }, [activeView, isActive, workspacePath, workspace?.id, hostLabel]);
 
   if (!isActive) {
-    return <div className="openbitfun-git-scene" aria-hidden="true" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="hidden" />;
+    return <div className="openbitfun-git-scene" aria-hidden="true" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="hidden"  data-starmate-scene="git" data-starmate-part="root" data-starmate-view="hidden" />;
   }
 
   // Ownership trust outranks `isRepository`. A repository Git refuses on
@@ -119,9 +119,9 @@ const GitScene: React.FC<GitSceneProps> = ({
   // this view on `!isRepository` made it unreachable exactly where it matters.
   if (!repoLoading && repositoryTrustRequired) {
     return (
-      <div className="openbitfun-git-scene openbitfun-git-scene--not-repository" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="trust-required">
-        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content">
-          <div className="openbitfun-git-scene__init-container" data-openbitfun-scene="git" data-openbitfun-part="empty">
+      <div className="openbitfun-git-scene openbitfun-git-scene--not-repository" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="trust-required" data-starmate-scene="git" data-starmate-part="root" data-starmate-view="trust-required" >
+        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content" data-starmate-scene="git" data-starmate-part="content" >
+          <div className="openbitfun-git-scene__init-container" data-openbitfun-scene="git" data-openbitfun-part="empty" data-starmate-scene="git" data-starmate-part="empty" >
             <div className="openbitfun-git-scene__init-card">
               <div className="openbitfun-git-scene__init-icon">
                 <ShieldAlert size={24} />
@@ -148,9 +148,9 @@ const GitScene: React.FC<GitSceneProps> = ({
 
   if (!repoLoading && !isRepository) {
     return (
-      <div className="openbitfun-git-scene openbitfun-git-scene--not-repository" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="not-repository">
-        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content">
-          <div className="openbitfun-git-scene__init-container" data-openbitfun-scene="git" data-openbitfun-part="empty">
+      <div className="openbitfun-git-scene openbitfun-git-scene--not-repository" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="not-repository" data-starmate-scene="git" data-starmate-part="root" data-starmate-view="not-repository" >
+        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content" data-starmate-scene="git" data-starmate-part="content" >
+          <div className="openbitfun-git-scene__init-container" data-openbitfun-scene="git" data-openbitfun-part="empty" data-starmate-scene="git" data-starmate-part="empty" >
             <div className="openbitfun-git-scene__init-decoration">
               <div className="openbitfun-git-scene__init-line openbitfun-git-scene__init-line--dashed" />
               <div className="openbitfun-git-scene__init-dot" />
@@ -189,8 +189,8 @@ const GitScene: React.FC<GitSceneProps> = ({
 
   if ((repoLoading || statusLoading) && !forceReset) {
     return (
-      <div className="openbitfun-git-scene openbitfun-git-scene--loading" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="loading">
-        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content">
+      <div className="openbitfun-git-scene openbitfun-git-scene--loading" data-openbitfun-scene="git" data-openbitfun-part="root" data-openbitfun-view="loading" data-starmate-scene="git" data-starmate-part="root" data-starmate-view="loading" >
+        <div className="openbitfun-git-scene__content" data-openbitfun-scene="git" data-openbitfun-part="content" data-starmate-scene="git" data-starmate-part="content" >
           <div className="openbitfun-git-scene__loading-actions">
             <Tooltip content={t('actions.forceRefresh')}>
               <IconButton
@@ -207,7 +207,7 @@ const GitScene: React.FC<GitSceneProps> = ({
               />
             </Tooltip>
           </div>
-          <div className="openbitfun-git-scene__loading-state" data-openbitfun-scene="git" data-openbitfun-part="loading">
+          <div className="openbitfun-git-scene__loading-state" data-openbitfun-scene="git" data-openbitfun-part="loading" data-starmate-scene="git" data-starmate-part="loading" >
             <LoadingState size="md">{t('loading.text')}</LoadingState>
             <p className="openbitfun-git-scene__loading-hint">{t('loading.hint')}</p>
           </div>
@@ -223,7 +223,7 @@ const GitScene: React.FC<GitSceneProps> = ({
       data-openbitfun-scene="git"
       data-openbitfun-part="root"
       data-openbitfun-view="repository"
-    >
+     data-starmate-scene="git" data-starmate-part="root" data-starmate-view="repository" >
       {renderView()}
     </div>
   );

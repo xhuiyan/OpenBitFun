@@ -41,14 +41,14 @@ export const MobileButton = forwardRef<HTMLButtonElement, MobileButtonProps>(
         disabled={disabled || loading}
         ref={ref}
         type={type}
-      >
-        {loading && <span aria-hidden="true" className={styles.spinner} data-openbitfun-part="progress" />}
+       data-starmate-component="mobile-button" >
+        {loading && <span aria-hidden="true" className={styles.spinner} data-openbitfun-part="progress"  data-starmate-part="progress" />}
         {!loading && leading !== undefined && leading !== null && (
-          <span className={styles.slot} data-openbitfun-part="leading">{leading}</span>
+          <span className={styles.slot} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</span>
         )}
-        <span className={styles.label} data-openbitfun-part="label">{children}</span>
+        <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</span>
         {!loading && trailing !== undefined && trailing !== null && (
-          <span className={styles.slot} data-openbitfun-part="trailing">{trailing}</span>
+          <span className={styles.slot} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</span>
         )}
       </button>
     );

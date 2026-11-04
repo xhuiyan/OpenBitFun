@@ -53,10 +53,10 @@ export const ScrollToBottomButton: React.FC<ScrollToBottomButtonProps> = ({
           aria-label={unreadCount ? t('scroll.toBottomWithCount', { count: unreadCount }) : t('scroll.toBottom')}
           tabIndex={visible ? buttonProps.tabIndex : -1}
           {...(!visible ? { inert: '' } : {})}
-        >
-          <LucideChevronDown data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="icon" className="scroll-icon" size="var(--openbitfun-control-icon-size-md)" aria-hidden="true" />
+         data-starmate-icon-slot="true" data-starmate-component="scroll-to-bottom-button" data-starmate-part="root" >
+          <LucideChevronDown data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="icon" className="scroll-icon" size="var(--openbitfun-control-icon-size-md)" aria-hidden="true"  data-starmate-component="scroll-to-bottom-button" data-starmate-part="icon" />
           {unreadCount !== undefined && unreadCount > 0 && (
-            <span data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="badge" className="unread-badge">{unreadCount > 99 ? '99+' : unreadCount}</span>
+            <span data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="badge" className="unread-badge" data-starmate-component="scroll-to-bottom-button" data-starmate-part="badge" >{unreadCount > 99 ? '99+' : unreadCount}</span>
           )}
         </button>
       </Tooltip>

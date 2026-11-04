@@ -255,12 +255,12 @@ export const PortForwardDialog: React.FC<PortForwardDialogProps> = ({
         className="port-forward-dialog"
         data-openbitfun-component="ssh-remote"
         data-openbitfun-part="portForward"
-      >
+       data-starmate-component="ssh-remote" data-starmate-part="portForward" >
         <div
           className="port-forward-dialog__intro"
           data-openbitfun-component="ssh-remote"
           data-openbitfun-part="portForwardIntro"
-        >
+         data-starmate-component="ssh-remote" data-starmate-part="portForwardIntro" >
           <Network size={18} aria-hidden="true" />
           <p>{t('ssh.portForward.intro')}</p>
         </div>
@@ -271,7 +271,7 @@ export const PortForwardDialog: React.FC<PortForwardDialogProps> = ({
             role="alert"
             data-openbitfun-component="ssh-remote"
             data-openbitfun-part="portForwardError"
-          >
+           data-starmate-component="ssh-remote" data-starmate-part="portForwardError" >
             <AlertTriangle size={16} aria-hidden="true" />
             <span>{error}</span>
           </div>
@@ -342,7 +342,7 @@ export const PortForwardDialog: React.FC<PortForwardDialogProps> = ({
           data-openbitfun-component="ssh-remote"
           data-openbitfun-part="portForwardTable"
           title={t('ssh.portForward.activeTitle')}
-        >
+         data-starmate-component="ssh-remote" data-starmate-part="portForwardTable" >
 
           {forwards.length === 0 ? (
             <div className="port-forward-dialog__section-body">
@@ -447,7 +447,7 @@ export const PortForwardDialog: React.FC<PortForwardDialogProps> = ({
               className="port-forward-dialog__form"
               data-openbitfun-component="ssh-remote"
               data-openbitfun-part="portForwardForm"
-            >
+             data-starmate-component="ssh-remote" data-starmate-part="portForwardForm" >
               <label className="port-forward-dialog__field">
                 <span>{t('ssh.portForward.remotePortLabel')}</span>
                 <Input

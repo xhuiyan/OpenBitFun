@@ -58,7 +58,7 @@ export const MobileRadioGroup = forwardRef<HTMLDivElement, MobileRadioGroupProps
         data-openbitfun-component="mobile-radio-group"
         ref={ref}
         role="radiogroup"
-      >
+       data-starmate-component="mobile-radio-group" >
         {options.map(option => {
           const checked = selected === option.value;
           const disabled = option.disabled ?? false;
@@ -69,7 +69,7 @@ export const MobileRadioGroup = forwardRef<HTMLDivElement, MobileRadioGroupProps
               data-disabled={disabled ? "true" : "false"}
               data-openbitfun-part="option"
               key={option.value}
-            >
+             data-starmate-part="option" >
               <span className={styles.control}>
                 <input
                   checked={checked}
@@ -80,18 +80,18 @@ export const MobileRadioGroup = forwardRef<HTMLDivElement, MobileRadioGroupProps
                   type="radio"
                   value={option.value}
                 />
-                <span aria-hidden="true" className={styles.circle} data-openbitfun-part="circle">
-                  <span className={styles.dot} data-openbitfun-part="dot" />
+                <span aria-hidden="true" className={styles.circle} data-openbitfun-part="circle" data-starmate-part="circle" >
+                  <span className={styles.dot} data-openbitfun-part="dot"  data-starmate-part="dot" />
                 </span>
               </span>
-              <span className={styles.copy} data-openbitfun-part="copy">
-                <span className={styles.label} data-openbitfun-part="label">{option.label}</span>
+              <span className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+                <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{option.label}</span>
                 {option.description !== undefined && option.description !== null && (
-                  <span className={styles.description} data-openbitfun-part="description">{option.description}</span>
+                  <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{option.description}</span>
                 )}
               </span>
               {option.leading !== undefined && option.leading !== null && (
-                <span className={styles.leading} data-openbitfun-part="leading">{option.leading}</span>
+                <span className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{option.leading}</span>
               )}
             </label>
           );

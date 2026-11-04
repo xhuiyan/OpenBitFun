@@ -48,7 +48,7 @@ interface SessionUsageReportCardProps {
 const UsageMiniListFilePathLabel = React.forwardRef<HTMLSpanElement, { pathLabel: string }>(
   function UsageMiniListFilePathLabel({ pathLabel }, ref) {
     return (
-      <OverflowText data-openbitfun-component="session-usage-report-card" data-openbitfun-part="listRow" ref={ref} className="session-usage-report-card__mini-list-file-name">
+      <OverflowText data-openbitfun-component="session-usage-report-card" data-openbitfun-part="listRow" ref={ref} className="session-usage-report-card__mini-list-file-name" data-starmate-component="session-usage-report-card" data-starmate-part="listRow" >
         {getUsageFileNameFromPath(pathLabel)}
       </OverflowText>
     );
@@ -121,7 +121,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
 
   if (isLoading) {
     return (
-      <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="loading" data-openbitfun-state="loading" className={`session-usage-report-card session-usage-report-card--loading${compactClassName}`} aria-live="polite">
+      <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="loading" data-openbitfun-state="loading" className={`session-usage-report-card session-usage-report-card--loading${compactClassName}`} aria-live="polite" data-starmate-component="session-usage-report-card" data-starmate-part="loading" data-starmate-state="loading" >
         <div className="session-usage-report-card__loading-main">
           <ToolProcessingDots className="session-usage-report-card__loading-dots" size={12} />
           <div>
@@ -138,8 +138,8 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
 
   if (!report) {
     return (
-      <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="fallback" data-openbitfun-state="fallback" className={`session-usage-report-card session-usage-report-card--fallback${compactClassName}`}>
-        <div className="session-usage-report-card__fallback-actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions">
+      <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="fallback" data-openbitfun-state="fallback" className={`session-usage-report-card session-usage-report-card--fallback${compactClassName}`} data-starmate-component="session-usage-report-card" data-starmate-part="fallback" data-starmate-state="fallback" >
+        <div className="session-usage-report-card__fallback-actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions" data-starmate-component="session-usage-report-card" data-starmate-part="actions" >
           <Tooltip content={copied ? t('usage.actions.copied') : t('usage.actions.copyMarkdown')}>
             <IconButton
               size="sm"
@@ -224,9 +224,9 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
         data-openbitfun-part="root"
         className="session-usage-report-card session-usage-report-card--compact"
         data-report-id={report.reportId}
-      >
-        <div className="session-usage-report-card__header" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="header">
-          <div className="session-usage-report-card__title-block" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="title">
+       data-starmate-component="session-usage-report-card" data-starmate-part="root" >
+        <div className="session-usage-report-card__header" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="header" data-starmate-component="session-usage-report-card" data-starmate-part="header" >
+          <div className="session-usage-report-card__title-block" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="title" data-starmate-component="session-usage-report-card" data-starmate-part="title" >
             <div className="session-usage-report-card__meta">
               <OverflowText className="session-usage-report-card__compact-meta-item">{formatUsageTimestamp(generatedAt ?? report.generatedAt, t)}</OverflowText>
               <OverflowText className="session-usage-report-card__compact-meta-item">{t('usage.card.turns', { count: report.scope.turnCount })}</OverflowText>
@@ -236,7 +236,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
               <OverflowText title={workspacePathLabel}>{workspacePathLabel}</OverflowText>
             </div>
           </div>
-          <div className="session-usage-report-card__actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions">
+          <div className="session-usage-report-card__actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions" data-starmate-component="session-usage-report-card" data-starmate-part="actions" >
             <Tooltip content={copied ? t('usage.actions.copied') : t('usage.actions.copyMarkdown')}>
               <IconButton
                 size="sm"
@@ -265,7 +265,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
 
         <div className="session-usage-report-card__compact-overview">
           <Card appearance="subtle" padding="md">
-            <section className="session-usage-report-card__compact-token" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metric">
+            <section className="session-usage-report-card__compact-token" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metric" data-starmate-component="session-usage-report-card" data-starmate-part="metric" >
               <div className="session-usage-report-card__compact-token-label">
                 <Icon glyph={Database} size="sm" />
                 <span>{t('usage.card.tokenUsage')}</span>
@@ -292,14 +292,14 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
             </section>
           </Card>
 
-          <div className="session-usage-report-card__compact-metrics" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metrics">
+          <div className="session-usage-report-card__compact-metrics" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metrics" data-starmate-component="session-usage-report-card" data-starmate-part="metrics" >
             {compactMetrics.map(metric => (
               <Card appearance="subtle" padding="sm" radius="sm" key={metric.key}>
                 <div
                   data-openbitfun-component="session-usage-report-card"
                   data-openbitfun-part="metric"
                   className={`session-usage-report-card__compact-metric${metric.tone ? ` session-usage-report-card__compact-metric--${metric.tone}` : ''}`}
-                >
+                 data-starmate-component="session-usage-report-card" data-starmate-part="metric" >
                   <div className="session-usage-report-card__compact-metric-label">
                     {metric.icon}
                     <span>{metric.label}</span>
@@ -311,11 +311,11 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
           </div>
         </div>
 
-        <section className="session-usage-report-card__compact-tools" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="lists">
+        <section className="session-usage-report-card__compact-tools" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="lists" data-starmate-component="session-usage-report-card" data-starmate-part="lists" >
           <div className="session-usage-report-card__compact-tools-header">
             <h3>{t('usage.sections.tools')}</h3>
           </div>
-          <div className="session-usage-report-card__compact-tool-list" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="list">
+          <div className="session-usage-report-card__compact-tool-list" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="list" data-starmate-component="session-usage-report-card" data-starmate-part="list" >
             {topTools.length === 0 ? (
               <div className="session-usage-report-card__compact-tool-empty">
                 {t('usage.empty.tools')}
@@ -326,7 +326,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
                 data-openbitfun-component="session-usage-report-card"
                 data-openbitfun-part="listRow"
                 key={tool.toolName}
-              >
+               data-starmate-component="session-usage-report-card" data-starmate-part="listRow" >
                 <span className="session-usage-report-card__compact-tool-icon" aria-hidden>
                   {renderCompactToolIcon(tool.toolName, tool.category)}
                 </span>
@@ -394,9 +394,9 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
   ];
 
   return (
-    <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="root" className={`session-usage-report-card${compactClassName}`} data-report-id={report.reportId}>
-      <div className="session-usage-report-card__header" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="header">
-        <div className="session-usage-report-card__title-block" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="title">
+    <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="root" className={`session-usage-report-card${compactClassName}`} data-report-id={report.reportId} data-starmate-component="session-usage-report-card" data-starmate-part="root" >
+      <div className="session-usage-report-card__header" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="header" data-starmate-component="session-usage-report-card" data-starmate-part="header" >
+        <div className="session-usage-report-card__title-block" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="title" data-starmate-component="session-usage-report-card" data-starmate-part="title" >
           <h3 className="session-usage-report-card__title">{t('usage.card.heading')}</h3>
           <div className="session-usage-report-card__meta">
             <OverflowText>{formatUsageTimestamp(generatedAt ?? report.generatedAt, t)}</OverflowText>
@@ -404,7 +404,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
             <OverflowText>{workspacePathLabel}</OverflowText>
           </div>
         </div>
-        <div className="session-usage-report-card__actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions">
+        <div className="session-usage-report-card__actions" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="actions" data-starmate-component="session-usage-report-card" data-starmate-part="actions" >
           {report.coverage.level !== 'complete' ? (
             <Tooltip content={t('usage.coverage.partialNotice')} placement="top">
               <span className={coverageBadgeClassName}>
@@ -454,13 +454,13 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
         </div>
       </div>
 
-      <div className="session-usage-report-card__metrics" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metrics">
+      <div className="session-usage-report-card__metrics" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metrics" data-starmate-component="session-usage-report-card" data-starmate-part="metrics" >
         {metrics.map(metric => {
           return (
             <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="metric"
               className={`session-usage-report-card__metric${metric.tone ? ` session-usage-report-card__metric--${metric.tone}` : ''}`}
               key={metric.key}
-            >
+             data-starmate-component="session-usage-report-card" data-starmate-part="metric" >
               <Icon {...metric.icon} size="sm" />
               <OverflowText className="session-usage-report-card__metric-label">{metric.label}</OverflowText>
               <UsageMetricValue value={metric.value} help={metric.help} />
@@ -469,7 +469,7 @@ export const SessionUsageReportCard: React.FC<SessionUsageReportCardProps> = ({
         })}
       </div>
 
-      <div className="session-usage-report-card__lists" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="lists">
+      <div className="session-usage-report-card__lists" data-openbitfun-component="session-usage-report-card" data-openbitfun-part="lists" data-starmate-component="session-usage-report-card" data-starmate-part="lists" >
         <UsageMiniList
           title={t('usage.sections.models')}
           items={topModels.map(model => {
@@ -645,7 +645,7 @@ function UsageFileChangeDetail({
     <span data-openbitfun-component="session-usage-report-card" data-openbitfun-part="fileStat"
       className="session-usage-report-card__file-stat"
       aria-label={`${t('usage.table.added')}: ${formatUsageNumber(addedLines, t)}, ${t('usage.table.deleted')}: ${formatUsageNumber(deletedLines, t)}`}
-    >
+     data-starmate-component="session-usage-report-card" data-starmate-part="fileStat" >
       <span className="session-usage-report-card__file-stat--added">
         {formatSignedFileLineCount(addedLines, '+', t)}
       </span>
@@ -668,7 +668,7 @@ function formatSignedFileLineCount(
 
 function UsageMiniList({ title, items, emptyLabel, emptyDescription }: UsageMiniListProps) {
   return (
-    <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="list" className="session-usage-report-card__mini-list">
+    <div data-openbitfun-component="session-usage-report-card" data-openbitfun-part="list" className="session-usage-report-card__mini-list" data-starmate-component="session-usage-report-card" data-starmate-part="list" >
       <div className="session-usage-report-card__mini-list-header">
         <div className="session-usage-report-card__mini-list-title">{title}</div>
       </div>
@@ -679,7 +679,7 @@ function UsageMiniList({ title, items, emptyLabel, emptyDescription }: UsageMini
         </div>
       ) : (
         items.map(item => (
-          <div className="session-usage-report-card__mini-list-row" key={`${getMiniListLabelText(item.label)}-${item.value}`} data-openbitfun-component="session-usage-report-card" data-openbitfun-part="listRow">
+          <div className="session-usage-report-card__mini-list-row" key={`${getMiniListLabelText(item.label)}-${item.value}`} data-openbitfun-component="session-usage-report-card" data-openbitfun-part="listRow" data-starmate-component="session-usage-report-card" data-starmate-part="listRow" >
             <UsageMiniListLabelView label={item.label} />
             <span className="session-usage-report-card__mini-list-value">{item.value}</span>
             <OverflowText className="session-usage-report-card__mini-list-detail">{item.detail}</OverflowText>

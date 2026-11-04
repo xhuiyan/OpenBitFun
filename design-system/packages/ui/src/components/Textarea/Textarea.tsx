@@ -104,12 +104,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       data-layout={layout}
       data-resize={resize}
       data-variant={variant}
-    >
+     data-starmate-component="textarea" >
       {label && (
-        <label className={styles.label} data-openbitfun-part="label" htmlFor={resolvedId}>
+        <label className={styles.label} data-openbitfun-part="label" htmlFor={resolvedId} data-starmate-part="label" >
           {label}
           {required && (
-            <span aria-hidden="true" className={styles.required} data-openbitfun-part="required">
+            <span aria-hidden="true" className={styles.required} data-openbitfun-part="required" data-starmate-part="required" >
               *
             </span>
           )}
@@ -136,11 +136,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
         ref={textareaRef}
         required={required}
         value={value}
-      />
+       data-starmate-part="input" />
       {hasSupport && (
-        <span className={styles.support} data-openbitfun-part="support" id={supportId}>
-          <span className={resolvedInvalid ? styles.error : styles.hint} data-openbitfun-part="message">{resolvedInvalid ? errorMessage : hint}</span>
-          {showCount && <span className={styles.count} data-openbitfun-part="count">{count}{maxLength ? ` / ${maxLength}` : ""}</span>}
+        <span className={styles.support} data-openbitfun-part="support" id={supportId} data-starmate-part="support" >
+          <span className={resolvedInvalid ? styles.error : styles.hint} data-openbitfun-part="message" data-starmate-part="message" >{resolvedInvalid ? errorMessage : hint}</span>
+          {showCount && <span className={styles.count} data-openbitfun-part="count" data-starmate-part="count" >{count}{maxLength ? ` / ${maxLength}` : ""}</span>}
         </span>
       )}
     </span>

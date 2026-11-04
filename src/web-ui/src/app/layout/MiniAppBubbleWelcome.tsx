@@ -42,7 +42,7 @@ export const MiniAppBubbleWelcome: React.FC<MiniAppBubbleWelcomeProps> = ({
   const inputClearance = computeFlowChatInputStackFooterPx(inputHeight);
 
   return (
-    <ScrollArea className="openbitfun-fmc__miniapp-welcome" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="root">
+    <ScrollArea className="openbitfun-fmc__miniapp-welcome" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="root" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="root" >
       <div
         className="openbitfun-fmc__miniapp-welcome-content"
         style={{
@@ -54,15 +54,15 @@ export const MiniAppBubbleWelcome: React.FC<MiniAppBubbleWelcomeProps> = ({
           data-openbitfun-component="miniapp-bubble-welcome"
           data-openbitfun-part="icon"
           aria-hidden="true"
-        >
+         data-starmate-component="miniapp-bubble-welcome" data-starmate-part="icon" >
           {renderMiniAppIcon(appIcon, 28)}
         </div>}
 
         {title !== appName && (
-          <div className="openbitfun-fmc__miniapp-welcome-eyebrow" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="eyebrow">{appName}</div>
+          <div className="openbitfun-fmc__miniapp-welcome-eyebrow" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="eyebrow" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="eyebrow" >{appName}</div>
         )}
-        <h2 data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="title">{title}</h2>
-        {description && <p className="openbitfun-fmc__miniapp-welcome-description" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="description">{description}</p>}
+        <h2 data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="title" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="title" >{title}</h2>
+        {description && <p className="openbitfun-fmc__miniapp-welcome-description" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="description" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="description" >{description}</p>}
 
         {workspaceLabel && workspacePath && (
           <div
@@ -71,20 +71,20 @@ export const MiniAppBubbleWelcome: React.FC<MiniAppBubbleWelcomeProps> = ({
             data-openbitfun-part="workspace"
             title={workspacePath}
             data-workspace-path={workspacePath}
-          >
+           data-starmate-component="miniapp-bubble-welcome" data-starmate-part="workspace" >
             <FolderOpen size={13} aria-hidden="true" />
             <OverflowText>{workspaceLabel}</OverflowText>
           </div>
         )}
 
         {suggestions.length > 0 && (
-          <div className="openbitfun-fmc__miniapp-suggestions" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestions">
+          <div className="openbitfun-fmc__miniapp-suggestions" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestions" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="suggestions" >
             {welcome?.suggestionsLabel && (
-              <div className="openbitfun-fmc__miniapp-suggestions-label" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestionsLabel">
+              <div className="openbitfun-fmc__miniapp-suggestions-label" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestionsLabel" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="suggestionsLabel" >
                 {welcome.suggestionsLabel}
               </div>
             )}
-            <div className="openbitfun-fmc__miniapp-suggestions-list" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestionsList">
+            <div className="openbitfun-fmc__miniapp-suggestions-list" data-openbitfun-component="miniapp-bubble-welcome" data-openbitfun-part="suggestionsList" data-starmate-component="miniapp-bubble-welcome" data-starmate-part="suggestionsList" >
               {suggestions.map((suggestion, index) => (
                 <button
                   key={`${suggestion.label}:${index}`}
@@ -94,7 +94,7 @@ export const MiniAppBubbleWelcome: React.FC<MiniAppBubbleWelcomeProps> = ({
                   data-openbitfun-part="suggestion"
                   title={suggestion.prompt}
                   onClick={() => onSuggestion(suggestion.prompt)}
-                >
+                 data-starmate-component="miniapp-bubble-welcome" data-starmate-part="suggestion" >
                   <span>{suggestion.label}</span>
                   <Icon name="arrow-up-right" size="xs" aria-hidden="true" />
                 </button>

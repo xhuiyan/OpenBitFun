@@ -145,7 +145,7 @@ export const CreateBranchDialog: React.FC<CreateBranchDialogProps> = ({
         <DialogClose />
       </DialogHeader>
       <DialogBody inset="none">
-      <div className="openbitfun-create-branch-dialog" onKeyDown={handleKeyDown} data-openbitfun-component="git-tool" data-openbitfun-part="createBranchDialog">
+      <div className="openbitfun-create-branch-dialog" onKeyDown={handleKeyDown} data-openbitfun-component="git-tool" data-openbitfun-part="createBranchDialog" data-starmate-component="git-tool" data-starmate-part="createBranchDialog" >
       <ScrollArea className="openbitfun-create-branch-dialog__scroll">
         <div className="openbitfun-create-branch-dialog__base-info">
           <div className="openbitfun-create-branch-dialog__base-label">

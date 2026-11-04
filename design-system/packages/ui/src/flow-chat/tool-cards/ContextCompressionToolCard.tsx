@@ -50,7 +50,7 @@ export function ContextCompressionToolCard({
       data-openbitfun-component="context-compression-tool-card"
       data-openbitfun-part="root"
       data-openbitfun-status={status}
-    >
+     data-starmate-component="context-compression-tool-card" data-starmate-part="root" data-starmate-status={status} >
       <ProminentToolCard
         collapsibleErrorContent
         isExpanded={isExpanded}
@@ -64,7 +64,7 @@ export function ContextCompressionToolCard({
                 className={summary !== undefined && summary !== null ? styles.summary : styles.processing}
                 data-openbitfun-part={summary !== undefined && summary !== null ? "summary" : "processing"}
                 title={typeof summary === "string" ? summary : undefined}
-              >
+               data-starmate-part={summary !== undefined && summary !== null ? "summary" : "processing"} >
                 {content}
               </OverflowText>
             ) : undefined}

@@ -192,12 +192,12 @@ export const MissionControl: React.FC<MissionControlProps> = ({
       data-shortcut-scope="canvas"
       tabIndex={-1}
       onClick={handleBackdropClick}
-    >
-      <div className="canvas-mission-control__content" data-openbitfun-component="mission-control" data-openbitfun-part="content">
+     data-starmate-component="mission-control" data-starmate-part="root" data-starmate-state="open" >
+      <div className="canvas-mission-control__content" data-openbitfun-component="mission-control" data-openbitfun-part="content" data-starmate-component="mission-control" data-starmate-part="content" >
         {/* Header */}
-        <div data-openbitfun-component="mission-control" data-openbitfun-part="header" className="canvas-mission-control__header">
+        <div data-openbitfun-component="mission-control" data-openbitfun-part="header" className="canvas-mission-control__header" data-starmate-component="mission-control" data-starmate-part="header" >
           <h2 className="canvas-mission-control__title">{t('tabs.missionControl')}</h2>
-          <div data-openbitfun-component="mission-control" data-openbitfun-part="headerActions" className="canvas-mission-control__header-actions">
+          <div data-openbitfun-component="mission-control" data-openbitfun-part="headerActions" className="canvas-mission-control__header-actions" data-starmate-component="mission-control" data-starmate-part="headerActions" >
             {hasMultipleGroups && (
               <Button
                 variant="outline"
@@ -220,9 +220,9 @@ export const MissionControl: React.FC<MissionControlProps> = ({
         </div>
 
         {/* Search and filter area */}
-        <div data-openbitfun-component="mission-control" data-openbitfun-part="filters" className="canvas-mission-control__filters">
+        <div data-openbitfun-component="mission-control" data-openbitfun-part="filters" className="canvas-mission-control__filters" data-starmate-component="mission-control" data-starmate-part="filters" >
           <div className="canvas-mission-control__filters-row">
-            <div data-openbitfun-component="mission-control" data-openbitfun-part="search" className="canvas-mission-control__search-wrapper">
+            <div data-openbitfun-component="mission-control" data-openbitfun-part="search" className="canvas-mission-control__search-wrapper" data-starmate-component="mission-control" data-starmate-part="search" >
               <SearchFilter
                 value={searchQuery}
                 onChange={setSearchQuery}
@@ -233,7 +233,7 @@ export const MissionControl: React.FC<MissionControlProps> = ({
             
             {/* Group filters - compact icon buttons */}
             {hasMultipleGroups && (
-              <div data-openbitfun-component="mission-control" data-openbitfun-part="groupFilters" className="canvas-mission-control__group-filters">
+              <div data-openbitfun-component="mission-control" data-openbitfun-part="groupFilters" className="canvas-mission-control__group-filters" data-starmate-component="mission-control" data-starmate-part="groupFilters" >
                 {[
                   { id: 'primary' as EditorGroupId, labelKey: 'canvas.groupPrimaryFull', shortLabelKey: 'canvas.groupPrimary' },
                   { id: 'secondary' as EditorGroupId, labelKey: 'canvas.groupSecondaryFull', shortLabelKey: 'canvas.groupSecondary' },
@@ -248,7 +248,7 @@ export const MissionControl: React.FC<MissionControlProps> = ({
                       className={`canvas-mission-control__group-filter canvas-mission-control__group-filter--${id} ${selectedGroups.has(id) ? 'is-active' : ''}`}
                       onClick={() => toggleGroupFilter(id)}
                       title={t(labelKey)}
-                    >
+                     data-starmate-component="mission-control" data-starmate-part="filter" data-starmate-group={id} data-starmate-state={selectedGroups.has(id) ? 'active' : ''} >
                       <span className="canvas-mission-control__group-filter-indicator" />
                       <span className="canvas-mission-control__group-filter-text">{t(shortLabelKey)}</span>
                     </button>
@@ -260,7 +260,7 @@ export const MissionControl: React.FC<MissionControlProps> = ({
         </div>
 
         {/* Thumbnail grid - unified display */}
-        <ScrollArea data-openbitfun-component="mission-control" data-openbitfun-part="grid" className="canvas-mission-control__grid">
+        <ScrollArea data-openbitfun-component="mission-control" data-openbitfun-part="grid" className="canvas-mission-control__grid" data-starmate-component="mission-control" data-starmate-part="grid" >
           {filteredTabs.length > 0 ? (
             filteredTabs.map(({ tab, groupId }) => (
               <ThumbnailCard
@@ -276,7 +276,7 @@ export const MissionControl: React.FC<MissionControlProps> = ({
               />
             ))
           ) : (
-            <div data-openbitfun-component="mission-control" data-openbitfun-part="empty" className="canvas-mission-control__empty">
+            <div data-openbitfun-component="mission-control" data-openbitfun-part="empty" className="canvas-mission-control__empty" data-starmate-component="mission-control" data-starmate-part="empty" >
               {searchQuery || selectedGroups.size < 3 ? (
                 <span>{t('canvas.noMatchingFiles')}</span>
               ) : (
@@ -287,9 +287,9 @@ export const MissionControl: React.FC<MissionControlProps> = ({
         </ScrollArea>
 
         {/* Footer hint */}
-        <div data-openbitfun-component="mission-control" data-openbitfun-part="footer" className="canvas-mission-control__footer">
+        <div data-openbitfun-component="mission-control" data-openbitfun-part="footer" className="canvas-mission-control__footer" data-starmate-component="mission-control" data-starmate-part="footer" >
           <span>{t('canvas.clickToSwitch')}</span>
-          <div data-openbitfun-component="mission-control" data-openbitfun-part="separator" className="canvas-mission-control__separator" />
+          <div data-openbitfun-component="mission-control" data-openbitfun-part="separator" className="canvas-mission-control__separator"  data-starmate-component="mission-control" data-starmate-part="separator" />
           <span><KeyHint>Esc</KeyHint> {t('canvas.exit')}</span>
         </div>
       </div>

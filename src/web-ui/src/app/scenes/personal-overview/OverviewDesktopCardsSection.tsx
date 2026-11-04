@@ -135,7 +135,7 @@ export function OverviewDesktopCardsSection({ isActive }: { isActive: boolean })
 
   return (
     <section className="personal-overview__section" aria-labelledby="overview-desktop-cards-title" aria-busy={state.status === 'loading'}
-      data-openbitfun-scene="personal-overview" data-openbitfun-part="desktopCards">
+      data-openbitfun-scene="personal-overview" data-openbitfun-part="desktopCards" data-starmate-scene="personal-overview" data-starmate-part="desktopCards" >
       <div className="personal-overview__section-header">
         <h2 id="overview-desktop-cards-title" className="personal-overview__section-title">{t('desktopCards.title')}</h2>
         <Button className="personal-overview__section-action" variant="text" size="sm" leadingIcon={<Icon glyph={Settings} size="sm" />}

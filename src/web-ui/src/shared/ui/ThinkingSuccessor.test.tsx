@@ -49,7 +49,7 @@ describe('thinking to successor transaction', () => {
       </ThinkingBlock>
       <div data-thinking-continuation="">{content && <button
         data-openbitfun-status={error ? 'error' : undefined}
-        data-thinking-handoff-priority={priority ? 'immediate' : undefined}>Real execution state</button>}</div>
+        data-thinking-handoff-priority={priority ? 'immediate' : undefined} data-starmate-status={error ? 'error' : undefined} >Real execution state</button>}</div>
       {burst && <div data-thinking-continuation=""><p>Second output</p></div>}
     </div>));
   }

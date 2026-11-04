@@ -246,11 +246,11 @@ export default class SessionViewTransition extends Component<Props, object, Snap
   render(): ReactNode {
     return (
       <div ref={this.rootRef} className="openbitfun-nav-panel__session-view-transition" onPointerDownCapture={this.finish}
-        data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewTransition">
+        data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewTransition" data-starmate-component="workspace-list-section" data-starmate-part="viewTransition" >
         <div ref={this.contentRef} className="openbitfun-nav-panel__session-view-content"
-          data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewContent">{this.props.children}</div>
+          data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewContent" data-starmate-component="workspace-list-section" data-starmate-part="viewContent" >{this.props.children}</div>
         <div ref={this.exitsRef} className="openbitfun-nav-panel__session-view-exits" aria-hidden="true" {...{ inert: '' }}
-          data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewExits" />
+          data-openbitfun-component="workspace-list-section" data-openbitfun-part="viewExits"  data-starmate-component="workspace-list-section" data-starmate-part="viewExits" />
       </div>
     );
   }

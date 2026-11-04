@@ -214,7 +214,7 @@ class MarkdownErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="markdown-renderer markdown-renderer--fallback" style={{ whiteSpace: 'pre-wrap' }} data-openbitfun-component="markdown" data-openbitfun-part="fallback" data-openbitfun-state="fallback">
+        <div className="markdown-renderer markdown-renderer--fallback" style={{ whiteSpace: 'pre-wrap' }} data-openbitfun-component="markdown" data-openbitfun-part="fallback" data-openbitfun-state="fallback" data-starmate-component="markdown" data-starmate-part="fallback" data-starmate-state="fallback" >
           {this.props.fallbackContent}
         </div>
       );
@@ -692,7 +692,7 @@ const ScopedMarkdownImage: React.FC<MarkdownImageProps & { scope: SurfaceScope }
         data-openbitfun-component="markdown"
         data-openbitfun-part="imageFallback"
         title={typeof alt === 'string' && alt ? alt : undefined}
-      >
+       data-starmate-component="markdown" data-starmate-part="imageFallback" >
         {typeof alt === 'string' ? alt : null}
       </span>
     );
@@ -849,12 +849,12 @@ const CodeBlockFallback: React.FC<FlowCodeBlockFallbackProps> = ({
       style={bodyStyle}
       data-openbitfun-component="markdown"
       data-openbitfun-part="codePre"
-    >
+     data-starmate-component="markdown" data-starmate-part="codePre" >
       <code
         style={codeTagStyle}
         data-openbitfun-component="markdown"
         data-openbitfun-part="codeContent"
-      >
+       data-starmate-component="markdown" data-starmate-part="codeContent" >
         {code}
       </code>
     </pre>
@@ -1366,8 +1366,8 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
         color: syntaxThemeRef.current['code[class*="language-"]']?.color,
       };
       return (
-        <div className={`code-block-wrapper${hasMultipleLines ? '' : ' code-block-wrapper--single-line'}`} data-openbitfun-component="markdown" data-openbitfun-part="codeBlock" data-openbitfun-state={streaming ? 'streaming' : undefined}>
-          <div className="code-block-toolbar" data-openbitfun-component="markdown" data-openbitfun-part="codeToolbar">
+        <div className={`code-block-wrapper${hasMultipleLines ? '' : ' code-block-wrapper--single-line'}`} data-openbitfun-component="markdown" data-openbitfun-part="codeBlock" data-openbitfun-state={streaming ? 'streaming' : undefined} data-starmate-component="markdown" data-starmate-part="codeBlock" data-starmate-state={streaming ? 'streaming' : undefined} >
+          <div className="code-block-toolbar" data-openbitfun-component="markdown" data-openbitfun-part="codeToolbar" data-starmate-component="markdown" data-starmate-part="codeToolbar" >
             <span className="code-block-lang">{formatCodeLanguageLabel(normalizedLang)}</span>
             <CopyButton code={code} />
           </div>
@@ -1482,7 +1482,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
                 lineRange,
               )}
               type="button"
-            >
+             data-starmate-component="markdown" data-starmate-part="fileLink" >
               {children}
             </button>
           );
@@ -1522,7 +1522,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
               }
             }}
             type="button"
-          >
+           data-starmate-component="markdown" data-starmate-part="canvasLink" >
             {children}
           </button>
         );
@@ -1547,7 +1547,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
               }
             }}
             type="button"
-          >
+           data-starmate-component="markdown" data-starmate-part="visualizationLink" >
             {children}
           </button>
         );
@@ -1572,7 +1572,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
               }
             }}
             type="button"
-          >
+           data-starmate-component="markdown" data-starmate-part="tabLink" >
             {children}
           </button>
         );
@@ -1635,7 +1635,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
     
     table({ children }: any) {
       return (
-        <div className="table-wrapper" data-openbitfun-component="markdown" data-openbitfun-part="table">
+        <div className="table-wrapper" data-openbitfun-component="markdown" data-openbitfun-part="table" data-starmate-component="markdown" data-starmate-part="table" >
           <table>{children}</table>
         </div>
       );
@@ -1666,7 +1666,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
             data-openbitfun-component="markdown"
             data-openbitfun-part="imageFallback"
             title={label}
-          >
+           data-starmate-component="markdown" data-starmate-part="imageFallback" >
             {props.alt ? `${props.alt} — ${label}` : label}
           </span>
         );
@@ -1683,7 +1683,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
     },
     
     blockquote({ children }: any) {
-      return <blockquote className="custom-blockquote" data-openbitfun-component="markdown" data-openbitfun-part="blockquote">{children}</blockquote>;
+      return <blockquote className="custom-blockquote" data-openbitfun-component="markdown" data-openbitfun-part="blockquote" data-starmate-component="markdown" data-starmate-part="blockquote" >{children}</blockquote>;
     },
     
     ul({ children, ...props }: any) {
@@ -1811,7 +1811,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
   );
 
   return (
-    <div ref={textRevealRef} className={wrapperClassName} data-openbitfun-component="markdown" data-openbitfun-part="root" data-openbitfun-state={isStreaming ? 'streaming' : undefined}>
+    <div ref={textRevealRef} className={wrapperClassName} data-openbitfun-component="markdown" data-openbitfun-part="root" data-openbitfun-state={isStreaming ? 'streaming' : undefined} data-starmate-component="markdown" data-starmate-part="root" data-starmate-state={isStreaming ? 'streaming' : undefined} >
       {renderTraceEnabled && renderTraceStartedAtMs !== null && (
         <MarkdownRenderTrace
           startedAtMs={renderTraceStartedAtMs}

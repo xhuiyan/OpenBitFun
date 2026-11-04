@@ -523,7 +523,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
         data-openbitfun-component="plan-viewer"
         data-openbitfun-part="editorPanel"
         data-openbitfun-state={isInline && isTodosExpanded ? 'expanded' : undefined}
-      >
+       data-starmate-component="plan-viewer" data-starmate-part="editorPanel" data-starmate-state={isInline && isTodosExpanded ? 'expanded' : undefined} >
         <div className={toolbarClassName}>
           {isYamlEditingInPanel ? (
             <Tooltip content={t('editor.planViewer.toggleYamlEditOff')}>
@@ -591,7 +591,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
         </div>
 
         {isYamlEditingInPanel ? (
-          <div className="yaml-editor-section" data-openbitfun-component="plan-viewer" data-openbitfun-part="editor">
+          <div className="yaml-editor-section" data-openbitfun-component="plan-viewer" data-openbitfun-part="editor" data-starmate-component="plan-viewer" data-starmate-part="editor" >
             <div className="yaml-editor-content">
               <MEditor
                 ref={yamlEditorRef}
@@ -609,14 +609,14 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
             </div>
           </div>
         ) : (
-          <div className="todos-list" data-openbitfun-component="plan-viewer" data-openbitfun-part="todos">
+          <div className="todos-list" data-openbitfun-component="plan-viewer" data-openbitfun-part="todos" data-starmate-component="plan-viewer" data-starmate-part="todos" >
             {panelTodos.map((todo, index) => (
               <div
                 key={todo.id || index}
                 className={`todo-item status-${todo.status || 'pending'}`}
                 data-openbitfun-component="plan-viewer"
                 data-openbitfun-part="todo"
-              >
+               data-starmate-component="plan-viewer" data-starmate-part="todo" >
                 {getTodoIcon(todo.status)}
                 {isPanelEditing ? (
                   <>
@@ -738,7 +738,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
   // Render loading state
   if (loading) {
     return (
-      <div className="openbitfun-plan-viewer openbitfun-plan-viewer--loading" data-openbitfun-component="plan-viewer" data-openbitfun-part="loading" data-openbitfun-state="loading">
+      <div className="openbitfun-plan-viewer openbitfun-plan-viewer--loading" data-openbitfun-component="plan-viewer" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="plan-viewer" data-starmate-part="loading" data-starmate-state="loading" >
         <LoadingState size="md">{t('editor.planViewer.loadingPlan')}</LoadingState>
       </div>
     );
@@ -747,7 +747,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
   // Render error state
   if (error) {
     return (
-      <div className="openbitfun-plan-viewer openbitfun-plan-viewer--error" data-openbitfun-component="plan-viewer" data-openbitfun-part="error" data-openbitfun-state="error">
+      <div className="openbitfun-plan-viewer openbitfun-plan-viewer--error" data-openbitfun-component="plan-viewer" data-openbitfun-part="error" data-openbitfun-state="error" data-starmate-component="plan-viewer" data-starmate-part="error" data-starmate-state="error" >
         <div className="error-content">
           <AlertCircle className="error-icon" />
           <p>{error}</p>
@@ -765,7 +765,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
       data-openbitfun-component="plan-viewer"
       data-openbitfun-part="root"
       data-openbitfun-state={hasTodos && isTodosExpanded ? 'expanded' : undefined}
-    >
+     data-starmate-component="plan-viewer" data-starmate-part="root" data-starmate-state={hasTodos && isTodosExpanded ? 'expanded' : undefined} >
       <div data-overflow-trigger
         className={`plan-viewer-header ${hasTodos ? 'plan-viewer-header--collapsible' : ''}`}
         data-openbitfun-component="plan-viewer"
@@ -775,8 +775,8 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
             setIsTodosExpanded(!isTodosExpanded);
           }
         }}
-      >
-        <div className="header-left" data-openbitfun-component="plan-viewer" data-openbitfun-part="headerMain">
+       data-starmate-component="plan-viewer" data-starmate-part="header" >
+        <div className="header-left" data-openbitfun-component="plan-viewer" data-openbitfun-part="headerMain" data-starmate-component="plan-viewer" data-starmate-part="headerMain" >
           {hasTodos && (
             <span
               className={`header-expand-indicator ${isTodosExpanded ? 'header-expand-indicator--expanded' : ''} ${isEditingYaml ? 'header-expand-indicator--disabled' : ''}`}
@@ -788,7 +788,7 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
           <OverflowText className="file-name">{displayFileName}</OverflowText>
           {hasUnsavedChanges && <span className="unsaved-indicator">{t('editor.planViewer.unsaved')}</span>}
         </div>
-        <div className="header-right" onClick={(e) => e.stopPropagation()} data-openbitfun-component="plan-viewer" data-openbitfun-part="headerActions">
+        <div className="header-right" onClick={(e) => e.stopPropagation()} data-openbitfun-component="plan-viewer" data-openbitfun-part="headerActions" data-starmate-component="plan-viewer" data-starmate-part="headerActions" >
           {planData && (
             <>
               {hasTodos && <span className="todos-count">{t('editor.planViewer.remainingTodos', { count: remainingTodos })}</span>}
@@ -820,8 +820,8 @@ const PlanViewer: React.FC<PlanViewerProps> = ({
 
       {hasTodos && (yamlEditorPlacement === 'inline' || isTodosExpanded) && renderSharedTodoPanel('inline')}
 
-      <div className="plan-viewer-content" data-openbitfun-component="plan-viewer" data-openbitfun-part="content">
-        <div className="plan-markdown" data-openbitfun-component="plan-viewer" data-openbitfun-part="markdown">
+      <div className="plan-viewer-content" data-openbitfun-component="plan-viewer" data-openbitfun-part="content" data-starmate-component="plan-viewer" data-starmate-part="content" >
+        <div className="plan-markdown" data-openbitfun-component="plan-viewer" data-openbitfun-part="markdown" data-starmate-component="plan-viewer" data-starmate-part="markdown" >
           <MEditor
             ref={editorRef}
             value={planContent}

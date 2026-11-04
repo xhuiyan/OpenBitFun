@@ -48,7 +48,7 @@ export function UserMessageImage({ image, onPreview }: UserMessageImageProps) {
       className="user-message-item__image-thumb"
       onClick={event => { event.stopPropagation(); if (source && !error) onPreview(source); }}
       title={failure || name}
-    >
+     data-starmate-product-component="user-message-item" data-starmate-product-part="image" >
       {failure ? <span role="alert">{failure}</span> : source ? (
         <img src={source} alt={name} onError={() => setError(name)} />
       ) : <span>{name}</span>}

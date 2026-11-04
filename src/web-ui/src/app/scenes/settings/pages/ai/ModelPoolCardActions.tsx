@@ -48,7 +48,7 @@ export function ModelPoolCardActions({
       data-menu-open={menuOpen || undefined}
       role="group"
       aria-label={modelLabel}
-    >
+     data-starmate-component="model-settings" data-starmate-part="modelActions" >
       <Tooltip content={testLabel} trigger="hover-focus">
         <IconButton
           size="sm"

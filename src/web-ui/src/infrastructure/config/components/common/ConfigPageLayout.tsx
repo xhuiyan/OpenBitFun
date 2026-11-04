@@ -24,7 +24,7 @@ export const ConfigPageLayout: React.FC<ConfigPageLayoutProps> = ({
   ...props
 }) => {
   return (
-    <ScrollArea className={`openbitfun-config-page-layout ${className}`} data-openbitfun-component="config" data-openbitfun-part="root" {...props}>
+    <ScrollArea className={`openbitfun-config-page-layout ${className}`} data-openbitfun-component="config" data-openbitfun-part="root" {...props} data-starmate-component="config" data-starmate-part="root" >
       {children}
       {/* Real DOM spacer: keeps a guaranteed blank tail at the end of the scroll range. */}
       <div className="openbitfun-config-page-layout__scroll-end-spacer" aria-hidden="true" />
@@ -48,8 +48,8 @@ export const ConfigPageContent: React.FC<ConfigPageContentProps> = ({
   ...props
 }) => {
   return (
-    <div id={id} className={`openbitfun-config-page-content ${className}`} data-openbitfun-component="config" data-openbitfun-part="content" {...props}>
-      <div className="openbitfun-config-page-content__inner" data-openbitfun-component="config" data-openbitfun-part="contentInner">
+    <div id={id} className={`openbitfun-config-page-content ${className}`} data-openbitfun-component="config" data-openbitfun-part="content" {...props} data-starmate-component="config" data-starmate-part="content" >
+      <div className="openbitfun-config-page-content__inner" data-openbitfun-component="config" data-openbitfun-part="contentInner" data-starmate-component="config" data-starmate-part="contentInner" >
         {children}
       </div>
     </div>
@@ -75,7 +75,7 @@ export const ConfigPageSectionStack: React.FC<ConfigPageSectionStackProps> = ({
       className={`openbitfun-config-page-section-stack ${className}`.trim()}
       data-openbitfun-component="config"
       data-openbitfun-part="sectionStack"
-    >
+     data-starmate-component="config" data-starmate-part="sectionStack" >
       {children}
     </div>
   );
@@ -126,13 +126,13 @@ export const ConfigPageSection: React.FC<ConfigPageSectionProps> = ({
       headingAs="h3"
       descriptionLayout={descriptionLayout}
       title={(
-        <span className="openbitfun-config-page-section__title-row" data-openbitfun-component="config" data-openbitfun-part="sectionHeader">
-          <span className="openbitfun-config-page-section__title" data-openbitfun-component="config" data-openbitfun-part="sectionTitle">{title}</span>
+        <span className="openbitfun-config-page-section__title-row" data-openbitfun-component="config" data-openbitfun-part="sectionHeader" data-starmate-component="config" data-starmate-part="sectionHeader" >
+          <span className="openbitfun-config-page-section__title" data-openbitfun-component="config" data-openbitfun-part="sectionTitle" data-starmate-component="config" data-starmate-part="sectionTitle" >{title}</span>
           {titleSuffix}
         </span>
       )}
       description={description ? (
-        <span className={descriptionClassName} data-openbitfun-component="config" data-openbitfun-part="sectionDescription">
+        <span className={descriptionClassName} data-openbitfun-component="config" data-openbitfun-part="sectionDescription" data-starmate-component="config" data-starmate-part="sectionDescription" >
           {formatStandaloneUiCopy(description)}
         </span>
       ) : undefined}
@@ -140,7 +140,7 @@ export const ConfigPageSection: React.FC<ConfigPageSectionProps> = ({
         <div className="openbitfun-config-page-section__extra">{extra}</div>
       ) : undefined}
       {...props}
-    >
+     data-starmate-component="config" data-starmate-part="section" >
       {hasBody ? (
         <FieldGroup
           appearance={bodySurface ? 'subtle' : 'plain'}
@@ -149,7 +149,7 @@ export const ConfigPageSection: React.FC<ConfigPageSectionProps> = ({
           data-openbitfun-part="sectionBody"
           dividers={false}
           fieldSurface={fieldSurface ?? (bodySurface ? 'ambient' : 'default')}
-        >
+         data-starmate-component="config" data-starmate-part="sectionBody" >
           {children}
         </FieldGroup>
       ) : null}
@@ -214,10 +214,10 @@ export const ConfigPageRow: React.FC<ConfigPageRowProps> = ({
       data-openbitfun-layout={wide ? 'wide' : balanced ? 'balanced' : multiline ? 'multiline' : 'default'}
       data-required={required ? 'true' : 'false'}
       {...props}
-    >
+     data-starmate-component="config" data-starmate-part="row" data-starmate-align={align} data-starmate-layout={wide ? 'wide' : balanced ? 'balanced' : multiline ? 'multiline' : 'default'} >
       <div className="openbitfun-config-page-row__meta">
         {/* div (not p): label may contain buttons; button-in-p freezes React event path */}
-        <div id={labelId} className="openbitfun-config-page-row__label" data-openbitfun-component="config" data-openbitfun-part="rowLabel">
+        <div id={labelId} className="openbitfun-config-page-row__label" data-openbitfun-component="config" data-openbitfun-part="rowLabel" data-starmate-component="config" data-starmate-part="rowLabel" >
           {label}
           {required ? (
             <span
@@ -225,17 +225,17 @@ export const ConfigPageRow: React.FC<ConfigPageRowProps> = ({
               className="openbitfun-config-page-row__required"
               data-openbitfun-component="config"
               data-openbitfun-part="required"
-            >
+             data-starmate-component="config" data-starmate-part="required" >
               *
             </span>
           ) : null}
         </div>
         {description ? (
-          <div id={descriptionId} className="openbitfun-config-page-row__description" data-openbitfun-component="config" data-openbitfun-part="rowDescription">{formatStandaloneUiCopy(description)}</div>
+          <div id={descriptionId} className="openbitfun-config-page-row__description" data-openbitfun-component="config" data-openbitfun-part="rowDescription" data-starmate-component="config" data-starmate-part="rowDescription" >{formatStandaloneUiCopy(description)}</div>
         ) : null}
       </div>
       {hasControl ? (
-        <div className="openbitfun-config-page-row__control" data-openbitfun-component="config" data-openbitfun-part="rowControl">
+        <div className="openbitfun-config-page-row__control" data-openbitfun-component="config" data-openbitfun-part="rowControl" data-starmate-component="config" data-starmate-part="rowControl" >
           <FieldAccessibilityProvider aria-labelledby={labelId} aria-describedby={descriptionId}>
             {children}
           </FieldAccessibilityProvider>

@@ -69,7 +69,7 @@ const AssistantScene: React.FC = () => {
   ]);
 
   return (
-    <div className="openbitfun-assistant-scene" data-openbitfun-scene="assistant" data-openbitfun-part="root">
+    <div className="openbitfun-assistant-scene" data-openbitfun-scene="assistant" data-openbitfun-part="root" data-starmate-scene="assistant" data-starmate-part="root" >
       <Suspense
         fallback={(
           <div
@@ -79,7 +79,7 @@ const AssistantScene: React.FC = () => {
             role="status"
             aria-busy="true"
             aria-label={t('loading.scenes')}
-          >
+           data-starmate-scene="assistant" data-starmate-part="loading" >
             <Spinner size="md" />
           </div>
         )}

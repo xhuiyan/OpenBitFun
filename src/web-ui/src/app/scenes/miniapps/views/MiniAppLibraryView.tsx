@@ -864,7 +864,7 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
           {accountControls}
         </nav>
       ) : undefined}
-    >
+     data-starmate-component="miniapp-gallery-view" data-starmate-part="root" >
       {!showingDetail && <div className="miniapp-gallery-pane__account-actions">{accountControls}</div>}
       <div ref={catalogContentRef} hidden={showingDetail}>
         <GalleryPageHeader
@@ -947,9 +947,9 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
             data-openbitfun-component="miniapp-gallery-view"
             data-openbitfun-part="content"
             className="gallery-zones"
-          >
+           data-starmate-component="miniapp-gallery-view" data-starmate-part="content" >
             <section className="gallery-zone" aria-label={t('allApps')}>
-              <div className="miniapp-gallery__filters" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="tools">
+              <div className="miniapp-gallery__filters" data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="tools" data-starmate-component="miniapp-gallery-view" data-starmate-part="tools" >
                 <SearchField
                   className="miniapp-gallery__search"
                   leadingIcon={<Icon name="search" size="sm" aria-hidden />}
@@ -962,7 +962,7 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
                   size="sm"
                   value={query}
                 />
-                <div data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="categoryFilters">
+                <div data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="categoryFilters" data-starmate-component="miniapp-gallery-view" data-starmate-part="categoryFilters" >
                   <Select
                     className="miniapp-gallery__categories"
                     options={CATEGORIES.map((value) => ({ label: categoryLabel(value, t), value }))}
@@ -994,7 +994,7 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
                   role="alert"
                   data-openbitfun-component="miniapp-gallery-view"
                   data-openbitfun-part="error"
-                >
+                 data-starmate-component="miniapp-gallery-view" data-starmate-part="error" >
                   <AlertTriangle size={16} aria-hidden="true" />
                   <span>{t('market.library.marketUnavailable')}</span>
                   <Button
@@ -1108,7 +1108,7 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
             className="miniapp-market-detail"
             data-openbitfun-component="miniapp-gallery-view"
             data-openbitfun-part="detail"
-          >
+           data-starmate-component="miniapp-gallery-view" data-starmate-part="detail" >
             {detailWorkspaceUnsupported ? (
               <div className="miniapp-market-detail__warning">
                 <AlertTriangle size={16} aria-hidden="true" />

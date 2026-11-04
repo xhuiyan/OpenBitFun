@@ -412,7 +412,7 @@ const WebSearchSettingsPage: React.FC = () => {
 
   if (loadFailed) {
     return (
-      <ConfigPageLayout data-openbitfun-component="config" data-openbitfun-part="root">
+      <ConfigPageLayout data-openbitfun-component="config" data-openbitfun-part="root" data-starmate-component="config" data-starmate-part="root" >
         <ConfigPageHeader title={t('title')} />
         <ConfigPageContent>
           <ConfigRetryState
@@ -427,7 +427,7 @@ const WebSearchSettingsPage: React.FC = () => {
   }
 
   return (
-    <ConfigPageLayout data-openbitfun-component="config" data-openbitfun-part="root">
+    <ConfigPageLayout data-openbitfun-component="config" data-openbitfun-part="root" data-starmate-component="config" data-starmate-part="root" >
       <ConfigPageHeader
         title={t('title')}
       />
@@ -600,7 +600,7 @@ const WebSearchSettingsPage: React.FC = () => {
               id="web-search-openbitfun-protocol"
               data-openbitfun-component="config"
               data-openbitfun-part="collectionDetails"
-            >
+             data-starmate-component="config" data-starmate-part="collectionDetails" >
               <section>
                 <h4>{t('protocol.request.title')}</h4>
                 <p>{t('protocol.request.description')}</p>

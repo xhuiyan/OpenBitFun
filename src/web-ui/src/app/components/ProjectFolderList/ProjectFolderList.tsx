@@ -11,7 +11,7 @@ interface ProjectFolderListProps {
 export function ProjectFolderList({ label, children, scrollable = false }: ProjectFolderListProps) {
   return (
     <ul className="project-folder-list" aria-label={label} data-scrollable={scrollable}
-      data-openbitfun-component="project-folder-list" data-openbitfun-part="root">
+      data-openbitfun-component="project-folder-list" data-openbitfun-part="root" data-starmate-component="project-folder-list" data-starmate-part="root" >
       {children}
     </ul>
   );
@@ -28,7 +28,7 @@ interface ProjectFolderItemProps {
 
 export function ProjectFolderItem({ name, path, leading, actions, children, editorId }: ProjectFolderItemProps) {
   return (
-    <li className="project-folder-list__item" data-openbitfun-component="project-folder-list" data-openbitfun-part="item">
+    <li className="project-folder-list__item" data-openbitfun-component="project-folder-list" data-openbitfun-part="item" data-starmate-component="project-folder-list" data-starmate-part="item" >
       <div className="project-folder-list__row">
         {leading ?? <Icon name="folder" size="sm" />}
         <div className="project-folder-list__info">

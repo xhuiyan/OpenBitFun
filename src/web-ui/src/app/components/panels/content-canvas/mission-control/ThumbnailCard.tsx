@@ -154,27 +154,33 @@ export const ThumbnailCard: React.FC<ThumbnailCardProps> = ({
       draggable
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}
-    >
+     data-starmate-component="canvas-thumbnail" data-starmate-part="root" data-starmate-group={groupId} data-starmate-state={[
+        isActive && 'active',
+        tab.isDirty && 'dirty',
+        tab.fileDeletedFromDisk && 'deleted',
+        tab.state === 'pinned' && 'pinned',
+        tab.state === 'preview' && 'preview',
+      ].filter(Boolean).join(' ')} >
       {/* Header */}
-      <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="header" className="canvas-thumbnail-card__header">
-        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="icon" className="canvas-thumbnail-card__icon">
+      <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="header" className="canvas-thumbnail-card__header" data-starmate-component="canvas-thumbnail" data-starmate-part="header" >
+        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="icon" className="canvas-thumbnail-card__icon" data-starmate-component="canvas-thumbnail" data-starmate-part="icon" >
           {getContentIcon(tab.content.type)}
         </div>
-        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="title" className="canvas-thumbnail-card__title">
+        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="title" className="canvas-thumbnail-card__title" data-starmate-component="canvas-thumbnail" data-starmate-part="title" >
           {tab.state === 'pinned' && <Icon name="pin" size="2xs" className="canvas-thumbnail-card__pin-icon" />}
           <OverflowText className={tab.state === 'preview' ? 'is-preview' : ''}>
             {titleWithDeleted}
           </OverflowText>
           {tab.isDirty && <OverflowText className="canvas-thumbnail-card__dirty">●</OverflowText>}
         </div>
-        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="actions" className="canvas-thumbnail-card__actions">
+        <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="actions" className="canvas-thumbnail-card__actions" data-starmate-component="canvas-thumbnail" data-starmate-part="actions" >
           <Tooltip content={tab.state === 'pinned' ? t('tabs.unpin') : t('tabs.pin')}>
             <button
               data-openbitfun-component="canvas-thumbnail"
               data-openbitfun-part="action"
               className={`canvas-thumbnail-card__action-btn ${tab.state === 'pinned' ? 'is-active' : ''}`}
               onClick={handlePin}
-            >
+             data-starmate-component="canvas-thumbnail" data-starmate-part="action" >
               <Icon name="pin" size="xs" />
             </button>
           </Tooltip>
@@ -184,7 +190,7 @@ export const ThumbnailCard: React.FC<ThumbnailCardProps> = ({
               data-openbitfun-part="action"
               className="canvas-thumbnail-card__action-btn canvas-thumbnail-card__close-btn"
               onClick={handleClose}
-            >
+             data-starmate-component="canvas-thumbnail" data-starmate-part="action" >
               <Icon name="xmark" size="xs" />
             </button>
           </Tooltip>
@@ -192,9 +198,9 @@ export const ThumbnailCard: React.FC<ThumbnailCardProps> = ({
       </div>
 
       {/* Preview area */}
-      <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="preview" className="canvas-thumbnail-card__preview">
+      <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="preview" className="canvas-thumbnail-card__preview" data-starmate-component="canvas-thumbnail" data-starmate-part="preview" >
         {isFileType ? (
-          <pre data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="code" className="canvas-thumbnail-card__code">
+          <pre data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="code" className="canvas-thumbnail-card__code" data-starmate-component="canvas-thumbnail" data-starmate-part="code" >
             {previewLines.map((line, index) => (
               <div key={index} className="canvas-thumbnail-card__code-line" title={line}>
                 {line || ' '}
@@ -202,7 +208,7 @@ export const ThumbnailCard: React.FC<ThumbnailCardProps> = ({
             ))}
           </pre>
         ) : (
-          <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="placeholder" className="canvas-thumbnail-card__placeholder">
+          <div data-openbitfun-component="canvas-thumbnail" data-openbitfun-part="placeholder" className="canvas-thumbnail-card__placeholder" data-starmate-component="canvas-thumbnail" data-starmate-part="placeholder" >
             {getContentIcon(tab.content.type)}
             <span>{tab.content.type}</span>
           </div>
@@ -214,7 +220,7 @@ export const ThumbnailCard: React.FC<ThumbnailCardProps> = ({
         data-openbitfun-component="canvas-thumbnail"
         data-openbitfun-part="groupBadge"
         className={`canvas-thumbnail-card__group-badge canvas-thumbnail-card__group-badge--${groupId}`}
-      >
+       data-starmate-component="canvas-thumbnail" data-starmate-part="groupBadge" >
         {groupLabel}
       </div>
     </div>

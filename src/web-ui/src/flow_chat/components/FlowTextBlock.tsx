@@ -186,7 +186,7 @@ export const FlowTextBlock = React.memo<FlowTextBlockProps>(({
   );
 
   const renderStructuredContent = () => (
-    <div className="deep-research-protocol" data-openbitfun-component="flow-text-block" data-openbitfun-part="protocol">
+    <div className="deep-research-protocol" data-openbitfun-component="flow-text-block" data-openbitfun-part="protocol" data-starmate-component="flow-text-block" data-starmate-part="protocol" >
       {parsedContent.segments.map((segment, index) => (
         segment.type === 'protocol'
           ? (
@@ -204,7 +204,7 @@ export const FlowTextBlock = React.memo<FlowTextBlockProps>(({
                   data-openbitfun-component="flow-text-block"
                   data-openbitfun-part="protocolTextContent"
                   key={`text:${index}`}
-                >
+                 data-starmate-component="flow-text-block" data-starmate-part="protocolTextContent" >
                   {segment.content}
                 </div>
               )
@@ -224,13 +224,13 @@ export const FlowTextBlock = React.memo<FlowTextBlockProps>(({
       data-status={textItem.status}
       data-streaming={isVisuallyStreaming ? 'true' : 'false'}
       {...testAttributes}
-    >
+     data-starmate-component="flow-text-block" data-starmate-part="root" data-starmate-mode={textItem.isMarkdown ? 'markdown' : 'text'} data-starmate-state={isActivelyStreaming ? 'streaming' : ''} >
       {parsedContent.hasProtocol ? (
         renderStructuredContent()
       ) : textItem.isMarkdown ? (
         renderMarkdown(displayContent)
       ) : (
-        <div data-openbitfun-component="flow-text-block" data-openbitfun-part="textContent" className="text-content">
+        <div data-openbitfun-component="flow-text-block" data-openbitfun-part="textContent" className="text-content" data-starmate-component="flow-text-block" data-starmate-part="textContent" >
           {displayContent}
         </div>
       )}

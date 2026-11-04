@@ -550,7 +550,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
           data-openbitfun-component="chat-input-workspace-strip"
           data-openbitfun-part="branch"
           className="openbitfun-chat-input-workspace-strip__branch"
-        ><OverflowText>
+         data-starmate-component="chat-input-workspace-strip" data-starmate-part="branch" ><OverflowText>
           {branchLabel}
         </OverflowText></span>
       </>
@@ -608,7 +608,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
     if (!workspaceSwitchable || !workspaceControl) {
       return (
         <Tooltip content={workspaceTooltipContent} placement="top">
-          <span data-openbitfun-component="chat-input-workspace-strip" data-openbitfun-part="workspace" className="openbitfun-chat-input-workspace-strip__workspace">
+          <span data-openbitfun-component="chat-input-workspace-strip" data-openbitfun-part="workspace" className="openbitfun-chat-input-workspace-strip__workspace" data-starmate-component="chat-input-workspace-strip" data-starmate-part="workspace" >
             <Icon name="folder-open" size="xs" aria-hidden />
             <span className="openbitfun-chat-input-workspace-strip__workspace-name"><OverflowText>{label}</OverflowText></span>
           </span>
@@ -632,7 +632,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
               event.stopPropagation();
               setWorkspaceMenuOpen(open => !open);
             }}
-          >
+           data-starmate-component="chat-input-workspace-strip" data-starmate-part="workspace" >
             <Icon name="folder-open" size="xs" aria-hidden />
             <span className="openbitfun-chat-input-workspace-strip__workspace-name"><OverflowText>{label}</OverflowText></span>
           </button>
@@ -653,7 +653,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
             aria-label={tCommon('header.switchWorkspace')}
             data-testid="chat-input-workspace-menu"
             autoFocusFirstItem
-          >
+           data-starmate-component="chat-input-workspace-strip" data-starmate-part="workspaceMenu" data-starmate-state="open" data-starmate-placement={workspaceMenuLayout?.placement ?? 'top'} >
             {switchableWorkspaces.map(workspace => {
               const isActive = workspace.id === workspaceControl.selectedId;
               const workspaceName = getWorkspaceDisplayName(workspace);
@@ -691,7 +691,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
                       workspaceControl.onSelect(workspace.id);
                     }
                   }}
-                >
+                 data-starmate-component="chat-input-workspace-strip" data-starmate-part="workspaceOption" data-starmate-state={isActive ? 'active' : undefined} >
                   <span className="openbitfun-chat-input-workspace-strip__workspace-option-copy">
                     <OverflowText className="openbitfun-chat-input-workspace-strip__workspace-option-name">
                       {workspaceName}
@@ -753,7 +753,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
       data-openbitfun-part="divider"
       className="openbitfun-chat-input-workspace-strip__divider"
       aria-hidden
-    />
+     data-starmate-component="chat-input-workspace-strip" data-starmate-part="divider" />
   );
 
   const renderPermissionModeOption = (
@@ -823,12 +823,12 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
       ref={stripRef}
       className="openbitfun-chat-input-workspace-strip"
       data-testid="chat-input-workspace-strip"
-    >
+     data-starmate-component="chat-input-workspace-strip" data-starmate-part="root" >
       <div
         data-openbitfun-component="chat-input-workspace-strip"
         data-openbitfun-part="context"
         className="openbitfun-chat-input-workspace-strip__context"
-      >
+       data-starmate-component="chat-input-workspace-strip" data-starmate-part="context" >
         {label ? (
           <span className="openbitfun-chat-input-workspace-strip__location">
             {renderWorkspaceControl()}
@@ -876,7 +876,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
         data-openbitfun-component="chat-input-workspace-strip"
         data-openbitfun-part="next"
         className="openbitfun-chat-input-workspace-strip__next"
-      >
+       data-starmate-component="chat-input-workspace-strip" data-starmate-part="next" >
         {dispatchControl?.syncableJobId ? (
           <>
             <Tooltip content={tCommon('dispatch.syncTitle')} placement="top">
@@ -909,7 +909,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
             data-openbitfun-component="chat-input-workspace-strip"
             data-openbitfun-part="permission"
             className="openbitfun-chat-input-workspace-strip__permission"
-          >
+           data-starmate-component="chat-input-workspace-strip" data-starmate-part="permission" >
             <Tooltip content={permissionTooltip} placement="top">
               <button data-overflow-trigger
                 ref={permissionTriggerRef}
@@ -990,14 +990,14 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
                     returnToPermissionSessionMenu();
                   }
                 }}
-              >
+               data-starmate-component="chat-input-workspace-strip" data-starmate-part="permissionMenu" data-starmate-state="open" data-starmate-placement={permissionMenuLayout?.placement ?? 'top'} >
                 {permissionMenuView === 'session' ? (
                   <>
                     <MenuSection
                       title={`${t('chatInput.permissionMode.menuLabel')} · ${permissionSessionScopeLabel}`}
                       data-openbitfun-component="chat-input-workspace-strip"
                       data-openbitfun-part="permissionOptions"
-                    >
+                     data-starmate-component="chat-input-workspace-strip" data-starmate-part="permissionOptions" >
                       {/* With no readable Session mode there is no honest
                           checkmark to place, so say why the list is unmarked. */}
                       {permissionUnread ? (
@@ -1068,7 +1068,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
                     title={`${t('chatInput.permissionMode.menuLabel')} · ${permissionTurnScopeLabel}`}
                     data-openbitfun-component="chat-input-workspace-strip"
                     data-openbitfun-part="permissionOptions"
-                  >
+                   data-starmate-component="chat-input-workspace-strip" data-starmate-part="permissionOptions" >
                     <MenuItem
                       leading={<Icon name="chevron-left" size="sm" aria-hidden />}
                       metadata={permissionCopy[permissionMode].label}
@@ -1132,7 +1132,7 @@ export const ChatInputWorkspaceStrip: React.FC<ChatInputWorkspaceStripProps> = (
                 e.stopPropagation();
                 setUsagePopoverOpen(open => !open);
               }}
-            >
+             data-starmate-component="chat-input-workspace-strip" data-starmate-part="usageAction" >
               <span className="openbitfun-chat-input-workspace-strip__usage-ring" aria-hidden>
                 <Circle className="is-track" size={12} strokeWidth={3.2} />
                 {usagePercentage > 0 ? (

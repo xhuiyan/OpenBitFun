@@ -179,13 +179,13 @@ export const ConfirmDialog = forwardRef<HTMLDivElement, ConfirmDialogProps>(
         </DialogHeader>
         {hasMessage || hasPreview ? (
           <DialogBody>
-            <div className={styles.content} data-openbitfun-component="confirm-dialog" data-openbitfun-part="content">
+            <div className={styles.content} data-openbitfun-component="confirm-dialog" data-openbitfun-part="content" data-starmate-component="confirm-dialog" data-starmate-part="content" >
               {hasMessage ? (
                 <div
                   className={styles.messageRow}
                   data-openbitfun-component="confirm-dialog"
                   data-openbitfun-part="messageRow"
-                >
+                 data-starmate-component="confirm-dialog" data-starmate-part="messageRow" >
                   {resolvedIcon !== null ? (
                     <span
                       aria-hidden="true"
@@ -194,7 +194,7 @@ export const ConfirmDialog = forwardRef<HTMLDivElement, ConfirmDialogProps>(
                       data-openbitfun-icon-slot="true"
                       data-openbitfun-part="icon"
                       data-openbitfun-status={type === "error" ? "danger" : type}
-                    >
+                     data-starmate-component="confirm-dialog" data-starmate-icon-slot="true" data-starmate-part="icon" data-starmate-status={type === "error" ? "danger" : type} >
                       {resolvedIcon}
                     </span>
                   ) : null}
@@ -202,7 +202,7 @@ export const ConfirmDialog = forwardRef<HTMLDivElement, ConfirmDialogProps>(
                     className={styles.message}
                     data-openbitfun-component="confirm-dialog"
                     data-openbitfun-part="message"
-                  >
+                   data-starmate-component="confirm-dialog" data-starmate-part="message" >
                     {message}
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export const ConfirmDialog = forwardRef<HTMLDivElement, ConfirmDialogProps>(
                   className={styles.preview}
                   data-openbitfun-component="confirm-dialog"
                   data-openbitfun-part="preview"
-                >
+                 data-starmate-component="confirm-dialog" data-starmate-part="preview" >
                   {typeof preview === "string" ? <pre>{preview}</pre> : preview}
                 </div>
               ) : null}
@@ -225,13 +225,13 @@ export const ConfirmDialog = forwardRef<HTMLDivElement, ConfirmDialogProps>(
               className={styles.splitActions}
               data-openbitfun-component="confirm-dialog"
               data-openbitfun-part="actions"
-            >
+             data-starmate-component="confirm-dialog" data-starmate-part="actions" >
               {secondaryButton}
               <div
                 className={styles.actionGroup}
                 data-openbitfun-component="confirm-dialog"
                 data-openbitfun-part="actionGroup"
-              >
+               data-starmate-component="confirm-dialog" data-starmate-part="actionGroup" >
                 {cancelButton}
                 {confirmButton}
               </div>

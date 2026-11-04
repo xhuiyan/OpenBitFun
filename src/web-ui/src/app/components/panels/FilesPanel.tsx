@@ -1054,7 +1054,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
       className="openbitfun-files-panel"
       tabIndex={-1}
       onFocus={() => {}}
-    >
+     data-starmate-component="files-panel" data-starmate-part="root" >
       {!hideHeader && (
         <PanelHeader
           title={t('title')}
@@ -1082,9 +1082,9 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
         />
       )}
 
-      <div className="openbitfun-files-panel__content" data-openbitfun-component="files-panel" data-openbitfun-part="content">
+      <div className="openbitfun-files-panel__content" data-openbitfun-component="files-panel" data-openbitfun-part="content" data-starmate-component="files-panel" data-starmate-part="content" >
         {workspacePath && viewMode === 'search' && (
-          <div className="openbitfun-files-panel__search" data-openbitfun-component="files-panel" data-openbitfun-part="search" data-openbitfun-search-mode={searchMode}>
+          <div className="openbitfun-files-panel__search" data-openbitfun-component="files-panel" data-openbitfun-part="search" data-openbitfun-search-mode={searchMode} data-starmate-component="files-panel" data-starmate-part="search" data-starmate-search-mode={searchMode} >
             <SearchField
               placeholder={t('search.placeholder')}
               aria-label={t('search.placeholder')}
@@ -1097,7 +1097,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
                 ? <Loader2 className="openbitfun-files-panel__search-spinner" size={14} aria-hidden />
                 : <Icon name="search" size="sm" aria-hidden />}
             />
-            <div className="openbitfun-files-panel__search-toolbar" data-openbitfun-component="files-panel" data-openbitfun-part="searchToolbar">
+            <div className="openbitfun-files-panel__search-toolbar" data-openbitfun-component="files-panel" data-openbitfun-part="searchToolbar" data-starmate-component="files-panel" data-starmate-part="searchToolbar" >
               <SegmentedControl
                 className="openbitfun-files-panel__search-modes"
                 interaction="buttons"
@@ -1151,9 +1151,9 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
           }`}
           data-openbitfun-component="files-panel"
           data-openbitfun-part="main"
-        >
+         data-starmate-component="files-panel" data-starmate-part="main" >
         {!workspacePath ? (
-          <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder">
+          <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder" data-starmate-component="files-panel" data-starmate-part="placeholder" >
             <div className="openbitfun-files-panel__placeholder-icon">
               <LucideFileText width="32" height="32" stroke="currentColor" aria-hidden="true" />
             </div>
@@ -1197,7 +1197,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
               )}
 
               {searchError && (
-                <div className="openbitfun-files-panel__error" data-openbitfun-component="files-panel" data-openbitfun-part="error">
+                <div className="openbitfun-files-panel__error" data-openbitfun-component="files-panel" data-openbitfun-part="error" data-starmate-component="files-panel" data-starmate-part="error" >
                   <p>❌ {searchError}</p>
                   <Button
                     variant="outline"
@@ -1222,7 +1222,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
                 />
               ) : (
                 !isSearching && !searchError && (
-                  <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder">
+                  <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder" data-starmate-component="files-panel" data-starmate-part="placeholder" >
                     <div className="openbitfun-files-panel__placeholder-icon">
                       <Icon name="search" size="lg" />
                     </div>
@@ -1232,7 +1232,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
               )}
             </div>
           ) : (
-            <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder">
+            <div className="openbitfun-files-panel__placeholder" data-openbitfun-component="files-panel" data-openbitfun-part="placeholder" data-starmate-component="files-panel" data-starmate-part="placeholder" >
               <div className="openbitfun-files-panel__placeholder-icon">
                 <Icon name="search" size="lg" />
               </div>
@@ -1245,7 +1245,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
               <LoadingState size="md">{t('status.loadingFileTree')}</LoadingState>
             </div>
           ) : error ? (
-            <div className="openbitfun-files-panel__error" data-openbitfun-component="files-panel" data-openbitfun-part="error">
+            <div className="openbitfun-files-panel__error" data-openbitfun-component="files-panel" data-openbitfun-part="error" data-starmate-component="files-panel" data-starmate-part="error" >
               <p>❌ {error}</p>
               <Button
                 variant="outline"
@@ -1283,9 +1283,9 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
       </div>
 
       {transfers.size > 0 && (
-        <ScrollArea className="openbitfun-files-panel__transfers" data-openbitfun-component="files-panel" data-openbitfun-part="transfers">
+        <ScrollArea className="openbitfun-files-panel__transfers" data-openbitfun-component="files-panel" data-openbitfun-part="transfers" data-starmate-component="files-panel" data-starmate-part="transfers" >
           {Array.from(transfers.entries()).map(([id, tp]) => (
-            <div className="openbitfun-files-panel__transfer" data-openbitfun-component="files-panel" data-openbitfun-part="transfer" role="status" key={id}>
+            <div className="openbitfun-files-panel__transfer" data-openbitfun-component="files-panel" data-openbitfun-part="transfer" role="status" key={id} data-starmate-component="files-panel" data-starmate-part="transfer" >
               <div className="openbitfun-files-panel__transfer-label">
                 <OverflowText className="openbitfun-files-panel__transfer-label-text">
                   {tp.phase === 'download'
@@ -1315,7 +1315,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
                 }`}
                 data-openbitfun-component="files-panel"
                 data-openbitfun-part="transferTrack"
-              >
+               data-starmate-component="files-panel" data-starmate-part="transferTrack" >
                 <div
                   className="openbitfun-files-panel__transfer-fill"
                   data-openbitfun-component="files-panel"
@@ -1330,7 +1330,7 @@ const FilesPanel: React.FC<FilesPanelProps> = ({
                           )}%`,
                         }
                   }
-                />
+                 data-starmate-component="files-panel" data-starmate-part="transferFill" />
               </div>
               <div className="openbitfun-files-panel__transfer-bottom">
                 {!tp.indeterminate &&

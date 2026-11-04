@@ -82,7 +82,7 @@ function SessionToolCardBase({
 }: SessionToolCardBaseProps) {
   const hasDetails = fields.length > 0 || records.length > 0 || sessions.length > 0 || Boolean(emptyState || message || error || interaction && summary);
   const expandedContent = hasDetails ? (
-    <div className={styles.details} data-openbitfun-part="details">
+    <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
       {interaction && summary && <ToolCardText variant="prose">{summary}</ToolCardText>}
       {fields.length > 0 && <ToolCardFields fields={fields} />}
 
@@ -97,9 +97,9 @@ function SessionToolCardBase({
       )}
 
       {sessions.length > 0 && (
-        <ScrollArea className={styles.sessionList} data-openbitfun-part="sessionList" edgeFade="vertical" overscrollBehaviorY="auto">
+        <ScrollArea className={styles.sessionList} data-openbitfun-part="sessionList" edgeFade="vertical" overscrollBehaviorY="auto" data-starmate-part="sessionList" >
           {sessions.map((session) => (
-            <div className={styles.session} data-openbitfun-part="session" key={session.key}>
+            <div className={styles.session} data-openbitfun-part="session" key={session.key} data-starmate-part="session" >
               {session.name && <OverflowText className={styles.sessionName}>{session.name}</OverflowText>}
               <span className={styles.sessionId}>{session.id}</span>
               {session.agentType && <span className={styles.sessionAgent}>{session.agentType}</span>}
@@ -109,28 +109,28 @@ function SessionToolCardBase({
       )}
 
       {message && (
-        <ToolCardSection label={messageLabel} data-openbitfun-part="messageSection">
-          <ToolCardText variant="prose" data-openbitfun-part="message">{message}</ToolCardText>
+        <ToolCardSection label={messageLabel} data-openbitfun-part="messageSection" data-starmate-part="messageSection" >
+          <ToolCardText variant="prose" data-openbitfun-part="message" data-starmate-part="message" >{message}</ToolCardText>
         </ToolCardSection>
       )}
 
-      {emptyState && <div className={styles.empty} data-openbitfun-part="empty">{emptyState}</div>}
-      {error && <div className={styles.error} data-openbitfun-part="error">{error}</div>}
+      {emptyState && <div className={styles.empty} data-openbitfun-part="empty" data-starmate-part="empty" >{emptyState}</div>}
+      {error && <div className={styles.error} data-openbitfun-part="error" data-starmate-part="error" >{error}</div>}
     </div>
   ) : undefined;
 
   if (interaction) {
-    const relationDetails = <div className={styles.details} data-openbitfun-part="details">
-      {message && <ToolCardText variant="prose" data-openbitfun-part="message">{message}</ToolCardText>}
+    const relationDetails = <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
+      {message && <ToolCardText variant="prose" data-openbitfun-part="message" data-starmate-part="message" >{message}</ToolCardText>}
       {fields.length > 0 && <ToolCardFields fields={fields} />}
-      {error && <ToolCardText variant="prose" data-openbitfun-part="error">{error}</ToolCardText>}
+      {error && <ToolCardText variant="prose" data-openbitfun-part="error" data-starmate-part="error" >{error}</ToolCardText>}
       {!message && !error && fields.length === 0 && <ToolCardText variant="prose">{summary}</ToolCardText>}
     </div>;
     return <ToolRelationRow {...props} data-openbitfun-tool-card={toolCard}
       interaction={{ ...interaction, target: openAction ? { ...interaction.target,
         onOpen: openAction.onPress, openLabel: openAction.label } : interaction.target }}
       status={status} result={statusLabel ?? resultSummary ?? summary}
-      details={relationDetails} detailsTitle={message ? messageLabel ?? action : action ?? summary} resultLabel={resultLabel} />;
+      details={relationDetails} detailsTitle={message ? messageLabel ?? action : action ?? summary} resultLabel={resultLabel}  data-starmate-tool-card={toolCard} />;
   }
 
   return (
@@ -154,7 +154,7 @@ function SessionToolCardBase({
       isExpanded={Boolean(isExpanded && hasDetails)}
       onClick={hasDetails && onToggle ? onToggle : undefined}
       status={status}
-    />
+     data-starmate-tool-card={toolCard} />
   );
 }
 

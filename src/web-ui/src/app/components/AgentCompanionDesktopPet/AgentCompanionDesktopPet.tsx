@@ -1058,7 +1058,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
       onContextMenu={onContextMenu}
       data-openbitfun-component="agent-companion-desktop-pet"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="agent-companion-desktop-pet" data-starmate-part="root" >
       {overlay && (
         <div
           className="openbitfun-agent-companion-window__backdrop"
@@ -1091,14 +1091,14 @@ export const AgentCompanionDesktopPet: React.FC = () => {
         <div
           ref={dockRef}
           className="openbitfun-agent-companion-window__dock"
-         data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="dock">
+         data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="dock" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="dock" >
           {visibleTasks.length > 0 && (
             <ScrollArea
               ref={bubblesRef}
               className={`openbitfun-agent-companion-window__bubbles${isSingleTask ? ' openbitfun-agent-companion-window__bubbles--single' : ''}`}
               aria-live="polite"
               onDoubleClick={event => event.stopPropagation()}
-             data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbles">
+             data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbles" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubbles" >
               {displayTasks.map(task => {
                 const isComposingTask = overlay?.kind === 'composer'
                   && overlay.sessionId === task.sessionId;
@@ -1121,11 +1121,11 @@ export const AgentCompanionDesktopPet: React.FC = () => {
                         aria-hidden="true"
                       />
                       {/* The bubble's own tooltip carries title and status together. */}
-                      <OverflowText className="openbitfun-agent-companion-window__bubble-title" title="" data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleTitle">
+                      <OverflowText className="openbitfun-agent-companion-window__bubble-title" title="" data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleTitle" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubbleTitle" >
                         {task.title}
                       </OverflowText>
                     </span>
-                    <span className="openbitfun-agent-companion-window__bubble-status" data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleStatus">
+                    <span className="openbitfun-agent-companion-window__bubble-status" data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleStatus" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubbleStatus" >
                       {statusLabel}
                     </span>
                     {isSingleTask && task.latestOutput && (() => {
@@ -1145,7 +1145,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
                             }
                           }}
                           className={`openbitfun-agent-companion-window__bubble-output${isTyping ? ' openbitfun-agent-companion-window__bubble-output--typing' : ''}`}
-                         data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleOutput" data-openbitfun-state={isTyping ? 'typing' : undefined}>
+                         data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubbleOutput" data-openbitfun-state={isTyping ? 'typing' : undefined} data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubbleOutput" data-starmate-state={isTyping ? 'typing' : undefined} >
                           {visibleOutput}
                         </span>
                       );
@@ -1163,7 +1163,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
                     {isComposingTask ? (
                       // The bubble itself becomes the composer: no extra panel,
                       // and the window keeps its size.
-                      <div className={bubbleClassName} data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubble">
+                      <div className={bubbleClassName} data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="bubble" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubble" >
                         {bubbleBody}
                         <div className="openbitfun-agent-companion-window__bubble-composer">
                           <input
@@ -1211,7 +1211,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
                         onClick={() => void openTaskSession(task)}
                         data-openbitfun-component="agent-companion-desktop-pet"
                         data-openbitfun-part="bubble"
-                      >
+                       data-starmate-component="agent-companion-desktop-pet" data-starmate-part="bubble" >
                         {bubbleBody}
                       </button>
                     )}
@@ -1241,7 +1241,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
             onPointerCancel={onPetPointerCancel}
             onLostPointerCapture={onPetPointerCancel}
             onContextMenu={onPetContextMenu}
-           data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="hitbox" data-openbitfun-state={hasAttentionTask ? 'attention' : undefined}>
+           data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="hitbox" data-openbitfun-state={hasAttentionTask ? 'attention' : undefined} data-starmate-component="agent-companion-desktop-pet" data-starmate-part="hitbox" data-starmate-state={hasAttentionTask ? 'attention' : undefined} >
             <AgentCompanionPet
               mood={displayMood}
               dragDirection={dragDirection}
@@ -1255,7 +1255,7 @@ export const AgentCompanionDesktopPet: React.FC = () => {
               petdexMaxSize={PET_MAX_DISPLAY_SIZE}
               onPetFrameSizeChange={handlePetFrameSizeChange}
               className="openbitfun-agent-companion-window__pet"
-             data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="pet"/>
+             data-openbitfun-component="agent-companion-desktop-pet" data-openbitfun-part="pet" data-starmate-component="agent-companion-desktop-pet" data-starmate-part="pet" />
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ export function ShimmerText({ active = true, children, className, ...props }: Sh
       data-openbitfun-component="shimmer-text"
       data-openbitfun-part="root"
       data-active={active ? "true" : "false"}
-    >
+     data-starmate-component="shimmer-text" data-starmate-part="root" >
       {children}
     </span>
   );

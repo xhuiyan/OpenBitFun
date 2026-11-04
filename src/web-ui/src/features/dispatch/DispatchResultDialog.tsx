@@ -84,11 +84,11 @@ export const DispatchResultDialog: React.FC<DispatchResultDialogProps> = ({
         className="dispatch-result-dialog"
         data-openbitfun-component="dispatch-result-dialog"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="dispatch-result-dialog" data-starmate-part="root" >
         <DialogHeader
           data-openbitfun-component="dispatch-result-dialog"
           data-openbitfun-part="header"
-        >
+         data-starmate-component="dispatch-result-dialog" data-starmate-part="header" >
           <DialogHeading>
             <DialogTitle id={DIALOG_TITLE_ID}>{t('dispatch.syncTitle')}</DialogTitle>
             <DialogDescription>
@@ -104,7 +104,7 @@ export const DispatchResultDialog: React.FC<DispatchResultDialogProps> = ({
           className="dispatch-result-dialog__body"
           data-openbitfun-component="dispatch-result-dialog"
           data-openbitfun-part="body"
-        >
+         data-starmate-component="dispatch-result-dialog" data-starmate-part="body" >
           {error ? (
             <Alert tone="error" message={error} closable onClose={() => setError(null)} />
           ) : null}
@@ -197,7 +197,7 @@ export const DispatchResultDialog: React.FC<DispatchResultDialogProps> = ({
           className="dispatch-result-dialog__actions"
           data-openbitfun-component="dispatch-result-dialog"
           data-openbitfun-part="actions"
-        >
+         data-starmate-component="dispatch-result-dialog" data-starmate-part="actions" >
           <DialogFooter>
           <Button variant="fill" size="sm" onClick={onClose}>
             {t('dispatch.syncClose')}

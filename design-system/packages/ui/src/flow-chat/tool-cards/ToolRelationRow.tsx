@@ -34,7 +34,7 @@ export function ToolRelationRow({ interaction, result, status, details, detailsT
   const participant = (value: ToolCardParticipant, part: 'source' | 'target', key: string) => {
     const interactive = Boolean(value.onOpen);
     const contents = <>
-      <span className={styles.identity} aria-hidden="true" data-openbitfun-icon-slot="true">
+      <span className={styles.identity} aria-hidden="true" data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >
         {value.avatar ?? (value.kind === 'agent' ? <SubagentHatch phase="stopped" size={16} active={false} />
           : <Icon name={value.kind === 'process' ? 'square-terminal' : 'session'} size="sm" />)}
       </span>
@@ -43,26 +43,26 @@ export function ToolRelationRow({ interaction, result, status, details, detailsT
     return interactive || part === 'target' ? <button key={key} type="button" className={styles.participant} disabled={!interactive}
       data-openbitfun-part={part} data-overflow-trigger title={interactive ? value.openLabel : undefined}
       aria-label={interactive && value.openLabel ? `${value.label} · ${value.openLabel}` : value.label}
-      onClick={event => { event.stopPropagation(); value.onOpen?.(event); }}>
+      onClick={event => { event.stopPropagation(); value.onOpen?.(event); }} data-starmate-part={part} >
       {contents}
-    </button> : <span key={key} className={styles.participant} data-openbitfun-part={part}>{contents}</span>;
+    </button> : <span key={key} className={styles.participant} data-openbitfun-part={part} data-starmate-part={part} >{contents}</span>;
   };
 
   return <div {...props} className={classNames(styles.root, className)} data-openbitfun-component="tool-relation-row"
-    data-openbitfun-part="root" data-openbitfun-status={status} data-operation={interaction.operation}>
+    data-openbitfun-part="root" data-openbitfun-status={status} data-operation={interaction.operation} data-starmate-component="tool-relation-row" data-starmate-part="root" data-starmate-status={status} >
     {interaction.source && participant(interaction.source, 'source', 'source')}
-    <span className={styles.direction} aria-hidden="true" data-openbitfun-part="direction" data-openbitfun-icon-slot="true">
+    <span className={styles.direction} aria-hidden="true" data-openbitfun-part="direction" data-openbitfun-icon-slot="true" data-starmate-part="direction" data-starmate-icon-slot="true" >
       <Icon name={interaction.operation === 'receive' ? 'arrow-left' : 'arrow-right'} size="sm" />
     </span>
-    <span className={styles.targets} data-openbitfun-part="targets">
+    <span className={styles.targets} data-openbitfun-part="targets" data-starmate-part="targets" >
       {targets.map((target, index) => participant(target, 'target', participantKey(target, index)))}
     </span>
-    <span className={styles.outcome} data-openbitfun-part="outcome">
+    <span className={styles.outcome} data-openbitfun-part="outcome" data-starmate-part="outcome" >
       <span className={styles.separator} aria-hidden="true">:</span>
       {details ? <button type="button" className={styles.result} data-openbitfun-part="result"
         aria-haspopup="dialog" title={resultLabel} aria-label={resultLabel && typeof result === 'string' ? `${result} · ${resultLabel}` : resultLabel}
-        onClick={event => { event.stopPropagation(); inspect(); }}>{resultContent}</button>
-        : <span className={styles.result} data-openbitfun-part="result">{resultContent}</span>}
+        onClick={event => { event.stopPropagation(); inspect(); }} data-starmate-part="result" >{resultContent}</button>
+        : <span className={styles.result} data-openbitfun-part="result" data-starmate-part="result" >{resultContent}</span>}
     </span>
     {hasOpenedDetails && <Dialog open={open} onOpenChange={setOpen} size={detailsSize}
       onClick={event => event.stopPropagation()} onKeyDown={event => event.stopPropagation()}>
@@ -75,7 +75,7 @@ export function ToolRelationRow({ interaction, result, status, details, detailsT
         </DialogHeading>
         <DialogClose />
       </DialogHeader>
-      <DialogBody><div className={styles.details} data-openbitfun-component="tool-relation-row" data-openbitfun-part="details">{details}</div></DialogBody>
+      <DialogBody><div className={styles.details} data-openbitfun-component="tool-relation-row" data-openbitfun-part="details" data-starmate-component="tool-relation-row" data-starmate-part="details" >{details}</div></DialogBody>
     </Dialog>}
   </div>;
 }

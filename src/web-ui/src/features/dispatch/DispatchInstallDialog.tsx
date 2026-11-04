@@ -408,11 +408,11 @@ export const DispatchInstallDialog: React.FC<DispatchInstallDialogProps> = ({
         className="dispatch-install-dialog"
         data-openbitfun-component="dispatch-install-dialog"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="dispatch-install-dialog" data-starmate-part="root" >
         <DialogHeader
           data-openbitfun-component="dispatch-install-dialog"
           data-openbitfun-part="header"
-        >
+         data-starmate-component="dispatch-install-dialog" data-starmate-part="header" >
           <DialogHeading>
             <DialogTitle id={DIALOG_TITLE_ID}>
               {t('dispatch.configureTitle', { target: target?.kind === 'device' && target.deviceId ? resolveDeviceName(target.deviceId, target.displayName) : target?.displayName ?? '' })}
@@ -426,7 +426,7 @@ export const DispatchInstallDialog: React.FC<DispatchInstallDialogProps> = ({
           className="dispatch-install-dialog__body"
           data-openbitfun-component="dispatch-install-dialog"
           data-openbitfun-part="body"
-        >
+         data-starmate-component="dispatch-install-dialog" data-starmate-part="body" >
           {error ? (
             <Alert tone="error" message={error} closable onClose={() => setError(null)} />
           ) : null}
@@ -632,7 +632,7 @@ export const DispatchInstallDialog: React.FC<DispatchInstallDialogProps> = ({
           className="dispatch-install-dialog__actions"
           data-openbitfun-component="dispatch-install-dialog"
           data-openbitfun-part="actions"
-        >
+         data-starmate-component="dispatch-install-dialog" data-starmate-part="actions" >
           <DialogFooter>
           <Button
             variant="fill"

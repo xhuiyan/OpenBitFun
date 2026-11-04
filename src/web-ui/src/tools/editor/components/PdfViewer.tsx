@@ -285,7 +285,7 @@ const PdfPageCanvas: React.FC<PdfPageCanvasProps> = ({
       data-openbitfun-state={rendering ? 'rendering' : undefined}
       data-page-number={pageNumber}
       style={{ width: displaySize.width, height: displaySize.height }}
-    >
+     data-starmate-component="pdf-viewer" data-starmate-part="page" data-starmate-state={rendering ? 'rendering' : undefined} >
       {shouldRender && (
         <>
           <canvas
@@ -299,7 +299,7 @@ const PdfPageCanvas: React.FC<PdfPageCanvasProps> = ({
             data-openbitfun-component="pdf-viewer"
             data-openbitfun-part="textLayer"
             onCopy={copyAllowed ? undefined : event => event.preventDefault()}
-          />
+           data-starmate-component="pdf-viewer" data-starmate-part="textLayer" />
         </>
       )}
     </div>
@@ -688,11 +688,11 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({ isActiveTab = true,
       className={`openbitfun-pdf-viewer ${className}`}
       data-openbitfun-component="pdf-viewer"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="pdf-viewer" data-starmate-part="root" >
       <Toolbar
         className="openbitfun-pdf-viewer__toolbar"
         leading={
-          <div className="openbitfun-pdf-viewer__info" data-openbitfun-component="pdf-viewer" data-openbitfun-part="info">
+          <div className="openbitfun-pdf-viewer__info" data-openbitfun-component="pdf-viewer" data-openbitfun-part="info" data-starmate-component="pdf-viewer" data-starmate-part="info" >
             {pageCount > 0 && (
               <span className="openbitfun-pdf-viewer__page-label">
                 <Input
@@ -806,16 +806,16 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({ isActiveTab = true,
         className="openbitfun-pdf-viewer__container"
         data-openbitfun-component="pdf-viewer"
         data-openbitfun-part="container"
-      >
+       data-starmate-component="pdf-viewer" data-starmate-part="container" >
         {loading && (
-          <div className="openbitfun-pdf-viewer__status" data-openbitfun-component="pdf-viewer" data-openbitfun-part="loading">
+          <div className="openbitfun-pdf-viewer__status" data-openbitfun-component="pdf-viewer" data-openbitfun-part="loading" data-starmate-component="pdf-viewer" data-starmate-part="loading" >
             <div className="openbitfun-pdf-viewer__spinner" />
             <p>{t('editor.pdfViewer.loading')}</p>
           </div>
         )}
 
         {error && (
-          <div className="openbitfun-pdf-viewer__status openbitfun-pdf-viewer__status--error" data-openbitfun-component="pdf-viewer" data-openbitfun-part="error">
+          <div className="openbitfun-pdf-viewer__status openbitfun-pdf-viewer__status--error" data-openbitfun-component="pdf-viewer" data-openbitfun-part="error" data-starmate-component="pdf-viewer" data-starmate-part="error" >
             <p>{error}</p>
             <p className="openbitfun-pdf-viewer__error-path">{filePath}</p>
             <Button variant="outline" size="sm" onClick={() => void loadDocument()}>

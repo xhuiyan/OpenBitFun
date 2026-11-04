@@ -294,9 +294,9 @@ const GroupManagerModal: React.FC<GroupManagerModalProps> = ({
         <DialogClose />
       </DialogHeader>
       <DialogBody>
-        <div className="tool-group-manager" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="manager">
+        <div className="tool-group-manager" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="manager" data-starmate-product-component="tool-group-picker" data-starmate-product-part="manager" >
           {isEditing ? (
-            <div className="tool-group-manager__editor" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerEditor">
+            <div className="tool-group-manager__editor" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerEditor" data-starmate-product-component="tool-group-picker" data-starmate-product-part="managerEditor" >
               <Field
                 label={t('agentsOverview.toolGroups.groupName')}
                 error={nameError ? t('agentsOverview.toolGroups.validation.nameRequired') : undefined}
@@ -314,7 +314,7 @@ const GroupManagerModal: React.FC<GroupManagerModalProps> = ({
                 />
               </Field>
               <FormSection headingAs="h4" title={t('agentsOverview.toolGroups.groupTools')}>
-                <div className="tool-group-manager__token-grid" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="tokenGrid">
+                <div className="tool-group-manager__token-grid" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="tokenGrid" data-starmate-product-component="tool-group-picker" data-starmate-product-part="tokenGrid" >
                   {selectableTools.map((tool) => {
                     const selected = toolNames.has(tool.name);
                     const tooltipFields = toolTooltipFields(tool, t);
@@ -336,7 +336,7 @@ const GroupManagerModal: React.FC<GroupManagerModalProps> = ({
                           onCheckedChange={(checked) => setToolSelected(tool.name, checked)}
                           disabled={saving}
                           inputAriaLabel={capabilityTooltipAriaLabel(tool.name, tool.description, tooltipFields)}
-                        />
+                         data-starmate-product-component="tool-group-picker" data-starmate-product-part="token" data-starmate-state={selected ? 'selected' : undefined} />
                       </AgentCapabilityTooltip>
                     );
                   })}
@@ -361,11 +361,11 @@ const GroupManagerModal: React.FC<GroupManagerModalProps> = ({
               {groups.length === 0 ? (
                 <p className="tool-group-manager__empty">{t('agentsOverview.toolGroups.noUserGroups')}</p>
               ) : (
-                <FieldGroup className="tool-group-manager__list" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerList">
+                <FieldGroup className="tool-group-manager__list" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerList" data-starmate-product-component="tool-group-picker" data-starmate-product-part="managerList" >
                   {groups.map((group, index) => {
                     const unavailable = unavailableUserToolNames(group, tools);
                     return (
-                      <FieldRow key={group.id} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerGroup">
+                      <FieldRow key={group.id} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="managerGroup" data-starmate-product-component="tool-group-picker" data-starmate-product-part="managerGroup" >
                         <div className="tool-group-manager__group-row">
                           <div className="tool-group-manager__group-copy">
                             <OverflowText className="tool-group-manager__group-name">{group.name}</OverflowText>
@@ -376,7 +376,7 @@ const GroupManagerModal: React.FC<GroupManagerModalProps> = ({
                                 : ''}
                             </span>
                           </div>
-                          <div className="tool-group-manager__group-actions" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupActions">
+                          <div className="tool-group-manager__group-actions" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupActions" data-starmate-product-component="tool-group-picker" data-starmate-product-part="groupActions" >
                             <Tooltip content={t('agentsOverview.toolGroups.moveUp')}>
                               <IconButton
                                 size="sm"
@@ -475,7 +475,7 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
   }, [grouped, groups, selectedToolNames, t]);
 
   return (
-    <div data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="root" className={`tool-group-picker${grouped ? '' : ' tool-group-picker--flat'}`} data-testid={testId}>
+    <div data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="root" className={`tool-group-picker${grouped ? '' : ' tool-group-picker--flat'}`} data-testid={testId} data-starmate-product-component="tool-group-picker" data-starmate-product-part="root" >
       {grouped && <Toolbar
         data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="head"
         bordered={false}
@@ -498,21 +498,21 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
             {t('agentsOverview.toolGroups.manageGroups')}
           </Button>
         )}
-      />}
-      <div className="tool-group-picker__sections" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="sections">
+       data-starmate-product-component="tool-group-picker" data-starmate-product-part="head" />}
+      <div className="tool-group-picker__sections" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="sections" data-starmate-product-component="tool-group-picker" data-starmate-product-part="sections" >
         {sections.map(([sectionLabel, sectionGroups]) => (
           <FormSection
             key={sectionLabel}
             headingAs="h4"
             title={grouped ? sectionLabel : undefined}
             data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="section"
-          >
+           data-starmate-product-component="tool-group-picker" data-starmate-product-part="section" >
             {sectionGroups.map((group) => {
               const selectedInGroup = selectedGroupToolCount(group, selectedToolNames);
               const allSelected = isGroupEnabled(group, selectedToolNames);
               return (
-                <FieldGroup key={group.id} appearance={grouped ? 'subtle' : 'plain'} dividers={grouped} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="group">
-                  {grouped && <FieldRow data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupHeader">
+                <FieldGroup key={group.id} appearance={grouped ? 'subtle' : 'plain'} dividers={grouped} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="group" data-starmate-product-component="tool-group-picker" data-starmate-product-part="group" >
+                  {grouped && <FieldRow data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupHeader" data-starmate-product-component="tool-group-picker" data-starmate-product-part="groupHeader" >
                     <div className="tool-group-picker__group-head">
                       <div className="tool-group-picker__group-title-wrap">
                         <OverflowText className="tool-group-picker__group-name">{group.label}</OverflowText>
@@ -520,7 +520,7 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
                           {formatNumber(selectedInGroup)}/{formatNumber(group.tools.length)}
                         </span>
                       </div>
-                      <div className="tool-group-picker__group-actions" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupActions">
+                      <div className="tool-group-picker__group-actions" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="groupActions" data-starmate-product-component="tool-group-picker" data-starmate-product-part="groupActions" >
                         {selectedInGroup > 0 && !allSelected ? (
                           <Button
                             variant="text"
@@ -550,7 +550,7 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
                     </div>
                   </FieldRow>}
                   <FieldRow align="start" padding={grouped ? 'md' : 'none'}>
-                    <div className="tool-group-picker__token-grid" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="tokenGrid">
+                    <div className="tool-group-picker__token-grid" data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="tokenGrid" data-starmate-product-component="tool-group-picker" data-starmate-product-part="tokenGrid" >
                       {group.tools.map((tool) => {
                         const selected = selectedToolNames.includes(tool.name);
                         const tooltipFields = toolTooltipFields(tool, t);
@@ -575,7 +575,7 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
                                 )}
                                 disabled={disabled}
                                 inputAriaLabel={capabilityTooltipAriaLabel(tool.name, tool.description, tooltipFields)}
-                              />
+                               data-starmate-product-component="tool-group-picker" data-starmate-product-part="token" data-starmate-state={selected ? 'selected' : undefined} />
                             ) : (
                               <Button
                                 className="tool-group-picker__token tool-group-picker__pill"
@@ -591,7 +591,7 @@ export const ToolGroupPicker: React.FC<ToolGroupPickerProps> = ({
                                   setToolGroupSelection(selectedToolNames, [tool.name], !selected),
                                 )}
                                 disabled={disabled}
-                              >
+                               data-starmate-product-component="tool-group-picker" data-starmate-product-part="token" data-starmate-state={selected ? 'selected' : undefined} >
                                 {tool.name.replace(/_/g, ' ')}
                               </Button>
                             )}
@@ -633,13 +633,13 @@ export const ToolGroupSummary: React.FC<ToolGroupSummaryProps> = ({
   );
 
   if (groups.length === 0) {
-    return <span data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="empty" className="tool-group-summary__empty">{t('agentsOverview.toolGroups.noEnabledTools')}</span>;
+    return <span data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="empty" className="tool-group-summary__empty" data-starmate-product-component="tool-group-picker" data-starmate-product-part="empty" >{t('agentsOverview.toolGroups.noEnabledTools')}</span>;
   }
 
   return (
-    <div data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="summary" className="tool-group-summary">
+    <div data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="summary" className="tool-group-summary" data-starmate-product-component="tool-group-picker" data-starmate-product-part="summary" >
       {groups.map((group) => (
-        <FormSection key={group.id} headingAs="h4" title={grouped ? group.label : undefined} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="summaryGroup">
+        <FormSection key={group.id} headingAs="h4" title={grouped ? group.label : undefined} data-openbitfun-product-component="tool-group-picker" data-openbitfun-product-part="summaryGroup" data-starmate-product-component="tool-group-picker" data-starmate-product-part="summaryGroup" >
           <div className="tool-group-summary__tools">
             {group.tools.map((tool) => {
               const tooltipFields = toolTooltipFields(tool, t);

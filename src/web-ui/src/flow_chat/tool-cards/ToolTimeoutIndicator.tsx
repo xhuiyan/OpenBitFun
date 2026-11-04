@@ -144,7 +144,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
     <ToolDuration formatDuration={formatDuration} isRunning showIcon={showIcon} elapsedMs={elapsedMs} remainingMs={remainingMs} timeoutMs={timeoutMs}
       timeoutDisabled={isTimeoutDisabled} open={isPopoverOpen}>
       {canControlTimeout && (
-        <div data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="controls" className="timeout-control-wrapper" ref={controlRef}>
+        <div data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="controls" className="timeout-control-wrapper" ref={controlRef} data-starmate-component="tool-timeout-indicator" data-starmate-part="controls" >
           <button
             ref={triggerRef}
             type="button"
@@ -161,7 +161,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
                 ? t('toolCards.timeout.enableTooltip')
                 : t('toolCards.timeout.disableTooltip')
             }
-          >
+           data-starmate-component="tool-timeout-indicator" data-starmate-part="toggle" >
             <Icon glyph={InfinityIcon} size="xs" />
             <span className="timeout-ignore-btn__label">
               {isTimeoutDisabled
@@ -184,7 +184,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
               }}
               aria-label={t('toolCards.timeout.disableTooltip')}
               autoFocusFirstItem
-            >
+             data-starmate-component="tool-timeout-indicator" data-starmate-part="popover" data-starmate-placement={popoverLayout?.placement ?? 'bottom'} >
               {remainingAtDisable > 0 ? (
                 <MenuItem
                   data-openbitfun-component="tool-timeout-indicator"
@@ -193,7 +193,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
                     e.stopPropagation();
                     extendTimeout(remainingAtDisable);
                   }}
-                >
+                 data-starmate-component="tool-timeout-indicator" data-starmate-part="option" >
                   {t('toolCards.timeout.restoreShort', { seconds: remainingAtDisable })}
                 </MenuItem>
               ) : null}
@@ -204,7 +204,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
                   e.stopPropagation();
                   extendTimeout(60);
                 }}
-              >
+               data-starmate-component="tool-timeout-indicator" data-starmate-part="option" >
                 +1m
               </MenuItem>
               <MenuItem
@@ -214,7 +214,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
                   e.stopPropagation();
                   extendTimeout(300);
                 }}
-              >
+               data-starmate-component="tool-timeout-indicator" data-starmate-part="option" >
                 +5m
               </MenuItem>
               <MenuItem
@@ -224,7 +224,7 @@ export const ToolTimeoutIndicator: React.FC<ToolTimeoutIndicatorProps> = ({
                   e.stopPropagation();
                   extendTimeout(600);
                 }}
-              >
+               data-starmate-component="tool-timeout-indicator" data-starmate-part="option" >
                 +10m
               </MenuItem>
             </Menu>,

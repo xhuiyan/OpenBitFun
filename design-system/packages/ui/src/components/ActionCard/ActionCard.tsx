@@ -88,7 +88,7 @@ export const ActionCard = forwardRef<HTMLButtonElement, ActionCardProps>(
         data-has-actions={actions.length > 0 ? "true" : "false"}
         data-selected={selected ? "true" : "false"}
         data-size={size}
-      >
+       data-starmate-component="action-card" >
         <button data-overflow-trigger
           {...props}
           className={classNames(styles.trigger, triggerClassName)}
@@ -96,27 +96,27 @@ export const ActionCard = forwardRef<HTMLButtonElement, ActionCardProps>(
           disabled={disabled}
           ref={ref}
           type={type}
-        >
+         data-starmate-part="trigger" >
           {leading !== undefined && leading !== null && (
-            <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+            <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
               {leading}
             </span>
           )}
-          {body !== undefined ? body : <span className={styles.content} data-openbitfun-part="content">
-            <OverflowText className={styles.title} data-openbitfun-part="title">{children}</OverflowText>
+          {body !== undefined ? body : <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
+            <OverflowText className={styles.title} data-openbitfun-part="title" data-starmate-part="title" >{children}</OverflowText>
             {description !== undefined && description !== null && (
-              <OverflowText className={styles.description} data-openbitfun-part="description">
+              <OverflowText className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
                 {description}
               </OverflowText>
             )}
           </span>}
         </button>
         {actions.length > 0 && (actionPlacement === "floating" ? (
-          <FloatingAction group size="standard" className={styles.floatingActions} data-openbitfun-part="actions">
+          <FloatingAction group size="standard" className={styles.floatingActions} data-openbitfun-part="actions" data-starmate-part="actions" >
             {actionButtons}
           </FloatingAction>
         ) : (
-          <span className={styles.actions} data-openbitfun-part="actions">
+          <span className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >
             {actionButtons}
           </span>
         ))}

@@ -71,7 +71,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
       className={['assistant-card', (isDeleting || isSettingPrimary) && 'assistant-card--busy'].filter(Boolean).join(' ')}
       role="listitem"
       style={style}
-    >
+     data-starmate-component="assistant-card" data-starmate-part="root" data-starmate-primary={isPrimary ? 'true' : 'false'} data-starmate-state={isBusy ? 'busy' : undefined} >
       <Card
         className="assistant-card__surface"
         appearance="subtle"
@@ -89,7 +89,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
           onClick={onClick}
           aria-label={`${t('nursery.card.configure')}: ${name}`}
           disabled={isDeleting || isSettingPrimary || isOpening || isClosing}
-        />
+         data-starmate-component="assistant-card" data-starmate-part="main" />
 
         <CardHeader
           align="center"
@@ -98,7 +98,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
           data-openbitfun-component="assistant-card"
           data-openbitfun-part="header"
           leading={(
-            <span className="assistant-card__avatar" data-openbitfun-component="assistant-card" data-openbitfun-part="avatar">
+            <span className="assistant-card__avatar" data-openbitfun-component="assistant-card" data-openbitfun-part="avatar" data-starmate-component="assistant-card" data-starmate-part="avatar" >
               <AssistantAvatar
                 presetId={avatar}
                 emoji={emoji}
@@ -109,38 +109,38 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
             </span>
           )}
           title={(
-            <span className="assistant-card__title-row" data-openbitfun-component="assistant-card" data-openbitfun-part="title">
-              <OverflowText className="assistant-card__name" data-openbitfun-component="assistant-card" data-openbitfun-part="name">{name}</OverflowText>
+            <span className="assistant-card__title-row" data-openbitfun-component="assistant-card" data-openbitfun-part="title" data-starmate-component="assistant-card" data-starmate-part="title" >
+              <OverflowText className="assistant-card__name" data-openbitfun-component="assistant-card" data-openbitfun-part="name" data-starmate-component="assistant-card" data-starmate-part="name" >{name}</OverflowText>
               {isPrimary && (
-                <span className="assistant-card__primary-badge" data-openbitfun-component="assistant-card" data-openbitfun-part="primaryBadge">
+                <span className="assistant-card__primary-badge" data-openbitfun-component="assistant-card" data-openbitfun-part="primaryBadge" data-starmate-component="assistant-card" data-starmate-part="primaryBadge" >
                   <StatusPill tone="neutral">{t('nursery.card.primaryBadge')}</StatusPill>
                 </span>
               )}
             </span>
           )}
           description={(
-            <span className="assistant-card__metadata" data-openbitfun-component="assistant-card" data-openbitfun-part="metadata">
+            <span className="assistant-card__metadata" data-openbitfun-component="assistant-card" data-openbitfun-part="metadata" data-starmate-component="assistant-card" data-starmate-part="metadata" >
               {vibe ? (
-                <OverflowText className="assistant-card__vibe" data-openbitfun-component="assistant-card" data-openbitfun-part="vibe">{vibe}</OverflowText>
+                <OverflowText className="assistant-card__vibe" data-openbitfun-component="assistant-card" data-openbitfun-part="vibe" data-starmate-component="assistant-card" data-starmate-part="vibe" >{vibe}</OverflowText>
               ) : (
-                <OverflowText lines={1} className="assistant-card__vibe assistant-card__vibe--empty" data-openbitfun-component="assistant-card" data-openbitfun-part="vibe">
+                <OverflowText lines={1} className="assistant-card__vibe assistant-card__vibe--empty" data-openbitfun-component="assistant-card" data-openbitfun-part="vibe" data-starmate-component="assistant-card" data-starmate-part="vibe" >
                   {t('nursery.card.noVibe')}
                 </OverflowText>
               )}
               {creature ? (
                 <>
                   <span className="assistant-card__metadata-separator" aria-hidden="true">·</span>
-                  <OverflowText className="assistant-card__creature" data-openbitfun-component="assistant-card" data-openbitfun-part="creature">
+                  <OverflowText className="assistant-card__creature" data-openbitfun-component="assistant-card" data-openbitfun-part="creature" data-starmate-component="assistant-card" data-starmate-part="creature" >
                     {creature}
                   </OverflowText>
                 </>
               ) : null}
             </span>
           )}
-        />
+         data-starmate-component="assistant-card" data-starmate-part="header" />
 
         {hasActions ? (
-          <CardFooter align="end" className="assistant-card__footer" data-openbitfun-component="assistant-card" data-openbitfun-part="footer">
+          <CardFooter align="end" className="assistant-card__footer" data-openbitfun-component="assistant-card" data-openbitfun-part="footer" data-starmate-component="assistant-card" data-starmate-part="footer" >
             <span className="assistant-card__workspace-actions">
               {visibilityAction ? (
                 <Tooltip content={isOpened && closeDisabledReason ? closeDisabledReason : visibilityLabel}>
@@ -154,7 +154,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
                     disabled={isBusy || (isOpened && Boolean(closeDisabledReason))}
                     onClick={visibilityAction}
                     icon={isOpened ? <Icon name="eye" size="sm" /> : <Icon glyph={EyeOff} size="sm" />}
-                  />
+                   data-starmate-component="assistant-card" data-starmate-part="visibility" />
                 </Tooltip>
               ) : null}
 
@@ -170,7 +170,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
                       loading={isSettingPrimary}
                       disabled={isBusy}
                       icon={<Icon name="pin" size="sm" aria-hidden="true" />}
-                    />
+                     data-starmate-component="assistant-card" data-starmate-part="setPrimary" />
                   </Tooltip>
                 ) : null}
 
@@ -186,7 +186,7 @@ const AssistantCard: React.FC<AssistantCardProps> = ({
                       loading={isDeleting}
                       disabled={isBusy}
                       icon={<Icon name="delete" size="sm" aria-hidden="true" />}
-                    />
+                     data-starmate-component="assistant-card" data-starmate-part="delete" />
                   </Tooltip>
                 ) : null}
               </span>

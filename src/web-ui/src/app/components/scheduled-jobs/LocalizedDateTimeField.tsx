@@ -128,7 +128,7 @@ const LocalizedDateTimeField: React.FC<LocalizedDateTimeFieldProps> = ({
       data-openbitfun-component="localized-datetime-field"
       data-openbitfun-part="root"
       data-openbitfun-state={error ? 'error' : undefined}
-    >
+     data-starmate-component="localized-datetime-field" data-starmate-part="root" data-starmate-state={error ? 'error' : undefined} >
       <Input
         id={id}
         value={text}

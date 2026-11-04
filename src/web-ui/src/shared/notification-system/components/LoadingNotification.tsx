@@ -41,7 +41,7 @@ export const LoadingNotification: React.FC<LoadingNotificationProps> = ({ notifi
       data-openbitfun-component="notification"
       data-openbitfun-part="loadingItem"
       data-openbitfun-state={status || undefined}
-    >
+     data-starmate-component="notification" data-starmate-part="loadingItem" data-starmate-state={status || undefined} >
       
       <div className="loading-notification__icon">
         {getStatusIcon()}

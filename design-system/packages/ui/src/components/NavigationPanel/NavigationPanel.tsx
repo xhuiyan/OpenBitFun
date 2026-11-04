@@ -59,7 +59,7 @@ export const NavigationPanel = forwardRef<HTMLElement, NavigationPanelProps>(
         className={classNames(styles.root, className)}
         data-openbitfun-component="navigation-panel"
         ref={ref}
-      >
+       data-starmate-component="navigation-panel" >
         {children}
       </nav>
     );
@@ -74,7 +74,7 @@ export const NavigationPanelHeader = forwardRef<HTMLDivElement, NavigationPanelH
         className={classNames(styles.header, className)}
         data-openbitfun-part="header"
         ref={ref}
-      />
+       data-starmate-part="header" />
     );
   },
 );
@@ -89,7 +89,7 @@ export const NavigationPanelBody = forwardRef<HTMLDivElement, NavigationPanelBod
         orientation="vertical"
         ref={ref}
         scrollbarVisibility={scrollbarVisibility}
-      />
+       data-starmate-part="body" />
     );
   },
 );
@@ -102,7 +102,7 @@ export const NavigationPanelContent = forwardRef<HTMLDivElement, NavigationPanel
         className={classNames(styles.content, className)}
         data-openbitfun-part="content"
         ref={ref}
-      />
+       data-starmate-part="content" />
     );
   },
 );
@@ -115,7 +115,7 @@ export const NavigationPanelFooter = forwardRef<HTMLDivElement, NavigationPanelF
         className={classNames(styles.footer, className)}
         data-openbitfun-part="footer"
         ref={ref}
-      />
+       data-starmate-part="footer" />
     );
   },
 );
@@ -160,14 +160,14 @@ export const NavigationPanelSection = forwardRef<HTMLElement, NavigationPanelSec
         className={classNames(styles.section, className)}
         data-openbitfun-part="section"
         ref={ref}
-      >
+       data-starmate-part="section" >
         {headingId && (
-          <div className={styles.heading} data-openbitfun-part="heading" id={headingId}>
-            <OverflowText className={styles.headingLabel} data-openbitfun-part="heading-label">
+          <div className={styles.heading} data-openbitfun-part="heading" id={headingId} data-starmate-part="heading" >
+            <OverflowText className={styles.headingLabel} data-openbitfun-part="heading-label" data-starmate-part="heading-label" >
               {title}
             </OverflowText>
             {actions.length > 0 && (
-              <span className={styles.headingActions} data-openbitfun-part="heading-actions">
+              <span className={styles.headingActions} data-openbitfun-part="heading-actions" data-starmate-part="heading-actions" >
                 {actions.map((action) => (
                   <IconButton
                     aria-label={action.label}
@@ -185,7 +185,7 @@ export const NavigationPanelSection = forwardRef<HTMLElement, NavigationPanelSec
             )}
           </div>
         )}
-        <div className={styles.items} data-openbitfun-part="section-items">
+        <div className={styles.items} data-openbitfun-part="section-items" data-starmate-part="section-items" >
           {children}
         </div>
       </section>
@@ -202,7 +202,7 @@ export const NavigationPanelSeparator = forwardRef<HTMLDivElement, NavigationPan
         data-openbitfun-part="separator"
         ref={ref}
         role="separator"
-      />
+       data-starmate-part="separator" />
     );
   },
 );

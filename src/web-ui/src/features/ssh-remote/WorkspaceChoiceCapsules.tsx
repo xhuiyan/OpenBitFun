@@ -21,7 +21,7 @@ export function WorkspaceChoiceCapsules({ choices, value, disabled, label, onVal
 }) {
   const { t } = useI18n('common');
   return <div className="workspace-choice-capsules" role="group" aria-label={label}
-    data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceOptions">
+    data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceOptions" data-starmate-component="ssh-remote" data-starmate-part="sourceOptions" >
     {choices.map(choice => <Capsule size="xs" actionPlacement="reserved" key={choice.id} data-workspace-choice={choice.id}
       action={onEdit ? <Tooltip content={t('actions.edit')}><IconButton size="xs" shape="circle" variant="quiet"
         disabled={disabled} icon={<Icon name="edit" size="xs" />} aria-label={`${t('actions.edit')} · ${choice.label}`}

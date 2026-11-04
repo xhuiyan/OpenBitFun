@@ -234,12 +234,12 @@ const ModelSelectorMenuLevel: React.FC<{
     data-openbitfun-component="model-selector"
     data-openbitfun-part="level"
     data-direction={direction}
-  >
+   data-starmate-component="model-selector" data-starmate-part="level" >
     <div
       className="openbitfun-model-selector__list"
       data-openbitfun-component="model-selector"
       data-openbitfun-part="list"
-    >
+     data-starmate-component="model-selector" data-starmate-part="list" >
       <MenuSection>{children}</MenuSection>
     </div>
   </div>
@@ -1133,7 +1133,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
         data-model-status={currentAvailability.status}
         data-openbitfun-component="model-selector"
         data-openbitfun-part="option"
-      >
+       data-starmate-component="model-selector" data-starmate-part="option" >
         {getAvailabilityLabel(currentAvailability.status, t)}
       </MenuItem>
       {canOpenSettings ? (
@@ -1143,7 +1143,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
           data-openbitfun-component="model-selector"
           data-openbitfun-part="option"
           onClick={handleOpenModelSettings}
-        >
+         data-starmate-component="model-selector" data-starmate-part="option" >
           {t('modelSelector.openModelSettings')}
         </MenuItem>
       ) : null}
@@ -2451,7 +2451,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
       ref={dropdownRef}
       className={`openbitfun-model-selector ${className}`}
       data-openbitfun-state={[modelInformationLoading ? 'loading' : displayedAvailability.status, dropdownOpen && 'open'].filter(Boolean).join(' ')}
-    >
+     data-starmate-component="model-selector" data-starmate-part="root" data-starmate-state={[modelInformationLoading ? 'loading' : displayedAvailability.status, dropdownOpen && 'open'].filter(Boolean).join(' ')} >
       {showModelTrigger && (
       <Tooltip content={disabledReason || tooltipContent} disabled={dropdownOpen}>
         <button data-overflow-trigger
@@ -2484,7 +2484,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
             || reasoningLoading
             || externalSelection?.disabled
           }
-         data-openbitfun-component="model-selector" data-openbitfun-part="trigger" data-openbitfun-state={dropdownOpen ? 'open' : undefined}>
+         data-openbitfun-component="model-selector" data-openbitfun-part="trigger" data-openbitfun-state={dropdownOpen ? 'open' : undefined} data-starmate-component="model-selector" data-starmate-part="trigger" data-starmate-state={dropdownOpen ? 'open' : undefined} >
           {modelInformationLoading && <Spinner size="xs" />}
           {currentModelMode && (
             <Icon
@@ -2504,7 +2504,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
               data-model-role={currentModelId}
             />
           )}
-          <OverflowText className="openbitfun-model-selector__name" data-openbitfun-component="model-selector" data-openbitfun-part="name">
+          <OverflowText className="openbitfun-model-selector__name" data-openbitfun-component="model-selector" data-openbitfun-part="name" data-starmate-component="model-selector" data-starmate-part="name" >
              {modelLabel}
           </OverflowText>
           {isAcpSelection && acpFastMode?.enabled && (
@@ -2516,7 +2516,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
               data-testid="chat-model-selector-trigger-reasoning"
               data-openbitfun-component="model-selector"
               data-openbitfun-part="reasoningSummary"
-            >
+             data-starmate-component="model-selector" data-starmate-part="reasoningSummary" >
               {t('reasoningSelector.title')}: {' '}
               {currentReasoningLabel}
             </span>
@@ -2568,7 +2568,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
             aria-label={activeProviderGroup?.providerName ?? (activePanel === 'modes'
                 ? t('modelSelector.modes.selection') : t('modelSelector.modelSettings'))}
             onKeyDown={isSelectionPanel ? handlePanelKeyDown : handleDropdownKeyDown}
-          >
+           data-starmate-component="model-selector" data-starmate-part="dropdown" >
             {!showModelLoadingState && !isSelectionPanel && !activeProviderGroup
               && (currentModelMode === 'smart' || currentModelMode === 'pool') && (
                 <ModelModeAnimation mode={currentModelMode} />
@@ -2580,7 +2580,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                 data-openbitfun-component="model-selector"
                 data-openbitfun-part="loading"
                 role="status"
-              >
+               data-starmate-component="model-selector" data-starmate-part="loading" >
                 <LoadingState size="sm">{t('modelSelector.status.loading')}</LoadingState>
               </div>
             ) : showModelConfiguration || (activePanel === 'pools' && poolsEmpty) ? (
@@ -2597,7 +2597,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                   data-openbitfun-menu-item=""
                   data-testid="chat-model-selector-open-settings"
                   onClick={handleOpenModelSettings}
-                >
+                 data-starmate-menu-item="" >
                   {showModelConfiguration ? t('modelSelector.configure') : poolSelectionLabel}
                 </Button>
               </MenuList>
@@ -2672,7 +2672,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                               shortcut={isSelected ? <Icon name="check-line" size="sm" aria-hidden className="openbitfun-model-selector__option-selected-check" /> : undefined}
                               disabled={disabled || loading || reasoningLoading || externalSelection?.disabled}
                               onClick={() => handleSelectModelFromMenu(model.id)}
-                            >
+                             data-starmate-component="model-selector" data-starmate-part="option" data-starmate-state={isSelected ? 'selected' : undefined} >
                               {model.modelName}<span className="openbitfun-model-selector__option-provider"> {model.providerName}</span>
                             </MenuItem>
                           </Tooltip>
@@ -2913,7 +2913,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                         aria-label={t(modelsFromSummary ? 'modelSelector.backToSettings' : 'modelSelector.backToProviders')}
                         leading={<Icon name="chevron-left" size="xs" aria-hidden />}
                         onClick={closeProviderLevel}
-                      >
+                       data-starmate-component="model-selector" data-starmate-part="back" >
                         {activeProviderGroup.providerName}
                       </MenuItem>
 
@@ -2935,7 +2935,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                               data-openbitfun-state={isSelected ? 'selected' : undefined}
                               metadata={isSelected ? <Icon name="check-line" size="sm" aria-hidden className="openbitfun-model-selector__option-selected-check" /> : null}
                               onClick={() => handleSelectModelFromMenu(model.id)}
-                            >
+                             data-starmate-component="model-selector" data-starmate-part="option" data-starmate-state={isSelected ? 'selected' : undefined} >
                               {model.modelName}<span className="openbitfun-model-selector__option-provider"> {model.providerName}</span>
                             </MenuItem>
                           </Tooltip>
@@ -2965,8 +2965,8 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                               metadata={group.models.length}
                               shortcut={<Icon name="chevron-right" size="sm" aria-hidden />}
                               onClick={() => openProviderLevel(group.key)}
-                            >
-                              <span className="openbitfun-model-selector__option-main" data-openbitfun-component="model-selector" data-openbitfun-part="optionMain">
+                             data-starmate-component="model-selector" data-starmate-part="providerOption" data-starmate-state={isSelected ? 'selected' : undefined} >
+                              <span className="openbitfun-model-selector__option-main" data-openbitfun-component="model-selector" data-openbitfun-part="optionMain" data-starmate-component="model-selector" data-starmate-part="optionMain" >
                                 <OverflowText className="openbitfun-model-selector__option-name">
                                   {group.providerName}
                                 </OverflowText>
@@ -3002,7 +3002,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                       data-openbitfun-part="modeChoices"
                       aria-busy={modeSelectionPending || undefined}
                       onKeyDown={handleModeChoicesKeyDown}
-                    >
+                     data-starmate-component="model-selector" data-starmate-part="modeChoices" >
                       <SegmentedControl
                         ref={modeChoicesRef}
                         id={`${menuId}-mode-choices`}
@@ -3156,7 +3156,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
                         className="openbitfun-model-selector__settings-model-section"
                         data-openbitfun-component="model-selector"
                         data-openbitfun-part="selectionSummary"
-                      >
+                       data-starmate-component="model-selector" data-starmate-part="selectionSummary" >
                         <MenuItem
                           ref={modelFieldRef}
                           className="openbitfun-model-selector__settings-row"

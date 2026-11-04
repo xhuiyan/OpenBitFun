@@ -31,7 +31,7 @@ test("Toolbar keeps leading, centered, and trailing regions independent", () => 
   assert.match(markup, /data-openbitfun-part="center"/);
   assert.match(markup, /data-openbitfun-part="trailing"/);
   assert.match(markup, /data-openbitfun-part="badge"/);
-  assert.match(markup, /data-openbitfun-part="value">18<\/span>/);
+  assert.match(markup, /data-openbitfun-part="value"[^>]*>18<\/span>/);
   assert.match(markup, /data-openbitfun-part="separator"/);
   assert.match(markup, /aria-hidden="true"/);
 });

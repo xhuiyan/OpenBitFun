@@ -32,7 +32,7 @@ const HistorySurface: typeof Menu = forwardRef(function HistorySurface(props, fo
     root.style.setProperty('--_session-history-source-top', `${Math.max(0, rect.top - top)}px`);
   }, [context.anchorRef, props.style?.left, props.style?.top]);
 
-  return <div data-openbitfun-component="scene-bar" data-openbitfun-part="history"><Menu {...props}
+  return <div data-openbitfun-component="scene-bar" data-openbitfun-part="history" data-starmate-component="scene-bar" data-starmate-part="history" ><Menu {...props}
     autoFocusFirstItem={!props['aria-hidden']}
     ref={node => {
       rootRef.current = node;

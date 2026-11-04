@@ -449,8 +449,8 @@ const TaskLaunchDisplay: React.FC<ToolCardProps> = ({
   if (isCancelAction) {
     const cancelSessionId = linkedSubagentSessionId || 'Not provided';
     return (
-      <div data-openbitfun-component="task-tool-display" data-openbitfun-part="root">
-        <div data-openbitfun-component="task-tool-display" data-openbitfun-part="cancel">
+      <div data-openbitfun-component="task-tool-display" data-openbitfun-part="root" data-starmate-component="task-tool-display" data-starmate-part="root" >
+        <div data-openbitfun-component="task-tool-display" data-openbitfun-part="cancel" data-starmate-component="task-tool-display" data-starmate-part="cancel" >
           <AmbientToolCard
             status={status}
             isExpanded={false}
@@ -494,7 +494,7 @@ const TaskLaunchDisplay: React.FC<ToolCardProps> = ({
       data-openbitfun-part="root"
       data-openbitfun-state={hasFailedOutcome ? 'failed' : undefined}
       data-tool-card-id={toolId ?? ''}
-    >
+     data-starmate-component="task-tool-display" data-starmate-part="root" data-starmate-state={hasFailedOutcome ? 'failed' : undefined} >
       <AgentControlToolCardView
         lang={currentLanguage}
         status={displayStatus}

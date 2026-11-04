@@ -594,12 +594,12 @@ export function Tooltip({
             top: `${layout.top}px`,
             left: `${layout.left}px`,
           }}
-        >
+         data-starmate-native-webview-occlusion data-starmate-component="tooltip" data-starmate-placement={layout.placement} data-starmate-interactive={interactive ? "true" : "false"} data-starmate-state={isShown ? "visible" : undefined} >
           {!followCursor && (
-            <div className={styles.arrow} data-openbitfun-part="arrow" aria-hidden="true" />
+            <div className={styles.arrow} data-openbitfun-part="arrow" aria-hidden="true"  data-starmate-part="arrow" />
           )}
-          <div className={styles.content} data-openbitfun-part="content">
-            <div className={styles.body} data-openbitfun-part="body">{content}</div>
+          <div className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
+            <div className={styles.body} data-openbitfun-part="body" data-starmate-part="body" >{content}</div>
           </div>
         </div>
         </Portal>

@@ -29,7 +29,7 @@ describe('session view transitions across replaced subtrees', () => {
 
   function render(grouping: WorkspaceSessionGrouping, entries: Entry[], surfaceId = 'local') {
     act(() => root.render(
-      <div ref={scrollRootRef} data-scroll-root data-openbitfun-section="sessions">
+      <div ref={scrollRootRef} data-scroll-root data-openbitfun-section="sessions" data-starmate-section="sessions" >
         <button data-toggle>View</button>
         <div data-pinned-assistant>Assistant</div>
         <SessionViewTransition grouping={grouping} surfaceId={surfaceId} scrollRootRef={scrollRootRef}>

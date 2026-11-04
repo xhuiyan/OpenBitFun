@@ -35,17 +35,19 @@ export function AppUpdatePanel() {
       data-openbitfun-component="about-dialog" data-openbitfun-part="updateCard"
       data-openbitfun-state={state.checkStatus === 'checking' ? 'checking' : downloading ? 'downloading'
         : state.error || state.checkError ? 'error' : state.status === 'ready' || state.status === 'installing' ? 'installed'
-          : state.checkStatus === 'latest' ? 'latest' : undefined} aria-label={t('update.thisDevice')}>
+          : state.checkStatus === 'latest' ? 'latest' : undefined} aria-label={t('update.thisDevice')} data-starmate-component="about-dialog" data-starmate-part="updateCard" data-starmate-state={state.checkStatus === 'checking' ? 'checking' : downloading ? 'downloading'
+        : state.error || state.checkError ? 'error' : state.status === 'ready' || state.status === 'installing' ? 'installed'
+          : state.checkStatus === 'latest' ? 'latest' : undefined} >
       <DialogHeader className="openbitfun-update-details__header">
         <DialogHeading>
           <DialogTitle>
-            <span data-openbitfun-component="update" data-openbitfun-part="notesLabel">
+            <span data-openbitfun-component="update" data-openbitfun-part="notesLabel" data-starmate-component="update" data-starmate-part="notesLabel" >
               {target ? <span className="openbitfun-update-details__versions"
-                data-openbitfun-component="update" data-openbitfun-part="versions">
-                <span data-openbitfun-component="update" data-openbitfun-part="versionRow">
-                  <span data-openbitfun-component="update" data-openbitfun-part="versionLabel">{productName}</span>
+                data-openbitfun-component="update" data-openbitfun-part="versions" data-starmate-component="update" data-starmate-part="versions" >
+                <span data-openbitfun-component="update" data-openbitfun-part="versionRow" data-starmate-component="update" data-starmate-part="versionRow" >
+                  <span data-openbitfun-component="update" data-openbitfun-part="versionLabel" data-starmate-component="update" data-starmate-part="versionLabel" >{productName}</span>
                   <span className="openbitfun-update-details__version"
-                    data-openbitfun-component="update" data-openbitfun-part="versionValue">v{target}</span>
+                    data-openbitfun-component="update" data-openbitfun-part="versionValue" data-starmate-component="update" data-starmate-part="versionValue" >v{target}</span>
                 </span>
               </span> : t('update.detailsTitle')}
             </span>
@@ -54,18 +56,18 @@ export function AppUpdatePanel() {
         <DialogClose className="openbitfun-update-details__close" />
       </DialogHeader>
       <DialogBody className="openbitfun-update-details__body">
-        <div className="openbitfun-update-panel" data-openbitfun-component="update" data-openbitfun-part="panel">
+        <div className="openbitfun-update-panel" data-openbitfun-component="update" data-openbitfun-part="panel" data-starmate-component="update" data-starmate-part="panel" >
           {(status || state.error || state.checkError) && <div className="openbitfun-update-panel__feedback"
-            data-openbitfun-component="about-dialog" data-openbitfun-part="updateFeedback">
+            data-openbitfun-component="about-dialog" data-openbitfun-part="updateFeedback" data-starmate-component="about-dialog" data-starmate-part="updateFeedback" >
             {status && <p className="openbitfun-update-panel__status" role="status"
-              data-openbitfun-component="update" data-openbitfun-part="panelStatus">{status}</p>}
+              data-openbitfun-component="update" data-openbitfun-part="panelStatus" data-starmate-component="update" data-starmate-part="panelStatus" >{status}</p>}
             {state.error && <Alert tone="error" showIcon message={formatUpdateInstallError(state.error, t)} />}
             {state.checkError && <Alert tone="error" showIcon message={formatUpdateInstallError(state.checkError, t)} />}
           </div>}
           {releaseNotes ? (
             <section className="openbitfun-update-panel__notes" aria-label={t('update.releaseNotes')}
-              data-openbitfun-component="update" data-openbitfun-part="notes">
-              <div className="openbitfun-update-panel__prose" data-openbitfun-component="update" data-openbitfun-part="notesBody">
+              data-openbitfun-component="update" data-openbitfun-part="notes" data-starmate-component="update" data-starmate-part="notes" >
+              <div className="openbitfun-update-panel__prose" data-openbitfun-component="update" data-openbitfun-part="notesBody" data-starmate-component="update" data-starmate-part="notesBody" >
                 <ReactMarkdown skipHtml components={{
                   img: () => null,
                   ul: ({ children }) => <ul role="list">{children}</ul>,
@@ -78,22 +80,22 @@ export function AppUpdatePanel() {
             </section>
           ) : (
             <div className="openbitfun-update-panel__empty" aria-hidden="true"
-              data-openbitfun-component="update" data-openbitfun-part="releaseArtwork">
+              data-openbitfun-component="update" data-openbitfun-part="releaseArtwork" data-starmate-component="update" data-starmate-part="releaseArtwork" >
               <StarMateMark className="openbitfun-update-details__mark" />
             </div>
           )}
         </div>
       </DialogBody>
       <DialogFooter separator className="openbitfun-update-details__footer">
-        <div className="openbitfun-update-panel__actions" data-openbitfun-component="about-dialog" data-openbitfun-part="updateActions">
+        <div className="openbitfun-update-panel__actions" data-openbitfun-component="about-dialog" data-openbitfun-part="updateActions" data-starmate-component="about-dialog" data-starmate-part="updateActions" >
           {downloading ? (
             <div className="openbitfun-update-progress__bar openbitfun-update-panel__progress"
               role="progressbar" aria-label={t('update.downloadingTitle')}
               aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent ?? undefined}
-              data-openbitfun-component="about-dialog" data-openbitfun-part="progress">
+              data-openbitfun-component="about-dialog" data-openbitfun-part="progress" data-starmate-component="about-dialog" data-starmate-part="progress" >
               <div className={'openbitfun-update-progress__fill' + (fraction == null ? ' openbitfun-update-progress__fill--indeterminate' : '')}
                 style={fraction == null ? undefined : { transform: `scaleX(${fraction})` }}
-                data-openbitfun-component="about-dialog" data-openbitfun-part="progressFill" />
+                data-openbitfun-component="about-dialog" data-openbitfun-part="progressFill"  data-starmate-component="about-dialog" data-starmate-part="progressFill" />
             </div>
           ) : (
             <>

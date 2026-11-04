@@ -121,14 +121,14 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
             className="openbitfun-about-dialog__content"
             data-openbitfun-component="about-dialog"
             data-openbitfun-part="root"
-          >
+           data-starmate-component="about-dialog" data-starmate-part="root" >
             <div className="openbitfun-about-dialog__body">
               <div
                 className="openbitfun-about-dialog__brand"
                 data-openbitfun-component="about-dialog"
                 data-openbitfun-part="hero"
                 aria-hidden="true"
-              >
+               data-starmate-component="about-dialog" data-starmate-part="hero" >
                 <div className="openbitfun-about-dialog__artwork">
                   <StarMateBrandMotion className="openbitfun-about-dialog__brand-mark" active={isOpen} />
                 </div>
@@ -142,13 +142,13 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                 data-openbitfun-component="about-dialog"
                 data-openbitfun-part="content"
                 aria-label={t('about.details')}
-              >
+               data-starmate-component="about-dialog" data-starmate-part="content" >
                 <header className="openbitfun-about-dialog__brand-copy">
                   <DialogTitle
                     className="openbitfun-about-dialog__title"
                     data-openbitfun-component="about-dialog"
                     data-openbitfun-part="title"
-                  >
+                   data-starmate-component="about-dialog" data-starmate-part="title" >
                     {version.name}
                   </DialogTitle>
                   <p className="openbitfun-about-dialog__tagline">{t('about.tagline')}</p>
@@ -156,8 +156,8 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
 
                 <FieldGroup className="openbitfun-about-dialog__details" appearance="plain" dividers={false}>
                   <FieldRow padding="none">
-                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow">
-                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel">
+                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow" data-starmate-component="about-dialog" data-starmate-part="infoRow" >
+                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel" data-starmate-component="about-dialog" data-starmate-part="infoLabel" >
                         <span>{t('about.versionLabel')}</span>
                       </dt>
                       <dd className="openbitfun-about-dialog__info-value-group">
@@ -166,14 +166,14 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                           data-openbitfun-component="about-dialog"
                           data-openbitfun-part="infoValue"
                           data-testid="about-version-value"
-                        >
+                         data-starmate-component="about-dialog" data-starmate-part="infoValue" >
                           {displayedVersion}
                         </span>
                         <span
                           className="openbitfun-about-dialog__channel-badge"
                           data-openbitfun-component="about-dialog"
                           data-openbitfun-part="channelBadge"
-                        >
+                         data-starmate-component="about-dialog" data-starmate-part="channelBadge" >
                           <StatusPill tone="neutral">{releaseLabel}</StatusPill>
                         </span>
                       </dd>
@@ -181,12 +181,12 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                   </FieldRow>
 
                   <FieldRow padding="none">
-                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow">
-                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel">
+                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow" data-starmate-component="about-dialog" data-starmate-part="infoRow" >
+                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel" data-starmate-component="about-dialog" data-starmate-part="infoLabel" >
                         <span>{t('about.buildDate')}</span>
                       </dt>
                       <dd className="openbitfun-about-dialog__info-value-group">
-                        <span className="openbitfun-about-dialog__info-value" data-openbitfun-component="about-dialog" data-openbitfun-part="infoValue">
+                        <span className="openbitfun-about-dialog__info-value" data-openbitfun-component="about-dialog" data-openbitfun-part="infoValue" data-starmate-component="about-dialog" data-starmate-part="infoValue" >
                           {formatBuildDate(version.buildDate)}
                         </span>
                       </dd>
@@ -194,8 +194,8 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                   </FieldRow>
 
                   <FieldRow padding="none">
-                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow">
-                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel">
+                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow" data-starmate-component="about-dialog" data-starmate-part="infoRow" >
+                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel" data-starmate-component="about-dialog" data-starmate-part="infoLabel" >
                         <span>{t('about.commit')}</span>
                       </dt>
                       <dd className="openbitfun-about-dialog__info-value-group">
@@ -203,7 +203,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                           className="openbitfun-about-dialog__info-value openbitfun-about-dialog__info-value--mono"
                           data-openbitfun-component="about-dialog"
                           data-openbitfun-part="infoValue"
-                        >
+                         data-starmate-component="about-dialog" data-starmate-part="infoValue" >
                           {version.gitCommit ?? t('about.notAvailable')}
                         </span>
                         {version.gitCommit ? (
@@ -211,7 +211,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                             className="openbitfun-about-dialog__copy-action"
                             data-openbitfun-component="about-dialog"
                             data-openbitfun-part="copyButton"
-                          >
+                           data-starmate-component="about-dialog" data-starmate-part="copyButton" >
                             <Tooltip content={t('about.copy')}>
                               <IconButton
                                 size="xs"
@@ -228,8 +228,8 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                   </FieldRow>
 
                   <FieldRow padding="none">
-                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow">
-                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel">
+                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow" data-starmate-component="about-dialog" data-starmate-part="infoRow" >
+                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel" data-starmate-component="about-dialog" data-starmate-part="infoLabel" >
                         <span>{t('about.branch')}</span>
                       </dt>
                       <dd className="openbitfun-about-dialog__info-value-group">
@@ -239,7 +239,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                           data-openbitfun-part="infoValue"
                           data-testid="about-branch-value"
                           title={version.gitBranch}
-                        >
+                         data-starmate-component="about-dialog" data-starmate-part="infoValue" >
                           {version.gitBranch ?? t('about.notAvailable')}
                         </span>
                       </dd>
@@ -247,8 +247,8 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                   </FieldRow>
 
                   <FieldRow padding="none">
-                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow">
-                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel">
+                    <dl className="openbitfun-about-dialog__info-row" data-openbitfun-component="about-dialog" data-openbitfun-part="infoRow" data-starmate-component="about-dialog" data-starmate-part="infoRow" >
+                      <dt className="openbitfun-about-dialog__info-label" data-openbitfun-component="about-dialog" data-openbitfun-part="infoLabel" data-starmate-component="about-dialog" data-starmate-part="infoLabel" >
                         <span>{t('about.license')}</span>
                       </dt>
                       <dd className="openbitfun-about-dialog__info-value-group">
@@ -257,7 +257,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                           data-openbitfun-component="about-dialog"
                           data-openbitfun-part="license"
                           data-testid="about-license-value"
-                        >
+                         data-starmate-component="about-dialog" data-starmate-part="license" >
                           {licenseName}
                         </span>
                       </dd>
@@ -272,14 +272,14 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
               className="openbitfun-about-dialog__footer"
               data-openbitfun-component="about-dialog"
               data-openbitfun-part="footer"
-            >
+             data-starmate-component="about-dialog" data-starmate-part="footer" >
               <div
                 className="openbitfun-about-dialog__star-callout"
                 data-openbitfun-component="about-dialog"
                 data-openbitfun-part="starCallout"
                 role="group"
                 aria-labelledby="openbitfun-about-star-title"
-              >
+               data-starmate-component="about-dialog" data-starmate-part="starCallout" >
                 <div className="openbitfun-about-dialog__star-copy">
                   <h3 id="openbitfun-about-star-title" className="openbitfun-about-dialog__star-title">
                     {t('about.githubStarTitle')}
@@ -303,7 +303,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
                 className="openbitfun-about-dialog__copyright"
                 data-openbitfun-component="about-dialog"
                 data-openbitfun-part="copyright"
-              >
+               data-starmate-component="about-dialog" data-starmate-part="copyright" >
                 {legalCopyright}
               </p>
             </footer>

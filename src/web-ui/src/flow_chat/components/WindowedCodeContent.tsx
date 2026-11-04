@@ -114,7 +114,7 @@ export function WindowedCodeContent({ content, language, scrollerRef, startingLi
       if (!window.getSelection()?.isCollapsed) return;
       const index = Math.floor((event.clientY - event.currentTarget.getBoundingClientRect().top) / lineHeight);
       if (index >= 0 && index < visibleLineCount) onLineClick(startingLineNumber + index);
-    }}>
+    }} data-starmate-component="code-preview" data-starmate-part="plain" >
     <code ref={sourceRef} data-code-source="" style={{
       color: 'transparent',
       paddingInlineStart: showLineNumbers ? '3.5em' : undefined,
@@ -125,7 +125,7 @@ export function WindowedCodeContent({ content, language, scrollerRef, startingLi
       const number = startingLineNumber + row.index;
       return <span key={row.key} className={`code-preview__plain-line${highlightedLine === number ? ' code-preview__plain-line--highlighted' : ''}`}
         data-code-line={row.index} data-openbitfun-component="code-preview" data-openbitfun-part="line"
-        style={{ position: 'absolute', insetInlineStart: 0, top: row.start, height: lineHeight }}>
+        style={{ position: 'absolute', insetInlineStart: 0, top: row.start, height: lineHeight }} data-starmate-component="code-preview" data-starmate-part="line" >
         {showLineNumbers && <span className="code-preview__plain-line-number" aria-hidden="true">{number}</span>}
         <span className="code-preview__plain-line-content">{lines[row.index]?.map(tokenNode) ?? plain[row.index] ?? ''}</span>
       </span>;

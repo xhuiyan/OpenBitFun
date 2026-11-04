@@ -332,7 +332,7 @@ const AssistantConfigPage: React.FC = () => {
   const identityName = displayIdentity.name || resolveAssistantName(workspace, t('shared:agents.Claw'));
 
   const renderPersonaDocLinks = () => (
-    <div className="acp-identity__meta" data-openbitfun-component="assistant-config-page" data-openbitfun-part="personaList">
+    <div className="acp-identity__meta" data-openbitfun-component="assistant-config-page" data-openbitfun-part="personaList" data-starmate-component="assistant-config-page" data-starmate-part="personaList" >
       {PERSONA_DOC_FILES.map((fileName, index) => {
         const selected = personaDoc?.fileName === fileName;
         const labelKey = fileName.replace(/\.md$/i, '') as 'SOUL' | 'USER' | 'IDENTITY';
@@ -343,7 +343,7 @@ const AssistantConfigPage: React.FC = () => {
             data-openbitfun-component="assistant-config-page"
             data-openbitfun-part="persona"
             data-openbitfun-state={selected ? 'selected' : undefined}
-          >
+           data-starmate-component="assistant-config-page" data-starmate-part="persona" data-starmate-state={selected ? 'selected' : undefined} >
             {index > 0 && <span className="acp-identity__meta-divider" aria-hidden />}
             <button
               type="button"
@@ -370,8 +370,8 @@ const AssistantConfigPage: React.FC = () => {
     const usesHybridEditor = sections.hasFrontmatter;
     const usesSourceBodyEditor = bodyEditability.mode === 'unsafe';
     return (
-      <div className="acp-persona-editor" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editor">
-        <div className="acp-persona-editor__head" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editorHeader">
+      <div className="acp-persona-editor" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editor" data-starmate-component="assistant-config-page" data-starmate-part="editor" >
+        <div className="acp-persona-editor__head" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editorHeader" data-starmate-component="assistant-config-page" data-starmate-part="editorHeader" >
           <DialogHeader separator>
             <DialogHeading>
               <DialogTitle>{t(`nursery.assistant.personaDocs.${docLabelKey}`)}</DialogTitle>
@@ -381,13 +381,13 @@ const AssistantConfigPage: React.FC = () => {
           </DialogHeader>
         </div>
         <DialogBody inset="none">
-          <div className="acp-persona-editor__body" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editorBody">
-            {error && <p className="acp-persona-editor__error" data-openbitfun-component="assistant-config-page" data-openbitfun-part="error">{t('nursery.assistant.personaDocLoadFailed')}: {error}</p>}
+          <div className="acp-persona-editor__body" data-openbitfun-component="assistant-config-page" data-openbitfun-part="editorBody" data-starmate-component="assistant-config-page" data-starmate-part="editorBody" >
+            {error && <p className="acp-persona-editor__error" data-openbitfun-component="assistant-config-page" data-openbitfun-part="error" data-starmate-component="assistant-config-page" data-starmate-part="error" >{t('nursery.assistant.personaDocLoadFailed')}: {error}</p>}
             {loading ? (
-              <div className="acp-loading" data-openbitfun-component="assistant-config-page" data-openbitfun-part="loading"><Spinner size="sm" /></div>
+              <div className="acp-loading" data-openbitfun-component="assistant-config-page" data-openbitfun-part="loading" data-starmate-component="assistant-config-page" data-starmate-part="loading" ><Spinner size="sm" /></div>
             ) : usesHybridEditor ? (
               <div className="acp-persona-editor__hybrid">
-                <section className="acp-persona-editor__frontmatter" data-openbitfun-component="assistant-config-page" data-openbitfun-part="frontmatter">
+                <section className="acp-persona-editor__frontmatter" data-openbitfun-component="assistant-config-page" data-openbitfun-part="frontmatter" data-starmate-component="assistant-config-page" data-starmate-part="frontmatter" >
                   <AutoResizeTextarea
                     key={`${fileName}-frontmatter`}
                     value={sections.frontmatter}
@@ -395,7 +395,7 @@ const AssistantConfigPage: React.FC = () => {
                   />
                 </section>
                 <div className="acp-persona-editor__divider" aria-hidden="true" />
-                <section className="acp-persona-editor__body-editor" data-openbitfun-component="assistant-config-page" data-openbitfun-part="bodyEditor">
+                <section className="acp-persona-editor__body-editor" data-openbitfun-component="assistant-config-page" data-openbitfun-part="bodyEditor" data-starmate-component="assistant-config-page" data-starmate-part="bodyEditor" >
                   {usesSourceBodyEditor ? (
                     <EditArea
                       key={`${fileName}-body-source`}
@@ -453,9 +453,9 @@ const AssistantConfigPage: React.FC = () => {
       className="nursery-page acp-page"
       data-openbitfun-component="assistant-config-page"
       data-openbitfun-part="root"
-    >
-      <header className="acp-page__toolbar" data-openbitfun-component="assistant-config-page" data-openbitfun-part="toolbar">
-        <span data-openbitfun-component="assistant-config-page" data-openbitfun-part="back">
+     data-starmate-component="assistant-config-page" data-starmate-part="root" >
+      <header className="acp-page__toolbar" data-openbitfun-component="assistant-config-page" data-openbitfun-part="toolbar" data-starmate-component="assistant-config-page" data-starmate-part="toolbar" >
+        <span data-openbitfun-component="assistant-config-page" data-openbitfun-part="back" data-starmate-component="assistant-config-page" data-starmate-part="back" >
           <Button
             className="acp-page__back"
             variant="text"
@@ -468,8 +468,8 @@ const AssistantConfigPage: React.FC = () => {
         </span>
       </header>
       <ScrollArea className="acp-page__scroll">
-        <div className="acp-layout" data-openbitfun-component="assistant-config-page" data-openbitfun-part="layout">
-          <div className="acp-identity" data-openbitfun-component="assistant-config-page" data-openbitfun-part="identity">
+        <div className="acp-layout" data-openbitfun-component="assistant-config-page" data-openbitfun-part="layout" data-starmate-component="assistant-config-page" data-starmate-part="layout" >
+          <div className="acp-identity" data-openbitfun-component="assistant-config-page" data-openbitfun-part="identity" data-starmate-component="assistant-config-page" data-starmate-part="identity" >
             <AssistantAvatarPicker
               presetValue={displayIdentity.avatar}
               value={displayIdentity.emoji}
@@ -528,7 +528,7 @@ const AssistantConfigPage: React.FC = () => {
                 fallback={(
                   <>
                     <PageHeader size="sm" level={3} title={t('nursery.assistant.scheduledSessionsTitle')} />
-                    <div className="acp-loading" data-openbitfun-component="assistant-config-page" data-openbitfun-part="loading">
+                    <div className="acp-loading" data-openbitfun-component="assistant-config-page" data-openbitfun-part="loading" data-starmate-component="assistant-config-page" data-starmate-part="loading" >
                       <Spinner size="sm" />
                     </div>
                   </>
@@ -550,7 +550,7 @@ const AssistantConfigPage: React.FC = () => {
             aria-label={t('nursery.assistant.sessionsSectionTitle')}
             data-openbitfun-component="assistant-config-page"
             data-openbitfun-part="sessions"
-          >
+           data-starmate-component="assistant-config-page" data-starmate-part="sessions" >
             <PageHeader size="sm" level={3} title={t('nursery.assistant.sessionsSectionTitle')} />
             <SessionsSection
               workspaceId={workspace?.id}

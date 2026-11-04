@@ -128,14 +128,14 @@ const SceneViewport: React.FC<SceneViewportProps> = ({ workspacePath, isEntering
       data-openbitfun-scene="workbench"
       data-openbitfun-part="viewport"
       data-openbitfun-state={activeRenderedSceneId === EMPTY_SCENE_ID ? 'empty' : undefined}
-    >
+     data-starmate-scene="workbench" data-starmate-part="viewport" data-starmate-state={activeRenderedSceneId === EMPTY_SCENE_ID ? 'empty' : undefined} >
       <div
         className="openbitfun-scene-viewport__clip"
         data-testid="scene-viewport-clip"
         data-scene-motion-phase={pendingTransition?.phase}
         data-openbitfun-scene="workbench"
         data-openbitfun-part="viewportClip"
-      >
+       data-starmate-scene="workbench" data-starmate-part="viewportClip" >
         {renderedTabIds.map(tabId => {
           const isEmpty = tabId === EMPTY_SCENE_ID;
           const isSecondary = tabId === secondarySceneId || (tabId !== activeRenderedSceneId && (
@@ -181,7 +181,10 @@ const SceneViewport: React.FC<SceneViewportProps> = ({ workspacePath, isEntering
                 isActive && 'active',
                 isEmpty && 'empty',
               ].filter(Boolean).join(' ') || undefined}
-            >
+             data-starmate-scene="workbench" data-starmate-part="scene" data-starmate-scene-id={isEmpty ? 'welcome' : tabId.startsWith('project-resources:') ? 'project-resources' : tabId.startsWith('content:') ? 'content' : tabId.startsWith('miniapp:') ? 'miniapp' : tabId} data-starmate-state={[
+                isActive && 'active',
+                isEmpty && 'empty',
+              ].filter(Boolean).join(' ') || undefined} >
               {isEmpty ? (
                 <div
                   className="openbitfun-scene-viewport__empty"
@@ -189,7 +192,7 @@ const SceneViewport: React.FC<SceneViewportProps> = ({ workspacePath, isEntering
                   data-openbitfun-scene="workbench"
                   data-openbitfun-part="empty"
                   data-openbitfun-state="empty"
-                >
+                 data-starmate-scene="workbench" data-starmate-part="empty" data-starmate-state="empty" >
                   <WelcomeScene />
                 </div>
               ) : (
@@ -203,7 +206,7 @@ const SceneViewport: React.FC<SceneViewportProps> = ({ workspacePath, isEntering
                         aria-label={t('loading.scenes')}
                         data-openbitfun-scene="workbench"
                         data-openbitfun-part="loading"
-                      >
+                       data-starmate-scene="workbench" data-starmate-part="loading" >
                         <Spinner size="md" />
                       </div>
                     ) : null

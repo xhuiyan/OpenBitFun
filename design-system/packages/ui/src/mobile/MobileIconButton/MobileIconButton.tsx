@@ -47,9 +47,9 @@ export const MobileIconButton = forwardRef<HTMLButtonElement, MobileIconButtonPr
         disabled={disabled || loading}
         ref={ref}
         type={type}
-      >
-        <span aria-hidden="true" className={styles.spinner} data-openbitfun-part="progress" />
-        <span aria-hidden="true" className={styles.icon} data-openbitfun-part="icon">
+       data-starmate-component="mobile-icon-button" >
+        <span aria-hidden="true" className={styles.spinner} data-openbitfun-part="progress"  data-starmate-part="progress" />
+        <span aria-hidden="true" className={styles.icon} data-openbitfun-part="icon" data-starmate-part="icon" >
           {icon}
         </span>
       </button>

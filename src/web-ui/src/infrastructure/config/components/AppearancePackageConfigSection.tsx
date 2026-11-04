@@ -86,12 +86,12 @@ export function AppearancePackageFailurePanel({
       aria-live="polite"
       data-openbitfun-component="appearance-settings"
       data-openbitfun-part="packageDiagnostics"
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="packageDiagnostics" >
       <div
         className="appearance-package-config__diagnostics-header"
         data-openbitfun-component="appearance-settings"
         data-openbitfun-part="packageDiagnosticsHeader"
-      >
+       data-starmate-component="appearance-settings" data-starmate-part="packageDiagnosticsHeader" >
         <AlertTriangle size={17} aria-hidden="true" />
         <div>
           <strong>{title}</strong>
@@ -116,7 +116,7 @@ export function AppearancePackageFailurePanel({
               className="appearance-package-config__diagnostics-group"
               data-openbitfun-component="appearance-settings"
               data-openbitfun-part="packageDiagnosticsGroup"
-            >
+             data-starmate-component="appearance-settings" data-starmate-part="packageDiagnosticsGroup" >
               <h4>
                 {group.surfaceKind === 'component'
                   ? t('package.diagnostics.componentGroup', { id: group.surfaceId })
@@ -130,7 +130,7 @@ export function AppearancePackageFailurePanel({
                     key={`${issue.code}:${issue.path}`}
                     data-openbitfun-component="appearance-settings"
                     data-openbitfun-part="packageDiagnosticIssue"
-                  >
+                   data-starmate-component="appearance-settings" data-starmate-part="packageDiagnosticIssue" >
                     <span>{issueText(issue, t)}</span>
                     <code>{issue.path}</code>
                   </li>
@@ -141,7 +141,7 @@ export function AppearancePackageFailurePanel({
                   className="appearance-package-config__diagnostics-parts"
                   data-openbitfun-component="appearance-settings"
                   data-openbitfun-part="packageDiagnosticAllowedParts"
-                >
+                 data-starmate-component="appearance-settings" data-starmate-part="packageDiagnosticAllowedParts" >
                   <summary>{t('package.diagnostics.allowedParts')}</summary>
                   <div>{group.allowedParts.map(part => <code key={part}>{part}</code>)}</div>
                 </details>
@@ -258,7 +258,7 @@ function AppearancePackagePreview({
       data-openbitfun-part="packagePreview"
       data-openbitfun-package-type={packageType}
       data-openbitfun-state={state || undefined}
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="packagePreview" data-starmate-package-type={packageType} data-starmate-state={state || undefined} >
       {onSelect ? (
         <ActionCard
           className="appearance-package-config__card-action"
@@ -425,7 +425,7 @@ export function AppearancePackageConfigSection() {
           className="appearance-package-config__actions"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="packageActions"
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="packageActions" >
           {APPEARANCE_MARKET_ENTRY_VISIBLE && (
             <Button
               variant="outline"
@@ -472,7 +472,7 @@ export function AppearancePackageConfigSection() {
       data-openbitfun-part="packageSection"
       data-openbitfun-package-type={selectedAppearance ? 'imported' : 'native'}
       data-openbitfun-state={busy ? 'disabled' : undefined}
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="packageSection" data-starmate-package-type={selectedAppearance ? 'imported' : 'native'} data-starmate-state={busy ? 'disabled' : undefined} >
       {APPEARANCE_PACKAGE_IMPORT_VISIBLE && (
         <input
           ref={inputRef}
@@ -498,7 +498,7 @@ export function AppearancePackageConfigSection() {
             className="appearance-package-config__builtin-theme-select"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="packageBuiltinTheme"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="packageBuiltinTheme" >
             <Select
               size="sm"
               value={selectedBuiltinThemeId}
@@ -538,7 +538,7 @@ export function AppearancePackageConfigSection() {
           className="appearance-package-config__missing-selection"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="packageMissingSelection"
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="packageMissingSelection" >
           <AlertTriangle size={16} aria-hidden="true" />
           <span>{t('package.missingSelection', { id: unavailableSelectionId })}</span>
           {APPEARANCE_MARKET_ENTRY_VISIBLE && (

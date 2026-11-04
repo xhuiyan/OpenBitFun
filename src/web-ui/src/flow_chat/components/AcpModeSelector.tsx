@@ -131,7 +131,7 @@ export const AcpModeSelector: React.FC<AcpModeSelectorProps> = ({
       data-openbitfun-component="acp-mode-selector"
       data-openbitfun-part="root"
       data-openbitfun-state={open ? 'open' : undefined}
-    >
+     data-starmate-component="acp-mode-selector" data-starmate-part="root" data-starmate-state={open ? 'open' : undefined} >
       <Tooltip content={triggerTooltip} disabled={open}>
         <button data-overflow-trigger
           ref={triggerRef}
@@ -164,12 +164,12 @@ export const AcpModeSelector: React.FC<AcpModeSelectorProps> = ({
               setOpen(false);
             }
           }}
-        >
+         data-starmate-component="acp-mode-selector" data-starmate-part="trigger" data-starmate-state={open ? 'open' : undefined} >
           <OverflowText
             className="openbitfun-acp-mode-selector__label"
             data-openbitfun-component="acp-mode-selector"
             data-openbitfun-part="label"
-          >
+           data-starmate-component="acp-mode-selector" data-starmate-part="label" >
             {currentLabel}
           </OverflowText>
           <Icon name="chevron-down" size="xs" aria-hidden="true" />
@@ -194,12 +194,12 @@ export const AcpModeSelector: React.FC<AcpModeSelectorProps> = ({
             aria-label={t('modelSelector.acpMode')}
             data-testid="chat-acp-mode-selector-menu"
             onKeyDown={handleMenuKeyDown}
-          >
+           data-starmate-component="acp-mode-selector" data-starmate-part="menu" >
             <div
               className="openbitfun-acp-mode-selector__header"
               data-openbitfun-component="acp-mode-selector"
               data-openbitfun-part="header"
-            >
+             data-starmate-component="acp-mode-selector" data-starmate-part="header" >
               <span>{t('modelSelector.acpMode')}</span>
               {clientId && (
                 <OverflowText className="openbitfun-acp-mode-selector__header-hint">{clientId}</OverflowText>
@@ -230,7 +230,7 @@ export const AcpModeSelector: React.FC<AcpModeSelectorProps> = ({
                     title={hint}
                     onClick={() => select(candidate.value)}
                     shortcut={isSelected ? <Icon name="check-line" size="sm" aria-hidden="true" /> : undefined}
-                  >
+                   data-starmate-component="acp-mode-selector" data-starmate-part="option" data-starmate-state={isSelected ? 'selected' : undefined} >
                     <span className="openbitfun-acp-mode-menu__option-content">
                       <strong>{candidate.name}</strong>
                     </span>

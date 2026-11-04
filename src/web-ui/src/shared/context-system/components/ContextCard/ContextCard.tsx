@@ -85,7 +85,7 @@ export const ContextCard: React.FC<ContextCardProps> = ({
       data-openbitfun-component="context-list"
       data-openbitfun-part="card"
       data-openbitfun-state={validationState ? (validationState.valid ? 'valid' : 'invalid') : undefined}
-    >
+     data-starmate-component="context-list" data-starmate-part="card" data-starmate-state={validationState ? (validationState.valid ? 'valid' : 'invalid') : undefined} >
       
       {definition && (
         <div 
@@ -93,17 +93,17 @@ export const ContextCard: React.FC<ContextCardProps> = ({
           style={{ backgroundColor: definition.color }}
           data-openbitfun-component="context-list"
           data-openbitfun-part="cardIndicator"
-        />
+         data-starmate-component="context-list" data-starmate-part="cardIndicator" />
       )}
       
       
-      <div className="openbitfun-context-card__body" data-openbitfun-component="context-list" data-openbitfun-part="cardBody">
+      <div className="openbitfun-context-card__body" data-openbitfun-component="context-list" data-openbitfun-part="cardBody" data-starmate-component="context-list" data-starmate-part="cardBody" >
         {content}
       </div>
       
       
       {interactive && (
-        <div className="openbitfun-context-card__toolbar" data-openbitfun-component="context-list" data-openbitfun-part="cardToolbar">
+        <div className="openbitfun-context-card__toolbar" data-openbitfun-component="context-list" data-openbitfun-part="cardToolbar" data-starmate-component="context-list" data-starmate-part="cardToolbar" >
           
           <div className="openbitfun-context-card__validation">
             {isValidating ? (
@@ -137,7 +137,7 @@ export const ContextCard: React.FC<ContextCardProps> = ({
       
       
       {validationState && !validationState.valid && validationState.error && (
-        <div className="openbitfun-context-card__error" data-openbitfun-component="context-list" data-openbitfun-part="cardError" data-openbitfun-state="invalid">
+        <div className="openbitfun-context-card__error" data-openbitfun-component="context-list" data-openbitfun-part="cardError" data-openbitfun-state="invalid" data-starmate-component="context-list" data-starmate-part="cardError" data-starmate-state="invalid" >
           <AlertCircle size={12} />
           <span>{validationState.error}</span>
         </div>

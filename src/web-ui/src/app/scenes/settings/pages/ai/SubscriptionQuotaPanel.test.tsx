@@ -17,12 +17,12 @@ vi.mock('@/infrastructure/i18n', () => ({
   i18nService: { formatNumber: (value: number, options?: { style?: string }) => options?.style === 'percent' ? `${Math.round(value * 1000) / 10}%` : String(value), formatDate: (value: Date) => value.toISOString() },
 }));
 vi.mock('@starmate/ui', () => ({
-  Card: ({ children }: React.PropsWithChildren) => <div data-openbitfun-component="card">{children}</div>,
+  Card: ({ children }: React.PropsWithChildren) => <div data-openbitfun-component="card" data-starmate-component="card" >{children}</div>,
   Button: ({ children, onClick, disabled }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button onClick={onClick} disabled={disabled}>{children}</button>,
   IconButton: ({ icon, loading: _loading, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { icon: React.ReactNode; loading?: boolean }) => <button {...props}>{icon}</button>,
   Icon: () => <svg aria-hidden="true" />,
   Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  StatusPill: ({ children }: { children: React.ReactNode }) => <span data-openbitfun-component="status-pill">{children}</span>,
+  StatusPill: ({ children }: { children: React.ReactNode }) => <span data-openbitfun-component="status-pill" data-starmate-component="status-pill" >{children}</span>,
 }));
 let container: HTMLDivElement;
 let root: Root;

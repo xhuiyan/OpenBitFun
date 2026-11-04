@@ -49,21 +49,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       disabled={disabled || loading}
       ref={ref}
       type={type}
-    >
-      <span aria-hidden="true" className={styles.progress} data-openbitfun-part="progress" />
-      <span className={styles.content} data-openbitfun-part="content">
+     data-starmate-component="button" data-starmate-part="root" data-starmate-tone={tone} data-starmate-variant={variant} >
+      <span aria-hidden="true" className={styles.progress} data-openbitfun-part="progress"  data-starmate-part="progress" />
+      <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
         {leadingIcon && (
-          <span aria-hidden="true" className={classNames(styles.icon, styles.leadingIcon)} data-openbitfun-icon-slot="true" data-openbitfun-part="leading-icon">
+          <span aria-hidden="true" className={classNames(styles.icon, styles.leadingIcon)} data-openbitfun-icon-slot="true" data-openbitfun-part="leading-icon" data-starmate-icon-slot="true" data-starmate-part="leading-icon" >
             {leadingIcon}
           </span>
         )}
         {labelBehavior === "static" ? (
-          <span className={classNames(styles.label, styles.staticLabel)} data-openbitfun-part="label">{children}</span>
+          <span className={classNames(styles.label, styles.staticLabel)} data-openbitfun-part="label" data-starmate-part="label" >{children}</span>
         ) : (
-          <OverflowText className={styles.label} data-openbitfun-part="label">{children}</OverflowText>
+          <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</OverflowText>
         )}
         {trailingIcon && (
-          <span aria-hidden="true" className={classNames(styles.icon, styles.trailingIcon)} data-openbitfun-icon-slot="true" data-openbitfun-part="trailing-icon">
+          <span aria-hidden="true" className={classNames(styles.icon, styles.trailingIcon)} data-openbitfun-icon-slot="true" data-openbitfun-part="trailing-icon" data-starmate-icon-slot="true" data-starmate-part="trailing-icon" >
             {trailingIcon}
           </span>
         )}

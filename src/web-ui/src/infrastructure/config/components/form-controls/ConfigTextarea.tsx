@@ -89,7 +89,7 @@ export const ConfigTextarea = forwardRef<HTMLTextAreaElement, ConfigTextareaProp
                 className="config-form-label__required"
                 data-openbitfun-component="config"
                 data-openbitfun-part="required"
-              >
+               data-starmate-component="config" data-starmate-part="required" >
                 *
               </span>
             ) : null}

@@ -77,7 +77,7 @@ export const RollingText = forwardRef<HTMLSpanElement, RollingTextProps>(
         data-openbitfun-component="rolling-text"
         data-transitioning={transitioning ? "true" : "false"}
         ref={rootRef}
-      >
+       data-starmate-component="rolling-text" >
         {transitioning && (
           <span aria-hidden="true" className={styles.outgoing} data-rolling-text-part="outgoing" ref={outgoingRef}>
             <OverflowText behavior="fade">{frame.outgoing}</OverflowText>

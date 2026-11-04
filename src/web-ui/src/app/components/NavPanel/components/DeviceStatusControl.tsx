@@ -395,7 +395,7 @@ const DeviceStatusControl: React.FC<DeviceStatusControlProps> = ({
           data-openbitfun-component="nav-panel"
           data-openbitfun-part="deviceStatus"
           data-openbitfun-state={overview.mode}
-        >
+         data-starmate-component="nav-panel" data-starmate-part="deviceStatus" data-starmate-state={overview.mode} >
           {/* The label names a device, and this mark says which system that device
               is: the machine the window works on, whichever end of the connection
               it sits on. */}
@@ -458,7 +458,7 @@ const DeviceStatusControl: React.FC<DeviceStatusControlProps> = ({
               left: `${popoverLayout?.left ?? 0}px`,
               visibility: popoverLayout ? 'visible' : 'hidden',
             }}
-          >
+           data-starmate-product-component="device-overview" data-starmate-product-part="root" data-starmate-state={overview.mode} data-starmate-placement={popoverLayout?.placement ?? 'top'} >
             <CardHeader
               className="openbitfun-device-overview__header"
               align="center"
@@ -634,7 +634,7 @@ const DeviceStatusControl: React.FC<DeviceStatusControlProps> = ({
                         data-openbitfun-activities={device.activities.join(' ')}
                         role="group"
                         aria-label={`${deviceDisplayName(device)} · ${deviceActivity(device)}`}
-                      >
+                       data-starmate-device-kind={device.kind} data-starmate-activities={device.activities.join(' ')} >
                         <span className="openbitfun-device-overview__device-icon" aria-hidden="true">
                           <DeviceMark
                             device={device}

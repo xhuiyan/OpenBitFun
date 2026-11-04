@@ -120,7 +120,7 @@ function highlightFirstMatch(text: string, query: string): React.ReactNode {
         className="openbitfun-settings-nav__search-highlight"
         data-openbitfun-component="settings-nav"
         data-openbitfun-part="highlight"
-      >
+       data-starmate-component="settings-nav" data-starmate-part="highlight" >
         {text.slice(index, index + needle.length)}
       </mark>
       {text.slice(index + needle.length)}
@@ -179,7 +179,7 @@ const SettingsNav: React.FC = () => {
         data-openbitfun-part="dirtyMarker"
         title={t('changeGuard.unsavedPage')}
         aria-label={t('changeGuard.unsavedPage')}
-      />
+       data-starmate-component="settings-nav" data-starmate-part="dirtyMarker" />
     ) : null
   ), [dirtyPageIds, t]);
 
@@ -270,13 +270,13 @@ const SettingsNav: React.FC = () => {
       aria-label={t('shared:features.settings')}
       data-openbitfun-component="settings-nav"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="settings-nav" data-starmate-part="root" >
       <NavigationPanelHeader
         className="openbitfun-settings-nav__panel-header"
         data-openbitfun-component="settings-nav"
         data-openbitfun-part="header"
-      >
-        <div className="openbitfun-settings-nav__search" data-openbitfun-component="settings-nav" data-openbitfun-part="search">
+       data-starmate-component="settings-nav" data-starmate-part="header" >
+        <div className="openbitfun-settings-nav__search" data-openbitfun-component="settings-nav" data-openbitfun-part="search" data-starmate-component="settings-nav" data-starmate-part="search" >
           <SearchField
             ref={searchInputRef}
             className="openbitfun-settings-nav__search-field"
@@ -313,7 +313,7 @@ const SettingsNav: React.FC = () => {
                 aria-activedescendant={highlightedIndex >= 0
                   ? `settings-nav-result-${highlightedIndex}`
                   : undefined}
-              >
+               data-starmate-component="settings-nav" data-starmate-part="searchResults" >
                 {results.map((row, index) => {
                   const active = activePageId === row.destination.pageId
                     && (!row.destination.viewId || row.destination.viewId === activeViewId)
@@ -343,7 +343,7 @@ const SettingsNav: React.FC = () => {
                         preload(row.destination.pageId);
                       }}
                       onFocus={() => preload(row.destination.pageId)}
-                    >
+                     data-starmate-component="settings-nav" data-starmate-part="searchResult" data-starmate-state={[active && 'active', selected && 'selected'].filter(Boolean).join(' ') || undefined} >
                       <span className="openbitfun-settings-nav__search-result-copy">
                         <OverflowText behavior="marquee" className="openbitfun-settings-nav__search-result-line">
                           {highlightFirstMatch(path, searchQuery)}
@@ -358,7 +358,7 @@ const SettingsNav: React.FC = () => {
                 })}
               </div>
             ) : (
-              <div className="openbitfun-settings-nav__search-empty" role="status" data-openbitfun-component="settings-nav" data-openbitfun-part="searchEmpty">
+              <div className="openbitfun-settings-nav__search-empty" role="status" data-openbitfun-component="settings-nav" data-openbitfun-part="searchEmpty" data-starmate-component="settings-nav" data-starmate-part="searchEmpty" >
                 {t('navigation.search.empty')}
               </div>
             )
@@ -373,12 +373,12 @@ const SettingsNav: React.FC = () => {
                   className="openbitfun-settings-nav__category-label"
                   data-openbitfun-component="settings-nav"
                   data-openbitfun-part="categoryHeader"
-                >
+                 data-starmate-component="settings-nav" data-starmate-part="categoryHeader" >
                   {t(category.labelKey)}
                 </span>
               )}
-            >
-              <div className="openbitfun-settings-nav__items" data-openbitfun-component="settings-nav" data-openbitfun-part="items">
+             data-starmate-component="settings-nav" data-starmate-part="category" >
+              <div className="openbitfun-settings-nav__items" data-openbitfun-component="settings-nav" data-openbitfun-part="items" data-starmate-component="settings-nav" data-starmate-part="items" >
                 {category.pages.map((page) => (
                   <NavigationPanelItem data-overflow-trigger
                     key={page.id}
@@ -394,7 +394,7 @@ const SettingsNav: React.FC = () => {
                     onClick={() => activate({ pageId: page.id })}
                     onPointerEnter={() => preload(page.id)}
                     onFocus={() => preload(page.id)}
-                  >
+                   data-starmate-component="settings-nav" data-starmate-part="item" data-starmate-state={activePageId === page.id ? 'active' : undefined} >
                     <OverflowText className="openbitfun-settings-nav__item-label">{t(page.labelKey)}</OverflowText>
                     {pendingPageId === page.id ? <Spinner size="sm" /> : dirtyMarker(page.id)}
                   </NavigationPanelItem>

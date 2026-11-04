@@ -227,7 +227,7 @@ function HarnessPreview({ profile, active, replay, onReplay, replayLabel }: {
   const Scene = SCENES[profile];
   return <button type="button" className="harness-preview__stage" aria-label={replayLabel} onClick={onReplay}
     data-testid="harness-preview-animation" data-profile={profile}
-    data-openbitfun-scene="agents" data-openbitfun-part="harnessPreview">
+    data-openbitfun-scene="agents" data-openbitfun-part="harnessPreview" data-starmate-scene="agents" data-starmate-part="harnessPreview" >
     <span aria-hidden="true"><Scene t={time} motion={motion} /></span>
   </button>;
 }

@@ -12,7 +12,7 @@ export function ProductBrandIcon({ productId, size = 24 }: {
     className={`${styles.icon}${icon.monochrome ? ` ${styles.monochrome}` : ''}`}
     aria-hidden="true" data-product-logo={productId}
     style={{ width: size, height: size, ...(icon.monochrome ? { maskImage: `url("${icon.src}")` } : {}) }}
-    data-openbitfun-component="product-brand-icon" data-openbitfun-part="root">
+    data-openbitfun-component="product-brand-icon" data-openbitfun-part="root" data-starmate-component="product-brand-icon" data-starmate-part="root" >
     {!icon.monochrome && <>
       <img className={icon.darkSrc ? styles.light : undefined} src={icon.src} alt="" draggable={false} />
       {icon.darkSrc && <img className={styles.dark} src={icon.darkSrc} alt="" draggable={false} />}

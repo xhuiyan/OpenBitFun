@@ -177,12 +177,12 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
         event.preventDefault();
         onSave();
       }}
-    >
+     data-starmate-scene="todos" data-starmate-part="editor" >
       <header
         className="openbitfun-todos__editor-intro"
         data-openbitfun-scene="todos"
         data-openbitfun-part="editorIntro"
-      >
+       data-starmate-scene="todos" data-starmate-part="editorIntro" >
         <span className="openbitfun-todos__editor-intro-icon" aria-hidden="true">
           <CalendarClock size={24} strokeWidth={1.8} />
         </span>
@@ -198,19 +198,19 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
         className="openbitfun-todos__editor-body"
         data-openbitfun-scene="todos"
         data-openbitfun-part="editorBody"
-      >
+       data-starmate-scene="todos" data-starmate-part="editorBody" >
         <section
           className="openbitfun-todos__editor-section"
           aria-labelledby="todos-editor-information-title"
           data-openbitfun-scene="todos"
           data-openbitfun-part="editorSection"
-        >
+         data-starmate-scene="todos" data-starmate-part="editorSection" >
           <h3 id="todos-editor-information-title" className="openbitfun-todos__editor-section-title">
             {t('editor.sections.information')}
           </h3>
 
-          <div className="openbitfun-todos__editor-grid" data-openbitfun-scene="todos" data-openbitfun-part="editorGrid">
-            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+          <div className="openbitfun-todos__editor-grid" data-openbitfun-scene="todos" data-openbitfun-part="editorGrid" data-starmate-scene="todos" data-starmate-part="editorGrid" >
+            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
               <span className="openbitfun-todos__field-label">
                 <ClipboardList size={16} aria-hidden="true" />
                 {t('editor.fields.name')}
@@ -231,7 +231,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
               />
             </div>
 
-            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
               <span className="openbitfun-todos__field-label">
                 <Icon name="folder" size="md" aria-hidden="true" />
                 {t('shared:features.workspace')}
@@ -248,7 +248,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
             </div>
 
             {boundSessionId ? (
-              <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+              <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
                 <span className="openbitfun-todos__field-label">
                   <Icon name="user" size="md" aria-hidden="true" />
                   {t('editor.fields.runsIn')}
@@ -258,7 +258,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
                 </OverflowText></span>
               </div>
             ) : (
-              <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+              <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
                 <span className="openbitfun-todos__field-label">
                   <Icon name="user" size="md" aria-hidden="true" />
                   {t('editor.fields.agentType')}
@@ -280,7 +280,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
               </div>
             )}
 
-            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
               <span className="openbitfun-todos__field-label">
                 <Icon name="refresh" size="md" aria-hidden="true" />
                 {t('editor.fields.scheduleKind')}
@@ -300,7 +300,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
               />
             </div>
 
-            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+            <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
               <span className="openbitfun-todos__field-label">
                 <Icon name="clock" size="md" aria-hidden="true" />
                 {draft.scheduleKind === 'at'
@@ -383,7 +383,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
             className="openbitfun-todos__editor-runtime"
             data-openbitfun-scene="todos"
             data-openbitfun-part="editorRuntime"
-          >
+           data-starmate-scene="todos" data-starmate-part="editorRuntime" >
             <label className="openbitfun-todos__editor-enable">
               <Switch
                 checked={draft.enabled}
@@ -413,7 +413,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
           aria-labelledby="todos-editor-prompt-title"
           data-openbitfun-scene="todos"
           data-openbitfun-part="editorSection"
-        >
+         data-starmate-scene="todos" data-starmate-part="editorSection" >
           <h3 id="todos-editor-prompt-title" className="openbitfun-todos__editor-section-title">
             {t('editor.sections.prompt')}
           </h3>
@@ -439,7 +439,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
           className="openbitfun-todos__editor-advanced"
           data-openbitfun-scene="todos"
           data-openbitfun-part="editorAdvanced"
-        >
+         data-starmate-scene="todos" data-starmate-part="editorAdvanced" >
           <button
             type="button"
             className="openbitfun-todos__editor-advanced-trigger"
@@ -455,7 +455,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
           {advancedOpen ? (
             <div id="todos-editor-advanced-panel" className="openbitfun-todos__editor-advanced-panel">
               {draft.scheduleKind === 'every' ? (
-                <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+                <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
                   <span className="openbitfun-todos__field-label">
                     <Icon name="clock" size="md" aria-hidden="true" />
                     {t('editor.fields.anchor')}
@@ -471,7 +471,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
               ) : null}
 
               {draft.scheduleKind === 'cron' ? (
-                <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field">
+                <div className="openbitfun-todos__field-card" data-openbitfun-scene="todos" data-openbitfun-part="field" data-starmate-scene="todos" data-starmate-part="field" >
                   <span className="openbitfun-todos__field-label">
                     <Icon name="clock" size="md" aria-hidden="true" />
                     {t('editor.fields.timezone')}
@@ -504,7 +504,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
         </section>
 
         {workspaceOptions.length === 0 ? (
-          <p className="openbitfun-todos__warning" data-openbitfun-scene="todos" data-openbitfun-part="warning">
+          <p className="openbitfun-todos__warning" data-openbitfun-scene="todos" data-openbitfun-part="warning" data-starmate-scene="todos" data-starmate-part="warning" >
             {t('editor.noWorkspace')}
           </p>
         ) : null}
@@ -514,7 +514,7 @@ const TodoEditor: React.FC<TodoEditorProps> = ({
         className="openbitfun-todos__editor-actions"
         data-openbitfun-scene="todos"
         data-openbitfun-part="editorActions"
-      >
+       data-starmate-scene="todos" data-starmate-part="editorActions" >
         <Button
           type="button"
           size="md"

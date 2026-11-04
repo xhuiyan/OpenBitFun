@@ -180,7 +180,7 @@ const MatchItem = memo<MatchItemProps>(({ match, target, searchQuery, onLineClic
       onClick={() => onLineClick(target, match.lineNumber)}
       data-openbitfun-component="file-system"
       data-openbitfun-part="match"
-    >
+     data-starmate-component="file-system" data-starmate-part="match" >
       <span 
         className="openbitfun-search-results__match-content"
         title={match.matchedContent || ''}
@@ -517,8 +517,8 @@ export const FileSearchResults: React.FC<FileSearchResultsProps> = ({
 
   if (results.length === 0) {
     return (
-      <div className={`openbitfun-search-results openbitfun-search-results--empty ${className}`} data-openbitfun-component="file-system" data-openbitfun-part="searchResults" data-openbitfun-state="empty">
-        <div className="openbitfun-search-results__empty" data-openbitfun-component="file-system" data-openbitfun-part="empty">
+      <div className={`openbitfun-search-results openbitfun-search-results--empty ${className}`} data-openbitfun-component="file-system" data-openbitfun-part="searchResults" data-openbitfun-state="empty" data-starmate-component="file-system" data-starmate-part="searchResults" data-starmate-state="empty" >
+        <div className="openbitfun-search-results__empty" data-openbitfun-component="file-system" data-openbitfun-part="empty" data-starmate-component="file-system" data-starmate-part="empty" >
           <div className="openbitfun-search-results__empty-icon">
             <FileText size={48} />
           </div>
@@ -532,8 +532,8 @@ export const FileSearchResults: React.FC<FileSearchResultsProps> = ({
   }
 
   return (
-    <div className={`openbitfun-search-results ${className}`} data-openbitfun-component="file-system" data-openbitfun-part="searchResults">
-      <div className="openbitfun-search-results__header" data-openbitfun-component="file-system" data-openbitfun-part="header">
+    <div className={`openbitfun-search-results ${className}`} data-openbitfun-component="file-system" data-openbitfun-part="searchResults" data-starmate-component="file-system" data-starmate-part="searchResults" >
+      <div className="openbitfun-search-results__header" data-openbitfun-component="file-system" data-openbitfun-part="header" data-starmate-component="file-system" data-starmate-part="header" >
         <OverflowText
           aria-label={headerText}
           behavior="fade"
@@ -551,7 +551,7 @@ export const FileSearchResults: React.FC<FileSearchResultsProps> = ({
         onScroll={maybeAutoLoadMore}
         data-openbitfun-component="file-system"
         data-openbitfun-part="list"
-      >
+       data-starmate-component="file-system" data-starmate-part="list" >
         {visibleGroups.map((group, index) => (
           <FileGroup
             key={`${group.path}-${index}`}

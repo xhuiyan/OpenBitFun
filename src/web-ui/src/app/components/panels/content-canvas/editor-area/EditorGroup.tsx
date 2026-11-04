@@ -274,7 +274,7 @@ export const EditorGroup: React.FC<EditorGroupProps> = ({
     <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="root" data-openbitfun-group={groupId} data-openbitfun-state={isActive ? 'active' : ''}
       className={`canvas-editor-group ${isActive ? 'is-active' : ''}`}
       onClick={onGroupFocus}
-    >
+     data-starmate-component="canvas-editor-group" data-starmate-part="root" data-starmate-group={groupId} data-starmate-state={isActive ? 'active' : ''} >
       {/* Tab bar */}
       {externalToolbar ? <CanvasToolbarContribution groupId={groupId}>{tabBar}</CanvasToolbarContribution> : tabBar}
 
@@ -285,7 +285,7 @@ export const EditorGroup: React.FC<EditorGroupProps> = ({
         splitMode={splitMode}
         onDrop={onDrop}
       >
-        <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="content" className="canvas-editor-group__content">
+        <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="content" className="canvas-editor-group__content" data-starmate-component="canvas-editor-group" data-starmate-part="content" >
           {/* Render cached tabs (active shown, others hidden) for instant switching */}
           {tabsToRender.length > 0 ? (
             tabsToRender.map((tab) => (
@@ -296,7 +296,7 @@ export const EditorGroup: React.FC<EditorGroupProps> = ({
                 data-openbitfun-part="tabContent"
                 className="canvas-editor-group__tab-content"
                 style={{ display: effectiveActiveTabId === tab.id ? 'flex' : 'none' }}
-              >
+               data-starmate-component="canvas-editor-group" data-starmate-part="tabContent" >
                 <CanvasContentView
                   documentId={canvasTabDocumentId(tab)}
                   content={tab.content as any}
@@ -316,8 +316,8 @@ export const EditorGroup: React.FC<EditorGroupProps> = ({
               </div>
             ))
           ) : visibleTabs.length === 0 ? (
-            <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="empty" className="canvas-editor-group__empty">
-              <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="emptyContent" className="canvas-editor-group__empty-content">
+            <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="empty" className="canvas-editor-group__empty" data-starmate-component="canvas-editor-group" data-starmate-part="empty" >
+              <div data-openbitfun-component="canvas-editor-group" data-openbitfun-part="emptyContent" className="canvas-editor-group__empty-content" data-starmate-component="canvas-editor-group" data-starmate-part="emptyContent" >
                 <span>{t('canvas.dragTabHere')}</span>
               </div>
             </div>

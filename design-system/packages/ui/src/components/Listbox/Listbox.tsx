@@ -191,13 +191,13 @@ export const Listbox = forwardRef<HTMLDivElement, ListboxProps>(function Listbox
       onKeyDown={handleKeyDown}
       ref={setRootRef}
       role="listbox"
-    >
+     data-starmate-component="listbox" data-starmate-focus-mode={focusMode} data-starmate-multiple={multiple ? "true" : "false"} >
       <ScrollArea
         className={styles.viewport}
         orientation="vertical"
         scrollbarVisibility={scrollbarVisibility}
       >
-        <div className={styles.list} data-openbitfun-part="list">{children}</div>
+        <div className={styles.list} data-openbitfun-part="list" data-starmate-part="list" >{children}</div>
       </ScrollArea>
     </div>
   );
@@ -237,24 +237,24 @@ export const ListboxOption = forwardRef<HTMLButtonElement, ListboxOptionProps>(
         tabIndex={tabIndex}
         title={title}
         type="button"
-      >
+       data-starmate-listbox-option="" data-starmate-part="option" >
         {leading !== undefined && leading !== null && (
-          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+          <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
             {leading}
           </span>
         )}
-        <span className={styles.content} data-openbitfun-part="content">
-          <OverflowText title={title === "" ? "" : undefined} className={styles.label} data-openbitfun-part="label" marqueeActive={active}>{children}</OverflowText>
+        <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
+          <OverflowText title={title === "" ? "" : undefined} className={styles.label} data-openbitfun-part="label" marqueeActive={active} data-starmate-part="label" >{children}</OverflowText>
           {description !== undefined && description !== null && (
-            <span className={styles.description} data-openbitfun-part="description">
+            <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
               {description}
             </span>
           )}
         </span>
         {metadata !== undefined && metadata !== null && (
-          <OverflowText title={title === "" ? "" : undefined} className={styles.metadata} data-openbitfun-part="metadata" marqueeActive={active}>{metadata}</OverflowText>
+          <OverflowText title={title === "" ? "" : undefined} className={styles.metadata} data-openbitfun-part="metadata" marqueeActive={active} data-starmate-part="metadata" >{metadata}</OverflowText>
         )}
-        <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator">
+        <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator" data-starmate-icon-slot="true" data-starmate-part="indicator" >
           {indicator ?? (selected ? <Icon name="check-line" /> : null)}
         </span>
       </button>
@@ -274,13 +274,13 @@ export const ListboxGroup = forwardRef<HTMLDivElement, ListboxGroupProps>(
         data-openbitfun-part="group"
         ref={ref}
         role="group"
-      >
+       data-starmate-part="group" >
         {labelId && (
-          <div className={styles.groupLabel} data-openbitfun-part="group-label" id={labelId}>
+          <div className={styles.groupLabel} data-openbitfun-part="group-label" id={labelId} data-starmate-part="group-label" >
             {label}
           </div>
         )}
-        <div className={styles.groupOptions} data-openbitfun-part="group-options">{children}</div>
+        <div className={styles.groupOptions} data-openbitfun-part="group-options" data-starmate-part="group-options" >{children}</div>
       </div>
     );
   },
@@ -295,7 +295,7 @@ export const ListboxEmpty = forwardRef<HTMLDivElement, ListboxEmptyProps>(
         data-openbitfun-part="empty"
         ref={ref}
         role="status"
-      />
+       data-starmate-part="empty" />
     );
   },
 );

@@ -284,7 +284,7 @@ const FlowChatListHeader = forwardRef<HTMLDivElement, {
         height: `${FLOWCHAT_TURN_TOP_GAP_PX}px`,
         minHeight: `${FLOWCHAT_TURN_TOP_GAP_PX}px`,
       }}
-    />
+     data-starmate-component="virtual-message-list" data-starmate-part="header" />
     {previousHistoryBoundaryStatusNode}
   </div>
 ));
@@ -310,7 +310,7 @@ const FlowChatListFooter = ({
         height: `${bottomLayoutInsetPx}px`,
         minHeight: `${bottomLayoutInsetPx}px`,
       }}
-    >
+     data-starmate-component="virtual-message-list" data-starmate-part="footer" >
       {nextHistoryBoundaryStatusNode}
       <RuntimeStatusSlot sessionId={runtimeStatusSessionId} placement="footer" />
     </div>
@@ -324,7 +324,7 @@ const FlowChatListFooter = ({
         height: `${tailSpacerPx}px`,
         minHeight: `${tailSpacerPx}px`,
       }}
-    />
+     data-starmate-component="virtual-message-list" data-starmate-part="tailSpacer" />
   </>
 );
 
@@ -349,7 +349,7 @@ const FlowChatHistoryPagingSentinel = ({
     aria-hidden={state === 'idle'}
     role={state === 'idle' ? undefined : 'status'}
     aria-live={state === 'idle' ? undefined : 'polite'}
-  >
+   data-starmate-component="virtual-message-list" data-starmate-part="boundaryStatus" data-starmate-state={state === 'loading' ? 'preparing' : state === 'error' ? 'unavailable' : undefined} >
     {state === 'loading' ? (
       <Icon glyph={Loader2} size="sm" aria-hidden className="virtual-message-list__history-paging-spinner" />
     ) : null}
@@ -2421,9 +2421,9 @@ const VirtualMessageListSession = forwardRef<VirtualMessageListRef, VirtualMessa
         data-openbitfun-state="empty"
         className="virtual-message-list virtual-message-list--empty"
         data-testid="flowchat-message-list-empty"
-      >
-        <div className="empty-state" data-openbitfun-component="virtual-message-list" data-openbitfun-part="empty">
-          <p data-openbitfun-component="virtual-message-list" data-openbitfun-part="emptyMessage">No messages yet</p>
+       data-starmate-component="virtual-message-list" data-starmate-part="root" data-starmate-state="empty" >
+        <div className="empty-state" data-openbitfun-component="virtual-message-list" data-openbitfun-part="empty" data-starmate-component="virtual-message-list" data-starmate-part="empty" >
+          <p data-openbitfun-component="virtual-message-list" data-openbitfun-part="emptyMessage" data-starmate-component="virtual-message-list" data-starmate-part="emptyMessage" >No messages yet</p>
         </div>
       </div>
     );
@@ -2446,7 +2446,7 @@ const VirtualMessageListSession = forwardRef<VirtualMessageListRef, VirtualMessa
       data-streaming-output={isStreamingOutput ? 'true' : 'false'}
       data-open-viewport-settled={isOpenViewportSettled ? 'true' : 'false'}
       opening={!isOpenViewportSettled}
-    >
+     data-starmate-component="virtual-message-list" data-starmate-part="root" >
       <div
         ref={handleScrollerRef}
         className="virtual-message-list__scroller"
@@ -2456,7 +2456,7 @@ const VirtualMessageListSession = forwardRef<VirtualMessageListRef, VirtualMessa
         style={{
           '--_flow-chat-input-overlay-inset': `${inputOverlayInsetPx}px`,
         } as React.CSSProperties}
-      >
+       data-starmate-viewport-inset-bottom={inputOverlayInsetPx} >
         <div className="virtual-message-list__extent" ref={extentElementRef}>
         <FlowChatListHeader
           ref={headerElementRef}
@@ -2476,7 +2476,7 @@ const VirtualMessageListSession = forwardRef<VirtualMessageListRef, VirtualMessa
             paddingTop: `${virtualizer.paddingTopPx}px`,
             paddingBottom: `${virtualizer.paddingBottomPx}px`,
           }}
-        >
+         data-starmate-component="virtual-message-list" data-starmate-part="items" >
           {virtualizer.rows.map((row, rowIndex) => {
             const item = virtualItems[row.index];
             const nextItem = virtualItems[nextVisibleItemIndexes[row.index]];

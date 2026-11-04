@@ -60,8 +60,8 @@ export function ToolCardStatusSlot({
   // A capsule's glyph communicates its type; status lives beside its label.
   if (capsule && hasToolIcon) {
     return <span aria-hidden="true" className={classNames(styles.root, className)}
-      data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="statusSlot" data-default-icon="tool">
-      <span className={styles.iconLayer} data-openbitfun-icon-slot="true" data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="toolIconLayer">{toolIcon}</span>
+      data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="statusSlot" data-default-icon="tool" data-starmate-component="flow-chat-tool-card" data-starmate-part="statusSlot" >
+      <span className={styles.iconLayer} data-openbitfun-icon-slot="true" data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="toolIconLayer" data-starmate-icon-slot="true" data-starmate-component="flow-chat-tool-card" data-starmate-part="toolIconLayer" >{toolIcon}</span>
     </span>;
   }
 
@@ -81,14 +81,14 @@ export function ToolCardStatusSlot({
       data-openbitfun-component="flow-chat-tool-card"
       data-openbitfun-part="statusSlot"
       data-default-icon={resolvedDefaultIcon}
-    >
+     data-starmate-component="flow-chat-tool-card" data-starmate-part="statusSlot" >
       {hasStatusGlyph && (
         <span
           className={styles.statusLayer}
           data-openbitfun-icon-slot="true"
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="statusLayer"
-        >
+         data-starmate-icon-slot="true" data-starmate-component="flow-chat-tool-card" data-starmate-part="statusLayer" >
           <StatusGlyph size={size} status={status} />
         </span>
       )}
@@ -99,7 +99,7 @@ export function ToolCardStatusSlot({
           data-openbitfun-icon-slot="true"
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="toolIconLayer"
-        >
+         data-starmate-icon-slot="true" data-starmate-component="flow-chat-tool-card" data-starmate-part="toolIconLayer" >
           {toolIcon}
         </span>
       )}

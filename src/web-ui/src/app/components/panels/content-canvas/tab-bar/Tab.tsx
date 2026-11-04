@@ -359,7 +359,14 @@ export const Tab: React.FC<TabProps> = ({
         draggable
         onDragStart={handleDragStart}
         onDragEnd={onDragEnd}
-      >
+       data-starmate-product-component="canvas-tab" data-starmate-product-part="root" data-starmate-group={groupId} data-starmate-state={[
+          isActive && 'active',
+          isDragging && 'dragging',
+          tab.isDirty && 'dirty',
+          tab.fileDeletedFromDisk && 'deleted',
+          tab.state === 'pinned' && 'pinned',
+          tab.state === 'preview' && 'preview',
+        ].filter(Boolean).join(' ')} >
         {children}
       </div>
     </Tooltip>

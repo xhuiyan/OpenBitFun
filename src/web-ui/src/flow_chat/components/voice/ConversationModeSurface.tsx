@@ -107,7 +107,7 @@ export function ConversationModeSurface({
       data-openbitfun-component="conversation-mode-surface"
       data-openbitfun-part="root"
       data-openbitfun-state={isVoiceMode ? 'voice' : 'chat'}
-    >
+     data-starmate-component="conversation-mode-surface" data-starmate-part="root" data-starmate-state={isVoiceMode ? 'voice' : 'chat'} >
       {!isVoiceMode && renderHeader?.(integrated ? null : <IconButton
         size="sm"
         data-testid={switchTestId}
@@ -119,7 +119,7 @@ export function ConversationModeSurface({
         onClick={handleModeSwitch}
       />)}
       {integrated && <div ref={voiceHeaderRef} className="openbitfun-conversation-mode-surface__voice-header" aria-hidden={!isVoiceMode}
-        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="voiceHeader">
+        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="voiceHeader" data-starmate-component="conversation-mode-surface" data-starmate-part="voiceHeader" >
         <div className="openbitfun-conversation-mode-surface__voice-header-content">
           <VoiceCallHeader title={t('voiceCall.call.title')} phase={phase === 'idle' ? 'live' : phase}
             labels={{ back: t('voiceCall.call.switchToChat'), close: t('voiceCall.call.close') }}
@@ -130,7 +130,7 @@ export function ConversationModeSurface({
         className="openbitfun-conversation-mode-surface__body"
         data-openbitfun-component="conversation-mode-surface"
         data-openbitfun-part="body"
-      >
+       data-starmate-component="conversation-mode-surface" data-starmate-part="body" >
         {integrated && <VoiceCallIdentity expanded={isVoiceMode} active={active && ownsCall && phase === 'live'}
           leading={headerAction}
           readAudio={ownsCall ? controller.readAudio : undefined}
@@ -148,7 +148,7 @@ export function ConversationModeSurface({
           onToggleMute={controller.toggleMute} onOpenSettings={controller.openSettings} onEnd={controller.end} />}
         <ConversationTextVisibilityContext.Provider value={!isVoiceMode}>
           {integrated ? <div ref={composerRef} className="openbitfun-conversation-mode-surface__composer" aria-hidden={isVoiceMode}
-            data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="composer">
+            data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="composer" data-starmate-component="conversation-mode-surface" data-starmate-part="composer" >
             <div className="openbitfun-conversation-mode-surface__composer-content">{children}</div>
           </div> : <div hidden={isVoiceMode} style={{ display: isVoiceMode ? 'none' : 'contents' }}>{children}</div>}
         </ConversationTextVisibilityContext.Provider>
@@ -159,7 +159,7 @@ export function ConversationModeSurface({
           className="openbitfun-conversation-mode-surface__switch"
           data-openbitfun-component="conversation-mode-surface"
           data-openbitfun-part="modeSwitch"
-        >
+         data-starmate-component="conversation-mode-surface" data-starmate-part="modeSwitch" >
           <button data-overflow-trigger
             type="button"
             className="openbitfun-conversation-mode-surface__switch-button"
@@ -168,7 +168,7 @@ export function ConversationModeSurface({
             data-openbitfun-part="modeSwitchButton"
             disabled={!ownsCall && (voiceStartDisabled || phase !== 'idle')}
             onClick={handleModeSwitch}
-          >
+           data-starmate-component="conversation-mode-surface" data-starmate-part="modeSwitchButton" >
             <Icon glyph={Phone} size="md" aria-hidden="true" />
             <OverflowText>
               {t('voiceCall.call.switchToVoice')}

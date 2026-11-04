@@ -70,7 +70,7 @@ export const PageManageDisplay: React.FC<ToolCardProps> = ({ toolItem, sessionId
   const summary = typeof count === 'number'
     ? t('toolCards.pageManage.count', { count: formatNumber(count) }) : slug;
   return <div ref={cardRootRef} data-openbitfun-adapter="page-manage" data-testid="chat-page-manage-card"
-    data-tool-card-id={toolItem.id} data-status={status} data-expanded={isExpanded ? 'true' : 'false'}>
+    data-tool-card-id={toolItem.id} data-status={status} data-expanded={isExpanded ? 'true' : 'false'} data-starmate-adapter="page-manage" >
     <PagePublishToolCard action={labels[action] || t('toolCards.pageManage.title')} subject={summary}
       version={version || undefined} status={status} isExpanded={isExpanded} onToggle={toggle}
       loading={['preparing', 'running', 'streaming'].includes(status)} fields={fields} error={error}

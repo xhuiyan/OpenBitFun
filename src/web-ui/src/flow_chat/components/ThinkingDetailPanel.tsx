@@ -65,9 +65,9 @@ export function ThinkingDetailPanel({ data }: { data: ThinkingDetailPanelData })
     data-testid="thinking-details-panel"
     role="region"
     aria-label={item?.reasoningKind === 'summary' ? t('toolCards.think.thinkingSummary') : t('toolCards.think.thinkingProcess')}
-  >
+   data-starmate-component="model-thinking-display" data-starmate-part="details" data-starmate-state={isStreaming ? 'streaming' : undefined} >
     <div className="thinking-details-panel__actions"
-      data-openbitfun-component="model-thinking-display" data-openbitfun-part="detailsActions">
+      data-openbitfun-component="model-thinking-display" data-openbitfun-part="detailsActions" data-starmate-component="model-thinking-display" data-starmate-part="detailsActions" >
       <Button size="sm" variant="outline" disabled={!item || !data.navigationTarget}
         onClick={() => {
           if (!surface.isCurrent() || surface.surfaceId !== data.surfaceId || !data.navigationTarget) return;

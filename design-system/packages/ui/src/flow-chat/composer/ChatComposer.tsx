@@ -48,7 +48,7 @@ export const ChatComposerActionButton = forwardRef<
       ref={ref}
       shape="circle"
       size="sm"
-    />
+     data-starmate-role="composer-action" />
   );
 });
 
@@ -144,15 +144,15 @@ export const ChatComposer = forwardRef<HTMLDivElement, ChatComposerProps>(
         data-openbitfun-state={state}
         data-has-context={contextVisible ? "true" : "false"}
         ref={ref}
-      >
+       data-starmate-component="chat-composer" data-starmate-state={state} >
         {contextVisible && (
-          <div className={styles.context} data-openbitfun-part="contextBar">
+          <div className={styles.context} data-openbitfun-part="contextBar" data-starmate-part="contextBar" >
             {contextBar}
           </div>
         )}
-        <div className={styles.body} data-openbitfun-part="body">
+        <div className={styles.body} data-openbitfun-part="body" data-starmate-part="body" >
           {hasSlot(queue) && (
-            <div className={styles.queue} data-openbitfun-part="queue">
+            <div className={styles.queue} data-openbitfun-part="queue" data-starmate-part="queue" >
               {queue}
             </div>
           )}
@@ -161,17 +161,17 @@ export const ChatComposer = forwardRef<HTMLDivElement, ChatComposerProps>(
             className={styles.surface}
             data-openbitfun-layout={layout}
             data-openbitfun-part="surface"
-          >
+           data-starmate-layout={layout} data-starmate-part="surface" >
             {hasSlot(resolvedStartActions) && (
-              <div className={styles.startActions} data-openbitfun-part="startActions">
+              <div className={styles.startActions} data-openbitfun-part="startActions" data-starmate-part="startActions" >
                 {resolvedStartActions}
               </div>
             )}
-            <div className={styles.content} data-openbitfun-part="content">
+            <div className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
               {compoundSlots.content}
             </div>
             {hasSlot(resolvedEndActions) && (
-              <div className={styles.endActions} data-openbitfun-part="endActions">
+              <div className={styles.endActions} data-openbitfun-part="endActions" data-starmate-part="endActions" >
                 {resolvedEndActions}
               </div>
             )}

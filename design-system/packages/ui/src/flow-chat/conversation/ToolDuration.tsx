@@ -53,22 +53,22 @@ export function ToolDuration({
     if (completedDurationMs == null || !showCompletedDuration) return null;
     return <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="root" data-openbitfun-mode="completed"
       className={`duration-text duration-text--completed${completedStatus ? ` duration-text--completed-${completedStatus}` : ''}`}
-      title={completionLabel} aria-label={completionLabel}>
-      <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="duration">{formatDuration?.(completedDurationMs, 'precise') ?? formatDurationPrecise(completedDurationMs)}</span>
+      title={completionLabel} aria-label={completionLabel} data-starmate-component="tool-timeout-indicator" data-starmate-part="root" data-starmate-mode="completed" >
+      <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="duration" data-starmate-component="tool-timeout-indicator" data-starmate-part="duration" >{formatDuration?.(completedDurationMs, 'precise') ?? formatDurationPrecise(completedDurationMs)}</span>
     </span>;
   }
   const hasTimeout = Boolean(timeoutMs && timeoutMs > 0);
   const displayRemaining = timeoutDisabled ? null : remainingMs;
   const isWarning = displayRemaining != null && hasTimeout && displayRemaining < timeoutMs! * 0.2;
   return <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="root" data-openbitfun-mode="live"
-    data-openbitfun-state={[isWarning && 'warning', timeoutDisabled && 'disabled', open && 'open'].filter(Boolean).join(' ')} className="tool-timeout-indicator">
-    <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="duration" className={`duration-text duration-text--live ${isWarning ? 'duration-text--warning' : ''}`}>
+    data-openbitfun-state={[isWarning && 'warning', timeoutDisabled && 'disabled', open && 'open'].filter(Boolean).join(' ')} className="tool-timeout-indicator" data-starmate-component="tool-timeout-indicator" data-starmate-part="root" data-starmate-mode="live" data-starmate-state={[isWarning && 'warning', timeoutDisabled && 'disabled', open && 'open'].filter(Boolean).join(' ')} >
+    <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="duration" className={`duration-text duration-text--live ${isWarning ? 'duration-text--warning' : ''}`} data-starmate-component="tool-timeout-indicator" data-starmate-part="duration" >
       {showIcon && <Icon glyph={Timer} size="sm" />}
-      <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="elapsed" className="duration-elapsed">{formatDuration?.(elapsedMs, 'live') ?? formatDurationLive(elapsedMs)}</span>
+      <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="elapsed" className="duration-elapsed" data-starmate-component="tool-timeout-indicator" data-starmate-part="elapsed" >{formatDuration?.(elapsedMs, 'live') ?? formatDurationLive(elapsedMs)}</span>
       {hasTimeout && <>
         <span className="duration-separator">/</span>
         <span data-openbitfun-component="tool-timeout-indicator" data-openbitfun-part="timeout"
-          className={`duration-timeout ${timeoutDisabled ? 'duration-timeout--disabled' : ''} ${isWarning ? 'duration-timeout--warning' : ''}`}>
+          className={`duration-timeout ${timeoutDisabled ? 'duration-timeout--disabled' : ''} ${isWarning ? 'duration-timeout--warning' : ''}`} data-starmate-component="tool-timeout-indicator" data-starmate-part="timeout" >
           {timeoutDisabled ? <Icon glyph={InfinityIcon} size="sm" className="duration-timeout--infinity" />
             : (formatDuration?.(displayRemaining ?? timeoutMs!, 'live') ?? formatDurationLive(displayRemaining ?? timeoutMs!))}
         </span>

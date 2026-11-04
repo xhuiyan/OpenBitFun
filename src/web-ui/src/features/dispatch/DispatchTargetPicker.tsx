@@ -155,7 +155,7 @@ export const DispatchTargetPicker: React.FC<DispatchTargetPickerProps> = ({
       aria-label={t('chatInput.dispatch.menuLabel')}
       data-testid="dispatch-target-menu"
       autoFocusFirstItem
-    >
+     data-starmate-component="dispatch-target-picker" data-starmate-part="menu" data-starmate-placement={menuLayout?.placement ?? 'top'} >
       <MenuSection
         className="dispatch-target-picker__local-section"
         title={t('chatInput.dispatch.localSection')}
@@ -172,7 +172,7 @@ export const DispatchTargetPicker: React.FC<DispatchTargetPickerProps> = ({
             leading={<Laptop size={15} aria-hidden />}
             metadata={localDirectorySelected ? <Icon name="check-line" size="sm" aria-hidden /> : null}
             onClick={() => selectLocalMode(false)}
-          >
+           data-starmate-component="dispatch-target-picker" data-starmate-part="option" >
             <span className="dispatch-target-picker__option-copy">
               <strong><OverflowText>{t('chatInput.dispatch.local')}</OverflowText></strong>
             </span>
@@ -191,7 +191,7 @@ export const DispatchTargetPicker: React.FC<DispatchTargetPickerProps> = ({
               leading={<FolderGit2 size={15} aria-hidden />}
               metadata={localWorktreeSelected ? <Icon name="check-line" size="sm" aria-hidden /> : null}
               onClick={() => selectLocalMode(true)}
-            >
+             data-starmate-component="dispatch-target-picker" data-starmate-part="option" >
               <span className="dispatch-target-picker__option-copy">
                 <strong><OverflowText>{localWorktreeControl.label}</OverflowText></strong>
               </span>
@@ -333,7 +333,7 @@ export const DispatchTargetPicker: React.FC<DispatchTargetPickerProps> = ({
         className="dispatch-target-picker"
         data-openbitfun-component="dispatch-target-picker"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="dispatch-target-picker" data-starmate-part="root" >
         <Tooltip content={tooltip} placement="top">
           <button data-overflow-trigger
             ref={triggerRef}
@@ -351,7 +351,7 @@ export const DispatchTargetPicker: React.FC<DispatchTargetPickerProps> = ({
               event.stopPropagation();
               setOpen(current => !current);
             }}
-          >
+           data-starmate-component="dispatch-target-picker" data-starmate-part="trigger" >
             {target.kind === 'local'
               ? localWorktreeControl?.enabled
                 ? <FolderGit2 size={12} />

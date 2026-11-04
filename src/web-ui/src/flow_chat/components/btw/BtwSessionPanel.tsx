@@ -1053,8 +1053,8 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
 
   if (!childSessionId || !childSession) {
     return (
-      <div className="btw-session-panel btw-session-panel--empty" data-openbitfun-component="btw-session-panel" data-openbitfun-part="root" data-openbitfun-view="empty">
-        <div className="btw-session-panel__empty-state" data-openbitfun-component="btw-session-panel" data-openbitfun-part="empty">
+      <div className="btw-session-panel btw-session-panel--empty" data-openbitfun-component="btw-session-panel" data-openbitfun-part="root" data-openbitfun-view="empty" data-starmate-component="btw-session-panel" data-starmate-part="root" data-starmate-view="empty" >
+        <div className="btw-session-panel__empty-state" data-openbitfun-component="btw-session-panel" data-openbitfun-part="empty" data-starmate-component="btw-session-panel" data-starmate-part="empty" >
           {t('btw.emptyThreadLabel', { label: t('btw.threadLabel') })}
         </div>
       </div>
@@ -1072,10 +1072,10 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
         data-openbitfun-part="root"
         data-openbitfun-view="session"
         data-openbitfun-state={retainsReviewActionBarLayout ? 'hasActionBar' : undefined}
-      >
-        <div className="btw-session-panel__header" data-openbitfun-component="btw-session-panel" data-openbitfun-part="header">
+       data-starmate-component="btw-session-panel" data-starmate-part="root" data-starmate-view="session" data-starmate-state={retainsReviewActionBarLayout ? 'hasActionBar' : undefined} >
+        <div className="btw-session-panel__header" data-openbitfun-component="btw-session-panel" data-openbitfun-part="header" data-starmate-component="btw-session-panel" data-starmate-part="header" >
           <Toolbar size="sm" leading={(
-            <div className="btw-session-panel__header-left" data-openbitfun-component="btw-session-panel" data-openbitfun-part="headerMain">
+            <div className="btw-session-panel__header-left" data-openbitfun-component="btw-session-panel" data-openbitfun-part="headerMain" data-starmate-component="btw-session-panel" data-starmate-part="headerMain" >
               {childKind === 'subagent' ? (
                 <SubagentAvatar
                   sessionId={childSessionId}
@@ -1085,13 +1085,13 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
                   showStatus={false}
                 />
               ) : null}
-              <OverflowText className="btw-session-panel__title" data-openbitfun-component="btw-session-panel" data-openbitfun-part="title">
+              <OverflowText className="btw-session-panel__title" data-openbitfun-component="btw-session-panel" data-openbitfun-part="title" data-starmate-component="btw-session-panel" data-starmate-part="title" >
                 {headerTitle}
               </OverflowText>
               {headerModelName && <OverflowText className="btw-session-panel__model">{headerModelName}</OverflowText>}
             </div>
           )} trailing={(
-            <div data-openbitfun-component="btw-session-panel" data-openbitfun-part="actions">
+            <div data-openbitfun-component="btw-session-panel" data-openbitfun-part="actions" data-starmate-component="btw-session-panel" data-starmate-part="actions" >
               <ToolbarGroup>
                 {childKind === 'btw' && childSession.isTransient && (
                   <Tooltip content={t('btw.temporaryHint')}>
@@ -1099,7 +1099,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
                   </Tooltip>
                 )}
                 {childKind === 'btw' && parentMetadata && (
-                  <OverflowText className="btw-session-panel__origin" data-openbitfun-component="btw-session-panel" data-openbitfun-part="meta">
+                  <OverflowText className="btw-session-panel__origin" data-openbitfun-component="btw-session-panel" data-openbitfun-part="meta" data-starmate-component="btw-session-panel" data-starmate-part="meta" >
                     {childOriginLabel} {resolveSessionTitle(parentMetadata, t('btw.parent'))}
                   </OverflowText>
                 )}
@@ -1163,7 +1163,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
             overflowAnchor: 'none',
             ...(reviewActionBottomPadding > 0 ? { paddingBottom: reviewActionBottomPadding } : {}),
           }}
-        >
+         data-starmate-component="btw-session-panel" data-starmate-part="body" >
           {/* Include the top inset and notices in the virtualizer's measured offset. */}
           <div ref={listHeaderRef} style={{ paddingTop: 12 }}>
             {isReviewDetail && reviewDetailNotices.length > 0 && (
@@ -1176,7 +1176,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
                   ? 'alert'
                   : 'status'}
                 aria-live="polite"
-              >
+               data-starmate-component="btw-session-panel" data-starmate-part="empty" >
                 {reviewDetailNotices.map(({ state, key }) => (
                   <span key={state}>{t(key, { label: childBadgeLabel })}</span>
                 ))}
@@ -1194,7 +1194,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
           </div>
           {virtualItems.length === 0 ? (
             !isReviewDetail || reviewDetailNotices.length === 0 ? (
-              <div className="btw-session-panel__empty-state" data-openbitfun-component="btw-session-panel" data-openbitfun-part="empty">{t('session.empty')}</div>
+              <div className="btw-session-panel__empty-state" data-openbitfun-component="btw-session-panel" data-openbitfun-part="empty" data-starmate-component="btw-session-panel" data-starmate-part="empty" >{t('session.empty')}</div>
             ) : null
           ) : (
             <BtwVirtualSessionList
@@ -1228,7 +1228,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
           className="btw-session-panel__scroll-to-bottom"
           data-openbitfun-component="btw-session-panel"
           data-openbitfun-part="scrollToBottom"
-        />
+         data-starmate-component="btw-session-panel" data-starmate-part="scrollToBottom" />
         <div
           className="btw-session-panel__minimized-indicator"
           data-openbitfun-component="btw-session-panel"
@@ -1236,7 +1236,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
           data-openbitfun-state={showMinimizedIndicator ? 'minimized' : 'hidden'}
           aria-hidden={!showMinimizedIndicator}
           {...(!showMinimizedIndicator ? { inert: '' } : {})}
-        >
+         data-starmate-component="btw-session-panel" data-starmate-part="minimized" data-starmate-state={showMinimizedIndicator ? 'minimized' : 'hidden'} >
             <button
               type="button"
               onClick={() => useReviewActionBarStore.getState().restore(childSessionId)}
@@ -1266,7 +1266,7 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
             data-visible={showReviewActionBar ? 'true' : 'false'}
             aria-hidden={!showReviewActionBar}
             {...(!showReviewActionBar ? { inert: '' } : {})}
-          >
+           data-starmate-component="btw-session-panel" data-starmate-part="actionBar" >
             <ReviewActionBar childSessionId={childSessionId} />
           </div>
         </RetainedMountBoundary>

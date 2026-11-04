@@ -222,13 +222,16 @@ export function VoiceInputDiagnostics({
         testingRecognition && 'testing-recognition',
         error && 'error',
       ].filter(Boolean).join(' ')}
-    >
+     data-starmate-component="voice-input-diagnostics" data-starmate-part="root" data-starmate-phase={phase} data-starmate-state={[
+        testingRecognition && 'testing-recognition',
+        error && 'error',
+      ].filter(Boolean).join(' ')} >
       <ConfigPageRow
         label={t('diagnostics.microphone.label')}
         description={t('diagnostics.microphone.description')}
         align="center"
       >
-        <div className="voice-input-config__device-control" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="deviceControl">
+        <div className="voice-input-config__device-control" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="deviceControl" data-starmate-component="voice-input-diagnostics" data-starmate-part="deviceControl" >
           <Select
             data-openbitfun-component="voice-input-diagnostics"
             data-openbitfun-part="deviceSelect"
@@ -237,7 +240,7 @@ export function VoiceInputDiagnostics({
             onPointerDown={() => void loadMicrophones()}
             options={microphoneOptions}
             size="sm"
-          />
+           data-starmate-component="voice-input-diagnostics" data-starmate-part="deviceSelect" />
         </div>
       </ConfigPageRow>
 
@@ -247,7 +250,7 @@ export function VoiceInputDiagnostics({
         align="start"
         className="voice-input-config__balanced-row"
       >
-        <div className="voice-input-config__diagnostic-action" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="diagnosticAction">
+        <div className="voice-input-config__diagnostic-action" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="diagnosticAction" data-starmate-component="voice-input-diagnostics" data-starmate-part="diagnosticAction" >
           {phase === 'recording' ? (
             <div className="voice-input-config__waveform" aria-hidden="true">
               {WAVEFORM_BAR_WEIGHTS.map((weight, index) => (
@@ -289,15 +292,15 @@ export function VoiceInputDiagnostics({
         data-openbitfun-component="voice-input-diagnostics"
         data-openbitfun-part="feedback"
         aria-live="polite"
-      >
+       data-starmate-component="voice-input-diagnostics" data-starmate-part="feedback" >
         {result?.text.trim() ? (
-          <div className="voice-input-config__recognition-result" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="result">
+          <div className="voice-input-config__recognition-result" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="result" data-starmate-component="voice-input-diagnostics" data-starmate-part="result" >
             <span>{result.text.trim()}</span>
             <small>{t('diagnostics.recognition.timing', { duration: result.durationMs })}</small>
           </div>
         ) : null}
         {error ? (
-          <span className="voice-input-config__diagnostic-error" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="error">{error}</span>
+          <span className="voice-input-config__diagnostic-error" data-openbitfun-component="voice-input-diagnostics" data-openbitfun-part="error" data-starmate-component="voice-input-diagnostics" data-starmate-part="error" >{error}</span>
         ) : null}
       </div>
     </div>

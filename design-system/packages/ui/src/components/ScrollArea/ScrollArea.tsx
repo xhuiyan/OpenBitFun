@@ -108,7 +108,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         data-openbitfun-part={part}
         data-openbitfun-scrollbar-visibility={scrollbarVisibility}
         ref={setViewportRef}
-      />
+       data-starmate-component={component} data-starmate-edge-fade={edgeFade} data-starmate-orientation={orientation} data-starmate-overscroll-behavior-y={overscrollBehaviorY} data-starmate-part={part} data-starmate-scrollbar-visibility={scrollbarVisibility} />
     );
   },
 );

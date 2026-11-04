@@ -23,7 +23,7 @@ vi.mock('@/infrastructure/i18n', () => ({
 
 vi.mock('@starmate/ui', async (importOriginal) => ({
   Disclosure: (await importOriginal<typeof import('@starmate/ui')>()).Disclosure,
-  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name} />,
+  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name}  data-starmate-component="icon" data-starmate-name={name} />,
   Alert: ({ message }: { message: string }) => <div role="alert">{message}</div>,
   ScrollArea: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
   Button: ({

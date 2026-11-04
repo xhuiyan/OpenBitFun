@@ -138,7 +138,7 @@ export const DefaultToolCard: React.FC<ToolCardProps> = ({
   const showConfirmationHighlight = needsConfirmation;
 
   return (
-    <div data-openbitfun-adapter="default-tool-card" ref={cardRootRef} data-tool-card-id={toolId ?? ''}>
+    <div data-openbitfun-adapter="default-tool-card" ref={cardRootRef} data-tool-card-id={toolId ?? ''} data-starmate-adapter="default-tool-card" >
       <DefaultToolCardView
         status={status}
         isExpanded={isExpanded}

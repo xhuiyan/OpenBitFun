@@ -316,8 +316,8 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
 
   if (!workspacePath) {
     return (
-      <div data-openbitfun-component="working-copy-view" data-openbitfun-part="root" className="openbitfun-git-scene-working-copy">
-        <div className="openbitfun-git-scene-working-copy__placeholder" data-openbitfun-component="working-copy-view" data-openbitfun-part="placeholder">
+      <div data-openbitfun-component="working-copy-view" data-openbitfun-part="root" className="openbitfun-git-scene-working-copy" data-starmate-component="working-copy-view" data-starmate-part="root" >
+        <div className="openbitfun-git-scene-working-copy__placeholder" data-openbitfun-component="working-copy-view" data-openbitfun-part="placeholder" data-starmate-component="working-copy-view" data-starmate-part="placeholder" >
           <FileCode2 size={48} aria-hidden />
           <p>{t('tabs.changes')}</p>
           <p className="openbitfun-git-scene-working-copy__hint">{t('workingCopy.openWorkspace')}</p>
@@ -327,11 +327,11 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
   }
 
   return (
-    <div data-openbitfun-component="working-copy-view" data-openbitfun-part="root" className="openbitfun-git-scene-working-copy">
-      <div className="openbitfun-git-scene-working-copy__commit-bar" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitBar">
-        <div className="openbitfun-git-scene-working-copy__status-row" data-openbitfun-component="working-copy-view" data-openbitfun-part="statusRow">
+    <div data-openbitfun-component="working-copy-view" data-openbitfun-part="root" className="openbitfun-git-scene-working-copy" data-starmate-component="working-copy-view" data-starmate-part="root" >
+      <div className="openbitfun-git-scene-working-copy__commit-bar" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitBar" data-starmate-component="working-copy-view" data-starmate-part="commitBar" >
+        <div className="openbitfun-git-scene-working-copy__status-row" data-openbitfun-component="working-copy-view" data-openbitfun-part="statusRow" data-starmate-component="working-copy-view" data-starmate-part="statusRow" >
           <Icon name="git" size="xs" />
-          <span className="openbitfun-git-scene-working-copy__branch" data-openbitfun-component="working-copy-view" data-openbitfun-part="branch">{status?.current_branch ?? t('common.unknown')}</span>
+          <span className="openbitfun-git-scene-working-copy__branch" data-openbitfun-component="working-copy-view" data-openbitfun-part="branch" data-starmate-component="working-copy-view" data-starmate-part="branch" >{status?.current_branch ?? t('common.unknown')}</span>
           {(status?.ahead ?? 0) > 0 && (
             <Tooltip content={t('status.ahead')}>
               <span className="openbitfun-git-scene-working-copy__badge wcv-badge--ahead">↑{status?.ahead}</span>
@@ -342,7 +342,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
               <span className="openbitfun-git-scene-working-copy__badge wcv-badge--behind">↓{status?.behind}</span>
             </Tooltip>
           )}
-          <div className="openbitfun-git-scene-working-copy__sync-actions" data-openbitfun-component="working-copy-view" data-openbitfun-part="syncActions">
+          <div className="openbitfun-git-scene-working-copy__sync-actions" data-openbitfun-component="working-copy-view" data-openbitfun-part="syncActions" data-starmate-component="working-copy-view" data-starmate-part="syncActions" >
             <Tooltip content={t('actions.pull')}>
               <IconButton
                 aria-label={t('actions.pull')}
@@ -364,7 +364,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
           </div>
         </div>
         {!clean && <>
-        <div className="openbitfun-git-scene-working-copy__commit-input-row" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitInput">
+        <div className="openbitfun-git-scene-working-copy__commit-input-row" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitInput" data-starmate-component="working-copy-view" data-starmate-part="commitInput" >
           <Textarea
             className="openbitfun-git-scene-working-copy__message"
             placeholder={status?.staged?.length ? t('commit.inputPlaceholder') : t('commit.inputPlaceholderNoStaged')}
@@ -393,7 +393,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
             </Tooltip>
           )}
         </div>
-        <div className="openbitfun-git-scene-working-copy__commit-actions" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitActions">
+        <div className="openbitfun-git-scene-working-copy__commit-actions" data-openbitfun-component="working-copy-view" data-openbitfun-part="commitActions" data-starmate-component="working-copy-view" data-starmate-part="commitActions" >
           <Button
             size="sm"
             variant="primary"
@@ -406,10 +406,10 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
         </>}
       </div>
 
-      <div className="openbitfun-git-scene-working-copy__main" ref={mainRef} data-openbitfun-component="working-copy-view" data-openbitfun-part="main">
+      <div className="openbitfun-git-scene-working-copy__main" ref={mainRef} data-openbitfun-component="working-copy-view" data-openbitfun-part="main" data-starmate-component="working-copy-view" data-starmate-part="main" >
         {!clean && <>
-        <div className="openbitfun-git-scene-working-copy__file-list" style={{ width: fileListWidth }} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileList">
-          <div className="openbitfun-git-scene-working-copy__search" data-openbitfun-component="working-copy-view" data-openbitfun-part="search">
+        <div className="openbitfun-git-scene-working-copy__file-list" style={{ width: fileListWidth }} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileList" data-starmate-component="working-copy-view" data-starmate-part="fileList" >
+          <div className="openbitfun-git-scene-working-copy__search" data-openbitfun-component="working-copy-view" data-openbitfun-part="search" data-starmate-component="working-copy-view" data-starmate-part="search" >
             <SearchField
               size="sm"
               leadingIcon={<Icon name="search" size="sm" aria-hidden />}
@@ -431,7 +431,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                     data-openbitfun-component="working-copy-view"
                     data-openbitfun-part="groupHeader"
                     onClick={() => toggleFileGroup('unstaged')}
-                  >
+                   data-starmate-component="working-copy-view" data-starmate-part="groupHeader" >
                     {expandedFileGroups.has('unstaged') ? <Icon name="chevron-down" size="xs" /> : <Icon name="chevron-right" size="xs" />}
                     <span>
                       {searchQuery
@@ -475,7 +475,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                           data-openbitfun-state={[isSelected && 'selected', isLoading && 'loading'].filter(Boolean).join(' ') || undefined}
                           onClick={() => !isLoading && handleOpenFileDiff(file.path, file.status)}
                           title={t('tooltips.viewDiff')}
-                        >
+                         data-starmate-component="working-copy-view" data-starmate-part="file" data-starmate-state={[isSelected && 'selected', isLoading && 'loading'].filter(Boolean).join(' ') || undefined} >
                           <button
                             type="button"
                             className="openbitfun-git-scene-working-copy__file-check"
@@ -485,12 +485,12 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                               e.stopPropagation();
                               toggleFileSelection(file.path);
                             }}
-                          >
+                           data-starmate-component="working-copy-view" data-starmate-part="fileCheck" >
                             {isSelected ? <Icon name="check-line" size="sm" /> : <Icon name="unselected" size="sm" />}
                           </button>
-                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName">{fileName}</OverflowText>
+                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName" data-starmate-component="working-copy-view" data-starmate-part="fileName" >{fileName}</OverflowText>
                           {dirPath && <span className="openbitfun-git-scene-working-copy__file-dir">{dirPath}</span>}
-                          <span className={`openbitfun-git-scene-working-copy__file-status ${statusInfo.className}`} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus">{statusInfo.text}</span>
+                          <span className={`openbitfun-git-scene-working-copy__file-status ${statusInfo.className}`} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus" data-starmate-component="working-copy-view" data-starmate-part="fileStatus" >{statusInfo.text}</span>
                           <Tooltip content={t('actions.discardFile')}>
                             <IconButton
                               aria-label={t('actions.discardFile')}
@@ -510,7 +510,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
               )}
               {filteredFiles.untracked.length > 0 && (
                 <>
-                  <div className="openbitfun-git-scene-working-copy__group-header" onClick={() => toggleFileGroup('untracked')} data-openbitfun-component="working-copy-view" data-openbitfun-part="groupHeader">
+                  <div className="openbitfun-git-scene-working-copy__group-header" onClick={() => toggleFileGroup('untracked')} data-openbitfun-component="working-copy-view" data-openbitfun-part="groupHeader" data-starmate-component="working-copy-view" data-starmate-part="groupHeader" >
                     {expandedFileGroups.has('untracked') ? <Icon name="chevron-down" size="xs" /> : <Icon name="chevron-right" size="xs" />}
                     <span>
                       {searchQuery
@@ -530,7 +530,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                           data-openbitfun-state={[isSelected && 'selected', isLoading && 'loading'].filter(Boolean).join(' ') || undefined}
                           onClick={() => !isLoading && handleOpenFileDiff(filePath, 'Untracked')}
                           title={t('tooltips.viewDiff')}
-                        >
+                         data-starmate-component="working-copy-view" data-starmate-part="file" data-starmate-state={[isSelected && 'selected', isLoading && 'loading'].filter(Boolean).join(' ') || undefined} >
                           <button
                             type="button"
                             className="openbitfun-git-scene-working-copy__file-check"
@@ -540,12 +540,12 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                               e.stopPropagation();
                               toggleFileSelection(filePath);
                             }}
-                          >
+                           data-starmate-component="working-copy-view" data-starmate-part="fileCheck" >
                             {isSelected ? <Icon name="check-line" size="sm" /> : <Icon name="unselected" size="sm" />}
                           </button>
-                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName">{fileName}</OverflowText>
+                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName" data-starmate-component="working-copy-view" data-starmate-part="fileName" >{fileName}</OverflowText>
                           {dirPath && <span className="openbitfun-git-scene-working-copy__file-dir">{dirPath}</span>}
-                          <span className="openbitfun-git-scene-working-copy__file-status wcv-status--added" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus">U</span>
+                          <span className="openbitfun-git-scene-working-copy__file-status wcv-status--added" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus" data-starmate-component="working-copy-view" data-starmate-part="fileStatus" >U</span>
                           <Tooltip content={t('actions.deleteFile')}>
                             <IconButton
                               aria-label={t('actions.deleteFile')}
@@ -565,7 +565,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
               )}
               {filteredFiles.staged.length > 0 && (
                 <>
-                  <div className="openbitfun-git-scene-working-copy__group-header" onClick={() => toggleFileGroup('staged')} data-openbitfun-component="working-copy-view" data-openbitfun-part="groupHeader">
+                  <div className="openbitfun-git-scene-working-copy__group-header" onClick={() => toggleFileGroup('staged')} data-openbitfun-component="working-copy-view" data-openbitfun-part="groupHeader" data-starmate-component="working-copy-view" data-starmate-part="groupHeader" >
                     {expandedFileGroups.has('staged') ? <Icon name="chevron-down" size="xs" /> : <Icon name="chevron-right" size="xs" />}
                     <span>
                       {searchQuery
@@ -584,9 +584,9 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
                           data-openbitfun-state={isLoading ? 'loading' : undefined}
                           onClick={() => !isLoading && handleOpenFileDiff(file.path, file.status)}
                           title={t('tooltips.viewDiff')}
-                        >
-                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName">{file.path}</OverflowText>
-                          <span className={`openbitfun-git-scene-working-copy__file-status ${statusInfo.className}`} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus">{statusInfo.text}</span>
+                         data-starmate-component="working-copy-view" data-starmate-part="file" data-starmate-state={isLoading ? 'loading' : undefined} >
+                          <OverflowText className="openbitfun-git-scene-working-copy__file-name" data-openbitfun-component="working-copy-view" data-openbitfun-part="fileName" data-starmate-component="working-copy-view" data-starmate-part="fileName" >{file.path}</OverflowText>
+                          <span className={`openbitfun-git-scene-working-copy__file-status ${statusInfo.className}`} data-openbitfun-component="working-copy-view" data-openbitfun-part="fileStatus" data-starmate-component="working-copy-view" data-starmate-part="fileStatus" >{statusInfo.text}</span>
                           <Tooltip content={t('actions.discardFile')}>
                             <IconButton
                               aria-label={t('actions.discardFile')}
@@ -606,7 +606,7 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
               )}
             </>
           ) : (
-            <div className="openbitfun-git-scene-working-copy__empty" data-openbitfun-component="working-copy-view" data-openbitfun-part="empty">{t(statusError ? 'workingCopy.statusUnavailable' : !statusReady ? 'loading.text' : 'empty.noChanges')}</div>
+            <div className="openbitfun-git-scene-working-copy__empty" data-openbitfun-component="working-copy-view" data-openbitfun-part="empty" data-starmate-component="working-copy-view" data-starmate-part="empty" >{t(statusError ? 'workingCopy.statusUnavailable' : !statusReady ? 'loading.text' : 'empty.noChanges')}</div>
           )}
         </div>
         <div
@@ -618,9 +618,9 @@ const WorkingCopyView: React.FC<WorkingCopyViewProps> = ({
           aria-orientation="vertical"
           aria-valuenow={fileListWidth}
           title={t('tooltips.resizeFileList')}
-        />
+         data-starmate-component="working-copy-view" data-starmate-part="resizer" />
         </>}
-        <div className="openbitfun-git-scene-working-copy__diff-area" data-openbitfun-component="working-copy-view" data-openbitfun-part="diffArea">
+        <div className="openbitfun-git-scene-working-copy__diff-area" data-openbitfun-component="working-copy-view" data-openbitfun-part="diffArea" data-starmate-component="working-copy-view" data-starmate-part="diffArea" >
           <CanvasStoreModeContext.Provider value="git">
             <ContentCanvas workspacePath={workspacePath} mode="git" emptyState={
               <Empty className="openbitfun-git-scene-working-copy__overview" icon={<Icon name="git" size="lg" />}

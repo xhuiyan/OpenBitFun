@@ -309,7 +309,7 @@ const LocalVoiceModelsConfig: React.FC<LocalVoiceModelsConfigProps> = ({
         className="voice-input-config__model-list"
         data-openbitfun-component="voice-input-config"
         data-openbitfun-part="modelList"
-      >
+       data-starmate-component="voice-input-config" data-starmate-part="modelList" >
         {models.map(model => {
           const isUsable = model.state === 'installed';
           const isSelected = model.modelId === selectedModelId && isUsable;
@@ -331,7 +331,7 @@ const LocalVoiceModelsConfig: React.FC<LocalVoiceModelsConfigProps> = ({
               data-openbitfun-component="voice-input-config"
               data-openbitfun-part="modelCard"
               key={model.modelId}
-            >
+             data-starmate-component="voice-input-config" data-starmate-part="modelCard" >
               <div className="voice-input-config__model-copy">
                 <div className="voice-input-config__model-title-row">
                   <div className="voice-input-config__model-name">{model.displayName}</div>
@@ -365,7 +365,7 @@ const LocalVoiceModelsConfig: React.FC<LocalVoiceModelsConfigProps> = ({
                 className="voice-input-config__model-actions"
                 data-openbitfun-component="voice-input-config"
                 data-openbitfun-part="modelActions"
-              >
+               data-starmate-component="voice-input-config" data-starmate-part="modelActions" >
                 {isUsable && !isSelected ? (
                   <Button
                     variant="primary"
@@ -412,7 +412,7 @@ const LocalVoiceModelsConfig: React.FC<LocalVoiceModelsConfigProps> = ({
                       data-openbitfun-part="modelMore"
                       onClick={event => openMaintenanceMenu(event, model)}
                       icon={<Icon name="more" size="sm" />}
-                    />
+                     data-starmate-component="voice-input-config" data-starmate-part="modelMore" />
                   </Tooltip>
                 ) : null}
               </div>
@@ -442,7 +442,7 @@ const LocalVoiceModelsConfig: React.FC<LocalVoiceModelsConfigProps> = ({
         className="voice-input-config__model-dialog"
         data-openbitfun-component="voice-input-config"
         data-openbitfun-part="modelDialog"
-      >
+       data-starmate-component="voice-input-config" data-starmate-part="modelDialog" >
         <div className="voice-input-config__model-dialog-intro">
           <span>{t('localModels.description')}</span>
           <Tooltip content={t('model.refresh')}>

@@ -118,14 +118,14 @@ const ArchivedRow: React.FC<ArchivedRowProps> = ({
   const dateStr = formatDateTime(session.lastActiveAt);
 
   return (
-    <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="row" className="archived-sessions-config__row">
-      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="rowInfo" className="archived-sessions-config__row-info">
+    <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="row" className="archived-sessions-config__row" data-starmate-component="archived-sessions-config" data-starmate-part="row" >
+      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="rowInfo" className="archived-sessions-config__row-info" data-starmate-component="archived-sessions-config" data-starmate-part="rowInfo" >
         <OverflowText className="archived-sessions-config__row-name">{displayName}</OverflowText>
         {dateStr && (
           <span className="archived-sessions-config__row-date">{dateStr}</span>
         )}
       </div>
-      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="rowActions" className="archived-sessions-config__row-actions">
+      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="rowActions" className="archived-sessions-config__row-actions" data-starmate-component="archived-sessions-config" data-starmate-part="rowActions" >
         <Button
           size="sm"
           variant="outline"
@@ -453,7 +453,7 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
   const hasEntries = entries.length > 0;
 
   const headerExtra = (
-    <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="headerActions" className="archived-sessions-config__header-actions">
+    <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="headerActions" className="archived-sessions-config__header-actions" data-starmate-component="archived-sessions-config" data-starmate-part="headerActions" >
       <ConfigRefreshButton
         tooltip={t('actions.refresh')}
         onClick={() => { void loadArchived(true); }}
@@ -477,7 +477,7 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
   );
 
   return (
-    <ConfigPageLayout data-openbitfun-component="archived-sessions-config" data-openbitfun-part="root" className="archived-sessions-config">
+    <ConfigPageLayout data-openbitfun-component="archived-sessions-config" data-openbitfun-part="root" className="archived-sessions-config" data-starmate-component="archived-sessions-config" data-starmate-part="root" >
       <ConfigPageHeader
         title={t('nav.sessions.archivedSessions')}
       />
@@ -499,11 +499,11 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
             />
           ))}
           {loading ? (
-            <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="loading" className="archived-sessions-config__loading">
+            <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="loading" className="archived-sessions-config__loading" data-starmate-component="archived-sessions-config" data-starmate-part="loading" >
               <ConfigLoadingState label={t('nav.sessions.loading')} variant="list" />
             </div>
           ) : !hasEntries && loadFailures.length === 0 ? (
-            <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="empty" className="archived-sessions-config__empty">
+            <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="empty" className="archived-sessions-config__empty" data-starmate-component="archived-sessions-config" data-starmate-part="empty" >
               <Empty
                 icon={<Inbox aria-hidden />}
                 title={t('nav.sessions.noArchivedSessions')}
@@ -514,7 +514,7 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
               {Array.from(grouped.entries()).map(([workspaceKey, group]) => {
                 const isCollapsed = collapsedWorkspaces.has(workspaceKey);
                 return (
-                  <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="group" data-openbitfun-state={isCollapsed ? 'collapsed' : undefined} key={workspaceKey} className="archived-sessions-config__group">
+                  <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="group" data-openbitfun-state={isCollapsed ? 'collapsed' : undefined} key={workspaceKey} className="archived-sessions-config__group" data-starmate-component="archived-sessions-config" data-starmate-part="group" data-starmate-state={isCollapsed ? 'collapsed' : undefined} >
                     <button data-overflow-trigger
                       type="button"
                       data-openbitfun-component="archived-sessions-config"
@@ -522,7 +522,7 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
                       className="archived-sessions-config__group-header"
                       onClick={() => toggleWorkspace(workspaceKey)}
                       aria-expanded={!isCollapsed}
-                    >
+                     data-starmate-component="archived-sessions-config" data-starmate-part="groupHeader" >
                       {isCollapsed ? (
                         <Icon name="chevron-right" size="sm" className="archived-sessions-config__group-chevron" />
                       ) : (
@@ -534,7 +534,7 @@ const ArchivedSessionsSettingsPage: React.FC = () => {
                       </span>
                     </button>
                     {!isCollapsed && (
-                      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="groupList" className="archived-sessions-config__group-list">
+                      <div data-openbitfun-component="archived-sessions-config" data-openbitfun-part="groupList" className="archived-sessions-config__group-list" data-starmate-component="archived-sessions-config" data-starmate-part="groupList" >
                         {group.entries.map(entry => (
                           <ArchivedRow
                             key={archivedEntryIdentityKey(entry)}

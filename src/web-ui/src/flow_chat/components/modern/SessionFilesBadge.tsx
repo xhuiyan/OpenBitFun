@@ -754,19 +754,19 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
       <div data-openbitfun-component="session-files-badge" data-openbitfun-part="root" data-openbitfun-state={isExpanded ? 'expanded' : undefined}
         ref={badgeRef}
         className={`session-files-badge ${isExpanded ? 'session-files-badge--expanded' : ''}`}
-      >
+       data-starmate-component="session-files-badge" data-starmate-part="root" data-starmate-state={isExpanded ? 'expanded' : undefined} >
       <div
         className="session-files-badge__review-menu"
         data-openbitfun-component="session-files-badge"
         data-openbitfun-part="reviewMenu"
-      >
+       data-starmate-component="session-files-badge" data-starmate-part="reviewMenu" >
         <Tooltip content={reviewButtonTitle}>
           <span
             className="session-files-badge__review-trigger"
             data-openbitfun-component="session-files-badge"
             data-openbitfun-part="reviewTrigger"
             data-openbitfun-state={isReviewMenuOpen ? 'open' : undefined}
-          >
+           data-starmate-component="session-files-badge" data-starmate-part="reviewTrigger" data-starmate-state={isReviewMenuOpen ? 'open' : undefined} >
             <IconButton
               ref={reviewTriggerRef}
               className={[
@@ -806,7 +806,7 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
               left: `${reviewPopoverLayout?.left ?? 0}px`,
               visibility: reviewPopoverLayout ? 'visible' : 'hidden',
             }}
-          >
+           data-starmate-component="session-files-badge" data-starmate-part="reviewPopover" data-starmate-placement={reviewPopoverLayout?.placement ?? 'bottom'} >
             {canLaunchReview && <MenuItem
               data-openbitfun-component="session-files-badge"
               data-openbitfun-part="reviewItem"
@@ -814,7 +814,7 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
               type="button"
               disabled={areReviewMenuItemsDisabled}
               leading={<SearchCheck size={12} />}
-            >
+             data-starmate-component="session-files-badge" data-starmate-part="reviewItem" >
               <span>{t('sessionFilesBadge.reviewModeStandard')}</span>
             </MenuItem>}
             {quickActions.filter(a => a.enabled).length > 0 && (
@@ -836,7 +836,7 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
                   ) : (
                     <Zap size={12} />
                   )}
-                >
+                 data-starmate-component="session-files-badge" data-starmate-part="reviewItem" >
                   <span>{actionText.label}</span>
                 </MenuItem>
               );
@@ -869,14 +869,14 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
             : fileChangeToggleAriaCollapsed
         }
         aria-expanded={isExpanded}
-      >
+       data-starmate-component="session-files-badge" data-starmate-part="trigger" data-starmate-state={isExpanded ? 'expanded' : undefined} >
         {totalStats.totalAdditions > 0 && (
-          <span className="session-files-badge__stats session-files-badge__stats--add" data-openbitfun-component="session-files-badge" data-openbitfun-part="stats">
+          <span className="session-files-badge__stats session-files-badge__stats--add" data-openbitfun-component="session-files-badge" data-openbitfun-part="stats" data-starmate-component="session-files-badge" data-starmate-part="stats" >
             +{totalStats.totalAdditions}
           </span>
         )}
         {totalStats.totalDeletions > 0 && (
-          <span className="session-files-badge__stats session-files-badge__stats--del" data-openbitfun-component="session-files-badge" data-openbitfun-part="stats">
+          <span className="session-files-badge__stats session-files-badge__stats--del" data-openbitfun-component="session-files-badge" data-openbitfun-part="stats" data-starmate-component="session-files-badge" data-starmate-part="stats" >
             -{totalStats.totalDeletions}
           </span>
         )}
@@ -900,8 +900,8 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
             left: `${filePopoverLayout?.left ?? 0}px`,
             visibility: filePopoverLayout ? 'visible' : 'hidden',
           }}
-        >
-          <div className="session-files-badge__popover-summary" data-openbitfun-component="session-files-badge" data-openbitfun-part="summary">
+         data-starmate-component="session-files-badge" data-starmate-part="popover" data-starmate-placement={filePopoverLayout?.placement ?? 'bottom'} >
+          <div className="session-files-badge__popover-summary" data-openbitfun-component="session-files-badge" data-openbitfun-part="summary" data-starmate-component="session-files-badge" data-starmate-part="summary" >
             <OverflowText className="session-files-badge__popover-summary-count">
               {t('sessionFilesBadge.filesSummaryCount', {
                 count: fileStats.size,
@@ -922,7 +922,7 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
               </span>
             )}
           </div>
-          <div className="session-files-badge__list" data-openbitfun-component="session-files-badge" data-openbitfun-part="list">
+          <div className="session-files-badge__list" data-openbitfun-component="session-files-badge" data-openbitfun-part="list" data-starmate-component="session-files-badge" data-starmate-part="list" >
             {Array.from(fileStats.values()).map((stat) => (
               <div data-overflow-trigger
                 key={stat.filePath}
@@ -935,7 +935,7 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
                 data-openbitfun-state={stat.error ? 'error' : undefined}
                 onClick={() => !stat.error && handleFileClick(stat.filePath)}
                 title={stat.error ? stat.error : t('sessionFilesBadge.clickToViewDiff')}
-              >
+               data-starmate-component="session-files-badge" data-starmate-part="file" data-starmate-operation={stat.operationType} data-starmate-state={stat.error ? 'error' : undefined} >
                 <span className="session-files-badge__file-icon">
                   {getOperationIcon(stat.operationType)}
                 </span>
@@ -943,9 +943,9 @@ export const SessionFilesBadge: React.FC<SessionFilesBadgeProps> = ({
                 <OverflowText className="session-files-badge__file-name">{stat.fileName}</OverflowText>
 
                 {stat.error ? (
-                  <span className="session-files-badge__file-error" data-openbitfun-component="session-files-badge" data-openbitfun-part="fileError">{stat.error}</span>
+                  <span className="session-files-badge__file-error" data-openbitfun-component="session-files-badge" data-openbitfun-part="fileError" data-starmate-component="session-files-badge" data-starmate-part="fileError" >{stat.error}</span>
                 ) : (
-                  <span className="session-files-badge__file-stats" data-openbitfun-component="session-files-badge" data-openbitfun-part="fileStats">
+                  <span className="session-files-badge__file-stats" data-openbitfun-component="session-files-badge" data-openbitfun-part="fileStats" data-starmate-component="session-files-badge" data-starmate-part="fileStats" >
                     {stat.additions > 0 && (
                       <span className="session-files-badge__file-stat session-files-badge__file-stat--add">
                         +{stat.additions}

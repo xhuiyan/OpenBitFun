@@ -27,35 +27,35 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
     : '';
   
   return (
-    <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="root" data-openbitfun-status={status} data-openbitfun-state={expanded ? 'expanded' : ''} className="image-analysis-card" data-status={status}>
-      <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="header" className="image-analysis-card__header">
-        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="thumbnail" className="image-analysis-card__thumbnail">
+    <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="root" data-openbitfun-status={status} data-openbitfun-state={expanded ? 'expanded' : ''} className="image-analysis-card" data-status={status} data-starmate-component="image-analysis-card" data-starmate-part="root" data-starmate-status={status} data-starmate-state={expanded ? 'expanded' : ''} >
+      <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="header" className="image-analysis-card__header" data-starmate-component="image-analysis-card" data-starmate-part="header" >
+        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="thumbnail" className="image-analysis-card__thumbnail" data-starmate-component="image-analysis-card" data-starmate-part="thumbnail" >
           {imageContext.thumbnailUrl || imageContext.dataUrl ? (
             <img 
               src={imageContext.thumbnailUrl || imageContext.dataUrl} 
               alt={imageContext.imageName}
             />
           ) : (
-            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="placeholder" className="image-analysis-card__thumbnail-placeholder">
+            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="placeholder" className="image-analysis-card__thumbnail-placeholder" data-starmate-component="image-analysis-card" data-starmate-part="placeholder" >
               <Icon name="eye" size="lg" />
             </div>
           )}
         </div>
         
-        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="info" className="image-analysis-card__info">
-          <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="filename" className="image-analysis-card__filename"><OverflowText>
+        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="info" className="image-analysis-card__info" data-starmate-component="image-analysis-card" data-starmate-part="info" >
+          <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="filename" className="image-analysis-card__filename" data-starmate-component="image-analysis-card" data-starmate-part="filename" ><OverflowText>
             {imageContext.imageName}
           </OverflowText></div>
           
           {status === 'analyzing' && (
-            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status analyzing">
+            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status analyzing" data-starmate-component="image-analysis-card" data-starmate-part="status" >
               <Icon glyph={Loader} size="sm" className="spinner" />
               <span>AI is analyzing the image...</span>
             </div>
           )}
           
           {status === 'completed' && result && (
-            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status completed">
+            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status completed" data-starmate-component="image-analysis-card" data-starmate-part="status" >
               <Icon name="check-circle" size="sm" className="icon" />
               <span>Analysis complete</span>
               {duration && (
@@ -65,7 +65,7 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
           )}
           
           {status === 'error' && (
-            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status error">
+            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="status" className="image-analysis-card__status error" data-starmate-component="image-analysis-card" data-starmate-part="status" >
               <Icon glyph={AlertCircle} size="sm" className="icon" />
               <span>Analysis failed</span>
               {onRetry && (
@@ -84,8 +84,8 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
       </div>
       
       {status === 'completed' && result && (
-        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="content" className="image-analysis-card__content">
-          <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="summary" className="image-analysis-card__summary">
+        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="content" className="image-analysis-card__content" data-starmate-component="image-analysis-card" data-starmate-part="content" >
+          <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="summary" className="image-analysis-card__summary" data-starmate-component="image-analysis-card" data-starmate-part="summary" >
             <Icon name="spark" size="sm" className="summary-icon" />
             <span>{result.summary}</span>
           </div>
@@ -101,16 +101,16 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
           </Button>
           
           {expanded && (
-            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="details" className="image-analysis-card__detailed">
-              <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="section" className="detail-section">
+            <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="details" className="image-analysis-card__detailed" data-starmate-component="image-analysis-card" data-starmate-part="details" >
+              <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="section" className="detail-section" data-starmate-component="image-analysis-card" data-starmate-part="section" >
                 <h4>Detailed description</h4>
                 <p>{result.detailed_description}</p>
               </div>
               
               {result.detected_elements.length > 0 && (
-                <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="section" className="detail-section">
+                <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="section" className="detail-section" data-starmate-component="image-analysis-card" data-starmate-part="section" >
                   <h4>Key elements detected</h4>
-                  <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="tags" className="tags">
+                  <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="tags" className="tags" data-starmate-component="image-analysis-card" data-starmate-part="tags" >
                     {result.detected_elements.map((elem, idx) => (
                       <span key={idx} className="tag">{elem}</span>
                     ))}
@@ -118,7 +118,7 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
                 </div>
               )}
               
-              <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="metadata" className="detail-section metadata">
+              <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="metadata" className="detail-section metadata" data-starmate-component="image-analysis-card" data-starmate-part="metadata" >
                 <span className="meta-item">
                   Confidence: {(result.confidence * 100).toFixed(1)}%
                 </span>
@@ -133,7 +133,7 @@ export const ImageAnalysisCard: React.FC<ImageAnalysisCardProps> = ({
       )}
       
       {status === 'error' && error && (
-        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="error" className="image-analysis-card__error">
+        <div data-openbitfun-component="image-analysis-card" data-openbitfun-part="error" className="image-analysis-card__error" data-starmate-component="image-analysis-card" data-starmate-part="error" >
           <Icon glyph={AlertCircle} size="md" />
           <span>{error}</span>
         </div>

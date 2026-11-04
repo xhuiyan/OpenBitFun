@@ -104,7 +104,7 @@ export const TerminalEditModal: React.FC<TerminalEditModalProps> = ({
         <DialogClose />
       </DialogHeader>
       <DialogBody>
-      <div data-openbitfun-component="terminal-edit-modal" data-openbitfun-part="content" className="terminal-edit-dialog__content">
+      <div data-openbitfun-component="terminal-edit-modal" data-openbitfun-part="content" className="terminal-edit-dialog__content" data-starmate-component="terminal-edit-modal" data-starmate-part="content" >
         <Field label={t('dialog.editTerminal.nameLabel')}>
           <Input
             ref={nameInputRef}
@@ -143,7 +143,7 @@ export const TerminalEditModal: React.FC<TerminalEditModalProps> = ({
           </Field>
         ) : null}
         {saveError && <p role="alert" className="terminal-edit-dialog__error"
-          data-openbitfun-component="terminal-edit-modal" data-openbitfun-part="error">
+          data-openbitfun-component="terminal-edit-modal" data-openbitfun-part="error" data-starmate-component="terminal-edit-modal" data-starmate-part="error" >
           {tCommon('nav.resources.actionFailed', { error: saveError })}
         </p>}
       </div>
@@ -153,7 +153,7 @@ export const TerminalEditModal: React.FC<TerminalEditModalProps> = ({
         data-openbitfun-component="terminal-edit-modal"
         data-openbitfun-part="footer"
         className="terminal-edit-dialog__footer"
-      >
+       data-starmate-component="terminal-edit-modal" data-starmate-part="footer" >
         <Button variant="fill" onClick={onClose}>
           {t('dialog.editTerminal.cancel')}
         </Button>

@@ -16,5 +16,5 @@ export function TurnFooter({ turnId, isLatestTurn, ready, children }: {
     data-openbitfun-state={ready ? undefined : 'pending'}
     data-footer-reveal={isLatestTurn || interacting ? 'visible' : 'hover'}
     aria-hidden={!ready}
-  >{children}</div>;
+   data-starmate-product-component="model-round-item" data-starmate-product-part="footer" data-starmate-state={ready ? undefined : 'pending'} >{children}</div>;
 }

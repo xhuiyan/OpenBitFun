@@ -234,13 +234,13 @@ function CollapsibleRegion({
       style={{
         "--_tool-card-collapse-duration": `${durationMs}ms`,
       } as CSSProperties}
-    >
+     data-starmate-component="flow-chat-tool-card" data-starmate-part={`${part}Collapse`} >
       {shouldRender && (
         <div
           className={styles.collapseInner}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="collapseInner"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="collapseInner" >
           <div
             className={classNames(
               part === "expanded" ? styles.expanded : styles.error,
@@ -250,7 +250,7 @@ function CollapsibleRegion({
             data-openbitfun-part={part}
             data-openbitfun-state={part === "error" ? "failed" : "expanded"}
             data-openbitfun-status={status}
-          >
+           data-starmate-component="flow-chat-tool-card" data-starmate-part={part} data-starmate-state={part === "error" ? "failed" : "expanded"} data-starmate-status={status} >
             {children}
           </div>
         </div>
@@ -346,7 +346,7 @@ export function ProminentToolCard({
       data-openbitfun-part="root"
       data-openbitfun-state={appearanceState}
       data-openbitfun-status={status}
-    >
+     data-starmate-attention="prominent" data-starmate-component="flow-chat-tool-card" data-starmate-expandable={expandable ? "true" : "false"} data-starmate-interactive={onToggle ? "true" : "false"} data-starmate-part="root" data-starmate-state={appearanceState} data-starmate-status={status} >
       <div
         className={classNames(
           styles.surface,
@@ -362,7 +362,7 @@ export function ProminentToolCard({
         data-openbitfun-status={status}
         data-testid={onToggle ? toggleTestId : undefined}
         onClick={handleSurfaceClick}
-      >
+       data-starmate-attention="prominent" data-starmate-component="flow-chat-tool-card" data-starmate-expandable={expandable ? "true" : "false"} data-starmate-interactive={onToggle ? "true" : "false"} data-starmate-part="surface" data-starmate-state={appearanceState} data-starmate-status={status} >
         <ToolCardRowLayoutContext.Provider
           value={{
             affordanceKind: summaryAffordanceKind,
@@ -498,7 +498,7 @@ export function AmbientToolCard({
       onKeyDown={directAction || onRootKeyDown ? handleDirectActionKeyDown : undefined}
       role={directAction ? "button" : role}
       tabIndex={directAction ? 0 : tabIndex}
-    >
+     data-starmate-attention="ambient" data-starmate-component="flow-chat-tool-card" data-starmate-direct-action={directAction ? "true" : "false"} data-starmate-expandable={expandable ? "true" : "false"} data-starmate-interactive={interactive ? "true" : "false"} data-starmate-part="root" data-starmate-state={appearanceState} data-starmate-status={status} data-starmate-expanded-shell={expandedShell ? "true" : "false"} >
       <Surface
         type={capsule && interactive ? 'button' : undefined}
         aria-label={capsule?.description}
@@ -519,7 +519,7 @@ export function AmbientToolCard({
         data-openbitfun-status={status}
         data-testid={interactive ? toggleTestId : undefined}
         onClick={handleSurfaceClick}
-      >
+       data-starmate-attention="ambient" data-starmate-component="flow-chat-tool-card" data-starmate-expandable={expandable ? "true" : "false"} data-starmate-interactive={interactive ? "true" : "false"} data-starmate-part="surface" data-starmate-state={appearanceState} data-starmate-status={status} >
         {capsule && <span aria-hidden="true" data-capsule-skin className={styles.capsuleSkin} />}
         <ToolCardRowLayoutContext.Provider
           value={{
@@ -601,18 +601,18 @@ export function ToolCardIconSlot({
         data-openbitfun-expandable={showInlineAffordance ? "true" : "false"}
         data-openbitfun-part="icon"
         data-divider={showDivider ? "true" : "false"}
-      >
+       data-starmate-affordance={resolvedKind} data-starmate-component="flow-chat-tool-card" data-starmate-expandable={showInlineAffordance ? "true" : "false"} data-starmate-part="icon" >
         <span
           className={styles.iconMarks}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="iconMarks"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="iconMarks" >
           <span
             className={styles.mainIcon}
             data-openbitfun-icon-slot="true"
             data-openbitfun-component="flow-chat-tool-card"
             data-openbitfun-part="iconGraphic"
-          >
+           data-starmate-icon-slot="true" data-starmate-component="flow-chat-tool-card" data-starmate-part="iconGraphic" >
             {icon}
           </span>
           {showInlineAffordance && (
@@ -624,7 +624,7 @@ export function ToolCardIconSlot({
               data-openbitfun-component="flow-chat-tool-card"
               data-openbitfun-part="iconAffordance"
               data-expanded={resolvedExpanded ? "true" : "false"}
-            >
+             data-starmate-icon-slot="true" data-starmate-affordance={resolvedKind} data-starmate-component="flow-chat-tool-card" data-starmate-part="iconAffordance" >
               {isPanelAffordance
                 ? <Icon name="arrow-up-right" size="sm" />
                 : <Icon name="chevron-down" size="sm" />}
@@ -644,7 +644,7 @@ export function ToolCardIconSlot({
               handleAffordance(event);
             }}
             type="button"
-          />
+           data-starmate-affordance={resolvedKind} data-starmate-component="flow-chat-tool-card" data-starmate-part="iconAffordanceButton" />
         )}
       </span>
       {description && <Tooltip content={description} triggerRef={descriptionRef} trigger="hover-focus" />}
@@ -670,7 +670,7 @@ export function ToolCardStatusIcon({
       data-openbitfun-component="flow-chat-tool-card"
       data-openbitfun-part="status"
       data-divider={withDivider ? "true" : "false"}
-    >
+     data-starmate-icon-slot="true" data-starmate-component="flow-chat-tool-card" data-starmate-part="status" >
       {icon}
     </span>
   );
@@ -691,7 +691,7 @@ export function ToolCardActions({ children, className, revealOnHover = false }: 
       data-openbitfun-part="actions"
       data-reveal={revealOnHover ? "hover" : undefined}
       onClick={(event) => event.stopPropagation()}
-    >
+     data-starmate-component="flow-chat-tool-card" data-starmate-part="actions" >
       {children}
     </span>
   );
@@ -710,7 +710,7 @@ export function ToolCardSubject({ children, actions, className, ...props }: Tool
           {typeof children === "string" || typeof children === "number" ? <OverflowText>{children}</OverflowText> : children}
         </span>
       )}
-      {actions && <span className={styles.actionRegion} data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="actionRegion">
+      {actions && <span className={styles.actionRegion} data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="actionRegion" data-starmate-component="flow-chat-tool-card" data-starmate-part="actionRegion" >
         <ToolCardActions revealOnHover>{actions}</ToolCardActions>
       </span>}
     </span>
@@ -746,12 +746,12 @@ export function ToolCardChangeSummary({
       className={classNames(styles.changeSummary, className)}
       data-openbitfun-component="flow-chat-tool-card"
       data-openbitfun-part="changeSummary"
-    >
+     data-starmate-component="flow-chat-tool-card" data-starmate-part="changeSummary" >
       {hasAdditions && (
-        <span data-openbitfun-change="added">+{animated ? <ToolCardRollingNumber value={additions!} /> : additions}</span>
+        <span data-openbitfun-change="added" data-starmate-change="added" >+{animated ? <ToolCardRollingNumber value={additions!} /> : additions}</span>
       )}
       {hasDeletions && (
-        <span data-openbitfun-change="removed">-{animated ? <ToolCardRollingNumber value={deletions!} /> : deletions}</span>
+        <span data-openbitfun-change="removed" data-starmate-change="removed" >-{animated ? <ToolCardRollingNumber value={deletions!} /> : deletions}</span>
       )}
     </span>
   );
@@ -816,7 +816,7 @@ export function ProminentToolCardSummary({
     <IconButton aria-label={affordanceLabel} title={affordanceLabel} size="sm" variant="quiet"
       data-openbitfun-affordance={resolvedKind} data-openbitfun-part="affordanceButton"
       icon={<Icon name="arrow-up-right" size="sm" />} ref={affordanceButtonRef}
-      onClick={event => { event.stopPropagation(); affordanceAction(event); }} />
+      onClick={event => { event.stopPropagation(); affordanceAction(event); }}  data-starmate-affordance={resolvedKind} data-starmate-part="affordanceButton" />
   ) : affordanceAction ? (
     <button
       aria-expanded={resolvedKind === "expand" ? expanded : undefined}
@@ -832,7 +832,7 @@ export function ProminentToolCardSummary({
       }}
       ref={affordanceButtonRef}
       type="button"
-    >
+     data-starmate-icon-slot="true" data-starmate-affordance={resolvedKind} data-starmate-component="flow-chat-tool-card" data-starmate-part="affordanceButton" >
       {resolvedKind === "open-panel-right" && <Icon name="arrow-up-right" size="sm" />}
     </button>
   ) : null;
@@ -848,7 +848,7 @@ export function ProminentToolCardSummary({
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="action"
           data-testid={actionTestId}
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="action" >
           {typeof action === "string" || typeof action === "number"
             ? <OverflowText>{action}</OverflowText>
             : action}
@@ -859,7 +859,7 @@ export function ProminentToolCardSummary({
           className={styles.content}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="content"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="content" >
           {subjectText}
         </span>
       )}
@@ -880,7 +880,7 @@ export function ProminentToolCardSummary({
         event.stopPropagation();
         affordanceButtonRef.current?.click();
       } : undefined}
-    >
+     data-starmate-affordance={resolvedKind} data-starmate-component="flow-chat-tool-card" data-starmate-expandable={expandable ? "true" : "false"} data-starmate-part="summary" >
       {isExpandAction && affordanceButton}
       {icon !== undefined && icon !== null && icon !== false && icon !== "" && (
         <ToolCardIconSlot icon={icon} />
@@ -897,7 +897,7 @@ export function ProminentToolCardSummary({
           className={styles.extra}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="extra"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="extra" >
           {extra}
         </span>
       )}
@@ -906,14 +906,14 @@ export function ProminentToolCardSummary({
       )}
       {hasActionRegion && (
         <span className={classNames(styles.actionRegion, !primaryActions && styles.hoverActions)}
-          data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="actionRegion">
+          data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="actionRegion" data-starmate-component="flow-chat-tool-card" data-starmate-part="actionRegion" >
           {primaryActions && <ToolCardActions>{primaryActions}</ToolCardActions>}
           {hasAuxiliaryActions && <ToolCardActions revealOnHover className={primaryActions ? styles.hoverActions : undefined}>
             {actions}
             {contentActions}
             {hasPanelAction && affordanceButton}
             {trailingActions && <span className={styles.trailingActions} data-openbitfun-component="flow-chat-tool-card"
-              data-openbitfun-part="trailingActions" data-divider="false">{trailingActions}</span>}
+              data-openbitfun-part="trailingActions" data-divider="false" data-starmate-component="flow-chat-tool-card" data-starmate-part="trailingActions" >{trailingActions}</span>}
           </ToolCardActions>}
         </span>
       )}
@@ -974,11 +974,11 @@ export function AmbientToolCardHeader({
   if (capsule) {
     return <>
       {icon && <ToolCardIconSlot icon={icon} expandable={false} />}
-      <span className={styles.ambientContent} data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="content">
+      <span className={styles.ambientContent} data-openbitfun-component="flow-chat-tool-card" data-openbitfun-part="content" data-starmate-component="flow-chat-tool-card" data-starmate-part="content" >
         <OverflowText>{capsule.label}</OverflowText>
       </span>
       {extra !== undefined && extra !== null && extra !== false && (
-        <span className={styles.capsuleExtra} data-openbitfun-part="extra">{extra}</span>
+        <span className={styles.capsuleExtra} data-openbitfun-part="extra" data-starmate-part="extra" >{extra}</span>
       )}
       {capsule.countLabel !== undefined && <span className={styles.capsuleStatus} aria-hidden="true">{capsule.countLabel}</span>}
       {capsule.status !== 'completed' && capsule.status !== 'confirmed' && (
@@ -1009,7 +1009,7 @@ export function AmbientToolCardHeader({
           className={styles.ambientAction}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="action"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="action" >
           {typeof actionLabel === "string" || typeof actionLabel === "number"
             ? <OverflowText>{actionLabel}{(hasContent || hasResult) && separator}</OverflowText>
             : <>{actionLabel}{(hasContent || hasResult) && separator}</>}
@@ -1020,7 +1020,7 @@ export function AmbientToolCardHeader({
           className={styles.ambientContent}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="content"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="content" >
           {(hasContent || contentActions) && <ToolCardSubject actions={contentActions}>
             {hasContent && <span className={styles.ambientSubject} data-variant={contentVariant}>
               {typeof content === "string" || typeof content === "number"
@@ -1028,7 +1028,7 @@ export function AmbientToolCardHeader({
                 : content}
             </span>}
           </ToolCardSubject>}
-          {hasResult && <span className={styles.ambientResult} data-openbitfun-part="resultSummary">
+          {hasResult && <span className={styles.ambientResult} data-openbitfun-part="resultSummary" data-starmate-part="resultSummary" >
             {typeof result === "string" || typeof result === "number" ? <OverflowText>{result}</OverflowText> : result}
           </span>}
         </span>
@@ -1038,7 +1038,7 @@ export function AmbientToolCardHeader({
           className={styles.ambientExtra}
           data-openbitfun-component="flow-chat-tool-card"
           data-openbitfun-part="extra"
-        >
+         data-starmate-component="flow-chat-tool-card" data-starmate-part="extra" >
           {extra}
         </span>
       )}

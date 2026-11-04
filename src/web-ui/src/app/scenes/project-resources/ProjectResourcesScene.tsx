@@ -38,7 +38,7 @@ export default function ProjectResourcesScene({ sceneId, isActive }: { sceneId: 
   const target = parseProjectResourceTarget(sceneId);
   const workspace = target?.surfaceId === scope.surfaceId ? openedWorkspaces.get(target.workspaceId) : undefined;
   if (!workspace || workspace.workspaceKind === 'assistant') {
-    return <div className="project-resources" data-openbitfun-scene="project-resources" data-openbitfun-part="root">
+    return <div className="project-resources" data-openbitfun-scene="project-resources" data-openbitfun-part="root" data-starmate-scene="project-resources" data-starmate-part="root" >
       <div className="project-resources__unavailable" role="status"><Icon glyph={FolderOpen} size="lg" /><p>{t('unavailable')}</p></div>
     </div>;
   }
@@ -106,16 +106,16 @@ function ProjectResourcesContent({ workspace, scope, isActive }: { workspace: Wo
   const skillAddAction: ProjectResourceListAction = { label: t('capabilities.addSkill'), disabled: !skillInstallSupported,
     disabledReason: t('capabilities.skillInstallUnavailable'), onClick: () => { setCapabilityList(null); setDialog('skill'); } };
 
-  return <div className="project-resources" data-openbitfun-scene="project-resources" data-openbitfun-part="root">
+  return <div className="project-resources" data-openbitfun-scene="project-resources" data-openbitfun-part="root" data-starmate-scene="project-resources" data-starmate-part="root" >
     <ScrollArea className="project-resources__scroll">
       <div className="project-resources__content">
-        <header className="project-resources__identity" data-openbitfun-scene="project-resources" data-openbitfun-part="identity">
+        <header className="project-resources__identity" data-openbitfun-scene="project-resources" data-openbitfun-part="identity" data-starmate-scene="project-resources" data-starmate-part="identity" >
           <IconButton className="project-resources__avatar" size="lg"
             aria-label={commonT('nav.workspaces.icon.title')} title={commonT('nav.workspaces.icon.title')}
             aria-haspopup="dialog" disabled={!isActive}
             icon={<>
               <WorkspaceIcon workspace={workspace} size={128} />
-              <span className="project-resources__icon-edit-indicator" data-openbitfun-scene="project-resources" data-openbitfun-part="iconEditIndicator">
+              <span className="project-resources__icon-edit-indicator" data-openbitfun-scene="project-resources" data-openbitfun-part="iconEditIndicator" data-starmate-scene="project-resources" data-starmate-part="iconEditIndicator" >
                 <Icon name="edit" size="sm" />
               </span>
             </>}
@@ -133,7 +133,7 @@ function ProjectResourcesContent({ workspace, scope, isActive }: { workspace: Wo
           canReveal={isActive && directoryActions.canReveal} onReveal={path => void directoryActions.reveal(path)} revealingPath={directoryActions.revealingPath}
           removingPath={directoryActions.removingPath} error={directoryActions.error} />
 
-        <section ref={jobsSectionRef} tabIndex={-1} className="project-resources__section" aria-label={t('automation.title')} data-openbitfun-scene="project-resources" data-openbitfun-part="automation">
+        <section ref={jobsSectionRef} tabIndex={-1} className="project-resources__section" aria-label={t('automation.title')} data-openbitfun-scene="project-resources" data-openbitfun-part="automation" data-starmate-scene="project-resources" data-starmate-part="automation" >
           <ResourceSectionHeader title={t('automation.title')} actions={<>
             {!jobsEmpty && <>
               <Button className="project-resources__section-action" variant="text" size="sm" leadingIcon={<Icon name="plus" size="sm" />} onClick={() => setDialog('addJob')}>{t('automation.add')}</Button>
@@ -154,13 +154,13 @@ function ProjectResourcesContent({ workspace, scope, isActive }: { workspace: Wo
           </ProjectResourceSummary>
         </section>
 
-        <section className="project-resources__section" aria-label={t('permissions')} data-openbitfun-scene="project-resources" data-openbitfun-part="permissions">
+        <section className="project-resources__section" aria-label={t('permissions')} data-openbitfun-scene="project-resources" data-openbitfun-part="permissions" data-starmate-scene="project-resources" data-starmate-part="permissions" >
           <Suspense fallback={<Spinner size="sm" />}>
             <PermissionsPanel workspace={workspace} isActive={isActive} />
           </Suspense>
         </section>
 
-        <section className="project-resources__section" aria-label={t('capabilities.title')} data-openbitfun-scene="project-resources" data-openbitfun-part="capabilities">
+        <section className="project-resources__section" aria-label={t('capabilities.title')} data-openbitfun-scene="project-resources" data-openbitfun-part="capabilities" data-starmate-scene="project-resources" data-starmate-part="capabilities" >
           <ResourceSectionHeader title={t('capabilities.title')} />
           <div className="project-resources__split">
             <Card ref={agentsSectionRef} tabIndex={-1} aria-label={t('capabilities.agents')} appearance="subtle" radius="lg" className="project-resources__pane">

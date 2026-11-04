@@ -25,7 +25,7 @@ export function VoiceCallIdentity({ expanded, active, label, leading, disabled, 
   }, [expanded, disabled]);
 
   return <div className={styles.root} data-expanded={expanded} data-disabled={!expanded && disabled || undefined}
-    data-openbitfun-component="voice-call-panel" data-openbitfun-part="identity">
+    data-openbitfun-component="voice-call-panel" data-openbitfun-part="identity" data-starmate-component="voice-call-panel" data-starmate-part="identity" >
     {leading && <div className={styles.leading} hidden={expanded}>{leading}</div>}
     <div className={styles.content} data-overflow-trigger>
       <span className={styles.artwork}>

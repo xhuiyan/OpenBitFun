@@ -65,11 +65,11 @@ function UpdateNoticeCard({ notice }: { notice: UpdateNotice }) {
           state.dismissNotice();
         }
       }}
-    >
+     data-starmate-component="update" data-starmate-part="notice" >
       <Card appearance="raised" padding="md" gap="md" radius="md"
-        className="openbitfun-update-notice__surface" data-openbitfun-native-webview-occlusion>
-        <div data-openbitfun-component="update" data-openbitfun-part="availableRoot" data-openbitfun-variant="daily">
-          <div data-openbitfun-component="update" data-openbitfun-part="lead">
+        className="openbitfun-update-notice__surface" data-openbitfun-native-webview-occlusion data-starmate-native-webview-occlusion >
+        <div data-openbitfun-component="update" data-openbitfun-part="availableRoot" data-openbitfun-variant="daily" data-starmate-component="update" data-starmate-part="availableRoot" data-starmate-variant="daily" >
+          <div data-openbitfun-component="update" data-openbitfun-part="lead" data-starmate-component="update" data-starmate-part="lead" >
             <CardHeader
               align="center"
               actions={(
@@ -78,7 +78,7 @@ function UpdateNoticeCard({ notice }: { notice: UpdateNotice }) {
               )}
             >
               <span className="openbitfun-update-notice__heading"
-                data-openbitfun-component="update" data-openbitfun-part="noticeTitle">
+                data-openbitfun-component="update" data-openbitfun-part="noticeTitle" data-starmate-component="update" data-starmate-part="noticeTitle" >
                 <ActionItem className="openbitfun-update-notice__title"
                   aria-label={t('update.openReleaseNotes', { title })}
                   aria-haspopup="dialog" data-testid="app-update-release-notes"
@@ -94,21 +94,21 @@ function UpdateNoticeCard({ notice }: { notice: UpdateNotice }) {
           {introduction ? (
             <OverflowText as="p" lines={notice === 'error' ? 1 : 3} className="openbitfun-update-notice__introduction"
               data-testid="app-update-introduction"
-              data-openbitfun-component="update" data-openbitfun-part="subtitle">
+              data-openbitfun-component="update" data-openbitfun-part="subtitle" data-starmate-component="update" data-starmate-part="subtitle" >
               {introduction}
             </OverflowText>
           ) : (
             <div className="openbitfun-update-notice__empty-introduction" aria-hidden="true"
               data-testid="app-update-release-artwork"
-              data-openbitfun-component="update" data-openbitfun-part="releaseArtwork">
+              data-openbitfun-component="update" data-openbitfun-part="releaseArtwork" data-starmate-component="update" data-starmate-part="releaseArtwork" >
               <StarMateMark className="openbitfun-update-notice__brand-mark" />
             </div>
           )}
           {notice === 'error' && <div className="openbitfun-update-notice__feedback">
             <p className="openbitfun-update-notice__message" role="status" aria-live="polite"
-              data-openbitfun-component="update" data-openbitfun-part="subtitle">
+              data-openbitfun-component="update" data-openbitfun-part="subtitle" data-starmate-component="update" data-starmate-part="subtitle" >
               <span className="openbitfun-update-notice__status-icon" aria-hidden="true"
-                data-openbitfun-component="update" data-openbitfun-part="leadIcon">
+                data-openbitfun-component="update" data-openbitfun-part="leadIcon" data-starmate-component="update" data-starmate-part="leadIcon" >
                 <Icon name="info" size="sm" tone="danger" />
               </span>
               <OverflowText lines={2}>{message}</OverflowText>
@@ -118,17 +118,17 @@ function UpdateNoticeCard({ notice }: { notice: UpdateNotice }) {
             <div className="openbitfun-update-progress__bar openbitfun-update-notice__progress"
               role="progressbar" aria-label={t('update.downloadingTitle')}
               aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent ?? undefined}
-              data-openbitfun-component="update" data-openbitfun-part="progressBar">
+              data-openbitfun-component="update" data-openbitfun-part="progressBar" data-starmate-component="update" data-starmate-part="progressBar" >
               <div
                 className={'openbitfun-update-progress__fill' + (percent == null ? ' openbitfun-update-progress__fill--indeterminate' : '')}
                 style={percent == null ? undefined : { transform: `scaleX(${percent / 100})` }}
                 data-openbitfun-component="update" data-openbitfun-part="progressFill"
-                data-openbitfun-state={percent == null ? 'indeterminate' : undefined} />
+                data-openbitfun-state={percent == null ? 'indeterminate' : undefined}  data-starmate-component="update" data-starmate-part="progressFill" data-starmate-state={percent == null ? 'indeterminate' : undefined} />
             </div>
           )}
         </CardBody>
         {notice !== 'downloading' && (
-          <div className="openbitfun-update-notice__footer" data-openbitfun-component="update" data-openbitfun-part="actions">
+          <div className="openbitfun-update-notice__footer" data-openbitfun-component="update" data-openbitfun-part="actions" data-starmate-component="update" data-starmate-part="actions" >
             <CardFooter align={notice === 'available' ? 'between' : 'end'} className="openbitfun-update-notice__actions">
               {notice === 'available' && version && (
                 <Button data-testid="app-update-skip" className="openbitfun-update-notice__action" size="sm" variant="outline" onClick={() => state.skipVersion(version)}>

@@ -54,7 +54,7 @@ export function OverviewMiniAppLogos({ apps, onDetails, onLaunch, onViewAll }: {
 
   const visibleApps = apps.slice(0, visibleCount ?? apps.length);
   const hiddenCount = apps.length - visibleApps.length;
-  return <div className="overview-miniapp-logos" ref={rowRef} data-testid="personal-overview-miniapp-logos" data-openbitfun-scene="personal-overview" data-openbitfun-part="miniAppLogos">
+  return <div className="overview-miniapp-logos" ref={rowRef} data-testid="personal-overview-miniapp-logos" data-openbitfun-scene="personal-overview" data-openbitfun-part="miniAppLogos" data-starmate-scene="personal-overview" data-starmate-part="miniAppLogos" >
     <span className="overview-miniapp-logos__probe" ref={probeRef} aria-hidden="true"><Avatar size="lg" /></span>
     {visibleApps.map(app => {
       const name = pickLocalizedString(app, currentLanguage, 'name');

@@ -93,40 +93,40 @@ export const OpenBitFunControlToolCard: React.FC<ToolCardProps> = ({ toolItem, o
   const hasDetails = Boolean(model.failed || description || fields.length || hasAvailabilityNotice || model.syncPending || hasDiscoveryResults);
   const toggle = () => applyExpandedState(isExpanded, !isExpanded, setExpanded, { onExpand });
   const details = (
-    <div className="openbitfun-control-card__details" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="details">
-      {model.failed && <p className="openbitfun-control-card__error" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="error">{model.error || t('toolCards.default.failed')}</p>}
-      {description && <p className="openbitfun-control-card__description" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description">{description}</p>}
-      {fields.length > 0 && <dl className="openbitfun-control-card__fields" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="fields">
-        {fields.map((field, index) => <div className="openbitfun-control-card__field" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="field" key={index}>
-          <dt data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="label">{field.label}</dt>
-          <dd data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="value">{field.value}</dd>
+    <div className="openbitfun-control-card__details" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="details" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="details" >
+      {model.failed && <p className="openbitfun-control-card__error" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="error" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="error" >{model.error || t('toolCards.default.failed')}</p>}
+      {description && <p className="openbitfun-control-card__description" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="description" >{description}</p>}
+      {fields.length > 0 && <dl className="openbitfun-control-card__fields" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="fields" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="fields" >
+        {fields.map((field, index) => <div className="openbitfun-control-card__field" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="field" key={index} data-starmate-component="openbitfun-control-tool-card" data-starmate-part="field" >
+          <dt data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="label" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="label" >{field.label}</dt>
+          <dd data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="value" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="value" >{field.value}</dd>
         </div>)}
       </dl>}
       {hasAvailabilityNotice && (
-        <p className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice">
+        <p className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="notice" >
           {t('toolCards.openBitFunControl.controlUnavailable')}{model.availabilityReason && ` · ${model.availabilityReason}`}
         </p>
       )}
-      {model.syncPending && <p className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice">
+      {model.syncPending && <p className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="notice" >
         {t('toolCards.openBitFunControl.syncPendingDetails')}{model.syncReason && ` · ${model.syncReason}`}
       </p>}
       {hasDiscoveryResults && (
-        <div className="openbitfun-control-card__results" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="results">
-          {discovery.items.length === 0 ? (!discovery.loading && !discovery.error && <p data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description">{t('toolCards.openBitFunControl.noResults')}</p>) : (
+        <div className="openbitfun-control-card__results" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="results" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="results" >
+          {discovery.items.length === 0 ? (!discovery.loading && !discovery.error && <p data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="description" >{t('toolCards.openBitFunControl.noResults')}</p>) : (
             <ScrollArea className="openbitfun-control-card__viewport" edgeFade="vertical" overscrollBehaviorY="auto">
-            <ul className="openbitfun-control-card__list" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="list">
-              {discovery.items.map((item, index) => <li className="openbitfun-control-card__result" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="result" key={index} data-overflow-trigger>
+            <ul className="openbitfun-control-card__list" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="list" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="list" >
+              {discovery.items.map((item, index) => <li className="openbitfun-control-card__result" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="result" key={index} data-overflow-trigger data-starmate-component="openbitfun-control-tool-card" data-starmate-part="result" >
                 <OverflowText>{controlTitle(item, currentLanguage) ?? String(item.capabilityId ?? item.id ?? '')}</OverflowText>
-                {controlDescription(item, currentLanguage) && <p data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description">{controlDescription(item, currentLanguage)}</p>}
+                {controlDescription(item, currentLanguage) && <p data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="description" >{controlDescription(item, currentLanguage)}</p>}
               </li>)}
             </ul>
             </ScrollArea>
           )}
-          {discovery.loading && <p role="status" className="openbitfun-control-card__description" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description">
+          {discovery.loading && <p role="status" className="openbitfun-control-card__description" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="description" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="description" >
             {t('toolCards.openBitFunControl.loadingAll')}
           </p>}
           {discovery.error && <>
-            <p role="status" className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice">
+            <p role="status" className="openbitfun-control-card__notice" data-openbitfun-component="openbitfun-control-tool-card" data-openbitfun-part="notice" data-starmate-component="openbitfun-control-tool-card" data-starmate-part="notice" >
               {discovery.error === 'catalog-changed' ? t('toolCards.openBitFunControl.catalogChanged')
                 : discovery.error === 'surface-changed' ? t('toolCards.openBitFunControl.sourceDeviceRequired')
                   : t('toolCards.openBitFunControl.loadAllFailed')}
@@ -146,7 +146,7 @@ export const OpenBitFunControlToolCard: React.FC<ToolCardProps> = ({ toolItem, o
     expandedContent: hasDetails ? details : undefined,
   };
 
-  return <div ref={cardRootRef} data-openbitfun-adapter="openbitfun-control" data-tool-card-id={toolItem.id}>
+  return <div ref={cardRootRef} data-openbitfun-adapter="openbitfun-control" data-tool-card-id={toolItem.id} data-starmate-adapter="openbitfun-control" >
     {isDiscovery ? (
       <AmbientToolCard {...common} onClick={hasDetails ? toggle : undefined}
         header={<AmbientToolCardHeader action={actionLabel} content={summary || t('toolCards.openBitFunControl.allFeatures')}

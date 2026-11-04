@@ -725,7 +725,7 @@ export const ReviewPlatformPanel: React.FC<ReviewPlatformPanelProps> = (props) =
   if (!supported) {
     const url = props.initialPullRequestUrl;
     return (
-      <div className="review-platform" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="root" data-openbitfun-layout={props.detailOnly ? 'detail' : 'full'} data-openbitfun-view={props.detailOnly ? 'detail' : 'list'}>
+      <div className="review-platform" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="root" data-openbitfun-layout={props.detailOnly ? 'detail' : 'full'} data-openbitfun-view={props.detailOnly ? 'detail' : 'list'} data-starmate-product-component="review-platform" data-starmate-product-part="root" data-starmate-layout={props.detailOnly ? 'detail' : 'full'} data-starmate-view={props.detailOnly ? 'detail' : 'list'} >
         <Empty
           className="review-platform__detail-empty"
           icon={<GitPullRequest />}
@@ -740,7 +740,7 @@ export const ReviewPlatformPanel: React.FC<ReviewPlatformPanelProps> = (props) =
               {t('common:file.openInSystemBrowser')}
             </Button>
           ) : undefined}
-        />
+         data-starmate-product-component="review-platform" data-starmate-product-part="emptyState" />
       </div>
     );
   }
@@ -1487,12 +1487,12 @@ function ReviewPlatformContent({
             icon={<Icon name="chevron-right" size="sm" />}
           />
         </ToolbarGroup>}
-      />
+       data-starmate-product-component="review-platform" data-starmate-product-part="pagination" />
     );
   }, []);
 
   const renderDetailLoading = useCallback((message: string) => (
-    <LoadingState size="sm" role="status" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="loadingState">
+    <LoadingState size="sm" role="status" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="loadingState" data-starmate-product-component="review-platform" data-starmate-product-part="loadingState" >
       {message}
     </LoadingState>
   ), []);
@@ -1940,11 +1940,11 @@ function ReviewPlatformContent({
         title={authChallengeTitle(authChallenge)}
         message={reviewAuthErrorMessage(authChallenge, t)}
         description={<Stack gap="3">
-          <span data-openbitfun-product-component="review-platform" data-openbitfun-product-part="authCopy">
+          <span data-openbitfun-product-component="review-platform" data-openbitfun-product-part="authCopy" data-starmate-product-component="review-platform" data-starmate-product-part="authCopy" >
             {authChallenge.host} · {authChallenge.projectPath}<br />
             {selectedRemote.platform === 'github' ? 'CLI authorization' : 'Required scopes'}: {authChallengeScopes(authChallenge)}
           </span>
-          <ToolbarGroup className="review-platform__wrap" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="authActions">
+          <ToolbarGroup className="review-platform__wrap" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="authActions" data-starmate-product-component="review-platform" data-starmate-product-part="authActions" >
             <Button size="sm" variant="primary" onClick={handleOpenAuthModal} disabled={authSaving} leadingIcon={<KeyRound size={13} />}>
 
               {selectedRemote.platform === 'github' ? 'Authenticate' : authChallenge.state === 'missing' ? 'Add token' : 'Update token'}
@@ -1955,7 +1955,7 @@ function ReviewPlatformContent({
             </Button>
           </ToolbarGroup>
         </Stack>}
-      />
+       data-starmate-product-component="review-platform" data-starmate-product-part="authGate" />
     );
   }, [authChallenge, authSaving, handleOpenAuthModal, loading, refreshAuthSnapshot, selectedRemote, t]);
 
@@ -2048,7 +2048,7 @@ function ReviewPlatformContent({
   };
 
   return (
-    <div data-openbitfun-product-component="review-platform" data-openbitfun-product-part="root" data-openbitfun-layout={detailOnly ? 'detail' : 'full'} data-openbitfun-view={detailOnly ? 'detail' : selectedPr ? panelView : 'list'} className={`review-platform${detailOnly ? ' review-platform--detail-only' : ''}`}>
+    <div data-openbitfun-product-component="review-platform" data-openbitfun-product-part="root" data-openbitfun-layout={detailOnly ? 'detail' : 'full'} data-openbitfun-view={detailOnly ? 'detail' : selectedPr ? panelView : 'list'} className={`review-platform${detailOnly ? ' review-platform--detail-only' : ''}`} data-starmate-product-component="review-platform" data-starmate-product-part="root" data-starmate-layout={detailOnly ? 'detail' : 'full'} data-starmate-view={detailOnly ? 'detail' : selectedPr ? panelView : 'list'} >
       {!detailOnly && (
         <Toolbar className="review-platform__toolbar" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="chrome"
           leading={<Combobox
@@ -2061,7 +2061,7 @@ function ReviewPlatformContent({
             disabled={!remoteOptions.length || loading}
             onValueChange={handleRemoteChange}
           />}
-          trailing={<ToolbarGroup data-openbitfun-product-component="review-platform" data-openbitfun-product-part="actions">
+          trailing={<ToolbarGroup data-openbitfun-product-component="review-platform" data-openbitfun-product-part="actions" data-starmate-product-component="review-platform" data-starmate-product-part="actions" >
             <Tooltip content={selectedRemote?.platform === 'github' ? 'GitHub CLI authentication' : account?.authSource === 'stored' ? 'Update token' : 'Add token'}>
               <IconButton
                 aria-label={selectedRemote?.platform === 'github' ? 'GitHub CLI authentication' : account?.authSource === 'stored' ? 'Update token' : 'Add token'}
@@ -2082,13 +2082,13 @@ function ReviewPlatformContent({
               />
             </Tooltip>
           </ToolbarGroup>}
-        />
+         data-starmate-product-component="review-platform" data-starmate-product-part="chrome" />
       )}
 
-      <div className={`review-platform__body${!detailOnly && !selectedPr ? ' review-platform__body--list-only' : ''}`} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="body">
+      <div className={`review-platform__body${!detailOnly && !selectedPr ? ' review-platform__body--list-only' : ''}`} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="body" data-starmate-product-component="review-platform" data-starmate-product-part="body" >
         {!detailOnly && (
-          <NavigationPanel className="review-platform__list" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listPane" aria-label="Pull request list">
-            <NavigationPanelHeader data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listToolbar">
+          <NavigationPanel className="review-platform__list" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listPane" aria-label="Pull request list" data-starmate-product-component="review-platform" data-starmate-product-part="listPane" >
+            <NavigationPanelHeader data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listToolbar" data-starmate-product-component="review-platform" data-starmate-product-part="listToolbar" >
               <Stack gap="2">
                 {authChallenge && renderAuthGate('inline')}
                 <SearchField
@@ -2115,7 +2115,7 @@ function ReviewPlatformContent({
                       label: state === 'all' ? 'All' : stateLabel(state),
                       disabled: selectedRemote?.platform === 'gitee' && state !== 'all' && !snapshot.capabilities.supportedPullRequestStates?.includes(state),
                     }))}
-                  />
+                   data-starmate-product-component="review-platform" data-starmate-product-part="filters" />
                 )}
                 {selectedRemote?.platform === 'gitee' && !snapshot.capabilities.supportedPullRequestStates?.length && (
                   <Alert tone="warning" role="status" message={t('reviewPlatform.stateFilterUnsupported')} />
@@ -2123,10 +2123,10 @@ function ReviewPlatformContent({
               </Stack>
             </NavigationPanelHeader>
 
-            <NavigationPanelBody data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listScroll">
+            <NavigationPanelBody data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listScroll" data-starmate-product-component="review-platform" data-starmate-product-part="listScroll" >
               <NavigationPanelContent>
                 {loading && (
-                  <LoadingState size="sm" role="status" data-testid="review-platform-list-loading" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="loadingState">Loading pull requests...</LoadingState>
+                  <LoadingState size="sm" role="status" data-testid="review-platform-list-loading" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="loadingState" data-starmate-product-component="review-platform" data-starmate-product-part="loadingState" >Loading pull requests...</LoadingState>
                 )}
                 {error && (
                   <Alert tone="error" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="errorState"
@@ -2136,10 +2136,10 @@ function ReviewPlatformContent({
                         Retry
                       </Button>
                     }
-                  />
+                   data-starmate-product-component="review-platform" data-starmate-product-part="errorState" />
                 )}
                 {!loading && !error && !authChallenge && !visiblePullRequests.length && (
-                  <Empty icon={<GitPullRequest />} description={emptyStateMessage} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="emptyState" />
+                  <Empty icon={<GitPullRequest />} description={emptyStateMessage} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="emptyState"  data-starmate-product-component="review-platform" data-starmate-product-part="emptyState" />
                 )}
                 {!loading && !error && visiblePullRequests.map(pr => {
                   const pullRequestRemote = pr.providerId
@@ -2166,10 +2166,10 @@ function ReviewPlatformContent({
                         setPanelView('detail');
                         setSelectedPrId(pr.id);
                       }}
-                    >
-                      <span className="review-platform__list-copy" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemMain">
-                        <OverflowText data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemTitle">{pr.title}</OverflowText>
-                        <OverflowText className="review-platform__meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemMeta">
+                     data-starmate-product-component="review-platform" data-starmate-product-part="listItem" data-starmate-state={selected ? 'selected' : ''} >
+                      <span className="review-platform__list-copy" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemMain" data-starmate-product-component="review-platform" data-starmate-product-part="listItemMain" >
+                        <OverflowText data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemTitle" data-starmate-product-component="review-platform" data-starmate-product-part="listItemTitle" >{pr.title}</OverflowText>
+                        <OverflowText className="review-platform__meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="listItemMeta" data-starmate-product-component="review-platform" data-starmate-product-part="listItemMeta" >
                           {[isGithubUserList && pullRequestRemote?.projectPath, `#${pr.number}`, pr.author, formatRelativeTime(pr.updatedAt)].filter(Boolean).join(' · ')}
                         </OverflowText>
                       </span>
@@ -2179,7 +2179,7 @@ function ReviewPlatformContent({
               </NavigationPanelContent>
             </NavigationPanelBody>
             {!loading && !error && (totalPages > 1 || pagination.hasNext) && (
-              <NavigationPanelFooter data-testid="review-platform-pagination" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="pagination">
+              <NavigationPanelFooter data-testid="review-platform-pagination" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="pagination" data-starmate-product-component="review-platform" data-starmate-product-part="pagination" >
                 <Tooltip content="Previous page">
                   <IconButton
                     aria-label="Previous page"
@@ -2208,7 +2208,7 @@ function ReviewPlatformContent({
           </NavigationPanel>
         )}
 
-        {(detailOnly || selectedPr) && <main className="review-platform__detail" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailPane">
+        {(detailOnly || selectedPr) && <main className="review-platform__detail" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailPane" data-starmate-product-component="review-platform" data-starmate-product-part="detailPane" >
           {(!detailOnly || selectedPr) && (
             <Toolbar
               className="review-platform__detail-toolbar"
@@ -2253,7 +2253,7 @@ function ReviewPlatformContent({
                   />
                 </Tooltip>
               </ToolbarGroup>}
-            />
+             data-starmate-product-component="review-platform" data-starmate-product-part="detailActions" />
           )}
           {!selectedPr && detailOnly && (loading || detailLoading) && (
             <LoadingState className="review-platform__detail-empty" role="status">Loading pull request details...</LoadingState>
@@ -2324,10 +2324,10 @@ function ReviewPlatformContent({
                 data-openbitfun-product-component="review-platform"
                 data-openbitfun-product-part="detailHeader"
                 headingAs="h3"
-                title={<span data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailTitle">{selectedPr.title}</span>}
+                title={<span data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailTitle" data-starmate-product-component="review-platform" data-starmate-product-part="detailTitle" >{selectedPr.title}</span>}
                 description={
-                  <Stack direction="horizontal" gap="2" align="center" wrap className="review-platform__detail-meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailMeta">
-                    <StatusPill data-testid="review-platform-detail-state" tone={pullRequestStateTones[displayPr?.state ?? selectedPr.state]} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailState">
+                  <Stack direction="horizontal" gap="2" align="center" wrap className="review-platform__detail-meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailMeta" data-starmate-product-component="review-platform" data-starmate-product-part="detailMeta" >
+                    <StatusPill data-testid="review-platform-detail-state" tone={pullRequestStateTones[displayPr?.state ?? selectedPr.state]} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="detailState" data-starmate-product-component="review-platform" data-starmate-product-part="detailState" >
                       {stateLabel(displayPr?.state ?? selectedPr.state)}
                     </StatusPill>
                     <span>#{selectedPr.number}</span>
@@ -2338,8 +2338,8 @@ function ReviewPlatformContent({
                     )}
                   </Stack>
                 }
-              >
-                <Stack gap="2" className="review-platform__meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="facts">
+               data-starmate-product-component="review-platform" data-starmate-product-part="detailHeader" >
+                <Stack gap="2" className="review-platform__meta" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="facts" data-starmate-product-component="review-platform" data-starmate-product-part="facts" >
                   <OverflowText>{displayPr?.sourceBranch ?? selectedPr.sourceBranch} → {displayPr?.targetBranch ?? selectedPr.targetBranch}</OverflowText>
                   <Stack direction="horizontal" gap="2" align="center" wrap>
                     <span data-testid="review-platform-detail-files">{resolvedChangedFileCount(displayStatistics) ?? '—'} files</span>
@@ -2348,7 +2348,7 @@ function ReviewPlatformContent({
                 </Stack>
               </FormSection>
 
-              <div className="review-platform__tabs" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="tabs">
+              <div className="review-platform__tabs" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="tabs" data-starmate-product-component="review-platform" data-starmate-product-part="tabs" >
                 {(detail?.limitations?.length ?? 0) > 0 && (
                   <Alert tone="warning" role="status" message={detail!.limitations!.map(limitation => {
                     switch (limitation) {
@@ -2372,13 +2372,13 @@ function ReviewPlatformContent({
                     value={activeTab}
                     onValueChange={(value) => setActiveTab(value as DetailTab)}
                   />
-                } />
+                }  data-starmate-product-component="review-platform" data-starmate-product-part="tabBar" />
                 {activeTab === 'overview' && (
-                  <ScrollArea className="review-platform__tab-content" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="tabContent">
+                  <ScrollArea className="review-platform__tab-content" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="tabContent" data-starmate-product-component="review-platform" data-starmate-product-part="tabContent" >
                     {detailLoading && renderDetailLoading(detail ? 'Refreshing pull request...' : 'Loading pull request...')}
                     {detailError && <Alert tone="error" message={detailError} description={<Button size="sm" variant="outline" onClick={handleRetryDetail}>Retry</Button>} />}
                     {detail && (
-                      <div className="review-platform__body-markdown" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="section">
+                      <div className="review-platform__body-markdown" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="section" data-starmate-product-component="review-platform" data-starmate-product-part="section" >
                         {detail.body ? <MarkdownRenderer content={detail.body} basePath={workspacePath} /> : <p className="review-platform__meta">No description provided.</p>}
                       </div>
                     )}
@@ -2394,7 +2394,7 @@ function ReviewPlatformContent({
                       disabled={!detailLoading && ciItems.length === 0}
                       data-openbitfun-product-component="review-platform"
                       data-openbitfun-product-part="section"
-                    >
+                     data-starmate-product-component="review-platform" data-starmate-product-part="section" >
                       <FieldGroup appearance="plain">
                         {pagedCiItems.map(item => {
                           const tone = ciItemTone(item);
@@ -2406,13 +2406,13 @@ function ReviewPlatformContent({
                           const logAvailable = canLoadCiLog(selectedRemote, item);
                           const expandable = canExpandCiItem(selectedRemote, item);
                           return (
-                            <FieldRow data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciItem" key={item.id}>
+                            <FieldRow data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciItem" key={item.id} data-starmate-product-component="review-platform" data-starmate-product-part="ciItem" >
                               <Stack gap="3">
                                 <CardHeader
                                   data-openbitfun-product-component="review-platform"
                                   data-openbitfun-product-part="ciHead"
                                   title={<OverflowText>{item.name}</OverflowText>}
-                                  description={<StatusPill tone={tone === 'passed' ? 'success' : tone === 'failed' ? 'danger' : 'warning'} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciStatus">
+                                  description={<StatusPill tone={tone === 'passed' ? 'success' : tone === 'failed' ? 'danger' : 'warning'} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciStatus" data-starmate-product-component="review-platform" data-starmate-product-part="ciStatus" >
                                     {ciItemStatusText(item)}
                                   </StatusPill>}
                                   actions={<ToolbarGroup>
@@ -2449,9 +2449,9 @@ function ReviewPlatformContent({
                                       </Tooltip>
                                     )}
                                   </ToolbarGroup>}
-                                />
+                                 data-starmate-product-component="review-platform" data-starmate-product-part="ciHead" />
                                 {isCiExpanded && (
-                                  <Stack gap="3" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciLog">
+                                  <Stack gap="3" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="ciLog" data-starmate-product-component="review-platform" data-starmate-product-part="ciLog" >
                                     <dl className="review-platform__ci-details">
                                       {item.stage && <div className="review-platform__fact-row"><dt>Stage</dt><dd>{item.stage}</dd></div>}
                                       {item.detail && <div className="review-platform__fact-row"><dt>Detail</dt><dd>{item.detail}</dd></div>}
@@ -2479,14 +2479,14 @@ function ReviewPlatformContent({
                       disabled={!detailLoading && reviewThreads.length === 0}
                       data-openbitfun-product-component="review-platform"
                       data-openbitfun-product-part="section"
-                    >
+                     data-starmate-product-component="review-platform" data-starmate-product-part="section" >
                       <FieldGroup appearance="plain">
                         {pagedReviewThreads.map(thread => {
                           const parent = thread.replyToProviderCommentId
                             ? reviewThreadByCommentId.get(thread.replyToProviderCommentId)
                             : null;
                           return (
-                            <FieldRow data-openbitfun-product-component="review-platform" data-openbitfun-product-part="thread" key={thread.id}>
+                            <FieldRow data-openbitfun-product-component="review-platform" data-openbitfun-product-part="thread" key={thread.id} data-starmate-product-component="review-platform" data-starmate-product-part="thread" >
                               <Stack gap="3">
                                 <CardHeader
                                   data-openbitfun-product-component="review-platform"
@@ -2497,13 +2497,13 @@ function ReviewPlatformContent({
                                     {thread.kind === 'review' && <StatusPill tone="neutral">Review</StatusPill>}
                                     {thread.resolved && <StatusPill tone="success">Resolved</StatusPill>}
                                   </ToolbarGroup>}
-                                />
+                                 data-starmate-product-component="review-platform" data-starmate-product-part="threadHead" />
                                 {parent && (
                                   <Disclosure summary={'Reply to @' + parent.author}>
                                     <div className="review-platform__body-markdown"><MarkdownRenderer content={parent.body} basePath={workspacePath} /></div>
                                   </Disclosure>
                                 )}
-                                <div className="review-platform__body-markdown" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="threadBody"><MarkdownRenderer content={thread.body} basePath={workspacePath} /></div>
+                                <div className="review-platform__body-markdown" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="threadBody" data-starmate-product-component="review-platform" data-starmate-product-part="threadBody" ><MarkdownRenderer content={thread.body} basePath={workspacePath} /></div>
                                 {thread.filePath && <OverflowText className="review-platform__thread-anchor">{thread.filePath}{thread.line ? `:${thread.line}` : ''}</OverflowText>}
                               </Stack>
                             </FieldRow>
@@ -2516,7 +2516,7 @@ function ReviewPlatformContent({
                 )}
 
                 {activeTab === 'changes' && (
-                  <ScrollArea className="review-platform__tab-content" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileList">
+                  <ScrollArea className="review-platform__tab-content" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileList" data-starmate-product-component="review-platform" data-starmate-product-part="fileList" >
                     {detailError && (
                       <Alert tone="error" message={detailError} description={
                         <Button size="sm" variant="outline" onClick={handleRetryDetail}>
@@ -2530,14 +2530,14 @@ function ReviewPlatformContent({
                         const key = fileKey(file);
                         const isExpanded = expandedFileKeys.has(key);
                         return (
-                          <FieldRow key={key} padding="none" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileRow">
+                          <FieldRow key={key} padding="none" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileRow" data-starmate-product-component="review-platform" data-starmate-product-part="fileRow" >
                             <Disclosure
                               data-openbitfun-product-component="review-platform"
                               data-openbitfun-product-part="fileCard"
                               summary={file.path}
                               description={<span className="review-platform__inline-meta">
-                                <StatusPill tone={file.status === 'added' ? 'success' : file.status === 'deleted' ? 'danger' : 'neutral'} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileStatus">{file.status}</StatusPill>
-                                <ChangeCount additions={file.additions} deletions={file.deletions} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileDelta" />
+                                <StatusPill tone={file.status === 'added' ? 'success' : file.status === 'deleted' ? 'danger' : 'neutral'} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileStatus" data-starmate-product-component="review-platform" data-starmate-product-part="fileStatus" >{file.status}</StatusPill>
+                                <ChangeCount additions={file.additions} deletions={file.deletions} data-openbitfun-product-component="review-platform" data-openbitfun-product-part="fileDelta"  data-starmate-product-component="review-platform" data-starmate-product-part="fileDelta" />
                               </span>}
                               open={isExpanded}
                               onOpenChange={() => toggleFileExpanded(key)}
@@ -2545,9 +2545,9 @@ function ReviewPlatformContent({
                               actions={<Tooltip content="Add to chat">
                                 <IconButton aria-label={`Add ${file.path} to chat`} size="sm" onClick={() => void handleAddFileDiffContext(file)} disabled={!selectedPr} icon={<MessageSquareText size={13} />} />
                               </Tooltip>}
-                            >
+                             data-starmate-product-component="review-platform" data-starmate-product-part="fileCard" >
                               {file.patch ? (
-                                <pre tabIndex={0} className="review-platform__diff-block" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="diff" aria-label={`Diff for ${file.path}`}>
+                                <pre tabIndex={0} className="review-platform__diff-block" data-openbitfun-product-component="review-platform" data-openbitfun-product-part="diff" aria-label={`Diff for ${file.path}`} data-starmate-product-component="review-platform" data-starmate-product-part="diff" >
                                   {file.patch.split('\n').map((line, index) => (
                                     <span key={`${file.path}-${index}`} className={diffLineClass(line)}>
                                       {line || ' '}

@@ -42,8 +42,8 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         data-openbitfun-part="root"
         data-openbitfun-mode="icon-only"
         data-openbitfun-state={isChanging ? 'changing' : undefined}
-      >
-        <span data-openbitfun-component="language-selector" data-openbitfun-part="trigger">
+       data-starmate-component="language-selector" data-starmate-part="root" data-starmate-mode="icon-only" data-starmate-state={isChanging ? 'changing' : undefined} >
+        <span data-openbitfun-component="language-selector" data-openbitfun-part="trigger" data-starmate-component="language-selector" data-starmate-part="trigger" >
           <Tooltip content={currentLocale?.nativeName || currentLanguage}>
             <Button
               aria-label={currentLocale?.nativeName || currentLanguage}
@@ -52,7 +52,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               size="sm"
               disabled={isChanging}
               leadingIcon={(
-                <span data-openbitfun-component="language-selector" data-openbitfun-part="icon">
+                <span data-openbitfun-component="language-selector" data-openbitfun-part="icon" data-starmate-component="language-selector" data-starmate-part="icon" >
                   <Icon name="browser" size="md" />
                 </span>
               )}
@@ -61,7 +61,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 className="language-selector__code"
                 data-openbitfun-component="language-selector"
                 data-openbitfun-part="code"
-              >
+               data-starmate-component="language-selector" data-starmate-part="code" >
                 {currentLanguage.split('-')[0].toUpperCase()}
               </span>
             </Button>
@@ -71,7 +71,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           className="language-selector__dropdown"
           data-openbitfun-component="language-selector"
           data-openbitfun-part="menu"
-        >
+         data-starmate-component="language-selector" data-starmate-part="menu" >
           {supportedLocales.map(locale => (
             <ActionItem
               key={locale.id}
@@ -86,14 +86,14 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                   className="language-selector__check"
                   data-openbitfun-component="language-selector"
                   data-openbitfun-part="check"
-                >✓</span>
+                 data-starmate-component="language-selector" data-starmate-part="check" >✓</span>
               ) : undefined}
-            >
+             data-starmate-component="language-selector" data-starmate-part="option" data-starmate-state={locale.id === currentLanguage ? 'active' : undefined} >
               <span
                 className="language-selector__option-name"
                 data-openbitfun-component="language-selector"
                 data-openbitfun-part="optionLabel"
-              >
+               data-starmate-component="language-selector" data-starmate-part="optionLabel" >
                 {showNativeName ? locale.nativeName : locale.englishName}
               </span>
             </ActionItem>
@@ -111,7 +111,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         data-openbitfun-part="root"
         data-openbitfun-mode="inline"
         data-openbitfun-state={isChanging ? 'changing' : undefined}
-      >
+       data-starmate-component="language-selector" data-starmate-part="root" data-starmate-mode="inline" data-starmate-state={isChanging ? 'changing' : undefined} >
         {supportedLocales.map(locale => (
           <Button
             key={locale.id}
@@ -123,7 +123,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             data-openbitfun-component="language-selector"
             data-openbitfun-part="option"
             data-openbitfun-state={locale.id === currentLanguage ? 'active' : undefined}
-          >
+           data-starmate-component="language-selector" data-starmate-part="option" data-starmate-state={locale.id === currentLanguage ? 'active' : undefined} >
             {showNativeName ? locale.nativeName : locale.englishName}
           </Button>
         ))}
@@ -139,7 +139,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       data-openbitfun-part="root"
       data-openbitfun-mode="dropdown"
       data-openbitfun-state={isChanging ? 'changing' : undefined}
-    >
+     data-starmate-component="language-selector" data-starmate-part="root" data-starmate-mode="dropdown" data-starmate-state={isChanging ? 'changing' : undefined} >
       <Select
         className="language-selector__select"
         value={currentLanguage}
@@ -156,7 +156,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           data-openbitfun-component="language-selector"
           data-openbitfun-part="loading"
           data-openbitfun-state="changing"
-        >...</span>
+         data-starmate-component="language-selector" data-starmate-part="loading" data-starmate-state="changing" >...</span>
       )}
     </div>
   );

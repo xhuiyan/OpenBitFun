@@ -92,7 +92,7 @@ export const WebSearchCard: React.FC<ToolCardProps> = ({
   }
 
   return (
-    <div ref={cardRootRef} data-openbitfun-adapter="web-search" data-tool-card-id={toolId ?? ''}>
+    <div ref={cardRootRef} data-openbitfun-adapter="web-search" data-tool-card-id={toolId ?? ''} data-starmate-adapter="web-search" >
       <WebSearchToolCard
         action={t('toolCards.webSearch.action')}
         status={status}

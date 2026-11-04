@@ -31,13 +31,13 @@ export const LauncherButton = forwardRef<
       data-openbitfun-part="root"
       ref={ref}
       type={type}
-    >
+     data-starmate-component="launcher-button" data-starmate-part="root" >
       {leadingIcon !== undefined && leadingIcon !== null && (
-        <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">
+        <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >
           {leadingIcon}
         </span>
       )}
-      <OverflowText className={styles.label} data-openbitfun-part="label">
+      <OverflowText className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >
         {children}
       </OverflowText>
     </button>

@@ -23,8 +23,8 @@ export function SkillsPagination({ pagination, total, listId, hasMore = false, l
       data-testid={`${listId}-pagination`}
       data-openbitfun-scene="skills"
       data-openbitfun-part="pagination"
-    >
-      <span className="skills-pagination__summary" role="status" aria-live="polite" aria-atomic="true" data-openbitfun-scene="skills" data-openbitfun-part="pageInfo">
+     data-starmate-scene="skills" data-starmate-part="pagination" >
+      <span className="skills-pagination__summary" role="status" aria-live="polite" aria-atomic="true" data-openbitfun-scene="skills" data-openbitfun-part="pageInfo" data-starmate-scene="skills" data-starmate-part="pageInfo" >
         {t(hasMore ? 'pagination.rangeMore' : 'pagination.range', {
           start: formatNumber(pagination.start),
           end: formatNumber(pagination.end),
@@ -56,7 +56,7 @@ export function SkillsPagination({ pagination, total, listId, hasMore = false, l
                   onClick={() => onPageChange(page)}
                   data-openbitfun-scene="skills"
                   data-openbitfun-part="pageButton"
-                >
+                 data-starmate-scene="skills" data-starmate-part="pageButton" >
                   {formatNumber(page)}
                 </Button>
               ) : <span className="skills-pagination__gap" aria-hidden="true">…</span>}

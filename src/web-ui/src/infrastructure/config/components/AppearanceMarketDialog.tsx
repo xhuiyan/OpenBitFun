@@ -299,7 +299,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
         className="appearance-market__detail"
         data-openbitfun-component="appearance-settings"
         data-openbitfun-part="marketDetail"
-      >
+       data-starmate-component="appearance-settings" data-starmate-part="marketDetail" >
         <Button className="appearance-market__back" variant="outline" size="sm" onClick={() => setDetail(null)} leadingIcon={<Icon name="arrow-left" size="sm" />}>
 
           {t('package.market.back')}
@@ -308,7 +308,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
           className="appearance-market__detail-hero"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="marketDetailPreview"
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="marketDetailPreview" >
           {detail.previewUrl
             ? (
               <MarketImage
@@ -327,7 +327,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
           className="appearance-market__detail-body"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="marketDetailBody"
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="marketDetailBody" >
           <div className="appearance-market__detail-heading">
             <div>
               <h3>{detail.name}</h3>
@@ -363,7 +363,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
               className="appearance-market__warning"
               data-openbitfun-component="appearance-settings"
               data-openbitfun-part="marketWarning"
-            >
+             data-starmate-component="appearance-settings" data-starmate-part="marketWarning" >
               <AlertTriangle size={16} aria-hidden="true" />
               <span>
                 {release?.yanked
@@ -387,7 +387,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
             className="appearance-market__releases"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="marketReleaseList"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="marketReleaseList" >
             <h4>{t('package.market.releases')}</h4>
             {detail.releases.map(item => (
               <div
@@ -395,7 +395,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                 className="appearance-market__release"
                 data-openbitfun-component="appearance-settings"
                 data-openbitfun-part="marketRelease"
-              >
+               data-starmate-component="appearance-settings" data-starmate-part="marketRelease" >
                 <span>v{item.packageVersion}</span>
                 <small>{t('package.market.releaseNumber', { number: item.releaseNumber })}</small>
                 {item.yanked && <small>{t('package.market.yankedBadge')}</small>}
@@ -407,7 +407,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
             className="appearance-market__actions"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="marketActions"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="marketActions" >
             {local?.marketOrigin?.listingId === detail.listingId
               && !updateAvailable
               && !linkedToOtherListing ? (
@@ -473,13 +473,13 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
         className="appearance-market"
         data-openbitfun-component="appearance-settings"
         data-openbitfun-part="marketDialog"
-      >
+       data-starmate-component="appearance-settings" data-starmate-part="marketDialog" >
         <nav
           className="appearance-market__nav"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="marketNav"
           aria-label={t('package.market.views.label')}
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="marketNav" >
           <NavigationPanelItem
             type="button"
             labelBehavior="static"
@@ -523,12 +523,12 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
             className="appearance-market__browse"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="marketBrowse"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="marketBrowse" >
             <div
               className="appearance-market__toolbar"
               data-openbitfun-component="appearance-settings"
               data-openbitfun-part="marketToolbar"
-            >
+             data-starmate-component="appearance-settings" data-starmate-part="marketToolbar" >
               <SearchField
                 className="appearance-market__toolbar-control appearance-market__toolbar-search"
                 leadingIcon={<Icon name="search" size="lg" aria-hidden />}
@@ -579,7 +579,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                 role="alert"
                 data-openbitfun-component="appearance-settings"
                 data-openbitfun-part="marketError"
-              >
+               data-starmate-component="appearance-settings" data-starmate-part="marketError" >
                 <AlertTriangle size={16} />
                 <span>{error}</span>
                 <Button variant="outline" size="sm" onClick={() => void loadPage()}>
@@ -594,7 +594,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
               data-openbitfun-part="marketResults"
               data-openbitfun-state={loading ? 'loading' : undefined}
               aria-busy={loading || undefined}
-            >
+             data-starmate-component="appearance-settings" data-starmate-part="marketResults" data-starmate-state={loading ? 'loading' : undefined} >
               {showSkeletons ? (
                 <div className="appearance-market__grid" aria-hidden="true">
                   {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
@@ -619,7 +619,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                   animate={animateList.current}
                   data-openbitfun-component="appearance-settings"
                   data-openbitfun-part="marketGrid"
-                >
+                 data-starmate-component="appearance-settings" data-starmate-part="marketGrid" >
                   {items.map(item => {
                     const local = installedEntry(appearances, item);
                     const updateAvailable = Boolean(
@@ -637,12 +637,12 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                         data-openbitfun-component="appearance-settings"
                         data-openbitfun-part="marketCard"
                         data-openbitfun-state={detailLoading ? 'disabled' : undefined}
-                      >
+                       data-starmate-component="appearance-settings" data-starmate-part="marketCard" data-starmate-state={detailLoading ? 'disabled' : undefined} >
                         <div
                           className="appearance-market__preview"
                           data-openbitfun-component="appearance-settings"
                           data-openbitfun-part="marketPreview"
-                        >
+                         data-starmate-component="appearance-settings" data-starmate-part="marketPreview" >
                           {item.previewUrl
                             ? (
                               <MarketImage
@@ -659,7 +659,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                           className="appearance-market__card-body"
                           data-openbitfun-component="appearance-settings"
                           data-openbitfun-part="marketCardBody"
-                        >
+                         data-starmate-component="appearance-settings" data-starmate-part="marketCardBody" >
                           <strong><OverflowText>{item.name}</OverflowText></strong>
                           <OverflowText>{item.author || item.owner.login} · v{item.packageVersion}</OverflowText>
                           <OverflowText as="p" lines={2}>{item.description}</OverflowText>
@@ -669,7 +669,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                             className="appearance-market__status"
                             data-openbitfun-component="appearance-settings"
                             data-openbitfun-part="marketStatus"
-                          >
+                           data-starmate-component="appearance-settings" data-starmate-part="marketStatus" >
                             {updateAvailable
                               ? t('package.market.updateAvailable')
                               : local.localOverride
@@ -688,7 +688,7 @@ export function AppearanceMarketDialog({ isOpen, onClose }: AppearanceMarketDial
                   className="appearance-market__empty"
                   data-openbitfun-component="appearance-settings"
                   data-openbitfun-part="marketEmpty"
-                >
+                 data-starmate-component="appearance-settings" data-starmate-part="marketEmpty" >
                   <Icon name="store" size="lg" aria-hidden="true" />
                   <p>{t('package.market.empty')}</p>
                 </div>

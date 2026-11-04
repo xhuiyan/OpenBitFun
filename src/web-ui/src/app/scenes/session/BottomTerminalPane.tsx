@@ -41,7 +41,7 @@ const BottomTerminalPane: React.FC<BottomTerminalPaneProps> = ({
 
   return (
     <CanvasStoreModeContext.Provider value="bottom-terminal">
-      <div data-openbitfun-component="bottom-terminal-pane" data-openbitfun-part="root" className="openbitfun-bottom-terminal-pane">
+      <div data-openbitfun-component="bottom-terminal-pane" data-openbitfun-part="root" className="openbitfun-bottom-terminal-pane" data-starmate-component="bottom-terminal-pane" data-starmate-part="root" >
         <ContentCanvas
           workspacePath={workspacePath}
           mode="bottom-terminal"

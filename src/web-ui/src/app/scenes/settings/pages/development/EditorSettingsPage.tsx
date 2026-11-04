@@ -409,7 +409,7 @@ const EditorSettingsPage: React.FC = () => {
 
   if (isLoading || loadFailed) {
     return (
-      <ConfigPageLayout className="openbitfun-editor-config" data-openbitfun-component="editor-config" data-openbitfun-part="root" data-openbitfun-state="loading">
+      <ConfigPageLayout className="openbitfun-editor-config" data-openbitfun-component="editor-config" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="editor-config" data-starmate-part="root" data-starmate-state="loading" >
         <ConfigPageHeader
           title={t('title')}
         />
@@ -429,7 +429,7 @@ const EditorSettingsPage: React.FC = () => {
   }
 
   return (
-    <ConfigPageLayout className="openbitfun-editor-config" data-openbitfun-component="editor-config" data-openbitfun-part="root">
+    <ConfigPageLayout className="openbitfun-editor-config" data-openbitfun-component="editor-config" data-openbitfun-part="root" data-starmate-component="editor-config" data-starmate-part="root" >
       <ConfigPageHeader
         title={t('title')}
         extra={isSaving || statusMessage ? (
@@ -444,7 +444,7 @@ const EditorSettingsPage: React.FC = () => {
         ) : undefined}
       />
 
-      <ConfigPageContent className="openbitfun-editor-config__content" data-openbitfun-component="editor-config" data-openbitfun-part="content">
+      <ConfigPageContent className="openbitfun-editor-config__content" data-openbitfun-component="editor-config" data-openbitfun-part="content" data-starmate-component="editor-config" data-starmate-part="content" >
         <ConfigPageSection
           title={t('sections.appearance.title')}
         >

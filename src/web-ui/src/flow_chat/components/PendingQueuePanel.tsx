@@ -201,24 +201,24 @@ function LegacyPendingQueuePanel({
       onClick={e => {
         e.stopPropagation();
       }}
-    >
+     data-starmate-product-component="pending-queue-panel" data-starmate-product-part="root" >
       <ChatComposerQueueHeader
         data-openbitfun-product-component="pending-queue-panel"
         data-openbitfun-product-part="header"
-      >
+       data-starmate-product-component="pending-queue-panel" data-starmate-product-part="header" >
         <Icon glyph={ListEnd} size="sm" aria-hidden="true" />
         <ChatComposerQueueTitle
           count={visibleItems.length}
           data-openbitfun-product-component="pending-queue-panel"
           data-openbitfun-product-part="title"
-        >
+         data-starmate-product-component="pending-queue-panel" data-starmate-product-part="title" >
           {t('pendingQueue.title')}
         </ChatComposerQueueTitle>
       </ChatComposerQueueHeader>
       <ChatComposerQueueList
         data-openbitfun-product-component="pending-queue-panel"
         data-openbitfun-product-part="list"
-      >
+       data-starmate-product-component="pending-queue-panel" data-starmate-product-part="list" >
         {visibleItems.map(item => {
           const isSendingNow = item.status === 'sending_now';
           const isSending = item.status === 'sending' || isSendingNow;
@@ -246,12 +246,12 @@ function LegacyPendingQueuePanel({
               data-openbitfun-state={itemState === 'default' ? undefined : itemState}
               key={item.id}
               state={itemState}
-            >
+             data-starmate-product-component="pending-queue-panel" data-starmate-product-part="item" data-starmate-state={itemState === 'default' ? undefined : itemState} >
               <ChatComposerQueueItemContent
                 className="openbitfun-pending-queue-panel__content"
                 data-openbitfun-product-component="pending-queue-panel"
                 data-openbitfun-product-part="content"
-              >
+               data-starmate-product-component="pending-queue-panel" data-starmate-product-part="content" >
                 {isSendingNow ? (
                   <>
                     <div
@@ -259,7 +259,7 @@ function LegacyPendingQueuePanel({
                       data-openbitfun-product-component="pending-queue-panel"
                       data-openbitfun-product-part="preview"
                       title={previewText}
-                    ><OverflowText behavior="marquee">
+                     data-starmate-product-component="pending-queue-panel" data-starmate-product-part="preview" ><OverflowText behavior="marquee">
                       {previewText || (
                         <span className="openbitfun-pending-queue-panel__preview-empty">
                           {t('pendingQueue.emptyPlaceholder')}
@@ -270,7 +270,7 @@ function LegacyPendingQueuePanel({
                       className="openbitfun-pending-queue-panel__sending-label"
                       data-openbitfun-product-component="pending-queue-panel"
                       data-openbitfun-product-part="status"
-                    >
+                     data-starmate-product-component="pending-queue-panel" data-starmate-product-part="status" >
                       {t('pendingQueue.statusSending')}
                     </div>
                   </>
@@ -281,7 +281,7 @@ function LegacyPendingQueuePanel({
                       data-openbitfun-product-component="pending-queue-panel"
                       data-openbitfun-product-part="preview"
                       title={previewText}
-                    ><OverflowText behavior="marquee">
+                     data-starmate-product-component="pending-queue-panel" data-starmate-product-part="preview" ><OverflowText behavior="marquee">
                       {previewText || (
                         <span className="openbitfun-pending-queue-panel__preview-empty">
                           {t('pendingQueue.emptyPlaceholder')}
@@ -293,7 +293,7 @@ function LegacyPendingQueuePanel({
                         className="openbitfun-pending-queue-panel__failed-label"
                         data-openbitfun-product-component="pending-queue-panel"
                         data-openbitfun-product-part="status"
-                      >
+                       data-starmate-product-component="pending-queue-panel" data-starmate-product-part="status" >
                         {t('pendingQueue.statusFailed')}
                       </div>
                     )}
@@ -312,7 +312,7 @@ function LegacyPendingQueuePanel({
                 className="openbitfun-pending-queue-panel__actions"
                 data-openbitfun-product-component="pending-queue-panel"
                 data-openbitfun-product-part="actions"
-              >
+               data-starmate-product-component="pending-queue-panel" data-starmate-product-part="actions" >
                 <Tooltip content={t('pendingQueue.tooltip.sendNow')}>
                   <IconButton
                     aria-label={t('pendingQueue.actions.sendNow')}
@@ -326,7 +326,7 @@ function LegacyPendingQueuePanel({
                     onClick={() => {
                       void handleSendNow(item);
                     }}
-                  />
+                   data-starmate-product-component="pending-queue-panel" data-starmate-product-part="action" />
                 </Tooltip>
                 <Tooltip content={t('pendingQueue.actions.delete')}>
                   <IconButton
@@ -338,7 +338,7 @@ function LegacyPendingQueuePanel({
                     icon={<Icon name="delete" size="lg" />}
                     size="xs"
                     onClick={() => handleDelete(item)}
-                  />
+                   data-starmate-product-component="pending-queue-panel" data-starmate-product-part="action" />
                 </Tooltip>
                 <Tooltip content={t('pendingQueue.actions.edit')}>
                   <IconButton
@@ -350,7 +350,7 @@ function LegacyPendingQueuePanel({
                     icon={<Icon name="edit" size="lg" />}
                     size="xs"
                     onClick={() => handleRestoreToComposer(item)}
-                  />
+                   data-starmate-product-component="pending-queue-panel" data-starmate-product-part="action" />
                 </Tooltip>
               </ChatComposerQueueItemActions>
             </ChatComposerQueueItem>

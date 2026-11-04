@@ -117,7 +117,7 @@ export const SplitHandle: React.FC<SplitHandleProps> = ({
         aria-valuenow={Math.round(ratio * 100)}
         aria-valuemin={LAYOUT_CONFIG.MIN_SPLIT_RATIO * 100}
         aria-valuemax={LAYOUT_CONFIG.MAX_SPLIT_RATIO * 100}
-      >
+       data-starmate-component="content-canvas" data-starmate-part="splitHandle" data-starmate-direction={direction} data-starmate-state={isDragging ? 'dragging' : ''} >
         <div className="canvas-split-handle__line" />
         <div className="canvas-split-handle__grip">
           {direction === 'horizontal' ? (

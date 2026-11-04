@@ -37,15 +37,15 @@ export function MobileToolbar({
       data-safe-area={safeArea ? "true" : "false"}
       data-sticky={sticky ? "true" : "false"}
       role={label ? "toolbar" : undefined}
-    >
+     data-starmate-component="mobile-toolbar" >
       {leading !== undefined && leading !== null && (
-        <span className={styles.leading} data-openbitfun-part="leading">{leading}</span>
+        <span className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</span>
       )}
       {children !== undefined && children !== null && (
-        <span className={styles.content} data-openbitfun-part="content">{children}</span>
+        <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >{children}</span>
       )}
       {trailing !== undefined && trailing !== null && (
-        <span className={styles.trailing} data-openbitfun-part="trailing">{trailing}</span>
+        <span className={styles.trailing} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</span>
       )}
     </div>
   );

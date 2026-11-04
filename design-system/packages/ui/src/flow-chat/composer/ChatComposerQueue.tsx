@@ -54,7 +54,7 @@ export const ChatComposerQueue = forwardRef<HTMLElement, ChatComposerQueueProps>
         data-openbitfun-component="chat-composer-queue"
         data-openbitfun-part="root"
         ref={ref}
-      />
+       data-starmate-component="chat-composer-queue" data-starmate-part="root" />
     );
   },
 );
@@ -71,7 +71,7 @@ export const ChatComposerQueueHeader = forwardRef<
       data-openbitfun-component="chat-composer-queue"
       data-openbitfun-part="header"
       ref={ref}
-    />
+     data-starmate-component="chat-composer-queue" data-starmate-part="header" />
   );
 });
 
@@ -87,14 +87,14 @@ export const ChatComposerQueueTitle = forwardRef<
       data-openbitfun-component="chat-composer-queue"
       data-openbitfun-part="title"
       ref={ref}
-    >
+     data-starmate-component="chat-composer-queue" data-starmate-part="title" >
       <OverflowText className={styles.titleLabel}>{children}</OverflowText>
       {count !== undefined && count !== null && (
         <span
           className={styles.totalCount}
           data-openbitfun-component="chat-composer-queue"
           data-openbitfun-part="totalCount"
-        >
+         data-starmate-component="chat-composer-queue" data-starmate-part="totalCount" >
           {count}
         </span>
       )}
@@ -113,7 +113,7 @@ export const ChatComposerQueueList = forwardRef<
       data-openbitfun-component="chat-composer-queue"
       data-openbitfun-part="list"
       ref={ref}
-    />
+     data-starmate-component="chat-composer-queue" data-starmate-part="list" />
   );
 });
 
@@ -129,7 +129,7 @@ export const ChatComposerQueueItem = forwardRef<
       data-openbitfun-part="item"
       data-openbitfun-state={state === "default" ? undefined : state}
       ref={ref}
-    />
+     data-starmate-component="chat-composer-queue" data-starmate-part="item" data-starmate-state={state === "default" ? undefined : state} />
   );
 });
 
@@ -144,7 +144,7 @@ export const ChatComposerQueueItemContent = forwardRef<
       data-openbitfun-component="chat-composer-queue"
       data-openbitfun-part="content"
       ref={ref}
-    />
+     data-starmate-component="chat-composer-queue" data-starmate-part="content" />
   );
 });
 
@@ -166,7 +166,7 @@ export const ChatComposerQueueAttachmentBadge = forwardRef<
       data-openbitfun-part="attachmentCount"
       ref={ref}
       title={label}
-    >
+     data-starmate-component="chat-composer-queue" data-starmate-part="attachmentCount" >
       {Math.trunc(count)}
     </span>
   );
@@ -183,6 +183,6 @@ export const ChatComposerQueueItemActions = forwardRef<
       data-openbitfun-component="chat-composer-queue"
       data-openbitfun-part="actions"
       ref={ref}
-    />
+     data-starmate-component="chat-composer-queue" data-starmate-part="actions" />
   );
 });

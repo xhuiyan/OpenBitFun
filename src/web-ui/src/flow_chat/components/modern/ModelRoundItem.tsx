@@ -86,7 +86,7 @@ function RetryHistoryCard({
       className="model-round-item__retry-history"
       data-openbitfun-product-component="model-round-item"
       data-openbitfun-product-part="retryHistory"
-    >
+     data-starmate-product-component="model-round-item" data-starmate-product-part="retryHistory" >
       {nested ? (
         <Disclosure
           className="model-round-item__retry-toggle"
@@ -98,7 +98,7 @@ function RetryHistoryCard({
           summary={label}
           leading={<Icon glyph={Wifi} size="sm" />}
           unmountOnClose
-        >
+         data-starmate-product-component="model-round-item" data-starmate-product-part="retryToggle" data-starmate-state={isExpanded ? 'expanded' : undefined} >
           <RetryHistoryContent render={children} />
         </Disclosure>
       ) : (
@@ -111,7 +111,7 @@ function RetryHistoryCard({
           onClick={() => applyExpandedState(isExpanded, !isExpanded, onExpandedChange)}
           header={<AmbientToolCardHeader icon={<Icon glyph={Wifi} size="sm" />} action={label} />}
           expandedContent={<RetryHistoryContent render={children} />}
-        />
+         data-starmate-product-component="model-round-item" data-starmate-product-part="retryToggle" />
       )}
     </div>
   );
@@ -256,12 +256,12 @@ const RetryAttemptSection: React.FC<{
         onClick={() => void copyValue(value, valueKey)}
         aria-label={t('modelRound.attemptDiagnostics.copy')}
         icon={copiedValue === valueKey ? <Icon name="check-line" size="sm" /> : <Icon name="duplicate" size="sm" />}
-      />
+       data-starmate-product-component="model-round-item" data-starmate-product-part="action" data-starmate-state={copiedValue === valueKey ? 'copied' : undefined} />
     </Tooltip>
   );
 
   const attemptLabel = (
-    <span className="model-round-item__retry-attempt-label" data-openbitfun-product-component="model-round-item" data-openbitfun-product-part="attemptLabel">
+    <span className="model-round-item__retry-attempt-label" data-openbitfun-product-component="model-round-item" data-openbitfun-product-part="attemptLabel" data-starmate-product-component="model-round-item" data-starmate-product-part="attemptLabel" >
       {label}
     </span>
   );
@@ -272,7 +272,7 @@ const RetryAttemptSection: React.FC<{
       className="model-round-item__retry-attempt"
       data-openbitfun-product-component="model-round-item"
       data-openbitfun-product-part="retryAttempt"
-    >
+     data-starmate-product-component="model-round-item" data-starmate-product-part="retryAttempt" >
       <ToolCardSection label={diagnostic ? undefined : attemptLabel}>
         {diagnostic && (
           <Button
@@ -288,7 +288,7 @@ const RetryAttemptSection: React.FC<{
             aria-expanded={isOpen}
             aria-controls={detailsId}
             leadingIcon={<Icon glyph={CircleAlert} size="sm" />}
-          >
+           data-starmate-product-component="model-round-item" data-starmate-product-part="diagnosticToggle" data-starmate-state={isOpen ? 'expanded' : undefined} >
             {attemptLabel}
           </Button>
         )}
@@ -303,11 +303,11 @@ const RetryAttemptSection: React.FC<{
                 className="model-round-item__attempt-diagnostic-category"
                 data-openbitfun-product-component="model-round-item"
                 data-openbitfun-product-part="diagnosticSection"
-              >
+               data-starmate-product-component="model-round-item" data-starmate-product-part="diagnosticSection" >
                 {attemptDiagnosticCategoryLabel(diagnostic, t)}
               </span>
             )}
-          >
+           data-starmate-product-component="model-round-item" data-starmate-product-part="diagnosticDetails" >
             {diagnostic.rawError && (
               <ToolCardSection
                 className="model-round-item__attempt-diagnostic-section"
@@ -315,7 +315,7 @@ const RetryAttemptSection: React.FC<{
                 data-openbitfun-product-part="diagnosticSection"
                 label={t('modelRound.attemptDiagnostics.providerError')}
                 actions={renderCopyButton(diagnostic.rawError, 'raw-error')}
-              >
+               data-starmate-product-component="model-round-item" data-starmate-product-part="diagnosticSection" >
                 <ToolCardText>{diagnostic.rawError}</ToolCardText>
               </ToolCardSection>
             )}
@@ -329,7 +329,7 @@ const RetryAttemptSection: React.FC<{
                   data-openbitfun-product-component="model-round-item"
                   data-openbitfun-product-part="diagnosticSection"
                   label={t('modelRound.attemptDiagnostics.toolArguments', { name: toolLabel })}
-                >
+                 data-starmate-product-component="model-round-item" data-starmate-product-part="diagnosticSection" >
                   {toolCall.rawArguments && (
                     <ToolCardSection
                       label={t('modelRound.attemptDiagnostics.rawArguments')}
@@ -600,7 +600,7 @@ export const ModelRoundItem = React.memo<ModelRoundItemProps>(
         data-model-config-id={round.modelConfigId || ''}
         data-effective-model-name={round.effectiveModelName || ''}
         data-streaming={isVisuallyStreaming ? 'true' : 'false'}
-      >
+       data-starmate-product-component="model-round-item" data-starmate-product-part="root" data-starmate-status={round.status} data-starmate-state={isVisuallyStreaming ? 'streaming' : undefined} >
         {(!blockPart || blockPart === 'header') && round.routing && <div className="model-round-item__meta" data-testid="model-round-routing">
           <Tooltip content={t('modelSelector.routing.latency', { ms: round.routing.latencyMs })}>
             <span>{t(round.routing.fallbackReason ? 'modelSelector.routing.fallback' : round.routing.route === 'economy'
@@ -741,7 +741,7 @@ export const ModelRoundItem = React.memo<ModelRoundItemProps>(
             className="model-round-item__canvas-attachments"
             data-openbitfun-product-component="model-round-item"
             data-openbitfun-product-part="canvasAttachments"
-          >
+           data-starmate-product-component="model-round-item" data-starmate-product-part="canvasAttachments" >
             {canvasArtifactItems.map((item, index) => (
               <FlowItemRenderer
                 key={`canvas-attachment:${item.id}`}
@@ -767,12 +767,12 @@ export const ModelRoundItem = React.memo<ModelRoundItemProps>(
                   data-openbitfun-product-component="model-round-item"
                   data-openbitfun-product-part="meta"
                   aria-label={t('modelRound.meta.label')}
-                >
+                 data-starmate-product-component="model-round-item" data-starmate-product-part="meta" >
                   <span
                     className="model-round-item__meta-item"
                     data-openbitfun-product-component="model-round-item"
                     data-openbitfun-product-part="metaItem"
-                  >
+                   data-starmate-product-component="model-round-item" data-starmate-product-part="metaItem" >
                     <FlowChatMetric
                       focusable={shouldRevealFooter}
                       description={completionMetaItems.map(item => `${item.label}: ${item.value}`).join(' · ')}
@@ -803,7 +803,7 @@ export const ModelRoundItem = React.memo<ModelRoundItemProps>(
                         data-testid="model-round-copy-btn"
                         data-openbitfun-product-component="model-round-item" data-openbitfun-product-part="action" data-openbitfun-state={copied ? 'copied' : undefined}
                         icon={<Icon name={copied ? 'check-line' : 'duplicate'} size="sm" />}
-                      />
+                       data-starmate-product-component="model-round-item" data-starmate-product-part="action" data-starmate-state={copied ? 'copied' : undefined} />
                     </Tooltip>
 
                     {isCopyMenuOpen && createOverlayPortal(
@@ -817,7 +817,7 @@ export const ModelRoundItem = React.memo<ModelRoundItemProps>(
                           left: `${copyMenuLayout?.left ?? 0}px`,
                           visibility: copyMenuLayout ? 'visible' : 'hidden',
                         }}
-                      >
+                       data-starmate-placement={copyMenuLayout?.placement ?? 'bottom'} >
                         <MenuItem
                           type="button"
                           onClick={() => void handleCopyScope('full')}
@@ -929,7 +929,7 @@ const FlowItemRenderer: React.FC<FlowItemRendererProps> = ({
 
       return (
         <>
-          <div className="flowchat-flow-item" data-thinking-continuation="" data-flow-item-id={item.id} data-flow-item-type="tool" data-openbitfun-product-component="model-round-item" data-openbitfun-product-part="toolItem">
+          <div className="flowchat-flow-item" data-thinking-continuation="" data-flow-item-id={item.id} data-flow-item-type="tool" data-openbitfun-product-component="model-round-item" data-openbitfun-product-part="toolItem" data-starmate-product-component="model-round-item" data-starmate-product-part="toolItem" >
             <FlowToolCard
               toolItem={toolItem}
               parallel={capsuleRow !== undefined}

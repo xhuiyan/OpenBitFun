@@ -166,7 +166,7 @@ export const SessionTitleSection: React.FC = () => {
         data-openbitfun-component="session-title-config"
         data-openbitfun-part="root"
         title={t('sessionTitle.title')}
-      >
+       data-starmate-component="session-title-config" data-starmate-part="root" >
         <ConfigRetryState
           message={t('sessionTitle.loadFailedLocked')}
           retryLabel={t('sessionTitle.retry')}
@@ -183,7 +183,7 @@ export const SessionTitleSection: React.FC = () => {
         data-openbitfun-component="session-title-config"
         data-openbitfun-part="root"
         title={t('sessionTitle.title')}
-      >
+       data-starmate-component="session-title-config" data-starmate-part="root" >
         <ConfigPageRow
           label={t('sessionTitle.enable')}
           align="center"
@@ -192,7 +192,7 @@ export const SessionTitleSection: React.FC = () => {
             className="openbitfun-runtime-settings__appearance-host"
             data-openbitfun-component="session-title-config"
             data-openbitfun-part="enableControl"
-          >
+           data-starmate-component="session-title-config" data-starmate-part="enableControl" >
             <Switch
               checked={settings?.enable_session_title_generation ?? false}
               onChange={(e) => void updateEnabled(e.target.checked)}
@@ -211,7 +211,7 @@ export const SessionTitleSection: React.FC = () => {
               className="openbitfun-runtime-settings__appearance-host"
               data-openbitfun-component="session-title-config"
               data-openbitfun-part="modelControl"
-            >
+             data-starmate-component="session-title-config" data-starmate-part="modelControl" >
               <Combobox
                 size="sm"
                 options={modelOptions}

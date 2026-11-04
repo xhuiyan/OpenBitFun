@@ -54,13 +54,13 @@ export function ListModelsToolCard({
       header={<AmbientToolCardHeader action={action} content={summary} result={resultSummary} statusDescription={statusDescription}
         icon={<ToolCardStatusSlot status={status} toolIcon={<Icon glyph={Cpu} size="sm" />} />} />}
       expandedContent={hasDetails ? (
-        <div className={styles.details} data-openbitfun-part="details">
-          {error && <ToolCardText className={styles.error} variant="prose" data-openbitfun-part="error">{error}</ToolCardText>}
+        <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
+          {error && <ToolCardText className={styles.error} variant="prose" data-openbitfun-part="error" data-starmate-part="error" >{error}</ToolCardText>}
           {query && <ToolCardFields fields={[{ label: queryLabel, value: query }]} />}
           {(models.length > 0 || emptyContent) && <ToolCardSection label={modelsLabel}>
             {models.length > 0 ? <ScrollArea className={styles.viewport} edgeFade="vertical" overscrollBehaviorY="auto">
-              <ul className={styles.list} data-openbitfun-part="modelList">
-                {models.map(model => <li className={styles.model} key={model.key} data-openbitfun-part="model" data-overflow-trigger>
+              <ul className={styles.list} data-openbitfun-part="modelList" data-starmate-part="modelList" >
+                {models.map(model => <li className={styles.model} key={model.key} data-openbitfun-part="model" data-overflow-trigger data-starmate-part="model" >
                   <div className={styles.identity}>
                     <OverflowText className={styles.name}>{model.name}</OverflowText>
                     {model.provider && <OverflowText className={styles.secondary}>{model.provider}</OverflowText>}
@@ -75,7 +75,7 @@ export function ListModelsToolCard({
           </ToolCardSection>}
           {resultText && <ToolCardSection label={modelsLabel}><ToolCardText>{resultText}</ToolCardText></ToolCardSection>}
         </div>
-      ) : undefined} />
+      ) : undefined}  data-starmate-tool-card="list-models" />
   );
 }
 
@@ -117,13 +117,13 @@ export function ControlHubToolCard({
       : domain === "browser" ? <Icon name="browser" size="sm" />
         : <Icon name="mouse-pointer" size="sm" />;
   const icon = <ToolCardStatusSlot status={status} toolIcon={toolIcon} />;
-  const details = hasDetails ? <div className={styles.details} data-openbitfun-part="details">
-    {error && <ToolCardText variant="prose" className={styles.error} data-openbitfun-part="error">{error}</ToolCardText>}
+  const details = hasDetails ? <div className={styles.details} data-openbitfun-part="details" data-starmate-part="details" >
+    {error && <ToolCardText variant="prose" className={styles.error} data-openbitfun-part="error" data-starmate-part="error" >{error}</ToolCardText>}
     {fields.length > 0 && <ToolCardFields fields={fields} />}
     {records.length > 0 && <ToolCardSection label={resultLabel}>
       <ScrollArea className={styles.viewport} edgeFade="vertical" overscrollBehaviorY="auto">
-        <ul className={styles.list} data-openbitfun-part="resultList">
-          {records.map(record => <li key={record.key} className={styles.record} data-openbitfun-part="result" data-overflow-trigger>
+        <ul className={styles.list} data-openbitfun-part="resultList" data-starmate-part="resultList" >
+          {records.map(record => <li key={record.key} className={styles.record} data-openbitfun-part="result" data-overflow-trigger data-starmate-part="result" >
             <OverflowText className={styles.name}>{record.title}</OverflowText>
             {record.description && <span className={styles.description}>{record.description}</span>}
             {record.fields && record.fields.length > 0 && <ToolCardFields fields={record.fields} />}
@@ -132,17 +132,17 @@ export function ControlHubToolCard({
       </ScrollArea>
     </ToolCardSection>}
     {resultText && <ToolCardSection label={resultLabel}>
-      <ToolCardText variant={resultVariant} data-openbitfun-part="output">{resultText}</ToolCardText>
+      <ToolCardText variant={resultVariant} data-openbitfun-part="output" data-starmate-part="output" >{resultText}</ToolCardText>
     </ToolCardSection>}
-    {images.map((image, index) => <img className={styles.image} key={index} src={image.src} alt={image.alt} loading="lazy" data-openbitfun-part="image" />)}
+    {images.map((image, index) => <img className={styles.image} key={index} src={image.src} alt={image.alt} loading="lazy" data-openbitfun-part="image"  data-starmate-part="image" />)}
     {notices.length > 0 && <ToolCardSection label={noticesLabel}>
-      <ToolCardText variant="prose" data-openbitfun-part="notices">{notices.join("\n\n")}</ToolCardText>
+      <ToolCardText variant="prose" data-openbitfun-part="notices" data-starmate-part="notices" >{notices.join("\n\n")}</ToolCardText>
     </ToolCardSection>}
     {resultDetailsText && <ToolCardDisclosure summary={resultDetailsLabel} onOpenChange={onParamsOpenChange}>
-      <ToolCardText data-openbitfun-part="resultDetails">{resultDetailsText}</ToolCardText>
+      <ToolCardText data-openbitfun-part="resultDetails" data-starmate-part="resultDetails" >{resultDetailsText}</ToolCardText>
     </ToolCardDisclosure>}
     {paramsText && <ToolCardDisclosure summary={paramsLabel} onOpenChange={onParamsOpenChange}>
-      <ToolCardText data-openbitfun-part="params">{paramsText}</ToolCardText>
+      <ToolCardText data-openbitfun-part="params" data-starmate-part="params" >{paramsText}</ToolCardText>
     </ToolCardDisclosure>}
   </div> : undefined;
   const common = {

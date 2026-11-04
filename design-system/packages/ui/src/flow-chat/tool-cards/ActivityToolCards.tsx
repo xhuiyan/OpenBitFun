@@ -52,13 +52,13 @@ function ActivityToolCardBase({
 }: ActivityToolCardBaseProps) {
   const summaryContent = summary !== undefined && summary !== null ? (
     <OverflowText className={styles.summary} data-openbitfun-part="summary"
-      title={summaryTitle}>
+      title={summaryTitle} data-starmate-part="summary" >
       {summary}
     </OverflowText>
   ) : undefined;
   if (interaction) return <ToolRelationRow {...props} data-openbitfun-tool-card={toolCard}
     interaction={interaction} status={status} result={resultSummary ?? summary ?? action}
-    details={details} detailsTitle={detailsTitle ?? action} resultLabel={resultLabel} />;
+    details={details} detailsTitle={detailsTitle ?? action} resultLabel={resultLabel}  data-starmate-tool-card={toolCard} />;
   return (
     <AmbientToolCard
       {...props}
@@ -81,7 +81,7 @@ function ActivityToolCardBase({
         />
       )}
       status={status}
-    />
+     data-starmate-tool-card={toolCard} />
   );
 }
 

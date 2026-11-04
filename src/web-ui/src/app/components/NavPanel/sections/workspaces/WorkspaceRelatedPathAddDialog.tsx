@@ -108,7 +108,7 @@ export function WorkspaceRelatedPathAddDialog({ workspace, isOpen, onClose, onAd
     </DialogHeader>
     <DialogBody>
       <form id={formId} className="workspace-related-paths-dialog__add-form" onSubmit={event => void submit(event)}
-        data-openbitfun-component="workspace-related-paths-dialog" data-openbitfun-part="addForm">
+        data-openbitfun-component="workspace-related-paths-dialog" data-openbitfun-part="addForm" data-starmate-component="workspace-related-paths-dialog" data-starmate-part="addForm" >
         <Field label={t('nav.workspaces.relatedPaths.dialog.pathPlaceholder')} controlWidth="fill"
           controlTrailing={<Button variant="outline" size="sm" leadingIcon={<Icon glyph={FolderOpen} size="sm" />}
             onClick={() => void chooseDirectory()} disabled={busy || (remote && !connectionId)} loading={selecting}>{t('actions.select')}</Button>}>

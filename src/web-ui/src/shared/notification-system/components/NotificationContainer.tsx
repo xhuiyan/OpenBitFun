@@ -133,7 +133,7 @@ export const NotificationContainer: React.FC<React.PropsWithChildren> = ({ child
         className="notification-container"
         data-openbitfun-component="notification"
         data-openbitfun-part="container"
-      >
+       data-starmate-component="notification" data-starmate-part="container" >
         <ScrollArea className="notification-container__viewport" scrollbarVisibility="hidden">
           {children}
           {presentedNotifications.map(notification => {

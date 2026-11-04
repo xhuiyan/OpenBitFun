@@ -51,7 +51,7 @@ export function ProjectResourceList({ items, label, moreLabel, onShowAll, addAct
   const overflowing = bounded && items.length > itemCapacity;
   const visibleItems = bounded ? items.slice(0, Math.max(0, itemCapacity - Number(overflowing))) : items;
   return <ul className={`project-resource-list${bounded ? '' : ' project-resource-list--unbounded'}`} ref={listRef} aria-label={label}
-    data-openbitfun-scene="project-resources" data-openbitfun-part="resourceList">
+    data-openbitfun-scene="project-resources" data-openbitfun-part="resourceList" data-starmate-scene="project-resources" data-starmate-part="resourceList" >
     {visibleItems.map(item => <li className="project-resource-list__item" key={item.id}>
       <button type="button" className="project-resource-list__row" onClick={item.onClick} aria-haspopup="dialog" title={item.title} data-overflow-trigger>
         {item.icon}

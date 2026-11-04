@@ -24,7 +24,7 @@ export const MobileTextarea = forwardRef<HTMLTextAreaElement, MobileTextareaProp
         data-openbitfun-component="mobile-textarea"
         data-disabled={disabled ? "true" : "false"}
         data-invalid={resolvedInvalid ? "true" : "false"}
-      >
+       data-starmate-component="mobile-textarea" >
         {leading && <span className={styles.slot}>{leading}</span>}
         <textarea
           {...props}

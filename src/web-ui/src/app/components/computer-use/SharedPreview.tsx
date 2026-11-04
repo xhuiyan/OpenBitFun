@@ -95,7 +95,7 @@ export function SharedPreview({ snapshot, onSnapshot }: { snapshot: ComputerUseC
     const dy = Math.round(Math.max(-1000, Math.min(1000, event.deltaY * scale)));
     if (dx || dy) void send({ action: 'app_scroll', focus, dx, dy });
   };
-  return <div className="computer-control-card__sharing" data-openbitfun-component="computer-control" data-openbitfun-part="sharing">
+  return <div className="computer-control-card__sharing" data-openbitfun-component="computer-control" data-openbitfun-part="sharing" data-starmate-component="computer-control" data-starmate-part="sharing" >
     {frame && <div ref={container} className="computer-control-card__preview" data-openbitfun-component="computer-control" data-openbitfun-part="preview"
       onContextMenu={event => { if (allowed) event.preventDefault(); }}
       onPointerDown={event => {
@@ -130,12 +130,12 @@ export function SharedPreview({ snapshot, onSnapshot }: { snapshot: ComputerUseC
         } else {
           void send({ action: 'app_click', target: to, click_count: clickCount, mouse_button: button(start.button), modifier_keys: start.modifiers });
         }
-      }}>
+      }} data-starmate-component="computer-control" data-starmate-part="preview" >
       <img src={`data:${frame.mime_type};base64,${frame.image_base64}`} alt={t('computerControl.previewAlt')} draggable={false} />
       {feedback && <PreviewCursor x={feedback.x} y={feedback.y} immediate={!!localPointer} />}
       {click && <span key={lastClick?.sequence} className="computer-control-card__click computer-control-card__click--shared"
         data-openbitfun-component="computer-control" data-openbitfun-part="click" aria-hidden="true"
-        style={{ left: `${click.x * 100}%`, top: `${click.y * 100}%` }} />}
+        style={{ left: `${click.x * 100}%`, top: `${click.y * 100}%` }}  data-starmate-component="computer-control" data-starmate-part="click" />}
     </div>}
     {tree && <pre className="computer-control-card__tree">{tree}</pre>}
     {allowed && <>

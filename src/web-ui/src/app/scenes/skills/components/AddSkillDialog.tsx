@@ -54,7 +54,7 @@ export function AddSkillDialog({ open, onOpenChange, onAdded, installed }: AddSk
         <DialogClose />
       </DialogHeader>
       <DialogBody>
-        <div className="openbitfun-skills-scene__modal-form" data-openbitfun-scene="skills" data-openbitfun-part="addForm">
+        <div className="openbitfun-skills-scene__modal-form" data-openbitfun-scene="skills" data-openbitfun-part="addForm" data-starmate-scene="skills" data-starmate-part="addForm" >
           <Field label={t('form.level.label')} controlWidth="fill">
             <Select
               options={[

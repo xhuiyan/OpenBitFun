@@ -70,14 +70,14 @@ const SubagentProjectionTextBlock = React.memo<{ textItem: FlowTextItem; classNa
   };
 
   return (
-    <div data-openbitfun-component="subagent-projection" data-openbitfun-part="truncated" className="subagent-projection-text--truncated" data-thinking-continuation="">
+    <div data-openbitfun-component="subagent-projection" data-openbitfun-part="truncated" className="subagent-projection-text--truncated" data-thinking-continuation="" data-starmate-component="subagent-projection" data-starmate-part="truncated" >
       <FlowTextBlock
         textItem={truncatedItem}
         className={className}
         replayStreamingOnMount={false}
       />
-      <div data-openbitfun-component="subagent-projection" data-openbitfun-part="hint" className="subagent-projection-text__hint">
-        <span data-openbitfun-component="subagent-projection" data-openbitfun-part="message" className="subagent-projection-text__message">
+      <div data-openbitfun-component="subagent-projection" data-openbitfun-part="hint" className="subagent-projection-text__hint" data-starmate-component="subagent-projection" data-starmate-part="hint" >
+        <span data-openbitfun-component="subagent-projection" data-openbitfun-part="message" className="subagent-projection-text__message" data-starmate-component="subagent-projection" data-starmate-part="message" >
           {t('subagent.showingLines', { shown: SUBAGENT_TEXT_TRUNCATE_LINES, total: lines.length })}
         </span>
         <Button
@@ -123,7 +123,7 @@ function renderProjectedItem(
       );
     case 'tool':
       return (
-        <div data-openbitfun-component="subagent-projection" data-openbitfun-part="item" key={item.id} className="flowchat-flow-item" data-thinking-continuation="" data-flow-item-id={item.id} data-flow-item-type="tool">
+        <div data-openbitfun-component="subagent-projection" data-openbitfun-part="item" key={item.id} className="flowchat-flow-item" data-thinking-continuation="" data-flow-item-id={item.id} data-flow-item-type="tool" data-starmate-component="subagent-projection" data-starmate-part="item" >
           <FlowToolCard
             toolItem={item as FlowToolItem}
             sessionId={sessionId}
@@ -345,18 +345,18 @@ export const SubagentProjectionView: React.FC<SubagentProjectionViewProps> = ({
     <div data-openbitfun-component="subagent-projection" data-openbitfun-part="root" data-openbitfun-state="expanded"
       className={`subagent-projection-wrapper ${className}`.trim()}
       data-subagent-session-id={resolvedSubagentSessionId}
-    >
+     data-starmate-component="subagent-projection" data-starmate-part="root" data-starmate-state="expanded" >
       <div
         ref={containerRef}
         data-openbitfun-component="subagent-projection"
         data-openbitfun-part="container"
         className="subagent-projection-container subagent-projection-container--expanded"
         data-parent-tool-id={parentTaskToolId}
-      >
+       data-starmate-component="subagent-projection" data-starmate-part="container" >
         <TimelineMutationBoundary itemKeys={runs.map(run => run[0].id)} scrollerRef={containerRef}
           canRepair={() => !followRef.current && viewportOwner.canShift()} shift={viewportOwner.shift}
           rowSelector=".subagent-projection-run">
-        <div ref={contentRef} style={{ paddingTop: virtualizer.paddingTopPx, paddingBottom: virtualizer.paddingBottomPx }} data-openbitfun-component="subagent-projection" data-openbitfun-part="content" className="subagent-projection-content" data-flow-item-stack="">
+        <div ref={contentRef} style={{ paddingTop: virtualizer.paddingTopPx, paddingBottom: virtualizer.paddingBottomPx }} data-openbitfun-component="subagent-projection" data-openbitfun-part="content" className="subagent-projection-content" data-flow-item-stack="" data-starmate-component="subagent-projection" data-starmate-part="content" >
           {virtualizer.rows.map((row, index) => <React.Fragment key={row.key}>
             {index > 0 && row.startPx > virtualizer.rows[index - 1].endPx && <div aria-hidden="true" style={{ height: row.startPx - virtualizer.rows[index - 1].endPx }} />}
             <div ref={virtualizer.measureRowElement} data-virtual-index={row.index} data-virtual-item-key={row.key}

@@ -55,7 +55,7 @@ const log = createLogger('AgentCompanionPet');
 
 function Silhouette() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="silhouette" className="openbitfun-panda-head__silhouette" aria-hidden>
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="silhouette" className="openbitfun-panda-head__silhouette" aria-hidden data-starmate-component="chat-input-pixel-pet" data-starmate-part="silhouette" >
       {/* Ears + back-hump bump */}
       <g className="openbitfun-panda-head__ears">
         <g className="openbitfun-panda-head__ear openbitfun-panda-head__ear--left">
@@ -149,7 +149,7 @@ function Silhouette() {
 
 function FaceRest() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="rest" className="openbitfun-panda-head__face openbitfun-panda-head__face--rest">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="rest" className="openbitfun-panda-head__face openbitfun-panda-head__face--rest" data-starmate-component="chat-input-pixel-pet" data-starmate-part="rest" >
       <g className="openbitfun-panda-head__zzz" aria-hidden>
         <text
           x={215}
@@ -179,7 +179,7 @@ function FaceRest() {
 
 function FaceAnalyzing() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="analyze" className="openbitfun-panda-head__face openbitfun-panda-head__face--analyze">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="analyze" className="openbitfun-panda-head__face openbitfun-panda-head__face--analyze" data-starmate-component="chat-input-pixel-pet" data-starmate-part="analyze" >
       <g className="openbitfun-panda-head__think" aria-hidden>
         <circle cx={222} cy={72} r={4.5} className="openbitfun-panda__b openbitfun-panda-head__think-pip" />
         <circle cx={250} cy={48} r={6} className="openbitfun-panda__b openbitfun-panda-head__think-pip" />
@@ -191,7 +191,7 @@ function FaceAnalyzing() {
 
 function FaceWaiting() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="wait" className="openbitfun-panda-head__face openbitfun-panda-head__face--wait">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="wait" className="openbitfun-panda-head__face openbitfun-panda-head__face--wait" data-starmate-component="chat-input-pixel-pet" data-starmate-part="wait" >
       <g className="openbitfun-panda-head__wait-pips" aria-hidden>
         <circle cx={228} cy={50} r={5} className="openbitfun-panda-head__wait-pip" />
         <circle cx={252} cy={50} r={5} className="openbitfun-panda-head__wait-pip" />
@@ -203,7 +203,7 @@ function FaceWaiting() {
 
 function FaceWorking() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="work" className="openbitfun-panda-head__face openbitfun-panda-head__face--work">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="work" className="openbitfun-panda-head__face openbitfun-panda-head__face--work" data-starmate-component="chat-input-pixel-pet" data-starmate-part="work" >
       {/* Sweat drop trickling down from forehead — classic "trying hard" cue. */}
       <g className="openbitfun-panda-head__sweat" aria-hidden>
         <path
@@ -217,7 +217,7 @@ function FaceWorking() {
 
 function FaceHover() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="hover" className="openbitfun-panda-head__face openbitfun-panda-head__face--hover">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="hover" className="openbitfun-panda-head__face openbitfun-panda-head__face--hover" data-starmate-component="chat-input-pixel-pet" data-starmate-part="hover" >
       <g className="openbitfun-panda-head__sparkles" aria-hidden>
         <path d="M226 46 L232 58 L244 64 L232 70 L226 82 L220 70 L208 64 L220 58 Z" className="openbitfun-panda-head__sparkle openbitfun-panda-head__sparkle--a" />
         <path d="M270 20 L274 28 L282 32 L274 36 L270 44 L266 36 L258 32 L266 28 Z" className="openbitfun-panda-head__sparkle openbitfun-panda-head__sparkle--b" />
@@ -228,7 +228,7 @@ function FaceHover() {
 
 function FaceDragging() {
   return (
-    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="drag" className="openbitfun-panda-head__face openbitfun-panda-head__face--drag">
+    <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="drag" className="openbitfun-panda-head__face openbitfun-panda-head__face--drag" data-starmate-component="chat-input-pixel-pet" data-starmate-part="drag" >
       <g className="openbitfun-panda-head__drag-lines" aria-hidden>
         <path d="M226 48 C244 40 262 40 282 48" className="openbitfun-panda-head__drag-line openbitfun-panda-head__drag-line--a" />
         <path d="M230 72 C248 64 268 65 286 75" className="openbitfun-panda-head__drag-line openbitfun-panda-head__drag-line--b" />
@@ -453,7 +453,7 @@ export const AgentCompanionPet: React.FC<AgentCompanionPetProps> = ({
         data-openbitfun-mood={mood} data-openbitfun-layout="petdex"
         className={`openbitfun-agent-companion-pet ${className}`.trim()}
         role="img" aria-label={t('features.pet.loadFailed')} title={t('features.pet.loadFailed')}
-      >!</div>
+       data-starmate-component="chat-input-pixel-pet" data-starmate-part="root" data-starmate-mood={mood} data-starmate-layout="petdex" >!</div>
     );
   }
 
@@ -487,7 +487,7 @@ export const AgentCompanionPet: React.FC<AgentCompanionPetProps> = ({
         className={`openbitfun-agent-companion-pet ${className}`.trim()}
         style={nativePetdexStyle as React.CSSProperties}
         aria-hidden
-      >
+       data-starmate-component="chat-input-pixel-pet" data-starmate-part="root" data-starmate-mood={mood} data-starmate-layout="petdex" >
         <div
           key={spriteAction ?? mood}
           data-openbitfun-component="chat-input-pixel-pet"
@@ -511,20 +511,20 @@ export const AgentCompanionPet: React.FC<AgentCompanionPetProps> = ({
               backgroundPositionX: `${lookFrame.column / (layout.columns - 1) * 100}%`,
             } : {}),
           } as React.CSSProperties}
-        />
+         data-starmate-component="chat-input-pixel-pet" data-starmate-part="petdex" />
       </div>
     );
   }
 
   if (pet) {
     return (
-      <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="root" data-openbitfun-mood={mood} data-openbitfun-layout="default" className={`openbitfun-agent-companion-pet ${className}`.trim()} aria-hidden />
+      <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="root" data-openbitfun-mood={mood} data-openbitfun-layout="default" className={`openbitfun-agent-companion-pet ${className}`.trim()} aria-hidden  data-starmate-component="chat-input-pixel-pet" data-starmate-part="root" data-starmate-mood={mood} data-starmate-layout="default" />
     );
   }
 
   return (
-    <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="root" data-openbitfun-mood={mood} data-openbitfun-layout="default" className={`openbitfun-agent-companion-pet ${className}`.trim()} aria-hidden>
-      <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="stage" className={stageClasses}>
+    <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="root" data-openbitfun-mood={mood} data-openbitfun-layout="default" className={`openbitfun-agent-companion-pet ${className}`.trim()} aria-hidden data-starmate-component="chat-input-pixel-pet" data-starmate-part="root" data-starmate-mood={mood} data-starmate-layout="default" >
+      <div data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="stage" className={stageClasses} data-starmate-component="chat-input-pixel-pet" data-starmate-part="stage" >
         <svg
           data-openbitfun-component="chat-input-pixel-pet"
           data-openbitfun-part="svg"
@@ -532,7 +532,7 @@ export const AgentCompanionPet: React.FC<AgentCompanionPetProps> = ({
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden
-        >
+         data-starmate-component="chat-input-pixel-pet" data-starmate-part="svg" >
           {/* Outline filter — only applied in dark theme via SCSS. Builds a
              single continuous light contour around the union of all dark
              shapes by dilating the silhouette's alpha and flooding the
@@ -557,7 +557,7 @@ export const AgentCompanionPet: React.FC<AgentCompanionPetProps> = ({
           </defs>
           <g className={`openbitfun-panda-head openbitfun-panda-head--${mood}`}>
             <Silhouette />
-            <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="face" className="openbitfun-panda-head__faces">
+            <g data-openbitfun-component="chat-input-pixel-pet" data-openbitfun-part="face" className="openbitfun-panda-head__faces" data-starmate-component="chat-input-pixel-pet" data-starmate-part="face" >
               {FACE_ORDER.map(m => (
                 <g
                   key={m}

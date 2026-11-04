@@ -13,7 +13,7 @@ export function SubscriptionProviderBrowser({ providers, disabled, children }: {
   const listId = useId();
   const [selected, setSelected] = useState<SubscriptionProvider | 'all'>('all');
   const filter = providers.some(provider => provider.value === selected) ? selected : 'all';
-  return <div className={styles.browser} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionBrowser">
+  return <div className={styles.browser} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionBrowser" data-starmate-component="model-settings" data-starmate-part="subscriptionBrowser" >
     <SegmentedControl variant="pills" tone="neutral" size="sm" className={styles.filters} disabled={disabled}
       aria-label={t('pool.providerFilter')} aria-controls={listId}
       value={filter} onValueChange={value => setSelected(value as SubscriptionProvider | 'all')}

@@ -56,11 +56,11 @@ export const MobileSwitch = forwardRef<HTMLInputElement, MobileSwitchProps>(
         data-disabled={disabled ? "true" : "false"}
         data-openbitfun-component="mobile-switch"
         data-openbitfun-preview-state={typeof previewState === "string" ? previewState : undefined}
-      >
-        <span className={styles.copy} data-openbitfun-part="copy">
-          <span className={styles.label} data-openbitfun-part="label">{label}</span>
+       data-starmate-component="mobile-switch" data-starmate-preview-state={typeof previewState === "string" ? previewState : undefined} >
+        <span className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+          <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{label}</span>
           {description !== undefined && description !== null && (
-            <span className={styles.description} data-openbitfun-part="description">{description}</span>
+            <span className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{description}</span>
           )}
         </span>
         <span className={styles.control}>
@@ -74,8 +74,8 @@ export const MobileSwitch = forwardRef<HTMLInputElement, MobileSwitchProps>(
             role="switch"
             type="checkbox"
           />
-          <span aria-hidden="true" className={styles.track} data-openbitfun-part="track">
-            <span className={styles.thumb} data-openbitfun-part="thumb" />
+          <span aria-hidden="true" className={styles.track} data-openbitfun-part="track" data-starmate-part="track" >
+            <span className={styles.thumb} data-openbitfun-part="thumb"  data-starmate-part="thumb" />
           </span>
         </span>
       </label>

@@ -103,7 +103,7 @@ export function FileOperationToolCard({
   const errorContent = error ? (
     <div className={styles.error} data-guidance={error.guidance ? "true" : "false"}>
       {error.title != null && (
-        <div className={styles.errorTitle} data-openbitfun-icon-slot="true">
+        <div className={styles.errorTitle} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >
           {error.guidance ? <Icon name="info" size="sm" /> : <Icon glyph={XCircle} size="sm" />}
           <span>{error.title}</span>
         </div>
@@ -122,7 +122,7 @@ export function FileOperationToolCard({
       data-openbitfun-operation={operation}
       data-openbitfun-part="root"
       data-openbitfun-status={status}
-    >
+     data-starmate-component="file-operation-tool-card" data-starmate-operation={operation} data-starmate-part="root" data-starmate-status={status} >
       <ProminentToolCard
         collapsibleErrorContent
         errorContent={errorContent}
@@ -138,13 +138,13 @@ export function FileOperationToolCard({
                   aria-label={onOpenFile.label}
                   data-openbitfun-affordance="open-panel-right"
                   data-openbitfun-part="openPanelButton"
-                  icon={<Icon name="arrow-up-right" size="sm" data-openbitfun-icon="open-panel-right" />}
+                  icon={<Icon name="arrow-up-right" size="sm" data-openbitfun-icon="open-panel-right"  data-starmate-icon="open-panel-right" />}
                   onClick={onOpenFile.onPress}
                   size="sm"
                   data-testid={onOpenFile.testId}
                   title={onOpenFile.label}
                   variant="quiet"
-                />
+                 data-starmate-affordance="open-panel-right" data-starmate-part="openPanelButton" />
               </ToolCardActions>
             ) : undefined}
             content={inlineMessage ? (
@@ -157,7 +157,7 @@ export function FileOperationToolCard({
                 data-path={path}
                 data-testid={pathTestId}
                 title={path}
-              >
+               data-starmate-operation={operation} >
                 {pathLabel}
               </OverflowText>
             )}
@@ -180,7 +180,7 @@ export function FileOperationToolCard({
                   size="sm"
                   className={styles.warningStatusIcon}
                   data-openbitfun-icon="warning"
-                />
+                 data-starmate-icon="warning" />
               )
               : undefined}
           />

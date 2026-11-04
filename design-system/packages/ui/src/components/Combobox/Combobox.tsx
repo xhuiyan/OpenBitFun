@@ -549,8 +549,8 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
       data-size={size}
       ref={popoverRef}
       style={layout?.style ?? { position: "fixed", visibility: "hidden" }}
-    >
-      <div className={styles.search} data-openbitfun-part="search">
+     data-starmate-component={multiple ? "multi-select-popup" : "combobox-popup"} data-starmate-part="popover" data-starmate-native-webview-occlusion >
+      <div className={styles.search} data-openbitfun-part="search" data-starmate-part="search" >
         <SearchField
           aria-activedescendant={activeDescendant}
           aria-autocomplete="list"
@@ -593,10 +593,10 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
           onClick={() => closeListbox(true)}
           size="xs"
           variant="quiet"
-        />
+         data-starmate-part="collapse" />
       </div>
-      <div aria-hidden="true" className={styles.divider} data-openbitfun-part="divider" />
-      <div className={styles.options} data-openbitfun-part="options">
+      <div aria-hidden="true" className={styles.divider} data-openbitfun-part="divider"  data-starmate-part="divider" />
+      <div className={styles.options} data-openbitfun-part="options" data-starmate-part="options" >
         <Listbox
           aria-label={ariaLabel ?? (typeof label === "string" ? label : "Options")}
           className={styles.listbox}
@@ -673,9 +673,9 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
       data-hit-area={hitArea}
       data-show-indicator={showIndicator ? "true" : "false"}
       ref={setRootRef}
-    >
+     data-starmate-component={multiple ? "multi-select" : "combobox"} >
       {label !== undefined && label !== null && (
-        <label className={styles.visibleLabel} data-openbitfun-part="label" htmlFor={id} id={labelId}>
+        <label className={styles.visibleLabel} data-openbitfun-part="label" htmlFor={id} id={labelId} data-starmate-part="label" >
           {label}
         </label>
       )}
@@ -684,9 +684,9 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
         className={styles.control}
         data-openbitfun-part="control"
         data-tags={showTags ? "true" : "false"}
-      >
+       data-starmate-part="control" >
         {showTags && (
-          <span className={styles.tags} data-openbitfun-part="tags">
+          <span className={styles.tags} data-openbitfun-part="tags" data-starmate-part="tags" >
             {selectedOptions.slice(0, Math.max(1, maxVisibleTags)).map((option) => (
               <Capsule size="xs" data-openbitfun-part="tag" key={`${typeof option.value}:${option.value}`} action={(
                 <IconButton
@@ -703,7 +703,7 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
                   tabIndex={resolvedOpen ? -1 : undefined}
                   variant="quiet"
                 />
-              )}>
+              )} data-starmate-part="tag" >
                 <span className={styles.tag}><OverflowText>{option.label}</OverflowText></span>
               </Capsule>
             ))}
@@ -735,9 +735,9 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
           role={resolvedOpen ? undefined : "combobox"}
           tabIndex={resolvedOpen ? -1 : undefined}
           type="button"
-        >
-          <span className={styles.value} data-openbitfun-part="value">
-            {valuePrefix != null && <span className={styles.valuePrefix} data-openbitfun-part="value-prefix">{valuePrefix}</span>}
+         data-starmate-part="trigger" >
+          <span className={styles.value} data-openbitfun-part="value" data-starmate-part="value" >
+            {valuePrefix != null && <span className={styles.valuePrefix} data-openbitfun-part="value-prefix" data-starmate-part="value-prefix" >{valuePrefix}</span>}
             {!hasValue ? (
               <OverflowText className={styles.placeholder}>{placeholder}</OverflowText>
             ) : multiple ? (
@@ -745,7 +745,7 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
             ) : (
               <span className={styles.singleValue}>
                 {singleOption?.leading && (
-                  <span aria-hidden="true" className={styles.valueLeading} data-openbitfun-icon-slot="true">{singleOption.leading}</span>
+                  <span aria-hidden="true" className={styles.valueLeading} data-openbitfun-icon-slot="true" data-starmate-icon-slot="true" >{singleOption.leading}</span>
                 )}
                 <OverflowText className={styles.valueLabel}>{singleOption?.label}</OverflowText>
               </span>
@@ -767,12 +767,12 @@ const CollectionPicker = forwardRef<HTMLDivElement, PickerProps>(function Collec
             variant="quiet"
           />
         )}
-        {showIndicator && <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator">
+        {showIndicator && <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator" data-starmate-icon-slot="true" data-starmate-part="indicator" >
           <Icon name="chevron-down" />
         </span>}
       </div>
       {errorMessage ? (
-        <span className={styles.error} data-openbitfun-part="message" id={errorId}>
+        <span className={styles.error} data-openbitfun-part="message" id={errorId} data-starmate-part="message" >
           {errorMessage}
         </span>
       ) : null}

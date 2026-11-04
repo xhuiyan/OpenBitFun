@@ -12,13 +12,13 @@ export interface MobilePageHeaderProps extends Omit<HTMLAttributes<HTMLElement>,
 
 export const MobilePageHeader = forwardRef<HTMLElement, MobilePageHeaderProps>(function MobilePageHeader({ actions, centered = false, className, leading, subtitle, title, ...props }, ref) {
   return (
-    <header {...props} className={classNames(styles.root, className)} data-openbitfun-component="mobile-page-header" data-centered={centered ? "true" : "false"} ref={ref}>
-      <div className={styles.leading} data-openbitfun-part="leading">{leading}</div>
-      <div className={styles.copy} data-openbitfun-part="copy">
-        <h1 className={styles.title} data-openbitfun-part="title">{title}</h1>
-        {subtitle !== undefined && subtitle !== null && <div className={styles.subtitle} data-openbitfun-part="subtitle">{subtitle}</div>}
+    <header {...props} className={classNames(styles.root, className)} data-openbitfun-component="mobile-page-header" data-centered={centered ? "true" : "false"} ref={ref} data-starmate-component="mobile-page-header" >
+      <div className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</div>
+      <div className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+        <h1 className={styles.title} data-openbitfun-part="title" data-starmate-part="title" >{title}</h1>
+        {subtitle !== undefined && subtitle !== null && <div className={styles.subtitle} data-openbitfun-part="subtitle" data-starmate-part="subtitle" >{subtitle}</div>}
       </div>
-      <div className={styles.actions} data-openbitfun-part="actions">{actions}</div>
+      <div className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >{actions}</div>
     </header>
   );
 });

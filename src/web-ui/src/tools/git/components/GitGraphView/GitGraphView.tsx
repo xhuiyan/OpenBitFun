@@ -284,8 +284,8 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
 
   if (loading) {
     return (
-      <div className={`git-graph-view git-graph-view--loading ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="loading">
-        <div className="git-graph-view__loading" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus">
+      <div className={`git-graph-view git-graph-view--loading ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="loading" data-starmate-component="git-tool" data-starmate-part="graphRoot" data-starmate-state="loading" >
+        <div className="git-graph-view__loading" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus" data-starmate-component="git-tool" data-starmate-part="graphStatus" >
           <div className="git-graph-view__spinner" />
           <p>{t('graph.loading')}</p>
         </div>
@@ -295,8 +295,8 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
 
   if (error) {
     return (
-      <div className={`git-graph-view git-graph-view--error ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="error">
-        <div className="git-graph-view__error" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus">
+      <div className={`git-graph-view git-graph-view--error ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="error" data-starmate-component="git-tool" data-starmate-part="graphRoot" data-starmate-state="error" >
+        <div className="git-graph-view__error" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus" data-starmate-component="git-tool" data-starmate-part="graphStatus" >
           <p>{t('graph.loadFailedWithMessage', { error })}</p>
           <Button variant="primary" size="sm" onClick={loadGraphData}>
             {t('common.retry')}
@@ -308,8 +308,8 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
 
   if (!graphData || graphData.nodes.length === 0) {
     return (
-      <div className={`git-graph-view git-graph-view--empty ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="empty">
-        <div className="git-graph-view__empty" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus">
+      <div className={`git-graph-view git-graph-view--empty ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-openbitfun-state="empty" data-starmate-component="git-tool" data-starmate-part="graphRoot" data-starmate-state="empty" >
+        <div className="git-graph-view__empty" data-openbitfun-component="git-tool" data-openbitfun-part="graphStatus" data-starmate-component="git-tool" data-starmate-part="graphStatus" >
           <p>{t('graph.empty')}</p>
         </div>
       </div>
@@ -324,8 +324,8 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
   const displayedBranch = currentBranch ?? graphData.currentBranch;
 
   return (
-    <div className={`git-graph-view ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot">
-      <div className="git-graph-view__header" data-openbitfun-component="git-tool" data-openbitfun-part="graphHeader">
+    <div className={`git-graph-view ${className}`} data-openbitfun-component="git-tool" data-openbitfun-part="graphRoot" data-starmate-component="git-tool" data-starmate-part="graphRoot" >
+      <div className="git-graph-view__header" data-openbitfun-component="git-tool" data-openbitfun-part="graphHeader" data-starmate-component="git-tool" data-starmate-part="graphHeader" >
         <div className="git-graph-view__header-left">
           <h3>{t('graph.title')}</h3>
           {displayedBranch && (
@@ -398,7 +398,7 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
         ref={containerRef}
         data-openbitfun-component="git-tool"
         data-openbitfun-part="graphContent"
-      >
+       data-starmate-component="git-tool" data-starmate-part="graphContent" >
         <div style={{ height: totalHeight, width: graphWidth, position: 'relative' }}>
           <canvas
             ref={canvasRef}
@@ -413,7 +413,7 @@ export const GitGraphView: React.FC<GitGraphViewProps> = ({
               left: 0,
               pointerEvents: 'none'
             }}
-          />
+           data-starmate-component="git-tool" data-starmate-part="graphCanvas" />
           
           {allNodesData.nodes.map((node, index) => {
 

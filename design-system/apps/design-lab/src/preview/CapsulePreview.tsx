@@ -13,7 +13,7 @@ export function CapsulePreview({ state = "default" }: { state?: string }) {
           <IconButton aria-label={t("components.preview.close")} icon={<Icon name="xmark" />}
             disabled={disabled} onClick={() => setRemoved(current => [...current, size])} />
         </Tooltip>
-      )}>
+      )} data-starmate-preview-state={state} >
         <Button size={size} variant="outline" disabled={disabled}>{t("components.preview.modalProviderName")}</Button>
       </Capsule>
     ))}

@@ -537,7 +537,7 @@ const DeviceControlSettingsPage: React.FC = () => {
   }, [peerModeActive, renderedPeerDeviceId, refreshComputerUseStatus, refreshBrowserControlStatus]);
 
   return (
-    <SettingsPage pageId="tools.desktop-control" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="browser-desktop-control">
+    <SettingsPage pageId="tools.desktop-control" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="browser-desktop-control" data-starmate-component="runtime-settings" data-starmate-part="root" data-starmate-view="browser-desktop-control" >
       {loadError ? (
         <ConfigRetryState message={t('loading.failed')} retryLabel={t('loading.retry')} onRetry={() => void loadPageData()} />
       ) : isLoading ? (
@@ -565,7 +565,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     : null}
                 />
                 <ConfigPageRow label={t('computerUse.enable')} description={t('computerUse.enableDesc')} align="center">
-                  <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+                  <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                     <Switch
                       checked={computerUseEnabled}
                       onChange={(e) => handleComputerUseEnabledChange(e.target.checked)}
@@ -584,7 +584,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     className="openbitfun-runtime-settings__status-actions"
                     data-openbitfun-component="runtime-settings"
                     data-openbitfun-part="control"
-                  >
+                   data-starmate-component="runtime-settings" data-starmate-part="control" >
                     <StatusPill
                       tone={computerUseStatusLoading ? 'neutral' : computerUseStatusError ? 'warning' : computerUseAccess ? 'success' : 'warning'}
                       role="status"
@@ -614,7 +614,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     className="openbitfun-runtime-settings__status-actions"
                     data-openbitfun-component="runtime-settings"
                     data-openbitfun-part="control"
-                  >
+                   data-starmate-component="runtime-settings" data-starmate-part="control" >
                     <StatusPill
                       tone={computerUseStatusLoading ? 'neutral' : computerUseStatusError ? 'warning' : computerUseScreen ? 'success' : 'warning'}
                       role="status"
@@ -641,7 +641,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     data-openbitfun-component="runtime-settings"
                     data-openbitfun-part="platformNote"
                     role="note"
-                  >
+                   data-starmate-component="runtime-settings" data-starmate-part="platformNote" >
                     <Icon
                       aria-hidden="true"
                       className="openbitfun-runtime-settings__platform-note-icon"
@@ -694,7 +694,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                   description={t(browserCdpAvailable ? 'browserControl.preferredBrowserConnectedDesc' : 'browserControl.preferredBrowserDesc')}
                   align="center"
                 >
-                  <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+                  <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                     <Select
                       value={preferredBrowser}
                       options={browserSelectOptions}
@@ -715,7 +715,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                       className="openbitfun-runtime-settings__status-actions"
                       data-openbitfun-component="runtime-settings"
                       data-openbitfun-part="control"
-                    >
+                     data-starmate-component="runtime-settings" data-starmate-part="control" >
                       <StatusPill
                         tone={browserStatusLoading ? 'neutral' : browserStatusError ? 'warning' : browserDefaultCdpEnabled ? 'success' : 'neutral'}
                         role="status"
@@ -733,7 +733,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     description={t('browserControl.autoConnectOnStartupDesc')}
                     align="center"
                   >
-                    <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+                    <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                       <Switch
                         checked={browserAutoConnectOnStartup}
                         onChange={(e) => void handleBrowserAutoConnectChange(e.target.checked)}
@@ -752,7 +752,7 @@ const DeviceControlSettingsPage: React.FC = () => {
                     className="openbitfun-runtime-settings__status-actions"
                     data-openbitfun-component="runtime-settings"
                     data-openbitfun-part="control"
-                  >
+                   data-starmate-component="runtime-settings" data-starmate-part="control" >
                     <StatusPill
                       tone={browserStatusLoading ? 'neutral' : browserStatusError ? 'warning' : browserCdpAvailable ? 'success' : 'neutral'}
                       role="status"
@@ -818,7 +818,7 @@ const DeviceControlSettingsPage: React.FC = () => {
               <DialogClose />
             </DialogHeader>
             <DialogBody>
-              <div className="openbitfun-debug-config__modal-body" data-openbitfun-component="runtime-settings" data-openbitfun-part="restartModal">
+              <div className="openbitfun-debug-config__modal-body" data-openbitfun-component="runtime-settings" data-openbitfun-part="restartModal" data-starmate-component="runtime-settings" data-starmate-part="restartModal" >
                 <p>{t('browserControl.restartModal.description', { browser: browserRestartPrompt?.browserKind || browserKind })}</p>
                 <p>{t('browserControl.restartModal.warning')}</p>
                 {browserRestartPrompt?.message ? (
@@ -831,7 +831,7 @@ const DeviceControlSettingsPage: React.FC = () => {
               className="openbitfun-debug-config__modal-footer"
               data-openbitfun-component="runtime-settings"
               data-openbitfun-part="modalFooter"
-            >
+             data-starmate-component="runtime-settings" data-starmate-part="modalFooter" >
               <Button
                 variant="fill"
                 size="sm"

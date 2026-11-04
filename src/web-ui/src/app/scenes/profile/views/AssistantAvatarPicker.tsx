@@ -141,7 +141,7 @@ const AssistantAvatarPicker: React.FC<AssistantAvatarPickerProps> = ({
             left: `${popoverLayout?.left ?? 0}px`,
             visibility: popoverLayout ? 'visible' : 'hidden',
           }}
-        >
+         data-starmate-placement={popoverLayout?.placement ?? 'bottom'} >
           <div className="acp-avatar-picker__header">
             <div className="acp-avatar-picker__heading">
               <strong id={titleId}>{t('identity.avatarPickerTitle')}</strong>

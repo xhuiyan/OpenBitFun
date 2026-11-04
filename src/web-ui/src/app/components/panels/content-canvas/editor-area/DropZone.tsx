@@ -138,13 +138,13 @@ export const DropZone: React.FC<DropZoneProps> = ({
   };
 
   return (
-    <div data-openbitfun-component="content-canvas" data-openbitfun-part="dropZone" data-openbitfun-state={showOverlay ? 'dragging' : ''} className={`canvas-drop-zone-container ${showOverlay ? 'is-dragging' : ''}`}>
-      <div className="canvas-drop-zone-container__content" data-openbitfun-component="content-canvas" data-openbitfun-part="dropContent">
+    <div data-openbitfun-component="content-canvas" data-openbitfun-part="dropZone" data-openbitfun-state={showOverlay ? 'dragging' : ''} className={`canvas-drop-zone-container ${showOverlay ? 'is-dragging' : ''}`} data-starmate-component="content-canvas" data-starmate-part="dropZone" data-starmate-state={showOverlay ? 'dragging' : ''} >
+      <div className="canvas-drop-zone-container__content" data-openbitfun-component="content-canvas" data-openbitfun-part="dropContent" data-starmate-component="content-canvas" data-starmate-part="dropContent" >
         {children}
       </div>
 
       {showOverlay && zones.length > 0 && (
-        <div className="canvas-drop-zone-overlay" data-openbitfun-component="content-canvas" data-openbitfun-part="dropOverlay" data-openbitfun-state="dragging">
+        <div className="canvas-drop-zone-overlay" data-openbitfun-component="content-canvas" data-openbitfun-part="dropOverlay" data-openbitfun-state="dragging" data-starmate-component="content-canvas" data-starmate-part="dropOverlay" data-starmate-state="dragging" >
           {zones.filter(z => z.show).map(({ position, label }) => (
             <div
               key={position}
@@ -158,8 +158,8 @@ export const DropZone: React.FC<DropZoneProps> = ({
               onDragLeave={handleDragLeave}
               onDragOver={handleDragOver}
               onDrop={handleDrop(position)}
-            >
-              <div className="canvas-drop-zone__indicator" data-openbitfun-component="content-canvas" data-openbitfun-part="dropIndicator" data-openbitfun-position={position}>
+             data-starmate-component="content-canvas" data-starmate-part="dropTarget" data-starmate-position={position} data-starmate-state={activeZone === position ? 'active' : ''} >
+              <div className="canvas-drop-zone__indicator" data-openbitfun-component="content-canvas" data-openbitfun-part="dropIndicator" data-openbitfun-position={position} data-starmate-component="content-canvas" data-starmate-part="dropIndicator" data-starmate-position={position} >
                 <span>{label}</span>
               </div>
             </div>

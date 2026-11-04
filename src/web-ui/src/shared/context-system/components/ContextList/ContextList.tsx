@@ -97,8 +97,8 @@ export const ContextList: React.FC<ContextListProps> = ({
   
   if (renderedContexts.length === 0) {
     return (
-      <div className={`openbitfun-context-list openbitfun-context-list--empty ${className}`} data-openbitfun-component="context-list" data-openbitfun-part="root" data-openbitfun-state="empty">
-        <div className="openbitfun-context-list__empty-state" data-openbitfun-component="context-list" data-openbitfun-part="empty">
+      <div className={`openbitfun-context-list openbitfun-context-list--empty ${className}`} data-openbitfun-component="context-list" data-openbitfun-part="root" data-openbitfun-state="empty" data-starmate-component="context-list" data-starmate-part="root" data-starmate-state="empty" >
+        <div className="openbitfun-context-list__empty-state" data-openbitfun-component="context-list" data-openbitfun-part="empty" data-starmate-component="context-list" data-starmate-part="empty" >
           <AlertCircle size={24} className="openbitfun-context-list__empty-icon" />
           <p className="openbitfun-context-list__empty-text">
             {t('contextSystem.contextList.emptyTitle')}
@@ -112,12 +112,12 @@ export const ContextList: React.FC<ContextListProps> = ({
   }
   
   return (
-    <div className={`openbitfun-context-list ${className}`} data-openbitfun-component="context-list" data-openbitfun-part="root">
+    <div className={`openbitfun-context-list ${className}`} data-openbitfun-component="context-list" data-openbitfun-part="root" data-starmate-component="context-list" data-starmate-part="root" >
       
-      <div className="openbitfun-context-list__header" data-openbitfun-component="context-list" data-openbitfun-part="header">
-        <div className="openbitfun-context-list__title" data-openbitfun-component="context-list" data-openbitfun-part="title">
+      <div className="openbitfun-context-list__header" data-openbitfun-component="context-list" data-openbitfun-part="header" data-starmate-component="context-list" data-starmate-part="header" >
+        <div className="openbitfun-context-list__title" data-openbitfun-component="context-list" data-openbitfun-part="title" data-starmate-component="context-list" data-starmate-part="title" >
           {t('contextSystem.contextList.title')}
-          <span className="openbitfun-context-list__count" data-openbitfun-component="context-list" data-openbitfun-part="count">
+          <span className="openbitfun-context-list__count" data-openbitfun-component="context-list" data-openbitfun-part="count" data-starmate-component="context-list" data-starmate-part="count" >
             {contexts.length}
           </span>
         </div>
@@ -141,7 +141,7 @@ export const ContextList: React.FC<ContextListProps> = ({
         style={{ maxHeight }}
         data-openbitfun-component="context-list"
         data-openbitfun-part="items"
-      >
+       data-starmate-component="context-list" data-starmate-part="items" >
         {renderedContexts.map(({ context, exiting }) => (
           <div
             key={context.id}
@@ -152,7 +152,7 @@ export const ContextList: React.FC<ContextListProps> = ({
             onClick={exiting ? undefined : () => handleCardClick(context.id)}
             data-openbitfun-component="context-list"
             data-openbitfun-part="item"
-          >
+           data-starmate-component="context-list" data-starmate-part="item" >
             <div className="openbitfun-context-list__item-inner">
               <ContextCard
                 context={context}

@@ -49,7 +49,7 @@ export function TimelineContentBlock({ item }: { item: Extract<VirtualItem, { ty
           data-testid="chat-assistant-message" data-turn-id={item.turnId} data-round-id={item.data.id}
           data-status={item.data.status} data-openbitfun-status={item.data.status}
           data-model-config-id={item.data.modelConfigId || ''} data-effective-model-name={item.data.effectiveModelName || ''}
-          data-streaming={item.data.isStreaming || gate.isAnyRevealing ? 'true' : 'false'}>
+          data-streaming={item.data.isStreaming || gate.isAnyRevealing ? 'true' : 'false'} data-starmate-product-component="model-round-item" data-starmate-product-part="root" data-starmate-status={item.data.status} >
           {item.data.items.map((member, index) => <FlowGroupItemRenderer key={member.id} item={member}
             turnId={item.turnId} roundId={item.data.id} withinGroup={Boolean(group)} Item={GroupMember} capsuleRow={parallel.get(member.id)}
             isLastItem={(group ? group.isLastGroupInTurn && block.last : item.isLastRound) && index === item.data.items.length - 1}

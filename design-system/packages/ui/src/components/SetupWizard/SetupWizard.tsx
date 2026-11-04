@@ -48,29 +48,29 @@ export const SetupWizard = forwardRef<HTMLDivElement, SetupWizardProps>(function
   }, [step.id]);
 
   return (
-    <div {...props} className={classNames(styles.root, className)} data-openbitfun-component="setup-wizard" data-openbitfun-part="root" data-content-mode={contentMode} ref={ref}>
-      <div className={styles.layout} data-openbitfun-component="setup-wizard" data-openbitfun-part="layout">
-        <header className={styles.header} data-openbitfun-component="setup-wizard" data-openbitfun-part="header">
-          <div className={styles.heading} data-openbitfun-component="setup-wizard" data-openbitfun-part="heading">
-            <h2 className={styles.title} id={titleId ?? generatedTitleId} data-openbitfun-component="setup-wizard" data-openbitfun-part="title"><OverflowText>{title}</OverflowText></h2>
+    <div {...props} className={classNames(styles.root, className)} data-openbitfun-component="setup-wizard" data-openbitfun-part="root" data-content-mode={contentMode} ref={ref} data-starmate-component="setup-wizard" data-starmate-part="root" >
+      <div className={styles.layout} data-openbitfun-component="setup-wizard" data-openbitfun-part="layout" data-starmate-component="setup-wizard" data-starmate-part="layout" >
+        <header className={styles.header} data-openbitfun-component="setup-wizard" data-openbitfun-part="header" data-starmate-component="setup-wizard" data-starmate-part="header" >
+          <div className={styles.heading} data-openbitfun-component="setup-wizard" data-openbitfun-part="heading" data-starmate-component="setup-wizard" data-starmate-part="heading" >
+            <h2 className={styles.title} id={titleId ?? generatedTitleId} data-openbitfun-component="setup-wizard" data-openbitfun-part="title" data-starmate-component="setup-wizard" data-starmate-part="title" ><OverflowText>{title}</OverflowText></h2>
           </div>
-          <div className={styles.headerActions} data-openbitfun-component="setup-wizard" data-openbitfun-part="headerActions">{headerActions}</div>
+          <div className={styles.headerActions} data-openbitfun-component="setup-wizard" data-openbitfun-part="headerActions" data-starmate-component="setup-wizard" data-starmate-part="headerActions" >{headerActions}</div>
         </header>
-        <aside className={styles.guide} aria-label={guideLabel} data-openbitfun-component="setup-wizard" data-openbitfun-part="guide">
+        <aside className={styles.guide} aria-label={guideLabel} data-openbitfun-component="setup-wizard" data-openbitfun-part="guide" data-starmate-component="setup-wizard" data-starmate-part="guide" >
           <div className={styles.guideContent} aria-live="polite" aria-atomic="true">
-            <div className={styles.guideCopy} data-openbitfun-component="setup-wizard" data-openbitfun-part="guideCopy">
+            <div className={styles.guideCopy} data-openbitfun-component="setup-wizard" data-openbitfun-part="guideCopy" data-starmate-component="setup-wizard" data-starmate-part="guideCopy" >
               <PageHeader title={step.title} description={step.description} level={3} />
             </div>
-            <div className={styles.progress} data-openbitfun-component="setup-wizard" data-openbitfun-part="progress">
+            <div className={styles.progress} data-openbitfun-component="setup-wizard" data-openbitfun-part="progress" data-starmate-component="setup-wizard" data-starmate-part="progress" >
               <span>{step.progress}</span>
-              <span className={styles.step} aria-current="step" data-openbitfun-component="setup-wizard" data-openbitfun-part="step">{step.label}</span>
+              <span className={styles.step} aria-current="step" data-openbitfun-component="setup-wizard" data-openbitfun-part="step" data-starmate-component="setup-wizard" data-starmate-part="step" >{step.label}</span>
             </div>
           </div>
         </aside>
-        <ScrollArea className={styles.content} ref={viewportRef} data-openbitfun-component="setup-wizard" data-openbitfun-part="content">
-          <div className={styles.contentInner} data-openbitfun-component="setup-wizard" data-openbitfun-part="contentInner">{children}</div>
+        <ScrollArea className={styles.content} ref={viewportRef} data-openbitfun-component="setup-wizard" data-openbitfun-part="content" data-starmate-component="setup-wizard" data-starmate-part="content" >
+          <div className={styles.contentInner} data-openbitfun-component="setup-wizard" data-openbitfun-part="contentInner" data-starmate-component="setup-wizard" data-starmate-part="contentInner" >{children}</div>
         </ScrollArea>
-        <footer className={styles.footer} data-openbitfun-component="setup-wizard" data-openbitfun-part="footer">{footer}</footer>
+        <footer className={styles.footer} data-openbitfun-component="setup-wizard" data-openbitfun-part="footer" data-starmate-component="setup-wizard" data-starmate-part="footer" >{footer}</footer>
       </div>
     </div>
   );

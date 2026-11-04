@@ -46,7 +46,7 @@ export function ProjectResourceCards({ label, previousLabel, nextLabel, resetKey
       behavior: getMotionAwareScrollBehavior(animate ? 'smooth' : 'auto') });
   };
   return <div className="project-resource-cards" role="region" aria-label={label}
-    data-openbitfun-scene="project-resources" data-openbitfun-part="resourceCards">
+    data-openbitfun-scene="project-resources" data-openbitfun-part="resourceCards" data-starmate-scene="project-resources" data-starmate-part="resourceCards" >
     <ul className="project-resource-cards__track" id={trackId} ref={trackRef} onScroll={updateScroll}>
       {children}
     </ul>

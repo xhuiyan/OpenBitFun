@@ -57,33 +57,33 @@ export const FormSection = forwardRef<HTMLElement, FormSectionProps>(
         data-openbitfun-component="form-section"
         data-description-layout={descriptionLayout}
         ref={ref}
-      >
+       data-starmate-component="form-section" >
         {(title !== undefined && title !== null)
           || (description !== undefined && description !== null)
           || (leading !== undefined && leading !== null)
           || (actions !== undefined && actions !== null) ? (
-            <div className={styles.header} data-openbitfun-part="header">
+            <div className={styles.header} data-openbitfun-part="header" data-starmate-part="header" >
               {(title !== undefined && title !== null)
                 || (description !== undefined && description !== null)
                 || (leading !== undefined && leading !== null) ? (
-                  <div className={styles.headingRegion} data-openbitfun-part="heading-region">
+                  <div className={styles.headingRegion} data-openbitfun-part="heading-region" data-starmate-part="heading-region" >
                     {leading !== undefined && leading !== null && (
-                      <div className={styles.leading} data-openbitfun-part="leading">{leading}</div>
+                      <div className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</div>
                     )}
                     {(title !== undefined && title !== null)
                       || (description !== undefined && description !== null) ? (
-                        <div className={styles.headingContent} data-openbitfun-part="heading-content">
+                        <div className={styles.headingContent} data-openbitfun-part="heading-content" data-starmate-part="heading-content" >
                           {title !== undefined && title !== null && createElement(
                             headingAs,
                             { className: styles.title, "data-openbitfun-part": "title" },
                             title,
                           )}
                           {description !== undefined && description !== null && (descriptionLayout === "inline" ? (
-                            <OverflowText as="div" className={styles.description} data-openbitfun-part="description">
+                            <OverflowText as="div" className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
                               {description}
                             </OverflowText>
                           ) : (
-                            <div className={styles.description} data-openbitfun-part="description">
+                            <div className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
                               {description}
                             </div>
                           ))}
@@ -92,7 +92,7 @@ export const FormSection = forwardRef<HTMLElement, FormSectionProps>(
                   </div>
                 ) : null}
               {actions !== undefined && actions !== null && (
-                <div className={styles.actions} data-openbitfun-part="actions">{actions}</div>
+                <div className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >{actions}</div>
               )}
             </div>
           ) : null}
@@ -121,7 +121,7 @@ export const FieldGroup = forwardRef<HTMLDivElement, FieldGroupProps>(
           data-dividers={dividers ? "true" : "false"}
           data-field-surface={fieldSurface}
           ref={ref}
-        >
+         data-starmate-component="field-group" >
           {children}
         </div>
       </FieldSurfaceContext.Provider>
@@ -145,7 +145,7 @@ export const FieldRow = forwardRef<HTMLDivElement, FieldRowProps>(
         data-openbitfun-part="row"
         data-padding={padding}
         ref={ref}
-      >
+       data-starmate-part="row" >
         {children}
       </div>
     );

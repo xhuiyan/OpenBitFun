@@ -391,18 +391,18 @@ describe('ConfigPageLayout', () => {
           data-testid="feature-root"
           data-openbitfun-component="model-settings"
           data-openbitfun-part="root"
-        >
+         data-starmate-component="model-settings" data-starmate-part="root" >
           <ConfigPageContent
             data-testid="feature-content"
             data-openbitfun-component="model-settings"
             data-openbitfun-part="providerSelection"
-          >
+           data-starmate-component="model-settings" data-starmate-part="providerSelection" >
             <ConfigPageSection
               title="Models"
               data-testid="feature-section"
               data-openbitfun-component="model-settings"
               data-openbitfun-part="providerGroup"
-            >
+             data-starmate-component="model-settings" data-starmate-part="providerGroup" >
               <div>Body</div>
             </ConfigPageSection>
           </ConfigPageContent>

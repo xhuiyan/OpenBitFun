@@ -52,7 +52,7 @@ export const EditArea = forwardRef<HTMLTextAreaElement, EditAreaProps>(
         placeholder={placeholder}
         readOnly={readonly}
         spellCheck={false}
-      />
+       data-starmate-component="editor-tool" data-starmate-part="meditorEditArea" />
     )
   }
 )

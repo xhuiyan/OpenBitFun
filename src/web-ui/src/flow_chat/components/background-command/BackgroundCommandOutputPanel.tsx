@@ -266,9 +266,9 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
 
   return (
     <>
-      <section data-openbitfun-component="background-command-output-panel" data-openbitfun-part="root" data-openbitfun-state={[loading && 'loading', error && 'error'].filter(Boolean).join(' ') || undefined} className="background-command-output-panel">
-        <header data-openbitfun-component="background-command-output-panel" data-openbitfun-part="header" className="background-command-output-panel__header">
-          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="title" className="background-command-output-panel__title-group">
+      <section data-openbitfun-component="background-command-output-panel" data-openbitfun-part="root" data-openbitfun-state={[loading && 'loading', error && 'error'].filter(Boolean).join(' ') || undefined} className="background-command-output-panel" data-starmate-component="background-command-output-panel" data-starmate-part="root" data-starmate-state={[loading && 'loading', error && 'error'].filter(Boolean).join(' ') || undefined} >
+        <header data-openbitfun-component="background-command-output-panel" data-openbitfun-part="header" className="background-command-output-panel__header" data-starmate-component="background-command-output-panel" data-starmate-part="header" >
+          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="title" className="background-command-output-panel__title-group" data-starmate-component="background-command-output-panel" data-starmate-part="title" >
             <span className="background-command-output-panel__icon">
               <Icon name="terminal" size="md" aria-hidden="true" />
             </span>
@@ -277,7 +277,7 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
               <p title={command}><OverflowText>{command}</OverflowText></p>
             </div>
           </div>
-          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="headerActions" className="background-command-output-panel__header-actions">
+          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="headerActions" className="background-command-output-panel__header-actions" data-starmate-component="background-command-output-panel" data-starmate-part="headerActions" >
             <Tooltip content={canSendInput
                 ? t('backgroundCommandOutput.sendInput')
                 : t('backgroundCommandOutput.sendInputUnavailable')}>
@@ -315,7 +315,7 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
           </div>
         </header>
 
-        <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="meta" className="background-command-output-panel__meta">
+        <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="meta" className="background-command-output-panel__meta" data-starmate-component="background-command-output-panel" data-starmate-part="meta" >
           <div className="background-command-output-panel__meta-status">
             {metadata ? (
               <>
@@ -338,32 +338,32 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
         </div>
 
         {metadata?.truncatedFromStart || projection?.incomplete ? (
-          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="notice" className="background-command-output-panel__notice">
+          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="notice" className="background-command-output-panel__notice" data-starmate-component="background-command-output-panel" data-starmate-part="notice" >
             <Icon glyph={AlertCircle} size="sm" aria-hidden="true" />
             <span>{t(projection?.incomplete ? 'backgroundCommandOutput.replayIncomplete' : 'backgroundCommandOutput.truncatedFromStart')}</span>
           </div>
         ) : null}
 
         {error ? (
-          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="error" className="background-command-output-panel__error">
+          <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="error" className="background-command-output-panel__error" data-starmate-component="background-command-output-panel" data-starmate-part="error" >
             <Icon glyph={AlertCircle} size="sm" aria-hidden="true" />
             <span>{t('backgroundCommandOutput.error', { message: error })}</span>
           </div>
         ) : null}
 
-        <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="output" className="background-command-output-panel__output">
+        <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="output" className="background-command-output-panel__output" data-starmate-component="background-command-output-panel" data-starmate-part="output" >
           {projection?.unknownGeometry ? (
             <div className="background-command-output-panel__empty">
               {t('backgroundCommandOutput.unknownGeometry')}
             </div>
           ) : projection?.text ? (
-            <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="terminal" className="background-command-output-panel__terminal-container">
+            <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="terminal" className="background-command-output-panel__terminal-container" data-starmate-component="background-command-output-panel" data-starmate-part="terminal" >
               <Suspense fallback={<pre className="background-command-output-panel__projection-fallback">{projection.text}</pre>}>
                 <BackgroundTerminalProjection projection={projection} />
               </Suspense>
             </div>
           ) : (
-            <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="empty" className="background-command-output-panel__empty">
+            <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="empty" className="background-command-output-panel__empty" data-starmate-component="background-command-output-panel" data-starmate-part="empty" >
               {loading ? t('backgroundCommandOutput.loading') : t('backgroundCommandOutput.empty')}
             </div>
           )}
@@ -379,7 +379,7 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
                 void handleSendInput();
               }
             }}
-          >
+           data-starmate-component="background-command-output-panel" data-starmate-part="inputEditor" >
             <Textarea
               ref={inputEditorRef}
               className={maskInput ? 'background-command-output-panel__input-textarea background-command-output-panel__input-textarea--masked' : 'background-command-output-panel__input-textarea'}
@@ -392,7 +392,7 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
               spellCheck={false}
             />
             <div className="background-command-output-panel__input-editor-footer">
-              <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="inputOptions" className="background-command-output-panel__input-options">
+              <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="inputOptions" className="background-command-output-panel__input-options" data-starmate-component="background-command-output-panel" data-starmate-part="inputOptions" >
                 <Checkbox
                   className="background-command-output-panel__input-option"
                   size="sm"
@@ -410,7 +410,7 @@ export const BackgroundCommandOutputPanel: React.FC<BackgroundCommandOutputPanel
                   label={t('backgroundCommandInput.maskInput')}
                 />
               </div>
-              <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="inputActions" className="background-command-output-panel__input-editor-actions">
+              <div data-openbitfun-component="background-command-output-panel" data-openbitfun-part="inputActions" className="background-command-output-panel__input-editor-actions" data-starmate-component="background-command-output-panel" data-starmate-part="inputActions" >
                 <Button
                   type="button"
                   variant="fill"

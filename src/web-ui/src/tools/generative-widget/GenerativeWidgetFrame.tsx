@@ -1047,7 +1047,7 @@ export const GenerativeWidgetFrame: React.FC<GenerativeWidgetFrameProps> = ({
       data-openbitfun-component="generative-widget"
       data-openbitfun-part="frame"
       style={{ height: `${frameHeight}px` }}
-    >
+     data-starmate-component="generative-widget" data-starmate-part="frame" >
       <iframe
         ref={iframeRef}
         title={title || 'Generative widget'}
@@ -1057,7 +1057,7 @@ export const GenerativeWidgetFrame: React.FC<GenerativeWidgetFrameProps> = ({
         style={{ width: '100%', minWidth: '100%' }}
         sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
         src="about:blank"
-      />
+       data-starmate-component="generative-widget" data-starmate-part="iframe" />
     </div>
   );
 };

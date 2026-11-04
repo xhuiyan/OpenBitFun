@@ -41,7 +41,7 @@ const WorkspaceSessionGroupingToggle: React.FC = () => {
         data-testid="nav-workspace-session-view-toggle"
         data-view-mode={grouping}
         onClick={() => setGrouping(getNextWorkspaceSessionGrouping(grouping))}
-      />
+       data-starmate-action="toggle-session-view" data-starmate-component="session-navigation" data-starmate-part="viewToggle" data-starmate-state={grouping} />
     </Tooltip>
   );
 };

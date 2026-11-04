@@ -34,7 +34,7 @@ export function ProjectResourceMetrics({ data, onNavigate }: { data: Stats; onNa
   const failures = states.flatMap(({ label, state }) => state.status === 'failed' ? [`${label}: ${state.error}`] : []);
   return <section aria-label={t('metrics.title')}>
     <dl className="project-resources__metrics" data-openbitfun-scene="project-resources" data-openbitfun-part="metrics"
-      aria-busy={states.some(({ state }) => state.status === 'loading')}>
+      aria-busy={states.some(({ state }) => state.status === 'loading')} data-starmate-scene="project-resources" data-starmate-part="metrics" >
       {metrics.map(metric => <div className="project-resources__metric" key={metric.id} title={metric.hint} data-metric={metric.id}>
         <dt className="project-resources__metric-label">{metric.label}</dt>
         <dd className="project-resources__metric-value">

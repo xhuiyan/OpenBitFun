@@ -45,7 +45,7 @@ test("LoadingState composes Spinner with optional support copy", () => {
   const markup = renderToStaticMarkup(createElement(LoadingState, null, "Loading project"));
   assert.match(markup, /data-openbitfun-component="loading-state"/);
   assert.match(markup, /data-openbitfun-component="spinner"/);
-  assert.match(markup, /data-openbitfun-part="label">Loading project/);
+  assert.match(markup, /data-openbitfun-part="label"[^>]*>Loading project/);
 });
 
 test("Spinner styling uses public system, motion, and semantic tokens", async () => {

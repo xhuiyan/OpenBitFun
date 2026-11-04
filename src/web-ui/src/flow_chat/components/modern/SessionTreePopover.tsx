@@ -442,7 +442,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
           aria-level={depth + 1}
           aria-expanded={hasChildren ? isExpanded : undefined}
           style={{ paddingLeft: `${(embedded ? 0 : 6) + Math.min(depth, 10) * 14}px` }}
-        >
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeNode" data-starmate-status={node.lifecycle} data-starmate-state={isCancelling ? 'cancelling' : undefined} >
           {hasChildren ? (
             <button
               type="button"
@@ -482,7 +482,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
                 className="session-tree-popover__node-title"
                 data-openbitfun-component="flow-chat-header"
                 data-openbitfun-part="sessionTreeNodeTitle"
-              >
+               data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeNodeTitle" >
                 {primaryLabel}
               </OverflowText>
               {nodeMeta ? (
@@ -514,7 +514,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
                   aria-label={t('flowChatHeader.agentTreeActions')}
                   style={actionMenuPosition}
                   data-testid="flowchat-header-session-tree-menu"
-                >
+                 data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeMenu" data-starmate-native-webview-occlusion >
                   {canCancel ? <MenuItem
                     type="button"
                     tone="danger"
@@ -523,7 +523,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
                     onClick={() => void handleCancel(node)}
                     disabled={isCancelling}
                     leading={<Square size={12} aria-hidden="true" />}
-                  >
+                   data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeMenuItem" >
                     <span>{isCancelling
                       ? t('flowChatHeader.agentTreeCancelling')
                       : t('flowChatHeader.agentTreeCancel')}</span>
@@ -574,7 +574,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
       className="session-tree-popover__body"
       data-openbitfun-component="flow-chat-header"
       data-openbitfun-part="sessionTreeBody"
-    >
+     data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeBody" >
       {visibleTree ? <div role="tree">{renderedTreeNodes}</div> : null}
       {isLoading && !tree ? (
         <div
@@ -583,7 +583,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
           data-openbitfun-part="sessionTreeState"
           data-openbitfun-state="loading"
           aria-live="polite"
-        >
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeState" data-starmate-state="loading" >
           <Spinner size="sm" />
           <span>{t('flowChatHeader.agentTreeLoading')}</span>
         </div>
@@ -594,7 +594,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
           data-openbitfun-component="flow-chat-header"
           data-openbitfun-part="sessionTreeState"
           data-openbitfun-state="empty"
-        >
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeState" data-starmate-state="empty" >
           {t(activeOnly ? 'flowChatHeader.agentTreeNoActive' : 'flowChatHeader.agentTreeEmpty')}
         </div>
       ) : null}
@@ -604,7 +604,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
           data-openbitfun-component="flow-chat-header"
           data-openbitfun-part="sessionTreeState"
           data-openbitfun-state="error"
-        >
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeState" data-starmate-state="error" >
           <span>{t('flowChatHeader.agentTreeLoadFailed')}</span>
           <Tooltip content={t('flowChatHeader.agentTreeRetry')}>
             <IconButton
@@ -627,7 +627,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
         data-openbitfun-component="flow-chat-header"
         data-openbitfun-part="sessionTree"
         data-testid="flowchat-header-session-tree-content"
-      >
+       data-starmate-component="flow-chat-header" data-starmate-part="sessionTree" >
         {treeBody}
       </div>
     );
@@ -639,7 +639,7 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
       ref={containerRef}
       data-openbitfun-component="flow-chat-header"
       data-openbitfun-part="sessionTree"
-    >
+     data-starmate-component="flow-chat-header" data-starmate-part="sessionTree" >
       <Tooltip content={panelLabel}>
         <IconButton
           ref={triggerRef}
@@ -678,7 +678,10 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
               <span className="session-tree-popover__status-dot" aria-hidden="true" />
             ) : null}
           </span>}
-        />
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeTrigger" data-starmate-state={[
+            isOpen ? 'open' : null,
+            hasActiveDescendants ? 'active' : null,
+          ].filter(Boolean).join(' ') || undefined} />
       </Tooltip>
 
       <RetainedMountBoundary present={isOpen}>
@@ -700,12 +703,12 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
             left: `${renderedPanelLayout?.left ?? 0}px`,
             visibility: renderedPanelLayout ? 'visible' : 'hidden',
           }}
-        >
+         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreePanel" data-starmate-placement={renderedPanelLayout?.placement ?? 'bottom'} >
           <div
             className="session-tree-popover__header"
             data-openbitfun-component="flow-chat-header"
             data-openbitfun-part="sessionTreeHeader"
-          >
+           data-starmate-component="flow-chat-header" data-starmate-part="sessionTreeHeader" >
             <span>{panelLabel}</span>
             <span>{descendantCount + (tree ? 1 : 0)}</span>
           </div>

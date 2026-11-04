@@ -37,6 +37,6 @@ export function ToolCardCopyButton({
       data-testid={testId}
       title={resolvedLabel}
       variant="quiet"
-    />
+     data-starmate-action="copy" data-starmate-part="copyButton" data-starmate-state={copied ? "copied" : undefined} />
   );
 }

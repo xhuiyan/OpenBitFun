@@ -21,13 +21,13 @@ const AppearanceSettingsPage: React.FC = () => {
       className="openbitfun-appearance-settings"
       data-openbitfun-component="appearance-settings"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="root" >
       <ConfigPageHeader title={t('title')} />
       <ConfigPageContent
         className="openbitfun-appearance-settings__content"
         data-openbitfun-component="appearance-settings"
         data-openbitfun-part="content"
-      >
+       data-starmate-component="appearance-settings" data-starmate-part="content" >
         <ConfigPageSectionStack data-testid="appearance-settings">
           <AppearancePackageConfigSection />
           <FontPreferencePanel />

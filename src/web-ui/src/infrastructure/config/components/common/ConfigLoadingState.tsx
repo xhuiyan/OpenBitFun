@@ -45,7 +45,7 @@ export const ConfigLoadingState: React.FC<ConfigLoadingStateProps> = ({
       data-loading-variant={variant}
       data-openbitfun-component="config"
       data-openbitfun-part="loadingState"
-    >
+     data-starmate-component="config" data-starmate-part="loadingState" >
       <div className="openbitfun-config-loading-state__skeleton" aria-hidden="true">
         {Array.from({ length: rows }, (_, index) => (
           <div className="openbitfun-config-loading-state__row" key={index}>

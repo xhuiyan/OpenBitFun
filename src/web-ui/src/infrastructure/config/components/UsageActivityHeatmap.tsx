@@ -60,7 +60,7 @@ export function UsageActivityHeatmap({ refreshKey }: UsageActivityHeatmapProps) 
       extra={<span className="openbitfun-usage-stats__activity-period">{t('activity.description', { timeZone })}</span>}
       data-openbitfun-component="usage-statistics-config"
       data-openbitfun-part="activityPanel"
-    >
+     data-starmate-component="usage-statistics-config" data-starmate-part="activityPanel" >
       {message && <ConfigMessage className="openbitfun-usage-stats__activity-message" message={message} />}
       {!activity ? (message ? null : (
         <ConfigLoadingState label={t('loading')} variant="statistics" rows={1} />

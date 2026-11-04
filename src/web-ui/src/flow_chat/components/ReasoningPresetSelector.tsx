@@ -129,7 +129,7 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
       data-openbitfun-part="root"
       data-openbitfun-state={open ? 'open' : undefined}
       data-openbitfun-presentation={showLabel ? 'label' : 'meter'}
-    >
+     data-starmate-component="reasoning-preset-selector" data-starmate-part="root" data-starmate-state={open ? 'open' : undefined} data-starmate-presentation={showLabel ? 'label' : 'meter'} >
       <Tooltip content={tooltip} disabled={open}>
         <button data-overflow-trigger
           ref={triggerRef}
@@ -166,7 +166,7 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
               setOpen(false);
             }
           }}
-        >
+         data-starmate-component="reasoning-preset-selector" data-starmate-part="trigger" data-starmate-state={open ? 'open' : undefined} >
           {showLabel ? (
             <OverflowText className="openbitfun-reasoning-preset-selector__trigger-label">
               {statusLabel}
@@ -195,12 +195,12 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
           aria-label={t('reasoningSelector.title')}
           data-testid="chat-reasoning-preset-selector-menu"
           onKeyDown={handleMenuKeyDown}
-        >
+         data-starmate-component="reasoning-preset-selector" data-starmate-part="menu" >
           <div
             className="openbitfun-reasoning-preset-selector__header"
             data-openbitfun-component="reasoning-preset-selector"
             data-openbitfun-part="header"
-          >
+           data-starmate-component="reasoning-preset-selector" data-starmate-part="header" >
             <span className="openbitfun-reasoning-preset-selector__title">
               {t('reasoningSelector.title')}
             </span>
@@ -213,7 +213,7 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
               data-openbitfun-part="auto"
               data-openbitfun-state={automatic ? 'selected' : undefined}
               onClick={() => select(automaticValue)}
-            >
+             data-starmate-component="reasoning-preset-selector" data-starmate-part="auto" data-starmate-state={automatic ? 'selected' : undefined} >
               <span>{t('reasoningSelector.auto')}</span>
             </MenuItem>
           </div>
@@ -221,7 +221,7 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
             className="openbitfun-reasoning-preset-selector__options"
             data-openbitfun-component="reasoning-preset-selector"
             data-openbitfun-part="options"
-          >
+           data-starmate-component="reasoning-preset-selector" data-starmate-part="options" >
             {orderedPresets.map((preset, index) => {
               const isSelected = selected?.id === preset.id;
               const label = presetLabels[index] ?? presetLabel(preset, t);
@@ -237,7 +237,7 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
                   data-openbitfun-part="option"
                   data-openbitfun-state={isSelected ? 'selected' : undefined}
                   onClick={() => select(preset.id)}
-                >
+                 data-starmate-component="reasoning-preset-selector" data-starmate-part="option" data-starmate-state={isSelected ? 'selected' : undefined} >
                   <OverflowText className="openbitfun-reasoning-preset-selector__option-label">
                     {label}
                   </OverflowText>

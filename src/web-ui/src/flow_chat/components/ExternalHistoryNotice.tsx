@@ -85,7 +85,7 @@ export function ExternalHistoryNotice({ session, active }: { session?: Session; 
   }
 
   return <div className="external-history-notice" role="status" aria-live="polite"
-    data-openbitfun-product-component="external-history-notice" data-openbitfun-product-part="root">
+    data-openbitfun-product-component="external-history-notice" data-openbitfun-product-part="root" data-starmate-product-component="external-history-notice" data-starmate-product-part="root" >
     <span>{t(followed ? 'externalHistory.followHint' : 'externalHistory.branchHint', { source })}</span>
     {unsupportedSurface && <span>{t('externalHistory.unsupportedSurface')}</span>}
     {unsupported && <span>{t('externalHistory.unsupported')}</span>}

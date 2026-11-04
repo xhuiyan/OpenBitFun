@@ -98,7 +98,7 @@ export function SkillGroupEditor({ draft, skills, catalogReady, saving, onClose,
       </DialogHeader>
       <DialogBody>
         <form className="skill-group-editor" data-openbitfun-scene="skills" data-openbitfun-part="groupEditor"
-          onSubmit={event => { event.preventDefault(); void save(); }}>
+          onSubmit={event => { event.preventDefault(); void save(); }} data-starmate-scene="skills" data-starmate-part="groupEditor" >
           {!draft.readOnly && (
             <div className="skill-group-editor__field">
               <label htmlFor={nameId}>{t('groups.name')}</label>
@@ -118,7 +118,7 @@ export function SkillGroupEditor({ draft, skills, catalogReady, saving, onClose,
           </div>
           <span className="skill-group-editor__meta">{t('groups.memberCount', { count: selected.size })}</span>
           {!catalogReady && <p role="status" className="skill-group-editor__meta">{t('groups.catalogUnavailable')}</p>}
-          <ScrollArea className="skill-group-editor__members" data-openbitfun-scene="skills" data-openbitfun-part="groupMembers">
+          <ScrollArea className="skill-group-editor__members" data-openbitfun-scene="skills" data-openbitfun-part="groupMembers" data-starmate-scene="skills" data-starmate-part="groupMembers" >
             {visible.map(({ key, skill }) => {
               const title = (
                 <OverflowText className="skill-group-editor__member-title">{skill?.name ?? key}</OverflowText>
@@ -127,7 +127,7 @@ export function SkillGroupEditor({ draft, skills, catalogReady, saving, onClose,
                 ? [skill.sourceLabel ?? skill.sourceSlot, skill.description, skill.runtimeStatus].filter(Boolean).join(' · ')
                 : t(catalogReady ? 'groups.unavailableMember' : 'groups.unresolvedMember');
               return (
-                <div key={key} className="skill-group-editor__member" data-overflow-trigger data-openbitfun-scene="skills" data-openbitfun-part="groupMember">
+                <div key={key} className="skill-group-editor__member" data-overflow-trigger data-openbitfun-scene="skills" data-openbitfun-part="groupMember" data-starmate-scene="skills" data-starmate-part="groupMember" >
                   {draft.readOnly ? (
                     <div className="skill-group-editor__identity">
                       {title}

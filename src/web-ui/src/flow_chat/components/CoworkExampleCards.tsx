@@ -99,10 +99,10 @@ export const CoworkExampleCards: React.FC<CoworkExampleCardsProps> = ({
   }, [onSelectPrompt, selected, t]);
 
   return (
-    <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="root" className="openbitfun-cowork-example-cards">
-      <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="header" className="openbitfun-cowork-example-cards__header">
-        <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="title" className="openbitfun-cowork-example-cards__title">{t('coworkExamples.title')}</div>
-        <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="actions" className="openbitfun-cowork-example-cards__header-actions">
+    <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="root" className="openbitfun-cowork-example-cards" data-starmate-component="cowork-example-cards" data-starmate-part="root" >
+      <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="header" className="openbitfun-cowork-example-cards__header" data-starmate-component="cowork-example-cards" data-starmate-part="header" >
+        <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="title" className="openbitfun-cowork-example-cards__title" data-starmate-component="cowork-example-cards" data-starmate-part="title" >{t('coworkExamples.title')}</div>
+        <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="actions" className="openbitfun-cowork-example-cards__header-actions" data-starmate-component="cowork-example-cards" data-starmate-part="actions" >
           {onAddPlugin && (
             <Tooltip content={t('coworkExamples.addPlugin')}>
               <IconButton
@@ -133,7 +133,7 @@ export const CoworkExampleCards: React.FC<CoworkExampleCardsProps> = ({
           )}
         </div>
       </div>
-      <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="grid" className="openbitfun-cowork-example-cards__grid">
+      <div data-openbitfun-component="cowork-example-cards" data-openbitfun-part="grid" className="openbitfun-cowork-example-cards__grid" data-starmate-component="cowork-example-cards" data-starmate-part="grid" >
         {cards}
       </div>
     </div>

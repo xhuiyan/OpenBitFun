@@ -18,7 +18,7 @@ export const MessageReferenceCapsule: React.FC<{
       data-openbitfun-product-part="content"
       data-openbitfun-state={type}
       title={title ?? label}
-    >
+     data-starmate-product-component="user-message-item" data-starmate-product-part="content" data-starmate-state={type} >
       {children ?? (type === 'skill' || type === 'widget'
         ? messageInlineTokenIcon(type)
         : messageContextIcon(type))}

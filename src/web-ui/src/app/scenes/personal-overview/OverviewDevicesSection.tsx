@@ -99,7 +99,7 @@ export function OverviewDevicesSection({ identity }: { identity: AccountIdentity
   ) : null;
 
   return (
-    <section className="personal-overview__section" aria-labelledby="overview-devices-title" aria-busy={loading} data-openbitfun-scene="personal-overview" data-openbitfun-part="devices">
+    <section className="personal-overview__section" aria-labelledby="overview-devices-title" aria-busy={loading} data-openbitfun-scene="personal-overview" data-openbitfun-part="devices" data-starmate-scene="personal-overview" data-starmate-part="devices" >
       <div className="personal-overview__section-header">
         <h2 id="overview-devices-title" className="personal-overview__section-title">{t('devices.title')}</h2>
         <Button className="personal-overview__section-action" variant="text" size="sm" leadingIcon={<Icon glyph={MonitorSmartphone} size="sm" />} onClick={openDeviceManagement} data-testid="personal-overview-manage-devices">

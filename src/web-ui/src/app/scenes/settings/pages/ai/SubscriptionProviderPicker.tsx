@@ -63,7 +63,7 @@ export function SubscriptionProviderPicker({ options, disabled, loginStatus, onL
 
   return <div className={styles.picker}>
     <div className={styles.options} role="group" aria-label={t('acquisition.subscriptions')}
-      data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionArea">
+      data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionArea" data-starmate-component="model-settings" data-starmate-part="subscriptionArea" >
       {options.map(option => {
         const region = regions[option.provider];
         const provider = option.regions?.find(item => item.provider === region)?.provider ?? option.provider;
@@ -82,7 +82,7 @@ export function SubscriptionProviderPicker({ options, disabled, loginStatus, onL
             </div>
           </CardBody>
           <CardFooter align="center" className={styles.footer}>
-            <div className={styles.actions} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionActions">
+            <div className={styles.actions} data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionActions" data-starmate-component="model-settings" data-starmate-part="subscriptionActions" >
               {option.regions ? <Capsule layout="split" splitSizing="content" size="sm" role="group" aria-label={option.title}>
                 <Select size="sm" variant="pill" width="content" popupWidth="content"
                   aria-label={t('subscriptionAuth.chooseRegion')} disabled={disabled}

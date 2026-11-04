@@ -99,7 +99,7 @@ export const ThreadGoalStripControl: React.FC<ThreadGoalStripControlProps> = ({
             event.stopPropagation();
             onOpen();
           }}
-        >
+         data-starmate-component="chat-input-workspace-strip" data-starmate-part="goal" data-starmate-state={tone} >
           <Icon glyph={Goal} size="xs" aria-hidden />
           <span className="openbitfun-chat-input-workspace-strip__goal-text">
             <span>{statusLabel}</span>
@@ -123,7 +123,7 @@ export const ThreadGoalStripControl: React.FC<ThreadGoalStripControlProps> = ({
               event.stopPropagation();
               onAction?.(quickRun.action);
             }}
-          >
+           data-starmate-component="chat-input-workspace-strip" data-starmate-part="goalRun" >
             <Icon glyph={quickRun.glyph} size="xs" aria-hidden />
           </button>
         </Tooltip>
@@ -141,7 +141,7 @@ export const ThreadGoalStripControl: React.FC<ThreadGoalStripControlProps> = ({
               event.stopPropagation();
               onAction?.('clear');
             }}
-          >
+           data-starmate-component="chat-input-workspace-strip" data-starmate-part="goalClear" >
             <Icon glyph={Trash2} size="xs" aria-hidden />
           </button>
         </Tooltip>

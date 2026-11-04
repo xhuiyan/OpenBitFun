@@ -134,5 +134,5 @@ export function VoiceParticleLogo({ readAudio, active = true, formation = 1, cla
   }, [active, formation]);
 
   return <canvas {...props} ref={canvasRef} className={classNames(styles.root, className)}
-    data-openbitfun-component="voice-particle-logo" data-openbitfun-part="root" aria-hidden="true" />;
+    data-openbitfun-component="voice-particle-logo" data-openbitfun-part="root" aria-hidden="true"  data-starmate-component="voice-particle-logo" data-starmate-part="root" />;
 }

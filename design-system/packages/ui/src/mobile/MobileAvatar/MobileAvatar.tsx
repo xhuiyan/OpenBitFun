@@ -47,12 +47,12 @@ export function MobileAvatar({
       data-shape={shape}
       data-size={size}
       role={label ? "img" : undefined}
-    >
+     data-starmate-component="mobile-avatar" >
       {children !== undefined && children !== null
-        ? <span aria-hidden="true" className={styles.content} data-openbitfun-part="content">{children}</span>
+        ? <span aria-hidden="true" className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >{children}</span>
         : src !== undefined && src !== null
-          ? <img alt="" className={styles.image} data-openbitfun-part="image" draggable={false} height={48} src={src} width={48} />
-          : <span aria-hidden="true" className={styles.initials} data-openbitfun-part="initials">{initialsOf(name ?? "")}</span>}
+          ? <img alt="" className={styles.image} data-openbitfun-part="image" draggable={false} height={48} src={src} width={48}  data-starmate-part="image" />
+          : <span aria-hidden="true" className={styles.initials} data-openbitfun-part="initials" data-starmate-part="initials" >{initialsOf(name ?? "")}</span>}
       {status !== undefined && status !== null && (
         <span
           aria-label={statusLabel}
@@ -61,7 +61,7 @@ export function MobileAvatar({
           data-openbitfun-part="status"
           data-status={status}
           role={statusLabel ? "img" : undefined}
-        />
+         data-starmate-part="status" />
       )}
     </span>
   );

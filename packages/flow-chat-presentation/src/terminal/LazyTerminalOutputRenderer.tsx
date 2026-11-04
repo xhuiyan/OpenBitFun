@@ -33,7 +33,7 @@ export function TerminalOutputFallback({
         maxHeight: `${fallback.height}px`,
         overflow: 'hidden',
       }}
-    >
+     data-starmate-component="terminal-tool" data-starmate-part="output" >
       {fallback.content}
     </pre>
   );

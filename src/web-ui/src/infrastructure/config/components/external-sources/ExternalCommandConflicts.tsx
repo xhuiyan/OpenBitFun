@@ -49,11 +49,11 @@ export const ExternalCommandConflicts: React.FC<ExternalCommandConflictsProps> =
             data-external-ecosystem={ecosystemIds.size === 1
               ? ecosystemIds.values().next().value
               : undefined}
-          >
-          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle">
+           data-starmate-product-component="external-sources-config" data-starmate-product-part="conflict" >
+          <div className="openbitfun-external-sources-config__conflict-title" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictTitle" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictTitle" >
             {t('conflicts.commandName', { name: conflict.commandName })}
           </div>
-          <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions">
+          <div className="openbitfun-external-sources-config__conflict-options" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictOptions" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictOptions" >
             {conflict.candidates.map((candidate) => {
               const selected = conflict.selectedCandidateId === candidate.candidateId;
               const available = candidate.availability.state === 'available';
@@ -63,7 +63,7 @@ export const ExternalCommandConflicts: React.FC<ExternalCommandConflictsProps> =
                   data-openbitfun-product-component="external-sources-config"
                   data-openbitfun-product-part="candidate"
                   key={candidate.candidateId}
-                >
+                 data-starmate-product-component="external-sources-config" data-starmate-product-part="candidate" >
                   <Button
                     variant={selected ? 'fill' : 'outline'}
                     size="sm"
@@ -80,7 +80,7 @@ export const ExternalCommandConflicts: React.FC<ExternalCommandConflictsProps> =
                       {candidate.ecosystemId}
                     </span>
                   </Button>
-                  <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState">
+                  <span className="openbitfun-external-sources-config__candidate-state" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateState" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateState" >
                     {t(selected
                       ? selectedChoiceUnavailable
                         ? 'common.selectedUnavailable'
@@ -91,7 +91,7 @@ export const ExternalCommandConflicts: React.FC<ExternalCommandConflictsProps> =
                           ? 'common.notSelected'
                           : 'common.availableChoice')}
                   </span>
-                  <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail">
+                  <div className="openbitfun-external-sources-config__candidate-detail" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="candidateDetail" data-starmate-product-component="external-sources-config" data-starmate-product-part="candidateDetail" >
                     {candidate.commandDescription}
                     {' · '}
                     {sourceScopeLabel(candidate.sourceScope, t)}
@@ -105,7 +105,7 @@ export const ExternalCommandConflicts: React.FC<ExternalCommandConflictsProps> =
               );
             })}
           </div>
-          <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint">
+          <div className="openbitfun-external-sources-config__conflict-hint" data-openbitfun-product-component="external-sources-config" data-openbitfun-product-part="conflictHint" data-starmate-product-component="external-sources-config" data-starmate-product-part="conflictHint" >
             {conflict.selectedCandidateId
               ? t(selectedChoiceUnavailable
                 ? 'conflicts.currentSelectionUnavailable'

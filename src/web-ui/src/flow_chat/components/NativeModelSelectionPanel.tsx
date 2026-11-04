@@ -61,7 +61,7 @@ export function NativeModelSelectionPanel(props: Props) {
         if (event.key === 'Escape' || (event.key === 'ArrowLeft' && event.target !== searchRef.current)) {
           event.preventDefault(); event.stopPropagation(); closePicker();
         }
-      }}>
+      }} data-starmate-component="model-selector" data-starmate-part="nativePanel" >
       <MenuList><MenuItem leading={<Icon name="chevron-left" size="xs" />} onClick={closePicker}
         aria-label={t('modelSelector.picker.back')}>{roleLabel(pickingRole)}</MenuItem></MenuList>
       <SearchField ref={searchRef} size="sm" value={query} onValueChange={setQuery} disabled={props.disabled}
@@ -73,7 +73,7 @@ export function NativeModelSelectionPanel(props: Props) {
             pickerRef.current?.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus({ preventScroll: true });
           }
         }} />
-      <div className="native-model-selection__picker-options" data-openbitfun-component="model-selector" data-openbitfun-part="rolePickerList">
+      <div className="native-model-selection__picker-options" data-openbitfun-component="model-selector" data-openbitfun-part="rolePickerList" data-starmate-component="model-selector" data-starmate-part="rolePickerList" >
         <ScrollArea orientation="vertical"><MenuList ref={pickerRef} data-testid="model-selection-role-options">
           {[...groups].map(([key, group]) => <MenuSection key={key} title={group.name}>
             {group.models.map(model => <MenuItem key={model.id} role="menuitemradio" checked={props[pickingRole]?.id === model.id}
@@ -92,7 +92,7 @@ export function NativeModelSelectionPanel(props: Props) {
   if (props.routing.available !== true) {
     return <MenuList className="openbitfun-model-selector__mode-empty" data-testid="model-selection-smart-empty">
       <Button variant="quiet" size="sm" role="menuitem" tabIndex={-1} data-openbitfun-menu-item=""
-        data-testid="model-routing-settings" disabled>{t('modelSelector.routing.notOpen')}</Button>
+        data-testid="model-routing-settings" disabled data-starmate-menu-item="" >{t('modelSelector.routing.notOpen')}</Button>
     </MenuList>;
   }
   if (!props.routing.ready || !props.routing.supported) {
@@ -101,23 +101,23 @@ export function NativeModelSelectionPanel(props: Props) {
         : props.routing.issue ? t('modelSelector.routing.configurationIssue') : t('modelSelector.routing.notReady')}>
         <Button variant="quiet" size="sm" role="menuitem" tabIndex={-1} data-openbitfun-menu-item=""
           data-testid="model-routing-settings" disabled={props.disabled || !props.routing.supported}
-          onClick={props.onRoutingSettings}>
+          onClick={props.onRoutingSettings} data-starmate-menu-item="" >
           {t(props.routing.supported ? 'modelSelector.routing.configure' : 'modelSelector.routing.unsupported')}
         </Button>
       </Tooltip>
     </MenuList>;
   }
   const statusLabel = t(props.routing.mode === 'smart' ? 'modelSelector.routing.active' : 'modelSelector.routing.ready');
-  return <div className="native-model-selection" data-openbitfun-component="model-selector" data-openbitfun-part="nativePanel">
+  return <div className="native-model-selection" data-openbitfun-component="model-selector" data-openbitfun-part="nativePanel" data-starmate-component="model-selector" data-starmate-part="nativePanel" >
     <MenuList className="native-model-selection__activation" data-testid="model-selection-smart-activation" data-empty={!smartEnabled || undefined}>
       <label className="native-model-selection__toggle">
         {t('modelSelector.routing.enable')}
         <Switch checked={smartEnabled} disabled={props.disabled} data-testid="model-routing-toggle"
           data-openbitfun-menu-item="" tabIndex={-1}
-          onCheckedChange={checked => { void props.onModeChange(checked ? 'smart' : 'manual'); }} />
+          onCheckedChange={checked => { void props.onModeChange(checked ? 'smart' : 'manual'); }}  data-starmate-menu-item="" />
       </label>
       {!smartEnabled && <Button variant="quiet" size="sm" role="menuitem" tabIndex={-1} data-openbitfun-menu-item=""
-        data-testid="model-routing-settings" disabled={props.disabled} onClick={props.onRoutingSettings}>
+        data-testid="model-routing-settings" disabled={props.disabled} onClick={props.onRoutingSettings} data-starmate-menu-item="" >
         {t('modelSelector.routing.configure')}
       </Button>}
     </MenuList>
@@ -127,7 +127,7 @@ export function NativeModelSelectionPanel(props: Props) {
         ? `${props[role]!.model_name} · ${getProviderDisplayName(props[role]!)}` : t('modelSelector.modelNotConfigured')}>
         <MenuItem ref={role === 'primary' ? primaryRef : economyRef} data-testid={`model-selection-smart-${role}`}
           className="openbitfun-model-selector__settings-row" disabled={props.disabled}
-          metadata={<OverflowText data-openbitfun-component="model-selector" data-openbitfun-part="modelInfo">{props[role]?.model_name ?? t('modelSelector.modelNotConfigured')}</OverflowText>}
+          metadata={<OverflowText data-openbitfun-component="model-selector" data-openbitfun-part="modelInfo" data-starmate-component="model-selector" data-starmate-part="modelInfo" >{props[role]?.model_name ?? t('modelSelector.modelNotConfigured')}</OverflowText>}
           shortcut={<Icon name="chevron-right" size="sm" />} onClick={() => { setQuery(''); setPickingRole(role); }}>
           {roleLabel(role)}
         </MenuItem>

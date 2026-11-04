@@ -80,12 +80,12 @@ export const BackgroundCommandInputDialog: React.FC<BackgroundCommandInputDialog
       </DialogHeader>
       <DialogBody inset="none">
         <div className="background-command-input-dialog__modal">
-      <form data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="root" data-openbitfun-state={[isSending && 'sending', maskInput && 'masked'].filter(Boolean).join(' ')} className="background-command-input-dialog" onSubmit={handleSubmit}>
-        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="summary" className="background-command-input-dialog__summary">
-          <span data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="summaryLabel" className="background-command-input-dialog__summary-label">
+      <form data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="root" data-openbitfun-state={[isSending && 'sending', maskInput && 'masked'].filter(Boolean).join(' ')} className="background-command-input-dialog" onSubmit={handleSubmit} data-starmate-component="background-command-input-dialog" data-starmate-part="root" data-starmate-state={[isSending && 'sending', maskInput && 'masked'].filter(Boolean).join(' ')} >
+        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="summary" className="background-command-input-dialog__summary" data-starmate-component="background-command-input-dialog" data-starmate-part="summary" >
+          <span data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="summaryLabel" className="background-command-input-dialog__summary-label" data-starmate-component="background-command-input-dialog" data-starmate-part="summaryLabel" >
             {t('backgroundCommandInput.commandLabel')}
           </span>
-          <code data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="command"><OverflowText>{command.command || command.title}</OverflowText></code>
+          <code data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="command" data-starmate-component="background-command-input-dialog" data-starmate-part="command" ><OverflowText>{command.command || command.title}</OverflowText></code>
         </div>
 
         <Textarea
@@ -101,7 +101,7 @@ export const BackgroundCommandInputDialog: React.FC<BackgroundCommandInputDialog
           spellCheck={false}
         />
 
-        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="options" className="background-command-input-dialog__options">
+        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="options" className="background-command-input-dialog__options" data-starmate-component="background-command-input-dialog" data-starmate-part="options" >
           <Checkbox
             checked={appendEnter}
             onChange={(event) => setAppendEnter(event.target.checked)}
@@ -116,11 +116,11 @@ export const BackgroundCommandInputDialog: React.FC<BackgroundCommandInputDialog
           />
         </div>
 
-        <p data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="note" className="background-command-input-dialog__note">
+        <p data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="note" className="background-command-input-dialog__note" data-starmate-component="background-command-input-dialog" data-starmate-part="note" >
           {t('backgroundCommandInput.privacyNote')}
         </p>
 
-        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="actions" className="background-command-input-dialog__actions">
+        <div data-openbitfun-component="background-command-input-dialog" data-openbitfun-part="actions" className="background-command-input-dialog__actions" data-starmate-component="background-command-input-dialog" data-starmate-part="actions" >
           <Button
             type="button"
             variant="fill"

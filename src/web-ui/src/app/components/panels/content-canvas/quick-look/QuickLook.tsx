@@ -136,10 +136,10 @@ export const QuickLook: React.FC<QuickLookProps> = ({
         left: `${adjustedPosition.x}px`,
         top: `${adjustedPosition.y}px`,
       }}
-    >
+     data-starmate-component="content-canvas" data-starmate-part="quickLook" data-starmate-state="open" >
       {/* Header */}
-      <div className="canvas-quick-look__header" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookHeader">
-        <div className="canvas-quick-look__title" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookTitle">
+      <div className="canvas-quick-look__header" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookHeader" data-starmate-component="content-canvas" data-starmate-part="quickLookHeader" >
+        <div className="canvas-quick-look__title" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookTitle" data-starmate-component="content-canvas" data-starmate-part="quickLookTitle" >
           <OverflowText>{content.title}</OverflowText>
           {content.data?.filePath && (
             <Tooltip content={t('canvas.openFileLocation')}>
@@ -150,7 +150,7 @@ export const QuickLook: React.FC<QuickLookProps> = ({
           )}
         </div>
         
-        <div className="canvas-quick-look__actions" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookActions">
+        <div className="canvas-quick-look__actions" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookActions" data-starmate-component="content-canvas" data-starmate-part="quickLookActions" >
           <Tooltip content={t('canvas.pinAsTab')}>
             <button
               className="canvas-quick-look__action-btn canvas-quick-look__pin-btn"
@@ -172,7 +172,7 @@ export const QuickLook: React.FC<QuickLookProps> = ({
       </div>
 
       {/* Content */}
-      <div className="canvas-quick-look__content" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookContent">
+      <div className="canvas-quick-look__content" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookContent" data-starmate-component="content-canvas" data-starmate-part="quickLookContent" >
         <FlexiblePanel
           content={content}
           onContentChange={handleContentChange}
@@ -181,7 +181,7 @@ export const QuickLook: React.FC<QuickLookProps> = ({
       </div>
 
       {/* Footer hint */}
-      <div className="canvas-quick-look__footer" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookFooter">
+      <div className="canvas-quick-look__footer" data-openbitfun-component="content-canvas" data-openbitfun-part="quickLookFooter" data-starmate-component="content-canvas" data-starmate-part="quickLookFooter" >
         <span>{t('canvas.enterToPin')}</span>
         <span className="canvas-quick-look__separator">|</span>
         <span>{t('canvas.escToClose')}</span>

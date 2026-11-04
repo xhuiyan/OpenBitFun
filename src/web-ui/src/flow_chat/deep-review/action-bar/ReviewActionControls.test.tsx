@@ -19,7 +19,7 @@ vi.mock('react-i18next', async () => {
 });
 
 vi.mock('@starmate/ui', () => ({
-  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name} />,
+  Icon: ({ name }: { name: string }) => <span data-openbitfun-component="icon" data-openbitfun-name={name}  data-starmate-component="icon" data-starmate-name={name} />,
   Button: ({
     children,
     disabled,

@@ -54,7 +54,7 @@ export function ReadFileToolCard({
               onClick={onOpen}
               size="sm"
               variant="quiet"
-            />
+             data-starmate-affordance="open-panel-right" data-starmate-part="affordanceButton" />
           ) : undefined}
           statusDescription={statusDescription}
           icon={(
@@ -68,6 +68,6 @@ export function ReadFileToolCard({
       isExpanded={false}
       onClick={canOpen ? () => onOpen?.() : undefined}
       status={status}
-    />
+     data-starmate-tool-card="read-file" />
   );
 }

@@ -27,26 +27,26 @@ export const RemoteConnectDisclaimer: React.FC<RemoteConnectDisclaimerProps> = (
   return (
     <>
       <DialogBody>
-        <div data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="root" className="openbitfun-remote-disclaimer">
-          <div className="openbitfun-remote-disclaimer__meta" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="meta">
+        <div data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="root" className="openbitfun-remote-disclaimer" data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="root" >
+          <div className="openbitfun-remote-disclaimer__meta" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="meta" data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="meta" >
             <StatusPill tone={agreed ? 'success' : 'warning'}>
               {t(agreed ? 'remoteConnect.disclaimerStatusAgreed' : 'remoteConnect.disclaimerStatusPending')}
             </StatusPill>
           </div>
 
-          <p className="openbitfun-remote-disclaimer__text" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="intro">{t('remoteConnect.disclaimerIntro')}</p>
+          <p className="openbitfun-remote-disclaimer__text" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="intro" data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="intro" >{t('remoteConnect.disclaimerIntro')}</p>
 
-          <h3 className="openbitfun-remote-disclaimer__section-title" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="title">
+          <h3 className="openbitfun-remote-disclaimer__section-title" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="title" data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="title" >
             {t('remoteConnect.disclaimerKeyRisks')}
           </h3>
-          <ol className="openbitfun-remote-disclaimer__list openbitfun-remote-disclaimer__list--key" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="riskList">
+          <ol className="openbitfun-remote-disclaimer__list openbitfun-remote-disclaimer__list--key" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="riskList" data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="riskList" >
             <li>{t('remoteConnect.disclaimerItemGeneralRisk')}</li>
             <li>{t('remoteConnect.disclaimerItemSecurity')}</li>
             <li>{t('remoteConnect.disclaimerItemEncryption')}</li>
             <li>{t('remoteConnect.disclaimerItemPrivacy')}</li>
           </ol>
 
-          <Disclosure presentation="native" className="openbitfun-remote-disclaimer__details" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="details" summary={t('remoteConnect.disclaimerFullDetails')}>
+          <Disclosure presentation="native" className="openbitfun-remote-disclaimer__details" data-openbitfun-product-component="remote-connect-disclaimer" data-openbitfun-product-part="details" summary={t('remoteConnect.disclaimerFullDetails')} data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="details" >
             <ScrollArea className="openbitfun-remote-disclaimer__list-scroll">
               <ol className="openbitfun-remote-disclaimer__list" start={5}>
                 <li>{t('remoteConnect.disclaimerItemOpenSource')}</li>
@@ -71,7 +71,7 @@ export const RemoteConnectDisclaimer: React.FC<RemoteConnectDisclaimerProps> = (
         className="openbitfun-remote-disclaimer__actions"
         data-openbitfun-product-component="remote-connect-disclaimer"
         data-openbitfun-product-part="actions"
-      >
+       data-starmate-product-component="remote-connect-disclaimer" data-starmate-product-part="actions" >
         <Button
           className="openbitfun-remote-disclaimer__action"
           variant={canAgree ? 'fill' : 'primary'}

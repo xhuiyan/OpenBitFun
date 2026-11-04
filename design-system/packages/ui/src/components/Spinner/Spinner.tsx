@@ -42,7 +42,7 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
       data-active={active}
       ref={ref}
       role={ariaLabel ? "status" : undefined}
-    >
+     data-starmate-component="spinner" >
       {presentation === "logo" ? (
         <span aria-hidden="true" className={styles.glyph} ref={glyphRef}>
           <span className={styles.artwork} />
@@ -68,9 +68,9 @@ export const LoadingState = forwardRef<HTMLDivElement, LoadingStateProps>(
         data-openbitfun-component="loading-state"
         data-size={size}
         ref={ref}
-      >
+       data-starmate-component="loading-state" >
         <Spinner size={size} />
-        {children ? <span className={styles.label} data-openbitfun-part="label">{children}</span> : null}
+        {children ? <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</span> : null}
       </div>
     );
   },

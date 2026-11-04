@@ -99,7 +99,7 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
       data-openbitfun-part="root"
       data-openbitfun-state={isMenuOpen ? 'open' : undefined}
       onKeyDown={handleKeyDown}
-    >
+     data-starmate-component="session-menu" data-starmate-part="root" data-starmate-state={isMenuOpen ? 'open' : undefined} >
       <Tooltip content={t('toolCards.toolbar.openSessionMenu')}>
         <button
           ref={triggerRef}
@@ -113,7 +113,7 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
           onClick={toggleMenu}
           aria-expanded={isMenuOpen}
           aria-haspopup="listbox"
-        >
+         data-starmate-component="session-menu" data-starmate-part="trigger" >
           <Icon name="plus" size="sm" />
         </button>
       </Tooltip>
@@ -131,8 +131,8 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
             visibility: dropdownLayout ? 'visible' : 'hidden',
           }}
           onMouseDown={(e) => e.stopPropagation()}
-        >
-          <MenuList className="openbitfun-session-menu__actions" data-openbitfun-component="session-menu" data-openbitfun-part="actions">
+         data-starmate-component="session-menu" data-starmate-part="dropdown" data-starmate-placement={dropdownLayout?.placement ?? 'bottom'} >
+          <MenuList className="openbitfun-session-menu__actions" data-openbitfun-component="session-menu" data-openbitfun-part="actions" data-starmate-component="session-menu" data-starmate-part="actions" >
             <MenuItem data-overflow-trigger
               type="button"
               className="openbitfun-session-menu__item-row openbitfun-session-menu__item-row--new openbitfun-session-menu__item--new"
@@ -146,16 +146,16 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
                 createSession();
               }}
               leading={(
-                <span className="openbitfun-session-menu__item-icon" data-openbitfun-component="session-menu" data-openbitfun-part="itemIcon">
+                <span className="openbitfun-session-menu__item-icon" data-openbitfun-component="session-menu" data-openbitfun-part="itemIcon" data-starmate-component="session-menu" data-starmate-part="itemIcon" >
                   <Icon name="plus" size="sm" />
                 </span>
               )}
-            >
-              <OverflowText className="openbitfun-session-menu__item-label" data-openbitfun-component="session-menu" data-openbitfun-part="itemLabel">
+             data-starmate-component="session-menu" data-starmate-part="item" data-starmate-item-kind="create" data-starmate-session-kind="unified" >
+              <OverflowText className="openbitfun-session-menu__item-label" data-openbitfun-component="session-menu" data-openbitfun-part="itemLabel" data-starmate-component="session-menu" data-starmate-part="itemLabel" >
                 {t('toolCards.toolbar.newSessionItem')}
               </OverflowText>
             </MenuItem>
-            <MenuSeparator className="openbitfun-session-menu__divider" data-openbitfun-component="session-menu" data-openbitfun-part="divider" />
+            <MenuSeparator className="openbitfun-session-menu__divider" data-openbitfun-component="session-menu" data-openbitfun-part="divider"  data-starmate-component="session-menu" data-starmate-part="divider" />
           </MenuList>
 
           <MenuList
@@ -163,7 +163,7 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
             data-openbitfun-component="session-menu"
             data-openbitfun-part="scroll"
             aria-label={t('session.switchSession')}
-          >
+           data-starmate-component="session-menu" data-starmate-part="scroll" >
             {sessions.map((session) => {
               const titleNumber = titleNumbers?.get(session.sessionId);
               return (
@@ -188,7 +188,7 @@ export const SessionMenu: React.FC<SessionMenuProps> = ({ onOpenChange }) => {
                   // menu reserves and aligns that space without pushing the label.
                   metadata={titleNumber ? <SessionTitleNumber number={titleNumber} /> : undefined}
                   onMouseDown={(e) => switchSession(e, session.sessionId)}
-                >
+                 data-starmate-component="session-menu" data-starmate-part="item" data-starmate-item-kind="session" data-starmate-state={session.sessionId === activeSessionId ? 'active' : undefined} >
                   <OverflowText>{resolveSessionTitle(session, t)}</OverflowText>
                 </MenuItem>
               );

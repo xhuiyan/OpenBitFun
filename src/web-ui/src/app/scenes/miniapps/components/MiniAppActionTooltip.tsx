@@ -12,7 +12,7 @@ export function MiniAppActionTooltip({ content, disabled = false, children }: {
     {disabled ? <span className={styles.disabledTrigger} role="group" tabIndex={0}
       aria-label={content} aria-disabled="true"
       data-openbitfun-scene="miniapp" data-openbitfun-part="actionHint"
-      onMouseDown={event => event.stopPropagation()} onDoubleClick={event => event.stopPropagation()}>
+      onMouseDown={event => event.stopPropagation()} onDoubleClick={event => event.stopPropagation()} data-starmate-scene="miniapp" data-starmate-part="actionHint" >
       {children}
     </span> : children}
   </Tooltip>;

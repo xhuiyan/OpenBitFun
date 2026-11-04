@@ -73,7 +73,7 @@ export function FontPreferencePanel() {
       data-testid="appearance-font-section"
       data-openbitfun-component="font-preference"
       data-openbitfun-part="root"
-    >
+     data-starmate-component="font-preference" data-starmate-part="root" >
       <ConfigPageSection
         className="font-pref-panel__section"
         title={t('appearance.fontSize.title')}
@@ -98,7 +98,7 @@ export function FontPreferencePanel() {
               data-testid="appearance-ui-font-custom-controls"
               data-openbitfun-component="font-preference"
               data-openbitfun-part="customControls"
-            >
+             data-starmate-component="font-preference" data-starmate-part="customControls" >
               <NumberInput
                 value={parseInt(customInput, 10) || 14}
                 min={12}
@@ -120,7 +120,7 @@ export function FontPreferencePanel() {
             className="font-pref-panel__preview"
             data-openbitfun-component="font-preference"
             data-openbitfun-part="preview"
-          >
+           data-starmate-component="font-preference" data-starmate-part="preview" >
             <Input
               className="font-pref-panel__preview-input"
               aria-label={t('appearance.fontSize.previewLabel')}

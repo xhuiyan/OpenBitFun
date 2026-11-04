@@ -28,7 +28,7 @@ export function FileWatchStatusNotice({ status, retrying, onRetry }: FileWatchSt
       data-openbitfun-part="watchNotice"
       data-watch-failure-code={failure?.code ?? 'unknown'}
       role="status"
-    >
+     data-starmate-component="files-panel" data-starmate-part="watchNotice" >
       <div className="openbitfun-file-watch-notice__body">
         <span className="openbitfun-file-watch-notice__title">{t('watch.title')}</span>
         <span className="openbitfun-file-watch-notice__reason">{t(reasonKey)}</span>

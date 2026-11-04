@@ -21,13 +21,13 @@ export function BackgroundRunItem({ turn, absoluteTurnIndex, forceOpen = false, 
   return (
     <details className="background-run" open={open}
       data-openbitfun-component="background-run" data-openbitfun-part="root"
-      onToggle={event => setOpen(event.currentTarget.open)}>
-      <summary data-openbitfun-component="background-run" data-openbitfun-part="summary">
+      onToggle={event => setOpen(event.currentTarget.open)} data-starmate-component="background-run" data-starmate-part="root" >
+      <summary data-openbitfun-component="background-run" data-openbitfun-part="summary" data-starmate-component="background-run" data-starmate-part="summary" >
         <span>{t(completed ? 'backgroundDelivery.quiet' : 'backgroundDelivery.running')}</span>
         <span className="background-run__action">{t('backgroundDelivery.executionDetails')}</span>
       </summary>
       {open ? (
-        <div data-openbitfun-component="background-run" data-openbitfun-part="details">
+        <div data-openbitfun-component="background-run" data-openbitfun-part="details" data-starmate-component="background-run" data-starmate-part="details" >
           {delivery?.decisionUsage ? <p>{t('backgroundDelivery.adjudicationUsage', { tokens: formatNumber(delivery.decisionUsage.totalTokens) })}</p> : null}
           <UserMessageItem message={turn.userMessage} turnId={turn.id} absoluteTurnIndex={absoluteTurnIndex} turnStatus={turn.status} />
           {turn.modelRounds.map((round, index) => <ModelRoundItem key={round.id} round={round} turnId={turn.id}

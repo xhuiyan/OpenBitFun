@@ -67,7 +67,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({
       data-padding={padding}
       data-radius={radius}
       ref={ref}
-    >
+     data-starmate-component="card" >
       {children}
     </div>
   );
@@ -95,27 +95,27 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         data-content-align={contentAlign}
         data-padding={padding}
         ref={ref}
-      >
+       data-starmate-part="header" >
         {leading !== undefined && leading !== null && (
-          <div className={styles.leading} data-openbitfun-part="leading">{leading}</div>
+          <div className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</div>
         )}
         <div
           className={styles.headerContent}
           data-align={contentAlign}
           data-openbitfun-part="header-content"
-        >
+         data-starmate-part="header-content" >
           {title !== undefined && title !== null && (
-            <div className={styles.title} data-openbitfun-part="title">{title}</div>
+            <div className={styles.title} data-openbitfun-part="title" data-starmate-part="title" >{title}</div>
           )}
           {description !== undefined && description !== null && (
-            <div className={styles.description} data-openbitfun-part="description">
+            <div className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >
               {description}
             </div>
           )}
           {children}
         </div>
         {actions !== undefined && actions !== null && (
-          <div className={styles.actions} data-openbitfun-part="actions">{actions}</div>
+          <div className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >{actions}</div>
         )}
       </div>
     );
@@ -132,7 +132,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
         data-openbitfun-part="body"
         data-padding={padding}
         ref={ref}
-      >
+       data-starmate-part="body" >
         {children}
       </div>
     );
@@ -147,7 +147,7 @@ export const CardMedia = forwardRef<HTMLDivElement, CardMediaProps>(
         className={classNames(styles.media, className)}
         data-openbitfun-part="media"
         ref={ref}
-      >
+       data-starmate-part="media" >
         {children}
       </div>
     );
@@ -170,7 +170,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
         data-openbitfun-part="footer"
         data-padding={padding}
         ref={ref}
-      >
+       data-starmate-part="footer" >
         {children}
       </div>
     );

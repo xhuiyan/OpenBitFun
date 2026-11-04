@@ -47,15 +47,15 @@ export const TurnFailureNoticeItem: React.FC<TurnFailureNoticeItemProps> = ({ er
     <section data-openbitfun-component="turn-failure-notice" data-openbitfun-part="root" data-openbitfun-state={[isOpen && 'open', copied && 'copied'].filter(Boolean).join(' ')}
       className={`turn-failure-notice turn-failure-notice--${presentation.severity}`}
       aria-label={t(presentation.titleKey)}
-    >
-      <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="icon" className="turn-failure-notice__icon" aria-hidden="true">
+     data-starmate-component="turn-failure-notice" data-starmate-part="root" data-starmate-state={[isOpen && 'open', copied && 'copied'].filter(Boolean).join(' ')} >
+      <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="icon" className="turn-failure-notice__icon" aria-hidden="true" data-starmate-component="turn-failure-notice" data-starmate-part="icon" >
         <Icon glyph={AlertCircle} size="md" />
       </div>
-      <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="content" className="turn-failure-notice__content">
-        <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="header" className="turn-failure-notice__header">
-          <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="summary" className="turn-failure-notice__summary">
-            <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="title" className="turn-failure-notice__title">{t(presentation.titleKey)}</div>
-            <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="message" className="turn-failure-notice__message"><OverflowText>{t(presentation.messageKey)}</OverflowText></div>
+      <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="content" className="turn-failure-notice__content" data-starmate-component="turn-failure-notice" data-starmate-part="content" >
+        <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="header" className="turn-failure-notice__header" data-starmate-component="turn-failure-notice" data-starmate-part="header" >
+          <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="summary" className="turn-failure-notice__summary" data-starmate-component="turn-failure-notice" data-starmate-part="summary" >
+            <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="title" className="turn-failure-notice__title" data-starmate-component="turn-failure-notice" data-starmate-part="title" >{t(presentation.titleKey)}</div>
+            <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="message" className="turn-failure-notice__message" data-starmate-component="turn-failure-notice" data-starmate-part="message" ><OverflowText>{t(presentation.messageKey)}</OverflowText></div>
           </div>
 
           {(facts.length > 0 || rawError) && (
@@ -72,7 +72,7 @@ export const TurnFailureNoticeItem: React.FC<TurnFailureNoticeItemProps> = ({ er
                 aria-controls={detailsId}
                 aria-label={t(isOpen ? 'turnFailure.hideDetails' : 'turnFailure.showDetails')}
                 onClick={() => setIsOpen(current => !current)}
-              >
+               data-starmate-component="turn-failure-notice" data-starmate-part="toggle" >
                 {isOpen ? <Icon name="chevron-down" size="sm" /> : <Icon name="chevron-right" size="sm" />}
               </button>
             </Tooltip>
@@ -80,11 +80,11 @@ export const TurnFailureNoticeItem: React.FC<TurnFailureNoticeItemProps> = ({ er
         </div>
 
         {isOpen && (
-          <div id={detailsId} data-openbitfun-component="turn-failure-notice" data-openbitfun-part="details" className="turn-failure-notice__details">
+          <div id={detailsId} data-openbitfun-component="turn-failure-notice" data-openbitfun-part="details" className="turn-failure-notice__details" data-starmate-component="turn-failure-notice" data-starmate-part="details" >
             {facts.length > 0 && (
-              <dl data-openbitfun-component="turn-failure-notice" data-openbitfun-part="facts" className="turn-failure-notice__facts">
+              <dl data-openbitfun-component="turn-failure-notice" data-openbitfun-part="facts" className="turn-failure-notice__facts" data-starmate-component="turn-failure-notice" data-starmate-part="facts" >
                 {facts.map(fact => (
-                  <div key={fact.label} data-openbitfun-component="turn-failure-notice" data-openbitfun-part="fact" className="turn-failure-notice__fact">
+                  <div key={fact.label} data-openbitfun-component="turn-failure-notice" data-openbitfun-part="fact" className="turn-failure-notice__fact" data-starmate-component="turn-failure-notice" data-starmate-part="fact" >
                     <dt>{fact.label}</dt>
                     <dd>{fact.value}</dd>
                   </div>
@@ -92,8 +92,8 @@ export const TurnFailureNoticeItem: React.FC<TurnFailureNoticeItemProps> = ({ er
               </dl>
             )}
             {rawError && (
-              <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="rawError" className="turn-failure-notice__raw-error">
-                <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="rawHeader" className="turn-failure-notice__raw-error-header">
+              <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="rawError" className="turn-failure-notice__raw-error" data-starmate-component="turn-failure-notice" data-starmate-part="rawError" >
+                <div data-openbitfun-component="turn-failure-notice" data-openbitfun-part="rawHeader" className="turn-failure-notice__raw-error-header" data-starmate-component="turn-failure-notice" data-starmate-part="rawHeader" >
                   <span>{t('turnFailure.providerError')}</span>
                   <Tooltip content={copied ? t('turnFailure.copied') : t('turnFailure.copy')} placement="top">
                     <button
@@ -103,12 +103,12 @@ export const TurnFailureNoticeItem: React.FC<TurnFailureNoticeItemProps> = ({ er
                       className="turn-failure-notice__copy"
                       onClick={() => void copyRawError()}
                       aria-label={t('turnFailure.copy')}
-                    >
+                     data-starmate-component="turn-failure-notice" data-starmate-part="copy" >
                       {copied ? <Icon name="check-line" size="sm" /> : <Icon name="duplicate" size="sm" />}
                     </button>
                   </Tooltip>
                 </div>
-                <pre data-openbitfun-component="turn-failure-notice" data-openbitfun-part="code">{rawError}</pre>
+                <pre data-openbitfun-component="turn-failure-notice" data-openbitfun-part="code" data-starmate-component="turn-failure-notice" data-starmate-part="code" >{rawError}</pre>
               </div>
             )}
           </div>

@@ -85,11 +85,11 @@ function ScheduledJobField({
   }
 
   return <div className={`asv__form-row asv__form-row--inline${prompt ? ' asv__form-row--prompt' : ''}`}
-    data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="field">
-    <div className="asv__field-meta" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="fieldMeta">
+    data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="field" data-starmate-component="scheduled-jobs-view" data-starmate-part="field" >
+    <div className="asv__field-meta" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="fieldMeta" data-starmate-component="scheduled-jobs-view" data-starmate-part="fieldMeta" >
       <span className="asv__field-label">{label}</span>
     </div>
-    <div className="asv__field-control" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="fieldControl">
+    <div className="asv__field-control" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="fieldControl" data-starmate-component="scheduled-jobs-view" data-starmate-part="fieldControl" >
       {controlTrailing ? <div className={`asv__control-grid asv__control-grid--${controlLayout}`}>{children}{controlTrailing}</div> : children}
       {description && <span className="asv__field-note">{description}</span>}
     </div>
@@ -671,19 +671,19 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
       data-openbitfun-part="root"
       data-openbitfun-target={targetKind}
       data-openbitfun-schedule={draft.scheduleKind}
-    >
+     data-starmate-component="scheduled-jobs-view" data-starmate-part="root" data-starmate-target={targetKind} data-starmate-schedule={draft.scheduleKind} >
       <div
         className={`asv__head${hasHeaderContent ? '' : ' asv__head--actions-only'}`}
         data-openbitfun-component="scheduled-jobs-view"
         data-openbitfun-part="header"
-      >
+       data-starmate-component="scheduled-jobs-view" data-starmate-part="header" >
         {targetLabel?.trim() ? (
           <div
             className="asv__target"
             title={targetDescription || targetLabel}
             data-openbitfun-component="scheduled-jobs-view"
             data-openbitfun-part="target"
-          >
+           data-starmate-component="scheduled-jobs-view" data-starmate-part="target" >
             <span className="asv__target-kind">{targetTypeLabel}</span>
             <OverflowText className="asv__target-main">{targetLabel}</OverflowText>
             {targetDescription?.trim() ? (
@@ -711,20 +711,20 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
         description={<Button size="sm" variant="text" disabled={loading} onClick={() => void loadJobs()}>{t('retry')}</Button>} />}
 
       {loading ? (
-        <div className="asv__empty" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="empty" data-openbitfun-state="loading">
+        <div className="asv__empty" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="empty" data-openbitfun-state="loading" data-starmate-component="scheduled-jobs-view" data-starmate-part="empty" data-starmate-state="loading" >
           <Icon name="refresh" size="sm" className="asv__spin" />
         </div>
       ) : !loadError && sortedJobs.length === 0 && expandedJobId !== NEW_JOB_ID ? (
-        <div className="asv__empty" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="empty">
+        <div className="asv__empty" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="empty" data-starmate-component="scheduled-jobs-view" data-starmate-part="empty" >
           <p className="asv__empty-title">{emptyTitle}</p>
         </div>
       ) : sortedJobs.length > 0 && listPresentation === 'table' ? (
-        <div className="asv__table-wrap" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="list">
+        <div className="asv__table-wrap" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="list" data-starmate-component="scheduled-jobs-view" data-starmate-part="list" >
           <div role="table" className="asv__table" aria-label={t('nav.scheduledJobs.listTitle')}>
             <div role="row" className="resource-table__row resource-table__header"><div role="columnheader">{t('nav.scheduledJobs.fields.name')}</div><div role="columnheader">{t('nav.scheduledJobs.fields.scheduleKind')}</div>
               <div role="columnheader">{t('nav.scheduledJobs.columns.status')}</div><div role="columnheader">{t('nav.scheduledJobs.columns.actions')}</div></div>
             {sortedJobs.map(job => <React.Fragment key={job.id}>
-              <div role="row" className="resource-table__row asv__table-row" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="job">
+              <div role="row" className="resource-table__row asv__table-row" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="job" data-starmate-component="scheduled-jobs-view" data-starmate-part="job" >
                 <div role="cell"><div className="asv__table-copy"><OverflowText className="asv__table-name">{job.name}</OverflowText>
                   <OverflowText className="asv__table-meta">{job.payload.text}</OverflowText></div></div>
                 <div role="cell"><div className="asv__table-copy"><span>{formatScheduleSummary(job.schedule, formatDate, t)}</span>
@@ -746,7 +746,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
           </div>
         </div>
       ) : sortedJobs.length > 0 ? (
-        <div className="asv__list" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="list">
+        <div className="asv__list" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="list" data-starmate-component="scheduled-jobs-view" data-starmate-part="list" >
           {sortedJobs.map(job => {
             const isExpanded = expandedJobId === job.id;
             return (
@@ -767,11 +767,11 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
                       handleEditJob(job);
                     }
                   }}
-                >
-                  <div className="asv__item-body" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobBody">
+                 data-starmate-component="scheduled-jobs-view" data-starmate-part="job" data-starmate-state={isExpanded ? 'expanded' : undefined} >
+                  <div className="asv__item-body" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobBody" data-starmate-component="scheduled-jobs-view" data-starmate-part="jobBody" >
                     <div className="asv__item-top">
                       <OverflowText className="asv__item-name">{job.name}</OverflowText>
-                      <div className="asv__item-actions" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobActions">
+                      <div className="asv__item-actions" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobActions" data-starmate-component="scheduled-jobs-view" data-starmate-part="jobActions" >
                         <div
                           className="asv__switch-wrap"
                           onClick={e => e.stopPropagation()}
@@ -798,7 +798,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
                         </Tooltip>
                       </div>
                     </div>
-                    <div className="asv__item-meta-row" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobMeta">
+                    <div className="asv__item-meta-row" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="jobMeta" data-starmate-component="scheduled-jobs-view" data-starmate-part="jobMeta" >
                       <div className="asv__item-meta"><OverflowText>
                         {formatJobMetaSummary(job, formatDate, t, {
                           resolveAgentLabel: id => {
@@ -813,7 +813,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
                       </OverflowText></div>
                     </div>
                     {job.state.lastError ? (
-                      <div className="asv__item-error" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="error">
+                      <div className="asv__item-error" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="error" data-starmate-component="scheduled-jobs-view" data-starmate-part="error" >
                         {job.state.lastError}
                       </div>
                     ) : null}
@@ -835,7 +835,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
         aria-label={t('nav.scheduledJobs.title')}
         data-openbitfun-component="scheduled-jobs-view"
         data-openbitfun-part="editor"
-      >
+       data-starmate-component="scheduled-jobs-view" data-starmate-part="editor" >
         {renderForm()}
       </section>
     );
@@ -846,9 +846,9 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
     return (
       <Form id={showActions ? undefined : creationFormId} className={`asv__form${showActions ? '' : ' asv__form--dialog'}`}
         onSubmit={event => { event.preventDefault(); if (canSave && !saving) void handleSave(); }}
-        data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="form">
+        data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="form" data-starmate-component="scheduled-jobs-view" data-starmate-part="form" >
         {targetKind === 'session' && !assistantWorkspaceMode && !canSave ? (
-          <p className="asv__warning" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="warning">
+          <p className="asv__warning" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="warning" data-starmate-component="scheduled-jobs-view" data-starmate-part="warning" >
             {t('nav.scheduledJobs.messages.sessionRequired')}
           </p>
         ) : null}
@@ -871,7 +871,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
 
         <ScheduledJobField dialog={!showActions} label={t('nav.scheduledJobs.fields.scheduleKind')} controlLayout="schedule"
           controlTrailing={showActions ? (
-            <div className="asv__toggle-card" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="toggle">
+            <div className="asv__toggle-card" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="toggle" data-starmate-component="scheduled-jobs-view" data-starmate-part="toggle" >
               <span className="asv__toggle-label">{t('nav.scheduledJobs.fields.enabled')}</span>
               <Switch
                 disabled={saving}
@@ -1093,7 +1093,7 @@ const ScheduledJobsView: React.FC<ScheduledJobsViewProps> = ({
             }} />
         </Field>}
 
-        {showActions && <div className="asv__form-actions" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="formActions">
+        {showActions && <div className="asv__form-actions" data-openbitfun-component="scheduled-jobs-view" data-openbitfun-part="formActions" data-starmate-component="scheduled-jobs-view" data-starmate-part="formActions" >
           {renderFormActions()}
         </div>}
       </Form>

@@ -31,7 +31,7 @@ export const AgentCapabilityOption = forwardRef<HTMLSpanElement, AgentCapability
         data-openbitfun-part="root"
         data-openbitfun-state={checked ? 'selected' : undefined}
         data-overflow-trigger
-      >
+       data-starmate-component="agent-capability-option" data-starmate-part="root" data-starmate-state={checked ? 'selected' : undefined} >
         <Checkbox
           className="agent-capability-option__control"
           checked={checked}

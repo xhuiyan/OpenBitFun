@@ -233,8 +233,8 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
   
   if (!content) {
     return (
-      <div data-openbitfun-component="code-preview" data-openbitfun-part="root" data-openbitfun-state="empty" className={`code-preview code-preview--empty ${className}`}>
-        <span data-openbitfun-component="code-preview" data-openbitfun-part="placeholder" className="code-preview__placeholder">No content</span>
+      <div data-openbitfun-component="code-preview" data-openbitfun-part="root" data-openbitfun-state="empty" className={`code-preview code-preview--empty ${className}`} data-starmate-component="code-preview" data-starmate-part="root" data-starmate-state="empty" >
+        <span data-openbitfun-component="code-preview" data-openbitfun-part="placeholder" className="code-preview__placeholder" data-starmate-component="code-preview" data-starmate-part="placeholder" >No content</span>
       </div>
     );
   }
@@ -244,7 +244,7 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
   };
   
   return (
-    <div data-openbitfun-component="code-preview" data-openbitfun-part="root" data-openbitfun-state={isStreaming ? 'streaming' : undefined} className={`code-preview ${isStreaming ? 'code-preview--streaming' : ''} ${className}`}>
+    <div data-openbitfun-component="code-preview" data-openbitfun-part="root" data-openbitfun-state={isStreaming ? 'streaming' : undefined} className={`code-preview ${isStreaming ? 'code-preview--streaming' : ''} ${className}`} data-starmate-component="code-preview" data-starmate-part="root" data-starmate-state={isStreaming ? 'streaming' : undefined} >
       <ScrollArea
         edgeFade={edgeFade}
         scrollbarVisibility={scrollbarVisibility}
@@ -257,7 +257,7 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
         data-inset={inset ? "true" : undefined}
         style={containerStyle}
         tabIndex={0}
-      >
+       data-starmate-component="code-preview" data-starmate-part="content" >
         {!isStreaming && (displayContent.length > 8000 || countNewlines(displayContent) > 120) ? (
           <WindowedCodeContent content={displayContent} language={detectedLanguage} scrollerRef={containerRef}
             startingLineNumber={displayContentInfo.startingLineNumber} showLineNumbers={showLineNumbers}
@@ -297,7 +297,7 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
             {displayContent}
           </SyntaxHighlighter>
         ) : (
-          <pre data-openbitfun-component="code-preview" data-openbitfun-part="plain" className="code-preview__plain" aria-label="Code preview">
+          <pre data-openbitfun-component="code-preview" data-openbitfun-part="plain" className="code-preview__plain" aria-label="Code preview" data-starmate-component="code-preview" data-starmate-part="plain" >
             <code>
               {displayContent.split('\n').map((line, index) => {
                 const lineNumber = displayContentInfo.startingLineNumber + index;
@@ -306,11 +306,11 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
                     key={`${lineNumber}-${index}`}
                     className={`code-preview__plain-line${highlightedLine === lineNumber ? ' code-preview__plain-line--highlighted' : ''}`}
                     onClick={() => handleLineClick(lineNumber)}
-                  >
+                   data-starmate-component="code-preview" data-starmate-part="line" data-starmate-state={highlightedLine === lineNumber ? 'highlighted' : undefined} >
                     {showLineNumbers && (
-                      <span data-openbitfun-component="code-preview" data-openbitfun-part="lineNumber" className="code-preview__plain-line-number">{lineNumber}</span>
+                      <span data-openbitfun-component="code-preview" data-openbitfun-part="lineNumber" className="code-preview__plain-line-number" data-starmate-component="code-preview" data-starmate-part="lineNumber" >{lineNumber}</span>
                     )}
-                    <span data-openbitfun-component="code-preview" data-openbitfun-part="lineContent" className="code-preview__plain-line-content">{line || '\u00A0'}</span>
+                    <span data-openbitfun-component="code-preview" data-openbitfun-part="lineContent" className="code-preview__plain-line-content" data-starmate-component="code-preview" data-starmate-part="lineContent" >{line || '\u00A0'}</span>
                   </span>
                 );
               })}
@@ -320,7 +320,7 @@ export const CodePreview: React.FC<CodePreviewProps> = memo(({
         
         {/* Streaming cursor indicator */}
         {isStreaming && (
-          <span data-openbitfun-component="code-preview" data-openbitfun-part="cursor" className="code-preview__cursor" />
+          <span data-openbitfun-component="code-preview" data-openbitfun-part="cursor" className="code-preview__cursor"  data-starmate-component="code-preview" data-starmate-part="cursor" />
         )}
       </ScrollArea>
     </div>

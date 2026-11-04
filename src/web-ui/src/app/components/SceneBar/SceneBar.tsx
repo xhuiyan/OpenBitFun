@@ -290,14 +290,14 @@ const SceneBar: React.FC<SceneBarProps> = ({
         dropSessionTabOnWorkbench(event.dataTransfer, getCanvasDropTarget(event), pane);
         setCanvasDrop(null);
       }}
-    >
+     data-starmate-component="scene-bar" data-starmate-part="root" >
       <div
         ref={tabRegionRef}
         className="openbitfun-scene-bar__tab-region"
         data-overflow={tabScrollState.hasOverflow ? 'true' : 'false'}
         data-openbitfun-component="scene-bar"
         data-openbitfun-part="tabs"
-      >
+       data-starmate-component="scene-bar" data-starmate-part="tabs" >
         {tabScrollState.hasOverflow && (
           <button
             type="button"
@@ -308,7 +308,7 @@ const SceneBar: React.FC<SceneBarProps> = ({
             onClick={() => scrollTabsByPage(-1)}
             data-openbitfun-component="scene-bar"
             data-openbitfun-part="scrollPrevious"
-          >
+           data-starmate-component="scene-bar" data-starmate-part="scrollPrevious" >
             <Icon name="chevron-left" size="sm" aria-hidden="true" />
           </button>
         )}
@@ -366,7 +366,7 @@ const SceneBar: React.FC<SceneBarProps> = ({
             onClick={() => scrollTabsByPage(1)}
             data-openbitfun-component="scene-bar"
             data-openbitfun-part="scrollNext"
-          >
+           data-starmate-component="scene-bar" data-starmate-part="scrollNext" >
             <Icon name="chevron-right" size="sm" aria-hidden="true" />
           </button>
         )}
@@ -379,7 +379,7 @@ const SceneBar: React.FC<SceneBarProps> = ({
       />}
       {showDropHint && canAcceptTab && (
         <div className="openbitfun-scene-bar__drop-hint" role="status"
-          data-openbitfun-component="scene-bar" data-openbitfun-part="dropHint">
+          data-openbitfun-component="scene-bar" data-openbitfun-part="dropHint" data-starmate-component="scene-bar" data-starmate-part="dropHint" >
           {/* Both labels reserve the same slot, keeping drop geometry stable. */}
           <span aria-hidden={Boolean(activeCanvasDrop)}>{tComponents(offeredSceneTab ? 'canvas.dragTabHere' : 'workbench.dragToPopOut')}</span>
           <span aria-hidden={!activeCanvasDrop}>{tComponents(offeredSceneTab ? 'canvas.dragTabHere' : 'workbench.releaseToPopOut')}</span>

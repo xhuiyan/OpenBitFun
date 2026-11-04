@@ -59,7 +59,7 @@ export function MobileChoiceSheet({
       ) : undefined}
       onOpenChange={onOpenChange}
     >
-      <div className={styles.options} data-openbitfun-component="mobile-choice-sheet" data-openbitfun-part="options" role="radiogroup">
+      <div className={styles.options} data-openbitfun-component="mobile-choice-sheet" data-openbitfun-part="options" role="radiogroup" data-starmate-component="mobile-choice-sheet" data-starmate-part="options" >
         {options.length === 0 ? emptyContent : options.map((option) => (
           <MobileListRow
             appearance={optionAppearance}

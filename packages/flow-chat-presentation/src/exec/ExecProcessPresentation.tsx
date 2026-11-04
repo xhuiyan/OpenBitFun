@@ -205,7 +205,7 @@ function ExecCommandPresentation({
   )));
 
   return (
-    <div ref={rootRef} data-openbitfun-adapter="exec-process-tool-card" data-tool-card-id={toolId ?? ''}>
+    <div ref={rootRef} data-openbitfun-adapter="exec-process-tool-card" data-tool-card-id={toolId ?? ''} data-starmate-adapter="exec-process-tool-card" >
       <CommandToolCard
         attention={attention}
         data-openbitfun-preview-state={previewState}
@@ -249,7 +249,7 @@ function ExecCommandPresentation({
         })}
         statusTone={rejectedOrCancelled ? 'warning' : 'neutral'}
         waitingContent={waitingText}
-      />
+       data-starmate-preview-state={previewState} data-starmate-state={rejectedOrCancelled ? 'cancelled' : status === 'completed' ? 'completed' : 'active'} />
     </div>
   );
 }

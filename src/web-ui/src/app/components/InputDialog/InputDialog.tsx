@@ -101,13 +101,13 @@ export function InputDialog({
         </DialogHeading>
         <DialogClose />
       </DialogHeader>
-      <DialogBody data-openbitfun-component="input-dialog" data-openbitfun-part="body">
+      <DialogBody data-openbitfun-component="input-dialog" data-openbitfun-part="body" data-starmate-component="input-dialog" data-starmate-part="body" >
         {description ? (
           <p
             className="input-dialog__description"
             data-openbitfun-component="input-dialog"
             data-openbitfun-part="description"
-          >
+           data-starmate-component="input-dialog" data-starmate-part="description" >
             {description}
           </p>
         ) : null}
@@ -130,12 +130,12 @@ export function InputDialog({
             data-openbitfun-part="error"
             id="input-dialog-error"
             role="alert"
-          >
+           data-starmate-component="input-dialog" data-starmate-part="error" >
             {error}
           </span>
         ) : null}
       </DialogBody>
-      <DialogFooter data-openbitfun-component="input-dialog" data-openbitfun-part="actions">
+      <DialogFooter data-openbitfun-component="input-dialog" data-openbitfun-part="actions" data-starmate-component="input-dialog" data-starmate-part="actions" >
         <Button onClick={onClose} size="sm" variant="fill">
           {cancelText ?? t('dialog.confirm.cancel')}
         </Button>

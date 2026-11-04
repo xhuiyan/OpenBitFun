@@ -62,7 +62,7 @@ const AssistantAvatar: React.FC<AssistantAvatarProps> = ({
       role={decorative ? undefined : 'img'}
       aria-hidden={decorative ? 'true' : undefined}
       aria-label={decorative ? undefined : accessibleName}
-    >
+     data-starmate-component="assistant-avatar" data-starmate-part="root" data-starmate-family={usesPreset ? preset.family : 'emoji'} data-starmate-preset={usesPreset ? preset.id : undefined} data-starmate-state={[active && 'active', status !== 'idle' && status].filter(Boolean).join(' ') || undefined} >
       <span className="assistant-avatar__art" aria-hidden="true">
         {usesPreset ? (
           <img

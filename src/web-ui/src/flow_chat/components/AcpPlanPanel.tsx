@@ -32,14 +32,14 @@ export const AcpPlanPanel: React.FC<AcpPlanPanelProps> = ({ entries }) => {
   const done = entries.filter((entry) => entry.status === 'completed').length;
 
   return (
-    <div data-openbitfun-component="acp-plan-panel" data-openbitfun-part="root" className="openbitfun-acp-plan" data-testid="acp-plan-panel">
-      <div data-openbitfun-component="acp-plan-panel" data-openbitfun-part="header" className="openbitfun-acp-plan__header">
-        <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="title" className="openbitfun-acp-plan__title">{t('chatInput.acpPlan.title')}</span>
-        <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="progress" className="openbitfun-acp-plan__progress">
+    <div data-openbitfun-component="acp-plan-panel" data-openbitfun-part="root" className="openbitfun-acp-plan" data-testid="acp-plan-panel" data-starmate-component="acp-plan-panel" data-starmate-part="root" >
+      <div data-openbitfun-component="acp-plan-panel" data-openbitfun-part="header" className="openbitfun-acp-plan__header" data-starmate-component="acp-plan-panel" data-starmate-part="header" >
+        <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="title" className="openbitfun-acp-plan__title" data-starmate-component="acp-plan-panel" data-starmate-part="title" >{t('chatInput.acpPlan.title')}</span>
+        <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="progress" className="openbitfun-acp-plan__progress" data-starmate-component="acp-plan-panel" data-starmate-part="progress" >
           {done}/{entries.length}
         </span>
       </div>
-      <ul data-openbitfun-component="acp-plan-panel" data-openbitfun-part="list" className="openbitfun-acp-plan__list">
+      <ul data-openbitfun-component="acp-plan-panel" data-openbitfun-part="list" className="openbitfun-acp-plan__list" data-starmate-component="acp-plan-panel" data-starmate-part="list" >
         {entries.map((entry, index) => (
           <li
             key={`${index}-${entry.content}`}
@@ -47,9 +47,9 @@ export const AcpPlanPanel: React.FC<AcpPlanPanelProps> = ({ entries }) => {
             data-openbitfun-part="item"
             data-openbitfun-status={entry.status}
             className={`openbitfun-acp-plan__item openbitfun-acp-plan__item--${entry.status}`}
-          >
+           data-starmate-component="acp-plan-panel" data-starmate-part="item" data-starmate-status={entry.status} >
             {statusIcon(entry.status)}
-            <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="content" className="openbitfun-acp-plan__content">{entry.content}</span>
+            <span data-openbitfun-component="acp-plan-panel" data-openbitfun-part="content" className="openbitfun-acp-plan__content" data-starmate-component="acp-plan-panel" data-starmate-part="content" >{entry.content}</span>
           </li>
         ))}
       </ul>

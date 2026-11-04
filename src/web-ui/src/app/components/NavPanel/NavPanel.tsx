@@ -79,8 +79,8 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
       className={`openbitfun-nav-panel ${className}`}
       aria-label={t('nav.aria.mainNav')}
       data-testid="nav-panel"
-    >
-      <div className={contentCls} data-openbitfun-component="nav-panel" data-openbitfun-part="content">
+     data-starmate-component="nav-panel" data-starmate-part="root" data-starmate-state={hasMountedSceneNav ? 'scene' : ''} data-starmate-theme-scope="chrome" >
+      <div className={contentCls} data-openbitfun-component="nav-panel" data-openbitfun-part="content" data-starmate-component="nav-panel" data-starmate-part="content" >
 
         <div
           className="openbitfun-nav-panel__layer openbitfun-nav-panel__layer--main"
@@ -89,7 +89,7 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
           data-openbitfun-layer="main"
           aria-hidden={hasMountedSceneNav || undefined}
           {...(hasMountedSceneNav ? { inert: '' } : {})}
-        >
+         data-starmate-component="nav-panel" data-starmate-part="mainLayer" data-starmate-layer="main" >
           <MainNav />
         </div>
 
@@ -102,7 +102,7 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
             data-openbitfun-state={hasMountedSceneNav ? 'active' : ''}
             aria-hidden={!hasMountedSceneNav || undefined}
             {...(!hasMountedSceneNav ? { inert: '' } : {})}
-          >
+           data-starmate-component="nav-panel" data-starmate-part="sceneLayer" data-starmate-layer="scene" data-starmate-state={hasMountedSceneNav ? 'active' : ''} >
             <Suspense fallback={null}>
               <NavigationTransitionBoundary
                 transitionKey={mountedSceneId ?? 'main'}
@@ -111,7 +111,7 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
                 layerClassName="openbitfun-nav-panel__scene-inner"
                 data-openbitfun-component="nav-panel"
                 data-openbitfun-part="sceneContent"
-              >
+               data-starmate-component="nav-panel" data-starmate-part="sceneContent" >
                 <SceneNavComponent />
               </NavigationTransitionBoundary>
             </Suspense>

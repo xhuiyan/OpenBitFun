@@ -138,7 +138,7 @@ const ChatPaneInner: React.FC<ChatPaneProps> = ({
       data-shortcut-scope="chat"
       data-fullscreen={isFullscreen}
       data-testid="chat-pane"
-    >
+     data-starmate-component="chat-pane" data-starmate-part="root" >
       <FlowChatContainer
         className="openbitfun-chat-pane__chat-container"
         isViewportActive={isSceneActive}

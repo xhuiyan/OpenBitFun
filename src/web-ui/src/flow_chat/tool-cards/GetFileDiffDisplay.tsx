@@ -141,7 +141,7 @@ export const GetFileDiffDisplay: React.FC<ToolCardProps> = React.memo(({
   const formattedDeletions = i18nService.formatNumber(stats?.deletions ?? 0);
 
   return (
-    <div data-openbitfun-adapter="get-file-diff" ref={cardRootRef} data-tool-card-id={toolId ?? ''}>
+    <div data-openbitfun-adapter="get-file-diff" ref={cardRootRef} data-tool-card-id={toolId ?? ''} data-starmate-adapter="get-file-diff" >
       <FileDiffToolCard
         data-diff-type={resultData?.diff_type}
         status={status}

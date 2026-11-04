@@ -48,7 +48,7 @@ export function ImageLightbox({ image, onClose }: {
         alt={image.alt ?? ''}
         data-openbitfun-component="image-lightbox"
         data-openbitfun-part="image"
-      />
+       data-starmate-component="image-lightbox" data-starmate-part="image" />
     </Dialog>
   );
 }

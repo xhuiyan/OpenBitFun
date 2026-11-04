@@ -600,7 +600,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
 
     // Avoid zero-size errors by rendering a placeholder instead of null.
     if (!message) {
-      return <div data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="root" style={{ minHeight: '1px' }} />;
+      return <div data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="root" style={{ minHeight: '1px' }}  data-starmate-product-component="user-message-item" data-starmate-product-part="root" />;
     }
 
     if (isUsageReportMessage) {
@@ -617,7 +617,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
 
     if (isGoalLoadingMessage) {
       return (
-        <div data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="loading" data-openbitfun-state="loading" className="session-usage-report-card session-usage-report-card--loading" aria-live="polite">
+        <div data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="loading" data-openbitfun-state="loading" className="session-usage-report-card session-usage-report-card--loading" aria-live="polite" data-starmate-product-component="user-message-item" data-starmate-product-part="loading" data-starmate-state="loading" >
           <div className="session-usage-report-card__loading-main">
             <ToolProcessingDots className="session-usage-report-card__loading-dots" size={12} />
             <div>
@@ -633,7 +633,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
         className="user-message-item__images"
         data-openbitfun-product-component="user-message-item"
         data-openbitfun-product-part="images"
-      >
+       data-starmate-product-component="user-message-item" data-starmate-product-part="images" >
         {messageImages.map(img => (
           <UserMessageImage key={img.id} image={img} onPreview={setLightboxImage} />
         ))}
@@ -665,7 +665,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
           data-turn-id={turnId}
           data-status={submissionPhase === 'failed' ? 'error' : resolvedTurnStatus || ''}
           data-failed={isFailed || submissionPhase === 'failed' ? 'true' : 'false'}
-        >
+         data-starmate-product-component="user-message-item" data-starmate-product-part="root" data-starmate-state={[expanded && 'expanded', isFailed && 'failed', submissionPhase].filter(Boolean).join(' ') || undefined} >
         <span className="user-message-item__surface" aria-hidden="true" />
         {isEditing ? (
           <div className="user-message-item__edit-layout">
@@ -689,7 +689,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
             />
           </div>
         ) : (
-          <div className="user-message-item__main" data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="main">
+          <div className="user-message-item__main" data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="main" data-starmate-product-component="user-message-item" data-starmate-product-part="main" >
           {backgroundDeliveryFromMetadata(message.metadata, turnId)?.reason === 'recovery_completed'
                     ? <p>{t('backgroundDelivery.recoveryCompleted')}</p> : null}
           <div
@@ -713,12 +713,12 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
                   style={{
                     cursor: (hasOverflow || expanded) ? 'pointer' : 'text',
                   }}
-                >
+                 data-starmate-product-component="user-message-item" data-starmate-product-part="content" >
 
                   {messageTextContent}
                 </div>
                 {steeringTag && (
-                  <div className={`user-message-item__steering-tag ${steeringTag.className}`} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="steeringTag">
+                  <div className={`user-message-item__steering-tag ${steeringTag.className}`} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="steeringTag" data-starmate-product-component="user-message-item" data-starmate-product-part="steeringTag" >
                     {steeringTag.label}
                   </div>
                 )}
@@ -737,11 +737,11 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
                   style={{
                     cursor: (hasOverflow || expanded) ? 'pointer' : 'text',
                   }}
-                >
+                 data-starmate-product-component="user-message-item" data-starmate-product-part="content" >
                   {messageTextContent}
                 </div>
                 {steeringTag && (
-                  <div className={`user-message-item__steering-tag ${steeringTag.className}`} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="steeringTag">
+                  <div className={`user-message-item__steering-tag ${steeringTag.className}`} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="steeringTag" data-starmate-product-component="user-message-item" data-starmate-product-part="steeringTag" >
                     {steeringTag.label}
                   </div>
                 )}
@@ -787,7 +787,7 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
             </Button>
           </div>
         )}
-        {!submissionPhase && <div className="user-message-item__meta" data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="meta">
+        {!submissionPhase && <div className="user-message-item__meta" data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="meta" data-starmate-product-component="user-message-item" data-starmate-product-part="meta" >
           {!isEditing && sentTime && sentAtLabel && sentTimestamp !== null && (
             <time
               className="user-message-item__timestamp"
@@ -797,12 +797,12 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
               dateTime={new Date(sentTimestamp).toISOString()}
               title={sentAtLabel}
               aria-label={sentAtLabel}
-            >
+             data-starmate-product-component="user-message-item" data-starmate-product-part="timestamp" >
               {sentTime}
             </time>
           )}
           {!isEditing && (
-            <div className="user-message-item__actions" data-menu-open={actionMenuOpen || undefined} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="actions">
+            <div className="user-message-item__actions" data-menu-open={actionMenuOpen || undefined} data-openbitfun-product-component="user-message-item" data-openbitfun-product-part="actions" data-starmate-product-component="user-message-item" data-starmate-product-part="actions" >
               <Tooltip content={copied ? t('message.copied') : t('message.copy')}>
                 <IconButton
                   type="button"

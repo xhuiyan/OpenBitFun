@@ -51,9 +51,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
       disabled={disabled || loading}
       ref={ref}
       type={type}
-    >
-      <span aria-hidden="true" className={styles.progress} data-openbitfun-part="progress" />
-      <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">{icon}</span>
+     data-starmate-component="icon-button" data-starmate-shape={floating ? "circle" : shape} data-starmate-tone={tone} data-starmate-variant={resolvedVariant} >
+      <span aria-hidden="true" className={styles.progress} data-openbitfun-part="progress"  data-starmate-part="progress" />
+      <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >{icon}</span>
     </button>
   );
 });

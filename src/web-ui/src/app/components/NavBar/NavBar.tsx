@@ -89,7 +89,7 @@ const NavBar: React.FC<NavBarProps> = ({
 
   if (isCollapsed) {
     return (
-      <div data-openbitfun-component="nav-bar" data-openbitfun-part="root" data-openbitfun-state="collapsed" data-openbitfun-theme-scope="chrome" className={rootClassName} role="toolbar" aria-label={t('nav.aria.navControl')} onMouseDown={handleBarMouseDown} onDoubleClick={handleBarDoubleClick}>
+      <div data-openbitfun-component="nav-bar" data-openbitfun-part="root" data-openbitfun-state="collapsed" data-openbitfun-theme-scope="chrome" className={rootClassName} role="toolbar" aria-label={t('nav.aria.navControl')} onMouseDown={handleBarMouseDown} onDoubleClick={handleBarDoubleClick} data-starmate-component="nav-bar" data-starmate-part="root" data-starmate-state="collapsed" data-starmate-theme-scope="chrome" >
         <Tooltip content={t('header.expandLeftPanel')} placement="bottom" followCursor>
           <button
             type="button"
@@ -98,7 +98,7 @@ const NavBar: React.FC<NavBarProps> = ({
             data-openbitfun-part="panelToggle"
             onClick={onExpandNav}
             aria-label={t('header.expandLeftPanel')}
-          >
+           data-starmate-component="nav-bar" data-starmate-part="panelToggle" >
             <Icon name="sidebar-left" size="sm" />
           </button>
         </Tooltip>
@@ -107,7 +107,7 @@ const NavBar: React.FC<NavBarProps> = ({
   }
 
   return (
-    <div data-openbitfun-component="nav-bar" data-openbitfun-part="root" data-openbitfun-theme-scope="chrome" className={rootClassName} role="toolbar" aria-label={t('nav.aria.navControl')} onMouseDown={handleBarMouseDown} onDoubleClick={handleBarDoubleClick}>
+    <div data-openbitfun-component="nav-bar" data-openbitfun-part="root" data-openbitfun-theme-scope="chrome" className={rootClassName} role="toolbar" aria-label={t('nav.aria.navControl')} onMouseDown={handleBarMouseDown} onDoubleClick={handleBarDoubleClick} data-starmate-component="nav-bar" data-starmate-part="root" data-starmate-theme-scope="chrome" >
       <Tooltip content={t('header.collapseLeftPanel')} placement="bottom" followCursor>
         <button
           type="button"
@@ -116,7 +116,7 @@ const NavBar: React.FC<NavBarProps> = ({
           data-openbitfun-part="panelToggle"
           onClick={onExpandNav}
           aria-label={t('header.collapseLeftPanel')}
-        >
+         data-starmate-component="nav-bar" data-starmate-part="panelToggle" >
           <Icon name="sidebar-left" size="sm" />
         </button>
       </Tooltip>
@@ -131,7 +131,7 @@ const NavBar: React.FC<NavBarProps> = ({
           onClick={canGoBack ? goBack : undefined}
           aria-disabled={!canGoBack}
           aria-label={t('nav.back')}
-        >
+         data-starmate-component="nav-bar" data-starmate-part="back" >
           <Icon name="arrow-left" size="sm" />
         </button>
       </Tooltip>
@@ -145,7 +145,7 @@ const NavBar: React.FC<NavBarProps> = ({
           onClick={canGoForward ? goForward : undefined}
           aria-disabled={!canGoForward}
           aria-label={t('nav.forward')}
-        >
+         data-starmate-component="nav-bar" data-starmate-part="forward" >
           <Icon name="arrow-right" size="sm" />
         </button>
       </Tooltip>
@@ -156,7 +156,7 @@ const NavBar: React.FC<NavBarProps> = ({
           data-openbitfun-component="nav-bar"
           data-openbitfun-part="title"
           title={title}
-        >
+         data-starmate-component="nav-bar" data-starmate-part="title" >
           {title}
         </OverflowText>
       )}

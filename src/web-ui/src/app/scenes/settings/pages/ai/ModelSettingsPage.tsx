@@ -2753,12 +2753,12 @@ const ModelSettingsPage: React.FC = () => {
 
   if (creationMode === 'selection') {
     return (
-      <ConfigPageLayout className="openbitfun-model-settings" data-openbitfun-component="model-settings" data-openbitfun-part="root" data-openbitfun-view="selection">
+      <ConfigPageLayout className="openbitfun-model-settings" data-openbitfun-component="model-settings" data-openbitfun-part="root" data-openbitfun-view="selection" data-starmate-component="model-settings" data-starmate-part="root" data-starmate-view="selection" >
         <ConfigPageHeader
           className="openbitfun-model-settings__selection-header"
           title={t('providerSelection.title')}
           extra={(
-            <div className="openbitfun-model-settings__selection-actions" data-openbitfun-component="model-settings" data-openbitfun-part="selectionActions">
+            <div className="openbitfun-model-settings__selection-actions" data-openbitfun-component="model-settings" data-openbitfun-part="selectionActions" data-starmate-component="model-settings" data-starmate-part="selectionActions" >
               <Tooltip content={t('actions.back')} trigger="hover-focus">
                 <IconButton
                   variant="quiet"
@@ -2774,7 +2774,7 @@ const ModelSettingsPage: React.FC = () => {
         />
 
         <ConfigPageContent className="openbitfun-model-settings__content openbitfun-model-settings__content--selection">
-          <div ref={providerSelectionRef} className="openbitfun-model-settings__provider-selection" data-openbitfun-component="model-settings" data-openbitfun-part="providerSelection">
+          <div ref={providerSelectionRef} className="openbitfun-model-settings__provider-selection" data-openbitfun-component="model-settings" data-openbitfun-part="providerSelection" data-starmate-component="model-settings" data-starmate-part="providerSelection" >
 
             <button
               type="button"
@@ -2783,16 +2783,16 @@ const ModelSettingsPage: React.FC = () => {
               className="openbitfun-model-settings__custom-option"
               onClick={handleSelectCustom}
             >
-              <div className="openbitfun-model-settings__custom-option-content" data-openbitfun-component="model-settings" data-openbitfun-part="customOption">
+              <div className="openbitfun-model-settings__custom-option-content" data-openbitfun-component="model-settings" data-openbitfun-part="customOption" data-starmate-component="model-settings" data-starmate-part="customOption" >
                 <Icon name="settings" size="lg" />
                 <div>
-                  <div className="openbitfun-model-settings__custom-option-title" data-openbitfun-component="model-settings" data-openbitfun-part="customOptionTitle">{t('providerSelection.customTitle')}</div>
-                  <div className="openbitfun-model-settings__custom-option-description" data-openbitfun-component="model-settings" data-openbitfun-part="customOptionDescription">{t('providerSelection.customDescription')}</div>
+                  <div className="openbitfun-model-settings__custom-option-title" data-openbitfun-component="model-settings" data-openbitfun-part="customOptionTitle" data-starmate-component="model-settings" data-starmate-part="customOptionTitle" >{t('providerSelection.customTitle')}</div>
+                  <div className="openbitfun-model-settings__custom-option-description" data-openbitfun-component="model-settings" data-openbitfun-part="customOptionDescription" data-starmate-component="model-settings" data-starmate-part="customOptionDescription" >{t('providerSelection.customDescription')}</div>
                 </div>
               </div>
             </button>
 
-            <div className="openbitfun-model-settings__selection-divider" data-openbitfun-component="model-settings" data-openbitfun-part="selectionDivider">
+            <div className="openbitfun-model-settings__selection-divider" data-openbitfun-component="model-settings" data-openbitfun-part="selectionDivider" data-starmate-component="model-settings" data-starmate-part="selectionDivider" >
               <span>{t('providerSelection.orSelectProvider')}</span>
             </div>
 
@@ -2811,9 +2811,9 @@ const ModelSettingsPage: React.FC = () => {
                 const firstMatch = visibleProviders[0];
                 if (normalizedProviderQuery && firstMatch) handleSelectProvider(firstMatch.id);
               }}
-            />
+             data-starmate-component="model-settings" data-starmate-part="providerSearch" />
 
-            <div className="openbitfun-model-settings__provider-list" data-openbitfun-component="model-settings" data-openbitfun-part="providerList">
+            <div className="openbitfun-model-settings__provider-list" data-openbitfun-component="model-settings" data-openbitfun-part="providerList" data-starmate-component="model-settings" data-starmate-part="providerList" >
               {visibleProviders.map(provider => (
                 // The help link is a sibling of the select button, not a child:
                 // a button may not contain interactive content.
@@ -2822,7 +2822,7 @@ const ModelSettingsPage: React.FC = () => {
                   className="openbitfun-model-settings__provider-row"
                   data-openbitfun-component="model-settings"
                   data-openbitfun-part="providerRow"
-                >
+                 data-starmate-component="model-settings" data-starmate-part="providerRow" >
                   <button
                     type="button"
                     data-testid="settings-model-provider-option"
@@ -2831,9 +2831,9 @@ const ModelSettingsPage: React.FC = () => {
                     data-openbitfun-component="model-settings"
                     data-openbitfun-part="providerSelect"
                     onClick={() => handleSelectProvider(provider.id)}
-                  >
-                    <span className="openbitfun-model-settings__provider-name" data-openbitfun-component="model-settings" data-openbitfun-part="providerName">{provider.name}</span>
-                    <span className="openbitfun-model-settings__provider-description" data-openbitfun-component="model-settings" data-openbitfun-part="providerDescription">{provider.description}</span>
+                   data-starmate-component="model-settings" data-starmate-part="providerSelect" >
+                    <span className="openbitfun-model-settings__provider-name" data-openbitfun-component="model-settings" data-openbitfun-part="providerName" data-starmate-component="model-settings" data-starmate-part="providerName" >{provider.name}</span>
+                    <span className="openbitfun-model-settings__provider-description" data-openbitfun-component="model-settings" data-openbitfun-part="providerDescription" data-starmate-component="model-settings" data-starmate-part="providerDescription" >{provider.description}</span>
                   </button>
                   {provider.helpUrl && (
                     <a
@@ -2860,7 +2860,7 @@ const ModelSettingsPage: React.FC = () => {
               ))}
 
               {visibleProviders.length === 0 && (
-                <div className="openbitfun-model-settings__provider-empty" data-openbitfun-component="model-settings" data-openbitfun-part="providerEmpty">
+                <div className="openbitfun-model-settings__provider-empty" data-openbitfun-component="model-settings" data-openbitfun-part="providerEmpty" data-starmate-component="model-settings" data-starmate-part="providerEmpty" >
                   {t('providerSelection.noProviderMatches')}
                 </div>
               )}
@@ -2873,7 +2873,7 @@ const ModelSettingsPage: React.FC = () => {
                   data-openbitfun-component="model-settings"
                   data-openbitfun-part="providerMore"
                   onClick={() => setShowAllProviders(previous => !previous)}
-                >
+                 data-starmate-component="model-settings" data-starmate-part="providerMore" >
                   {isProviderListCollapsed
                     ? t('providerSelection.showAllProviders', { count: matchedProviders.length })
                     : t('providerSelection.collapseProviders')}
@@ -3965,8 +3965,8 @@ const ModelSettingsPage: React.FC = () => {
         <div className={[
           'openbitfun-model-settings__form openbitfun-model-settings__form--modal',
           !isProviderScopedEditing && 'openbitfun-model-settings__form--single-model',
-        ].filter(Boolean).join(' ')} data-openbitfun-component="model-settings" data-openbitfun-part="form">
-          <div className="openbitfun-model-settings__form-content" data-openbitfun-component="model-settings" data-openbitfun-part="formBody">
+        ].filter(Boolean).join(' ')} data-openbitfun-component="model-settings" data-openbitfun-part="form" data-starmate-component="model-settings" data-starmate-part="form" >
+          <div className="openbitfun-model-settings__form-content" data-openbitfun-component="model-settings" data-openbitfun-part="formBody" data-starmate-component="model-settings" data-starmate-part="formBody" >
             {showModelValidation && modelValidationMessage && (
               <ConfigFieldStatus status="error" message={modelValidationMessage} />
             )}
@@ -4168,8 +4168,8 @@ const ModelSettingsPage: React.FC = () => {
         data-openbitfun-part="subscriptionPanel"
         data-openbitfun-status={loginPanel.status}
         role={loginPanel.status === 'failed' ? 'alert' : undefined}
-      >
-        <div className="openbitfun-model-settings__subscription-login-summary" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionSummary">
+       data-starmate-component="model-settings" data-starmate-part="subscriptionPanel" data-starmate-status={loginPanel.status} >
+        <div className="openbitfun-model-settings__subscription-login-summary" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionSummary" data-starmate-component="model-settings" data-starmate-part="subscriptionSummary" >
           <strong role={loginPanel.status === 'failed' ? undefined : 'status'}>
             {loginPanel.status === 'failed'
               ? t('subscriptionAuth.loginNeedsRetry')
@@ -4193,14 +4193,14 @@ const ModelSettingsPage: React.FC = () => {
         </div>
 
         {loginPanel.status === 'pending' && loginPanel.userCode && (
-          <div className="openbitfun-model-settings__subscription-code" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionCode">
+          <div className="openbitfun-model-settings__subscription-code" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionCode" data-starmate-component="model-settings" data-starmate-part="subscriptionCode" >
             <span>{t('subscriptionAuth.verificationCode')}</span>
             <code>{loginPanel.userCode}</code>
           </div>
         )}
 
         {loginPanel.status === 'pending' && (
-          <div className="openbitfun-model-settings__subscription-login-actions" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionActions">
+          <div className="openbitfun-model-settings__subscription-login-actions" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionActions" data-starmate-component="model-settings" data-starmate-part="subscriptionActions" >
             {loginPanel.userCode && (
               <Button
                 size="sm"
@@ -4411,7 +4411,7 @@ const ModelSettingsPage: React.FC = () => {
           onBack={() => { setSubscriptionLoginPanel(null); setSubscriptionLoginAccountId(null); }}
           renderAuthorization={target => subscriptionLoginPanel?.provider === target
             ? renderSubscriptionLoginPanel(subscriptionLoginPanel) : null}
-        /> : <div className="openbitfun-model-settings__cli-discovery" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionArea">
+        /> : <div className="openbitfun-model-settings__cli-discovery" data-openbitfun-component="model-settings" data-openbitfun-part="subscriptionArea" data-starmate-component="model-settings" data-starmate-part="subscriptionArea" >
           {browsingAccounts ? signedInAccounts.length > 0 && (
             <FieldGroup appearance="subtle" dividers={false} className="openbitfun-model-settings__signed-in-accounts">
               <SubscriptionAccountList accounts={signedInAccounts}
@@ -4489,7 +4489,7 @@ const ModelSettingsPage: React.FC = () => {
           className="openbitfun-model-settings__meta-tag"
           data-openbitfun-component="model-settings"
           data-openbitfun-part="modelMeta"
-        >
+         data-starmate-component="model-settings" data-starmate-part="modelMeta" >
           {t(`category.${config.category}`)}
         </span>}
         {(isTesting || testResult) && (
@@ -4514,7 +4514,7 @@ const ModelSettingsPage: React.FC = () => {
         className="openbitfun-model-settings__details"
         data-openbitfun-component="model-settings"
         data-openbitfun-part="modelDetails"
-      >
+       data-starmate-component="model-settings" data-starmate-part="modelDetails" >
         <div className="openbitfun-model-settings__details-section">
           <div className="openbitfun-model-settings__details-section-title">
             {t('details.basicInfo')}
@@ -4578,7 +4578,7 @@ const ModelSettingsPage: React.FC = () => {
           className="openbitfun-model-settings__model-actions"
           data-openbitfun-component="model-settings"
           data-openbitfun-part="modelActions"
-        >
+         data-starmate-component="model-settings" data-starmate-part="modelActions" >
           <Tooltip content={connectionTestSupported
             ? t('actions.test')
             : t('messages.testUnsupportedOnHost')}>
@@ -4621,7 +4621,7 @@ const ModelSettingsPage: React.FC = () => {
           data-openbitfun-component="model-settings" data-openbitfun-part="modelItem"
           data-openbitfun-state={!config.enabled ? 'disabled' : undefined}
           data-testid="settings-model-row" data-config-id={config.id || ''}
-          data-model-id={config.model_name} data-model-name={config.model_name}>
+          data-model-id={config.model_name} data-model-name={config.model_name} data-starmate-component="model-settings" data-starmate-part="modelItem" data-starmate-state={!config.enabled ? 'disabled' : undefined} >
           <Card appearance="subtle" padding="md" gap="sm" className="openbitfun-model-settings__pool-card">
             <CardHeader
               className="openbitfun-model-settings__pool-card-header"
@@ -4678,7 +4678,7 @@ const ModelSettingsPage: React.FC = () => {
         data-openbitfun-component="model-settings"
         data-openbitfun-part="modelItem"
         data-openbitfun-state={[isExpanded && 'expanded', !config.enabled && 'disabled'].filter(Boolean).join(' ') || undefined}
-      />
+       data-starmate-component="model-settings" data-starmate-part="modelItem" data-starmate-state={[isExpanded && 'expanded', !config.enabled && 'disabled'].filter(Boolean).join(' ') || undefined} />
     );
   };
 
@@ -4797,7 +4797,7 @@ const ModelSettingsPage: React.FC = () => {
     : editingConfig ? getProviderDisplayName(editingConfig) : t('newProvider');
 
   return (
-    <ConfigPageLayout className="openbitfun-model-settings" data-openbitfun-component="model-settings" data-openbitfun-part="root" data-openbitfun-view="settings">
+    <ConfigPageLayout className="openbitfun-model-settings" data-openbitfun-component="model-settings" data-openbitfun-part="root" data-openbitfun-view="settings" data-starmate-component="model-settings" data-starmate-part="root" data-starmate-view="settings" >
       <ConfigPageHeader
         title={t('title')}
       />
@@ -5007,7 +5007,7 @@ const ModelSettingsPage: React.FC = () => {
               <>
                 {visiblePoolModels.length + visibleImageModels.length > 0 ? (
                   <div className="openbitfun-model-settings__pool-grid" data-openbitfun-component="model-settings"
-                    data-openbitfun-part="collection" data-testid="settings-model-pool">
+                    data-openbitfun-part="collection" data-testid="settings-model-pool" data-starmate-component="model-settings" data-starmate-part="collection" >
                     {visiblePoolModels.map(config => renderModelCollectionItem(config, 'card'))}
                     {visibleImageModels.map(service => <ImageGenerationModelCard key={`image:${service.id}`} settings={imageSettings} service={service}
                       actions={<ModelPoolCardActions modelLabel={service.name || service.model_name || 'ChatGPT'} enabled={service.enabled}
@@ -5025,7 +5025,7 @@ const ModelSettingsPage: React.FC = () => {
             ) : (
               <ConfigEmptyState data-openbitfun-component="model-settings" data-openbitfun-part="empty"
                 icon={<Wifi aria-hidden="true" />} description={t('pool.empty')}
-                actions={<Button size="sm" onClick={() => { setSubscriptionDialogMode('import'); setShowSubscriptionManager(true); }} leadingIcon={<Icon name="plus" size="sm" />}>{t('acquisition.addSubscription')}</Button>} />
+                actions={<Button size="sm" onClick={() => { setSubscriptionDialogMode('import'); setShowSubscriptionManager(true); }} leadingIcon={<Icon name="plus" size="sm" />}>{t('acquisition.addSubscription')}</Button>}  data-starmate-component="model-settings" data-starmate-part="empty" />
             )}
           </ConfigPageSection>
         </div>
@@ -5227,9 +5227,9 @@ const ModelSettingsPage: React.FC = () => {
                     {t('actions.createFirst')}
                   </Button>
                 )}
-              />
+               data-starmate-component="model-settings" data-starmate-part="empty" />
             ) : (
-              <div className="openbitfun-model-settings__collection" data-openbitfun-component="model-settings" data-openbitfun-part="collection" data-testid="settings-model-list">
+              <div className="openbitfun-model-settings__collection" data-openbitfun-component="model-settings" data-openbitfun-part="collection" data-testid="settings-model-list" data-starmate-component="model-settings" data-starmate-part="collection" >
                 {providerGroups.map(group => {
                   const isExpanded = expandedProviderGroupKeys.has(group.key);
 
@@ -5240,13 +5240,13 @@ const ModelSettingsPage: React.FC = () => {
                       data-openbitfun-component="model-settings"
                       data-openbitfun-part="providerGroup"
                       data-openbitfun-state={isExpanded ? 'expanded' : undefined}
-                    >
+                     data-starmate-component="model-settings" data-starmate-part="providerGroup" data-starmate-state={isExpanded ? 'expanded' : undefined} >
                       <div
                         className="openbitfun-model-settings__provider-group-header"
                         data-openbitfun-component="model-settings"
                         data-openbitfun-part="providerGroupHeader"
                         data-expanded={isExpanded ? 'true' : 'false'}
-                      >
+                       data-starmate-component="model-settings" data-starmate-part="providerGroupHeader" >
                         <button
                           type="button"
                           className="openbitfun-model-settings__provider-group-toggle"
@@ -5260,7 +5260,7 @@ const ModelSettingsPage: React.FC = () => {
                             className="openbitfun-model-settings__provider-group-chevron"
                             aria-hidden="true"
                           />
-                          <span className="openbitfun-model-settings__provider-group-title" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupTitle">
+                          <span className="openbitfun-model-settings__provider-group-title" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupTitle" data-starmate-component="model-settings" data-starmate-part="providerGroupTitle" >
                             <span>{group.providerName}</span>
                             <span className="openbitfun-model-settings__provider-group-count">{group.models.length}</span>
                             <span className="openbitfun-model-settings__meta-tag">
@@ -5268,7 +5268,7 @@ const ModelSettingsPage: React.FC = () => {
                             </span>
                           </span>
                         </button>
-                        <div className="openbitfun-model-settings__provider-group-actions" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupActions">
+                        <div className="openbitfun-model-settings__provider-group-actions" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupActions" data-starmate-component="model-settings" data-starmate-part="providerGroupActions" >
                           <Tooltip content={t('actions.edit')}>
                             <IconButton
                               aria-label={t('actions.edit')}
@@ -5289,7 +5289,7 @@ const ModelSettingsPage: React.FC = () => {
                         </div>
                       </div>
                       {isExpanded && (
-                        <div className="openbitfun-model-settings__provider-group-list" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupList">
+                        <div className="openbitfun-model-settings__provider-group-list" data-openbitfun-component="model-settings" data-openbitfun-part="providerGroupList" data-starmate-component="model-settings" data-starmate-part="providerGroupList" >
                           {group.models.map(config => renderModelCollectionItem(config))}
                         </div>
                       )}
@@ -5421,7 +5421,7 @@ const ModelSettingsPage: React.FC = () => {
           <DialogClose />
         </DialogHeader>
         <DialogBody inset="none">
-          <div className="openbitfun-model-settings__subscription-logout-confirm" data-openbitfun-component="model-settings" data-openbitfun-part="logoutConfirm">
+          <div className="openbitfun-model-settings__subscription-logout-confirm" data-openbitfun-component="model-settings" data-openbitfun-part="logoutConfirm" data-starmate-component="model-settings" data-starmate-part="logoutConfirm" >
             <p>
               {subscriptionLogoutRequest?.affectedModels.length
                 ? t('subscriptionAuth.logoutAffectedModels', {

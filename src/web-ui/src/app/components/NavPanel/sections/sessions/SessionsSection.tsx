@@ -1310,7 +1310,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
             data-testid="nav-session-aggregate-loading"
             role="status"
             aria-live="polite"
-          >
+           data-starmate-component="sessions-section" data-starmate-part="aggregateLoading" data-starmate-state="loading" >
             <Loader2 className="openbitfun-nav-panel__inline-loading-icon" aria-hidden="true" />
             <OverflowText>{t('nav.sessions.loading')}</OverflowText>
           </div>
@@ -1324,7 +1324,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
               data-openbitfun-state="partial"
               data-testid="nav-session-aggregate-retry"
               onClick={() => setAggregateReloadRequestId(current => current + 1)}
-            >
+             data-starmate-state="partial" >
               {t('nav.sessions.partialLoadFailedRetry')}
             </Button>
           )
@@ -1334,8 +1334,8 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
   if (allTopLevelSessions.length === 0) {
     if (metadataPageState.isLoading) {
       return (
-        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName}>
-          <div className="openbitfun-nav-panel__inline-loading" data-openbitfun-component="sessions-section" data-openbitfun-part="loading" data-openbitfun-state="loading">
+        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName} data-starmate-component="sessions-section" data-starmate-part="root" >
+          <div className="openbitfun-nav-panel__inline-loading" data-openbitfun-component="sessions-section" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="sessions-section" data-starmate-part="loading" data-starmate-state="loading" >
             <Loader2 className="openbitfun-nav-panel__inline-loading-icon" aria-hidden="true" />
             <OverflowText>{t('nav.sessions.loading')}</OverflowText>
           </div>
@@ -1344,7 +1344,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
     }
     if (metadataPageState.loadError) {
       return (
-        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName}>
+        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName} data-starmate-component="sessions-section" data-starmate-part="root" >
           <Button
             variant="outline"
             size="sm"
@@ -1361,7 +1361,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
     if (sourceFilterErrorStatus) return <div className={sessionListClassName}>{sourceFilterErrorStatus}</div>;
     if (aggregateLoadStatus) {
       return (
-        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName}>
+        <div data-openbitfun-component="sessions-section" data-openbitfun-part="root" className={sessionListClassName} data-starmate-component="sessions-section" data-starmate-part="root" >
           {aggregateLoadStatus}
         </div>
       );
@@ -1611,9 +1611,13 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
               onPointerDown={event => handleSessionOpenPointerDown(event, session)}
               onClick={() => handleSwitch(session.sessionId)}
               onContextMenu={event => handleContextMenu(event, session.sessionId)}
-            >
+             data-starmate-component="sessions-section" data-starmate-part="row" data-starmate-state={[
+                isRowActive && 'active',
+                isEditing && 'editing',
+                openMenuSessionId === session.sessionId && 'menuOpen',
+              ].filter(Boolean).join(' ') || undefined} >
               {showAssistantIdentity && assistantIdentity ? (
-                <span className="openbitfun-nav-panel__inline-item-avatar" data-openbitfun-component="sessions-section" data-openbitfun-part="assistantAvatar">
+                <span className="openbitfun-nav-panel__inline-item-avatar" data-openbitfun-component="sessions-section" data-openbitfun-part="assistantAvatar" data-starmate-component="sessions-section" data-starmate-part="assistantAvatar" >
                   <AssistantAvatar
                     presetId={assistantIdentity.avatar}
                     emoji={assistantIdentity.emoji}
@@ -1626,7 +1630,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
               ) : null}
 
               {isEditing ? (
-                <div className="openbitfun-nav-panel__inline-item-edit" data-openbitfun-component="sessions-section" data-openbitfun-part="edit" onClick={e => e.stopPropagation()}>
+                <div className="openbitfun-nav-panel__inline-item-edit" data-openbitfun-component="sessions-section" data-openbitfun-part="edit" onClick={e => e.stopPropagation()} data-starmate-component="sessions-section" data-starmate-part="edit" >
                   <Input
                     ref={editInputRef}
                     className="openbitfun-nav-panel__inline-item-edit-field"
@@ -1658,7 +1662,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
                 </div>
               ) : (
                 <>
-                  <span className="openbitfun-nav-panel__inline-item-main" data-openbitfun-component="sessions-section" data-openbitfun-part="rowMain">
+                  <span className="openbitfun-nav-panel__inline-item-main" data-openbitfun-component="sessions-section" data-openbitfun-part="rowMain" data-starmate-component="sessions-section" data-starmate-part="rowMain" >
                     <span className="openbitfun-nav-panel__inline-item-copy">
                       <span className="openbitfun-nav-panel__inline-item-primary">
                         <span className="openbitfun-nav-panel__inline-item-title">
@@ -1750,7 +1754,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
                       data-openbitfun-component="sessions-section"
                       data-openbitfun-part="actions"
                       data-openbitfun-state={openMenuSessionId === session.sessionId ? 'menuOpen' : undefined}
-                    >
+                     data-starmate-component="sessions-section" data-starmate-part="actions" data-starmate-state={openMenuSessionId === session.sessionId ? 'menuOpen' : undefined} >
                       {defaultSessionAction && !isChildSession && !session.isTransient && session.persistedStatus !== 'archived' && (
                         <Tooltip content={defaultSessionAction.disabledReason ?? t(
                           defaultSessionAction.sessionId === session.sessionId ? 'nav.sessions.clearDefault' : 'nav.sessions.setDefault',
@@ -1800,7 +1804,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
                       }}
                       data-testid="nav-session-menu"
                       data-session-id={session.sessionId}
-                    >
+                     data-starmate-component="sessions-section" data-starmate-part="menu" data-starmate-state="menuOpen" >
                       {isArchived ? (
                         <ArchivedSessionMenuItems
                           key={surface.key(session.sessionId, surface.epoch)}
@@ -2015,7 +2019,7 @@ const SessionsSection: React.FC<SessionsSectionProps> = ({
           aria-label={expandToggleLabels.ariaLabel}
           disabled={metadataPageState.isLoading}
           onClick={() => { void handleExpandToggle(); }}
-        >
+         data-starmate-component="sessions-section" data-starmate-part="toggle" data-starmate-state={metadataPageState.isLoading ? 'loading' : undefined} >
           <OverflowText className="openbitfun-nav-panel__inline-toggle-label">
             {expandToggleLabels.label}
           </OverflowText>

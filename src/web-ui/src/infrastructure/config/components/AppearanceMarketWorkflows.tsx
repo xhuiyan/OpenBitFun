@@ -213,7 +213,7 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
       data-openbitfun-component="appearance-settings"
       data-openbitfun-part="marketManualSubmit"
       onSubmit={event => void submitPackage(event)}
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="marketManualSubmit" >
       <div className="appearance-market__manual-submit-heading">
         <div>
           <strong>{t('package.market.submissions.manual.title')}</strong>
@@ -383,7 +383,7 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
         data-openbitfun-component="appearance-settings"
         data-openbitfun-part="marketWorkflow"
         aria-labelledby="appearance-market-submissions-title"
-      >
+       data-starmate-component="appearance-settings" data-starmate-part="marketWorkflow" >
         <header className="appearance-market__workflow-heading">
           <div>
             <h3 id="appearance-market-submissions-title">{t('package.market.submissions.title')}</h3>
@@ -423,14 +423,14 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
                 className="appearance-market__submission-list"
                 data-openbitfun-component="appearance-settings"
                 data-openbitfun-part="marketSubmissionList"
-              >
+               data-starmate-component="appearance-settings" data-starmate-part="marketSubmissionList" >
                 {submissions.map(submission => (
                   <article
                     key={submission.submissionId}
                     className="appearance-market__submission"
                     data-openbitfun-component="appearance-settings"
                     data-openbitfun-part="marketSubmission"
-                  >
+                   data-starmate-component="appearance-settings" data-starmate-part="marketSubmission" >
                     <div className="appearance-market__submission-preview">
                       {submission.previewUrl
                         ? (
@@ -488,7 +488,7 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
       data-openbitfun-component="appearance-settings"
       data-openbitfun-part="marketWorkflow"
       aria-labelledby="appearance-market-review-title"
-    >
+     data-starmate-component="appearance-settings" data-starmate-part="marketWorkflow" >
       <header className="appearance-market__workflow-heading">
         <div>
           <h3 id="appearance-market-review-title">{t('package.market.review.title')}</h3>
@@ -513,12 +513,12 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
           className="appearance-market__review-layout"
           data-openbitfun-component="appearance-settings"
           data-openbitfun-part="marketReviewLayout"
-        >
+         data-starmate-component="appearance-settings" data-starmate-part="marketReviewLayout" >
           <ScrollArea
             className="appearance-market__review-queue"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="marketReviewQueue"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="marketReviewQueue" >
             {reviewQueue.map(submission => (
               <button data-overflow-trigger
                 key={submission.submissionId}
@@ -537,7 +537,7 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
             className="appearance-market__review-detail"
             data-openbitfun-component="appearance-settings"
             data-openbitfun-part="marketReviewDetail"
-          >
+           data-starmate-component="appearance-settings" data-starmate-part="marketReviewDetail" >
             {detailLoading || !reviewDetail ? (
               <p className="appearance-market__loading">{t('package.market.review.detailLoading')}</p>
             ) : (
@@ -593,7 +593,7 @@ export function AppearanceMarketWorkflows({ workflow }: AppearanceMarketWorkflow
                   className="appearance-market__review-actions"
                   data-openbitfun-component="appearance-settings"
                   data-openbitfun-part="marketReviewActions"
-                >
+                 data-starmate-component="appearance-settings" data-starmate-part="marketReviewActions" >
                   <Textarea
                     label={t('package.market.review.reason')}
                     placeholder={t('package.market.review.reasonPlaceholder')}

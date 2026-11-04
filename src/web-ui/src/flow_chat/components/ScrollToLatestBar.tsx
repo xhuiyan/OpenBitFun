@@ -87,14 +87,14 @@ export const ScrollToLatestBar: React.FC<ScrollToLatestBarProps> = ({
         aria-hidden={!visible}
         {...(!visible ? { inert: '' } : {})}
         aria-label={t('scroll.toLatest')}
-      >
-        <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="gradient" className="scroll-to-latest-bar__gradient" />
+       data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="root" data-starmate-input="active" >
+        <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="gradient" className="scroll-to-latest-bar__gradient"  data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="gradient" />
 
-        <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="content" className="scroll-to-latest-bar__content" style={contentStyle}>
+        <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="content" className="scroll-to-latest-bar__content" style={contentStyle} data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="content" >
           <IconButton data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="button" className="scroll-to-latest-bar__btn" aria-hidden="true" tabIndex={-1}
             aria-label={t('scroll.toLatest')}
             icon={<LucideArrowDown width="16" height="16" aria-hidden="true" />}
-          />
+           data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="button" />
         </div>
       </div>
     </RetainedMountBoundary>

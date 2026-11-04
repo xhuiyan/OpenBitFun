@@ -205,7 +205,7 @@ const AgentSpawnCard: React.FC<ToolCardProps> = ({
     <div
       data-openbitfun-adapter="agent-control-tool-card"
       data-tool-card-id={toolId ?? ''}
-    >
+     data-starmate-adapter="agent-control-tool-card" >
       <AgentControlToolCardView
         lang={currentLanguage}
         status={displayStatus}

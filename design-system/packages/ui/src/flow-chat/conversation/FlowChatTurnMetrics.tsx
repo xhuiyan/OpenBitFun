@@ -73,9 +73,9 @@ export function FlowChatTurnMetrics({
   if (!hasTokenUsage && rateValue === null && ttftValue === null) return null;
 
   return <div className={styles.root} role="group" aria-label={label}
-    data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="root">
+    data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="root" data-starmate-component="flow-chat-turn-metrics" data-starmate-part="root" >
       {hasTokenUsage && <FlowChatMetric content={tokenDetails ?? tokenDescription} description={tokenDescription} focusable={focusable}
-        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="tokens">
+        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="tokens" data-starmate-component="flow-chat-turn-metrics" data-starmate-part="tokens" >
         <span className={styles.gauge} aria-hidden="true" data-cache-state={ratio === null ? 'unknown' : 'reported'}>
           <Icon glyph={Circle} size="sm" className={styles.track} />
           {ratio !== null && ratio > 0 && <Icon glyph={Circle} size="sm" className={styles.cacheFill}
@@ -84,11 +84,11 @@ export function FlowChatTurnMetrics({
         {tokenValue !== null && <span>{tokenValue}</span>}
       </FlowChatMetric>}
       {ttftValue !== null && <FlowChatMetric content={ttftDetails ?? ttftDescription} description={ttftDescription} focusable={focusable}
-        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="ttft">
+        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="ttft" data-starmate-component="flow-chat-turn-metrics" data-starmate-part="ttft" >
         <span>{ttftValue}</span>
       </FlowChatMetric>}
       {rateValue !== null && <FlowChatMetric content={rateDetails ?? rateDescription} description={rateDescription} focusable={focusable}
-        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="speed">
+        data-openbitfun-component="flow-chat-turn-metrics" data-openbitfun-part="speed" data-starmate-component="flow-chat-turn-metrics" data-starmate-part="speed" >
         {speedGlyph && <span className={styles.gauge} aria-hidden="true" data-speed-level={speedLevel}>
           <Icon glyph={Signal} size="sm" className={styles.track} />
           <Icon glyph={speedGlyph} size="sm" className={styles.speedFill} />

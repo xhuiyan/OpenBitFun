@@ -36,5 +36,5 @@ export const AgentDeleteToolCard: React.FC<ToolCardProps> = ({ toolItem, session
     interaction={{ operation: 'delete', source, targets, target: targets[0] ?? { kind: 'agent', label: t('toolCards.interaction.unknownAgent') } }}
     result={summary} status={status} resultLabel={t('toolCards.interaction.inspectResult')}
     detailsTitle={summary}
-    details={<ToolCardText variant="prose">{toolItem.toolResult?.error || t('toolCards.builtin.deleteAgentScope')}</ToolCardText>} />;
+    details={<ToolCardText variant="prose">{toolItem.toolResult?.error || t('toolCards.builtin.deleteAgentScope')}</ToolCardText>}  data-starmate-adapter="agent-delete" />;
 };

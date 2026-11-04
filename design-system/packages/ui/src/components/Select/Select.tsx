@@ -383,9 +383,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
 
   const renderTriggerContent = (expanded = false) => (
     <>
-      {!expanded && valuePrefix != null && <span className={styles.valuePrefix} data-openbitfun-part="value-prefix">{valuePrefix}</span>}
+      {!expanded && valuePrefix != null && <span className={styles.valuePrefix} data-openbitfun-part="value-prefix" data-starmate-part="value-prefix" >{valuePrefix}</span>}
       {leading !== undefined && leading !== null && (
-        <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading">
+        <span aria-hidden="true" className={styles.leading} data-openbitfun-icon-slot="true" data-openbitfun-part="leading" data-starmate-icon-slot="true" data-starmate-part="leading" >
           {leading}
         </span>
       )}
@@ -393,10 +393,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         className={selectedOption ? styles.value : styles.placeholder}
         data-openbitfun-part="value"
         title={selectedOption?.tooltip}
-      >
+       data-starmate-part="value" >
         {selectedOption ? (expanded ? selectedOption.label : selectedOption.selectedLabel ?? selectedOption.label) : placeholder}
       </OverflowText>
-      {(expanded || showIndicator) && <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator">
+      {(expanded || showIndicator) && <span aria-hidden="true" className={styles.indicator} data-openbitfun-icon-slot="true" data-openbitfun-part="indicator" data-starmate-icon-slot="true" data-starmate-part="indicator" >
         <Icon name="chevron-down" size="sm" />
       </span>}
     </>
@@ -414,7 +414,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
       data-width={popupWidth}
       ref={popoverRef}
       style={layout?.style ?? { position: "fixed", visibility: "hidden" }}
-    >
+     data-starmate-component="select-popup" data-starmate-part="popover" data-starmate-native-webview-occlusion >
       <button
         data-overflow-trigger
         aria-controls={listboxId}
@@ -434,11 +434,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         role="combobox"
         title={title}
         type="button"
-      >
+       data-starmate-part="header" data-starmate-preview-state={typeof previewState === "string" ? previewState : undefined} >
         {renderTriggerContent(true)}
       </button>
-      <div aria-hidden="true" className={styles.divider} data-openbitfun-part="divider" />
-      <div className={styles.options} data-openbitfun-part="options">
+      <div aria-hidden="true" className={styles.divider} data-openbitfun-part="divider"  data-starmate-part="divider" />
+      <div className={styles.options} data-openbitfun-part="options" data-starmate-part="options" >
         <Listbox
           aria-label={ariaLabel}
           aria-labelledby={ariaLabel ? undefined : fieldAccessibility["aria-labelledby"] ?? id}
@@ -484,7 +484,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
       data-variant={variant}
       data-width={width}
       ref={rootRef}
-    >
+     data-starmate-component="select" >
       <select
         {...nativeProps}
         aria-describedby={fieldAccessibility["aria-describedby"]}
@@ -536,7 +536,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         tabIndex={resolvedOpen ? -1 : tabIndex}
         title={title}
         type="button"
-      >
+       data-starmate-part="trigger" data-starmate-preview-state={typeof previewState === "string" ? previewState : undefined} >
         {/* Keep the in-flow anchor intact while its portalled header is visible. */}
         {renderTriggerContent()}
       </button>

@@ -47,10 +47,10 @@ export function WorkspaceSourceSelector({
   const deviceName = deviceId ? resolveDeviceNameFrom(directory.devices, deviceId, fallbackName) : fallbackName;
   const deviceKind = metadata?.device_kind;
   const deviceOs = metadata?.device_os;
-  return <div className="workspace-source-selector" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceSelector">
-    <div className="workspace-source-selector__field" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceField">
+  return <div className="workspace-source-selector" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceSelector" data-starmate-component="ssh-remote" data-starmate-part="sourceSelector" >
+    <div className="workspace-source-selector__field" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceField" data-starmate-component="ssh-remote" data-starmate-part="sourceField" >
       <div className="workspace-source-selector__heading">
-      <span id={locationId} className="workspace-source-selector__label" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceLabel">{t('workspaceSource.location')}</span>
+      <span id={locationId} className="workspace-source-selector__label" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceLabel" data-starmate-component="ssh-remote" data-starmate-part="sourceLabel" >{t('workspaceSource.location')}</span>
       <SegmentedControl className="workspace-source-selector__control" size="sm" distribution="content" aria-labelledby={locationId}
         value={location} disabled={disabled}
         options={[
@@ -66,15 +66,15 @@ export function WorkspaceSourceSelector({
       {locationActions && <div className="workspace-source-selector__actions">{locationActions}</div>}
       </div>
       {location === 'current' && peerActive && showCurrentDevice && <div className="workspace-source-selector__device" role="status"
-        data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceHint">
+        data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceHint" data-starmate-component="ssh-remote" data-starmate-part="sourceHint" >
         {deviceName && <DeviceSystemGlyph size="sm" device={{ kind: deviceKind === 'cli' ? 'execution-host' : 'desktop', name: deviceName, os: deviceOs ?? undefined, hostKind: deviceKind === 'cli' ? 'cli' : 'desktop' }} />}
         <OverflowText>{deviceName}</OverflowText>
       </div>}
       {locationOptions}
     </div>
-    {showEnvironment && <div className="workspace-source-selector__field" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceField">
+    {showEnvironment && <div className="workspace-source-selector__field" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceField" data-starmate-component="ssh-remote" data-starmate-part="sourceField" >
       <div className="workspace-source-selector__heading">
-      <span id={environmentId} className="workspace-source-selector__label" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceLabel">{t('workspaceSource.environment')}</span>
+      <span id={environmentId} className="workspace-source-selector__label" data-openbitfun-component="ssh-remote" data-openbitfun-part="sourceLabel" data-starmate-component="ssh-remote" data-starmate-part="sourceLabel" >{t('workspaceSource.environment')}</span>
       <SegmentedControl className="workspace-source-selector__control" size="sm" distribution="content" aria-labelledby={environmentId}
         value={environment} disabled={disabled} aria-describedby={showWslHint ? wslHintId : undefined}
         options={[

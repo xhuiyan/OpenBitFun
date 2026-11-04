@@ -302,7 +302,7 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
       size="md" data-testid={testId}>
       <DialogHeader>
         <DialogHeading>
-          <DialogTitle data-openbitfun-component="new-project-dialog" data-openbitfun-part="title">
+          <DialogTitle data-openbitfun-component="new-project-dialog" data-openbitfun-part="title" data-starmate-component="new-project-dialog" data-starmate-part="title" >
             {step === 'choice' ? t('newWorkspace.title') : projectTitle}
           </DialogTitle>
           {step === 'choice' && <DialogDescription>{t('newWorkspace.description')}</DialogDescription>}
@@ -311,7 +311,7 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
       </DialogHeader>
       <DialogBody className="new-project-dialog__body">
         {step === 'choice' && (
-          <div className="new-project-dialog__choices" data-openbitfun-component="new-project-dialog" data-openbitfun-part="choices">
+          <div className="new-project-dialog__choices" data-openbitfun-component="new-project-dialog" data-openbitfun-part="choices" data-starmate-component="new-project-dialog" data-starmate-part="choices" >
             <ActionCard ref={assistantChoiceRef} size="md" className="new-project-dialog__choice-card"
               triggerClassName="new-project-dialog__choice-trigger" leading={<Icon name="user" size="md" />}
               aria-label={t('newWorkspace.createAssistant')} aria-busy={isCreating} disabled={busy}
@@ -338,9 +338,9 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
         )}
         {step === 'project' && (
           <form id={formId} data-openbitfun-component="new-project-dialog" data-openbitfun-part="root" className="new-project-dialog" aria-busy={busy}
-            onSubmit={event => { event.preventDefault(); void handleConfirm(); }}>
-            <div data-openbitfun-component="new-project-dialog" data-openbitfun-part="content" className="new-project-dialog__content">
-              <div className="new-project-dialog__field" data-openbitfun-component="new-project-dialog" data-openbitfun-part="field">
+            onSubmit={event => { event.preventDefault(); void handleConfirm(); }} data-starmate-component="new-project-dialog" data-starmate-part="root" >
+            <div data-openbitfun-component="new-project-dialog" data-openbitfun-part="content" className="new-project-dialog__content" data-starmate-component="new-project-dialog" data-starmate-part="content" >
+              <div className="new-project-dialog__field" data-openbitfun-component="new-project-dialog" data-openbitfun-part="field" data-starmate-component="new-project-dialog" data-starmate-part="field" >
                 <Input ref={nameInputRef} className="new-project-dialog__name-input" size="lg" leading={<Icon name="folder" size="md" />}
                   aria-label={t('newProject.projectName')} aria-describedby={nameHint ? nameHintId : undefined}
                   value={projectName} onChange={event => { setProjectName(event.target.value); setError(''); }}
@@ -349,7 +349,7 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
                 {nameHint && <div id={nameHintId} className="new-project-dialog__hint">{nameHint}</div>}
               </div>
               {onPickRemoteFolder && (
-                <div className="new-project-dialog__field" data-openbitfun-component="new-project-dialog" data-openbitfun-part="field">
+                <div className="new-project-dialog__field" data-openbitfun-component="new-project-dialog" data-openbitfun-part="field" data-starmate-component="new-project-dialog" data-starmate-part="field" >
                   <WorkspaceSourceSelector onWslSupportChange={setWslSupported} value={source} disabled={busy || hasFolders} showEnvironment={showEnvironment}
                     showCurrentDevice={source !== 'host' || recentWorkspaces.length === 0}
                     locationOptions={location === 'other' ? optionChoices(hostOptions, 'ssh', selectedHostOption, value => {
@@ -378,12 +378,12 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
                   {hasFolders && <span className="new-project-dialog__hint">{t('workspaceSource.foldersLockedHint')}</span>}
                 </div>
               )}
-              <section className="new-project-dialog__field" aria-labelledby={sourceLabelId} data-openbitfun-component="new-project-dialog" data-openbitfun-part="field">
+              <section className="new-project-dialog__field" aria-labelledby={sourceLabelId} data-openbitfun-component="new-project-dialog" data-openbitfun-part="field" data-starmate-component="new-project-dialog" data-starmate-part="field" >
                 <div className="new-project-dialog__section-heading">
                   <h3 id={sourceLabelId} className="new-project-dialog__source-label">{t('newProject.sourceFolder')}</h3>
                 </div>
                 <div data-openbitfun-component="new-project-dialog" data-openbitfun-part="pathSelector" aria-disabled={!sourceReady}
-                  className={!sourceReady ? 'new-project-dialog__paths--disabled' : undefined}>
+                  className={!sourceReady ? 'new-project-dialog__paths--disabled' : undefined} data-starmate-component="new-project-dialog" data-starmate-part="pathSelector" >
                   <Card appearance="neutral" radius="lg">
                     <CardBody className="new-project-dialog__folder" data-filled={hasFolders} align="stretch" padding="md">
                       <div className="new-project-dialog__folder-toolbar">
@@ -416,10 +416,10 @@ export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({
             </div>
           </form>
         )}
-        {error && <div role="alert" data-openbitfun-component="new-project-dialog" data-openbitfun-part="error" className="new-project-dialog__error"><Icon name="info" size="sm" /><span>{error}</span></div>}
+        {error && <div role="alert" data-openbitfun-component="new-project-dialog" data-openbitfun-part="error" className="new-project-dialog__error" data-starmate-component="new-project-dialog" data-starmate-part="error" ><Icon name="info" size="sm" /><span>{error}</span></div>}
       </DialogBody>
       {step === 'project' && (
-        <DialogFooter className="new-project-dialog__footer" data-openbitfun-component="new-project-dialog" data-openbitfun-part="footer">
+        <DialogFooter className="new-project-dialog__footer" data-openbitfun-component="new-project-dialog" data-openbitfun-part="footer" data-starmate-component="new-project-dialog" data-starmate-part="footer" >
           {onCreateAssistant && (
             <Button variant="fill" leadingIcon={<Icon name="arrow-left" size="sm" />} disabled={busy} onClick={() => changeStep('choice')}>
               {t('newWorkspace.back')}

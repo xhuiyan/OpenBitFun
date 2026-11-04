@@ -96,7 +96,7 @@ export const ThinkingIndicator = forwardRef<HTMLSpanElement, ThinkingIndicatorPr
 
   return <span {...props} ref={ref} className={classNames(styles.root, className)}
     data-openbitfun-component="thinking-indicator" data-active={active} data-size={size}
-    aria-hidden={label ? undefined : "true"} aria-label={label} role={label ? "img" : undefined}>
+    aria-hidden={label ? undefined : "true"} aria-label={label} role={label ? "img" : undefined} data-starmate-component="thinking-indicator" >
     <svg ref={svgRef} viewBox={viewBox} fill="none" aria-hidden="true" focusable="false">
       <defs>
         <clipPath id={edgeClipId} clipPathUnits="userSpaceOnUse">

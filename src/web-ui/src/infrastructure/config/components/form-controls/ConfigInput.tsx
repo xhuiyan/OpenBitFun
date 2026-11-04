@@ -65,7 +65,7 @@ export const ConfigInput = forwardRef<HTMLInputElement, ConfigInputProps>(({
                   className="config-form-label__required"
                   data-openbitfun-component="config"
                   data-openbitfun-part="required"
-                >
+                 data-starmate-component="config" data-starmate-part="required" >
                   *
                 </span>
               ) : null}
@@ -93,7 +93,7 @@ export const ConfigInput = forwardRef<HTMLInputElement, ConfigInputProps>(({
                 className="config-form-label__required"
                 data-openbitfun-component="config"
                 data-openbitfun-part="required"
-              >
+               data-starmate-component="config" data-starmate-part="required" >
                 *
               </span>
             ) : null}

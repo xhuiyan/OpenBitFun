@@ -47,20 +47,20 @@ export const MobileListRow = forwardRef<HTMLButtonElement, MobileListRowProps>(
         ref={ref}
         role={role}
         type={type}
-      >
+       data-starmate-component="mobile-list-row" >
         {leading !== undefined && leading !== null && (
-          <span className={styles.leading} data-openbitfun-part="leading">{leading}</span>
+          <span className={styles.leading} data-openbitfun-part="leading" data-starmate-part="leading" >{leading}</span>
         )}
-        <span className={styles.copy} data-openbitfun-part="copy">
-          <span className={styles.label} data-openbitfun-part="label">{label}</span>
+        <span className={styles.copy} data-openbitfun-part="copy" data-starmate-part="copy" >
+          <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{label}</span>
           {supportingText !== undefined && supportingText !== null && (
-            <span className={styles.supportingText} data-openbitfun-part="supporting-text">
+            <span className={styles.supportingText} data-openbitfun-part="supporting-text" data-starmate-part="supporting-text" >
               {supportingText}
             </span>
           )}
         </span>
         {trailing !== undefined && trailing !== null && (
-          <span className={styles.trailing} data-openbitfun-part="trailing">{trailing}</span>
+          <span className={styles.trailing} data-openbitfun-part="trailing" data-starmate-part="trailing" >{trailing}</span>
         )}
       </button>
     );

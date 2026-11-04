@@ -42,23 +42,23 @@ export const Empty = forwardRef<HTMLDivElement, EmptyProps>(function Empty({
       data-openbitfun-component="empty"
       ref={ref}
       style={style}
-    >
+     data-starmate-component="empty" >
       <div
         className={styles.media}
         data-openbitfun-icon-slot="true"
         data-openbitfun-part="media"
         data-size={imageSize}
-      >
+       data-starmate-icon-slot="true" data-starmate-part="media" >
         {media}
       </div>
       {title !== undefined && title !== null && (
-        <div className={styles.title} data-openbitfun-part="title">{title}</div>
+        <div className={styles.title} data-openbitfun-part="title" data-starmate-part="title" >{title}</div>
       )}
       {description !== undefined && description !== null && (
-        <div className={styles.description} data-openbitfun-part="description">{description}</div>
+        <div className={styles.description} data-openbitfun-part="description" data-starmate-part="description" >{description}</div>
       )}
       {footer !== undefined && footer !== null && (
-        <div className={styles.actions} data-openbitfun-part="actions">{footer}</div>
+        <div className={styles.actions} data-openbitfun-part="actions" data-starmate-part="actions" >{footer}</div>
       )}
     </div>
   );

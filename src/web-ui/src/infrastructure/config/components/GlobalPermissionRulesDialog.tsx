@@ -385,20 +385,20 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
       <DialogHeader>
         <DialogHeading>
           <DialogTitle>{t('permissionPolicy.globalRulesDialogTitle')}</DialogTitle>
-          <DialogDescription data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="intro">
+          <DialogDescription data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="intro" data-starmate-component="global-permission-rules-dialog" data-starmate-part="intro" >
             {t('permissionPolicy.globalRulesDialogDescription')}
           </DialogDescription>
         </DialogHeading>
         <DialogClose disabled={isSaving} />
       </DialogHeader>
       <DialogBody>
-        <div ref={dialogRootRef} className="global-permission-rules-dialog" data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="root">
+        <div ref={dialogRootRef} className="global-permission-rules-dialog" data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="root" data-starmate-component="global-permission-rules-dialog" data-starmate-part="root" >
           <FormSection
             data-openbitfun-component="global-permission-rules-dialog"
             data-openbitfun-part="section"
             className="global-permission-rules-dialog__section"
             title={(
-              <span data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="sectionHeader">
+              <span data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="sectionHeader" data-starmate-component="global-permission-rules-dialog" data-starmate-part="sectionHeader" >
                 {t('permissionPolicy.globalRulesTitle')}
               </span>
             )}
@@ -414,10 +414,10 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
                 {t('permissionPolicy.addGlobalRule')}
               </Button>
             )}
-          >
+           data-starmate-component="global-permission-rules-dialog" data-starmate-part="section" >
             {draftRules.length === 0 ? (
               <FieldGroup>
-                <div data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="empty" className="global-permission-rules-dialog__empty">
+                <div data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="empty" className="global-permission-rules-dialog__empty" data-starmate-component="global-permission-rules-dialog" data-starmate-part="empty" >
                   {t('permissionPolicy.globalRulesEmpty')}
                 </div>
               </FieldGroup>
@@ -428,7 +428,7 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
                 data-openbitfun-component="global-permission-rules-dialog"
                 data-openbitfun-part="rules"
                 className="global-permission-rules-dialog__rules"
-              >
+               data-starmate-component="global-permission-rules-dialog" data-starmate-part="rules" >
                 <div className="global-permission-rules-dialog__rule-heading" aria-hidden="true">
                   <span>{t('permissionPolicy.globalRulesEffect')}</span>
                   <span>{t('permissionPolicy.globalRulesAction')}</span>
@@ -455,7 +455,7 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
                       {...(exiting ? { inert: '' } : {})}
                       key={rule.localId}
                       className="global-permission-rules-dialog__rule-row"
-                    >
+                     data-starmate-component="global-permission-rules-dialog" data-starmate-part="rule" >
                       <Select
                         size="sm"
                         value={rule.effect}
@@ -483,7 +483,7 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
                         onChange={(event) => updateDraftRule(rule.localId, { resource: event.target.value })}
                         size="sm"
                       />
-                      <div data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="ruleActions" className="global-permission-rules-dialog__rule-actions">
+                      <div data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="ruleActions" className="global-permission-rules-dialog__rule-actions" data-starmate-component="global-permission-rules-dialog" data-starmate-part="ruleActions" >
                         <Tooltip content={t('permissionPolicy.moveGlobalRuleUp')}>
                           <IconButton
                             type="button"
@@ -529,7 +529,7 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
         </div>
       </DialogBody>
       {rulesDirty ? (
-        <DialogFooter data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="footer">
+        <DialogFooter data-openbitfun-component="global-permission-rules-dialog" data-openbitfun-part="footer" data-starmate-component="global-permission-rules-dialog" data-starmate-part="footer" >
           <Button
             type="button"
             variant="fill"

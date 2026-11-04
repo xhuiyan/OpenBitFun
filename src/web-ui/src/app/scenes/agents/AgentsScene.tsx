@@ -815,7 +815,7 @@ const AgentsHomeView: React.FC = () => {
       data-testid="agent-skill-panel"
       data-openbitfun-scene="agents"
       data-openbitfun-part="root"
-    >
+     data-starmate-scene="agents" data-starmate-part="root" >
       <GalleryPageHeader
         title={t('page.title')}
         subtitle={t('page.subtitle')}
@@ -830,7 +830,7 @@ const AgentsHomeView: React.FC = () => {
         )}
       />
 
-      <div className="gallery-zones" data-openbitfun-scene="agents" data-openbitfun-part="zones" data-testid="agent-list">
+      <div className="gallery-zones" data-openbitfun-scene="agents" data-openbitfun-part="zones" data-testid="agent-list" data-starmate-scene="agents" data-starmate-part="zones" >
         <AgentHarnessOverview agents={allAgents.filter(agent => agent.agentKind === 'harness')} onPreview={openHarnessPreview} />
 
         <GalleryZone
@@ -851,7 +851,7 @@ const AgentsHomeView: React.FC = () => {
             </Button>
           )}
         >
-          <div className="openbitfun-agents-scene__catalog-toolbar" data-openbitfun-scene="agents" data-openbitfun-part="filters">
+          <div className="openbitfun-agents-scene__catalog-toolbar" data-openbitfun-scene="agents" data-openbitfun-part="filters" data-starmate-scene="agents" data-starmate-part="filters" >
             <SearchField
               className="openbitfun-agents-scene__search"
               value={searchQuery}
@@ -919,7 +919,7 @@ const AgentsHomeView: React.FC = () => {
               minCardWidth={300}
               data-openbitfun-scene="agents"
               data-openbitfun-part="catalogGrid"
-            >
+             data-starmate-scene="agents" data-starmate-part="catalogGrid" >
               {catalogAgents.map((agent) => {
                 const commonCardProps = {
                   agent,
@@ -1116,7 +1116,7 @@ const AgentsHomeView: React.FC = () => {
                       })}
                       data-openbitfun-scene="agents"
                       data-openbitfun-part="detailSection"
-                    >
+                     data-starmate-scene="agents" data-starmate-part="detailSection" >
                       <span className="agent-detail-dialog__note">
                         {selectedAgentModeProfile?.profileLabel ?? t('agentsOverview.sharedProfileDefaultLabel')}
                       </span>
@@ -1328,7 +1328,7 @@ const AgentsScene: React.FC = () => {
 
   if (page === 'createAgent') {
     return (
-      <div className="openbitfun-agents-scene openbitfun-agents-scene--page" data-openbitfun-scene="agents" data-openbitfun-part="root">
+      <div className="openbitfun-agents-scene openbitfun-agents-scene--page" data-openbitfun-scene="agents" data-openbitfun-part="root" data-starmate-scene="agents" data-starmate-part="root" >
         <CreateAgentPage />
       </div>
     );

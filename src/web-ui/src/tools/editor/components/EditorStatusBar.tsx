@@ -115,31 +115,31 @@ export const EditorStatusBar: React.FC<EditorStatusBarProps> = ({
   };
 
   return (
-    <div className="editor-status-bar" data-openbitfun-component="editor-status-bar" data-openbitfun-part="root">
-      <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="left" className="editor-status-bar__left">
+    <div className="editor-status-bar" data-openbitfun-component="editor-status-bar" data-openbitfun-part="root" data-starmate-component="editor-status-bar" data-starmate-part="root" >
+      <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="left" className="editor-status-bar__left" data-starmate-component="editor-status-bar" data-starmate-part="left" >
         {isReadOnly && (
-          <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="item" className="editor-status-bar__item editor-status-bar__readonly">
+          <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="item" className="editor-status-bar__item editor-status-bar__readonly" data-starmate-component="editor-status-bar" data-starmate-part="item" >
             {t('editor.statusBar.readOnly')}
           </div>
         )}
       </div>
 
-      <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="right" className="editor-status-bar__right">
+      <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="right" className="editor-status-bar__right" data-starmate-component="editor-status-bar" data-starmate-part="right" >
         <Tooltip content={t('editor.statusBar.goToLine')} placement="top">
           <div 
             data-openbitfun-component="editor-status-bar"
             data-openbitfun-part="item"
             className={`editor-status-bar__item ${onPositionClick ? 'editor-status-bar__item--clickable' : ''}`}
             onClick={onPositionClick}
-          >
+           data-starmate-component="editor-status-bar" data-starmate-part="item" >
             <span>{t('editor.statusBar.ln')} {line}, {t('editor.statusBar.col')} {column}</span>
             {getSelectionText() && (
-              <span data-openbitfun-component="editor-status-bar" data-openbitfun-part="selection" className="editor-status-bar__selection">{getSelectionText()}</span>
+              <span data-openbitfun-component="editor-status-bar" data-openbitfun-part="selection" className="editor-status-bar__selection" data-starmate-component="editor-status-bar" data-starmate-part="selection" >{getSelectionText()}</span>
             )}
           </div>
         </Tooltip>
 
-        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator" />
+        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator"  data-starmate-component="editor-status-bar" data-starmate-part="separator" />
 
         <Tooltip content={t('editor.statusBar.indentSettings')} placement="top">
           <div 
@@ -147,12 +147,12 @@ export const EditorStatusBar: React.FC<EditorStatusBarProps> = ({
             data-openbitfun-part="item"
             className={`editor-status-bar__item ${onIndentClick ? 'editor-status-bar__item--clickable' : ''}`}
             onClick={onIndentClick}
-          >
+           data-starmate-component="editor-status-bar" data-starmate-part="item" >
             {insertSpaces ? t('editor.statusBar.indentSpaces', { n: tabSize }) : t('editor.statusBar.indentTab', { n: tabSize })}
           </div>
         </Tooltip>
 
-        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator" />
+        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator"  data-starmate-component="editor-status-bar" data-starmate-part="separator" />
 
         <Tooltip content={t('editor.statusBar.fileEncoding')} placement="top">
           <div 
@@ -160,12 +160,12 @@ export const EditorStatusBar: React.FC<EditorStatusBarProps> = ({
             data-openbitfun-part="item"
             className={`editor-status-bar__item ${onEncodingClick ? 'editor-status-bar__item--clickable' : ''}`}
             onClick={onEncodingClick}
-          >
+           data-starmate-component="editor-status-bar" data-starmate-part="item" >
             {encoding}
           </div>
         </Tooltip>
 
-        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator" />
+        <div data-openbitfun-component="editor-status-bar" data-openbitfun-part="separator" className="editor-status-bar__separator"  data-starmate-component="editor-status-bar" data-starmate-part="separator" />
 
         <Tooltip content={t('editor.statusBar.selectLanguageMode')} placement="top">
           <div 
@@ -173,7 +173,7 @@ export const EditorStatusBar: React.FC<EditorStatusBarProps> = ({
             data-openbitfun-part="item"
             className={`editor-status-bar__item ${onLanguageClick ? 'editor-status-bar__item--clickable' : ''}`}
             onClick={onLanguageClick}
-          >
+           data-starmate-component="editor-status-bar" data-starmate-part="item" >
             {getLanguageDisplayName(language)}
           </div>
         </Tooltip>

@@ -541,8 +541,8 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
     : t('agentsOverview.form.submit');
   if (isEdit && detailLoading) {
     return (
-      <div className="tv" data-openbitfun-component="create-agent-page" data-openbitfun-part="root" data-openbitfun-state="loading">
-        <div className="tv__editor-bar" data-openbitfun-component="create-agent-page" data-openbitfun-part="editorBar">
+      <div className="tv" data-openbitfun-component="create-agent-page" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="create-agent-page" data-starmate-part="root" data-starmate-state="loading" >
+        <div className="tv__editor-bar" data-openbitfun-component="create-agent-page" data-openbitfun-part="editorBar" data-starmate-component="create-agent-page" data-starmate-part="editorBar" >
           <Button
             variant="outline"
             size="sm"
@@ -553,7 +553,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           </Button>
         </div>
         <ScrollArea className="th__list-body">
-          <div className="th__list-inner" data-openbitfun-component="create-agent-page" data-openbitfun-part="body">
+          <div className="th__list-inner" data-openbitfun-component="create-agent-page" data-openbitfun-part="body" data-starmate-component="create-agent-page" data-starmate-part="body" >
             <p className="th__title-sub">{t('agentsOverview.form.loadingDetail')}</p>
           </div>
         </ScrollArea>
@@ -563,8 +563,8 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
 
   if (isEdit && detailError) {
     return (
-      <div className="tv" data-openbitfun-component="create-agent-page" data-openbitfun-part="root" data-openbitfun-state="error">
-        <div className="tv__editor-bar" data-openbitfun-component="create-agent-page" data-openbitfun-part="editorBar">
+      <div className="tv" data-openbitfun-component="create-agent-page" data-openbitfun-part="root" data-openbitfun-state="error" data-starmate-component="create-agent-page" data-starmate-part="root" data-starmate-state="error" >
+        <div className="tv__editor-bar" data-openbitfun-component="create-agent-page" data-openbitfun-part="editorBar" data-starmate-component="create-agent-page" data-starmate-part="editorBar" >
           <Button
             variant="outline"
             size="sm"
@@ -576,7 +576,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
         </div>
         <ScrollArea className="th__list-body">
           <div className="th__list-inner">
-            <p className="th-create-panel__error" data-openbitfun-component="create-agent-page" data-openbitfun-part="error" role="alert">{detailError}</p>
+            <p className="th-create-panel__error" data-openbitfun-component="create-agent-page" data-openbitfun-part="error" role="alert" data-starmate-component="create-agent-page" data-starmate-part="error" >{detailError}</p>
             <Button variant="fill" size="sm" onClick={closeEditor}>
               {t('agentsOverview.form.cancel')}
             </Button>
@@ -603,7 +603,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
   ) : null;
   const basicInformation = (
     <div className="th-create-page__section">
-      <div className="th-create-page__section-heading" data-openbitfun-component="create-agent-page" data-openbitfun-part="sectionHeading">
+      <div className="th-create-page__section-heading" data-openbitfun-component="create-agent-page" data-openbitfun-part="sectionHeading" data-starmate-component="create-agent-page" data-starmate-part="sectionHeading" >
         <h3>{t('agentsOverview.form.basicInformation')}</h3>
       </div>
 
@@ -650,7 +650,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
         )}
       </div>
 
-      <div className="th-create-panel__field" data-openbitfun-component="create-agent-page" data-openbitfun-part="field">
+      <div className="th-create-panel__field" data-openbitfun-component="create-agent-page" data-openbitfun-part="field" data-starmate-component="create-agent-page" data-starmate-part="field" >
         <span className="th-create-panel__label">{t('agentsOverview.form.kind')}</span>
         <div
           className="th-create-panel__level-group"
@@ -658,7 +658,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           data-openbitfun-part="levelGroup"
           role="group"
           aria-label={t('agentsOverview.form.kind')}
-        >
+         data-starmate-component="create-agent-page" data-starmate-part="levelGroup" >
           {(['mode', 'subagent'] as CustomAgentKind[]).map((candidateKind) => (
             <Tooltip
               key={candidateKind}
@@ -678,7 +678,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
                 data-openbitfun-state={kind === candidateKind ? 'active' : undefined}
                 aria-pressed={kind === candidateKind}
                 onClick={() => setKind(candidateKind)}
-              >
+               data-starmate-component="create-agent-page" data-starmate-part="levelOption" data-starmate-state={kind === candidateKind ? 'active' : undefined} >
                 {candidateKind === 'mode'
                   ? t('filters.agent')
                   : t('filters.subagent')}
@@ -697,7 +697,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
             data-openbitfun-part="levelGroup"
             role="group"
             aria-label={t('agentsOverview.form.level')}
-          >
+           data-starmate-component="create-agent-page" data-starmate-part="levelGroup" >
             {(['user', 'project'] as CustomAgentLevel[]).map((candidateLevel) => {
               const disabled =
                 (candidateLevel === 'project' && !hasWorkspace) || isEdit;
@@ -717,7 +717,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
                       ? t('agentsOverview.form.noWorkspace')
                       : undefined
                   }
-                >
+                 data-starmate-component="create-agent-page" data-starmate-part="levelOption" data-starmate-state={level === candidateLevel ? 'active' : undefined} >
                   {candidateLevel === 'user'
                     ? t('agentsOverview.filterUser')
                     : t('agentsOverview.filterProject')}
@@ -736,7 +736,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           className="th-create-page__section-heading th-create-page__section-heading--tools"
           data-openbitfun-component="create-agent-page"
           data-openbitfun-part="sectionHeading"
-        >
+         data-starmate-component="create-agent-page" data-starmate-part="sectionHeading" >
           <h3>{t('agentsOverview.form.tools')}</h3>
         </div>
         {toolsEditing ? (
@@ -846,7 +846,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
   ) : null;
   const promptEditor = (
     <div className="th-create-panel__field th-create-panel__field--prompt">
-      <h3 id={fieldId('prompt-label')} className="th-create-page__prompt-heading" data-openbitfun-component="create-agent-page" data-openbitfun-part="sectionHeading">
+      <h3 id={fieldId('prompt-label')} className="th-create-page__prompt-heading" data-openbitfun-component="create-agent-page" data-openbitfun-part="sectionHeading" data-starmate-component="create-agent-page" data-starmate-part="sectionHeading" >
         <span className="th-create-panel__label th-create-panel__label--strong">
           {t('agentsOverview.form.prompt')}
         </span>
@@ -864,17 +864,17 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
         className="th-create-panel__prompt-editor"
         data-openbitfun-component="create-agent-page"
         data-openbitfun-part="promptEditor"
-      >
+       data-starmate-component="create-agent-page" data-starmate-part="promptEditor" >
         <div
           id={fieldId('runtime-context-preview')}
           className="th-create-panel__prompt-context-preview"
           data-openbitfun-component="create-agent-page"
           data-openbitfun-part="contextPreview"
-        >
+         data-starmate-component="create-agent-page" data-starmate-part="contextPreview" >
           <span className="th-create-panel__prompt-context-label">
             {t('agentsOverview.form.contextPreviewLabel')}
           </span>
-          <div className="th-create-panel__context-options" data-openbitfun-component="create-agent-page" data-openbitfun-part="tools" role="group" aria-label={t('agentsOverview.form.contextPolicy')}>
+          <div className="th-create-panel__context-options" data-openbitfun-component="create-agent-page" data-openbitfun-part="tools" role="group" aria-label={t('agentsOverview.form.contextPolicy')} data-starmate-component="create-agent-page" data-starmate-part="tools" >
             {VISIBLE_CONTEXT_SECTIONS.map((section) => {
               const label = contextSectionLabels[section];
               const isSelected = userContextPolicy.has(section);
@@ -885,7 +885,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
                   data-openbitfun-component="create-agent-page"
                   data-openbitfun-part="tool"
                   data-openbitfun-state={isSelected ? 'active' : undefined}
-                >
+                 data-starmate-component="create-agent-page" data-starmate-part="tool" data-starmate-state={isSelected ? 'active' : undefined} >
                   <Tooltip content={contextSectionTooltips[section]} placement="top">
                     <Button
                       type="button"
@@ -915,7 +915,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           data-openbitfun-component="create-agent-page"
           data-openbitfun-part="prompt"
           className="th-create-panel__prompt-control"
-        >
+         data-starmate-component="create-agent-page" data-starmate-part="prompt" >
           <React.Suspense fallback={<p className="th__title-sub" role="status">{t('agentsOverview.form.loadingDetail')}</p>}>
             <MEditor
               value={prompt}
@@ -991,10 +991,10 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
         if (standalone && (toolsLoading || toolsLoadError)) return;
         void handleSubmit();
       }}
-    >
-      <div className="th-create-page__columns" data-openbitfun-component="create-agent-page" data-openbitfun-part="columns">
+     data-starmate-component="create-agent-page" data-starmate-part="form" >
+      <div className="th-create-page__columns" data-openbitfun-component="create-agent-page" data-openbitfun-part="columns" data-starmate-component="create-agent-page" data-starmate-part="columns" >
         {(!standalone || step !== 1) && (
-          <section className="th-create-page__panel th-create-page__panel--definition" data-openbitfun-component="create-agent-page" data-openbitfun-part="column">
+          <section className="th-create-page__panel th-create-page__panel--definition" data-openbitfun-component="create-agent-page" data-openbitfun-part="column" data-starmate-component="create-agent-page" data-starmate-part="column" >
             {(!standalone || step === 0) && basicInformation}
             {(!standalone || step === 2) && (
               <>
@@ -1021,7 +1021,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           </section>
         )}
         {(!standalone || step === 1) && (
-          <section className="th-create-page__panel th-create-page__panel--capabilities" data-openbitfun-component="create-agent-page" data-openbitfun-part="column">
+          <section className="th-create-page__panel th-create-page__panel--capabilities" data-openbitfun-component="create-agent-page" data-openbitfun-part="column" data-starmate-component="create-agent-page" data-starmate-part="column" >
             {promptEditor}
           </section>
         )}
@@ -1030,7 +1030,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
   );
 
   const page = (
-    <div className={`tv th-create-page${standalone ? ' th-create-page--dialog' : ''}${standalone && step === 1 ? ' th-create-page--prompt-step' : ''}`} data-openbitfun-component="create-agent-page" data-openbitfun-part="root">
+    <div className={`tv th-create-page${standalone ? ' th-create-page--dialog' : ''}${standalone && step === 1 ? ' th-create-page--prompt-step' : ''}`} data-openbitfun-component="create-agent-page" data-openbitfun-part="root" data-starmate-component="create-agent-page" data-starmate-part="root" >
       {standalone ? (
         <SetupWizard
           title={formTitle}
@@ -1042,15 +1042,15 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
             progress: t('agentsOverview.form.wizard.progress', { current: formatNumber(step + 1), total: formatNumber(steps.length) }),
           }}
           contentMode={step === 1 ? 'contained' : 'scroll'}
-          footer={<div className="th-create-page__actions" data-openbitfun-component="create-agent-page" data-openbitfun-part="actions">{formActions}</div>}
+          footer={<div className="th-create-page__actions" data-openbitfun-component="create-agent-page" data-openbitfun-part="actions" data-starmate-component="create-agent-page" data-starmate-part="actions" >{formActions}</div>}
         >
           {formContent}
         </SetupWizard>
       ) : (
         <>
           <ScrollArea className="th__list-body th-create-page__body">
-            <div className="th__list-inner th-create-page__inner" data-openbitfun-component="create-agent-page" data-openbitfun-part="body">
-              <header className="th-create-page__head" data-openbitfun-component="create-agent-page" data-openbitfun-part="heading">
+            <div className="th__list-inner th-create-page__inner" data-openbitfun-component="create-agent-page" data-openbitfun-part="body" data-starmate-component="create-agent-page" data-starmate-part="body" >
+              <header className="th-create-page__head" data-openbitfun-component="create-agent-page" data-openbitfun-part="heading" data-starmate-component="create-agent-page" data-starmate-part="heading" >
                 <PageHeader title={formTitle} level={2} />
               </header>
               {formContent}
@@ -1058,7 +1058,7 @@ const CreateAgentPage: React.FC<CreateAgentPageProps> = ({ standalone = false, t
           </ScrollArea>
           <footer className="th-create-page__footer">
             <div className="th-create-page__footer-inner">
-              <div className="th-create-page__actions" data-openbitfun-component="create-agent-page" data-openbitfun-part="actions">{formActions}</div>
+              <div className="th-create-page__actions" data-openbitfun-component="create-agent-page" data-openbitfun-part="actions" data-starmate-component="create-agent-page" data-starmate-part="actions" >{formActions}</div>
             </div>
           </footer>
         </>

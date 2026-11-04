@@ -912,7 +912,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
       className={`deep-review-action-bar deep-review-action-bar--${phaseConfig.variant}`}
       onWheel={stopNestedScrollPropagation}
       onTouchMove={stopNestedScrollPropagation}
-    >
+     data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="root" data-starmate-phase={phase} data-starmate-variant={phaseConfig.variant} >
       <ReviewActionHeader
         isReviewRunning={phase === 'review_running'}
         reviewData={reviewData}
@@ -935,7 +935,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
           aria-live="polite"
           data-openbitfun-product-component="deep-review-action-bar"
           data-openbitfun-product-part="progress"
-        >
+         data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="progress" >
           <span className="deep-review-action-bar__progress-text">
             {t('deepReviewActionBar.managedCoverageProgress', {
               planned: managedReviewPlan.plannedFileCount,
@@ -955,7 +955,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
 
       {/* Running progress */}
       {(['review_running', 'fix_running', 'resume_running'].includes(phase)) && progressSummary && (
-        <div className="deep-review-action-bar__progress" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="progress">
+        <div className="deep-review-action-bar__progress" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="progress" data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="progress" >
           <span className="deep-review-action-bar__progress-text">
             {progressText}
           </span>
@@ -1009,7 +1009,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
           data-openbitfun-product-part="attribution"
           role="status"
           aria-live="polite"
-        >
+         data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="attribution" >
           <span className="deep-review-action-bar__attribution-message">
             {t(errorAttribution.description, { defaultValue: '' })}
           </span>
@@ -1023,7 +1023,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
 
       {/* Context overflow degradation options */}
       {showInterruptionDetails && interruption?.errorDetail?.category === 'context_overflow' && (
-        <div className="deep-review-action-bar__degradation" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="degradation">
+        <div className="deep-review-action-bar__degradation" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="degradation" data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="degradation" >
           <span className="deep-review-action-bar__degradation-title">
             {t('deepReviewActionBar.contextOverflowTitle')}
           </span>
@@ -1036,7 +1036,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
               data-openbitfun-product-part="degradationOption"
               disabled={!option.enabled}
               onClick={() => handleDegradationAction(option.type)}
-            >
+             data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="degradationOption" >
               <span className="deep-review-action-bar__degradation-label">
                 {t(option.labelKey, { defaultValue: option.type })}
               </span>
@@ -1089,7 +1089,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
 
       {/* Friendly message when review completed with no remediation items */}
       {phase === 'review_completed' && remediationItems.length === 0 && (
-        <div className="deep-review-action-bar__no-issues" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="noIssues">
+        <div className="deep-review-action-bar__no-issues" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="noIssues" data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="noIssues" >
           <Icon name="check-circle" size="md" className="deep-review-action-bar__no-issues-icon" />
           <span className="deep-review-action-bar__no-issues-text">
             {t('reviewActionBar.noIssuesFound')}
@@ -1099,7 +1099,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
 
       {/* Fix completed — show success message */}
       {phase === 'fix_completed' && (
-        <div className="deep-review-action-bar__fix-done" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="fixDone">
+        <div className="deep-review-action-bar__fix-done" data-openbitfun-product-component="deep-review-action-bar" data-openbitfun-product-part="fixDone" data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="fixDone" >
           <Icon name="check-circle" size="md" className="deep-review-action-bar__fix-done-icon" />
           <span className="deep-review-action-bar__fix-done-text">
             {t('deepReviewActionBar.fixCompletedMessage')}
@@ -1114,7 +1114,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
           data-openbitfun-product-component="deep-review-action-bar"
           data-openbitfun-product-part="custom"
           data-openbitfun-state={showCustomInput ? 'expanded' : undefined}
-        >
+         data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="custom" data-starmate-state={showCustomInput ? 'expanded' : undefined} >
           <button
             type="button"
             className="deep-review-action-bar__custom-toggle"
@@ -1136,7 +1136,7 @@ export const ReviewActionBar: React.FC<ReviewActionBarProps> = ({ childSessionId
               value={customInstructions}
               onChange={(e) => store.setCustomInstructions(e.target.value, childSessionId ?? undefined)}
               rows={2}
-            />
+             data-starmate-product-component="deep-review-action-bar" data-starmate-product-part="customInput" />
           )}
         </div>
       )}

@@ -31,9 +31,9 @@ function SessionRuntimeButton({
         type="button"
         onClick={onOpen}
         aria-label={t('usage.runtime.open')}
-      >
-        <Activity size="var(--openbitfun-control-icon-size-sm)" data-openbitfun-component="session-runtime-status-entry" data-openbitfun-part="icon" aria-hidden />
-        <OverflowText data-openbitfun-component="session-runtime-status-entry" data-openbitfun-part="label">{t('usage.runtime.button')}</OverflowText>
+       data-starmate-icon-slot="true" data-starmate-component="session-runtime-status-entry" data-starmate-part="root" >
+        <Activity size="var(--openbitfun-control-icon-size-sm)" data-openbitfun-component="session-runtime-status-entry" data-openbitfun-part="icon" aria-hidden  data-starmate-component="session-runtime-status-entry" data-starmate-part="icon" />
+        <OverflowText data-openbitfun-component="session-runtime-status-entry" data-openbitfun-part="label" data-starmate-component="session-runtime-status-entry" data-starmate-part="label" >{t('usage.runtime.button')}</OverflowText>
       </button>
     </Tooltip>
   );

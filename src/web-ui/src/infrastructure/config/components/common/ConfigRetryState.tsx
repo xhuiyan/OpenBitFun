@@ -29,7 +29,7 @@ export const ConfigRetryState: React.FC<ConfigRetryStateProps> = ({
     className={['openbitfun-config-retry-state', className].filter(Boolean).join(' ')}
     data-openbitfun-component="config"
     data-openbitfun-part="retryState"
-  >
+   data-starmate-component="config" data-starmate-part="retryState" >
     <ConfigMessage message={{ type: 'error', text: message }} />
     <Button
       type="button"

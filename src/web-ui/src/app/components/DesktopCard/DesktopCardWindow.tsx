@@ -63,7 +63,7 @@ function DesktopCardResizeRegions({ cardId }: { cardId: string | null }) {
             void startDesktopCardWindowResize(direction).catch(error => {
               log.debug('Failed to start desktop card resize', { cardId, direction, error });
             });
-          }} />
+          }}  data-starmate-component="desktop-card" data-starmate-part="resizeHandle" />
       ))}
     </>
   );
@@ -115,7 +115,7 @@ function DesktopCardFooter({ card, formatRelativeTime }: {
   return (
     <footer className="openbitfun-desktop-card__footer" data-state={state} title={error ?? warning}
       data-openbitfun-component="desktop-card" data-openbitfun-part="footer"
-      data-openbitfun-state={state}>
+      data-openbitfun-state={state} data-starmate-component="desktop-card" data-starmate-part="footer" data-starmate-state={state} >
       <OverflowText>
         {error
           ? t('desktopCard.refreshFailed', { error })
@@ -231,7 +231,7 @@ export default function DesktopCardWindow() {
   if (!card) {
     return (
       <div className="openbitfun-desktop-card" data-state="loading"
-        data-openbitfun-component="desktop-card" data-openbitfun-part="root" data-openbitfun-state="loading">
+        data-openbitfun-component="desktop-card" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="desktop-card" data-starmate-part="root" data-starmate-state="loading" >
         <div className="openbitfun-desktop-card__empty" role="status">
           {loadFailed ? <span>{t('desktopCard.loadFailed')}</span> : <Spinner size="sm" />}
         </div>
@@ -279,21 +279,21 @@ export default function DesktopCardWindow() {
 
   return (
     <div className="openbitfun-desktop-card" data-tone={tone} data-template={card.template?.kind}
-      data-openbitfun-component="desktop-card" data-openbitfun-part="root">
+      data-openbitfun-component="desktop-card" data-openbitfun-part="root" data-starmate-component="desktop-card" data-starmate-part="root" >
       <header className="openbitfun-desktop-card__header" onMouseDown={onHeaderMouseDown}
         onDoubleClick={() => { if (link) openLink(link); }}
-        data-openbitfun-component="desktop-card" data-openbitfun-part="header">
+        data-openbitfun-component="desktop-card" data-openbitfun-part="header" data-starmate-component="desktop-card" data-starmate-part="header" >
         <span className="openbitfun-desktop-card__icon" aria-hidden="true"
-          data-openbitfun-component="desktop-card" data-openbitfun-part="icon"><Icon glyph={CardIcon} size="sm" /></span>
+          data-openbitfun-component="desktop-card" data-openbitfun-part="icon" data-starmate-component="desktop-card" data-starmate-part="icon" ><Icon glyph={CardIcon} size="sm" /></span>
         <div className="openbitfun-desktop-card__titles">
           <OverflowText className="openbitfun-desktop-card__title"
-            data-openbitfun-component="desktop-card" data-openbitfun-part="title">{card.title}</OverflowText>
+            data-openbitfun-component="desktop-card" data-openbitfun-part="title" data-starmate-component="desktop-card" data-starmate-part="title" >{card.title}</OverflowText>
           {card.subtitle && (
             <OverflowText className="openbitfun-desktop-card__subtitle"
-              data-openbitfun-component="desktop-card" data-openbitfun-part="subtitle">{card.subtitle}</OverflowText>
+              data-openbitfun-component="desktop-card" data-openbitfun-part="subtitle" data-starmate-component="desktop-card" data-starmate-part="subtitle" >{card.subtitle}</OverflowText>
           )}
         </div>
-        <div className="openbitfun-desktop-card__actions" data-openbitfun-component="desktop-card" data-openbitfun-part="actions">
+        <div className="openbitfun-desktop-card__actions" data-openbitfun-component="desktop-card" data-openbitfun-part="actions" data-starmate-component="desktop-card" data-starmate-part="actions" >
           {hasDataSource(card) && (
             <IconButton size="xs" aria-label={t('desktopCard.menu.refresh')} loading={refreshing}
               icon={<Icon glyph={RefreshCw} size="xs" />} onClick={refresh} />
@@ -303,7 +303,7 @@ export default function DesktopCardWindow() {
           <IconButton size="xs" aria-label={t('desktopCard.menu.hide')} icon={<Icon glyph={X} size="xs" />} onClick={hide} />
         </div>
       </header>
-      <div className="openbitfun-desktop-card__body" data-openbitfun-component="desktop-card" data-openbitfun-part="body">
+      <div className="openbitfun-desktop-card__body" data-openbitfun-component="desktop-card" data-openbitfun-part="body" data-starmate-component="desktop-card" data-starmate-part="body" >
         {stackingError === null && hasDesktopPinFailure(card) && <p className="openbitfun-desktop-card__empty" role="alert">{t('desktopCard.pinRecoveryFailed')}</p>}
         {stackingError !== null && <p className="openbitfun-desktop-card__empty" role="alert">{t('desktopCard.stackingFailed', { error: stackingError })}</p>}
         {confirmingDelete ? (

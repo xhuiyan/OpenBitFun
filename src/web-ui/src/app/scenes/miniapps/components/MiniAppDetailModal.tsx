@@ -275,10 +275,13 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
           ].filter(Boolean).join(' ') || undefined}
           data-openbitfun-source={source}
           data-miniapp-id={displayedApp.id}
-        >
-        <section className="miniapp-detail-modal__hero" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="hero">
-          <div className="miniapp-detail-modal__icon-stage" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="iconStage">
-            <div className="miniapp-detail-modal__icon" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="icon">
+         data-starmate-component="mini-app-detail-modal" data-starmate-part="root" data-starmate-state={[
+            snapshot.isActive && 'running',
+            snapshot.isCustomizing && 'customizing',
+          ].filter(Boolean).join(' ') || undefined} data-starmate-source={source} >
+        <section className="miniapp-detail-modal__hero" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="hero" data-starmate-component="mini-app-detail-modal" data-starmate-part="hero" >
+          <div className="miniapp-detail-modal__icon-stage" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="iconStage" data-starmate-component="mini-app-detail-modal" data-starmate-part="iconStage" >
+            <div className="miniapp-detail-modal__icon" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="icon" data-starmate-component="mini-app-detail-modal" data-starmate-part="icon" >
               {renderMiniAppIcon(displayedApp.icon || 'box', 72)}
             </div>
             {snapshot.isActive ? (
@@ -290,7 +293,7 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
             ) : null}
           </div>
 
-          <div className="miniapp-detail-modal__summary" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="summary">
+          <div className="miniapp-detail-modal__summary" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="summary" data-starmate-component="mini-app-detail-modal" data-starmate-part="summary" >
             <div className="miniapp-detail-modal__identity">
               <h3 className="miniapp-detail-modal__name">{localizedName}</h3>
               <span className="miniapp-detail-modal__version" data-testid="miniapp-detail-version">v{version}</span>
@@ -301,7 +304,7 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
               </p>
             ) : null}
             {localizedTags.length ? (
-              <div className="miniapp-detail-modal__tags" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="tags">
+              <div className="miniapp-detail-modal__tags" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="tags" data-starmate-component="mini-app-detail-modal" data-starmate-part="tags" >
                 {localizedTags.map((tag) => (
                   <span key={tag} className="miniapp-detail-modal__tag">{tag}</span>
                 ))}
@@ -310,7 +313,7 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
           </div>
         </section>
 
-        <section className="miniapp-detail-modal__highlights" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="highlights">
+        <section className="miniapp-detail-modal__highlights" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="highlights" data-starmate-component="mini-app-detail-modal" data-starmate-part="highlights" >
           <h4 className="miniapp-detail-modal__section-title">{t('detail.highlights')}</h4>
           <div className="miniapp-detail-modal__highlight-grid">
             {capabilities.map((capability) => {
@@ -323,7 +326,7 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
                   data-openbitfun-part="highlight"
                   data-capability={capability.kind}
                   data-testid="miniapp-detail-capability"
-                >
+                 data-starmate-component="mini-app-detail-modal" data-starmate-part="highlight" >
                   <span className="miniapp-detail-modal__highlight-icon" aria-hidden="true">
                     {capabilityIcon(capability)}
                   </span>
@@ -346,12 +349,12 @@ const MiniAppDetailModal: React.FC<MiniAppDetailModalProps> = ({
         className="miniapp-detail-modal__footer"
         data-openbitfun-component="mini-app-detail-modal"
         data-openbitfun-part="footer"
-      >
-          <div className="miniapp-detail-modal__status" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="status">
+       data-starmate-component="mini-app-detail-modal" data-starmate-part="footer" >
+          <div className="miniapp-detail-modal__status" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="status" data-starmate-component="mini-app-detail-modal" data-starmate-part="status" >
             <Icon name="check-circle" size="lg" aria-hidden="true" />
             <span data-testid="miniapp-detail-status">{statusCopy}</span>
           </div>
-          <div className="miniapp-detail-modal__actions" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="actions">
+          <div className="miniapp-detail-modal__actions" data-openbitfun-component="mini-app-detail-modal" data-openbitfun-part="actions" data-starmate-component="mini-app-detail-modal" data-starmate-part="actions" >
             <MiniAppNavigationAction appId={displayedApp.id} />
             {snapshot.isActive && onStop ? (
               <Button

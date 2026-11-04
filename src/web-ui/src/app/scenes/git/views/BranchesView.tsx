@@ -225,8 +225,8 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
 
   if (!workspacePath) {
     return (
-      <div data-openbitfun-component="branches-view" data-openbitfun-part="root" className="openbitfun-git-scene-branches">
-        <div data-openbitfun-component="branches-view" data-openbitfun-part="placeholder" className="openbitfun-git-scene-branches__placeholder">
+      <div data-openbitfun-component="branches-view" data-openbitfun-part="root" className="openbitfun-git-scene-branches" data-starmate-component="branches-view" data-starmate-part="root" >
+        <div data-openbitfun-component="branches-view" data-openbitfun-part="placeholder" className="openbitfun-git-scene-branches__placeholder" data-starmate-component="branches-view" data-starmate-part="placeholder" >
           <Icon name="git" size="lg" />
           <p>{t('tabs.branches')}</p>
           <p className="openbitfun-git-scene-branches__hint">Open a workspace to see branches.</p>
@@ -236,10 +236,10 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
   }
 
   return (
-    <div data-openbitfun-component="branches-view" data-openbitfun-part="root" className="openbitfun-git-scene-branches">
-      <div data-openbitfun-component="branches-view" data-openbitfun-part="left" className="openbitfun-git-scene-branches__left">
-        <div data-openbitfun-component="branches-view" data-openbitfun-part="toolbar" className="openbitfun-git-scene-branches__toolbar">
-          <div data-openbitfun-component="branches-view" data-openbitfun-part="search" className="openbitfun-git-scene-branches__toolbar-search">
+    <div data-openbitfun-component="branches-view" data-openbitfun-part="root" className="openbitfun-git-scene-branches" data-starmate-component="branches-view" data-starmate-part="root" >
+      <div data-openbitfun-component="branches-view" data-openbitfun-part="left" className="openbitfun-git-scene-branches__left" data-starmate-component="branches-view" data-starmate-part="left" >
+        <div data-openbitfun-component="branches-view" data-openbitfun-part="toolbar" className="openbitfun-git-scene-branches__toolbar" data-starmate-component="branches-view" data-starmate-part="toolbar" >
+          <div data-openbitfun-component="branches-view" data-openbitfun-part="search" className="openbitfun-git-scene-branches__toolbar-search" data-starmate-component="branches-view" data-starmate-part="search" >
             <SearchField
               size="sm"
               leadingIcon={<Icon name="search" size="sm" aria-hidden />}
@@ -251,7 +251,7 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
               onClear={branchSearchQuery ? () => setBranchSearchQuery('') : undefined}
             />
           </div>
-          <div data-openbitfun-component="branches-view" data-openbitfun-part="actions" className="openbitfun-git-scene-branches__toolbar-actions">
+          <div data-openbitfun-component="branches-view" data-openbitfun-part="actions" className="openbitfun-git-scene-branches__toolbar-actions" data-starmate-component="branches-view" data-starmate-part="actions" >
             <Button
               size="sm"
               variant="primary"
@@ -263,11 +263,11 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
             </Button>
           </div>
         </div>
-        <ScrollArea data-openbitfun-component="branches-view" data-openbitfun-part="list" className="openbitfun-git-scene-branches__list">
+        <ScrollArea data-openbitfun-component="branches-view" data-openbitfun-part="list" className="openbitfun-git-scene-branches__list" data-starmate-component="branches-view" data-starmate-part="list" >
           {branchLoading ? (
-            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty">{t('common.loading')}</div>
+            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty" data-starmate-component="branches-view" data-starmate-part="empty" >{t('common.loading')}</div>
           ) : filteredBranches.length === 0 ? (
-            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty">
+            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty" data-starmate-component="branches-view" data-starmate-part="empty" >
               {branchSearchQuery ? t('empty.noMatchingBranches') : t('empty.noBranches')}
             </div>
           ) : (
@@ -282,13 +282,16 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
                 key={branch.name ?? idx}
                 className={`openbitfun-git-scene-branches__row ${branch.current ? 'openbitfun-git-scene-branches__row--current' : ''} ${selectedBranchName === branch.name ? 'openbitfun-git-scene-branches__row--selected' : ''}`}
                 onClick={() => handleSelectBranch(branch.name)}
-              >
-                <div data-openbitfun-component="branches-view" data-openbitfun-part="branchInfo" className="openbitfun-git-scene-branches__info">
+               data-starmate-component="branches-view" data-starmate-part="branch" data-starmate-state={[
+                  branch.current && 'current',
+                  selectedBranchName === branch.name && 'selected',
+                ].filter(Boolean).join(' ') || undefined} >
+                <div data-openbitfun-component="branches-view" data-openbitfun-part="branchInfo" className="openbitfun-git-scene-branches__info" data-starmate-component="branches-view" data-starmate-part="branchInfo" >
                   <Icon name="git" size="sm" />
                   <OverflowText className="openbitfun-git-scene-branches__name">{branch.name}</OverflowText>
                   {branch.current && <span className="openbitfun-git-scene-branches__current-badge">{t('branch.current')}</span>}
                 </div>
-                <div data-openbitfun-component="branches-view" data-openbitfun-part="branchActions" className="openbitfun-git-scene-branches__actions" onClick={e => e.stopPropagation()}>
+                <div data-openbitfun-component="branches-view" data-openbitfun-part="branchActions" className="openbitfun-git-scene-branches__actions" onClick={e => e.stopPropagation()} data-starmate-component="branches-view" data-starmate-part="branchActions" >
                   {!branch.current && (
                     <Tooltip content={t('actions.switchBranch')}>
                       <IconButton
@@ -327,9 +330,9 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
         </ScrollArea>
       </div>
 
-      <div data-openbitfun-component="branches-view" data-openbitfun-part="right" className="openbitfun-git-scene-branches__right">
-        <div data-openbitfun-component="branches-view" data-openbitfun-part="historyToolbar" className="openbitfun-git-scene-branches__history-toolbar">
-          <span data-openbitfun-component="branches-view" data-openbitfun-part="historyTitle" className="openbitfun-git-scene-branches__history-title">
+      <div data-openbitfun-component="branches-view" data-openbitfun-part="right" className="openbitfun-git-scene-branches__right" data-starmate-component="branches-view" data-starmate-part="right" >
+        <div data-openbitfun-component="branches-view" data-openbitfun-part="historyToolbar" className="openbitfun-git-scene-branches__history-toolbar" data-starmate-component="branches-view" data-starmate-part="historyToolbar" >
+          <span data-openbitfun-component="branches-view" data-openbitfun-part="historyTitle" className="openbitfun-git-scene-branches__history-title" data-starmate-component="branches-view" data-starmate-part="historyTitle" >
             {selectedBranchName ? t('tabs.branchCommitHistory', { branch: selectedBranchName }) : t('tabs.commits')}
           </span>
           <SearchField
@@ -343,13 +346,13 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
             onClear={commitSearchQuery ? () => setCommitSearchQuery('') : undefined}
           />
         </div>
-        <ScrollArea data-openbitfun-component="branches-view" data-openbitfun-part="historyList" className="openbitfun-git-scene-branches__history-list">
+        <ScrollArea data-openbitfun-component="branches-view" data-openbitfun-part="historyList" className="openbitfun-git-scene-branches__history-list" data-starmate-component="branches-view" data-starmate-part="historyList" >
           {!selectedBranchName ? (
-            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty">{t('empty.noCommits')}</div>
+            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty" data-starmate-component="branches-view" data-starmate-part="empty" >{t('empty.noCommits')}</div>
           ) : commitLoading ? (
-            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty">{t('common.loading')}</div>
+            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty" data-starmate-component="branches-view" data-starmate-part="empty" >{t('common.loading')}</div>
           ) : filteredCommits.length === 0 ? (
-            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty">
+            <div data-openbitfun-component="branches-view" data-openbitfun-part="empty" className="openbitfun-git-scene-branches__empty" data-starmate-component="branches-view" data-starmate-part="empty" >
               {commitSearchQuery ? t('empty.noMatchingCommits') : t('empty.noCommits')}
             </div>
           ) : (
@@ -364,18 +367,18 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
                 <div data-openbitfun-component="branches-view" data-openbitfun-part="commit" data-openbitfun-state={isExpanded ? 'expanded' : undefined}
                   key={commit.hash ?? idx}
                   className={`openbitfun-git-scene-branches__commit ${isExpanded ? 'openbitfun-git-scene-branches__commit--expanded' : ''}`}
-                >
-                  <div data-overflow-trigger data-openbitfun-component="branches-view" data-openbitfun-part="commitHeader" className="openbitfun-git-scene-branches__commit-header" onClick={() => toggleCommitExpand(commit.hash)}>
+                 data-starmate-component="branches-view" data-starmate-part="commit" data-starmate-state={isExpanded ? 'expanded' : undefined} >
+                  <div data-overflow-trigger data-openbitfun-component="branches-view" data-openbitfun-part="commitHeader" className="openbitfun-git-scene-branches__commit-header" onClick={() => toggleCommitExpand(commit.hash)} data-starmate-component="branches-view" data-starmate-part="commitHeader" >
                     <button type="button" className="openbitfun-git-scene-branches__expand">
                       {isExpanded ? <Icon name="chevron-down" size="xs" /> : <Icon name="chevron-right" size="xs" />}
                     </button>
-                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitInfo" className="openbitfun-git-scene-branches__commit-info">
+                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitInfo" className="openbitfun-git-scene-branches__commit-info" data-starmate-component="branches-view" data-starmate-part="commitInfo" >
                       <div className="openbitfun-git-scene-branches__commit-message"><OverflowText>{summary}</OverflowText></div>
                       <div className="openbitfun-git-scene-branches__commit-meta">
                         {author} · {commit.hash?.substring(0, 7)}
                       </div>
                     </div>
-                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitActions" className="openbitfun-git-scene-branches__commit-actions" onClick={e => e.stopPropagation()}>
+                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitActions" className="openbitfun-git-scene-branches__commit-actions" onClick={e => e.stopPropagation()} data-starmate-component="branches-view" data-starmate-part="commitActions" >
                       <Tooltip content={t('actions.copyCommitHash')}>
                         <IconButton
                           aria-label={t('actions.copyCommitHash')}
@@ -396,7 +399,7 @@ const BranchesView: React.FC<BranchesViewProps> = ({ workspacePath, workspaceId 
                     </div>
                   </div>
                   {isExpanded && (
-                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitDetails" className="openbitfun-git-scene-branches__commit-detail">
+                    <div data-openbitfun-component="branches-view" data-openbitfun-part="commitDetails" className="openbitfun-git-scene-branches__commit-detail" data-starmate-component="branches-view" data-starmate-part="commitDetails" >
                       {body && <pre className="openbitfun-git-scene-branches__commit-body">{body}</pre>}
                       {files && files.length > 0 && (
                         <div className="openbitfun-git-scene-branches__files">

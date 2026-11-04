@@ -18,10 +18,10 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
   className = '',
 }) => {
   return (
-    <div data-openbitfun-component="panel-header" data-openbitfun-part="root" className={`openbitfun-panel-header ${className}`}>
-      <h3 className="openbitfun-panel-header__title" data-openbitfun-component="panel-header" data-openbitfun-part="title"><OverflowText>{title}</OverflowText></h3>
+    <div data-openbitfun-component="panel-header" data-openbitfun-part="root" className={`openbitfun-panel-header ${className}`} data-starmate-component="panel-header" data-starmate-part="root" >
+      <h3 className="openbitfun-panel-header__title" data-openbitfun-component="panel-header" data-openbitfun-part="title" data-starmate-component="panel-header" data-starmate-part="title" ><OverflowText>{title}</OverflowText></h3>
       {actions && (
-        <div className="openbitfun-panel-header__actions" data-openbitfun-component="panel-header" data-openbitfun-part="actions">
+        <div className="openbitfun-panel-header__actions" data-openbitfun-component="panel-header" data-openbitfun-part="actions" data-starmate-component="panel-header" data-starmate-part="actions" >
           {actions}
         </div>
       )}

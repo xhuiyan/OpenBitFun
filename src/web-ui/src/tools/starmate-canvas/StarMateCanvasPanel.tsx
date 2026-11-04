@@ -978,8 +978,8 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
 
   if (!hasHtml) {
     return (
-      <div className="openbitfun-canvas-panel openbitfun-canvas-panel--empty" data-openbitfun-component="canvas-tool" data-openbitfun-part="empty" data-openbitfun-state="empty">
-        <div className="openbitfun-canvas-panel__message" data-openbitfun-component="canvas-tool" data-openbitfun-part="message">
+      <div className="openbitfun-canvas-panel openbitfun-canvas-panel--empty" data-openbitfun-component="canvas-tool" data-openbitfun-part="empty" data-openbitfun-state="empty" data-starmate-component="canvas-tool" data-starmate-part="empty" data-starmate-state="empty" >
+        <div className="openbitfun-canvas-panel__message" data-openbitfun-component="canvas-tool" data-openbitfun-part="message" data-starmate-component="canvas-tool" data-starmate-part="message" >
           <AlertTriangle size={18} />
           <div>
             <h3>{resolvedTitle}</h3>
@@ -988,7 +988,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
           </div>
         </div>
         {resolvedDiagnostics.length > 0 && (
-          <ul className="openbitfun-canvas-panel__diagnostics" data-openbitfun-component="canvas-tool" data-openbitfun-part="diagnostics">
+          <ul className="openbitfun-canvas-panel__diagnostics" data-openbitfun-component="canvas-tool" data-openbitfun-part="diagnostics" data-starmate-component="canvas-tool" data-starmate-part="diagnostics" >
             {resolvedDiagnostics.map((diagnostic, index) => (
               <li key={`${diagnostic.code || diagnostic.message || 'diagnostic'}-${index}`}>
                 {diagnostic.message || diagnostic.code || 'Canvas diagnostic'}
@@ -996,14 +996,14 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             ))}
           </ul>
         )}
-        {sourcePreview && <pre className="openbitfun-canvas-panel__source" data-openbitfun-component="canvas-tool" data-openbitfun-part="source">{sourcePreview}</pre>}
+        {sourcePreview && <pre className="openbitfun-canvas-panel__source" data-openbitfun-component="canvas-tool" data-openbitfun-part="source" data-starmate-component="canvas-tool" data-starmate-part="source" >{sourcePreview}</pre>}
       </div>
     );
   }
 
   return (
-    <div className="openbitfun-canvas-panel" data-openbitfun-component="canvas-tool" data-openbitfun-part="root">
-      <div className="openbitfun-canvas-panel__toolbar" data-openbitfun-component="canvas-tool" data-openbitfun-part="toolbar">
+    <div className="openbitfun-canvas-panel" data-openbitfun-component="canvas-tool" data-openbitfun-part="root" data-starmate-component="canvas-tool" data-starmate-part="root" >
+      <div className="openbitfun-canvas-panel__toolbar" data-openbitfun-component="canvas-tool" data-openbitfun-part="toolbar" data-starmate-component="canvas-tool" data-starmate-part="toolbar" >
         <IconButton
           type="button"
           className={`openbitfun-canvas-panel__toolbar-button${sourceVisible ? ' openbitfun-canvas-panel__toolbar-button--active' : ''}`}
@@ -1053,11 +1053,11 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             void initializeIframe('load');
           }}
-        />
+         data-starmate-component="canvas-tool" data-starmate-part="frame" />
       )}
       {sourceVisible && (
-        <div className="openbitfun-canvas-panel__source-overlay" role="dialog" aria-modal="true" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceOverlay">
-          <div className="openbitfun-canvas-panel__source-dialog" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceDialog">
+        <div className="openbitfun-canvas-panel__source-overlay" role="dialog" aria-modal="true" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceOverlay" data-starmate-component="canvas-tool" data-starmate-part="sourceOverlay" >
+          <div className="openbitfun-canvas-panel__source-dialog" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceDialog" data-starmate-component="canvas-tool" data-starmate-part="sourceDialog" >
             <div className="openbitfun-canvas-panel__source-editor">
               <Suspense fallback={<div className="openbitfun-canvas-panel__source-loading">Loading editor...</div>}>
                 <CanvasSourceCodeEditor

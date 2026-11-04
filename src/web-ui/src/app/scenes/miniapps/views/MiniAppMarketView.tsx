@@ -275,7 +275,7 @@ const MiniAppMarketView: React.FC<MiniAppMarketViewProps> = ({ tabs }) => {
             className="miniapp-market-native__header-actions"
             data-openbitfun-component="miniapp-market-view"
             data-openbitfun-part="headerActions"
-          >
+           data-starmate-component="miniapp-market-view" data-starmate-part="headerActions" >
             <SearchField
               leadingIcon={<Icon name="search" size="lg" aria-hidden />}
               value={query}
@@ -298,7 +298,7 @@ const MiniAppMarketView: React.FC<MiniAppMarketViewProps> = ({ tabs }) => {
         className="gallery-zones"
         data-openbitfun-component="miniapp-market-view"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="miniapp-market-view" data-starmate-part="root" >
         <GalleryZone
           title={t('market.catalog')}
           tools={(
@@ -366,7 +366,7 @@ const MiniAppMarketView: React.FC<MiniAppMarketViewProps> = ({ tabs }) => {
                         data-openbitfun-component="miniapp-market-view"
                         data-openbitfun-part="card"
                         onClick={() => void openDetail(item)}
-                      >
+                       data-starmate-component="miniapp-market-view" data-starmate-part="card" >
                         <CardMedia className="miniapp-market-card__visual">
                           {item.screenshotUrls[0] ? (
                             <img
@@ -486,7 +486,7 @@ const MiniAppMarketView: React.FC<MiniAppMarketViewProps> = ({ tabs }) => {
                 className="miniapp-market-detail"
                 data-openbitfun-component="miniapp-market-view"
                 data-openbitfun-part="detail"
-              >
+               data-starmate-component="miniapp-market-view" data-starmate-part="detail" >
             {detail.screenshotUrls.length ? (
               <div className="miniapp-market-detail__screenshots">
                 {detail.screenshotUrls.map((url, index) => (

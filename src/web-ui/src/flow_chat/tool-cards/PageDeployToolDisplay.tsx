@@ -86,7 +86,7 @@ export const PageDeployDisplay: React.FC<ToolCardProps> = ({ toolItem, sessionId
       data-tool-card-id={toolId ?? ''}
       data-status={status}
       data-expanded={isExpanded ? 'true' : 'false'}
-    >
+     data-starmate-adapter="page-deploy" >
       <PageDeployToolCard
         status={isFailed ? 'error' : status}
         isExpanded={isExpanded}

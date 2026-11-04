@@ -25,5 +25,5 @@ export function MiniAppTitlebarPreview({ app }: { app: MiniApp }) {
     });
     return () => bar.destroy();
   }, [app, currentLanguage, t]);
-  return <div ref={ref} data-openbitfun-scene="miniapp" data-openbitfun-part="titlebar" />;
+  return <div ref={ref} data-openbitfun-scene="miniapp" data-openbitfun-part="titlebar"  data-starmate-scene="miniapp" data-starmate-part="titlebar" />;
 }

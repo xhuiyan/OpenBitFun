@@ -47,7 +47,7 @@ function MiniAppShortcutItems({ scope, pinnedAppIds, setPinned }: ReturnType<typ
             <IconButton className="openbitfun-nav-panel__miniapp-shortcut-remove" size="xs" variant="quiet" aria-label={removeLabel}
               icon={<Icon name="xmark" size="xs" />} onClick={() => setPinned(app.id, false)} />
           </Tooltip>}
-        >
+         data-starmate-component="nav-panel" data-starmate-part="topAction" data-starmate-state={selected ? 'active' : ''} >
           {name}
         </NavigationPanelItem>
       </Tooltip>;

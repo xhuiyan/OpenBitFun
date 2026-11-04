@@ -808,8 +808,11 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
       className={`chat-context-picker${isOverlay ? ' chat-context-picker--overlay' : ''}${displayItems.some(item => item.kind === 'skill') ? ' chat-context-picker--skills' : ''}`}
       style={style}
       onMouseDown={event => event.preventDefault()}
-    >
-      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="header" className="chat-context-picker__header">
+     data-starmate-component="chat-context-picker" data-starmate-part="root" data-starmate-state={[
+        isLoading && 'loading',
+        (fileLoadError || sessionBrowseFailed || (showMcpStatus && mcpLoadFailed)) && 'error',
+      ].filter(Boolean).join(' ') || undefined} data-starmate-placement={isOverlay ? overlayLayout?.placement ?? 'top' : undefined} >
+      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="header" className="chat-context-picker__header" data-starmate-component="chat-context-picker" data-starmate-part="header" >
         {canNavigateBack && (
           <Tooltip content={t('contextPicker.goBack')}>
             <IconButton
@@ -828,7 +831,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
                 data-openbitfun-component="chat-context-picker"
                 data-openbitfun-part="currentDirectoryPath"
                 className="chat-context-picker__directory-path chat-context-picker__directory-path--file"
-              >
+               data-starmate-component="chat-context-picker" data-starmate-part="currentDirectoryPath" >
                 {currentDirectoryTailStart > 0 && (
                   <OverflowText title="" className="chat-context-picker__directory-prefix">
                     {currentDirectoryPath.slice(0, currentDirectoryTailStart)}
@@ -843,7 +846,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
                 data-openbitfun-component="chat-context-picker"
                 data-openbitfun-part="currentViewLabel"
                 className="chat-context-picker__directory-path"
-              >
+               data-starmate-component="chat-context-picker" data-starmate-part="currentViewLabel" >
                 <OverflowText title="">{currentViewLabel}</OverflowText>
               </span>
             )}
@@ -861,7 +864,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
           />
         )}
       </div>
-      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="content" className="chat-context-picker__content">
+      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="content" className="chat-context-picker__content" data-starmate-component="chat-context-picker" data-starmate-part="content" >
         <Listbox
           aria-label={isSearchMode
             ? t('contextPicker.searchResults')
@@ -870,13 +873,13 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
           focusMode="virtual"
         >
           {displayItems.length === 0 && fileLoadError ? (
-          <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty">
+          <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty" data-starmate-state="error" >
             <span>{t(fileLoadError === 'search'
               ? 'contextPicker.searchUnavailable'
               : 'contextPicker.browseUnavailable')}</span>
           </ListboxEmpty>
         ) : sessionBrowseFailed ? (
-          <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty">
+          <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty" data-starmate-state="error" >
             <span>{t('contextPicker.sessions.loadFailed')}</span>
           </ListboxEmpty>
         ) : displayItems.length === 0 && isLoading ? (
@@ -959,7 +962,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
                           data-openbitfun-component="chat-context-picker"
                           data-openbitfun-part="skillDescription"
                           title=""
-                        >
+                         data-starmate-component="chat-context-picker" data-starmate-part="skillDescription" >
                           {skillDescription}
                         </OverflowText>
                       )
@@ -975,7 +978,9 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
                   }}
                   onMouseEnter={() => setSelectedIndex(index)}
                   value={key}
-                >
+                 data-starmate-context-kind={selection.kind === 'source' || selection.kind === 'action'
+                    ? selection.id
+                    : selection.kind === 'mcp' ? `mcp-${selection.item.kind}` : selection.kind} >
                   {skill ? <OverflowText behavior="fade" overflowStyle="ellipsis" title="">{label}</OverflowText> : label}
                 </ListboxOption>
               );
@@ -987,7 +992,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
               </ListboxEmpty>
             )}
             {fileLoadError && (
-              <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty">
+              <ListboxEmpty data-openbitfun-state="error" className="chat-context-picker__empty" data-starmate-state="error" >
                 <span>{t(fileLoadError === 'search'
                   ? 'contextPicker.searchUnavailable'
                   : 'contextPicker.browseUnavailable')}</span>
@@ -1020,7 +1025,7 @@ export const ChatContextPicker: React.FC<ChatContextPickerProps> = ({
           )}
         </>
       )}
-      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="footer" className="chat-context-picker__footer">
+      <div data-openbitfun-component="chat-context-picker" data-openbitfun-part="footer" className="chat-context-picker__footer" data-starmate-component="chat-context-picker" data-starmate-part="footer" >
         <span><KeyHint>↑</KeyHint><KeyHint>↓</KeyHint> {t('contextPicker.navHint')}</span>
         {!isSearchMode && (view === 'sources' || view === 'files') && (
           <span><KeyHint>→</KeyHint> {t('contextPicker.enterHint')}</span>

@@ -80,7 +80,7 @@ const StickySectionHeader: React.FC<StickySectionHeaderProps> = ({
         data-openbitfun-part="stickySectionHeader"
         data-openbitfun-state={isStuck ? 'stuck' : undefined}
         data-testid="nav-sessions-sticky-header"
-      >
+       data-starmate-component="nav-panel" data-starmate-part="stickySectionHeader" data-starmate-state={isStuck ? 'stuck' : undefined} >
         {children}
       </div>
     </>

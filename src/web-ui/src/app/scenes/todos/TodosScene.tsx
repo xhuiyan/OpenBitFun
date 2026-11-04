@@ -401,16 +401,16 @@ const TodosScene: React.FC = () => {
       data-openbitfun-scene="todos"
       data-openbitfun-part="root"
       data-testid="todos-scene"
-    >
+     data-starmate-scene="todos" data-starmate-part="root" >
       <div className="openbitfun-todos__content" data-testid="todos-content">
-        <header className="openbitfun-todos__head" data-openbitfun-scene="todos" data-openbitfun-part="header">
+        <header className="openbitfun-todos__head" data-openbitfun-scene="todos" data-openbitfun-part="header" data-starmate-scene="todos" data-starmate-part="header" >
           <div className="openbitfun-todos__head-main">
             <div className="openbitfun-todos__head-text">
               <h2 className="openbitfun-todos__title">{t('title')}</h2>
               <p className="openbitfun-todos__subtitle">{t('header.subtitle')}</p>
             </div>
           </div>
-          <div className="openbitfun-todos__head-actions" data-openbitfun-scene="todos" data-openbitfun-part="headerActions">
+          <div className="openbitfun-todos__head-actions" data-openbitfun-scene="todos" data-openbitfun-part="headerActions" data-starmate-scene="todos" data-starmate-part="headerActions" >
             <Button
               size="sm"
               variant="primary"
@@ -459,7 +459,7 @@ const TodosScene: React.FC = () => {
           </DialogBody>
         </Dialog>
 
-        <div className="openbitfun-todos__panes" data-openbitfun-scene="todos" data-openbitfun-part="panes">
+        <div className="openbitfun-todos__panes" data-openbitfun-scene="todos" data-openbitfun-part="panes" data-starmate-scene="todos" data-starmate-part="panes" >
           <section
             className="openbitfun-todos__pane openbitfun-todos__pane--overview"
             aria-label={t('overview.title')}
@@ -473,7 +473,7 @@ const TodosScene: React.FC = () => {
               data-openbitfun-scene="todos"
               data-openbitfun-part="overview"
               data-testid="todos-overview"
-            >
+             data-starmate-scene="todos" data-starmate-part="overview" >
               <div className="openbitfun-todos__overview-metrics">
                 <div className="openbitfun-todos__overview-metric">
                   <p className="openbitfun-todos__overview-value">
@@ -501,7 +501,7 @@ const TodosScene: React.FC = () => {
             data-openbitfun-part="listPane"
             data-testid="todos-list-pane"
             role="region"
-          >
+           data-starmate-scene="todos" data-starmate-part="listPane" >
             <header className="openbitfun-todos__pane-head">
               <h3 className="openbitfun-todos__list-title">
                 {t('list.countTitle', { total: visibleTodos.length })}
@@ -509,11 +509,11 @@ const TodosScene: React.FC = () => {
             </header>
 
             {visibleTodos.length === 0 ? (
-              <p className="openbitfun-todos__empty" data-openbitfun-scene="todos" data-openbitfun-part="empty">
+              <p className="openbitfun-todos__empty" data-openbitfun-scene="todos" data-openbitfun-part="empty" data-starmate-scene="todos" data-starmate-part="empty" >
                 {t('list.empty')}
               </p>
             ) : (
-              <div className="openbitfun-todos__rows" data-openbitfun-scene="todos" data-openbitfun-part="rows">
+              <div className="openbitfun-todos__rows" data-openbitfun-scene="todos" data-openbitfun-part="rows" data-starmate-scene="todos" data-starmate-part="rows" >
                 {visibleTodos.map((occurrence) => (
                   <TodoItemRow
                     key={occurrence.job.id}
@@ -534,7 +534,7 @@ const TodosScene: React.FC = () => {
             )}
 
             {buckets.inactive.length > 0 ? (
-              <div className="openbitfun-todos__inactive" data-openbitfun-scene="todos" data-openbitfun-part="inactive">
+              <div className="openbitfun-todos__inactive" data-openbitfun-scene="todos" data-openbitfun-part="inactive" data-starmate-scene="todos" data-starmate-part="inactive" >
                 <h4 className="openbitfun-todos__inactive-title">
                   {t('inactive.title', { total: buckets.inactive.length })}
                 </h4>
@@ -565,7 +565,7 @@ const TodosScene: React.FC = () => {
             data-openbitfun-part="calendarPane"
             data-has-selection={selectedDayKey ? 'true' : 'false'}
             data-testid="todos-calendar-pane"
-          >
+           data-starmate-scene="todos" data-starmate-part="calendarPane" >
             <TodoCalendar
               occurrences={buckets.calendar}
               monthAnchorMs={monthAnchorMs}
@@ -593,7 +593,7 @@ const TodosScene: React.FC = () => {
                   data-openbitfun-scene="todos"
                   data-openbitfun-part="dayDetail"
                   data-testid="todos-day-detail"
-                >
+                 data-starmate-scene="todos" data-starmate-part="dayDetail" >
                   <header className="openbitfun-todos__day-detail-head">
                     <h4 className="openbitfun-todos__day-detail-title">
                       {renderedSelectedDayOccurrences[0]

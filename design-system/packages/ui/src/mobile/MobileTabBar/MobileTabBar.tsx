@@ -53,7 +53,7 @@ export function MobileTabBar({
       data-appearance={appearance}
       data-openbitfun-component="mobile-tab-bar"
       data-safe-area={safeArea ? "true" : "false"}
-    >
+     data-starmate-component="mobile-tab-bar" >
       {items.map(item => {
         const selected = item.value === current;
         return (
@@ -66,14 +66,14 @@ export function MobileTabBar({
             key={item.value}
             onClick={() => select(item.value)}
             type="button"
-          >
-            <span className={styles.icon} data-openbitfun-part="icon">
+           data-starmate-part="item" >
+            <span className={styles.icon} data-openbitfun-part="icon" data-starmate-part="icon" >
               {item.icon}
               {item.badge !== undefined && item.badge !== null && (
-                <span className={styles.badge} data-openbitfun-part="badge">{item.badge}</span>
+                <span className={styles.badge} data-openbitfun-part="badge" data-starmate-part="badge" >{item.badge}</span>
               )}
             </span>
-            <span className={styles.label} data-openbitfun-part="label">{item.label}</span>
+            <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{item.label}</span>
           </button>
         );
       })}

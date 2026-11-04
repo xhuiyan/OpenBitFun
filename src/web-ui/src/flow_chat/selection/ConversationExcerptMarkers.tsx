@@ -101,7 +101,7 @@ export function ConversationExcerptMarkers({ wrapper, turnId }: { wrapper: HTMLE
       data-openbitfun-product-component="conversation-excerpt" data-openbitfun-product-part="markers"
       className="conversation-excerpt__markers" data-flowchat-selection-ignore="true"
       style={{ left: positions.get(group.key)?.left ?? 0, top: positions.get(group.key)?.top ?? 0,
-        visibility: positions.has(group.key) ? 'visible' : 'hidden' }}>
+        visibility: positions.has(group.key) ? 'visible' : 'hidden' }} data-starmate-product-component="conversation-excerpt" data-starmate-product-part="markers" >
       {group.excerpts.map(excerpt => <ConversationExcerptPreview key={excerpt.id} excerpt={excerpt} superscript origin="source" />)}
     </sup>
   ))}</>;

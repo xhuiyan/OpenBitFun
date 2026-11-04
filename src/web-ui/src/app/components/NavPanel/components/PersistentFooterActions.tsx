@@ -175,7 +175,7 @@ const PersistentFooterActions: React.FC = () => {
   return (
     <>
       <PeerConnectionStatus />
-      <div className="openbitfun-nav-panel__footer" data-openbitfun-component="nav-panel" data-openbitfun-part="footer">
+      <div className="openbitfun-nav-panel__footer" data-openbitfun-component="nav-panel" data-openbitfun-part="footer" data-starmate-component="nav-panel" data-starmate-part="footer" >
         <div className="openbitfun-nav-panel__footer-left">
           <DeviceStatusControl
             open={deviceOverviewOpen}
@@ -207,7 +207,7 @@ const PersistentFooterActions: React.FC = () => {
                 icon={<span className="openbitfun-update-indicator-anchor"><Icon name="gear" size="sm" aria-hidden="true" /><UpdateIndicator /></span>}
                 size="sm"
                 variant="quiet"
-              />
+               data-starmate-component="nav-panel" data-starmate-part="settingsEntry" data-starmate-state={menuOpen ? 'open' : undefined} />
             </Tooltip>
 
             {menuOpen && createOverlayPortal(

@@ -326,15 +326,15 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
         <DialogClose disabled={isBusy} />
       </DialogHeader>
       <DialogBody inset="none" className="workspace-session-batch-modal__body">
-        <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="root" className="workspace-session-batch-modal">
-          <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="hero" className="workspace-session-batch-modal__context">
+        <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="root" className="workspace-session-batch-modal" data-starmate-component="workspace-session-batch-modal" data-starmate-part="root" >
+          <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="hero" className="workspace-session-batch-modal__context" data-starmate-component="workspace-session-batch-modal" data-starmate-part="hero" >
             <Icon name="folder" size="sm" />
             <OverflowText className="workspace-session-batch-modal__workspace" title={workspacePath}>
               {workspaceLabel}
             </OverflowText>
           </div>
 
-          <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="toolbar" className="workspace-session-batch-modal__toolbar">
+          <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="toolbar" className="workspace-session-batch-modal__toolbar" data-starmate-component="workspace-session-batch-modal" data-starmate-part="toolbar" >
             <div className="workspace-session-batch-modal__toolbar-main">
               <Checkbox
                 checked={allSelected}
@@ -343,7 +343,7 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
                 disabled={!canSelectSessions}
                 label={t('actions.selectAll')}
               />
-              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="toolbarActions" className="workspace-session-batch-modal__toolbar-actions">
+              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="toolbarActions" className="workspace-session-batch-modal__toolbar-actions" data-starmate-component="workspace-session-batch-modal" data-starmate-part="toolbarActions" >
                 <Button
                   type="button"
                   variant="text"
@@ -361,7 +361,7 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
               className="workspace-session-batch-modal__summary"
               role="status"
               aria-atomic="true"
-            >
+             data-starmate-component="workspace-session-batch-modal" data-starmate-part="summary" >
               {!isLoading && !loadFailed && hasSessions
                 ? t('nav.sessions.batchSelectionSummary', { count: selectedCount, total: sessions.length })
                 : null}
@@ -373,14 +373,14 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
             data-openbitfun-part="list"
             className="workspace-session-batch-modal__list"
             aria-busy={isLoading}
-          >
+           data-starmate-component="workspace-session-batch-modal" data-starmate-part="list" >
             {isLoading ? (
-              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" data-openbitfun-state="loading" className="workspace-session-batch-modal__state" role="status">
+              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" data-openbitfun-state="loading" className="workspace-session-batch-modal__state" role="status" data-starmate-component="workspace-session-batch-modal" data-starmate-part="state" data-starmate-state="loading" >
                 <Spinner size="sm" />
                 <span>{t('nav.sessions.loading')}</span>
               </div>
             ) : loadFailed ? (
-              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" data-openbitfun-state="error" className="workspace-session-batch-modal__state" role="alert">
+              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" data-openbitfun-state="error" className="workspace-session-batch-modal__state" role="alert" data-starmate-component="workspace-session-batch-modal" data-starmate-part="state" data-starmate-state="error" >
                 <Icon name="info" size="md" />
                 <span>{t('nav.sessions.batchLoadFailed')}</span>
                 <Button type="button" variant="outline" size="sm" onClick={() => { void loadSessions(); }}>
@@ -388,7 +388,7 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
                 </Button>
               </div>
             ) : !hasSessions ? (
-              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" className="workspace-session-batch-modal__state" role="status">
+              <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="state" className="workspace-session-batch-modal__state" role="status" data-starmate-component="workspace-session-batch-modal" data-starmate-part="state" >
                 <Icon name="session" size="md" />
                 <span>{t('nav.sessions.noSessionsToManage')}</span>
               </div>
@@ -406,8 +406,8 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
                       key={metadata.sessionId}
                       role="listitem"
                       className="workspace-session-batch-modal__row"
-                    >
-                      <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="rowCheck">
+                     data-starmate-component="workspace-session-batch-modal" data-starmate-part="row" data-starmate-state={[isSelected && 'selected', displayAsChild && 'child'].filter(Boolean).join(' ') || undefined} >
+                      <div data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="rowCheck" data-starmate-component="workspace-session-batch-modal" data-starmate-part="rowCheck" >
                         <Checkbox
                           className="workspace-session-batch-modal__row-control"
                           checked={isSelected}
@@ -415,7 +415,7 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
                           disabled={isBusy}
                           aria-label={sessionName}
                           label={
-                            <span data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="rowContent" className="workspace-session-batch-modal__row-content">
+                            <span data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="rowContent" className="workspace-session-batch-modal__row-content" data-starmate-component="workspace-session-batch-modal" data-starmate-part="rowContent" >
                               <span className="workspace-session-batch-modal__row-icon">
                                 {sessionPresentation === 'assistant'
                                   ? <Icon name="user" size="sm" />
@@ -456,7 +456,7 @@ const WorkspaceSessionBatchModal: React.FC<WorkspaceSessionBatchModalProps> = ({
         </div>
       </DialogBody>
 
-      <DialogFooter data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="footer" className="workspace-session-batch-modal__footer">
+      <DialogFooter data-openbitfun-component="workspace-session-batch-modal" data-openbitfun-part="footer" className="workspace-session-batch-modal__footer" data-starmate-component="workspace-session-batch-modal" data-starmate-part="footer" >
         <Button
           type="button"
           variant="outline"

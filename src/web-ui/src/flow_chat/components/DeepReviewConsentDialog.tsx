@@ -118,14 +118,14 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
     const selectedStrategyLabel = getStrategyLabel(preview.strategyLevel, t);
     const targetSummary = getReviewTargetSummary(preview, t);
     return (
-      <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summary" className="deep-review-consent__summary">
-        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summaryHeader" className="deep-review-consent__summary-header">
+      <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summary" className="deep-review-consent__summary" data-starmate-component="deep-review-consent-dialog" data-starmate-part="summary" >
+        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summaryHeader" className="deep-review-consent__summary-header" data-starmate-component="deep-review-consent-dialog" data-starmate-part="summaryHeader" >
           <span className="deep-review-consent__fact-title">
             {t('deepReviewConsent.summaryTitle')}
           </span>
         </div>
 
-        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summaryStats" className="deep-review-consent__summary-stats">
+        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="summaryStats" className="deep-review-consent__summary-stats" data-starmate-component="deep-review-consent-dialog" data-starmate-part="summaryStats" >
           <span>{targetSummary}</span>
           {skippedCount > 0 && (
             <span className="deep-review-consent__summary-stat--warning">
@@ -135,7 +135,7 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
             </span>
           )}
         </div>
-        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="impactGrid" className="deep-review-consent__impact-grid">
+        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="impactGrid" className="deep-review-consent__impact-grid" data-starmate-component="deep-review-consent-dialog" data-starmate-part="impactGrid" >
           <div>
             <span>{t('deepReviewConsent.costLabel')}</span>
             <strong>{t('deepReviewConsent.cost')}</strong>
@@ -151,7 +151,7 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
         </div>
 
         {preview.workspacePath && (
-          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="strategy" className="deep-review-consent__strategy-control">
+          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="strategy" className="deep-review-consent__strategy-control" data-starmate-component="deep-review-consent-dialog" data-starmate-part="strategy" >
             <div className="deep-review-consent__strategy-current">
               <strong>
                 {t('deepReviewConsent.runStrategy', {
@@ -164,7 +164,7 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
         )}
 
         {skippedReviewers.length > 0 && (
-          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="reviewerGroup" className="deep-review-consent__reviewer-group">
+          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="reviewerGroup" className="deep-review-consent__reviewer-group" data-starmate-component="deep-review-consent-dialog" data-starmate-part="reviewerGroup" >
             <div className="deep-review-consent__reviewer-group-title deep-review-consent__reviewer-group-title--warning">
               <Icon glyph={AlertTriangle} size="sm" />
               {t('deepReviewConsent.skippedGroupTitle')}
@@ -190,9 +190,9 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
     >
       <DialogBody inset="none">
         <div className="deep-review-consent-modal">
-      <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="root" className="deep-review-consent">
-        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="header" className="deep-review-consent__header">
-          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="heading" className="deep-review-consent__heading">
+      <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="root" className="deep-review-consent" data-starmate-component="deep-review-consent-dialog" data-starmate-part="root" >
+        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="header" className="deep-review-consent__header" data-starmate-component="deep-review-consent-dialog" data-starmate-part="header" >
+          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="heading" className="deep-review-consent__heading" data-starmate-component="deep-review-consent-dialog" data-starmate-part="heading" >
             <span className="deep-review-consent__eyebrow">
               {t('deepReviewConsent.eyebrow')}
             </span>
@@ -206,11 +206,11 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
             data-openbitfun-part="close"
             className="deep-review-consent__close"
             aria-label={t('deepReviewConsent.cancel')}
-          />
+           data-starmate-component="deep-review-consent-dialog" data-starmate-part="close" />
         </div>
 
         {pendingConsent.launchContext?.sessionConcurrencyGuard?.highActivity && (
-          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="capacityNote" className="deep-review-consent__capacity-note">
+          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="capacityNote" className="deep-review-consent__capacity-note" data-starmate-component="deep-review-consent-dialog" data-starmate-part="capacityNote" >
             <div className="deep-review-consent__fact-icon deep-review-consent__fact-icon--warning">
               <Icon glyph={AlertTriangle} size="md" />
             </div>
@@ -229,8 +229,8 @@ export function useDeepReviewConsent(): DeepReviewConsentControls {
 
         {pendingConsent.preview && renderLaunchSummary(pendingConsent.preview)}
 
-        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="footer" className="deep-review-consent__footer">
-          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="actions" className="deep-review-consent__actions">
+        <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="footer" className="deep-review-consent__footer" data-starmate-component="deep-review-consent-dialog" data-starmate-part="footer" >
+          <div data-openbitfun-component="deep-review-consent-dialog" data-openbitfun-part="actions" className="deep-review-consent__actions" data-starmate-component="deep-review-consent-dialog" data-starmate-part="actions" >
             <Button
               variant="fill"
               size="sm"

@@ -196,12 +196,12 @@ function ReferenceDisclosure({ label, children }: { label: string; children: Rea
       className="design-reference-disclosure"
       summary={label}
       renderHeader={triggerProps => (
-        <h2 className="design-reference-heading" data-openbitfun-part="header">
+        <h2 className="design-reference-heading" data-openbitfun-part="header" data-starmate-part="header" >
           <button {...triggerProps} className="design-reference-trigger" data-overflow-trigger>
-            <span aria-hidden="true" className="design-reference-indicator" data-openbitfun-part="indicator">
+            <span aria-hidden="true" className="design-reference-indicator" data-openbitfun-part="indicator" data-starmate-part="indicator" >
               <Icon name="chevron-right" size="sm" />
             </span>
-            <OverflowText className="design-reference-label" data-openbitfun-part="heading">{label}</OverflowText>
+            <OverflowText className="design-reference-label" data-openbitfun-part="heading" data-starmate-part="heading" >{label}</OverflowText>
           </button>
         </h2>
       )}
@@ -952,7 +952,7 @@ export function ComponentDetailPage({
         size={iconButtonSize}
         shape={iconButtonShape}
         variant={previewVariant}
-      />
+       data-starmate-preview-state={state === "hover" || state === "active" ? state : undefined} />
     );
   }
 
@@ -986,7 +986,7 @@ export function ComponentDetailPage({
     if (component.name === "SetupWizard") return <SetupWizardPreview state={state} />;
 
     if (component.name === "MobileButton") {
-      return <MobileButton data-openbitfun-preview-state={state} disabled={state === "disabled"} loading={state === "loading"}>{t("components.preview.actionCardTitle")}</MobileButton>;
+      return <MobileButton data-openbitfun-preview-state={state} disabled={state === "disabled"} loading={state === "loading"} data-starmate-preview-state={state} >{t("components.preview.actionCardTitle")}</MobileButton>;
     }
 
     if (component.name === "MobileCard") {
@@ -1034,7 +1034,7 @@ export function ComponentDetailPage({
           icon={<Icon name="search" aria-hidden="true" />}
           loading={state === "loading"}
           selected={state === "selected"}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1065,7 +1065,7 @@ export function ComponentDetailPage({
           selected={state === "selected"}
           supportingText={t("components.preview.fieldDescription")}
           trailing={<Icon name="chevron-right" aria-hidden="true" />}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1096,7 +1096,7 @@ export function ComponentDetailPage({
           invalid={state === "invalid"}
           key={state}
           label={t("components.preview.notifications")}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1111,7 +1111,7 @@ export function ComponentDetailPage({
             { disabled: state === "disabled", label: t("components.preview.segmentedAgent"), value: "agent" },
           ]}
           value="chat"
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1131,7 +1131,7 @@ export function ComponentDetailPage({
           ]}
           sheetTitle={t("components.preview.mobileSelectLabel")}
           value="pro"
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1149,7 +1149,7 @@ export function ComponentDetailPage({
           max={5}
           min={0}
           value={3}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-within" ? state : undefined} />
       );
     }
 
@@ -1162,7 +1162,7 @@ export function ComponentDetailPage({
           disabled={state === "disabled"}
           key={state}
           label={t("components.preview.notifications")}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1178,7 +1178,7 @@ export function ComponentDetailPage({
           key={state}
           label={t("components.preview.segmentedLabel")}
           value={state === "selected" ? "agent" : "chat"}
-        />
+         data-starmate-preview-state={state === "hover" || state === "active" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1193,7 +1193,7 @@ export function ComponentDetailPage({
               key={label}
               selected={state === "selected" && index === 0}
               size={index === 2 ? "sm" : "md"}
-            >
+             data-starmate-preview-state={index === 0 ? forcedTagState : undefined} >
               {label}
             </MobileTag>
           ))}
@@ -1307,7 +1307,7 @@ export function ComponentDetailPage({
           disabled={state === "disabled"}
           key={state}
           summary={t("components.preview.appearance")}
-        >
+         data-starmate-preview-state={state === "hover" || state === "focus-visible" ? state : undefined} >
           {t("components.preview.appearanceDescription")}
         </Disclosure>
       );
@@ -1330,7 +1330,7 @@ export function ComponentDetailPage({
           leading={<Icon name="session" size="lg" aria-hidden="true" />}
           selected={state === "selected"}
           size={actionCardSize}
-        >
+         data-starmate-preview-state={state === "hover" || state === "active" ? state : undefined} >
           {t("components.preview.actionCardTitle")}
         </ActionCard>
       );
@@ -1347,7 +1347,11 @@ export function ComponentDetailPage({
           }
           disabled={state === "disabled"}
           leadingIcon={<Icon name="mic" aria-hidden="true" />}
-        >
+         data-starmate-preview-state={
+            state === "hover" || state === "active" || state === "focus-visible"
+              ? state
+              : undefined
+          } >
           Hello
         </LauncherButton>
       );
@@ -1447,7 +1451,7 @@ export function ComponentDetailPage({
             { disabled: true, label: "Agent", value: "agent" },
           ]}
           value={selectValue}
-        />
+         data-starmate-preview-state={state === "hover" || state === "focus-visible" ? state : undefined} />
       );
     }
 
@@ -1473,7 +1477,7 @@ export function ComponentDetailPage({
           leading={<Icon name="session" size="lg" aria-hidden="true" />}
           metadata={actionItemShowMetadata ? "12" : undefined}
           shortcut={<KeyHint>K</KeyHint>}
-        >
+         data-starmate-preview-state={state === "hover" || state === "active" ? state : undefined} >
           {t("components.preview.assistant")}
         </ActionItem>
       );
@@ -1515,7 +1519,7 @@ export function ComponentDetailPage({
             : <Icon name="check-line" size="lg" aria-hidden="true" />}
           metadata={surface ? <ChangeCount additions={6} deletions={0} /> : undefined}
           onActivate={surface ? () => undefined : undefined}
-        >
+         data-starmate-preview-state={state === "hover" || state === "active" ? state : undefined} >
           {surface
             ? t("components.preview.activityDescription")
             : t("components.preview.activityStatus")}
@@ -1543,7 +1547,7 @@ export function ComponentDetailPage({
           size={size}
           trailingIcon={trailingIcon}
           variant={previewVariant}
-        >
+         data-starmate-preview-state={state === "hover" || state === "active" ? state : undefined} >
           {t("components.preview.session")}
         </Button>
       );

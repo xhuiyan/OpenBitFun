@@ -84,7 +84,7 @@ export function ControlConversation({ session, sessionRef, voiceTarget, active, 
     if (turn.userMessage.content || turn.userMessage.images?.length) entries.push({ id: `${row.id}:user`, role: 'user', content: <>
       {presentation ? <UserMessagePresentationContent presentation={presentation} /> : turn.userMessage.content}
       {!!turn.userMessage.images?.length && <div className="openbitfun-conversation-mode-surface__images"
-        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="images">
+        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="images" data-starmate-component="conversation-mode-surface" data-starmate-part="images" >
         {turn.userMessage.images.map(image => <UserMessageImage key={image.id} image={image} onPreview={setPreview} />)}
       </div>}
     </>, activity: turn.id === processingTurnId
@@ -157,7 +157,7 @@ export function ControlConversation({ session, sessionRef, voiceTarget, active, 
       disabled={conversationBusy || historyBusy} loading={creatingConversation} onClick={() => void createConversation()} />
   </Tooltip> : undefined;
   const historyFeedback = failedHistory || historyBusy ? <div className="openbitfun-conversation-mode-surface__history" role="status"
-    data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="history">
+    data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="history" data-starmate-component="conversation-mode-surface" data-starmate-part="history" >
     {historyBusy ? t('dock.loadingHistory') : <><span>{failedHistory}</span>
       <Button size="sm" variant="fill" onClick={() => void loadEarlier()}>{t('dock.retry')}</Button></>}
   </div> : undefined;
@@ -173,7 +173,7 @@ export function ControlConversation({ session, sessionRef, voiceTarget, active, 
     </ConversationModeSurface>
     {preview && <Dialog open aria-label={t('context.image')} onOpenChange={() => setPreview(null)}>
       <img className="openbitfun-conversation-mode-surface__image-preview" src={preview} alt={t('context.image')}
-        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="imagePreview" />
+        data-openbitfun-component="conversation-mode-surface" data-openbitfun-part="imagePreview"  data-starmate-component="conversation-mode-surface" data-starmate-part="imagePreview" />
     </Dialog>}
   </>;
 }

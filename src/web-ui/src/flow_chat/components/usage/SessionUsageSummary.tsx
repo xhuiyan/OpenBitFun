@@ -46,7 +46,7 @@ function UsageLegend({ rows, highlight, className = '', showShares = true }: {
           <dd>
             <strong>{row.formattedValue ?? formatTokenCount(row.value, t)}</strong>
             {showShares && row.share !== undefined ? (
-              <span className="session-usage-panel__legend-share" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="legendShare">
+              <span className="session-usage-panel__legend-share" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="legendShare" data-starmate-product-component="session-usage-panel" data-starmate-product-part="legendShare" >
                 {formatUsagePercent(row.share * 100, t)}{row.shareSuffix}
               </span>
             ) : row.shareSuffix}
@@ -117,7 +117,7 @@ export function SessionUsageSummary({ report, workspaceName, onPreviewContext, p
       rate: cacheRateLabel, cached: formatTokenCount(cacheValue, t), input: formatTokenCount(inputTokens, t),
     })}` : cacheHelp}>
       <span className="session-usage-panel__legend-detail" data-usage-cache-summary
-        data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="legendDetail">
+        data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="legendDetail" data-starmate-product-component="session-usage-panel" data-starmate-product-part="legendDetail" >
         {cacheRate !== undefined ? t('usage.tokens.cacheHitDetail', { rate: cacheRateLabel })
           : t('usage.tokens.cacheUnavailable')}
       </span>
@@ -144,15 +144,15 @@ export function SessionUsageSummary({ report, workspaceName, onPreviewContext, p
   const { highlight: highlightTokens } = useUsageSeriesHighlight([...tokenRows, ...cacheRows]);
 
   const tokenUsage = (
-    <section className="session-usage-panel__summary session-usage-panel__tokens" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="section" aria-label={t('usage.tokens.title')}>
+    <section className="session-usage-panel__summary session-usage-panel__tokens" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="section" aria-label={t('usage.tokens.title')} data-starmate-product-component="session-usage-panel" data-starmate-product-part="section" >
       <PageHeader level={3} size="sm" title={t('usage.tokens.title')} />
-      <div className="session-usage-panel__token-chart" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="tokenChart">
+      <div className="session-usage-panel__token-chart" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="tokenChart" data-starmate-product-component="session-usage-panel" data-starmate-product-part="tokenChart" >
         <UsageLegend rows={tokenRows} highlight={highlightTokens} className="session-usage-panel__token-legend" />
         <div className="session-usage-panel__segmented-bar" aria-hidden="true">
           {tokenRows.map(row => row.share !== undefined && row.share > 0 && (
             <div key={row.key} className="session-usage-panel__bar-group" data-usage-category={row.key}
               data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="tokenGroup"
-              {...highlightTokens(row)} style={{ flexGrow: row.share }}>
+              {...highlightTokens(row)} style={{ flexGrow: row.share }} data-starmate-product-component="session-usage-panel" data-starmate-product-part="tokenGroup" >
               {(row.key === 'input' && hasCacheSplit ? cacheRows : [row]).map(segment => segment.share! > 0 && (
                 <span key={segment.key} className={`session-usage-panel__bar-segment session-usage-panel__series--${segment.key}`}
                   {...highlightTokens(segment)} data-usage-category={segment.key} data-usage-parent={segment.parentKey}
@@ -170,15 +170,15 @@ export function SessionUsageSummary({ report, workspaceName, onPreviewContext, p
 
   return (
     <>
-      <dl className="session-usage-panel__summary-facts" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFacts">
-        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact">
+      <dl className="session-usage-panel__summary-facts" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFacts" data-starmate-product-component="session-usage-panel" data-starmate-product-part="summaryFacts" >
+        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact" data-starmate-product-component="session-usage-panel" data-starmate-product-part="summaryFact" >
           <dt>{t('usage.panel.workspace')}</dt><dd><OverflowText>{workspaceName}</OverflowText></dd>
         </div>
-        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact">
+        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact" data-starmate-product-component="session-usage-panel" data-starmate-product-part="summaryFact" >
           <dt>{t('usage.panel.totalUsage')}</dt>
           <dd><OverflowText>{formatTokenCount(isCount(totalTokens) ? totalTokens : undefined, t)}</OverflowText></dd>
         </div>
-        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact">
+        <div className="session-usage-panel__summary-fact" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="summaryFact" data-starmate-product-component="session-usage-panel" data-starmate-product-part="summaryFact" >
           <dt>{t('usage.context.label')}</dt>
           <dd>
             <Tooltip content={t('usage.context.estimateHelp')}>
@@ -195,7 +195,7 @@ export function SessionUsageSummary({ report, workspaceName, onPreviewContext, p
         </div>
       </dl>
       {tokenUsage}
-      <section className="session-usage-panel__summary session-usage-panel__context" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="section" aria-label={t('usage.context.title')}>
+      <section className="session-usage-panel__summary session-usage-panel__context" data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="section" aria-label={t('usage.context.title')} data-starmate-product-component="session-usage-panel" data-starmate-product-part="section" >
         <PageHeader level={3} size="sm" title={t('usage.context.title')} action={
           <Tooltip content={t('usage.context.estimateHelp')}><span className="session-usage-panel__chart-meta">{t('usage.context.estimated')}</span></Tooltip>
         } />

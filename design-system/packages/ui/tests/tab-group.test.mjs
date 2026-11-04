@@ -113,7 +113,7 @@ test("label metadata remains inside the accessible tab and outside rolling text"
     items: [{ value: "session", label: "New Session", labelTransitionKey: "session-2", labelSuffix: "02" }],
   }));
   assert.match(markup, /data-openbitfun-component="rolling-text"/);
-  assert.match(markup, /<span[^>]*data-openbitfun-part="labelSuffix">02<\/span><\/button>/);
+  assert.match(markup, /<span[^>]*data-openbitfun-part="labelSuffix"[^>]*>02<\/span><\/button>/);
   assert.equal((markup.match(/role="tab"/g) ?? []).length, 1);
 });
 

@@ -1250,8 +1250,8 @@ export const TiptapEditor = React.forwardRef<TiptapEditorHandle, TiptapEditorPro
   const canSubmitInlinePrompt = !!inlineAiState?.query.trim() && !isInlineBusy;
 
   return (
-    <div ref={rootRef} className="m-editor-tiptap" data-openbitfun-component="tiptap-editor" data-openbitfun-part="root">
-      <EditorContent editor={editor} data-openbitfun-component="tiptap-editor" data-openbitfun-part="content" />
+    <div ref={rootRef} className="m-editor-tiptap" data-openbitfun-component="tiptap-editor" data-openbitfun-part="root" data-starmate-component="tiptap-editor" data-starmate-part="root" >
+      <EditorContent editor={editor} data-openbitfun-component="tiptap-editor" data-openbitfun-part="content"  data-starmate-component="tiptap-editor" data-starmate-part="content" />
       {inlineAiState?.isOpen && inlineAiState.status === 'idle' && (
         <div
           className="m-editor-inline-ai"
@@ -1265,22 +1265,22 @@ export const TiptapEditor = React.forwardRef<TiptapEditorHandle, TiptapEditorPro
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
-        >
+         data-starmate-component="tiptap-editor" data-starmate-part="inlineAi" >
           <div
             className="m-editor-inline-ai__surface"
             data-openbitfun-component="tiptap-editor"
             data-openbitfun-part="inlineAiSurface"
-          >
+           data-starmate-component="tiptap-editor" data-starmate-part="inlineAiSurface" >
             <div
               className="m-editor-inline-ai__panel"
               data-openbitfun-component="tiptap-editor"
               data-openbitfun-part="inlineAiPanel"
-            >
+             data-starmate-component="tiptap-editor" data-starmate-part="inlineAiPanel" >
               <div
                 className="m-editor-inline-ai__composer"
                 data-openbitfun-component="tiptap-editor"
                 data-openbitfun-part="composer"
-              >
+               data-starmate-component="tiptap-editor" data-starmate-part="composer" >
                 <Input
                   ref={inlineAiInputRef}
                   className="m-editor-inline-ai__composer-input"
@@ -1359,7 +1359,7 @@ export const TiptapEditor = React.forwardRef<TiptapEditorHandle, TiptapEditorPro
                 className="m-editor-inline-ai__quick-actions"
                 data-openbitfun-component="tiptap-editor"
                 data-openbitfun-part="quickActions"
-              >
+               data-starmate-component="tiptap-editor" data-starmate-part="quickActions" >
                 <Button
                   type="button"
                   variant="primary"
@@ -1405,7 +1405,7 @@ export const TiptapEditor = React.forwardRef<TiptapEditorHandle, TiptapEditorPro
                 className="m-editor-inline-ai__footer"
                 data-openbitfun-component="tiptap-editor"
                 data-openbitfun-part="footer"
-              >
+               data-starmate-component="tiptap-editor" data-starmate-part="footer" >
                 <Button
                   type="button"
                   variant="fill"

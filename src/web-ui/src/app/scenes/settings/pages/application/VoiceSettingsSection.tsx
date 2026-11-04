@@ -228,7 +228,7 @@ const VoiceSettingsSection: React.FC = () => {
 
   if (!speechRuntimeSupported) {
     return (
-      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root">
+      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root" data-starmate-component="voice-input-config" data-starmate-part="root" >
         <ConfigPageSectionStack>
           <ConfigMessage message={{ type: 'info', text: t('messages.unsupported') }} />
         </ConfigPageSectionStack>
@@ -238,7 +238,7 @@ const VoiceSettingsSection: React.FC = () => {
 
   if (modelsLoading || settingsLoading) {
     return (
-      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root">
+      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root" data-starmate-component="voice-input-config" data-starmate-part="root" >
         <ConfigPageSectionStack>
           <ConfigLoadingState label={t('loading')} />
         </ConfigPageSectionStack>
@@ -248,7 +248,7 @@ const VoiceSettingsSection: React.FC = () => {
 
   if (!settings || !voiceInput) {
     return (
-      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root">
+      <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root" data-starmate-component="voice-input-config" data-starmate-part="root" >
         <ConfigPageSectionStack>
           <ConfigRetryState
             message={t('messages.loadFailed')}
@@ -295,7 +295,7 @@ const VoiceSettingsSection: React.FC = () => {
       : <HardDrive size={18} />;
 
   return (
-    <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root">
+    <div id={sectionAnchor} className="voice-input-config" data-openbitfun-component="voice-input-config" data-openbitfun-part="root" data-starmate-component="voice-input-config" data-starmate-part="root" >
       <ConfigPageSectionStack className="voice-input-config__content">
         {settingsError && <ConfigMessage message={{ type: 'error', text: t('messages.loadFailed') }} />}
         <ConfigPageSection
@@ -327,7 +327,7 @@ const VoiceSettingsSection: React.FC = () => {
                     data-openbitfun-component="voice-input-config"
                     data-openbitfun-part="statusCard"
                     data-openbitfun-status={status}
-                  >
+                   data-starmate-component="voice-input-config" data-starmate-part="statusCard" data-starmate-status={status} >
                     {statusIcon ? (
                       <div className="voice-input-config__status-icon" aria-hidden="true">{statusIcon}</div>
                     ) : null}
@@ -379,7 +379,7 @@ const VoiceSettingsSection: React.FC = () => {
                       className="voice-input-config__status-actions"
                       data-openbitfun-component="voice-input-config"
                       data-openbitfun-part="statusActions"
-                    >
+                     data-starmate-component="voice-input-config" data-starmate-part="statusActions" >
                       {status === 'unavailable' ? (
                         <Button
                           variant="primary"

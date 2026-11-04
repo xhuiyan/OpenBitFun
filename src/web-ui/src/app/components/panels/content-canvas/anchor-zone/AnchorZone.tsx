@@ -106,7 +106,7 @@ export const AnchorZone: React.FC<AnchorZoneProps> = ({
       style={isCollapsed ? undefined : {
         [isBottom ? 'height' : 'width']: isMaximized ? '100%' : `${size}px`,
       }}
-    >
+     data-starmate-component="content-canvas" data-starmate-part="anchor" data-starmate-position={position} data-starmate-state={[isResizing && 'resizing', isCollapsed && 'collapsed', isMaximized && 'maximized'].filter(Boolean).join(' ')} >
       {/* Resize handle */}
       <Tooltip content={t('canvas.dragToResize')}>
         <div
@@ -115,19 +115,19 @@ export const AnchorZone: React.FC<AnchorZoneProps> = ({
           data-openbitfun-part="anchorResizer"
           onMouseDown={handleResizeStart}
           onDoubleClick={handleDoubleClick}
-        >
+         data-starmate-component="content-canvas" data-starmate-part="anchorResizer" >
           <div className="canvas-anchor-zone__resizer-line" />
         </div>
       </Tooltip>
 
       {/* Header */}
-      <div className="canvas-anchor-zone__header" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorHeader">
-        <div className="canvas-anchor-zone__title" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorTitle">
+      <div className="canvas-anchor-zone__header" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorHeader" data-starmate-component="content-canvas" data-starmate-part="anchorHeader" >
+        <div className="canvas-anchor-zone__title" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorTitle" data-starmate-component="content-canvas" data-starmate-part="anchorTitle" >
           <Icon name="terminal" size="sm" />
           <span>{t('canvas.terminal')}</span>
         </div>
 
-        <div className="canvas-anchor-zone__actions" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorActions">
+        <div className="canvas-anchor-zone__actions" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorActions" data-starmate-component="content-canvas" data-starmate-part="anchorActions" >
           {/* Collapse/expand */}
           <Tooltip content={isCollapsed ? t('tooltip.expand') : t('tooltip.collapse')}>
             <button
@@ -168,7 +168,7 @@ export const AnchorZone: React.FC<AnchorZoneProps> = ({
 
       {/* Content */}
       {!isCollapsed && (
-        <div className="canvas-anchor-zone__content" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorContent">
+        <div className="canvas-anchor-zone__content" data-openbitfun-component="content-canvas" data-openbitfun-part="anchorContent" data-starmate-component="content-canvas" data-starmate-part="anchorContent" >
           {children}
         </div>
       )}

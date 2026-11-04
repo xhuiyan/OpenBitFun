@@ -55,20 +55,20 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
       role={isAssertive ? 'alert' : 'status'}
       aria-live={isAssertive ? 'assertive' : 'polite'}
       aria-atomic="true"
-    >
+     data-starmate-component="notification" data-starmate-part="item" >
       
-      <div className="notification-item__icon" data-openbitfun-component="notification" data-openbitfun-part="itemIcon">
+      <div className="notification-item__icon" data-openbitfun-component="notification" data-openbitfun-part="itemIcon" data-starmate-component="notification" data-starmate-part="itemIcon" >
         {getIcon()}
       </div>
 
       
-      <div className="notification-item__content" data-openbitfun-component="notification" data-openbitfun-part="itemContent">
-        <div className="notification-item__title" data-openbitfun-component="notification" data-openbitfun-part="itemTitle">{title}</div>
-        <div className="notification-item__message" data-openbitfun-component="notification" data-openbitfun-part="itemMessage">{messageNode ?? message}</div>
+      <div className="notification-item__content" data-openbitfun-component="notification" data-openbitfun-part="itemContent" data-starmate-component="notification" data-starmate-part="itemContent" >
+        <div className="notification-item__title" data-openbitfun-component="notification" data-openbitfun-part="itemTitle" data-starmate-component="notification" data-starmate-part="itemTitle" >{title}</div>
+        <div className="notification-item__message" data-openbitfun-component="notification" data-openbitfun-part="itemMessage" data-starmate-component="notification" data-starmate-part="itemMessage" >{messageNode ?? message}</div>
 
         
         {actions && actions.length > 0 && (
-          <div className="notification-item__actions" data-openbitfun-component="notification" data-openbitfun-part="itemActions">
+          <div className="notification-item__actions" data-openbitfun-component="notification" data-openbitfun-part="itemActions" data-starmate-component="notification" data-starmate-part="itemActions" >
             {actions.map((action, index) => (
               <Button
                 key={index}
@@ -90,7 +90,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
           className="notification-item__close"
           data-openbitfun-component="notification"
           data-openbitfun-part="itemClose"
-        >
+         data-starmate-component="notification" data-starmate-part="itemClose" >
           <IconButton
             shape="circle"
             size="xs"

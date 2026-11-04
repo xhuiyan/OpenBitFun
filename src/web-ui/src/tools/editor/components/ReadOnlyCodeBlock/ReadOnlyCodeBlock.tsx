@@ -114,7 +114,7 @@ export const ReadOnlyCodeBlock: React.FC<ReadOnlyCodeBlockProps> = ({
         ...style,
       }}
       onClick={onClick}
-    >
+     data-starmate-component="editor-tool" data-starmate-part="readOnlyCodeBlock" >
       <MonacoEditorCore
         ref={editorRef}
         filePath={filePath}

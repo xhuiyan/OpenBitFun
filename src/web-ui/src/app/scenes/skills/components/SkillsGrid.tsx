@@ -19,6 +19,6 @@ export const SkillsGrid = forwardRef<HTMLDivElement, SkillsGridProps>(function S
       data-testid="skill-list"
       data-openbitfun-scene="skills"
       data-openbitfun-part="list"
-    />
+     data-starmate-scene="skills" data-starmate-part="list" />
   );
 });

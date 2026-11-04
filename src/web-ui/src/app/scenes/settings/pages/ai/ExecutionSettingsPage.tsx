@@ -384,7 +384,7 @@ const ExecutionSettingsPage: React.FC = () => {
     });
   }
   return (
-    <SettingsPage pageId="ai.execution" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="execution">
+    <SettingsPage pageId="ai.execution" className="openbitfun-runtime-settings" data-openbitfun-component="runtime-settings" data-openbitfun-part="root" data-openbitfun-view="execution" data-starmate-component="runtime-settings" data-starmate-part="root" data-starmate-view="execution" >
       {loadError ? (
         <ConfigRetryState message={t('loading.failed')} retryLabel={t('loading.retry')} onRetry={() => void loadPageData()} />
       ) : isLoading ? (
@@ -400,7 +400,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={!enableDeferredToolLoading ? t('deferredToolLoading.warning') : undefined}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <Switch
                   checked={enableDeferredToolLoading}
                   onChange={(event) => handleDeferredToolLoadingChange(event.target.checked)}
@@ -418,7 +418,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={t('toolPresentation.description')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <Select
                   size="sm"
                   value={toolPresentationMode}
@@ -443,7 +443,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={tTools('config.executionTimeoutDesc')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <NumberInput
                   value={executionTimeout === '' ? 0 : parseInt(executionTimeout, 10)}
                   onValueChange={(val) => handleToolTimeoutChange(val === 0 ? '' : String(val))}
@@ -462,7 +462,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={tTools('config.userQuestionTimeoutDesc')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <NumberInput
                   value={userQuestionTimeout === '' ? 0 : parseInt(userQuestionTimeout, 10)}
                   onValueChange={(val) => void handleUserQuestionTimeoutChange(val === 0 ? '0' : String(val))}
@@ -501,7 +501,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={tTools('config.subagentDefaultModelDesc')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <Combobox
                   value={subagentModelValue}
                   options={subagentModelOptions}
@@ -515,7 +515,7 @@ const ExecutionSettingsPage: React.FC = () => {
               label={tTools('config.subagentBatchPolicy.label')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <Select
                   value={subagentBatchExecutionPolicy}
                   options={subagentBatchExecutionPolicyOptions.map(option => ({
@@ -536,7 +536,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={tTools('config.subagentMaxConcurrencyDesc')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <NumberInput
                   value={subagentMaxConcurrency}
                   onValueChange={(val) => void handleSubagentMaxConcurrencyChange(val)}
@@ -554,7 +554,7 @@ const ExecutionSettingsPage: React.FC = () => {
               description={tTools('config.swarmMaxConcurrencyDesc')}
               align="center"
             >
-              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control">
+              <div className="openbitfun-runtime-settings__row-control" data-openbitfun-component="runtime-settings" data-openbitfun-part="control" data-starmate-component="runtime-settings" data-starmate-part="control" >
                 <NumberInput
                   value={swarmMaxConcurrency}
                   onValueChange={(val) => void handleSwarmMaxConcurrencyChange(val)}

@@ -183,7 +183,7 @@ const OverlaySurface = forwardRef<HTMLDivElement, OverlaySurfaceProps>(function 
         data-openbitfun-native-webview-occlusion
         data-placement={rendered.placement}
         data-state={exiting ? "exiting" : "open"}
-      >
+       data-starmate-component={kind} data-starmate-part="overlay" data-starmate-native-webview-occlusion >
         <DialogContext.Provider value={context}>
           <div
             {...surfaceProps}
@@ -204,7 +204,7 @@ const OverlaySurface = forwardRef<HTMLDivElement, OverlaySurfaceProps>(function 
             role={role}
             style={rendered.style}
             tabIndex={-1}
-          >
+           data-starmate-component={kind} data-starmate-part="surface" >
             {renderedChildren}
           </div>
         </DialogContext.Provider>
@@ -254,13 +254,13 @@ export interface DialogHeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   function DialogHeader({ className, separator = false, ...props }, ref) {
-    return <header {...props} className={classNames(styles.header, className)} data-openbitfun-part="header" data-separator={separator} ref={ref} />;
+    return <header {...props} className={classNames(styles.header, className)} data-openbitfun-part="header" data-separator={separator} ref={ref}  data-starmate-part="header" />;
   },
 );
 
 export const DialogHeading = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function DialogHeading({ className, ...props }, ref) {
-    return <div {...props} className={classNames(styles.heading, className)} data-openbitfun-part="heading" ref={ref} />;
+    return <div {...props} className={classNames(styles.heading, className)} data-openbitfun-part="heading" ref={ref}  data-starmate-part="heading" />;
   },
 );
 
@@ -268,7 +268,7 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHea
   function DialogTitle({ children, className, id, ...props }, ref) {
     const context = useDialogContext("DialogTitle");
     return (
-      <h2 {...props} className={classNames(styles.title, className)} data-openbitfun-part="title" id={id ?? context.titleId} ref={ref}>
+      <h2 {...props} className={classNames(styles.title, className)} data-openbitfun-part="title" id={id ?? context.titleId} ref={ref} data-starmate-part="title" >
         <OverflowText>{children}</OverflowText>
       </h2>
     );
@@ -278,19 +278,19 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHea
 export const DialogDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
   function DialogDescription({ className, id, ...props }, ref) {
     const context = useDialogContext("DialogDescription");
-    return <p {...props} className={classNames(styles.description, className)} data-openbitfun-part="description" id={id ?? context.descriptionId} ref={ref} />;
+    return <p {...props} className={classNames(styles.description, className)} data-openbitfun-part="description" id={id ?? context.descriptionId} ref={ref}  data-starmate-part="description" />;
   },
 );
 
 export const DialogHeaderActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function DialogHeaderActions({ className, ...props }, ref) {
-    return <div {...props} className={classNames(styles.headerActions, className)} data-openbitfun-part="header-actions" ref={ref} />;
+    return <div {...props} className={classNames(styles.headerActions, className)} data-openbitfun-part="header-actions" ref={ref}  data-starmate-part="header-actions" />;
   },
 );
 
 export const DialogHeaderLeading = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function DialogHeaderLeading({ className, ...props }, ref) {
-    return <div {...props} className={classNames(styles.headerLeading, className)} data-openbitfun-part="header-leading" ref={ref} />;
+    return <div {...props} className={classNames(styles.headerLeading, className)} data-openbitfun-part="header-leading" ref={ref}  data-starmate-part="header-leading" />;
   },
 );
 
@@ -315,7 +315,7 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
         ref={ref}
         size="sm"
         variant="quiet"
-      />
+       data-starmate-part="close" />
     );
   },
 );
@@ -333,7 +333,7 @@ export const DialogBody = forwardRef<HTMLDivElement, DialogBodyProps>(
         data-openbitfun-part="body"
         data-inset={inset}
         ref={ref}
-      />
+       data-starmate-part="body" />
     );
   },
 );
@@ -353,7 +353,7 @@ export const DialogFooter = forwardRef<HTMLElement, DialogFooterProps>(
         data-separator={separator}
         data-openbitfun-part="footer"
         ref={ref}
-      />
+       data-starmate-part="footer" />
     );
   },
 );

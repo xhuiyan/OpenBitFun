@@ -66,7 +66,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
       data-openbitfun-component="gallery-detail-modal"
       data-openbitfun-part="description"
       data-testid={descriptionTestId}
-    >
+     data-starmate-component="gallery-detail-modal" data-starmate-part="description" >
       {description.trim()}
     </p>
   ) : null;
@@ -75,7 +75,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
       className="gallery-detail-modal__badges"
       data-openbitfun-component="gallery-detail-modal"
       data-openbitfun-part="badges"
-    >
+     data-starmate-component="gallery-detail-modal" data-starmate-part="badges" >
       {badges}
     </div>
   ) : null;
@@ -84,7 +84,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
       className="gallery-detail-modal__meta"
       data-openbitfun-component="gallery-detail-modal"
       data-openbitfun-part="meta"
-    >
+     data-starmate-component="gallery-detail-modal" data-starmate-part="meta" >
       {meta}
     </div>
   ) : null;
@@ -121,12 +121,12 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
         data-openbitfun-component="gallery-detail-modal"
         data-openbitfun-part="root"
         data-openbitfun-state={appearanceState || undefined}
-      >
+       data-starmate-component="gallery-detail-modal" data-starmate-part="root" data-starmate-state={appearanceState || undefined} >
         <div
           className="gallery-detail-modal__hero"
           data-openbitfun-component="gallery-detail-modal"
           data-openbitfun-part="hero"
-        >
+         data-starmate-component="gallery-detail-modal" data-starmate-part="hero" >
           <div className="gallery-detail-modal__hero-heading">
             {icon ? (
               <div
@@ -134,7 +134,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
                 data-openbitfun-component="gallery-detail-modal"
                 data-openbitfun-part="icon"
                 style={iconGradient ? ({ '--gallery-detail-gradient': iconGradient } as React.CSSProperties) : undefined}
-              >
+               data-starmate-component="gallery-detail-modal" data-starmate-part="icon" >
                 {icon}
               </div>
             ) : null}
@@ -142,7 +142,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
               className="gallery-detail-modal__summary"
               data-openbitfun-component="gallery-detail-modal"
               data-openbitfun-part="summary"
-            >
+             data-starmate-component="gallery-detail-modal" data-starmate-part="summary" >
               {usesHeroTitle ? (
                 <>
                   <h2
@@ -151,7 +151,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
                     data-openbitfun-component="gallery-detail-modal"
                     data-openbitfun-part="title"
                     data-testid={titleTestId}
-                  >
+                   data-starmate-component="gallery-detail-modal" data-starmate-part="title" >
                     {title}
                   </h2>
                   {descriptionContent}
@@ -176,7 +176,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
               className="gallery-detail-modal__hero-actions"
               data-openbitfun-component="gallery-detail-modal"
               data-openbitfun-part="heroActions"
-            >
+             data-starmate-component="gallery-detail-modal" data-starmate-part="heroActions" >
               {heroActions}
             </div>
           ) : null}
@@ -190,7 +190,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
             className="gallery-detail-modal__content"
             data-openbitfun-component="gallery-detail-modal"
             data-openbitfun-part="content"
-          >
+           data-starmate-component="gallery-detail-modal" data-starmate-part="content" >
             {children}
           </div>
         ) : null}
@@ -203,7 +203,7 @@ const GalleryDetailModal: React.FC<GalleryDetailModalProps> = ({
           className="gallery-detail-modal__actions"
           data-openbitfun-component="gallery-detail-modal"
           data-openbitfun-part="actions"
-        >
+         data-starmate-component="gallery-detail-modal" data-starmate-part="actions" >
           {actions}
         </DialogFooter>
       ) : null}

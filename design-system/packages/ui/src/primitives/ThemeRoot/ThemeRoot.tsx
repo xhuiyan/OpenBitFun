@@ -42,7 +42,7 @@ export function ThemeRoot({
       data-contrast={contrast}
       data-density={density}
       style={mergedStyle}
-    >
+     data-starmate-design-system-root="" >
       {children}
     </div>
   );

@@ -287,15 +287,15 @@ export const TabBar: React.FC<TabBarProps> = ({
   const tabItems: TabGroupItem[] = visibleTabs.map(tab => ({
     value: tab.id,
     label: (
-      <span data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="title" className="canvas-tab__title">
+      <span data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="title" className="canvas-tab__title" data-starmate-product-component="canvas-tab" data-starmate-product-part="title" >
         {tab.fileDeletedFromDisk ? `${tab.title} - ${t('tabs.fileDeleted')}` : tab.title}
       </span>
     ),
     icon: tab.content.type === 'task-detail'
-      ? <Split data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="typeIcon" aria-hidden />
+      ? <Split data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="typeIcon" aria-hidden  data-starmate-product-component="canvas-tab" data-starmate-product-part="typeIcon" />
       : undefined,
     labelSuffix: tab.isDirty ? (
-      <span data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="dirtyIndicator" className="canvas-tab__dirty-indicator" title={t('tabs.unsaved')}>
+      <span data-openbitfun-product-component="canvas-tab" data-openbitfun-product-part="dirtyIndicator" className="canvas-tab__dirty-indicator" title={t('tabs.unsaved')} data-starmate-product-component="canvas-tab" data-starmate-product-part="dirtyIndicator" >
         ●
       </span>
     ) : undefined,
@@ -317,7 +317,7 @@ export const TabBar: React.FC<TabBarProps> = ({
           else void onTabClose(tab.id);
         }}
         onDoubleClick={(event) => event.stopPropagation()}
-      />
+       data-starmate-product-component="canvas-tab" data-starmate-product-part="action" />
     ),
   }));
 
@@ -373,10 +373,10 @@ export const TabBar: React.FC<TabBarProps> = ({
                   onDragOver={(e) => handleDragOver(e, index)}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, index)}
-                >
+                 data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="tabWrapper" >
                   {/* Drop indicator */}
                   {dragOverIndex === index && draggingTabId && (
-                    <div data-openbitfun-product-component="canvas-tab-bar" data-openbitfun-product-part="dropIndicator" className="canvas-tab-drop-indicator" />
+                    <div data-openbitfun-product-component="canvas-tab-bar" data-openbitfun-product-part="dropIndicator" className="canvas-tab-drop-indicator"  data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="dropIndicator" />
                   )}
 
                   <Tab
@@ -399,7 +399,7 @@ export const TabBar: React.FC<TabBarProps> = ({
                 </div>
               );
             }}
-          />
+           data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="list" data-starmate-group={groupId} />
           <div ref={overflowRef} className="canvas-tab-bar__overflow">
             {visibleTabs.length > 0 && (
               <TabOverflowMenu
@@ -415,7 +415,7 @@ export const TabBar: React.FC<TabBarProps> = ({
         </div>
       )}
       trailing={(
-        <div className="canvas-tab-bar__actions" data-openbitfun-product-component="canvas-tab-bar" data-openbitfun-product-part="actions" data-openbitfun-group={groupId}>
+        <div className="canvas-tab-bar__actions" data-openbitfun-product-component="canvas-tab-bar" data-openbitfun-product-part="actions" data-openbitfun-group={groupId} data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="actions" data-starmate-group={groupId} >
           {/* Hosts own layout actions; close-all remains available in tab menus. */}
           {toolbarActions !== undefined ? toolbarActions : onCloseAllTabs && visibleTabs.length > 0 && (
             <Tooltip content={t('tabs.closeAll')} placement="bottom">
@@ -430,12 +430,12 @@ export const TabBar: React.FC<TabBarProps> = ({
                   e.stopPropagation();
                   await onCloseAllTabs();
                 }}
-              />
+               data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="action" />
             </Tooltip>
           )}
         </div>
       )}
-    />
+     data-starmate-product-component="canvas-tab-bar" data-starmate-product-part="root" data-starmate-group={groupId} data-starmate-state={isActiveGroup ? 'active' : ''} />
   );
 };
 

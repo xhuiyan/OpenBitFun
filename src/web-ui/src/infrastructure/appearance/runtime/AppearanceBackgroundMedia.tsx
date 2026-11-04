@@ -91,7 +91,7 @@ export function AppearanceBackgroundMediaLayer({
         backgroundPosition: media.position ?? 'center',
         backgroundSize: media.fit ?? 'cover',
       }}
-    >
+     data-starmate-background-media="video" >
       <video
         ref={videoRef}
         className="openbitfun-appearance-background-media__video"

@@ -485,12 +485,12 @@ const ExternalImportSection: React.FC = () => {
       data-testid="ecosystem-compatibility-scene"
       data-openbitfun-scene="ecosystem-compatibility"
       data-openbitfun-part="root"
-    >
+     data-starmate-scene="ecosystem-compatibility" data-starmate-part="root" >
       <ConfigPageSectionStack
         className="ecosystem-compatibility__content"
         data-openbitfun-scene="ecosystem-compatibility"
         data-openbitfun-part="content"
-      >
+       data-starmate-scene="ecosystem-compatibility" data-starmate-part="content" >
         <ConfigPageSection
           className="ecosystem-compatibility__applications"
           title={t('applications.title')}
@@ -505,11 +505,11 @@ const ExternalImportSection: React.FC = () => {
           )}
           data-openbitfun-scene="ecosystem-compatibility"
           data-openbitfun-part="sidebar"
-        >
+         data-starmate-scene="ecosystem-compatibility" data-starmate-part="sidebar" >
           <div
             data-openbitfun-scene="ecosystem-compatibility"
             data-openbitfun-part="productList"
-          >
+           data-starmate-scene="ecosystem-compatibility" data-starmate-part="productList" >
             <SegmentedControl
               className="ecosystem-compatibility__product-pills"
               variant="pills"
@@ -544,12 +544,12 @@ const ExternalImportSection: React.FC = () => {
           aria-labelledby="ecosystem-selected-agent-title"
           data-openbitfun-scene="ecosystem-compatibility"
           data-openbitfun-part="main"
-        >
+         data-starmate-scene="ecosystem-compatibility" data-starmate-part="main" >
           <header
             className="ecosystem-compatibility__product-header"
             data-openbitfun-scene="ecosystem-compatibility"
             data-openbitfun-part="header"
-          >
+           data-starmate-scene="ecosystem-compatibility" data-starmate-part="header" >
             <div className="ecosystem-compatibility__header-top">
               <div className="ecosystem-compatibility__product-identity">
                 <span className="ecosystem-compatibility__product-logo" aria-hidden="true">

@@ -65,8 +65,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
       data-invalid={invalid ? "true" : "false"}
       data-readonly={readOnly ? "true" : "false"}
       data-size={size}
-    >
-      <span className={styles.control} data-openbitfun-part="control">
+     data-starmate-component="checkbox" >
+      <span className={styles.control} data-openbitfun-part="control" data-starmate-part="control" >
         <input
           {...props}
           {...fieldAccessibility}
@@ -82,13 +82,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
           }}
           ref={inputRef}
           type="checkbox"
-        />
-        {appearance === "custom" && <span aria-hidden="true" className={styles.box} data-openbitfun-part="box">
+         data-starmate-part="input" />
+        {appearance === "custom" && <span aria-hidden="true" className={styles.box} data-openbitfun-part="box" data-starmate-part="box" >
           <>{indeterminate ? <LucideMinus className={styles.icon} aria-hidden="true" /> : <LucideCheck className={styles.icon} aria-hidden="true" />}</>
         </span>}
       </span>
       {hasContent && (
-        <span className={styles.content} data-openbitfun-part="content">
+        <span className={styles.content} data-openbitfun-part="content" data-starmate-part="content" >
           {label !== undefined && <span className={styles.label}>{label}</span>}
           {description !== undefined && <span className={styles.description}>{description}</span>}
           {children}

@@ -90,7 +90,7 @@ function renderToken(
     : renderToken(token.content, 0);
 
   return (
-    <span data-openbitfun-component="inline-diff-preview" data-openbitfun-part="lineContent" key={key} className={classNames.join(' ')} style={style}>
+    <span data-openbitfun-component="inline-diff-preview" data-openbitfun-part="lineContent" key={key} className={classNames.join(' ')} style={style} data-starmate-component="inline-diff-preview" data-starmate-part="lineContent" >
       {children}
     </span>
   );
@@ -293,8 +293,8 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
 
   if (!originalContent && !modifiedContent) {
     return (
-      <div data-openbitfun-component="inline-diff-preview" data-openbitfun-part="root" data-openbitfun-state="empty" className={`inline-diff-preview inline-diff-preview--empty ${className}`}>
-        <span className="inline-diff-preview__placeholder" data-openbitfun-component="inline-diff-preview" data-openbitfun-part="placeholder">No content</span>
+      <div data-openbitfun-component="inline-diff-preview" data-openbitfun-part="root" data-openbitfun-state="empty" className={`inline-diff-preview inline-diff-preview--empty ${className}`} data-starmate-component="inline-diff-preview" data-starmate-part="root" data-starmate-state="empty" >
+        <span className="inline-diff-preview__placeholder" data-openbitfun-component="inline-diff-preview" data-openbitfun-part="placeholder" data-starmate-component="inline-diff-preview" data-starmate-part="placeholder" >No content</span>
       </div>
     );
   }
@@ -316,7 +316,7 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
         data-openbitfun-component="inline-diff-preview"
         data-openbitfun-part="gutter"
         aria-hidden="true"
-      >
+       data-starmate-component="inline-diff-preview" data-starmate-part="gutter" >
         {lineNumberMode === 'single' ? (
           <span className="diff-line__num">{removed ? originalNumber : modifiedNumber}</span>
         ) : (
@@ -336,9 +336,9 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
       data-line-numbers={showLineNumbers ? 'visible' : 'hidden'}
       className={`inline-diff-preview ${className}`}
       style={{ '--_diff-number-digits': lineNumberDigits } as CSSProperties}
-    >
+     data-starmate-component="inline-diff-preview" data-starmate-part="root" >
       {truncated.truncated && (
-        <div className="inline-diff-preview__truncation-notice" data-openbitfun-component="inline-diff-preview" data-openbitfun-part="notice">
+        <div className="inline-diff-preview__truncation-notice" data-openbitfun-component="inline-diff-preview" data-openbitfun-part="notice" data-starmate-component="inline-diff-preview" data-starmate-part="notice" >
           Content too large; showing first and last portions{truncated.omittedLines === null ? '.' : ` (${truncated.omittedLines} lines omitted).`}
         </div>
       )}
@@ -353,7 +353,7 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
         data-openbitfun-part="content"
         style={{ maxHeight: `${maxHeight}px` }}
         tabIndex={0}
-      >
+       data-starmate-component="inline-diff-preview" data-starmate-part="content" >
         <div className="inline-diff-preview__canvas" style={{ height: totalHeight }}>
           <div className="diff-line inline-diff-preview__sizer" aria-hidden="true">
             {renderGutter('', '')}
@@ -378,7 +378,7 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
                     width: '100%',
                     transform: `translateY(${virtualRow.start}px)`,
                   }}
-                >
+                 data-starmate-component="inline-diff-preview" data-starmate-part="line" >
                   <span className="diff-line__gutter diff-line__gutter--separator" />
                   <span className="diff-line__content diff-line__content--separator">{line.content}</span>
                 </div>
@@ -410,18 +410,18 @@ export const InlineDiffPreview: React.FC<InlineDiffPreviewProps> = memo(({
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
                 onClick={() => handleLineClick(virtualRow.index, line)}
-              >
+               data-starmate-component="inline-diff-preview" data-starmate-part="line" >
                 {renderGutter(line.originalLineNumber ?? '', line.modifiedLineNumber ?? '', line.type === 'removed')}
                 <span
                   className={`diff-line__prefix${showPrefix ? '' : ' diff-line__prefix--hidden'}`}
                   data-openbitfun-component="inline-diff-preview"
                   data-openbitfun-part="prefix"
-                >{prefix}</span>
+                 data-starmate-component="inline-diff-preview" data-starmate-part="prefix" >{prefix}</span>
                 <span
                   className="diff-line__content"
                   data-openbitfun-component="inline-diff-preview"
                   data-openbitfun-part="lineContent"
-                >
+                 data-starmate-component="inline-diff-preview" data-starmate-part="lineContent" >
                   {renderTokenLine(lineTokens)}
                 </span>
               </div>

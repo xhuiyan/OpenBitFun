@@ -22,13 +22,13 @@ export const KeyHint = forwardRef<HTMLElement, KeyHintProps>(function KeyHint({
       className={classNames(styles.root, className)}
       data-openbitfun-component="key-hint"
       ref={ref}
-    >
+     data-starmate-component="key-hint" >
       {icon !== undefined && icon !== null && (
-        <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon">
+        <span aria-hidden="true" className={styles.icon} data-openbitfun-icon-slot="true" data-openbitfun-part="icon" data-starmate-icon-slot="true" data-starmate-part="icon" >
           {icon}
         </span>
       )}
-      <span className={styles.label} data-openbitfun-part="label">{children}</span>
+      <span className={styles.label} data-openbitfun-part="label" data-starmate-part="label" >{children}</span>
     </kbd>
   );
 });

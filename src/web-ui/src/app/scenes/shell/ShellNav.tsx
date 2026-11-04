@@ -257,11 +257,11 @@ const ShellNav: React.FC = () => {
   }, [deleteEntry, t]);
 
   return (
-    <NavigationPanel data-openbitfun-component="shell-nav" data-openbitfun-part="root" className="openbitfun-shell-nav" data-testid="shell-panel">
+    <NavigationPanel data-openbitfun-component="shell-nav" data-openbitfun-part="root" className="openbitfun-shell-nav" data-testid="shell-panel" data-starmate-component="shell-nav" data-starmate-part="root" >
       <NavigationPanelHeader className="openbitfun-shell-nav__panel-header">
-        <div data-openbitfun-component="shell-nav" data-openbitfun-part="header" className="openbitfun-shell-nav__header">
+        <div data-openbitfun-component="shell-nav" data-openbitfun-part="header" className="openbitfun-shell-nav__header" data-starmate-component="shell-nav" data-starmate-part="header" >
         <div className="openbitfun-shell-nav__title-group">
-          <span data-openbitfun-component="shell-nav" data-openbitfun-part="title" className="openbitfun-shell-nav__title" data-testid="shell-panel-title">{t('nav.shell.title')}</span>
+          <span data-openbitfun-component="shell-nav" data-openbitfun-part="title" className="openbitfun-shell-nav__title" data-testid="shell-panel-title" data-starmate-component="shell-nav" data-starmate-part="title" >{t('nav.shell.title')}</span>
           <ShellNavWorkspaceSwitcher
             workspaceName={workspaceName}
             hasMultipleWorkspaces={hasMultipleWorkspaces}
@@ -276,8 +276,8 @@ const ShellNav: React.FC = () => {
             onSelectWorkspace={handleSelectWorkspace}
           />
         </div>
-        <div data-openbitfun-component="shell-nav" data-openbitfun-part="headerActions" className="openbitfun-shell-nav__header-actions" ref={menuRef}>
-          <div data-openbitfun-component="shell-nav" data-openbitfun-part="splitButton" data-openbitfun-state={menuOpen ? 'active' : undefined} className={`openbitfun-shell-nav__split-button${menuOpen ? ' is-active' : ''}`}>
+        <div data-openbitfun-component="shell-nav" data-openbitfun-part="headerActions" className="openbitfun-shell-nav__header-actions" ref={menuRef} data-starmate-component="shell-nav" data-starmate-part="headerActions" >
+          <div data-openbitfun-component="shell-nav" data-openbitfun-part="splitButton" data-openbitfun-state={menuOpen ? 'active' : undefined} className={`openbitfun-shell-nav__split-button${menuOpen ? ' is-active' : ''}`} data-starmate-component="shell-nav" data-starmate-part="splitButton" data-starmate-state={menuOpen ? 'active' : undefined} >
             <Tooltip content={t('nav.shell.actions.newTerminal')} placement="bottom">
               <button
                 type="button"
@@ -312,7 +312,7 @@ const ShellNav: React.FC = () => {
                 left: `${createMenuLayout?.left ?? 0}px`,
                 visibility: createMenuLayout ? 'visible' : 'hidden',
               }}
-            >
+             data-starmate-component="shell-nav" data-starmate-part="menu" data-starmate-placement={createMenuLayout?.placement ?? 'bottom'} >
               {shellMenuItems.map((shell) => (
                 <MenuItem
                   data-openbitfun-component="shell-nav"
@@ -321,12 +321,12 @@ const ShellNav: React.FC = () => {
                   type="button"
                   leading={<Icon name="plus" size="sm" />}
                   onClick={() => { void handleCreateManualTerminal(shell.shellType); }}
-                >
+                 data-starmate-component="shell-nav" data-starmate-part="menuItem" >
                   <span>{shell.label}</span>
                 </MenuItem>
               ))}
               {shellMenuItems.length > 0 ? <MenuSeparator /> : null}
-              <MenuItem type="button" data-openbitfun-component="shell-nav" data-openbitfun-part="menuItem" leading={<Icon name="refresh" size="sm" />} onClick={() => { setMenuOpen(false); void handleRefresh(); }}>
+              <MenuItem type="button" data-openbitfun-component="shell-nav" data-openbitfun-part="menuItem" leading={<Icon name="refresh" size="sm" />} onClick={() => { setMenuOpen(false); void handleRefresh(); }} data-starmate-component="shell-nav" data-starmate-part="menuItem" >
                 <span>{t('nav.shell.actions.refresh')}</span>
               </MenuItem>
             </Menu>,
@@ -338,7 +338,7 @@ const ShellNav: React.FC = () => {
       <NavigationPanelBody className={`openbitfun-shell-nav__sections${!hasVisibleContent ? ' openbitfun-shell-nav__sections--empty' : ''}`}>
         <NavigationPanelContent className="openbitfun-shell-nav__panel-content">
         {hasVisibleContent ? (
-          <div data-openbitfun-component="shell-nav" data-openbitfun-part="list" className="openbitfun-shell-nav__terminal-list" data-testid="shell-command-list">
+          <div data-openbitfun-component="shell-nav" data-openbitfun-part="list" className="openbitfun-shell-nav__terminal-list" data-testid="shell-command-list" data-starmate-component="shell-nav" data-starmate-part="list" >
             {entries.map((entry) => (
               <ShellNavEntryItem
                 key={entry.sessionId}
@@ -355,7 +355,7 @@ const ShellNav: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div data-openbitfun-component="shell-nav" data-openbitfun-part="empty" className="openbitfun-shell-nav__empty">
+          <div data-openbitfun-component="shell-nav" data-openbitfun-part="empty" className="openbitfun-shell-nav__empty" data-starmate-component="shell-nav" data-starmate-part="empty" >
             <p className="openbitfun-shell-nav__empty-message">
               {t('nav.shell.empty.all')}
             </p>

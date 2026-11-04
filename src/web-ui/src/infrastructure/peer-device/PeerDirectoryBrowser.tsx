@@ -149,23 +149,23 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
       {...(!visible ? { inert: '' } : {})}
       data-openbitfun-component="peer-device"
       data-openbitfun-part="overlay"
-    >
+     data-starmate-component="peer-device" data-starmate-part="overlay" >
       <div
         className="peer-directory-browser"
         data-testid="peer-directory-browser"
         data-openbitfun-component="peer-device"
         data-openbitfun-part="dialog"
-      >
+       data-starmate-component="peer-device" data-starmate-part="dialog" >
         <div
           className="peer-directory-browser__header"
           data-openbitfun-component="peer-device"
           data-openbitfun-part="header"
-        >
+         data-starmate-component="peer-device" data-starmate-part="header" >
           <h2
             className="peer-directory-browser__header-title"
             data-openbitfun-component="peer-device"
             data-openbitfun-part="title"
-          >{title}</h2>
+           data-starmate-component="peer-device" data-starmate-part="title" >{title}</h2>
           <IconButton
             className="peer-directory-browser__close-btn"
             icon={<Icon name="xmark" size="lg" />}
@@ -174,14 +174,14 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
             onClick={onCancel}
             data-openbitfun-component="peer-device"
             data-openbitfun-part="closeButton"
-          />
+           data-starmate-component="peer-device" data-starmate-part="closeButton" />
         </div>
 
         <div
           className="peer-directory-browser__toolbar"
           data-openbitfun-component="peer-device"
           data-openbitfun-part="toolbar"
-        >
+         data-starmate-component="peer-device" data-starmate-part="toolbar" >
           <button
             type="button"
             className="peer-directory-browser__tool-btn"
@@ -190,7 +190,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
             title={t('peerDirectoryPicker.parent')}
             data-openbitfun-component="peer-device"
             data-openbitfun-part="toolButton"
-          >
+           data-starmate-component="peer-device" data-starmate-part="toolButton" >
             <Icon name="arrow-left" size="sm" />
           </button>
           <button
@@ -201,7 +201,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
             title={t('peerDirectoryPicker.home')}
             data-openbitfun-component="peer-device"
             data-openbitfun-part="toolButton"
-          >
+           data-starmate-component="peer-device" data-starmate-part="toolButton" >
             <Home size={14} />
           </button>
           <button
@@ -212,16 +212,16 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
             title={t('peerDirectoryPicker.refresh')}
             data-openbitfun-component="peer-device"
             data-openbitfun-part="toolButton"
-          >
+           data-starmate-component="peer-device" data-starmate-part="toolButton" >
             <Icon name="refresh" size="sm" />
           </button>
           <div
             className="peer-directory-browser__path"
             data-openbitfun-component="peer-device"
             data-openbitfun-part="path"
-          >
+           data-starmate-component="peer-device" data-starmate-part="path" >
             {/* Retain the appearance part for existing user styles around the editable field. */}
-            <div data-openbitfun-component="peer-device" data-openbitfun-part="pathDisplay">
+            <div data-openbitfun-component="peer-device" data-openbitfun-part="pathDisplay" data-starmate-component="peer-device" data-starmate-part="pathDisplay" >
               <Input
                 className="peer-directory-browser__path-input-field"
                 size="sm"
@@ -256,7 +256,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
                 }}
                 data-openbitfun-component="peer-device"
                 data-openbitfun-part="pathInput"
-              />
+               data-starmate-component="peer-device" data-starmate-part="pathInput" />
             </div>
           </div>
         </div>
@@ -265,14 +265,14 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
           className="peer-directory-browser__body"
           data-openbitfun-component="peer-device"
           data-openbitfun-part="body"
-        >
+         data-starmate-component="peer-device" data-starmate-part="body" >
           {loading ? (
             <div
               className="peer-directory-browser__state"
               data-openbitfun-component="peer-device"
               data-openbitfun-part="status"
               data-openbitfun-state="loading"
-            >
+             data-starmate-component="peer-device" data-starmate-part="status" data-starmate-state="loading" >
               <Loader2 size={16} className="peer-directory-browser__spinner" />
               <span>{t('peerDirectoryPicker.loading')}</span>
             </div>
@@ -282,7 +282,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
               data-openbitfun-component="peer-device"
               data-openbitfun-part="status"
               data-openbitfun-state="error"
-            >
+             data-starmate-component="peer-device" data-starmate-part="status" data-starmate-state="error" >
               <span>{error}</span>
             </div>
           ) : entries.length === 0 ? (
@@ -291,7 +291,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
               data-openbitfun-component="peer-device"
               data-openbitfun-part="status"
               data-openbitfun-state="empty"
-            >
+             data-starmate-component="peer-device" data-starmate-part="status" data-starmate-state="empty" >
               <span>{t('peerDirectoryPicker.empty')}</span>
             </div>
           ) : (
@@ -299,7 +299,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
               className="peer-directory-browser__list"
               data-openbitfun-component="peer-device"
               data-openbitfun-part="list"
-            >
+             data-starmate-component="peer-device" data-starmate-part="list" >
               {entries.map((entry) => (
                 <li key={entry.path}>
                   <button
@@ -312,7 +312,7 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
                     data-openbitfun-component="peer-device"
                     data-openbitfun-part="item"
                     data-openbitfun-state={selectedPath === entry.path ? 'selected' : undefined}
-                  >
+                   data-starmate-component="peer-device" data-starmate-part="item" data-starmate-state={selectedPath === entry.path ? 'selected' : undefined} >
                     <Icon name="folder" size="sm" />
                     <span>{entry.name}</span>
                   </button>
@@ -326,20 +326,20 @@ export const PeerDirectoryBrowser: React.FC<PeerDirectoryBrowserProps> = ({
           className="peer-directory-browser__footer"
           data-openbitfun-component="peer-device"
           data-openbitfun-part="footer"
-        >
+         data-starmate-component="peer-device" data-starmate-part="footer" >
           <div
             className="peer-directory-browser__selected"
             title={selectedPath || currentPath}
             data-openbitfun-component="peer-device"
             data-openbitfun-part="selection"
-          ><OverflowText>
+           data-starmate-component="peer-device" data-starmate-part="selection" ><OverflowText>
             {t('peerDirectoryPicker.selected', { path: selectedPath || currentPath })}
           </OverflowText></div>
           <div
             className="peer-directory-browser__actions"
             data-openbitfun-component="peer-device"
             data-openbitfun-part="actions"
-          >
+           data-starmate-component="peer-device" data-starmate-part="actions" >
             <Button type="button" variant="fill" size="sm" onClick={onCancel}>
               {t('peerDirectoryPicker.cancel')}
             </Button>

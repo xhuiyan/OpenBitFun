@@ -25,5 +25,5 @@ export function StarMateMark({ label, size, motion = "none", active = true, clas
     style={{ width: size, height: size, ...style }} role={label ? "img" : undefined}
     aria-label={label} aria-hidden={label ? undefined : true}
     data-openbitfun-component="openbitfun-mark" data-openbitfun-part="root"
-    data-openbitfun-motion={motion} data-openbitfun-active={active} />;
+    data-openbitfun-motion={motion} data-openbitfun-active={active}  data-starmate-component="openbitfun-mark" data-starmate-part="root" data-starmate-motion={motion} data-starmate-active={active} />;
 }

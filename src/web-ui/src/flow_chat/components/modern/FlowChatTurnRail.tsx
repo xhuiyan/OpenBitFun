@@ -255,14 +255,14 @@ export const FlowChatTurnRail: React.FC<FlowChatTurnRailProps> = ({
       data-rendered-end-ordinal={renderedRange.endOrdinalExclusive}
       data-total-turn-count={totalOrdinalCount}
       data-hovering={hoveredTurnOrdinal !== null ? 'true' : undefined}
-    >
+     data-starmate-component="flow-chat-turn-rail" data-starmate-part="root" >
       <div
         ref={listRef}
         className="flowchat-turn-rail__list"
         data-openbitfun-component="flow-chat-turn-rail"
         data-openbitfun-part="list"
         onScroll={handleScroll}
-      >
+       data-starmate-component="flow-chat-turn-rail" data-starmate-part="list" >
         <div
           className="flowchat-turn-rail__track"
           style={{ height: `${getFlowChatTurnRailTotalHeight(totalOrdinalCount)}px` }}
@@ -289,10 +289,10 @@ export const FlowChatTurnRail: React.FC<FlowChatTurnRailProps> = ({
                 trigger="hover-focus"
                 className="flowchat-turn-rail__tooltip"
                 content={(
-                  <span className="flowchat-turn-rail__tooltip-content" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipContent">
-                    <span className="flowchat-turn-rail__tooltip-turn" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipTurn">{turnLabel}</span>
+                  <span className="flowchat-turn-rail__tooltip-content" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipContent" data-starmate-component="flow-chat-turn-rail" data-starmate-part="tooltipContent" >
+                    <span className="flowchat-turn-rail__tooltip-turn" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipTurn" data-starmate-component="flow-chat-turn-rail" data-starmate-part="tooltipTurn" >{turnLabel}</span>
                     {capsulePreview ? (
-                      <span className="flowchat-turn-rail__tooltip-message" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipMessage">
+                      <span className="flowchat-turn-rail__tooltip-message" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipMessage" data-starmate-component="flow-chat-turn-rail" data-starmate-part="tooltipMessage" >
                         {capsulePreview.segments.map((segment, index) => segment.kind === 'text' ? (
                           <React.Fragment key={`text-${index}`}>{segment.text}</React.Fragment>
                         ) : segment.kind === 'inlineToken' ? (
@@ -311,7 +311,7 @@ export const FlowChatTurnRail: React.FC<FlowChatTurnRailProps> = ({
                         ))}
                       </span>
                     ) : content !== null ? (
-                      <span className="flowchat-turn-rail__tooltip-message" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipMessage">{content}</span>
+                      <span className="flowchat-turn-rail__tooltip-message" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="tooltipMessage" data-starmate-component="flow-chat-turn-rail" data-starmate-part="tooltipMessage" >{content}</span>
                     ) : null}
                   </span>
                 )}
@@ -351,8 +351,8 @@ export const FlowChatTurnRail: React.FC<FlowChatTurnRailProps> = ({
                   onPointerLeave={() => setHoverOrdinal(null)}
                   onPointerCancel={() => setHoverOrdinal(null)}
                   onKeyDown={(event) => handleKeyDown(event, turnArrayIndex)}
-                >
-                  <span className="flowchat-turn-rail__bar" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="bar" aria-hidden="true" />
+                 data-starmate-component="flow-chat-turn-rail" data-starmate-part="item" data-starmate-state={[isCurrent && 'current', isVisible && 'visible'].filter(Boolean).join(' ')} >
+                  <span className="flowchat-turn-rail__bar" data-openbitfun-component="flow-chat-turn-rail" data-openbitfun-part="bar" aria-hidden="true"  data-starmate-component="flow-chat-turn-rail" data-starmate-part="bar" />
                 </button>
               </Tooltip>
             );

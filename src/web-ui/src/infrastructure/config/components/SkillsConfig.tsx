@@ -222,7 +222,7 @@ const SkillsConfig: React.FC = () => {
   const renderAddForm = (level: SkillLevel) => {
     if (!showAddForm || formLevel !== level) return null;
     return (
-      <div className="openbitfun-collection-form" data-openbitfun-component="skills-config" data-openbitfun-part="form">
+      <div className="openbitfun-collection-form" data-openbitfun-component="skills-config" data-openbitfun-part="form" data-starmate-component="skills-config" data-starmate-part="form" >
         <div className="openbitfun-collection-form__header">
           <h3>{t('form.title')}</h3>
           <Tooltip content={t('form.closeTooltip')}>
@@ -234,7 +234,7 @@ const SkillsConfig: React.FC = () => {
             />
           </Tooltip>
         </div>
-        <div className="openbitfun-collection-form__body" data-openbitfun-component="skills-config" data-openbitfun-part="formBody">
+        <div className="openbitfun-collection-form__body" data-openbitfun-component="skills-config" data-openbitfun-part="formBody" data-starmate-component="skills-config" data-starmate-part="formBody" >
           <Field label={t('form.level.label')} controlWidth="fill">
             <Select
               options={[
@@ -344,7 +344,7 @@ const SkillsConfig: React.FC = () => {
         />
     ) : null;
     const details = (
-      <div data-openbitfun-component="skills-config" data-openbitfun-part="details">
+      <div data-openbitfun-component="skills-config" data-openbitfun-part="details" data-starmate-component="skills-config" data-starmate-part="details" >
         <div className="openbitfun-collection-details__field">{skill.description}</div>
         <div className="openbitfun-collection-details__meta">
           <span className="openbitfun-collection-details__label">{t('list.item.sourceLabel')}</span>
@@ -380,14 +380,14 @@ const SkillsConfig: React.FC = () => {
         data-openbitfun-component="skills-config"
         data-openbitfun-part="item"
         data-openbitfun-state={skill.isShadowed ? 'covered' : undefined}
-      />
+       data-starmate-component="skills-config" data-starmate-part="item" data-starmate-state={skill.isShadowed ? 'covered' : undefined} />
     );
   };
 
   const renderMarketList = () => {
     if (marketLoading) {
       return (
-        <div className="openbitfun-skills-config__market-list" aria-busy="true" aria-label={t('market.loading')} data-openbitfun-component="skills-config" data-openbitfun-part="marketList" data-openbitfun-state="loading">
+        <div className="openbitfun-skills-config__market-list" aria-busy="true" aria-label={t('market.loading')} data-openbitfun-component="skills-config" data-openbitfun-part="marketList" data-openbitfun-state="loading" data-starmate-component="skills-config" data-starmate-part="marketList" data-starmate-state="loading" >
           {Array.from({ length: 5 }).map((_, index) => (
             <Card
               key={`market-loading-${index}`}
@@ -397,7 +397,7 @@ const SkillsConfig: React.FC = () => {
               data-openbitfun-component="skills-config"
               data-openbitfun-part="marketItem"
               data-openbitfun-state="loading"
-            >
+             data-starmate-component="skills-config" data-starmate-part="marketItem" data-starmate-state="loading" >
               <CardBody className="openbitfun-skills-config__market-item-body">
                 <div className="openbitfun-skills-config__market-skeleton-main">
                   <div className="openbitfun-skills-config__market-skeleton-line openbitfun-skills-config__market-skeleton-line--title" />
@@ -414,19 +414,19 @@ const SkillsConfig: React.FC = () => {
     }
 
     if (marketError) {
-      return <div className="openbitfun-skills-config__market-state openbitfun-skills-config__market-state--error" data-openbitfun-component="skills-config" data-openbitfun-part="marketState" data-openbitfun-state="error">{t('market.errorPrefix')}{marketError}</div>;
+      return <div className="openbitfun-skills-config__market-state openbitfun-skills-config__market-state--error" data-openbitfun-component="skills-config" data-openbitfun-part="marketState" data-openbitfun-state="error" data-starmate-component="skills-config" data-starmate-part="marketState" data-starmate-state="error" >{t('market.errorPrefix')}{marketError}</div>;
     }
 
     if (marketSkills.length === 0) {
       return (
-        <div className="openbitfun-skills-config__market-state" data-openbitfun-component="skills-config" data-openbitfun-part="marketState">
+        <div className="openbitfun-skills-config__market-state" data-openbitfun-component="skills-config" data-openbitfun-part="marketState" data-starmate-component="skills-config" data-starmate-part="marketState" >
           {marketKeyword.trim() ? t('market.empty.noMatch') : t('market.empty.noSkills')}
         </div>
       );
     }
 
     return (
-      <div className="openbitfun-skills-config__market-list" data-openbitfun-component="skills-config" data-openbitfun-part="marketList">
+      <div className="openbitfun-skills-config__market-list" data-openbitfun-component="skills-config" data-openbitfun-part="marketList" data-starmate-component="skills-config" data-starmate-part="marketList" >
         {displayMarketSkills.map((skill) => {
           const isDownloading = downloadingPackage === skill.installId;
           const isInstalled = isSkillMarketItemInstalled(skill, installedMarketIds);
@@ -446,7 +446,7 @@ const SkillsConfig: React.FC = () => {
               data-openbitfun-component="skills-config"
               data-openbitfun-part="marketItem"
               data-openbitfun-state={isInstalled ? 'installed' : undefined}
-            >
+             data-starmate-component="skills-config" data-starmate-part="marketItem" data-starmate-state={isInstalled ? 'installed' : undefined} >
               <CardBody className="openbitfun-skills-config__market-item-body">
                 <div className="openbitfun-skills-config__market-item-main">
                   <div className="openbitfun-skills-config__market-item-head">
@@ -626,10 +626,10 @@ const SkillsConfig: React.FC = () => {
 
   if (loading) {
     return (
-      <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root" data-openbitfun-state="loading">
+      <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root" data-openbitfun-state="loading" data-starmate-component="skills-config" data-starmate-part="root" data-starmate-state="loading" >
         <ConfigPageHeader title={t('title')} subtitle={t('subtitle')} />
-        <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content">
-          <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="loading" data-openbitfun-state="loading"><p>{t('list.loading')}</p></div>
+        <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content" data-starmate-component="skills-config" data-starmate-part="content" >
+          <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="skills-config" data-starmate-part="loading" data-starmate-state="loading" ><p>{t('list.loading')}</p></div>
         </ConfigPageContent>
       </ConfigPageLayout>
     );
@@ -637,10 +637,10 @@ const SkillsConfig: React.FC = () => {
 
   if (error) {
     return (
-      <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root" data-openbitfun-state="error">
+      <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root" data-openbitfun-state="error" data-starmate-component="skills-config" data-starmate-part="root" data-starmate-state="error" >
         <ConfigPageHeader title={t('title')} subtitle={t('subtitle')} />
-        <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content">
-          <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="error" data-openbitfun-state="error"><p>{t('list.errorPrefix')}{error}</p></div>
+        <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content" data-starmate-component="skills-config" data-starmate-part="content" >
+          <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="error" data-openbitfun-state="error" data-starmate-component="skills-config" data-starmate-part="error" data-starmate-state="error" ><p>{t('list.errorPrefix')}{error}</p></div>
         </ConfigPageContent>
       </ConfigPageLayout>
     );
@@ -650,10 +650,10 @@ const SkillsConfig: React.FC = () => {
   const projectSkills = skills.filter(s => s.level === 'project');
 
   return (
-    <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root">
+    <ConfigPageLayout className="openbitfun-skills-config" data-openbitfun-component="skills-config" data-openbitfun-part="root" data-starmate-component="skills-config" data-starmate-part="root" >
       <ConfigPageHeader title={t('title')} subtitle={t('subtitle')} />
 
-      <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content">
+      <ConfigPageContent data-openbitfun-component="skills-config" data-openbitfun-part="content" data-starmate-component="skills-config" data-starmate-part="content" >
         <ConfigPageSection
           title={t('market.title')}
           description={t('market.subtitle')}
@@ -668,7 +668,7 @@ const SkillsConfig: React.FC = () => {
             </Tooltip>
           )}
         >
-          <div className="openbitfun-skills-config__market-toolbar" data-openbitfun-component="skills-config" data-openbitfun-part="marketToolbar">
+          <div className="openbitfun-skills-config__market-toolbar" data-openbitfun-component="skills-config" data-openbitfun-part="marketToolbar" data-starmate-component="skills-config" data-starmate-part="marketToolbar" >
             <SearchField
               className="openbitfun-skills-config__market-search"
               placeholder={t('market.searchPlaceholder')}
@@ -695,7 +695,7 @@ const SkillsConfig: React.FC = () => {
         >
           {renderAddForm('user')}
           {userSkills.length === 0 && !(showAddForm && formLevel === 'user') ? (
-            <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="empty">
+            <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="empty" data-starmate-component="skills-config" data-starmate-part="empty" >
               <Button variant="outline" size="sm" onClick={() => { setFormLevel('user'); setShowAddForm(true); }} leadingIcon={<Icon name="plus" size="sm" />}>
 
                 {t('toolbar.addTooltip')}
@@ -711,7 +711,7 @@ const SkillsConfig: React.FC = () => {
         >
           {renderAddForm('project')}
           {projectSkills.length === 0 && !(showAddForm && formLevel === 'project') ? (
-            <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="empty">
+            <div className="openbitfun-collection-empty" data-openbitfun-component="skills-config" data-openbitfun-part="empty" data-starmate-component="skills-config" data-starmate-part="empty" >
               {!hasWorkspace && <p>{t('messages.noWorkspace')}</p>}
               {hasWorkspace && (
                 <Button variant="outline" size="sm" onClick={() => { setFormLevel('project'); setShowAddForm(true); }} leadingIcon={<Icon name="plus" size="sm" />}>

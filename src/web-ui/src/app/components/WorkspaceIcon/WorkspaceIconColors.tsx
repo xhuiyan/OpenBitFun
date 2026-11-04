@@ -44,14 +44,14 @@ export function WorkspaceIconColors({ color, disabled, onChange }: {
   const pickerValue = isPreset ? resolvedHex : color;
   const pickerLabels = { color: t('nav.workspaces.icon.colorValue'), palette: t('nav.workspaces.icon.customColor'),
     lightness: t('nav.workspaces.icon.lightness'), edit: t('actions.edit'), apply: t('actions.apply') };
-  return <div className="workspace-icon-editor__colors" data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="row">
+  return <div className="workspace-icon-editor__colors" data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="row" data-starmate-component="workspace-icon-editor" data-starmate-part="row" >
     <div className="workspace-icon-editor__palette" role="group" aria-label={t('nav.workspaces.icon.colors')}
-      data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="row">
+      data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="row" data-starmate-component="workspace-icon-editor" data-starmate-part="row" >
       {iconColors.map(value => <IconButton key={value} className="workspace-icon-editor__swatch" shape="circle" size="sm"
         aria-label={t(`nav.workspaces.icon.palette.${value}`)} title={t(`nav.workspaces.icon.palette.${value}`)}
         aria-pressed={color === value} disabled={disabled} onClick={() => onChange(value)}
         icon={<span ref={color === value ? selectedSwatch : undefined} className="workspace-icon-editor__color"
-          data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="color" style={{ backgroundColor: iconColorStyle(value) }} />} />)}
+          data-openbitfun-component="workspace-icon-editor" data-openbitfun-part="color" style={{ backgroundColor: iconColorStyle(value) }}  data-starmate-component="workspace-icon-editor" data-starmate-part="color" />} />)}
       <IconButton className="workspace-icon-editor__swatch" shape="circle" size="sm"
         aria-label={t('nav.workspaces.icon.customColor')} title={t('nav.workspaces.icon.customColor')} aria-pressed={!isPreset}
         aria-expanded={pickerOpen} aria-haspopup="dialog" aria-controls={pickerOpen ? pickerId : undefined}

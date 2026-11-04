@@ -368,7 +368,7 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
         className="miniapp-submissions__workspace"
         data-openbitfun-component="miniapp-submissions-view"
         data-openbitfun-part="root"
-      >
+       data-starmate-component="miniapp-submissions-view" data-starmate-part="root" >
         <Dialog
           open={showForm && !capturingScreenshot}
           onOpenChange={() => { if (!busy) setShowForm(false); }}
@@ -398,7 +398,7 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
                   data-openbitfun-component="miniapp-submissions-view"
                   data-openbitfun-part="form"
                   onSubmit={(event) => void submit(event)}
-                >
+                 data-starmate-component="miniapp-submissions-view" data-starmate-part="form" >
                   <section className="miniapp-submissions__section" aria-label={t('market.submissions.basicInformation')}>
                     <PageHeader title={t('market.submissions.basicInformation')} level={3} size="sm" />
                     <Field label={t('market.submissions.app')} controlWidth="fill">
@@ -671,7 +671,7 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
           aria-label={t('market.submissions.history')}
           data-openbitfun-component="miniapp-submissions-view"
           data-openbitfun-part="history"
-        >
+         data-starmate-component="miniapp-submissions-view" data-starmate-part="history" >
           {submissions.length ? (
             <div className="miniapp-submissions__list">
               {submissions.map((submission) => (
@@ -679,7 +679,7 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
                   key={submission.submissionId}
                   data-openbitfun-component="miniapp-submissions-view"
                   data-openbitfun-part="item"
-                >
+                 data-starmate-component="miniapp-submissions-view" data-starmate-part="item" >
                   <div className="miniapp-submissions__list-head">
                     <span className="miniapp-submissions__app-icon">
                       {renderMiniAppIcon(submission.icon || 'box', 16)}

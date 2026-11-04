@@ -84,7 +84,7 @@ export function ProjectDefaultsSection({ workspace, scope, isActive }: {
   ...(snapshot?.modes.map(mode => ({ value: mode.id, label: agentName(mode, t) })) ?? [])];
   const fields = [{ field: 'primary_model', label: t('defaults.primary_model') }, { field: 'fast_model', label: t('defaults.fast_model') }] as const;
   return <section className="project-resources__default-settings" aria-label={t('defaults.title')}
-    data-openbitfun-scene="project-resources" data-openbitfun-part="defaults" aria-busy={loading || saving}>
+    data-openbitfun-scene="project-resources" data-openbitfun-part="defaults" aria-busy={loading || saving} data-starmate-scene="project-resources" data-starmate-part="defaults" >
     <FieldGroup appearance="plain" fieldSurface="ambient" dividers={false} className="project-resources__default-fields">
       {fields.map(({ field, label }) => <Combobox key={field} className="project-resources__default-field"
           size="sm" variant="pill" bordered="hover" hitArea="expanded" showIndicator={false} aria-label={label} value={snapshot?.defaults[field] ?? ''}

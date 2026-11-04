@@ -94,7 +94,7 @@ export const GenerativeWidgetStaticRenderer: React.FC<GenerativeWidgetStaticRend
       style={appearanceStyle}
       data-openbitfun-appearance={appearancePayload?.id ?? 'unknown'}
       data-openbitfun-appearance-mode={appearancePayload?.mode ?? 'dark'}
-    >
+     data-starmate-appearance={appearancePayload?.id ?? 'unknown'} data-starmate-appearance-mode={appearancePayload?.mode ?? 'dark'} >
       <style>{shellCss}</style>
       <div ref={rootRef} className="openbitfun-generative-widget-static-renderer__root" />
     </div>

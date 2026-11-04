@@ -391,7 +391,7 @@ const MiniAppGalleryView: React.FC<MiniAppGalleryViewProps> = ({ tabs }) => {
       data-openbitfun-component="miniapp-gallery-view"
       data-openbitfun-part="root"
       className="miniapp-gallery-pane miniapp-gallery"
-    >
+     data-starmate-component="miniapp-gallery-view" data-starmate-part="root" >
       <GalleryPageHeader
         title={t('title')}
         subtitle={t('subtitle')}
@@ -468,7 +468,7 @@ const MiniAppGalleryView: React.FC<MiniAppGalleryViewProps> = ({ tabs }) => {
 
       {tabs}
 
-      <div data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="content" className="gallery-zones">
+      <div data-openbitfun-component="miniapp-gallery-view" data-openbitfun-part="content" className="gallery-zones" data-starmate-component="miniapp-gallery-view" data-starmate-part="content" >
         {activeApps.length > 0 ? (
           <GalleryZone
             title={t('running')}
@@ -502,7 +502,7 @@ const MiniAppGalleryView: React.FC<MiniAppGalleryViewProps> = ({ tabs }) => {
               <div
                 data-openbitfun-component="miniapp-gallery-view"
                 data-openbitfun-part="categoryFilters"
-              >
+               data-starmate-component="miniapp-gallery-view" data-starmate-part="categoryFilters" >
                 <SegmentedControl size="md"
                   className="miniapp-gallery__categories"
                   options={categories.map((category) => {
@@ -522,7 +522,7 @@ const MiniAppGalleryView: React.FC<MiniAppGalleryViewProps> = ({ tabs }) => {
                         <span
                           data-openbitfun-component="miniapp-gallery-view"
                           data-openbitfun-part="categoryFilter"
-                        >
+                         data-starmate-component="miniapp-gallery-view" data-starmate-part="categoryFilter" >
                           {category === 'all'
                             ? t('all')
                             : category.replace(/^./, (character) => character.toUpperCase())}

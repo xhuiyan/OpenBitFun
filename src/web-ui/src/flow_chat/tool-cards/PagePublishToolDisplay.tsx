@@ -86,7 +86,7 @@ export const PagePublishDisplay: React.FC<ToolCardProps> = ({ toolItem, sessionI
       data-tool-card-id={toolId ?? ''}
       data-status={status}
       data-expanded={isExpanded ? 'true' : 'false'}
-    >
+     data-starmate-adapter="page-publish" >
       <PagePublishToolCard
         status={isFailed ? 'error' : status}
         isExpanded={isExpanded}

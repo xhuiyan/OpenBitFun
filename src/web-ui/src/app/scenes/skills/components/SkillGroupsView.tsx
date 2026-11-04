@@ -109,10 +109,10 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
     ];
     return (
       <div key={group.id} role="row" className="skill-groups__row" data-overflow-trigger
-        aria-disabled={busy || undefined} data-openbitfun-scene="skills" data-openbitfun-part="groupRow">
+        aria-disabled={busy || undefined} data-openbitfun-scene="skills" data-openbitfun-part="groupRow" data-starmate-scene="skills" data-starmate-part="groupRow" >
         <div className="skill-groups__identity" role="cell">
           <button type="button" className="skill-groups__open" disabled={busy} aria-label={group.label}
-            onClick={() => edit(group)} data-openbitfun-scene="skills" data-openbitfun-part="groupOpen" />
+            onClick={() => edit(group)} data-openbitfun-scene="skills" data-openbitfun-part="groupOpen"  data-starmate-scene="skills" data-starmate-part="groupOpen" />
           <span className="skill-groups__name"><OverflowText>{group.label}</OverflowText></span>
           <OverflowText lines={2} className="skill-groups__preview">{group.skills.length
             ? group.skills.map(skill => skill.name).join(' · ')
@@ -124,7 +124,7 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
             <span>{t('groups.unavailableCount', { count: group.unavailableSkillKeys.length })}</span>
           )}
         </div>
-        <div className="skill-groups__actions" role="cell" data-openbitfun-scene="skills" data-openbitfun-part="groupActions">
+        <div className="skill-groups__actions" role="cell" data-openbitfun-scene="skills" data-openbitfun-part="groupActions" data-starmate-scene="skills" data-starmate-part="groupActions" >
           {original
             ? <GroupActions label={t('groups.actions', { name: group.label })} items={items} disabled={busy} />
             : <Button size="sm" variant="text" disabled={busy} onClick={() => copy(group)}>{t('groups.copy')}</Button>}
@@ -136,9 +136,9 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
   const renderSection = (label: string, sectionGroups: ResolvedSkillGroup[]) => (
     <section className="skill-groups__section" aria-label={label}>
       <div className="skill-groups__list" role="table" aria-label={label}
-        data-openbitfun-scene="skills" data-openbitfun-part="groupTable">
+        data-openbitfun-scene="skills" data-openbitfun-part="groupTable" data-starmate-scene="skills" data-starmate-part="groupTable" >
         <div className="skill-groups__list-header" role="row"
-          data-openbitfun-scene="skills" data-openbitfun-part="groupListHeader">
+          data-openbitfun-scene="skills" data-openbitfun-part="groupListHeader" data-starmate-scene="skills" data-starmate-part="groupListHeader" >
           <div className="skill-groups__list-heading" role="columnheader">
             <h2 className="skill-groups__section-title"><OverflowText>{label}</OverflowText></h2>
             <span className="skill-groups__count">{formatNumber(sectionGroups.length)}</span>
@@ -160,8 +160,8 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
   );
 
   return (
-    <div className="skill-groups" data-openbitfun-scene="skills" data-openbitfun-part="groups">
-      <header className="skills-content-header" data-openbitfun-scene="skills" data-openbitfun-part="groupsHeader">
+    <div className="skill-groups" data-openbitfun-scene="skills" data-openbitfun-part="groups" data-starmate-scene="skills" data-starmate-part="groups" >
+      <header className="skills-content-header" data-openbitfun-scene="skills" data-openbitfun-part="groupsHeader" data-starmate-scene="skills" data-starmate-part="groupsHeader" >
         <div className="skills-content-header__identity">
           <div className="skills-content-header__copy">
             <h2 className="skills-content-header__title"><OverflowText>{t('groups.title')}</OverflowText></h2>
@@ -173,7 +173,7 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
           {t('groups.create')}
         </Button>
       </header>
-      <div className="skills-main__toolbar" data-openbitfun-scene="skills" data-openbitfun-part="toolbar">
+      <div className="skills-main__toolbar" data-openbitfun-scene="skills" data-openbitfun-part="toolbar" data-starmate-scene="skills" data-starmate-part="toolbar" >
         <IconButton aria-label={t('groups.refresh')} title={t('groups.refresh')} icon={<Icon name="refresh" />}
           size="sm" disabled={collection.saving || collection.loading || catalogLoading} onClick={onRefresh} />
       </div>
@@ -186,7 +186,7 @@ export default function SkillGroupsView({ searchQuery, skills, collection, catal
         <p role="status" className="skill-groups__notice">{t('groups.catalogUnavailable')}</p>
       )}
       {collection.ready && (
-        <ScrollArea className="skill-groups__sections" data-openbitfun-scene="skills" data-openbitfun-part="groupList">
+        <ScrollArea className="skill-groups__sections" data-openbitfun-scene="skills" data-openbitfun-part="groupList" data-starmate-scene="skills" data-starmate-part="groupList" >
           {renderSection(t('groups.myGroups'), userGroups)}
           {builtinGroups.length > 0 && renderSection(t('groups.builtinGroups'), builtinGroups)}
         </ScrollArea>

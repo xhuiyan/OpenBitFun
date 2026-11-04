@@ -293,7 +293,7 @@ const TerminalOutputRendererComponent = forwardRef<TerminalOutputRendererHandle,
         overflow: 'hidden',
         position: 'relative',
       }}
-    >
+     data-starmate-component="terminal-tool" data-starmate-part="output" >
       <div
         ref={containerRef}
         className="terminal-output-renderer__xterm-host"

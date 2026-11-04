@@ -23,7 +23,7 @@ test("NavigationPanelItem forwards static labels and keeps native navigation sem
   assert.match(markup, /<button[^>]+aria-current="page"/);
   assert.match(markup, /data-active="true"/);
   assert.match(markup, /type="button"/);
-  assert.match(markup, /data-openbitfun-part="label">My submitted appearance packages<\/span>/);
+  assert.match(markup, /data-openbitfun-part="label"[^>]*>My submitted appearance packages<\/span>/);
   assert.doesNotMatch(markup, /data-overflow-behavior|data-overflow-content|labelBehavior/);
   const defaultMarkup = renderToStaticMarkup(createElement(NavigationPanelItem, null, "Navigation"));
   assert.match(defaultMarkup, /data-overflow-behavior="marquee"/);

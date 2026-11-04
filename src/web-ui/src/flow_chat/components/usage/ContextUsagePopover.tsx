@@ -89,9 +89,9 @@ export function ContextUsagePopover({
       data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="root"
       data-testid="context-usage-popover" data-openbitfun-native-webview-occlusion
       style={{ left: layout?.left ?? 0, top: layout?.top ?? 0, width: layout?.width,
-        visibility: layout ? 'visible' : 'hidden' }}>
+        visibility: layout ? 'visible' : 'hidden' }} data-starmate-product-component="context-usage-popover" data-starmate-product-part="root" data-starmate-native-webview-occlusion >
       <div className="context-usage-popover__header"
-        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="header">
+        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="header" data-starmate-product-component="context-usage-popover" data-starmate-product-part="header" >
         <Tooltip content={t('usage.context.estimateHelp')}>
           <span>{t('usage.context.title')}</span>
         </Tooltip>
@@ -108,7 +108,7 @@ export function ContextUsagePopover({
         </div>
       </div>
       <div className="context-usage-popover__totals"
-        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="totals">
+        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="totals" data-starmate-product-component="context-usage-popover" data-starmate-product-part="totals" >
         <span>{percentage !== undefined
           ? t('usage.context.full', { value: formatUsagePercent(percentage, t) }) : t('usage.unavailable')}</span>
         <span>{t('usage.context.tokenCapacity', {
@@ -117,10 +117,10 @@ export function ContextUsagePopover({
         })}</span>
       </div>
       <div className="context-usage-popover__body"
-        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="body">
+        data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="body" data-starmate-product-component="context-usage-popover" data-starmate-product-part="body" >
         {hasDistribution && <div className="context-usage-popover__bar" role="img"
           data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="bar"
-          aria-label={t('usage.context.full', { value: formatUsagePercent(percentage!, t) })}>
+          aria-label={t('usage.context.full', { value: formatUsagePercent(percentage!, t) })} data-starmate-product-component="context-usage-popover" data-starmate-product-part="bar" >
           {series.filter(row => row.value > 0).map(row => (
             <span key={row.key} className={`context-usage-popover__segment context-usage-popover__series--${row.key}`}
               data-usage-category={row.key} style={{ flexGrow: row.value }} {...highlight(row)} />
@@ -128,10 +128,10 @@ export function ContextUsagePopover({
         </div>}
         {hasTotal ? <>
           <dl className="context-usage-popover__legend"
-            data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="legend">
+            data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="legend" data-starmate-product-component="context-usage-popover" data-starmate-product-part="legend" >
             {rows.map(key => <div key={key} className="context-usage-popover__row" data-usage-category={key}
               data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="item"
-              tabIndex={0} {...highlight(series.find(row => row.key === key) ?? { key })}>
+              tabIndex={0} {...highlight(series.find(row => row.key === key) ?? { key })} data-starmate-product-component="context-usage-popover" data-starmate-product-part="item" >
               <dt><span aria-hidden="true" className={`context-usage-popover__swatch context-usage-popover__series--${key}`} />
                 <OverflowText>{t(`usage.context.categories.${key}`)}</OverflowText>
                 {previewSession && key !== 'summarizedConversation' && key !== 'conversation' && (
@@ -147,13 +147,13 @@ export function ContextUsagePopover({
             </div>)}
           </dl>
           {!hasDistribution && <p className="context-usage-popover__status" role="status">
-            <span data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="status">
+            <span data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="status" data-starmate-product-component="context-usage-popover" data-starmate-product-part="status" >
               {t(capacity === undefined ? 'usage.context.capacityUnavailable' : 'usage.context.exceedsCapacity')}
             </span>
           </p>}
         </> : <div className="context-usage-popover__empty" role="status" aria-live="polite" aria-busy={status === 'loading'}>
           <Empty icon={<Icon glyph={ChartPie} />} imageSize="sm" title={
-            <span data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="status">
+            <span data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="status" data-starmate-product-component="context-usage-popover" data-starmate-product-part="status" >
               {t(status === 'loading' ? 'usage.context.loading' : status === 'error' ? 'usage.context.loadFailed' : 'usage.context.unavailable')}
             </span>
           } />

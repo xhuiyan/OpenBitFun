@@ -247,7 +247,7 @@ const WorkspaceSessionFilterMenu: React.FC = () => {
         event.stopPropagation();
         openSubmenu(submenu, true);
       }}
-    >
+     data-starmate-state={activeSubmenu === submenu ? 'open' : undefined} >
       {t(`nav.sessions.viewMenu.${submenu}.label`)}
     </MenuItem>
   );
@@ -411,7 +411,7 @@ const WorkspaceSessionFilterMenu: React.FC = () => {
           icon={<Icon name="filter" size="sm" />}
           size="xs"
           variant="quiet"
-        />
+         data-starmate-action="session-filter" data-starmate-state={[open && 'open', isCustomized && 'filtered'].filter(Boolean).join(' ') || undefined} />
       </Tooltip>
       {menu}
     </>

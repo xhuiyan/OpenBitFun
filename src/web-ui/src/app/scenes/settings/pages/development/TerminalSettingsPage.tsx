@@ -130,7 +130,7 @@ function TerminalSection() {
   }
 
   return (
-    <div className="openbitfun-terminal-config" data-openbitfun-component="application-settings" data-openbitfun-part="terminal">
+    <div className="openbitfun-terminal-config" data-openbitfun-component="application-settings" data-openbitfun-part="terminal" data-starmate-component="application-settings" data-starmate-part="terminal" >
       <div className="openbitfun-terminal-config__content">
         <ConfigMessage message={message} />
 
@@ -165,6 +165,6 @@ function TerminalSection() {
 }
 const TerminalSettingsPage: React.FC = () => {
 
-  return <SettingsPage pageId="development.terminal" data-openbitfun-component="application-settings" data-openbitfun-part="root"><TerminalSection /></SettingsPage>;
+  return <SettingsPage pageId="development.terminal" data-openbitfun-component="application-settings" data-openbitfun-part="root" data-starmate-component="application-settings" data-starmate-part="root" ><TerminalSection /></SettingsPage>;
 };
 export default TerminalSettingsPage;

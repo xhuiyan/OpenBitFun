@@ -180,7 +180,7 @@ export const DeviceSurfaceSwitcher: React.FC = () => {
                 data-openbitfun-component="peer-device"
                 data-openbitfun-part="switcherElsewhere"
                 title={t('accountLogin.deviceSwitcher.othersRunning', { count: busyElsewhereCount })}
-              >
+               data-starmate-component="peer-device" data-starmate-part="switcherElsewhere" >
                 <MonitorSmartphone size={11} aria-hidden="true" />
                 {busyElsewhereCount}
               </span>
@@ -189,12 +189,12 @@ export const DeviceSurfaceSwitcher: React.FC = () => {
           </>
         )}
         onClick={() => setOpen(value => !value)}
-      >
+       data-starmate-component="peer-device" data-starmate-part="switcher" data-starmate-state={isRemote ? 'remote' : 'local'} >
         <OverflowText
           className="openbitfun-device-switcher__label"
           data-openbitfun-component="peer-device"
           data-openbitfun-part="switcherLabel"
-        >
+         data-starmate-component="peer-device" data-starmate-part="switcherLabel" >
           {currentLabel}
         </OverflowText>
       </ActionItem>
@@ -216,7 +216,7 @@ export const DeviceSurfaceSwitcher: React.FC = () => {
               left: `${layout?.left ?? 0}px`,
               visibility: layout ? 'visible' : 'hidden',
             }}
-          >
+           data-starmate-component="peer-device" data-starmate-part="switcherMenu" >
             <MenuSection title={t('accountLogin.deviceSwitcher.title')}>
               {devices.map(device => {
                 const isCurrent = device.deviceId === activeDeviceId;
@@ -245,7 +245,10 @@ export const DeviceSurfaceSwitcher: React.FC = () => {
                           !device.online && 'offline',
                         ].filter(Boolean).join(' ') || undefined}
                         aria-hidden="true"
-                      />
+                       data-starmate-component="peer-device" data-starmate-part="switcherStatusDot" data-starmate-state={[
+                          busy && 'busy',
+                          !device.online && 'offline',
+                        ].filter(Boolean).join(' ') || undefined} />
                     )}
                     metadata={(
                       <span className="openbitfun-device-switcher__item-metadata">
@@ -282,7 +285,7 @@ export const DeviceSurfaceSwitcher: React.FC = () => {
                     onClick={() => {
                       if (selectable) void handleSelect(device);
                     }}
-                  >
+                   data-starmate-component="peer-device" data-starmate-part="switcherItem" >
                     {device.deviceName}
                   </MenuItem>
                 );

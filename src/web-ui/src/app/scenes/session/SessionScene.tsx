@@ -189,10 +189,10 @@ const SessionScene: React.FC<SessionSceneProps> = ({ workspacePath, isEntering =
       ].filter(Boolean).join(' ')}
       data-testid="session-scene" data-openbitfun-scene="session" data-openbitfun-part="root"
       data-openbitfun-state={[isDragging && 'dragging', isTerminalDockedBottom && 'terminal-bottom'].filter(Boolean).join(' ') || undefined}
-    >
-      <div className="openbitfun-session-scene__main-row" data-openbitfun-scene="session" data-openbitfun-part="main">
+     data-starmate-scene="session" data-starmate-part="root" data-starmate-state={[isDragging && 'dragging', isTerminalDockedBottom && 'terminal-bottom'].filter(Boolean).join(' ') || undefined} >
+      <div className="openbitfun-session-scene__main-row" data-openbitfun-scene="session" data-openbitfun-part="main" data-starmate-scene="session" data-starmate-part="main" >
         <div className="openbitfun-session-scene__chat-pane" data-testid="session-chat-pane"
-          data-openbitfun-scene="session" data-openbitfun-part="chat">
+          data-openbitfun-scene="session" data-openbitfun-part="chat" data-starmate-scene="session" data-starmate-part="chat" >
           <ChatPane width={0} isFullscreen={false} isSceneActive={isActive}
             isDragging={isDragging} workspacePath={workspacePath} showChatInput
             resizeSuspended={workbenchResize.measurementSuspended}
@@ -226,7 +226,7 @@ const SessionScene: React.FC<SessionSceneProps> = ({ workspacePath, isEntering =
           onTransitionEnd={event => {
             if (event.currentTarget === event.target && event.propertyName === 'height') stopBottomPanelTransition();
           }}
-        >
+         data-starmate-scene="session" data-starmate-part="terminal" >
           <BottomTerminalPane workspacePath={workspacePath} isSceneActive={isActive && !isBottomHidden}
             onExpand={expandBottomTerminalPanel} onCollapse={collapseSessionBottomTerminalPane}
             terminalResizeSuspended={isBottomTerminalPanelTransitioning || isDraggingBottom || workbenchResize.measurementSuspended} />

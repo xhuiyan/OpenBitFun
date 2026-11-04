@@ -165,7 +165,7 @@ export const TabOverflowMenu: React.FC<TabOverflowMenuProps> = ({
       : '';
 
   return (
-    <div data-openbitfun-product-component="canvas-tab-overflow" data-openbitfun-product-part="root" data-openbitfun-state={isOpen ? 'open' : ''} ref={wrapperRef} className="canvas-tab-panorama-wrapper">
+    <div data-openbitfun-product-component="canvas-tab-overflow" data-openbitfun-product-part="root" data-openbitfun-state={isOpen ? 'open' : ''} ref={wrapperRef} className="canvas-tab-panorama-wrapper" data-starmate-product-component="canvas-tab-overflow" data-starmate-product-part="root" data-starmate-state={isOpen ? 'open' : ''} >
       <Tooltip content={tooltipContent} placement="bottom">
         {hasOverflow ? (
           <Button
@@ -181,8 +181,8 @@ export const TabOverflowMenu: React.FC<TabOverflowMenuProps> = ({
             onClick={handleButtonClick}
             leadingIcon={hasMissionControl ? <Icon glyph={LayoutGrid} size="sm" /> : undefined}
             trailingIcon={<Icon name={isOpen ? 'chevron-up' : 'chevron-down'} size="sm" />}
-          >
-            <span data-openbitfun-product-component="canvas-tab-overflow" data-openbitfun-product-part="badge">
+           data-starmate-product-component="canvas-tab-overflow" data-starmate-product-part="trigger" >
+            <span data-openbitfun-product-component="canvas-tab-overflow" data-openbitfun-product-part="badge" data-starmate-product-component="canvas-tab-overflow" data-starmate-product-part="badge" >
               +{overflowTabs.length}
             </span>
           </Button>
@@ -196,7 +196,7 @@ export const TabOverflowMenu: React.FC<TabOverflowMenuProps> = ({
             aria-label={tooltipContent}
             onClick={handleButtonClick}
             icon={<Icon glyph={LayoutGrid} size="sm" />}
-          />
+           data-starmate-product-component="canvas-tab-overflow" data-starmate-product-part="trigger" />
         )}
       </Tooltip>
 
@@ -259,7 +259,11 @@ export const TabOverflowMenu: React.FC<TabOverflowMenuProps> = ({
                     tab.fileDeletedFromDisk && 'deleted',
                   ].filter(Boolean).join(' ') || undefined}
                   className="canvas-tab-overflow-menu__item-title"
-                >
+                 data-starmate-product-component="canvas-tab-overflow" data-starmate-product-part="itemTitle" data-starmate-state={[
+                    activeTabId === tab.id && 'active',
+                    tab.isDirty && 'dirty',
+                    tab.fileDeletedFromDisk && 'deleted',
+                  ].filter(Boolean).join(' ') || undefined} >
                   {tab.state === 'preview' && <em>{titleWithDeleted}</em>}
                   {tab.state !== 'preview' && titleWithDeleted}
                 </OverflowText>

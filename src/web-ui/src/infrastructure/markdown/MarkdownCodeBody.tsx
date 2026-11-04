@@ -80,7 +80,7 @@ export function MarkdownCodeBody({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={bodyRef} className="code-block-body" data-openbitfun-component="markdown" data-openbitfun-part="codeBody">
+    <div ref={bodyRef} className="code-block-body" data-openbitfun-component="markdown" data-openbitfun-part="codeBody" data-starmate-component="markdown" data-starmate-part="codeBody" >
       {children}
     </div>
   );

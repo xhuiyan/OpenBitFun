@@ -101,7 +101,7 @@ export const MenuList = forwardRef<HTMLDivElement, MenuListProps>(function MenuL
       data-openbitfun-menu-list=""
       data-openbitfun-part={part}
       ref={ref}
-    />
+     data-starmate-menu-list="" data-starmate-part={part} />
   );
 });
 
@@ -220,13 +220,13 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu({
       onKeyDown={handleKeyDown}
       ref={setRootRef}
       role="menu"
-    >
+     data-starmate-component="menu" data-starmate-inline-size={inlineSize} >
       <ScrollArea
         className={styles.viewport}
         orientation="vertical"
         scrollbarVisibility={scrollbarVisibility}
       >
-        <MenuList className={styles.list} data-openbitfun-part="list">{children}</MenuList>
+        <MenuList className={styles.list} data-openbitfun-part="list" data-starmate-part="list" >{children}</MenuList>
       </ScrollArea>
     </div>
   );
@@ -248,7 +248,7 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(function Me
       ref={ref}
       role={role}
       tabIndex={tabIndex}
-    />
+     data-starmate-menu-item="" />
   );
 });
 
@@ -274,12 +274,12 @@ export const MenuSection = forwardRef<HTMLDivElement, MenuSectionProps>(function
       data-openbitfun-part="section"
       ref={ref}
       role="group"
-    >
+     data-starmate-part="section" >
       {headingId && (
-        <div className={styles.heading} data-openbitfun-part="heading" id={headingId}>
-          <OverflowText className={styles.headingLabel} data-openbitfun-part="heading-label">{title}</OverflowText>
+        <div className={styles.heading} data-openbitfun-part="heading" id={headingId} data-starmate-part="heading" >
+          <OverflowText className={styles.headingLabel} data-openbitfun-part="heading-label" data-starmate-part="heading-label" >{title}</OverflowText>
           {actions.length > 0 && (
-            <span className={styles.headingActions} data-openbitfun-part="heading-actions">
+            <span className={styles.headingActions} data-openbitfun-part="heading-actions" data-starmate-part="heading-actions" >
               {actions.map((action) => (
                 <IconButton
                   aria-label={action.label}
@@ -294,13 +294,13 @@ export const MenuSection = forwardRef<HTMLDivElement, MenuSectionProps>(function
                   tabIndex={-1}
                   tone={action.tone}
                   variant="quiet"
-                />
+                 data-starmate-menu-item="" />
               ))}
             </span>
           )}
         </div>
       )}
-      <MenuList data-openbitfun-part="section-items">
+      <MenuList data-openbitfun-part="section-items" data-starmate-part="section-items" >
         {children}
       </MenuList>
     </div>
@@ -316,7 +316,7 @@ export const MenuSeparator = forwardRef<HTMLDivElement, MenuSeparatorProps>(
         data-openbitfun-part="separator"
         ref={ref}
         role="separator"
-      />
+       data-starmate-part="separator" />
     );
   },
 );

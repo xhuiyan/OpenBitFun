@@ -116,9 +116,9 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
       data-openbitfun-part="root"
       data-openbitfun-state={hasLoadingAction ? 'loading' : undefined}
       className={`openbitfun-smart-recommendations ${className}`}
-    >
-      <div data-openbitfun-component="smart-recommendations" data-openbitfun-part="header" className="openbitfun-smart-recommendations__header">
-        <span data-openbitfun-component="smart-recommendations" data-openbitfun-part="title" className="openbitfun-smart-recommendations__title">{t('smartRecommendations.title')}</span>
+     data-starmate-component="smart-recommendations" data-starmate-part="root" data-starmate-state={hasLoadingAction ? 'loading' : undefined} >
+      <div data-openbitfun-component="smart-recommendations" data-openbitfun-part="header" className="openbitfun-smart-recommendations__header" data-starmate-component="smart-recommendations" data-starmate-part="header" >
+        <span data-openbitfun-component="smart-recommendations" data-openbitfun-part="title" className="openbitfun-smart-recommendations__title" data-starmate-component="smart-recommendations" data-starmate-part="title" >{t('smartRecommendations.title')}</span>
         <Tooltip content={t('smartRecommendations.close')}>
           <IconButton
             data-openbitfun-component="smart-recommendations"
@@ -129,11 +129,11 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
             size="sm"
             variant="quiet"
             aria-label={t('smartRecommendations.close')}
-          />
+           data-starmate-component="smart-recommendations" data-starmate-part="close" />
         </Tooltip>
       </div>
 
-      <div data-openbitfun-component="smart-recommendations" data-openbitfun-part="actions" className="openbitfun-smart-recommendations__actions">
+      <div data-openbitfun-component="smart-recommendations" data-openbitfun-part="actions" className="openbitfun-smart-recommendations__actions" data-starmate-component="smart-recommendations" data-starmate-part="actions" >
         {actions.map(action => {
           const CatalogIconName = action.icon ? RECOMMENDATION_CATALOG[action.icon] : undefined;
           const IconComponent = action.icon

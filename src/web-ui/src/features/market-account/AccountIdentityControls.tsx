@@ -179,7 +179,7 @@ export function AccountIdentityControls({
       data-openbitfun-component="market-account-controls"
       data-openbitfun-part="root"
       data-openbitfun-state={account.status}
-    >
+     data-starmate-component="market-account-controls" data-starmate-part="root" data-starmate-state={account.status} >
       {account.me ? (
         <div className="market-account-controls__menu-root" ref={menuRef}>
           <button data-overflow-trigger
@@ -192,7 +192,7 @@ export function AccountIdentityControls({
             aria-expanded={menuOpen}
             aria-label={t('market.account.menuLabel', { login: account.me.email ?? account.me.user.login })}
             onClick={() => setMenuOpen(open => !open)}
-          >
+           data-starmate-component="market-account-controls" data-starmate-part="identityTrigger" >
             <Avatar key={account.me.email ?? account.me.user.login} size="sm" src={account.me.user.avatarUrl} alt={account.me.email ?? account.me.user.login} aria-label={account.me.email ?? account.me.user.login}>
               {(account.me.email ?? account.me.user.login).trim().charAt(0).toUpperCase() || <Icon name="user" />}
             </Avatar>
@@ -214,7 +214,7 @@ export function AccountIdentityControls({
                 className="market-account-controls__profile"
                 data-openbitfun-component="market-account-controls"
                 data-openbitfun-part="profile"
-              >
+               data-starmate-component="market-account-controls" data-starmate-part="profile" >
                 <Avatar key={account.me.email ?? account.me.user.login} size="md" src={account.me.user.avatarUrl} alt={account.me.email ?? account.me.user.login} aria-label={account.me.email ?? account.me.user.login}>
               {(account.me.email ?? account.me.user.login).trim().charAt(0).toUpperCase() || <Icon name="user" />}
             </Avatar>
@@ -263,7 +263,7 @@ export function AccountIdentityControls({
           className="market-account-login"
           data-openbitfun-component="market-account-controls"
           data-openbitfun-part="login"
-        >
+         data-starmate-component="market-account-controls" data-starmate-part="login" >
           <div className="market-account-login__mark" aria-hidden="true">
             <Icon name="user" size="lg" />
           </div>
@@ -274,7 +274,7 @@ export function AccountIdentityControls({
                 role="status"
                 data-openbitfun-component="market-account-controls"
                 data-openbitfun-part="waiting"
-              >
+               data-starmate-component="market-account-controls" data-starmate-part="waiting" >
                 {t('market.account.waiting')}
               </p>
             ) : <p>{t('market.account.dialogDescription')}</p>}
@@ -285,7 +285,7 @@ export function AccountIdentityControls({
               role="alert"
               data-openbitfun-component="market-account-controls"
               data-openbitfun-part="error"
-            >
+             data-starmate-component="market-account-controls" data-starmate-part="error" >
               {errorText}
             </p>
           )}
@@ -293,7 +293,7 @@ export function AccountIdentityControls({
             className="market-account-login__actions"
             data-openbitfun-component="market-account-controls"
             data-openbitfun-part="actions"
-          >
+           data-starmate-component="market-account-controls" data-starmate-part="actions" >
             <Button variant="fill" onClick={closeLogin}>
               {t('market.account.cancel')}
             </Button>

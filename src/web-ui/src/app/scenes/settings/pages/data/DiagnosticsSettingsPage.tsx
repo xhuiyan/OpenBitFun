@@ -183,7 +183,7 @@ function LoggingSection() {
   }
 
   return (
-    <div className="openbitfun-logging-config" data-openbitfun-component="application-settings" data-openbitfun-part="logging">
+    <div className="openbitfun-logging-config" data-openbitfun-component="application-settings" data-openbitfun-part="logging" data-starmate-component="application-settings" data-starmate-part="logging" >
       <div className="openbitfun-logging-config__content">
         <ConfigMessage message={message} />
 
@@ -231,7 +231,7 @@ function LoggingSection() {
             description={t('logging.path.description')}
             multiline
           >
-            <div className="openbitfun-logging-config__path-row" data-openbitfun-component="application-settings" data-openbitfun-part="logPath">
+            <div className="openbitfun-logging-config__path-row" data-openbitfun-component="application-settings" data-openbitfun-part="logPath" data-starmate-component="application-settings" data-starmate-part="logPath" >
               <Input
                 className="openbitfun-logging-config__path-box"
                 aria-label={t('logging.sections.path')}
@@ -291,6 +291,6 @@ function LoggingSection() {
 }
 const DiagnosticsSettingsPage: React.FC = () => {
 
-  return <SettingsPage pageId="data.diagnostics" data-openbitfun-component="application-settings" data-openbitfun-part="root"><LoggingSection /></SettingsPage>;
+  return <SettingsPage pageId="data.diagnostics" data-openbitfun-component="application-settings" data-openbitfun-part="root" data-starmate-component="application-settings" data-starmate-part="root" ><LoggingSection /></SettingsPage>;
 };
 export default DiagnosticsSettingsPage;

@@ -190,7 +190,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
             detailBackLabel={t('miniApps.backToOverview')} onDetailBack={() => { setMiniAppDetail(null); refresh(); }} />
         </React.Suspense>
       )}
-      <div className="personal-overview" hidden={showingMiniAppDetail} data-openbitfun-scene="personal-overview" data-openbitfun-part="root">
+      <div className="personal-overview" hidden={showingMiniAppDetail} data-openbitfun-scene="personal-overview" data-openbitfun-part="root" data-starmate-scene="personal-overview" data-starmate-part="root" >
         {identity.resolved && identity.status === 'signed-in' && identity.me && (
           <div className="personal-overview__account-actions">
             <OverviewAccountButton identity={identity} />
@@ -198,14 +198,14 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
         )}
         <ScrollArea ref={overviewScrollRef} className="personal-overview__scroll">
           <div className="personal-overview__content">
-            <header className="personal-overview__identity" data-openbitfun-scene="personal-overview" data-openbitfun-part="identity">
+            <header className="personal-overview__identity" data-openbitfun-scene="personal-overview" data-openbitfun-part="identity" data-starmate-scene="personal-overview" data-starmate-part="identity" >
               <span
                 ref={avatarRef}
                 className="personal-overview__avatar"
                 data-openbitfun-scene="personal-overview"
                 data-openbitfun-part="avatar"
                 aria-hidden="true"
-              >
+               data-starmate-scene="personal-overview" data-starmate-part="avatar" >
                 <span className="personal-overview__avatar-art" data-subagent-motion-art="true" dangerouslySetInnerHTML={{ __html: overviewArtwork }} />
               </span>
               {displayName && <h1 className="personal-overview__name">{displayName}</h1>}
@@ -213,7 +213,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
             </header>
 
             <section aria-label={t('metrics.title')}>
-              <dl className="personal-overview__metrics" aria-busy={usage.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="metrics">
+              <dl className="personal-overview__metrics" aria-busy={usage.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="metrics" data-starmate-scene="personal-overview" data-starmate-part="metrics" >
                 {metrics.map(metric => (
                   <div className="personal-overview__metric" key={metric.label} title={metric.hint}>
                     <dt className="personal-overview__metric-label">{metric.label}</dt>
@@ -229,7 +229,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
               )}
             </section>
 
-            <section className="personal-overview__section" aria-labelledby="overview-agents-title" data-openbitfun-scene="personal-overview" data-openbitfun-part="agents">
+            <section className="personal-overview__section" aria-labelledby="overview-agents-title" data-openbitfun-scene="personal-overview" data-openbitfun-part="agents" data-starmate-scene="personal-overview" data-starmate-part="agents" >
               <div className="personal-overview__section-header">
                 <h2 id="overview-agents-title" className="personal-overview__section-title">{t('agents.title')}</h2>
                 <div className="personal-overview__section-actions">
@@ -258,7 +258,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
 
             <OverviewDevicesSection identity={identity} />
 
-            <section className="personal-overview__section" aria-labelledby="overview-miniapps-title" aria-busy={miniApps.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="miniApps" data-catalog-status={miniApps.status}>
+            <section className="personal-overview__section" aria-labelledby="overview-miniapps-title" aria-busy={miniApps.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="miniApps" data-catalog-status={miniApps.status} data-starmate-scene="personal-overview" data-starmate-part="miniApps" >
               <div className="personal-overview__section-header">
                 <h2 id="overview-miniapps-title" className="personal-overview__section-title">{t('common:scenes.miniApps')}</h2>
                 <Button
@@ -300,7 +300,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
 
             <OverviewDesktopCardsSection isActive={isActive} />
 
-            <section className="personal-overview__section" aria-labelledby="overview-skills-title" aria-busy={skills.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="skills">
+            <section className="personal-overview__section" aria-labelledby="overview-skills-title" aria-busy={skills.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="skills" data-starmate-scene="personal-overview" data-starmate-part="skills" >
               <div className="personal-overview__section-header">
                 <h2 id="overview-skills-title" className="personal-overview__section-title">{t('common:scenes.skills')}</h2>
                 <Button
@@ -344,7 +344,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
               </div>
             </section>
 
-            <section className="personal-overview__section" aria-labelledby="overview-activity-title" data-openbitfun-scene="personal-overview" data-openbitfun-part="activity">
+            <section className="personal-overview__section" aria-labelledby="overview-activity-title" data-openbitfun-scene="personal-overview" data-openbitfun-part="activity" data-starmate-scene="personal-overview" data-starmate-part="activity" >
               <div className="personal-overview__section-header">
                 <h2 id="overview-activity-title" className="personal-overview__section-title">{t('activity.title')}</h2>
               </div>

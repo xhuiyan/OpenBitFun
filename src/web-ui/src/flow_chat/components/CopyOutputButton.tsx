@@ -143,7 +143,7 @@ export const CopyOutputButton: React.FC<CopyOutputButtonProps> = ({
   }
 
   return (
-    <div data-openbitfun-component="copy-output-button" data-openbitfun-part="root" data-openbitfun-state={copied ? 'copied' : ''} className={`copy-output-button-group ${className}`}>
+    <div data-openbitfun-component="copy-output-button" data-openbitfun-part="root" data-openbitfun-state={copied ? 'copied' : ''} className={`copy-output-button-group ${className}`} data-starmate-component="copy-output-button" data-starmate-part="root" data-starmate-state={copied ? 'copied' : ''} >
       <Button
         type="button"
         variant={copied ? 'fill' : 'outline'}
@@ -153,7 +153,7 @@ export const CopyOutputButton: React.FC<CopyOutputButtonProps> = ({
         onClick={handleCopy}
         title={copied ? t('copyOutput.copiedOutputContent') : t('copyOutput.copyOutputContent')}
         aria-label={copied ? t('copyOutput.copiedOutputContent') : t('copyOutput.copyOutputContent')}
-      >
+       data-starmate-action="copy" >
         {copied ? t('copyOutput.copied') : t('copyOutput.copy')}
       </Button>
       
@@ -166,7 +166,7 @@ export const CopyOutputButton: React.FC<CopyOutputButtonProps> = ({
         onClick={handleOpenInEditor}
         title={t('copyOutput.openInEditor')}
         aria-label={t('copyOutput.openInEditor')}
-      >
+       data-starmate-action="edit" >
         {t('copyOutput.edit')}
       </Button>
     </div>

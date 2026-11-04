@@ -339,8 +339,8 @@ const SkillsScene: React.FC = () => {
   }, [installed.loading, installed.error, installed.sourceGroups, installedView, setInstalledView]);
 
   return (
-    <div className="openbitfun-skills-scene" data-testid="agent-skill-panel" data-openbitfun-scene="skills" data-openbitfun-part="root" data-openbitfun-tab={activeTab}>
-      <div className="skills-scene__actions" data-openbitfun-scene="skills" data-openbitfun-part="pageActions">
+    <div className="openbitfun-skills-scene" data-testid="agent-skill-panel" data-openbitfun-scene="skills" data-openbitfun-part="root" data-openbitfun-tab={activeTab} data-starmate-scene="skills" data-starmate-part="root" data-starmate-tab={activeTab} >
+      <div className="skills-scene__actions" data-openbitfun-scene="skills" data-openbitfun-part="pageActions" data-starmate-scene="skills" data-starmate-part="pageActions" >
         <Button
           className="skills-scene__market-button"
           variant="text"
@@ -355,11 +355,11 @@ const SkillsScene: React.FC = () => {
       </div>
       <ScrollArea className="skills-scene__scroll" ref={scrollRef}>
         <div className="skills-scene__content" ref={contentRef}>
-          <h1 className="skills-scene__title" data-openbitfun-scene="skills" data-openbitfun-part="header">
+          <h1 className="skills-scene__title" data-openbitfun-scene="skills" data-openbitfun-part="header" data-starmate-scene="skills" data-starmate-part="header" >
             {t(activeTab === 'installed' ? 'nav.title' : 'market.title')}
           </h1>
           {desktopConfigAvailable && (
-            <div className="skills-controls" data-openbitfun-scene="skills" data-openbitfun-part="controls">
+            <div className="skills-controls" data-openbitfun-scene="skills" data-openbitfun-part="controls" data-starmate-scene="skills" data-starmate-part="controls" >
               <SearchField
                 className="skills-controls__search"
                 value={searchValue}
@@ -418,10 +418,10 @@ const SkillsScene: React.FC = () => {
             </div>
           )}
 
-          <main className="skills-page" id="skills-page" data-openbitfun-scene="skills" data-openbitfun-part="content" data-openbitfun-tab={activeTab} data-openbitfun-category={activeTab === 'installed' ? installedView : undefined}>
+          <main className="skills-page" id="skills-page" data-openbitfun-scene="skills" data-openbitfun-part="content" data-openbitfun-tab={activeTab} data-openbitfun-category={activeTab === 'installed' ? installedView : undefined} data-starmate-scene="skills" data-starmate-part="content" data-starmate-tab={activeTab} data-starmate-category={activeTab === 'installed' ? installedView : undefined} >
             {activeTab === 'installed' && (
-              <div className="skills-installed" id="skills-panel-installed" role="region" aria-label={t('installed.titleAll')} data-openbitfun-scene="skills" data-openbitfun-part="installed">
-                <div className="skills-main" data-openbitfun-scene="skills" data-openbitfun-part="main">
+              <div className="skills-installed" id="skills-panel-installed" role="region" aria-label={t('installed.titleAll')} data-openbitfun-scene="skills" data-openbitfun-part="installed" data-starmate-scene="skills" data-starmate-part="installed" >
+                <div className="skills-main" data-openbitfun-scene="skills" data-openbitfun-part="main" data-starmate-scene="skills" data-starmate-part="main" >
                   {desktopConfigAvailable && (
                     <SkillScanDiagnostics
                       key={installed.catalogContextKey}
@@ -435,7 +435,7 @@ const SkillsScene: React.FC = () => {
                     />
                   )}
                   {!desktopConfigAvailable ? (
-                    <div className="skills-main__empty" data-testid="skills-management-unavailable" data-openbitfun-scene="skills" data-openbitfun-part="empty">
+                    <div className="skills-main__empty" data-testid="skills-management-unavailable" data-openbitfun-scene="skills" data-openbitfun-part="empty" data-starmate-scene="skills" data-starmate-part="empty" >
                       <Icon name="book-open" size="lg" />
                       <span>{t(remoteConnectionActive ? 'list.remoteUnavailable' : 'list.desktopUnavailable')}</span>
                     </div>
@@ -454,7 +454,7 @@ const SkillsScene: React.FC = () => {
                     <>
                       <div className="skills-main__list-shell">
                         {installed.loading && (
-                          <div className="skills-main__table" role="group" aria-busy="true" aria-label={t('list.loading')} data-openbitfun-scene="skills" data-openbitfun-part="installedTable">
+                          <div className="skills-main__table" role="group" aria-busy="true" aria-label={t('list.loading')} data-openbitfun-scene="skills" data-openbitfun-part="installedTable" data-starmate-scene="skills" data-starmate-part="installedTable" >
                             <div className="skills-main__loading" role="list">
                               {Array.from({ length: installedPageLayout.pageSize }).map((_, i) => (
                                 <div
@@ -464,7 +464,7 @@ const SkillsScene: React.FC = () => {
                                   aria-hidden="true"
                                   data-openbitfun-scene="skills"
                                   data-openbitfun-part="skeleton"
-                                >
+                                 data-starmate-scene="skills" data-starmate-part="skeleton" >
                                   <div className="skills-card__top">
                                     <span className="skills-card-skeleton__icon" />
                                     <div className="skills-card__info">
@@ -480,7 +480,7 @@ const SkillsScene: React.FC = () => {
                         )}
 
                         {!installed.loading && installedLoadFailed && (
-                          <div className="skills-main__empty skills-main__empty--error" data-openbitfun-scene="skills" data-openbitfun-part="error">
+                          <div className="skills-main__empty skills-main__empty--error" data-openbitfun-scene="skills" data-openbitfun-part="error" data-starmate-scene="skills" data-starmate-part="error" >
                             <Icon name="book-open" size="lg" />
                             <span>{t('list.loadFailed')}</span>
                             <Button
@@ -494,7 +494,7 @@ const SkillsScene: React.FC = () => {
                         )}
 
                         {!installed.loading && !installedLoadFailed && installedFiltered.length === 0 && (
-                          <div className="skills-main__empty" data-testid="skill-list-empty" data-openbitfun-scene="skills" data-openbitfun-part="empty">
+                          <div className="skills-main__empty" data-testid="skill-list-empty" data-openbitfun-scene="skills" data-openbitfun-part="empty" data-starmate-scene="skills" data-starmate-part="empty" >
                             <Icon name="book-open" size="lg" />
                             <span>
                               {installed.skills.length === 0
@@ -511,7 +511,7 @@ const SkillsScene: React.FC = () => {
                             aria-label={t('nav.title')}
                             data-openbitfun-scene="skills"
                             data-openbitfun-part="installedTable"
-                          >
+                           data-starmate-scene="skills" data-starmate-part="installedTable" >
                             <SkillsGrid
                               rows={installedPageLayout.rows}
                               paginated={installedPagination.totalPages > 1}
@@ -560,7 +560,7 @@ const SkillsScene: React.FC = () => {
             )}
 
             {desktopConfigAvailable && activeTab === 'discover' && (
-              <div className="skills-discover" id="skills-panel-discover" role="region" aria-label={t('market.title')} data-openbitfun-scene="skills" data-openbitfun-part="discover">
+              <div className="skills-discover" id="skills-panel-discover" role="region" aria-label={t('market.title')} data-openbitfun-scene="skills" data-openbitfun-part="discover" data-starmate-scene="skills" data-starmate-part="discover" >
                 <div className="skills-discover__content">
                   {!market.marketLoading && market.sourceErrors.length > 0 && (
                     <div className="skills-discover__state" role="alert">
@@ -568,12 +568,12 @@ const SkillsScene: React.FC = () => {
                     </div>
                   )}
                   {!market.marketLoading && !market.marketError && marketQuery && market.totalLoaded > 0 && (
-                    <div className="skills-discover__results-info" data-openbitfun-scene="skills" data-openbitfun-part="resultsInfo" role="status">
+                    <div className="skills-discover__results-info" data-openbitfun-scene="skills" data-openbitfun-part="resultsInfo" role="status" data-starmate-scene="skills" data-starmate-part="resultsInfo" >
                       <OverflowText>{t('market.resultsInfo', { query: marketQuery, count: market.totalLoaded })}</OverflowText>
                     </div>
                   )}
                   {market.marketLoading && (
-                    <LoadingState className="skills-discover__state" role="status" size="sm" data-openbitfun-scene="skills" data-openbitfun-part="loading">
+                    <LoadingState className="skills-discover__state" role="status" size="sm" data-openbitfun-scene="skills" data-openbitfun-part="loading" data-starmate-scene="skills" data-starmate-part="loading" >
                       {t('market.loading')}
                     </LoadingState>
                   )}
@@ -587,7 +587,7 @@ const SkillsScene: React.FC = () => {
                       actions={<Button variant="outline" size="sm" onClick={() => void market.refresh()}>{t('list.retry')}</Button>}
                       data-openbitfun-scene="skills"
                       data-openbitfun-part="error"
-                    />
+                     data-starmate-scene="skills" data-starmate-part="error" />
                   )}
 
                   {!market.marketLoading && !market.marketError && !market.loadingMore && market.marketSkills.length === 0 && (
@@ -598,7 +598,7 @@ const SkillsScene: React.FC = () => {
                       data-testid="skill-list-empty"
                       data-openbitfun-scene="skills"
                       data-openbitfun-part="empty"
-                    />
+                     data-starmate-scene="skills" data-starmate-part="empty" />
                   )}
 
                   {!market.marketLoading && !market.marketError && market.marketSkills.length > 0 && (
@@ -691,7 +691,7 @@ const SkillsScene: React.FC = () => {
                 className="skills-detail__badges"
                 data-openbitfun-scene="skills"
                 data-openbitfun-part="detailBadges"
-              >
+               data-starmate-scene="skills" data-starmate-part="detailBadges" >
                 {selectedInstalledSkill ? (
                   <>
                     <StatusPill tone="neutral">
@@ -723,25 +723,25 @@ const SkillsScene: React.FC = () => {
           <DialogClose data-testid="skill-detail-close" />
         </DialogHeader>
         <DialogBody>
-          <div className="skills-detail" data-openbitfun-scene="skills" data-openbitfun-part="detail">
+          <div className="skills-detail" data-openbitfun-scene="skills" data-openbitfun-part="detail" data-starmate-scene="skills" data-starmate-part="detail" >
             {detailDescription ? (
               <ScrollArea
                 className="skills-detail__description-scroll"
                 tabIndex={0}
                 data-openbitfun-scene="skills"
                 data-openbitfun-part="detailDescriptionViewport"
-              >
+               data-starmate-scene="skills" data-starmate-part="detailDescriptionViewport" >
                 <p
                   className="skills-detail__description"
                   data-openbitfun-scene="skills"
                   data-openbitfun-part="detailDescription"
                   data-testid="skill-detail-description"
-                >
+                 data-starmate-scene="skills" data-starmate-part="detailDescription" >
                   {detailDescription}
                 </p>
               </ScrollArea>
             ) : null}
-            <dl className="skills-detail__fields" data-openbitfun-scene="skills" data-openbitfun-part="detailMetadata">
+            <dl className="skills-detail__fields" data-openbitfun-scene="skills" data-openbitfun-part="detailMetadata" data-starmate-scene="skills" data-starmate-part="detailMetadata" >
               {selectedInstalledSkill ? (
                 <>
                   <div className="skills-detail__field">
@@ -749,7 +749,7 @@ const SkillsScene: React.FC = () => {
                     <dd>{getSkillSourceLabel(selectedInstalledSkill, t('list.item.unknownSource'))}</dd>
                   </div>
                   {installed.canToggleSkill(selectedInstalledSkill) && (
-                    <div className="skills-detail__field" data-openbitfun-scene="skills" data-openbitfun-part="detailStatus">
+                    <div className="skills-detail__field" data-openbitfun-scene="skills" data-openbitfun-part="detailStatus" data-starmate-scene="skills" data-starmate-part="detailStatus" >
                       <dt>{t('list.columns.status')}</dt>
                       <dd className="skills-detail__availability">
                         <Switch
