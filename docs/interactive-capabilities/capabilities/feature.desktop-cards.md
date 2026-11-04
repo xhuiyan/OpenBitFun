@@ -25,8 +25,8 @@ Let agents place draggable cards outside the main window for glanceable informat
   - Refresh data, check off list items, toggle always-on-top, open the link, or return to the source session from a card
 - **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 在卡片菜单、首页卡片列表或设置里把卡片固定到 Windows 桌面，隐藏的卡片同样可以切换固定状态
   - Pin a card to the Windows desktop from the card menu, the Home card list, or Settings, including hidden cards
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭 OpenBitFun 时卡片消失，重新打开后按原位置和大小恢复
-  - Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when OpenBitFun closes and return with the same position and size when it reopens
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭星伴时卡片消失，重新打开后按原位置和大小恢复
+  - Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when StarMate closes and return with the same position and size when it reopens
 
 ## 怎么用 / How to use it
 

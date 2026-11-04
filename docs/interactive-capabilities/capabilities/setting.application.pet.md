@@ -43,9 +43,9 @@ Enable the desktop agent companion, manage the active character, and turn deskto
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| 列出可用萌宠 / List available pets | 读取当前角色以及 OpenBitFun 已导入的 Petdex 角色。 | Read the active character and Petdex characters imported into OpenBitFun. |
+| 列出可用萌宠 / List available pets | 读取当前角色以及星伴已导入的 Petdex 角色。 | Read the active character and Petdex characters imported into StarMate. |
 | 使用指定萌宠 / Use a pet | 按本地 Petdex 目录或压缩包路径导入并选中角色，或按已导入角色 ID 直接选中。 | Import and select a local Petdex directory/archive, or select an already imported character by ID. |
-| 删除已导入萌宠 / Delete an imported pet | 按角色 ID 或 OpenBitFun 包目录删除已导入角色；若正在使用则安全回退到默认角色。 | Delete an imported character by ID or OpenBitFun package path, safely falling back when it is active. |
+| 删除已导入萌宠 / Delete an imported pet | 按角色 ID 或星伴包目录删除已导入角色；若正在使用则安全回退到默认角色。 | Delete an imported character by ID or StarMate package path, safely falling back when it is active. |
 
 ## 可配置选项 / Configurable options
 
@@ -58,8 +58,8 @@ Enable the desktop agent companion, manage the active character, and turn deskto
 
 - “关闭桌面伙伴”
   - “Turn off the desktop companion”
-- “让 OpenBitFun 使用 /path/to/pet 里的萌宠”
-  - “Make OpenBitFun use the pet at /path/to/pet”
+- “让星伴使用 /path/to/pet 里的萌宠”
+  - “Make StarMate use the pet at /path/to/pet”
 - “关闭小卡片功能”
   - “Turn off desktop cards”
 

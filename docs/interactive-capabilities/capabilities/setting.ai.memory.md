@@ -11,9 +11,9 @@ title_en: "Memory settings"
 
 > 设置 / Setting
 
-控制 OpenBitFun 是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。
+控制星伴是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。
 
-Control whether OpenBitFun extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.
+Control whether StarMate extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.
 
 ## 完整功能清单 / Everything included
 

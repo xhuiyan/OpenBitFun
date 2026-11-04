@@ -1,10 +1,10 @@
-# OpenBitFun Relay Server
+# StarMate Relay Server
 
-The official Relay connects devices signed in to the same OpenBitFun account.
+The official Relay connects devices signed in to the same StarMate account.
 The identity service is shared with the marketplaces. Current clients offer
 GitHub or email verification-code sign-in when enabled by the identity service;
 these are independent accounts, so use the same method and account on each device.
-Users sign in from OpenBitFun; they do not provision a separate Relay account or
+Users sign in from StarMate; they do not provision a separate Relay account or
 deploy a server. Older clients can remain on the GitHub-only authorization flow.
 
 For connection choices, internet requirements, privacy, service limits, and
@@ -57,7 +57,7 @@ Relay URL. A private Relay therefore needs a matching client build.
    `services/AccountDeviceLink.ets`; update the HarmonyOS account-link parser too.
    Search for `https://remote.openbitfun.com/v/1.0.2` to verify every runtime
    reference and corresponding test before building your distribution.
-3. Decide who owns identity. You can retain the official OpenBitFun identity
+3. Decide who owns identity. You can retain the official StarMate identity
    authority, or run the [shared identity service](../../../deploy/miniapp-market/README.md)
    with your own GitHub OAuth application and/or email delivery configuration.
    For an independent authority, change
@@ -95,7 +95,7 @@ shared HTTP/WebSocket implementation lives in `src/crates/services/relay-service
 
 Set `RELAY_DB_PATH` to a persistent SQLite database before starting the service.
 Startup fails if it is missing; anonymous public relay mode is unsupported.
-The service validates OpenBitFun access tokens against the fixed OpenBitFun identity
+The service validates StarMate access tokens against the fixed StarMate identity
 authority at `https://auth.openbitfun.com/api/v1/me`.
 
 ```bash

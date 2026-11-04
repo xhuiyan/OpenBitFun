@@ -11,16 +11,16 @@ title_en: "Detached Dispatch"
 
 > 功能 / Feature
 
-把可持续运行的任务派发到另一台 OpenBitFun 主机；控制端可以断开，目标主机继续执行并保留记录。
+把可持续运行的任务派发到另一台星伴主机；控制端可以断开，目标主机继续执行并保留记录。
 
-Dispatch durable work to another OpenBitFun host; the controller may disconnect while the target continues and keeps the record.
+Dispatch durable work to another StarMate host; the controller may disconnect while the target continues and keeps the record.
 
 ## 完整功能清单 / Everything included
 
 - **智能体可直接控制 / Direct Agent control** · 列出同账户设备与已保存的 SSH 目标
   - List same-account devices and saved SSH targets
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 为目标主机配置运行环境并安装或更新 OpenBitFun CLI
-  - Provision the target runtime and install or update the OpenBitFun CLI
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 为目标主机配置运行环境并安装或更新星伴CLI
+  - Provision the target runtime and install or update the StarMate CLI
 - **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 在提交任务前同步目标所需的模型配置
   - Synchronize required model configuration before submitting a job
 - **智能体可直接控制 / Direct Agent control** · 从当前 Git 工作区把持久任务提交到同账户设备或 SSH 目标
@@ -51,7 +51,7 @@ Dispatch durable work to another OpenBitFun host; the controller may disconnect 
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| 列出派发目标 / List dispatch targets | 读取同账户下所有 OpenBitFun 设备（含本机，带 isCurrentDevice 标记、在线状态、型号与系统）以及本机已保存的 SSH 连接。回答“有几台设备”或派发前先调用；未登录账户时 devices 为空并说明原因。 | Read every OpenBitFun device on this account (including this one, marked isCurrentDevice, with online state, model and OS) plus this host's saved SSH connections. Call it before stating how many devices exist or before submitting; when signed out, devices is empty with a reason. |
+| 列出派发目标 / List dispatch targets | 读取同账户下所有星伴设备（含本机，带 isCurrentDevice 标记、在线状态、型号与系统）以及本机已保存的 SSH 连接。回答“有几台设备”或派发前先调用；未登录账户时 devices 为空并说明原因。 | Read every StarMate device on this account (including this one, marked isCurrentDevice, with online state, model and OS) plus this host's saved SSH connections. Call it before stating how many devices exist or before submitting; when signed out, devices is empty with a reason. |
 | 派发任务 / Submit a dispatch job | 把任务提交到另一台同账户设备（名称、别名或 device:<id>）或 SSH 目标（ssh:<connectionId>）。目标在自己的 Git worktree 中从 baseRef（默认 HEAD）开始执行，本机可以断开。仅在用户明确要求派发时调用，并明确选择 approvalPolicy；离线设备直接报错，不会在本机执行。 | Submit work to another same-account device (name, alias, or device:<id>) or SSH target (ssh:<connectionId>). The target runs in its own Git worktree branched from baseRef (default HEAD) and this host may disconnect. Call only when the user asked to dispatch, and choose approvalPolicy explicitly; an offline device is an error, never a local run. |
 | 查询派发任务 / Read dispatch job status | 按 jobId 读取本机派发任务的状态与增量事件；cursor 传上次返回值以只取新事件。 | Read state and incremental events of a job submitted from this host; pass the previous cursor to read only new events. |
 | 列出派发任务 / List dispatch jobs | 不带 target 时列出本机提交过的任务；带 target 时直接询问该目标正在持有的任务。 | Without target, list jobs submitted from this host; with target, ask that target for the jobs it owns. |

@@ -11,9 +11,9 @@ title_en: "Remote Connect & devices"
 
 > 功能 / Feature
 
-从手机、Bot 或另一台 OpenBitFun 设备远程查看会话、回答权限并继续工作。手机与同账号设备互控默认使用官方 Relay，无需部署服务器；官方与局域网模式登录时均需联网。
+从手机、Bot 或另一台星伴设备远程查看会话、回答权限并继续工作。手机与同账号设备互控默认使用官方 Relay，无需部署服务器；官方与局域网模式登录时均需联网。
 
-Inspect sessions, answer permissions, and continue work from mobile, a bot, or another OpenBitFun device. Mobile and same-account device control use the official Relay by default, with no server deployment; both official and LAN modes need internet access for sign-in.
+Inspect sessions, answer permissions, and continue work from mobile, a bot, or another StarMate device. Mobile and same-account device control use the official Relay by default, with no server deployment; both official and LAN modes need internet access for sign-in.
 
 ## 完整功能清单 / Everything included
 
@@ -29,8 +29,8 @@ Inspect sessions, answer permissions, and continue work from mobile, a bot, or a
   - Sign in through the shared page with GitHub or an email code, sign out, and inspect identity status
 - **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 列出、连接、查看设备型号与系统、设置别名和删除同账户设备
   - List, connect, inspect model and OS, set aliases, and remove same-account devices
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 进入 Peer Device Mode，把另一台 OpenBitFun 设备作为命令与事件数据面
-  - Enter Peer Device Mode and use another OpenBitFun device as the command and event data plane
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 进入 Peer Device Mode，把另一台星伴设备作为命令与事件数据面
+  - Enter Peer Device Mode and use another StarMate device as the command and event data plane
 
 ## 怎么用 / How to use it
 

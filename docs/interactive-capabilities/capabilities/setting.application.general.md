@@ -21,10 +21,10 @@ Manage app-level preferences for startup, updates, close behavior, notifications
   - Enable or disable automatic update checks
 - **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 手动检查并后台下载更新，确认后安装并重启，或稍后从关于页面安装
   - Check and download updates in the background, then confirm installation and restart or install later from About
-- **智能体可直接控制 / Direct Agent control** · 控制 OpenBitFun 是否在登录系统后自动启动
-  - Choose whether OpenBitFun launches automatically after system sign-in
-- **智能体可直接控制 / Direct Agent control** · 控制 OpenBitFun 运行期间是否阻止电脑自动睡眠
-  - Choose whether OpenBitFun prevents the computer from sleeping while it runs
+- **智能体可直接控制 / Direct Agent control** · 控制星伴是否在登录系统后自动启动
+  - Choose whether StarMate launches automatically after system sign-in
+- **智能体可直接控制 / Direct Agent control** · 控制星伴运行期间是否阻止电脑自动睡眠
+  - Choose whether StarMate prevents the computer from sleeping while it runs
 - **智能体可直接控制 / Direct Agent control** · 选择关闭主窗口时退出、最小化到托盘或每次询问
   - Choose whether closing the main window quits, minimizes to tray, or asks each time
 - **智能体可直接控制 / Direct Agent control** · 分别控制任务完成和权限请求通知
@@ -51,8 +51,8 @@ Manage app-level preferences for startup, updates, close behavior, notifications
 
 | 选项 / Option | 可用值 / Values | 中文说明 | English description |
 | --- | --- | --- | --- |
-| 登录后自动启动 / Launch at login | `boolean` | 在当前桌面系统登录后自动启动 OpenBitFun。 | Launch OpenBitFun automatically after signing in to this desktop system. |
-| 阻止系统睡眠 / Prevent system sleep | `boolean` | 在 OpenBitFun 运行期间持有本机睡眠抑制器。 | Hold a local sleep inhibitor while OpenBitFun is running. |
+| 登录后自动启动 / Launch at login | `boolean` | 在当前桌面系统登录后自动启动星伴。 | Launch StarMate automatically after signing in to this desktop system. |
+| 阻止系统睡眠 / Prevent system sleep | `boolean` | 在星伴运行期间持有本机睡眠抑制器。 | Hold a local sleep inhibitor while StarMate is running. |
 | 自动检查更新 / Automatic updates | `boolean` | 启动后自动检查可用更新。 | Check for available updates automatically after startup. |
 | 关闭按钮行为 / Close button behavior | `ask` / `minimize_to_tray` / `quit` | 选择退出应用或最小化到托盘。 | Choose whether closing quits the app or minimizes it to the tray. |
 | 任务完成通知 / Completion notifications | `boolean` | 会话任务完成时发送系统通知。 | Send an OS notification when session work completes. |

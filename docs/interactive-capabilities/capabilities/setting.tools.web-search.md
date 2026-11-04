@@ -17,14 +17,14 @@ Choose the search provider used by the WebSearch tool at runtime and configure c
 
 ## 完整功能清单 / Everything included
 
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与 OpenBitFun Search HTTP Protocol 之间选择运行时服务
-  - Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or OpenBitFun Search HTTP Protocol as the runtime provider
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 为 OpenBitFun Search HTTP Protocol 配置端点、认证方式和受限凭据 Header
-  - Configure the endpoint, authentication mode, and restricted credential header for OpenBitFun Search HTTP Protocol
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与星伴Search HTTP Protocol 之间选择运行时服务
+  - Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or StarMate Search HTTP Protocol as the runtime provider
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 为星伴Search HTTP Protocol 配置端点、认证方式和受限凭据 Header
+  - Configure the endpoint, authentication mode, and restricted credential header for StarMate Search HTTP Protocol
 - **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 查看当前执行主机的凭据状态，并保存、替换或清除 API Key/Secret
   - Inspect credential status on the current execution host and save, replace, or clear an API key or secret
-- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 查看并复制 OpenBitFun Search HTTP Protocol v1 的请求、响应和传输限制
-  - Inspect and copy the request, response, and transport limits for OpenBitFun Search HTTP Protocol v1
+- **智能体可定位入口，需交互完成 / Agent opens; interaction required** · 查看并复制星伴Search HTTP Protocol v1 的请求、响应和传输限制
+  - Inspect and copy the request, response, and transport limits for StarMate Search HTTP Protocol v1
 
 ## 怎么用 / How to use it
 

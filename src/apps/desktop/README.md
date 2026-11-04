@@ -1,4 +1,4 @@
-# OpenBitFun Desktop
+# StarMate Desktop
 
 For development commands, see [AGENTS.md](AGENTS.md) and the repository
 [contribution guide](../../../CONTRIBUTING.md).
@@ -47,7 +47,7 @@ before the first message is sent.
 
 In **Settings → AI → Models**, add the Router as an API-key model, then open
 **Router service** to select it. No tokenizer file or remote tokenization endpoint
-is required. OpenBitFun estimates the input locally and uses the service's full
+is required. StarMate estimates the input locally and uses the service's full
 prompt usage to tighten the budget independently for each execution.
 The Router must support the classifier protocol
 described in [the deployment guide](../../../deploy/model-router/README.md).
@@ -99,7 +99,7 @@ overrides and persistence details are in the deployment guide linked above.
 
 Peer Device Mode applies configuration on the execution host and requires a host
 advertising smart-routing support. SSH/Docker workspaces also use their owning
-OpenBitFun runtime's Router configuration, not configuration or local files on the
+StarMate runtime's Router configuration, not configuration or local files on the
 controller. Mobile and bot model editors explicitly reject changes to smart
 sessions; use the GUI to change the strategy. External agents and approved
 immutable dispatch jobs retain their existing model bindings.
@@ -109,7 +109,7 @@ completion quality, total latency, model/cache usage and auxiliary request cost.
 
 ## Remote Connect
 
-Sign in with the same OpenBitFun account on each device, using the same GitHub
+Sign in with the same StarMate account on each device, using the same GitHub
 or email-code login method. The official Relay needs no user deployment. The
 official Relay and **Same network** (the embedded LAN Relay) can run at the same
 time. Each tab shows its own connection and connected browsers; **Disconnect** affects that tab only.
@@ -132,12 +132,12 @@ privacy, service availability, and private-deployment requirements.
 
 ## Global agent instructions
 
-Put personal instructions for local OpenBitFun sessions in
+Put personal instructions for local StarMate sessions in
 `~/.openbitfun/AGENTS.md` (`%USERPROFILE%\.openbitfun\AGENTS.md` on Windows).
 If `STARMATE_HOME` is set, the file is read from that directory instead.
 A non-empty file replaces Codex's global instructions, including
-`AGENTS.override.md`. If the OpenBitFun file is missing, empty, or whitespace-only,
-OpenBitFun keeps loading Codex's global instructions as before. OpenCode,
+`AGENTS.override.md`. If the StarMate file is missing, empty, or whitespace-only,
+StarMate keeps loading Codex's global instructions as before. OpenCode,
 Claude Code, and project instruction files continue to load independently.
 
 After editing the file, run `/reload instructions` in the session. The next
@@ -146,7 +146,7 @@ their workspace instruction files and do not load the controller's global files.
 
 ## Project agent instructions
 
-OpenBitFun selects one instruction family at the workspace root, in this order:
+StarMate selects one instruction family at the workspace root, in this order:
 
 1. AGENTS: the first non-empty file among `AGENTS.override.md` and `AGENTS.md`.
 2. Claude: the first non-empty file among `CLAUDE.md` and `.claude/CLAUDE.md`,
@@ -164,7 +164,7 @@ to rebuild startup context on the next message.
 
 MiniApps use a customizable titlebar in independent windows, with native macOS
 traffic lights and the main application's right-hand Windows caption controls.
-The return icon brings the app back to OpenBitFun. Inside OpenBitFun, MiniApp actions live on
+The return icon brings the app back to StarMate. Inside StarMate, MiniApp actions live on
 the main top bar, alongside an icon to open an independent window. System app
 installation actions are available from **More app actions**. Customization uses
 the Creative mode icon; the default action group has no reload icon.
@@ -190,7 +190,7 @@ launch, including when an update is available. Running state appears on the
 same card. Selecting the current destination focuses it; selecting the other
 destination transfers it after confirmation. App details provide **Stop** and
 **Add system app** without requiring a launch first. A tab also provides **Open in
-a window** and **Add system app**. Every generated icon carries the OpenBitFun
+a window** and **Add system app**. Every generated icon carries the StarMate
 mark in its bottom-right corner. System launchers are placed in the user's
 Applications folder on macOS, Start Menu on Windows, and application menu on Linux.
 System app names show the app title without internal IDs. Once added, app details
@@ -200,20 +200,20 @@ only owned system entries, retaining the MiniApp, saved data and running tasks;
 it can be added again later. Removing an entry through the OS is also detected
 when app details are reopened.
 
-The system launcher can start OpenBitFun in the background. Closing the last tab
+The system launcher can start StarMate in the background. Closing the last tab
 or independent window stops that MiniApp's Worker, Agent runs and streams.
 During a window/tab transfer, a prepared destination keeps the instance alive;
 late close notifications from the source do not stop it. **Stop** ends an instance
 even while a presentation is open. A crashed shell is cleaned up after its lease
 expires. Refreshing, hiding a window or switching device surfaces is not a close.
-An explicit quit of OpenBitFun ends its host runtime. Window/tab switching reopens
+An explicit quit of StarMate ends its host runtime. Window/tab switching reopens
 the document and retains saved data; save unsaved page state before confirming.
 The source closes only after the destination is ready. One installed app is bound
 to one workspace per host until its instance is stopped.
 
 Each native window uses a separately built **MiniApp Shell**, which contains only
 the window, local system adapters and private IPC. Agent execution, storage,
-tasks and instance management stay in the shared OpenBitFun host. macOS exports
+tasks and instance management stay in the shared StarMate host. macOS exports
 copy this small executable plus the icon and app identity; Windows/Linux entries
 point to the installed shell. The full Desktop program is never copied into an
 export. Updating an older system app upgrades its executable while retaining
@@ -223,7 +223,7 @@ On macOS, Dock icons come from each MiniApp bundle's own ICNS. Independent
 windows and system installations use the same catalog glyph and fixed brand
 watermark, with a rounded body and transparent canvas inset. The shell always
 uses bundled resources, including beside a development host, so Tauri cannot
-replace the Dock icon with the OpenBitFun development icon. After upgrading an
+replace the Dock icon with the StarMate development icon. After upgrading an
 older exported app, choose **Update system app**, then quit and reopen that
 MiniApp to load the new executable and icon.
 
@@ -286,10 +286,10 @@ credentials and saved model configurations are retained.
 In **Settings → Models → Subscription accounts**, sign in to **ZCode**. ZCode
 asks you to choose **Z.ai** or **BigModel** when you start sign-in. Connected
 regional accounts stay visible separately under ZCode so each can be imported or
-signed out. Finish sign-in in the browser, return to OpenBitFun, choose **Use as
+signed out. Finish sign-in in the browser, return to StarMate, choose **Use as
 model**, then select models from the live catalog. Authorization runs on the model
 host; the verification page can be opened on another device. Credentials are kept
-in OpenBitFun's vault.
+in StarMate's vault.
 
 ZCode browser sign-in reuses or creates the selected project's `zcode-api-key`
 (a team's `zcode-team-api-key`) and uses the Coding Plan Messages endpoint.
@@ -302,7 +302,7 @@ sign-in and model inference require the user's account; initialization alone
 does not verify subscription eligibility or model availability.
 
 WorkBuddy (China) and WorkBuddy AI (international) subscriptions were removed
-after the vendor stopped supporting subscription access through OpenBitFun.
+after the vendor stopped supporting subscription access through StarMate.
 Existing model configurations and vault credentials are preserved: a model still
 pointing at either product shows a removed-provider notice instead of a sign-in
 or import action, and the account stays listed only while this host holds its
@@ -326,7 +326,7 @@ Coding Plan windows, with MCP calls shown separately. Totals, reset times and pl
 expiry appear only when the provider reports them. Other channels explicitly show
 that allowance lookup is unsupported.
 
-OpenBitFun reads allowance from the account's host, supports manual refresh, and
+StarMate reads allowance from the account's host, supports manual refresh, and
 refreshes visible active panels once per minute. A failed refresh retains the last
 observation with a stale indicator. Unknown amounts stay unknown; zero and
 unlimited are distinct. These ZCode observations are informational and do not
@@ -379,7 +379,7 @@ Remote SSH/Docker workspaces open their locally stored session mirror, not the
 remote project directory. These actions are unavailable in Peer Device Mode,
 browser clients, and for detached sessions owned by another host.
 
-For manual recovery, exit every OpenBitFun instance using the session and back
+For manual recovery, exit every StarMate instance using the session and back
 up its complete directory before editing or moving files. Moving a directory
 does not update the workspace bindings in its metadata or saved configuration.
 
@@ -438,7 +438,7 @@ NUL or exceeding 16 MiB is rejected. `clipboard_get` returns `text`, the origina
 
 Windows uses the built-in Windows PowerShell and Windows Forms clipboard APIs;
 macOS uses AppKit through the built-in JavaScript bridge. On Linux, install
-`wl-clipboard` for Wayland, or `xclip`/`xsel` for X11, and run OpenBitFun in that
+`wl-clipboard` for Wayland, or `xclip`/`xsel` for X11, and run StarMate in that
 desktop session. Wayland does not silently fall back to an XWayland clipboard.
 Helpers have a ten-second deadline. A failed write may already have changed the
 clipboard; inspect it before retrying. Image/file clipboard formats are not
@@ -465,10 +465,10 @@ Windows accessibility requests return after ten seconds if the application's
 provider stops responding. Stop remains available and prevents input that has
 not yet been submitted. An `INPUT_OUTCOME_UNKNOWN` error means the application
 may still complete the input: wait for it to recover, then observe before taking
-another action. OpenBitFun does not automatically repeat the click or text. While
+another action. StarMate does not automatically repeat the click or text. While
 that native call is still running, new accessibility requests return
 `AX_PROVIDER_BUSY`; a provider that never returns requires the target to recover
-or OpenBitFun to restart. A missing preview only means no valid image is available
+or StarMate to restart. A missing preview only means no valid image is available
 (including observations requested without images); it does not mean that the
 control status is unavailable.
 
@@ -481,7 +481,7 @@ On Ubuntu GNOME, Computer Use uses the system desktop portal for screen sharing
 and foreground input. Start a control session, then approve the surface and
 input devices in the system dialog on the machine running Desktop. GNOME owns
 its sharing indicator and stop control. Stopping sharing revokes further input;
-OpenBitFun never falls back from Wayland to X11 input after denial or disconnect.
+StarMate never falls back from Wayland to X11 input after denial or disconnect.
 Foreground portal input controls the desktop seat and can move your real pointer.
 
 Background application operations use AT-SPI semantic actions and EditableText
@@ -599,7 +599,7 @@ About only contains
 product identity and build information.
 
 Choose **Download update** to download and verify an update while continuing to
-use OpenBitFun. Downloading does not install or restart the application.
+use StarMate. Downloading does not install or restart the application.
 When the navigation footer is visible, a dot travels from the download button to
 the circle beside **More**. Only after it arrives does the navigation circle appear and the
 card close. The circle fills from bottom to top using downloaded bytes, with a
@@ -624,11 +624,11 @@ opens automatically. Select the checkmark to open the installation confirmation
 directly. More no longer shows a reminder for the downloaded version.
 Failed downloads return to the reminder in More; an older downloaded package
 keeps its own installation checkmark if a newer download fails.
-Installation restarts OpenBitFun on this device and interrupts its active sessions.
+Installation restarts StarMate on this device and interrupts its active sessions.
 Choosing **Later**, or closing the confirmation, keeps the downloaded update.
 The checkmark remains available whenever you are ready.
 
-Downloaded updates remain available after closing and reopening OpenBitFun.
+Downloaded updates remain available after closing and reopening StarMate.
 After reopening, the current updater requires access to the update server to
 restore installer metadata, but does not download the package again. If this
 step or installation fails, the pending update remains available to retry.
@@ -664,7 +664,7 @@ Linux service.
 ## Remote SSH file handle errors
 
 If writing files and browsing directories both start failing with
-`Limit exceeded: handle limit reached`, update OpenBitFun to a build containing
+`Limit exceeded: handle limit reached`, update StarMate to a build containing
 the SFTP handle-lifecycle fix. Earlier builds can exhaust a client-side counter
 even when the server has already closed the files. Save ongoing work before
 manually disconnecting and reconnecting the remote workspace as a temporary
@@ -673,9 +673,9 @@ recovery; reconnecting can interrupt its terminals and commands.
 This message alone does not establish a server configuration problem. Raising
 server limits only delays a leaked-counter failure. Running `ulimit` in a new
 SSH shell does not change the limits of the already-running SFTP subsystem.
-OpenBitFun does not modify the remote user's shell startup files, SSH daemon
+StarMate does not modify the remote user's shell startup files, SSH daemon
 configuration, or OS limits automatically. If the problem persists after the
-fix, capture the OpenBitFun version and logs plus the server's SFTP implementation
+fix, capture the StarMate version and logs plus the server's SFTP implementation
 and advertised limits so genuine concurrent-handle or server resource exhaustion
 can be distinguished from a client lifecycle problem.
 
@@ -763,7 +763,7 @@ Focused checks:
 
 ```sh
 pnpm run check:github-config
-node --test scripts/desktop-tauri-build.test.mjs OpenBitFun-Installer/scripts/build-installer.test.cjs
+node --test scripts/desktop-tauri-build.test.mjs StarMate-Installer/scripts/build-installer.test.cjs
 pwsh -NoProfile -File scripts/ci/sign-windows.test.ps1
 ```
 
@@ -787,13 +787,13 @@ configured custom URL takes precedence. Disabling or deleting the official sourc
 also disables its environment override.
 
 SkillHub uses its ClawHub-compatible search API and native ZIP download API, and
-installs supporting files into OpenBitFun's user or project Skills directory. An
+installs supporting files into StarMate's user or project Skills directory. An
 existing destination is preserved and reported as a conflict. skills.sh-compatible
 sources use the existing repository-based `npx skills` installer: a custom search
 API does not supply a custom ZIP download protocol.
 
 Tokens are stored in the serving host's application configuration; browser login
-sessions are not shared with OpenBitFun. The market is currently available in the
+sessions are not shared with StarMate. The market is currently available in the
 local Desktop scene. Peer mode and older hosts show unsupported states. SSH/Docker
 project installation remains unsupported; choose user scope to install on the
 serving host. Mobile/bot controls, CLI peers and Detached Dispatch do not gain a
@@ -802,7 +802,7 @@ marketplace configuration or installation entry point.
 ## Files sent through WeChat
 
 Send an ordinary file or a native video in the paired WeChat chat to make it available to the
-selected Agent session. OpenBitFun downloads and decrypts the file, saves it in
+selected Agent session. StarMate downloads and decrypts the file, saves it in
 a unique `.openbitfun-inbound-<id>` directory inside that session's workspace,
 and supplies its path to the Agent. Existing files are not overwritten. File
 contents stay out of the message text; the Agent can read the saved file using
@@ -856,7 +856,7 @@ This is best-effort notification, not a durable message inbox. Switching session
 or devices discards output from the previous selection before sending.
 
 Proactive notifications currently require the session runtime and WeChat bot to
-run on the same OpenBitFun host. A session on that host may use an SSH workspace;
+run on the same StarMate host. A session on that host may use an SSH workspace;
 this does not make it an account-device session. When switching the bot to another
 account device, the existing reply includes an explicit notice that proactive
 scheduled-job and desktop-result notifications are unavailable there. Ordinary
@@ -1057,7 +1057,7 @@ also supplies the light/legacy fallback, which can then be replaced independentl
 To return to the original icon, select **Built-in icons**, choose the
 **Default** glyph and color swatch, and save. Closing the editor cancels its draft.
 
-Icons belong to the workspace catalog on the selected OpenBitFun host. Desktop and CLI
+Icons belong to the workspace catalog on the selected StarMate host. Desktop and CLI
 Peer Hosts support reading/editing them; mobile Remote Control displays them read-only.
 Older peers and the retired standalone Web Server explicitly do not offer editing. SSH/Docker
 projects store this presentation metadata on their catalog host, so an offline execution

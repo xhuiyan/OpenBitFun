@@ -5,7 +5,7 @@
 ## Do I need to deploy a server?
 
 No. Released clients use the official Relay for same-account device control.
-Sign in on the host and controller with the same OpenBitFun account and follow
+Sign in on the host and controller with the same StarMate account and follow
 the Remote Connect invitation or device-selection flow. Keep the host running
 and reachable. The official endpoint is `https://remote.openbitfun.com/v/1.0.2`;
 the path is a service-protocol prefix, not the current desktop release number.
@@ -70,7 +70,7 @@ operated service, nor does it protect a compromised endpoint.
 Published Pages, Page data/functions, marketplaces, model-provider requests, and
 messaging-bot traffic have separate data flows. Publishing a Page uploads its
 content to the publishing service under the selected visibility rules. Do not
-apply the device-control encryption claim to all OpenBitFun network traffic.
+apply the device-control encryption claim to all StarMate network traffic.
 
 ## Is the official Relay free? What are the quotas and SLA?
 

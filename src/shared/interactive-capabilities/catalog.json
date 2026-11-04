@@ -1,7 +1,7 @@
 {
   "schemaVersion": 5,
-  "product": "OpenBitFun",
-  "title": "OpenBitFun Playbook",
+  "product": "StarMate",
+  "title": "StarMate Playbook",
   "origin": "https://playbook.openbitfun.com",
   "searchAcceptance": [
     {
@@ -358,13 +358,13 @@
         "创建、归档、恢复和分叉会话",
         "暂停、继续或引导正在运行的任务",
         "查看工具调用、权限请求和用量",
-        "用创造模式安全定制正在运行的 OpenBitFun 前端"
+        "用创造模式安全定制正在运行的星伴前端"
       ],
       "highlightsEn": [
         "Create, archive, restore, and fork sessions",
         "Pause, continue, or steer running work",
         "Inspect tool calls, permission requests, and usage",
-        "Safely customize the running OpenBitFun frontend in Creative mode"
+        "Safely customize the running StarMate frontend in Creative mode"
       ],
       "items": [
         {
@@ -751,12 +751,12 @@
       "stepsZh": [
         "打开 AI 助手或新建会话",
         "选择项目、模型和工作模式",
-        "描述目标；OpenBitFun 会在会话中持续记录进度"
+        "描述目标；星伴会在会话中持续记录进度"
       ],
       "stepsEn": [
         "Open the AI assistant or create a session",
         "Choose a project, model, and working mode",
-        "Describe the goal; OpenBitFun keeps progress in the session"
+        "Describe the goal; StarMate keeps progress in the session"
       ],
       "agentExamplesZh": [
         "新建一个会话，我们来排查这个构建错误",
@@ -1509,11 +1509,11 @@
             ],
             "workflowZh": [
               "先用 Read 读取当前内容，再根据改动范围选择 Edit 精确替换或 Write 创建/完整写入文件",
-              "文件工具沿用 OpenBitFun 的工作区、权限与变更快照语义；写入后重新读取或查看差异确认结果"
+              "文件工具沿用星伴的工作区、权限与变更快照语义；写入后重新读取或查看差异确认结果"
             ],
             "workflowEn": [
               "Read the current content first, then use Edit for exact replacements or Write for creation/full rewrites",
-              "The file tools preserve OpenBitFun workspace, permission, and change-snapshot semantics; read back or inspect the diff after writing"
+              "The file tools preserve StarMate workspace, permission, and change-snapshot semantics; read back or inspect the diff after writing"
             ]
           },
           "evidence": [
@@ -2381,8 +2381,8 @@
       "categoryId": "workspace",
       "titleZh": "内置浏览器",
       "titleEn": "Built-in browser",
-      "summaryZh": "在 OpenBitFun 内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。",
-      "summaryEn": "Open webpages and local services inside OpenBitFun, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.",
+      "summaryZh": "在星伴内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。",
+      "summaryEn": "Open webpages and local services inside StarMate, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.",
       "keywordsZh": [
         "浏览器",
         "网页",
@@ -2422,8 +2422,8 @@
       "items": [
         {
           "id": "open-urls",
-          "titleZh": "输入完整网址、本地域名或开发服务端口并在 OpenBitFun 内打开",
-          "titleEn": "Open full URLs, local hostnames, or development-service ports inside OpenBitFun",
+          "titleZh": "输入完整网址、本地域名或开发服务端口并在星伴内打开",
+          "titleEn": "Open full URLs, local hostnames, or development-service ports inside StarMate",
           "control": {
             "kind": "delegate"
           },
@@ -2608,7 +2608,7 @@
       "agentControl": {
         "tool": "ControlHub",
         "workflowZh": [
-          "用户给出网址时，用 browser.navigate（target=builtin）直接打开，缺少页面时自动创建；需要读取或交互时附带 observe=article 或 snapshot，并复用返回的 session_id；用户只要求显示内置浏览器且没有网址时，改用 OpenBitFunControl 打开 feature.browser 能力根入口，不得臆造 about:blank",
+          "用户给出网址时，用 browser.navigate（target=builtin）直接打开，缺少页面时自动创建；需要读取或交互时附带 observe=article 或 snapshot，并复用返回的 session_id；用户只要求显示内置浏览器且没有网址时，改用星伴Control 打开 feature.browser 能力根入口，不得臆造 about:blank",
           "对同一个 session_id 指定 target 为 builtin；选择已打开页面时，用 browser.connect 和唯一匹配的 target_url 或 target_title；快照、点击、填写、滚动和截图等动作与外部 CDP 浏览器共用同一套契约",
           "复用 navigate 返回的观察结果，只在下一步需要新页面状态时重新快照；涉及用户账号登录态时，优先使用用户在设置中已授权连接的 external 浏览器，未授权时请用户连接，不得自行开启权限；CDP 协议扩展同样需要可用的外接连接"
         ],
@@ -3098,8 +3098,8 @@
       "categoryId": "automation",
       "titleZh": "Mini Apps 小应用",
       "titleEn": "Mini Apps",
-      "summaryZh": "在 OpenBitFun 内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。",
-      "summaryEn": "Install, create, and run lightweight apps inside OpenBitFun, combining UI, data, and agent workflows.",
+      "summaryZh": "在星伴内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。",
+      "summaryEn": "Install, create, and run lightweight apps inside StarMate, combining UI, data, and agent workflows.",
       "keywordsZh": [
         "Mini App",
         "小应用",
@@ -3366,7 +3366,7 @@
               "MiniAppBrowser"
             ],
             "workflowZh": [
-              "先用 OpenBitFunControl 的 get 查询 feature.miniapps，并按 schema 用 inspect-app 读取源码，理解业务函数、动作参数和状态；源码更新属于应用改造，不是日常操作的前置步骤",
+              "先用星伴Control 的 get 查询 feature.miniapps，并按 schema 用 inspect-app 读取源码，理解业务函数、动作参数和状态；源码更新属于应用改造，不是日常操作的前置步骤",
               "用 MiniAppBrowser 的 open 连接当前实例，优先 observe_bridge 读取业务状态、act_bridge 执行语义动作并核对结果，保留用户草稿，不改源码、不重载、不切换呈现。旧应用缺少接口时使用可用的 DOM/输入或说明限制；自动活动信息不能代替业务状态"
             ],
             "workflowEn": [
@@ -3988,8 +3988,8 @@
       "categoryId": "automation",
       "titleZh": "外部导入",
       "titleEn": "External Import",
-      "summaryZh": "查看外部 AI 生态的内容与状态，导入受支持的 Skill、MCP、Hook，以及 Codex、Zcode 会话，并在 OpenBitFun 中继续对话。",
-      "summaryEn": "Inspect external AI content and status, import supported Skills, MCP, Hooks, and Codex or Zcode sessions, and continue conversations in OpenBitFun.",
+      "summaryZh": "查看外部 AI 生态的内容与状态，导入受支持的 Skill、MCP、Hook，以及 Codex、Zcode 会话，并在星伴中继续对话。",
+      "summaryEn": "Inspect external AI content and status, import supported Skills, MCP, Hooks, and Codex or Zcode sessions, and continue conversations in StarMate.",
       "keywordsZh": [
         "外部导入",
         "生态兼容",
@@ -4068,13 +4068,13 @@
         },
         {
           "id": "codex-session-import",
-          "titleZh": "发现、移除和重新添加 Codex 来源会话，并在 OpenBitFun 分支中续聊",
-          "titleEn": "Discover, remove and restore Codex source sessions, then continue in OpenBitFun branches",
+          "titleZh": "发现、移除和重新添加 Codex 来源会话，并在星伴分支中续聊",
+          "titleEn": "Discover, remove and restore Codex source sessions, then continue in StarMate branches",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“发现、移除和重新添加 Codex 来源会话，并在 OpenBitFun 分支中续聊”由用户在生态兼容页开启发现或选择已移除的来源。打开来源时刷新历史，首次发送创建独立分支。归档、移除和分支删除各自独立，原应用历史保持不变。智能体打开入口，由用户选择具体会话。",
-            "reasonEn": "“Discover, remove and restore Codex source sessions, then continue in OpenBitFun branches” requires the user to enable discovery or select a removed source in ecosystem compatibility. Opening a source refreshes its history and first send creates an independent branch. Archives, source removal and branch deletion stay independent; original history is preserved. The Agent opens the entry for the user to choose a session."
+            "reasonZh": "“发现、移除和重新添加 Codex 来源会话，并在星伴分支中续聊”由用户在生态兼容页开启发现或选择已移除的来源。打开来源时刷新历史，首次发送创建独立分支。归档、移除和分支删除各自独立，原应用历史保持不变。智能体打开入口，由用户选择具体会话。",
+            "reasonEn": "“Discover, remove and restore Codex source sessions, then continue in StarMate branches” requires the user to enable discovery or select a removed source in ecosystem compatibility. Opening a source refreshes its history and first send creates an independent branch. Archives, source removal and branch deletion stay independent; original history is preserved. The Agent opens the entry for the user to choose a session."
           },
           "evidence": [
             "command:list_removed_external_sessions",
@@ -4085,13 +4085,13 @@
         },
         {
           "id": "zcode-session-import",
-          "titleZh": "发现、移除和重新添加 Zcode 来源会话，并在 OpenBitFun 分支中续聊",
-          "titleEn": "Discover, remove and restore Zcode source sessions, then continue in OpenBitFun branches",
+          "titleZh": "发现、移除和重新添加 Zcode 来源会话，并在星伴分支中续聊",
+          "titleEn": "Discover, remove and restore Zcode source sessions, then continue in StarMate branches",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“发现、移除和重新添加 Zcode 来源会话，并在 OpenBitFun 分支中续聊”由用户在生态兼容页开启发现或选择已移除的来源。打开来源时刷新历史，首次发送创建独立分支。归档、移除和分支删除各自独立，原应用历史保持不变。智能体打开入口，由用户选择具体会话。",
-            "reasonEn": "“Discover, remove and restore Zcode source sessions, then continue in OpenBitFun branches” requires the user to enable discovery or select a removed source in ecosystem compatibility. Opening a source refreshes its history and first send creates an independent branch. Archives, source removal and branch deletion stay independent; original history is preserved. The Agent opens the entry for the user to choose a session."
+            "reasonZh": "“发现、移除和重新添加 Zcode 来源会话，并在星伴分支中续聊”由用户在生态兼容页开启发现或选择已移除的来源。打开来源时刷新历史，首次发送创建独立分支。归档、移除和分支删除各自独立，原应用历史保持不变。智能体打开入口，由用户选择具体会话。",
+            "reasonEn": "“Discover, remove and restore Zcode source sessions, then continue in StarMate branches” requires the user to enable discovery or select a removed source in ecosystem compatibility. Opening a source refreshes its history and first send creates an independent branch. Archives, source removal and branch deletion stay independent; original history is preserved. The Agent opens the entry for the user to choose a session."
           },
           "evidence": [
             "command:list_removed_external_sessions",
@@ -4509,8 +4509,8 @@
       "categoryId": "connect",
       "titleZh": "Remote Connect 与多设备",
       "titleEn": "Remote Connect & devices",
-      "summaryZh": "从手机、Bot 或另一台 OpenBitFun 设备远程查看会话、回答权限并继续工作。手机与同账号设备互控默认使用官方 Relay，无需部署服务器；官方与局域网模式登录时均需联网。",
-      "summaryEn": "Inspect sessions, answer permissions, and continue work from mobile, a bot, or another OpenBitFun device. Mobile and same-account device control use the official Relay by default, with no server deployment; both official and LAN modes need internet access for sign-in.",
+      "summaryZh": "从手机、Bot 或另一台星伴设备远程查看会话、回答权限并继续工作。手机与同账号设备互控默认使用官方 Relay，无需部署服务器；官方与局域网模式登录时均需联网。",
+      "summaryEn": "Inspect sessions, answer permissions, and continue work from mobile, a bot, or another StarMate device. Mobile and same-account device control use the official Relay by default, with no server deployment; both official and LAN modes need internet access for sign-in.",
       "keywordsZh": [
         "Remote Connect",
         "远程控制",
@@ -4667,13 +4667,13 @@
         },
         {
           "id": "peer-device",
-          "titleZh": "进入 Peer Device Mode，把另一台 OpenBitFun 设备作为命令与事件数据面",
-          "titleEn": "Enter Peer Device Mode and use another OpenBitFun device as the command and event data plane",
+          "titleZh": "进入 Peer Device Mode，把另一台星伴设备作为命令与事件数据面",
+          "titleEn": "Enter Peer Device Mode and use another StarMate device as the command and event data plane",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“进入 Peer Device Mode，把另一台 OpenBitFun 设备作为命令与事件数据面”由多个实时状态相关步骤组成，目前没有一个能确定完成整个流程的单一结构化 Command；智能体会打开精确入口，并把后续交互保留在用户可见界面。",
-            "reasonEn": "“Enter Peer Device Mode and use another OpenBitFun device as the command and event data plane” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
+            "reasonZh": "“进入 Peer Device Mode，把另一台星伴设备作为命令与事件数据面”由多个实时状态相关步骤组成，目前没有一个能确定完成整个流程的单一结构化 Command；智能体会打开精确入口，并把后续交互保留在用户可见界面。",
+            "reasonEn": "“Enter Peer Device Mode and use another StarMate device as the command and event data plane” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
           },
           "evidence": [
             "command:peer_control_attach",
@@ -4773,8 +4773,8 @@
       "categoryId": "connect",
       "titleZh": "Detached Dispatch 远程派发",
       "titleEn": "Detached Dispatch",
-      "summaryZh": "把可持续运行的任务派发到另一台 OpenBitFun 主机；控制端可以断开，目标主机继续执行并保留记录。",
-      "summaryEn": "Dispatch durable work to another OpenBitFun host; the controller may disconnect while the target continues and keeps the record.",
+      "summaryZh": "把可持续运行的任务派发到另一台星伴主机；控制端可以断开，目标主机继续执行并保留记录。",
+      "summaryEn": "Dispatch durable work to another StarMate host; the controller may disconnect while the target continues and keeps the record.",
       "keywordsZh": [
         "派发任务",
         "Detached Dispatch",
@@ -4819,13 +4819,13 @@
         },
         {
           "id": "provision",
-          "titleZh": "为目标主机配置运行环境并安装或更新 OpenBitFun CLI",
-          "titleEn": "Provision the target runtime and install or update the OpenBitFun CLI",
+          "titleZh": "为目标主机配置运行环境并安装或更新星伴CLI",
+          "titleEn": "Provision the target runtime and install or update the StarMate CLI",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“为目标主机配置运行环境并安装或更新 OpenBitFun CLI”由多个实时状态相关步骤组成，目前没有一个能确定完成整个流程的单一结构化 Command；智能体会打开精确入口，并把后续交互保留在用户可见界面。",
-            "reasonEn": "“Provision the target runtime and install or update the OpenBitFun CLI” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
+            "reasonZh": "“为目标主机配置运行环境并安装或更新星伴CLI”由多个实时状态相关步骤组成，目前没有一个能确定完成整个流程的单一结构化 Command；智能体会打开精确入口，并把后续交互保留在用户可见界面。",
+            "reasonEn": "“Provision the target runtime and install or update the StarMate CLI” spans multiple live-state-dependent steps and currently has no single structured Command that can deterministically complete the whole workflow; the Agent opens the exact entry and keeps the remaining interaction visible to the user."
           },
           "evidence": [
             "command:dispatch_provision_target",
@@ -4976,8 +4976,8 @@
           "id": "list-targets",
           "titleZh": "列出派发目标",
           "titleEn": "List dispatch targets",
-          "descriptionZh": "读取同账户下所有 OpenBitFun 设备（含本机，带 isCurrentDevice 标记、在线状态、型号与系统）以及本机已保存的 SSH 连接。回答“有几台设备”或派发前先调用；未登录账户时 devices 为空并说明原因。",
-          "descriptionEn": "Read every OpenBitFun device on this account (including this one, marked isCurrentDevice, with online state, model and OS) plus this host's saved SSH connections. Call it before stating how many devices exist or before submitting; when signed out, devices is empty with a reason."
+          "descriptionZh": "读取同账户下所有星伴设备（含本机，带 isCurrentDevice 标记、在线状态、型号与系统）以及本机已保存的 SSH 连接。回答“有几台设备”或派发前先调用；未登录账户时 devices 为空并说明原因。",
+          "descriptionEn": "Read every StarMate device on this account (including this one, marked isCurrentDevice, with online state, model and OS) plus this host's saved SSH connections. Call it before stating how many devices exist or before submitting; when signed out, devices is empty with a reason."
         },
         {
           "id": "submit",
@@ -5183,12 +5183,12 @@
         }
       ],
       "stepsZh": [
-        "登录 OpenBitFun 账号（GitHub 或服务支持的邮箱验证码）",
+        "登录星伴账号（GitHub 或服务支持的邮箱验证码）",
         "打开 Pages",
         "选择页面并确认发布与可见性"
       ],
       "stepsEn": [
-        "Sign in to OpenBitFun with GitHub or an email code supported by the service",
+        "Sign in to StarMate with GitHub or an email code supported by the service",
         "Open Pages",
         "Choose a page and confirm publishing and visibility"
       ],
@@ -5641,8 +5641,8 @@
         },
         {
           "id": "drag-restore",
-          "titleZh": "拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭 OpenBitFun 时卡片消失，重新打开后按原位置和大小恢复",
-          "titleEn": "Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when OpenBitFun closes and return with the same position and size when it reopens",
+          "titleZh": "拖动卡片到桌面任意位置，拖动卡片边缘或四角调整大小；关闭星伴时卡片消失，重新打开后按原位置和大小恢复",
+          "titleEn": "Drag cards anywhere on the desktop and resize them from their edges or corners; they disappear when StarMate closes and return with the same position and size when it reopens",
           "control": {
             "kind": "open",
             "reasonCode": "visualSelection",
@@ -5768,8 +5768,8 @@
         },
         {
           "id": "launch-at-login",
-          "titleZh": "控制 OpenBitFun 是否在登录系统后自动启动",
-          "titleEn": "Choose whether OpenBitFun launches automatically after system sign-in",
+          "titleZh": "控制星伴是否在登录系统后自动启动",
+          "titleEn": "Choose whether StarMate launches automatically after system sign-in",
           "control": {
             "kind": "direct",
             "operations": [],
@@ -5785,8 +5785,8 @@
         },
         {
           "id": "prevent-sleep",
-          "titleZh": "控制 OpenBitFun 运行期间是否阻止电脑自动睡眠",
-          "titleEn": "Choose whether OpenBitFun prevents the computer from sleeping while it runs",
+          "titleZh": "控制星伴运行期间是否阻止电脑自动睡眠",
+          "titleEn": "Choose whether StarMate prevents the computer from sleeping while it runs",
           "control": {
             "kind": "direct",
             "operations": [],
@@ -5874,15 +5874,15 @@
           "id": "launch-at-login",
           "titleZh": "登录后自动启动",
           "titleEn": "Launch at login",
-          "descriptionZh": "在当前桌面系统登录后自动启动 OpenBitFun。",
-          "descriptionEn": "Launch OpenBitFun automatically after signing in to this desktop system."
+          "descriptionZh": "在当前桌面系统登录后自动启动星伴。",
+          "descriptionEn": "Launch StarMate automatically after signing in to this desktop system."
         },
         {
           "id": "prevent-sleep",
           "titleZh": "阻止系统睡眠",
           "titleEn": "Prevent system sleep",
-          "descriptionZh": "在 OpenBitFun 运行期间持有本机睡眠抑制器。",
-          "descriptionEn": "Hold a local sleep inhibitor while OpenBitFun is running."
+          "descriptionZh": "在星伴运行期间持有本机睡眠抑制器。",
+          "descriptionEn": "Hold a local sleep inhibitor while StarMate is running."
         },
         {
           "id": "auto-update",
@@ -6119,15 +6119,15 @@
           "id": "theme",
           "titleZh": "主题",
           "titleEn": "Theme",
-          "descriptionZh": "使用系统、OpenBitFun 深色或 OpenBitFun 浅色外观。",
-          "descriptionEn": "Use the system, OpenBitFun dark, or OpenBitFun light appearance."
+          "descriptionZh": "使用系统、星伴深色或星伴浅色外观。",
+          "descriptionEn": "Use the system, StarMate dark, or StarMate light appearance."
         },
         {
           "id": "language",
           "titleZh": "界面语言",
           "titleEn": "Interface language",
-          "descriptionZh": "设置 OpenBitFun 的界面语言。",
-          "descriptionEn": "Set the OpenBitFun interface language."
+          "descriptionZh": "设置星伴的界面语言。",
+          "descriptionEn": "Set the StarMate interface language."
         }
       ]
     },
@@ -6267,12 +6267,12 @@
       ],
       "agentExamplesZh": [
         "关闭桌面伙伴",
-        "让 OpenBitFun 使用 /path/to/pet 里的萌宠",
+        "让星伴使用 /path/to/pet 里的萌宠",
         "关闭小卡片功能"
       ],
       "agentExamplesEn": [
         "Turn off the desktop companion",
-        "Make OpenBitFun use the pet at /path/to/pet",
+        "Make StarMate use the pet at /path/to/pet",
         "Turn off desktop cards"
       ],
       "destination": {
@@ -6284,8 +6284,8 @@
           "id": "list-pets",
           "titleZh": "列出可用萌宠",
           "titleEn": "List available pets",
-          "descriptionZh": "读取当前角色以及 OpenBitFun 已导入的 Petdex 角色。",
-          "descriptionEn": "Read the active character and Petdex characters imported into OpenBitFun."
+          "descriptionZh": "读取当前角色以及星伴已导入的 Petdex 角色。",
+          "descriptionEn": "Read the active character and Petdex characters imported into StarMate."
         },
         {
           "id": "use-pet",
@@ -6298,8 +6298,8 @@
           "id": "delete-pet",
           "titleZh": "删除已导入萌宠",
           "titleEn": "Delete an imported pet",
-          "descriptionZh": "按角色 ID 或 OpenBitFun 包目录删除已导入角色；若正在使用则安全回退到默认角色。",
-          "descriptionEn": "Delete an imported character by ID or OpenBitFun package path, safely falling back when it is active."
+          "descriptionZh": "按角色 ID 或星伴包目录删除已导入角色；若正在使用则安全回退到默认角色。",
+          "descriptionEn": "Delete an imported character by ID or StarMate package path, safely falling back when it is active."
         }
       ],
       "options": [
@@ -7323,8 +7323,8 @@
       "categoryId": "assistant",
       "titleZh": "记忆设置",
       "titleEn": "Memory settings",
-      "summaryZh": "控制 OpenBitFun 是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。",
-      "summaryEn": "Control whether OpenBitFun extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.",
+      "summaryZh": "控制星伴是否从会话中提取和使用长期记忆，以及保留、整理和模型策略。",
+      "summaryEn": "Control whether StarMate extracts and uses long-term memory from sessions, including retention, consolidation, and model policy.",
       "keywordsZh": [
         "记忆设置",
         "长期记忆",
@@ -8011,8 +8011,8 @@
           "id": "worktree-root-path",
           "titleZh": "受管 Worktree 根目录",
           "titleEn": "Managed-worktree root",
-          "descriptionZh": "设置 OpenBitFun 创建受管 Worktree 的统一根目录。",
-          "descriptionEn": "Set the common root where OpenBitFun creates managed worktrees."
+          "descriptionZh": "设置星伴创建受管 Worktree 的统一根目录。",
+          "descriptionEn": "Set the common root where StarMate creates managed worktrees."
         },
         {
           "id": "worktree-branch-prefix",
@@ -8032,8 +8032,8 @@
           "id": "worktree-auto-delete-enabled",
           "titleZh": "自动清理 Worktree",
           "titleEn": "Automatic worktree cleanup",
-          "descriptionZh": "允许 OpenBitFun 自动清理超过保留上限的受管 Worktree。",
-          "descriptionEn": "Allow OpenBitFun to prune managed worktrees beyond the retention limit."
+          "descriptionZh": "允许星伴自动清理超过保留上限的受管 Worktree。",
+          "descriptionEn": "Allow StarMate to prune managed worktrees beyond the retention limit."
         },
         {
           "id": "worktree-auto-delete-limit",
@@ -8324,8 +8324,8 @@
         },
         {
           "id": "browser-auto-connect",
-          "titleZh": "控制 OpenBitFun 启动时是否自动连接浏览器",
-          "titleEn": "Choose whether OpenBitFun reconnects browser control at startup",
+          "titleZh": "控制星伴启动时是否自动连接浏览器",
+          "titleEn": "Choose whether StarMate reconnects browser control at startup",
           "control": {
             "kind": "direct",
             "operations": [],
@@ -8463,8 +8463,8 @@
           "id": "browser-auto-connect",
           "titleZh": "启动时连接浏览器",
           "titleEn": "Connect browser on startup",
-          "descriptionZh": "OpenBitFun 启动后自动尝试连接浏览器控制。",
-          "descriptionEn": "Automatically try to connect browser control after OpenBitFun starts."
+          "descriptionZh": "星伴启动后自动尝试连接浏览器控制。",
+          "descriptionEn": "Automatically try to connect browser control after StarMate starts."
         },
         {
           "id": "tool-json-repair",
@@ -9017,23 +9017,23 @@
       "highlightsZh": [
         "切换 WebSearch 运行时搜索服务",
         "在执行主机上加密保存设备凭据",
-        "配置和查看 OpenBitFun Search HTTP Protocol v1"
+        "配置和查看星伴Search HTTP Protocol v1"
       ],
       "highlightsEn": [
         "Switch the WebSearch runtime provider",
         "Store device credentials encrypted on the execution host",
-        "Configure and inspect OpenBitFun Search HTTP Protocol v1"
+        "Configure and inspect StarMate Search HTTP Protocol v1"
       ],
       "items": [
         {
           "id": "provider",
-          "titleZh": "在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与 OpenBitFun Search HTTP Protocol 之间选择运行时服务",
-          "titleEn": "Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or OpenBitFun Search HTTP Protocol as the runtime provider",
+          "titleZh": "在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与星伴Search HTTP Protocol 之间选择运行时服务",
+          "titleEn": "Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or StarMate Search HTTP Protocol as the runtime provider",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与 OpenBitFun Search HTTP Protocol 之间选择运行时服务”与各服务的配置状态相关，目前没有一个能安全完成选择、检查和保存整个流程的单一结构化 Command；智能体会打开精确设置入口，由用户确认配置。",
-            "reasonEn": "“Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or OpenBitFun Search HTTP Protocol as the runtime provider” depends on provider-specific configuration state, and no single structured Command can safely complete selection, validation, and saving; the Agent opens the exact settings entry for user confirmation."
+            "reasonZh": "“在免费 Exa MCP、Exa Search API、Tavily、DeepSeek 与星伴Search HTTP Protocol 之间选择运行时服务”与各服务的配置状态相关，目前没有一个能安全完成选择、检查和保存整个流程的单一结构化 Command；智能体会打开精确设置入口，由用户确认配置。",
+            "reasonEn": "“Choose free Exa MCP, Exa Search API, Tavily, DeepSeek, or StarMate Search HTTP Protocol as the runtime provider” depends on provider-specific configuration state, and no single structured Command can safely complete selection, validation, and saving; the Agent opens the exact settings entry for user confirmation."
           },
           "evidence": [
             "source:src/web-ui/src/locales/zh-CN/settings/web-search.json#providers"
@@ -9041,13 +9041,13 @@
         },
         {
           "id": "http-endpoint",
-          "titleZh": "为 OpenBitFun Search HTTP Protocol 配置端点、认证方式和受限凭据 Header",
-          "titleEn": "Configure the endpoint, authentication mode, and restricted credential header for OpenBitFun Search HTTP Protocol",
+          "titleZh": "为星伴Search HTTP Protocol 配置端点、认证方式和受限凭据 Header",
+          "titleEn": "Configure the endpoint, authentication mode, and restricted credential header for StarMate Search HTTP Protocol",
           "control": {
             "kind": "open",
             "reasonCode": "unstructuredInteraction",
-            "reasonZh": "“为 OpenBitFun Search HTTP Protocol 配置端点、认证方式和受限凭据 Header”包含 URL、安全限制和认证方式等关联字段，需要在设置页中一起校验并明确保存；智能体会打开对应入口而不猜测端点配置。",
-            "reasonEn": "“Configure the endpoint, authentication mode, and restricted credential header for OpenBitFun Search HTTP Protocol” combines URL, security restrictions, and authentication fields that must be validated and explicitly saved together in Settings; the Agent opens the corresponding entry instead of guessing endpoint configuration."
+            "reasonZh": "“为星伴Search HTTP Protocol 配置端点、认证方式和受限凭据 Header”包含 URL、安全限制和认证方式等关联字段，需要在设置页中一起校验并明确保存；智能体会打开对应入口而不猜测端点配置。",
+            "reasonEn": "“Configure the endpoint, authentication mode, and restricted credential header for StarMate Search HTTP Protocol” combines URL, security restrictions, and authentication fields that must be validated and explicitly saved together in Settings; the Agent opens the corresponding entry instead of guessing endpoint configuration."
           },
           "evidence": [
             "source:src/web-ui/src/locales/zh-CN/settings/web-search.json#fields.endpoint",
@@ -9074,13 +9074,13 @@
         },
         {
           "id": "http-protocol",
-          "titleZh": "查看并复制 OpenBitFun Search HTTP Protocol v1 的请求、响应和传输限制",
-          "titleEn": "Inspect and copy the request, response, and transport limits for OpenBitFun Search HTTP Protocol v1",
+          "titleZh": "查看并复制星伴Search HTTP Protocol v1 的请求、响应和传输限制",
+          "titleEn": "Inspect and copy the request, response, and transport limits for StarMate Search HTTP Protocol v1",
           "control": {
             "kind": "open",
             "reasonCode": "visualSelection",
-            "reasonZh": "协议说明仅在选中 OpenBitFun Search HTTP Protocol 时显示，并由设置页提供完整可复制内容；智能体会打开精确入口，避免用不完整摘要替代产品内协议。",
-            "reasonEn": "The protocol specification is shown only when OpenBitFun Search HTTP Protocol is selected and the Settings page owns the complete copyable content; the Agent opens the exact entry instead of substituting an incomplete summary."
+            "reasonZh": "协议说明仅在选中星伴Search HTTP Protocol 时显示，并由设置页提供完整可复制内容；智能体会打开精确入口，避免用不完整摘要替代产品内协议。",
+            "reasonEn": "The protocol specification is shown only when StarMate Search HTTP Protocol is selected and the Settings page owns the complete copyable content; the Agent opens the exact entry instead of substituting an incomplete summary."
           },
           "evidence": [
             "source:src/web-ui/src/locales/zh-CN/settings/web-search.json#protocol.request.description",

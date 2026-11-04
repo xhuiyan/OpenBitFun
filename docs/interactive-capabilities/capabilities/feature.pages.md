@@ -34,8 +34,8 @@ Save page versions and publish them to public or private URLs while managing tit
 
 ## 怎么用 / How to use it
 
-1. 登录 OpenBitFun 账号（GitHub 或服务支持的邮箱验证码）
-   Sign in to OpenBitFun with GitHub or an email code supported by the service
+1. 登录星伴账号（GitHub 或服务支持的邮箱验证码）
+   Sign in to StarMate with GitHub or an email code supported by the service
 2. 打开 Pages
    Open Pages
 3. 选择页面并确认发布与可见性

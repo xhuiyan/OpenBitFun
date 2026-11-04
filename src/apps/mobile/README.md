@@ -1,12 +1,12 @@
-# OpenBitFun Native Mobile Apps
+# StarMate Native Mobile Apps
 
-This directory contains the native mobile product surfaces for OpenBitFun:
+This directory contains the native mobile product surfaces for StarMate:
 
 - `android/`: Android application code and resources.
 - `ios/`: iOS application code and resources.
 - `harmonyos/`: HarmonyOS application code and resources.
 
-The mobile apps are remote controllers: OpenBitFun account sign-in and the device
+The mobile apps are remote controllers: StarMate account sign-in and the device
 directory select a desktop or CLI host that owns configuration and Agent Runtime
 execution. Phones submit tasks and display results; they do not synchronize model
 configuration or execute agents locally.

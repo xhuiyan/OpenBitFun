@@ -11,14 +11,14 @@ title_en: "Built-in browser"
 
 > 功能 / Feature
 
-在 OpenBitFun 内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。
+在星伴内打开网页和本地服务；智能体可直接读取页面、选择元素并点击、填写、滚动或截图。
 
-Open webpages and local services inside OpenBitFun, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.
+Open webpages and local services inside StarMate, where an agent can inspect the page and select, click, fill, scroll, or capture elements directly.
 
 ## 完整功能清单 / Everything included
 
-- **由专用智能体工具控制 / Delegated Agent tool** · `ControlHub` · 输入完整网址、本地域名或开发服务端口并在 OpenBitFun 内打开
-  - Open full URLs, local hostnames, or development-service ports inside OpenBitFun
+- **由专用智能体工具控制 / Delegated Agent tool** · `ControlHub` · 输入完整网址、本地域名或开发服务端口并在星伴内打开
+  - Open full URLs, local hostnames, or development-service ports inside StarMate
 - **由专用智能体工具控制 / Delegated Agent tool** · `WebSearch` / `WebFetch` · 让智能体搜索网页并按需读取指定页面正文
   - Let an agent search the web and fetch selected page content on demand
 - **由专用智能体工具控制 / Delegated Agent tool** · `ControlHub` · 使用后退、前进和地址栏浏览页面历史
@@ -57,7 +57,7 @@ Open webpages and local services inside OpenBitFun, where an agent can inspect t
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| ControlHub · 1 | 用户给出网址时，用 browser.navigate（target=builtin）直接打开，缺少页面时自动创建；需要读取或交互时附带 observe=article 或 snapshot，并复用返回的 session_id；用户只要求显示内置浏览器且没有网址时，改用 OpenBitFunControl 打开 feature.browser 能力根入口，不得臆造 about:blank | When the user supplies a URL, use browser.navigate with target=builtin (creates a page when needed), add observe=article or snapshot for reading/interaction, and keep the returned session_id; when they only want the built-in browser surface, open the feature.browser capability root with OpenBitFunControl and never invent about:blank |
+| ControlHub · 1 | 用户给出网址时，用 browser.navigate（target=builtin）直接打开，缺少页面时自动创建；需要读取或交互时附带 observe=article 或 snapshot，并复用返回的 session_id；用户只要求显示内置浏览器且没有网址时，改用星伴Control 打开 feature.browser 能力根入口，不得臆造 about:blank | When the user supplies a URL, use browser.navigate with target=builtin (creates a page when needed), add observe=article or snapshot for reading/interaction, and keep the returned session_id; when they only want the built-in browser surface, open the feature.browser capability root with OpenBitFunControl and never invent about:blank |
 | ControlHub · 2 | 对同一个 session_id 指定 target 为 builtin；选择已打开页面时，用 browser.connect 和唯一匹配的 target_url 或 target_title；快照、点击、填写、滚动和截图等动作与外部 CDP 浏览器共用同一套契约 | Address that session_id with target set to builtin; to select an existing page, use browser.connect with a unique target_url or target_title match. Portable actions share the external CDP contract |
 | ControlHub · 3 | 复用 navigate 返回的观察结果，只在下一步需要新页面状态时重新快照；涉及用户账号登录态时，优先使用用户在设置中已授权连接的 external 浏览器，未授权时请用户连接，不得自行开启权限；CDP 协议扩展同样需要可用的外接连接 | Reuse the observation returned by navigate; refresh only when the next decision needs new page state. For account/login-dependent work, prefer the external browser the user authorized in Settings; if unavailable, ask the user to connect it and never enable permissions yourself. CDP extensions also require an available external connection |
 

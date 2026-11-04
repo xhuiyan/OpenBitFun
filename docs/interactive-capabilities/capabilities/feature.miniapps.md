@@ -11,9 +11,9 @@ title_en: "Mini Apps"
 
 > 功能 / Feature
 
-在 OpenBitFun 内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。
+在星伴内安装、创建和运行轻量应用，让界面、数据与智能体工作流组合在一起。
 
-Install, create, and run lightweight apps inside OpenBitFun, combining UI, data, and agent workflows.
+Install, create, and run lightweight apps inside StarMate, combining UI, data, and agent workflows.
 
 ## 完整功能清单 / Everything included
 
