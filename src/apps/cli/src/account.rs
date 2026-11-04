@@ -75,7 +75,7 @@ pub(crate) fn account_login_status_message(
 ) -> String {
     if result.routing_standby {
         format!(
-            "Logged in as user {} on {}. Another OpenBitFun host on this machine serves device routing; this one takes over when it exits.",
+            "Logged in as user {} on {}. Another StarMate host on this machine serves device routing; this one takes over when it exits.",
             result.user_id, result.relay_url
         )
     } else if result.routing_connected {
@@ -188,7 +188,7 @@ impl CliAccountRoutingHost {
             .await?;
         if client.connection_state().await == ConnectionState::Standby {
             tracing::info!(
-                "Another OpenBitFun host on this machine serves this device; device routing is standing by"
+                "Another StarMate host on this machine serves this device; device routing is standing by"
             );
         }
         let client = Arc::new(client);

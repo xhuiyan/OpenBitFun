@@ -177,7 +177,7 @@ impl ChatView {
 
     /// Render header
     fn render_header(&self, frame: &mut Frame, area: Rect, chat_state: &ChatState) {
-        let title = format!(" OpenBitFun CLI v{} ", env!("CARGO_PKG_VERSION"));
+        let title = format!(" StarMate CLI v{} ", env!("CARGO_PKG_VERSION"));
         let auto_mode = if chat_state.auto_approve_ask {
             "Auto: on"
         } else {

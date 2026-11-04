@@ -59,7 +59,7 @@ pub(crate) enum HookAction {
     Enable { import_id: String },
     /// Disable one imported Hook source without deleting it
     Disable { import_id: String },
-    /// Remove only OpenBitFun's managed copy of one imported Hook source
+    /// Remove only StarMate's managed copy of one imported Hook source
     Remove {
         import_id: String,
         /// Confirm removal of the OpenBitFun-managed copy
@@ -159,7 +159,7 @@ pub(crate) async fn run(action: Option<HookAction>) -> Result<()> {
             .await
             .map_err(operation_error)?;
             println!(
-                "Removed OpenBitFun's managed Hook copy; the source was not changed: {}",
+                "Removed StarMate's managed Hook copy; the source was not changed: {}",
                 escape(&import_id)
             );
             Ok(())

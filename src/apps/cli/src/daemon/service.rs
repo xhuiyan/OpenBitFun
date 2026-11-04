@@ -32,7 +32,7 @@ fn systemd_unit_path() -> Result<PathBuf> {
 fn render_systemd_unit(executable: &Path) -> String {
     format!(
         "[Unit]\n\
-         Description=OpenBitFun CLI account device host\n\
+         Description=StarMate CLI account device host\n\
          After=network-online.target\n\
          Wants=network-online.target\n\
          \n\

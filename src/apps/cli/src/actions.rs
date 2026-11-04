@@ -935,7 +935,7 @@ static ACTION_SPECS: &[ActionSpec] = &[
         id: "logout",
         name: "Logout",
         aliases: &["/logout"],
-        description: "Log out of OpenBitFun account",
+        description: "Log out of StarMate account",
         contexts: BOTH,
         availability: ActionAvailability::Always,
         handler: ActionHandler::Logout,
@@ -1586,7 +1586,7 @@ impl ResolvedKeymap {
                 keymap.push_binding(
                     spec,
                     binding,
-                    "OpenBitFun safety".to_string(),
+                    "StarMate safety".to_string(),
                     BindingPolicy {
                         availability,
                         modifier_match: built_in_modifier_match(spec, binding),
@@ -1629,7 +1629,7 @@ impl ResolvedKeymap {
                 }
                 Err(error) => keymap.push_diagnostic(
                     format!(
-                        "Invalid {} ({}); using OpenBitFun default",
+                        "Invalid {} ({}); using StarMate default",
                         field.source(),
                         binding_error_summary(&error)
                     ),
@@ -1649,7 +1649,7 @@ impl ResolvedKeymap {
                 keymap.push_binding(
                     spec,
                     binding,
-                    "OpenBitFun default".to_string(),
+                    "StarMate default".to_string(),
                     BindingPolicy {
                         availability: spec.availability,
                         modifier_match: built_in_modifier_match(spec, binding),
@@ -2740,7 +2740,7 @@ mod tests {
             Some("exit")
         );
         let diagnostic = keymap.diagnostics().join("\n");
-        assert!(diagnostic.contains("OpenBitFun safety"));
+        assert!(diagnostic.contains("StarMate safety"));
         assert!(diagnostic.contains("shortcuts.menu"));
         assert!(diagnostic.contains("Quit"));
         assert!(diagnostic.contains("Interrupt"));
@@ -2905,7 +2905,7 @@ mod tests {
         let diagnostic = keymap.diagnostics().join("\n");
         assert!(diagnostic.contains("Ctrl+Esc"));
         assert!(diagnostic.contains("shortcuts.menu"));
-        assert!(diagnostic.contains("OpenBitFun safety"));
+        assert!(diagnostic.contains("StarMate safety"));
     }
 
     #[test]
@@ -3097,7 +3097,7 @@ mod tests {
             help.lines().all(|line| line.chars().count() <= 74),
             "{help}"
         );
-        assert!(help.contains("OpenBitFun safety"));
+        assert!(help.contains("StarMate safety"));
     }
 
     #[test]
@@ -3110,7 +3110,7 @@ mod tests {
         let help = keymap.help_text(ActionState::chat(false, false));
 
         assert!(help.contains("shortcuts.send_message"), "{help}");
-        assert!(help.contains("OpenBitFun default"), "{help}");
+        assert!(help.contains("StarMate default"), "{help}");
         assert!(help.contains("Commands"), "{help}");
         assert!(!help.contains("open_palette"), "{help}");
         assert!(help.lines().all(|line| line.chars().count() <= 74));
@@ -3145,8 +3145,8 @@ mod tests {
 
         assert!(help.contains("Invalid shortcuts.send_message"), "{help}");
         assert!(help.contains("unsupported key"), "{help}");
-        assert!(help.contains("using OpenBitFun"), "{help}");
-        assert!(help.lines().any(|line| line.trim() == "default"), "{help}");
+        assert!(help.contains("using StarMate"), "{help}");
+        assert!(help.lines().any(|line| line.contains("default")), "{help}");
         assert!(!help.contains("more shortcut notices"), "{help}");
         assert!(help.lines().count() <= 19, "{help}");
         assert!(help.lines().all(|line| line.chars().count() <= 74));

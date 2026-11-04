@@ -760,7 +760,7 @@ mod tests {
         assert_eq!(
             result.error.as_deref(),
             Some(
-                "command 'lsp_open_workspace' is unsupported because the StarMate LSP runtime has been retired"
+                "command 'lsp_open_workspace' is unsupported because the OpenBitFun LSP runtime has been retired"
             )
         );
     }

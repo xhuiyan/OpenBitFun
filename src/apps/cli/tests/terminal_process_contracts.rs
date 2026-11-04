@@ -246,7 +246,7 @@ fn interactive_startup_survives_resize_multiline_input_and_emits_cleanup() {
         "interactive startup did not render the multiline input tail",
     );
     assert!(
-        !process.output().contains("Welcome to OpenBitFun CLI!"),
+        !process.output().contains("Welcome to StarMate CLI!"),
         "multiline input was submitted instead of remaining in the startup editor"
     );
 
@@ -510,7 +510,7 @@ fn export_dialog_writes_markdown_under_the_local_cli_directory() {
     );
     assert!(markdown.contains("## Assistant"), "{markdown}");
     assert!(
-        !markdown.contains("Welcome to OpenBitFun CLI!"),
+        !markdown.contains("Welcome to StarMate CLI!"),
         "{markdown}"
     );
 }

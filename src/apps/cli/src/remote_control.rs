@@ -182,7 +182,7 @@ impl CliRemoteControlHost {
                 let url = QrGenerator::build_device_url(&info.relay_url, &info.device_id)?;
                 Ok(json!({"started":true,"method":"mobile_web", "url":url,
                     "routingState":format!("{:?}", runtime.account_routing().connection_state().await).to_ascii_lowercase(),
-                    "deviceId":info.device_id, "nextStep":"Open the URL in Mobile Web and sign in with the same OpenBitFun account. The daemon owns the session and continues when this chat disconnects."}))
+                    "deviceId":info.device_id, "nextStep":"Open the URL in Mobile Web and sign in with the same StarMate account. The daemon owns the session and continues when this chat disconnects."}))
             }
             RemoteControlRequest::Stop { method: RemoteControlMethod::MobileWeb } => {
                 let _operation = self.relay_operation.lock().await;

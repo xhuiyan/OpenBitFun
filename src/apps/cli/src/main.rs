@@ -2,7 +2,7 @@
 // several layers of `async fn`) exceeds the default depth.
 #![recursion_limit = "256"]
 
-/// OpenBitFun CLI
+/// StarMate CLI
 ///
 /// Command-line interface version, supports:
 /// - Interactive TUI
@@ -397,7 +397,7 @@ enum Commands {
         action: DispatchAction,
     },
 
-    /// Start the OpenBitFun app server over stdio
+    /// Start the StarMate app server over stdio
     ///
     /// stdout carries JSON-RPC traffic only; logs are written to stderr.
     Server,
@@ -520,7 +520,7 @@ enum AcpAction {
         #[arg(long, default_value = "openbitfun")]
         command: String,
     },
-    /// Manage external ACP agents that OpenBitFun can launch
+    /// Manage external ACP agents that StarMate can launch
     Clients {
         #[command(subcommand)]
         action: AcpClientsAction,
@@ -712,7 +712,7 @@ enum ExternalConfigAction {
     },
     /// Remove this project's overrides and inherit global settings
     ResetProject,
-    /// Back up and reset a policy written by an incompatible OpenBitFun version
+    /// Back up and reset a policy written by an incompatible StarMate version
     ResetIncompatible,
 }
 
@@ -783,7 +783,7 @@ pub(crate) enum DispatchAction {
     Continue,
     /// Read persisted session facts (usage report) without starting a turn
     Query,
-    /// Submit jobs to, and observe jobs on, another OpenBitFun host
+    /// Submit jobs to, and observe jobs on, another StarMate host
     Outbound {
         #[command(subcommand)]
         action: dispatch::outbound::OutboundAction,

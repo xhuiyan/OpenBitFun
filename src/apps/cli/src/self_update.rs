@@ -29,7 +29,7 @@ const AUTO_CHECK_INTERVAL: Duration = Duration::from_secs(6 * 60 * 60);
 const PROBE_WINDOW: Duration = Duration::from_secs(10);
 const PROBE_BYTES: u64 = 4 * 1024 * 1024;
 /// GitHub stays first at or above this rate. Below it, a synchronized
-/// OpenBitFun copy is preferred and GitHub remains the fallback.
+/// StarMate copy is preferred and GitHub remains the fallback.
 const HEALTHY_THROUGHPUT: u64 = 512 * 1024;
 /// Sustained below this counts as a dead link and we fail over. Deliberately
 /// far under the healthy bar: a genuinely slow but only available source must
@@ -180,7 +180,7 @@ fn spawn_detached_install() -> Result<bool> {
     if InstallLock::is_held() {
         return Ok(false);
     }
-    let exe = std::env::current_exe().context("resolve current OpenBitFun CLI executable")?;
+    let exe = std::env::current_exe().context("resolve current StarMate CLI executable")?;
     Command::new(exe)
         .arg("update")
         .env(BACKGROUND_INSTALL_ENV, "1")
@@ -235,7 +235,7 @@ fn report_background_failure() {
     if message.is_empty() {
         return;
     }
-    eprintln!("The last background OpenBitFun CLI update failed: {message}");
+    eprintln!("The last background StarMate CLI update failed: {message}");
     eprintln!("Run `openbitfun update` to retry.");
 }
 
@@ -289,7 +289,7 @@ impl InstallLock {
             Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
                 if Self::is_held() {
                     return Err(anyhow!(
-                        "another OpenBitFun CLI update is already running ({})",
+                        "another StarMate CLI update is already running ({})",
                         path.display()
                     ));
                 }
@@ -320,7 +320,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
         return Ok(UpdateOutcome::Unsupported);
     };
     let current_exe =
-        std::env::current_exe().context("resolve current OpenBitFun CLI executable")?;
+        std::env::current_exe().context("resolve current StarMate CLI executable")?;
     if is_development_binary(&current_exe) {
         return Ok(UpdateOutcome::Unsupported);
     }
@@ -410,7 +410,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
             .find(|(candidate, _)| candidate.source == ReleaseSource::GitHub)
         {
             eprintln!(
-                "GitHub update speed is {} KiB/s, under the {} KiB/s bar; trying the OpenBitFun mirror first.",
+                "GitHub update speed is {} KiB/s, under the {} KiB/s bar; trying the StarMate mirror first.",
                 github_speed / 1024,
                 HEALTHY_THROUGHPUT / 1024
             );
@@ -425,7 +425,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
     let mut buffer = staging.resume();
     if !buffer.is_empty() {
         eprintln!(
-            "Resuming a previous OpenBitFun CLI download at {} MB.",
+            "Resuming a previous StarMate CLI download at {} MB.",
             buffer.len() / (1024 * 1024)
         );
     }
@@ -890,7 +890,7 @@ async fn download_text(client: &Client, url: &str) -> Result<String> {
 /// Forks that publish their own releases override this with their own key.
 const RELEASE_PUBKEY: Option<&str> = option_env!("OPENBITFUN_RELEASE_PUBKEY");
 
-/// The official OpenBitFun release public key (minisign key ID `50F47CBE6CC0A376`),
+/// The official StarMate release public key (minisign key ID `50F47CBE6CC0A376`),
 /// base64-wrapped the way Tauri wraps `minisign.pub`. Public data — each
 /// release ships it as the `minisign.pub` asset — and the update source above
 /// is pinned to the official repository, so local and fork builds verifying
@@ -1016,7 +1016,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
             return base;
         }
         base.context(format!(
-            "the previous CLI could NOT be put back ({}); reinstall OpenBitFun manually",
+            "the previous CLI could NOT be put back ({}); reinstall StarMate manually",
             failures.join("; ")
         ))
     };
@@ -1112,7 +1112,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
             return Err(failed);
         }
         return Err(failed.context(format!(
-            "the previous CLI could NOT be put back ({}); reinstall OpenBitFun manually",
+            "the previous CLI could NOT be put back ({}); reinstall StarMate manually",
             rollback_failures.join("; ")
         )));
     }

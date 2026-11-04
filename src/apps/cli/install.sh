@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OpenBitFun CLI — one-click build + install into PATH.
+# StarMate CLI — one-click build + install into PATH.
 #
 # Usage (from anywhere inside the repo, or this directory):
 #   bash src/apps/cli/install.sh
@@ -44,7 +44,7 @@ resolve_repo_root() {
     echo "$candid"
     return 0
   fi
-  echo "Error: could not locate OpenBitFun repository root from $SCRIPT_DIR" >&2
+  echo "Error: could not locate StarMate repository root from $SCRIPT_DIR" >&2
   exit 1
 }
 
@@ -217,7 +217,7 @@ install_bundle() {
       mv "$plugin_host_backup" "$plugin_host_target"
     fi
     rm -rf "$stage_dir"
-    echo "Error: CLI installation failed; the previous OpenBitFun CLI was restored." >&2
+    echo "Error: CLI installation failed; the previous StarMate CLI was restored." >&2
     return 1
   fi
 
@@ -272,7 +272,7 @@ restart_daemon_for_upgrade() {
 
 usage() {
   cat <<'EOF'
-OpenBitFun CLI install script
+StarMate CLI install script
 
 Usage:
   bash install.sh [--help]
@@ -309,7 +309,7 @@ BIN_DIR="${OPENBITFUN_CLI_BIN_DIR:-${HOME}/.local/bin}"
 HOST_ARCH="$(host_arch_label)"
 HOST_OS="$(uname -s)"
 
-echo "=== OpenBitFun CLI Install ==="
+echo "=== StarMate CLI Install ==="
 echo "Repo:   $REPO_ROOT"
 echo "Host:   ${HOST_OS} / ${HOST_ARCH} ($(uname -m))"
 echo "Install dir: $BIN_DIR"

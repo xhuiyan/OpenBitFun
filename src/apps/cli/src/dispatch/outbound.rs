@@ -1,6 +1,6 @@
 //! Controller side of Detached Dispatch for the CLI.
 //!
-//! `openbitfun dispatch outbound ...` submits jobs to another OpenBitFun host and
+//! `openbitfun dispatch outbound ...` submits jobs to another StarMate host and
 //! observes them. The existing `openbitfun dispatch <verb>` commands are the
 //! target protocol and stay untouched. This module and the CLI's Agent
 //! product-control provider both run the Core dispatch-control executor; they
@@ -166,7 +166,7 @@ pub(crate) async fn execute_for_host(
     account: Arc<AccountRuntime>,
     request: DetachedDispatchControlRequest,
 ) -> Result<Value> {
-    let path_manager = try_get_path_manager_arc().context("resolve OpenBitFun data directory")?;
+    let path_manager = try_get_path_manager_arc().context("resolve StarMate data directory")?;
     let store = OutboundDispatchStore::new(path_manager.as_ref());
     let access = AccountRuntimeDispatchAccess::new(account);
     let ssh = match openbitfun_core::service::remote_ssh::workspace_state::ensure_saved_connection_services().await

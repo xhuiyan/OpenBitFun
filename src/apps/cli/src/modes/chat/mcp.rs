@@ -360,7 +360,7 @@ impl ChatMode {
                                 .find(|candidate| candidate.candidate_id == native_id)
                                 .and_then(|candidate| candidate.unavailable_reason.clone())
                                 .unwrap_or_else(|| {
-                                    "Enable this OpenBitFun server in its MCP configuration"
+                                    "Enable this StarMate server in its MCP configuration"
                                         .to_string()
                                 });
                             McpServerAction::ReadOnly { reason }
@@ -429,7 +429,7 @@ impl ChatMode {
                         tool_count: 0,
                         source_label: "External AI applications".to_string(),
                         external: true,
-                        detail: "OpenBitFun is still checking compatible MCP settings".to_string(),
+                        detail: "StarMate is still checking compatible MCP settings".to_string(),
                         action: McpServerAction::ReadOnly {
                             reason: "Still checking; this list updates automatically".to_string(),
                         },

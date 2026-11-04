@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn empty_notification_messages_keep_a_bounded_safe_fallback() {
         let sequence = notification_sequence(NotificationMethod::Osc9, "\n\t", true, false);
-        assert_eq!(sequence, b"\x1b]9;OpenBitFun needs attention\x07");
+        assert_eq!(sequence, b"\x1b]9;StarMate needs attention\x07");
         assert!(
             notification_sequence(NotificationMethod::Osc9, &"x".repeat(1_000), true, false,).len()
                 < 160
