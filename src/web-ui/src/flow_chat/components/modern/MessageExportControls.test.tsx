@@ -101,7 +101,9 @@ function compileLegacyPackage() {
   const snapshot = new AppearanceCompiler(registry).compile(restored, 1);
   expect(JSON.stringify(restored)).toBe(serialized);
   document.documentElement.setAttribute('data-openbitfun-appearance', snapshot.id);
+  document.documentElement.setAttribute('data-starmate-appearance', snapshot.id);
   document.documentElement.setAttribute('data-openbitfun-appearance-revision', String(snapshot.revision));
+  document.documentElement.setAttribute('data-starmate-appearance-revision', String(snapshot.revision));
   const style = document.createElement('style');
   style.textContent = snapshot.cssText;
   document.head.appendChild(style);

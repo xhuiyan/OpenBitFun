@@ -233,6 +233,7 @@
   function setDesignMode(enabled) {
     designMode = Boolean(enabled);
     document.body.dataset.openbitfunCanvasDesignMode = designMode ? 'true' : 'false';
+    document.body.dataset.starmateCanvasDesignMode = designMode ? 'true' : 'false';
     document.body.style.cursor = designMode ? 'crosshair' : '';
     if (!designMode) clearInspectHighlight();
   }

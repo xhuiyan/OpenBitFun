@@ -147,6 +147,9 @@ interface CompiledRule {
   forceableProperties: ReadonlySet<AppearanceStyleProperty>;
 }
 
+const normalizeSurfaceAttribute = (attribute: string): string =>
+  attribute.replace(/^data-openbitfun-/, 'data-starmate-');
+
 export class AppearanceCompiler {
   constructor(private readonly registry: AppearanceRegistry) {}
 
@@ -178,7 +181,7 @@ export class AppearanceCompiler {
         ? [compositionLayers.base.components ?? {}, compositionLayers.override.components ?? {}]
         : [pkg.components ?? {}],
       id => this.registry.getComponent(id),
-      'data-openbitfun-component',
+      'data-starmate-component',
       materials,
       context,
     );
@@ -187,12 +190,12 @@ export class AppearanceCompiler {
         ? [compositionLayers.base.scenes ?? {}, compositionLayers.override.scenes ?? {}]
         : [pkg.scenes ?? {}],
       id => this.registry.getScene(id),
-      'data-openbitfun-scene',
+      'data-starmate-scene',
       materials,
       context,
     );
 
-    const rootSelector = `:root[data-openbitfun-appearance="${pkg.id}"][data-openbitfun-appearance-revision="${revision}"]`;
+    const rootSelector = `:root[data-starmate-appearance="${pkg.id}"][data-starmate-appearance-revision="${revision}"]`;
     const appearanceRules = [
       `${rootSelector}{${globalDeclarations}}`,
       ...componentResult.rules.map(rule => this.renderRule(rule)),
@@ -231,7 +234,7 @@ export class AppearanceCompiler {
   private compileSurfaceLayers(
     layers: Record<string, AppearanceSurfaceDefinition>[],
     getDescriptor: (id: string) => AppearanceSurfaceDescriptor | undefined,
-    surfaceAttribute: 'data-openbitfun-component' | 'data-openbitfun-scene',
+    surfaceAttribute: 'data-starmate-component' | 'data-starmate-scene',
     materials: Record<string, ResolvedAppearanceStyle>,
     context: CompileContext,
   ): { surfaces: Record<string, ResolvedAppearanceSurface>; rules: CompiledRule[] } {
@@ -271,7 +274,7 @@ export class AppearanceCompiler {
   private compileSurfaces(
     definitions: Record<string, AppearanceSurfaceDefinition>,
     getDescriptor: (id: string) => AppearanceSurfaceDescriptor | undefined,
-    surfaceAttribute: 'data-openbitfun-component' | 'data-openbitfun-scene',
+    surfaceAttribute: 'data-starmate-component' | 'data-starmate-scene',
     materials: Record<string, ResolvedAppearanceStyle>,
     context: CompileContext,
   ): { surfaces: Record<string, ResolvedAppearanceSurface>; rules: CompiledRule[] } {
@@ -280,16 +283,16 @@ export class AppearanceCompiler {
     Object.entries(definitions).forEach(([surfaceId, definition]) => {
       const descriptor = getDescriptor(surfaceId);
       if (!descriptor) return;
-      const resolvedSurfaceAttribute = surfaceAttribute === 'data-openbitfun-component'
-        ? descriptor.componentAttribute ?? surfaceAttribute
-        : surfaceAttribute;
-      const partAttribute = resolvedSurfaceAttribute === 'data-openbitfun-product-component'
-        ? 'data-openbitfun-product-part'
-        : 'data-openbitfun-part';
+      const resolvedSurfaceAttribute = surfaceAttribute === 'data-starmate-component'
+        ? normalizeSurfaceAttribute(descriptor.componentAttribute ?? surfaceAttribute)
+        : normalizeSurfaceAttribute(surfaceAttribute);
+      const partAttribute = resolvedSurfaceAttribute === 'data-starmate-product-component'
+        ? 'data-starmate-product-part'
+        : 'data-starmate-part';
       const hostSelectorId = descriptor.hostSelectorId ?? surfaceId;
       const resolvedParts: Record<string, ResolvedAppearanceStyle[]> = {};
       Object.entries(definition.parts).forEach(([partId, partRule]) => {
-        const baseSelector = `:root[data-openbitfun-appearance="${context.pkg.id}"][data-openbitfun-appearance-revision="${context.revision}"] [${resolvedSurfaceAttribute}="${hostSelectorId}"][${partAttribute}="${partId}"]`;
+        const baseSelector = `:root[data-starmate-appearance="${context.pkg.id}"][data-starmate-appearance-revision="${context.revision}"] [${resolvedSurfaceAttribute}="${hostSelectorId}"][${partAttribute}="${partId}"]`;
         const compiled = this.compilePart(baseSelector, partRule, descriptor, materials, context);
         resolvedParts[partId] = compiled.map(rule => rule.style);
         rules.push(...compiled);
@@ -308,7 +311,7 @@ export class AppearanceCompiler {
   ): CompiledRule[] {
     const rules: CompiledRule[] = [];
     const important = rule.cascade === 'override';
-    const surfaceMatch = /^(.*) \[(data-openbitfun-(?:component|product-component|scene))="([^"]+)"\]\[(data-openbitfun-(?:part|product-part))="([^"]+)"\]$/.exec(baseSelector);
+    const surfaceMatch = /^(.*) \[(data-(?:starmate|openbitfun)-(?:component|product-component|scene))="([^"]+)"\]\[(data-(?:starmate|openbitfun)-(?:part|product-part))="([^"]+)"\]$/.exec(baseSelector);
     if (!surfaceMatch) throw new Error(`Invalid host Appearance selector: ${baseSelector}`);
     const [, rootSelector, surfaceAttribute, surfaceId, partAttribute, partId] = surfaceMatch;
     const partDescriptor = descriptor.parts.find(candidate => candidate.id === partId);

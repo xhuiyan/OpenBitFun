@@ -1751,10 +1751,12 @@ describe('ExternalSourcesConfig', () => {
       .registerComponent(externalSourcesConfigAppearanceDescriptor)).compile(restored, 1);
     expect(JSON.stringify(restored)).toBe(serialized);
     const selector = appearance.cssText.match(/:root[^{}]+(?=\{)/g)
-      ?.find(candidate => candidate.includes('[data-openbitfun-product-part="notice"]'))?.trim();
+      ?.find(candidate => candidate.includes('[data-starmate-product-part="notice"]'))?.trim();
     expect(selector).toBeDefined();
     document.documentElement.setAttribute('data-openbitfun-appearance', appearance.id);
+    document.documentElement.setAttribute('data-starmate-appearance', appearance.id);
     document.documentElement.setAttribute('data-openbitfun-appearance-revision', String(appearance.revision));
+    document.documentElement.setAttribute('data-starmate-appearance-revision', String(appearance.revision));
     try {
       expect(notice?.matches(selector!)).toBe(true);
     } finally {

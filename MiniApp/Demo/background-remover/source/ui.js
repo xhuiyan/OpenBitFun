@@ -252,6 +252,7 @@
 
   function setTheme(mode) {
     document.documentElement.dataset.openbitfunAppearanceMode = mode;
+    document.documentElement.dataset.starmateAppearanceMode = mode;
   }
   if (host) {
     setTheme(host.appearanceMode || 'dark');

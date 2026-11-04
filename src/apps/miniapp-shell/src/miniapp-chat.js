@@ -21,6 +21,7 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
     Object.assign(control.dataset, { openbitfunComponent: 'icon-button', openbitfunVariant: 'quiet', openbitfunShape: 'square', openbitfunTone: 'neutral', size: 'sm', loading: 'false' });
     const icon = glyph(name, iconStyles.icon);
     icon.dataset.openbitfunPart = 'icon';
+    icon.dataset.starmatePart = 'icon';
     control.append(icon);
     return control;
   };
@@ -30,6 +31,7 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
   const launcher = node('button', `miniapp-chat__launcher openbitfun-fmc__button ${launcherStyles.root}`);
   launcher.type = 'button';
   launcher.dataset.openbitfunComponent = 'launcher-button';
+  launcher.dataset.starmateComponent = 'launcher-button';
   const launcherLabel = node('span', launcherStyles.label);
   launcher.append(launcherLabel);
   launcher.setAttribute('aria-controls', 'miniapp-chat-panel');
@@ -57,24 +59,32 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
   const box = node('div', 'openbitfun-chat-input__box');
   const composer = node('div', `${composerStyles.root} openbitfun-chat-input__composer`);
   composer.dataset.openbitfunComponent = 'chat-composer';
+  composer.dataset.starmateComponent = 'chat-composer';
   composer.dataset.hasContext = 'false';
   const composerBody = node('div', composerStyles.body);
   const surface = node('div', composerStyles.surface);
   surface.dataset.openbitfunPart = 'surface';
+  surface.dataset.starmatePart = 'surface';
   surface.dataset.openbitfunLayout = 'compact';
+  surface.dataset.starmateLayout = 'compact';
   const content = node('div', composerStyles.content);
   content.dataset.openbitfunPart = 'content';
+  content.dataset.starmatePart = 'content';
   const input = node('textarea', 'miniapp-chat__input');
   input.rows = 1;
   const actions = node('div', `miniapp-chat__actions ${composerStyles.endActions}`);
   actions.dataset.openbitfunPart = 'endActions';
+  actions.dataset.starmatePart = 'endActions';
   const stop = iconButton('stop', composerStyles.actionButton);
   const send = iconButton('send', composerStyles.actionButton);
   send.type = 'submit';
   for (const action of [stop, send]) {
     action.dataset.openbitfunVariant = 'primary';
+    action.dataset.starmateVariant = 'primary';
     action.dataset.openbitfunShape = 'circle';
+    action.dataset.starmateShape = 'circle';
     action.dataset.openbitfunRole = 'composer-action';
+    action.dataset.starmateRole = 'composer-action';
   }
   actions.append(stop, send);
   content.append(input); surface.append(content, actions); composerBody.append(surface);
@@ -123,6 +133,7 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
     root.hidden = !claimed;
     root.classList.toggle('openbitfun-fmc--open', open);
     root.dataset.openbitfunState = open ? 'open' : '';
+    root.dataset.starmateState = open ? 'open' : '';
     launcherLabel.textContent = labels.launcher || '';
     launcher.setAttribute('aria-label', approval ? labels.approval : labels.open);
     launcher.setAttribute('aria-expanded', String(open));
@@ -141,6 +152,7 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
     send.disabled = sendDisabled();
     composer.setAttribute('aria-busy', String(!!busy || !!activeTurn()));
     composer.dataset.openbitfunState = busy || activeTurn() ? 'busy' : '';
+    composer.dataset.starmateState = busy || activeTurn() ? 'busy' : '';
     stop.setAttribute('aria-label', stopping ? labels.stopping : labels.stop);
     stop.hidden = !busy && !activeTurn();
     stop.disabled = !connected || stopping || !activeTurn();
@@ -295,6 +307,7 @@ export function mountMiniAppChat(root, { onSend, onStop, loadSnapshot, icons = {
     input.style.height = 'auto';
     const multiline = input.value.includes('\n') || input.scrollHeight > input.clientHeight + 2;
     surface.dataset.openbitfunLayout = multiline ? 'expanded' : 'compact';
+    surface.dataset.starmateLayout = multiline ? 'expanded' : 'compact';
     if (input.scrollHeight) input.style.height = `${input.scrollHeight}px`;
     send.disabled = sendDisabled();
   }

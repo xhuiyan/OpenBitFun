@@ -24,6 +24,7 @@ export async function activateCreationRuntime<Api>({
   stylesheet.rel = 'stylesheet';
   stylesheet.href = new URL('/openbitfun-creation.css', window.location.href).href;
   stylesheet.dataset.openbitfunCreation = 'stylesheet';
+  stylesheet.dataset.starmateCreation = 'stylesheet';
   const styleOrder = new MutationObserver(() => {
     if (!disposed && stylesheet.isConnected && document.head.lastElementChild !== stylesheet) {
       document.head.append(stylesheet);

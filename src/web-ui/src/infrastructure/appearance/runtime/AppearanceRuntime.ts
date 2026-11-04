@@ -12,7 +12,7 @@ import type {
 } from '../types';
 
 const log = createLogger('AppearanceRuntime');
-const STYLE_ATTRIBUTE = 'data-openbitfun-appearance-runtime';
+const STYLE_ATTRIBUTE = 'data-starmate-appearance-runtime';
 
 interface PreparedRendererTransaction {
   id: AppearanceRendererId;
@@ -116,9 +116,17 @@ export class AppearanceRuntime {
     this.activeAssetRevision = null;
     const root = document.documentElement;
     root.removeAttribute('data-openbitfun-appearance');
+    root.removeAttribute('data-starmate-appearance');
+    root.removeAttribute('data-starmate-appearance');
     root.removeAttribute('data-openbitfun-appearance-mode');
+    root.removeAttribute('data-starmate-appearance-mode');
+    root.removeAttribute('data-starmate-appearance-mode');
     root.removeAttribute('data-openbitfun-appearance-revision');
+    root.removeAttribute('data-starmate-appearance-revision');
+    root.removeAttribute('data-starmate-appearance-revision');
     root.removeAttribute('data-openbitfun-appearance-root');
+    root.removeAttribute('data-starmate-appearance-root');
+    root.removeAttribute('data-starmate-appearance-root');
     this.snapshot = null;
     this.emit();
   }
@@ -170,10 +178,14 @@ export class AppearanceRuntime {
 
     const root = document.documentElement;
     root.setAttribute('data-openbitfun-appearance-root', 'true');
+    root.setAttribute('data-starmate-appearance-root', 'true');
     root.setAttribute('data-openbitfun-appearance', next.id);
+    root.setAttribute('data-starmate-appearance', next.id);
     root.setAttribute('data-openbitfun-appearance-mode', next.mode);
+    root.setAttribute('data-starmate-appearance-mode', next.mode);
     // Revision is the activation switch because every generated selector is revision-scoped.
     root.setAttribute('data-openbitfun-appearance-revision', String(next.revision));
+    root.setAttribute('data-starmate-appearance-revision', String(next.revision));
     document.querySelectorAll<HTMLStyleElement>(`style[${STYLE_ATTRIBUTE}]`).forEach(node => {
       if (node !== nextStyle) node.remove();
     });

@@ -411,6 +411,7 @@ export class OverlayLayerStack {
     this.orderedLayers().forEach((layer, index) => {
       layer.element.style.zIndex = String(index + 1);
       layer.element.dataset.openbitfunOverlayState = layer.open ? "open" : "exiting";
+      layer.element.dataset.starmateOverlayState = layer.open ? "open" : "exiting";
       layer.element.hidden = !this.ancestorsOpen(layer);
       layer.element.style.pointerEvents = layer.modal && !layer.open ? "auto" : "none";
     });

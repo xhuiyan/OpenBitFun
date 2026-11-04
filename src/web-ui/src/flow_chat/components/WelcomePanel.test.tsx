@@ -466,7 +466,9 @@ describe('WelcomePanel empty session presentation', () => {
     const snapshot = new AppearanceCompiler(registry).compile(restored, 1);
     expect(JSON.stringify(restored)).toBe(serialized);
     document.documentElement.setAttribute('data-openbitfun-appearance', snapshot.id);
+    document.documentElement.setAttribute('data-starmate-appearance', snapshot.id);
     document.documentElement.setAttribute('data-openbitfun-appearance-revision', String(snapshot.revision));
+    document.documentElement.setAttribute('data-starmate-appearance-revision', String(snapshot.revision));
     const style = document.createElement('style');
     style.setAttribute('data-welcome-appearance-test', '');
     style.textContent = snapshot.cssText;
