@@ -1,12 +1,12 @@
 //! Local process owner for provider-neutral JavaScript tool workers.
 
 use async_trait::async_trait;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortError, PortErrorKind, PortResult, ScriptToolInvokeRequest, ScriptToolInvokeResponse,
     ScriptToolLoadRequest, ScriptToolLoadResponse, ScriptToolRuntime,
     ScriptToolRuntimeAvailability,
 };
-use openbitfun_services_core::process_tree::ProcessTreeChild;
+use starmate_services_core::process_tree::ProcessTreeChild;
 use serde::Deserialize;
 use serde_json::{Map, Value};
 use std::collections::HashMap;
@@ -1085,7 +1085,7 @@ async fn probe_node_version(executable: &PathBuf) -> Result<String, String> {
 #[cfg(test)]
 mod tests {
     use super::{CachedNodeAvailability, NodeScriptToolRuntime};
-    use openbitfun_runtime_ports::{ScriptToolRuntime, ScriptToolRuntimeAvailability};
+    use starmate_runtime_ports::{ScriptToolRuntime, ScriptToolRuntimeAvailability};
     use std::path::PathBuf;
     use tokio::sync::{Mutex, RwLock};
 

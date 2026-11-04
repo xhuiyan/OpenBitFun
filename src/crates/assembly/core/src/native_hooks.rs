@@ -1,7 +1,7 @@
 //! Product wiring for native OpenBitFun agent hooks.
 //!
 //! This module connects the portable hook engine
-//! (`openbitfun_agent_runtime::native_hooks`) to OpenBitFun configuration and the
+//! (`starmate_agent_runtime::native_hooks`) to OpenBitFun configuration and the
 //! agent runtime dispatch sites:
 //!
 //! - Settings discovery: user scope `~/.config/openbitfun/config/hooks.json`
@@ -25,8 +25,8 @@ use async_trait::async_trait;
 use dashmap::DashMap;
 use log::{info, warn};
 #[cfg(feature = "opencode-plugin-host")]
-use openbitfun_agent_runtime::native_hooks::PluginHookDispatchResult;
-use openbitfun_agent_runtime::native_hooks::{
+use starmate_agent_runtime::native_hooks::PluginHookDispatchResult;
+use starmate_agent_runtime::native_hooks::{
     AgentHookEngine, AgentHookEvent, AgentHookEventPayload, AgentHookMatcher, AgentHookOutcome,
     AgentHookPayload, AgentHookPayloadCommon, AgentHookPermissionMode, AgentHookPermissionOutcome,
     AgentHookScope, AgentHookSettings, AgentHookSettingsLayer, BuiltinHookExecutor, HookCall,
@@ -34,7 +34,7 @@ use openbitfun_agent_runtime::native_hooks::{
     RuntimeHookKind, RuntimeHookPlan, RuntimeHookRegistration, RuntimeHookRegistry,
     RuntimeHookSource, MAX_HOOKS_FILE_BYTES,
 };
-use openbitfun_agent_runtime::post_call_hooks::{
+use starmate_agent_runtime::post_call_hooks::{
     resolve_deep_review_shared_context_tool_use, DeepReviewSharedContextToolUseFacts,
 };
 use serde_json::Value;
@@ -76,7 +76,7 @@ pub(crate) fn runtime_hook_registry() -> RuntimeHookRegistry {
 /// macOS and Windows keep the inherited environment unchanged.
 #[cfg(target_os = "linux")]
 pub(crate) fn hook_environment_defaults() -> BTreeMap<String, String> {
-    match openbitfun_services_core::process_manager::platform_path_env() {
+    match starmate_services_core::process_manager::platform_path_env() {
         // An environment map is UTF-8; Linux PATH values are already text in
         // every configuration the app supports.
         Some(path) => BTreeMap::from([("PATH".to_string(), path.to_string_lossy().into_owned())]),
@@ -95,7 +95,7 @@ fn hook_engine(registry: RuntimeHookRegistry) -> AgentHookEngine {
 
 #[derive(Clone)]
 struct WorkspaceHookProcessProvider {
-    shell: Arc<dyn openbitfun_runtime_ports::WorkspaceShell>,
+    shell: Arc<dyn starmate_runtime_ports::WorkspaceShell>,
 }
 
 impl std::fmt::Debug for WorkspaceHookProcessProvider {
@@ -122,7 +122,7 @@ impl HookProcessProvider for WorkspaceHookProcessProvider {
                 command,
                 payload_json.as_bytes(),
                 environment,
-                openbitfun_runtime_ports::WorkspaceCommandOptions {
+                starmate_runtime_ports::WorkspaceCommandOptions {
                     timeout_ms: Some(timeout.as_millis().min(u64::MAX as u128) as u64),
                     ..Default::default()
                 },
@@ -148,11 +148,11 @@ pub(crate) fn plugin_hook_registry(_workspace_scope: &str) -> RuntimeHookRegistr
 #[cfg(feature = "opencode-plugin-host")]
 pub(crate) async fn dispatch_plugin_hook(
     workspace_scope: &str,
-    generation: Option<&openbitfun_agent_runtime::native_hooks::PluginHookGenerationIdentity>,
+    generation: Option<&starmate_agent_runtime::native_hooks::PluginHookGenerationIdentity>,
     hook_name: &str,
     input: Value,
     output: Value,
-) -> openbitfun_agent_runtime::native_hooks::PluginHookDispatchResult {
+) -> starmate_agent_runtime::native_hooks::PluginHookDispatchResult {
     AgentHookEngine::with_registry(plugin_hook_registry(workspace_scope))
         .dispatch_plugin_hook_for_generation(
             Some(workspace_scope),
@@ -319,7 +319,7 @@ impl PluginToolAfterOutput {
 #[cfg(all(test, feature = "opencode-plugin-host"))]
 mod plugin_tool_output_tests {
     use super::{plugin_tool_after_output, plugin_tool_before_output};
-    use openbitfun_agent_runtime::native_hooks::PluginHookDispatchResult;
+    use starmate_agent_runtime::native_hooks::PluginHookDispatchResult;
     use serde_json::{json, Value};
 
     fn dispatch_result(output: Value, executed_handlers: usize) -> PluginHookDispatchResult {
@@ -831,7 +831,7 @@ fn publish_command_registrations(
     workspace_scope: Option<&str>,
     manual_settings: AgentHookSettings,
     imported_settings: AgentHookSettings,
-) -> Result<(), openbitfun_agent_runtime::native_hooks::RuntimeHookRegistryError> {
+) -> Result<(), starmate_agent_runtime::native_hooks::RuntimeHookRegistryError> {
     let manual = manual_settings.registrations();
     let user_entries = manual
         .iter()
@@ -1330,13 +1330,13 @@ mod cache_tests {
         first.set_source_activation_for_workspace(
             RuntimeHookSource::Plugin,
             Some(&workspace_scope),
-            openbitfun_agent_runtime::native_hooks::RuntimeHookActivation::Ready,
+            starmate_agent_runtime::native_hooks::RuntimeHookActivation::Ready,
         );
 
         assert_eq!(
             second
                 .source_activation_for_workspace(RuntimeHookSource::Plugin, Some(&workspace_scope)),
-            openbitfun_agent_runtime::native_hooks::RuntimeHookActivation::Ready
+            starmate_agent_runtime::native_hooks::RuntimeHookActivation::Ready
         );
         second.clear_source_workspace(RuntimeHookSource::Plugin, &workspace_scope);
     }

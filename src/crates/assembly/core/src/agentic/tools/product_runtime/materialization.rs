@@ -4,11 +4,11 @@ use crate::agentic::tools::framework::Tool;
 use crate::agentic::tools::implementations::*;
 use crate::agentic::tools::product_runtime::CallDeferredTool;
 use crate::agentic::tools::registry::ProductToolDecoratorRef;
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     StaticToolMaterializationError, StaticToolProviderFactory, ToolRegistry as AgentToolRegistry,
     ToolRuntimeAssembly,
 };
-use openbitfun_tool_packs::{
+use starmate_tool_packs::{
     tool_feature_group, unavailable_feature_groups, ToolPackFeatureGroup, ToolProviderGroupPlan,
 };
 use std::collections::{HashMap, HashSet};
@@ -266,7 +266,7 @@ pub(in crate::agentic::tools) fn create_product_tool_registry_from_plan(
 mod tests {
     use super::*;
     use crate::agentic::tools::framework::ToolExposure;
-    use openbitfun_tool_packs::product_tool_provider_group_plan;
+    use starmate_tool_packs::product_tool_provider_group_plan;
 
     #[test]
     fn image_tools_follow_independent_compiled_owners() {
@@ -285,7 +285,7 @@ mod tests {
             let result = create_product_tool_registry_from_plan(
                 product_tool_provider_group_plan(),
                 &[group],
-                Arc::new(openbitfun_agent_tools::SnapshotToolDecorator::new(
+                Arc::new(starmate_agent_tools::SnapshotToolDecorator::new(
                     Arc::new(super::super::snapshot::ProductSnapshotToolWrapper),
                 )),
             );

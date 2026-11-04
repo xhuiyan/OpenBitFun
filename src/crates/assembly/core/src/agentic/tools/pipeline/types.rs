@@ -6,8 +6,8 @@ use crate::agentic::round_preempt::DialogRoundInjectionInterrupt;
 use crate::agentic::tools::ToolRuntimeRestrictions;
 use crate::agentic::workspace::WorkspaceServices;
 use crate::agentic::WorkspaceBinding;
-use openbitfun_agent_tools::{ResolvedToolInvocation, ValidationResult};
-use openbitfun_runtime_ports::{
+use starmate_agent_tools::{ResolvedToolInvocation, ValidationResult};
+use starmate_runtime_ports::{
     DelegationPolicy, PermissionDelegationContext, RemoteExecPort, ResolvedPermissionPolicy,
     TerminalPort,
 };
@@ -96,7 +96,7 @@ pub struct ToolExecutionContext {
     pub permission_delegation: Option<PermissionDelegationContext>,
     pub(crate) delegation_policy: DelegationPolicy,
     pub deferred_tools: Vec<String>,
-    pub loaded_deferred_tool_specs: Vec<openbitfun_agent_tools::LoadedDeferredToolSpec>,
+    pub loaded_deferred_tool_specs: Vec<starmate_agent_tools::LoadedDeferredToolSpec>,
     /// Allowed tools list (whitelist)
     /// If empty, allow all registered tools
     /// If not empty, only allow tools in the list to be executed
@@ -195,6 +195,6 @@ pub struct ToolExecutionResult {
     /// Deferred definitions loaded while executing a PTC gateway call.
     /// These are projected onto the outer RunCode message so a later round
     /// can reuse them without turning the state into a session-global cache.
-    pub ptc_loaded_deferred_tool_specs: Vec<openbitfun_agent_tools::LoadedDeferredToolSpec>,
+    pub ptc_loaded_deferred_tool_specs: Vec<starmate_agent_tools::LoadedDeferredToolSpec>,
     pub execution_time_ms: u64,
 }

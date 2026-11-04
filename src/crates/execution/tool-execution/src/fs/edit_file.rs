@@ -82,14 +82,14 @@ impl EditContentError {
             "new_string must be different from old_string",
         )
     }
-    pub fn detail(&self) -> Option<openbitfun_core_types::errors::ToolErrorDetail> {
+    pub fn detail(&self) -> Option<starmate_core_types::errors::ToolErrorDetail> {
         let code = match self.kind {
             EditContentErrorKind::EmptyTarget => return None,
             EditContentErrorKind::NoChange => "edit_no_change",
             EditContentErrorKind::TargetNotFound => "edit_target_not_found",
             EditContentErrorKind::TargetAmbiguous => "edit_target_ambiguous",
         };
-        Some(openbitfun_core_types::errors::ToolErrorDetail {
+        Some(starmate_core_types::errors::ToolErrorDetail {
             code: code.into(),
             kind: "guidance".into(),
         })

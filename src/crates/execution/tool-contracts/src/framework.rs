@@ -7,8 +7,8 @@ use crate::{
 };
 use async_trait::async_trait;
 use indexmap::IndexMap;
-use openbitfun_core_types::ToolImageAttachment;
-use openbitfun_runtime_ports::DelegationPolicy;
+use starmate_core_types::ToolImageAttachment;
+use starmate_runtime_ports::DelegationPolicy;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::{BTreeMap, BTreeSet, HashSet};

@@ -8,7 +8,7 @@
 use core_graphics::event::{CGEvent, CGEventFlags, CGEventType, CGMouseButton};
 use core_graphics::geometry::CGPoint;
 use foreign_types::ForeignType;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 use std::sync::Mutex;
 use std::time::Duration;
 

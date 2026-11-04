@@ -112,8 +112,8 @@ pub(super) fn try_ax_set_value(target: AxRef, value: &str) -> AxWriteOutcome {
 pub(super) fn insert_selected_text(
     target: AxRef,
     text: &str,
-) -> openbitfun_agent_tools::computer_use_host::error::OpenBitFunResult<bool> {
-    use openbitfun_agent_tools::computer_use_host::error::OpenBitFunError;
+) -> starmate_agent_tools::computer_use_host::error::OpenBitFunResult<bool> {
+    use starmate_agent_tools::computer_use_host::error::OpenBitFunError;
     if !can_write(target) {
         return Err(OpenBitFunError::tool(
             "[CONTROL_TARGET_CHANGED] Text target is outside the active capture",

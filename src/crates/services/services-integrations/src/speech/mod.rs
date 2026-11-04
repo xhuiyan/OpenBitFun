@@ -28,7 +28,7 @@ use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine;
 pub use error::{SpeechError, SpeechResult};
 use error::{SpeechError as OpenBitFunError, SpeechResult as OpenBitFunResult};
-pub use openbitfun_core_types::speech::*;
+pub use starmate_core_types::speech::*;
 #[cfg(feature = "speech-realtime")]
 pub use realtime::VolcengineRealtimeSpeechConfig;
 use std::collections::HashMap;

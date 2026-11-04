@@ -11,13 +11,13 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
 
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     PermissionReply, PermissionReplySource, PermissionRequest, PermissionRequestEvent,
     PortErrorKind, RuntimeError, TurnTokenUsage,
 };
-use openbitfun_agent_runtime::thread_goal::{ThreadGoalRunDisposition, ThreadGoalRunTracker};
-use openbitfun_agent_tools::effective_tool_invocation;
-use openbitfun_events::{AgenticEvent, ToolEventIdentity};
+use starmate_agent_runtime::thread_goal::{ThreadGoalRunDisposition, ThreadGoalRunTracker};
+use starmate_agent_tools::effective_tool_invocation;
+use starmate_events::{AgenticEvent, ToolEventIdentity};
 use tokio::time::Instant;
 
 use crate::agent::runtime_client::CliAgentRuntimeClient;
@@ -47,7 +47,7 @@ pub(super) fn observed_model_backfill_target<'a>(
     // Observing an actual model is not a user model selection. Retain saved
     // Smart intent even when this release disables its runtime routing.
     if stored_routing_mode == Some("smart")
-        || openbitfun_core::agentic::execution::round_model_routing::configuration::routing_enabled(
+        || starmate_core::agentic::execution::round_model_routing::configuration::routing_enabled(
             stored_routing_mode,
         )
         .unwrap_or(true)
@@ -278,11 +278,11 @@ pub(super) fn settlement_failure(
 }
 
 pub(super) fn resolve_cancelled_turn_observation(
-    observed_terminal: Result<openbitfun_events::AgenticEventEnvelope>,
+    observed_terminal: Result<starmate_events::AgenticEventEnvelope>,
     settlement: std::result::Result<(), RuntimeError>,
     session_id: &str,
     turn_id: &str,
-) -> std::result::Result<openbitfun_events::AgenticEventEnvelope, (ExitKind, String)> {
+) -> std::result::Result<starmate_events::AgenticEventEnvelope, (ExitKind, String)> {
     match settlement {
         Err(error) => Err(settlement_failure(error, session_id, turn_id)),
         Ok(()) => observed_terminal.map_err(|error| {
@@ -404,19 +404,19 @@ pub(crate) fn emit_preflight_json_error(
 }
 
 pub(super) fn serialize_stream_envelope(
-    envelope: &openbitfun_events::AgenticEventEnvelope,
+    envelope: &starmate_events::AgenticEventEnvelope,
 ) -> Result<String> {
     Ok(serde_json::to_string(envelope)?)
 }
 
-pub(super) fn session_in_use_stream_envelope() -> openbitfun_events::AgenticEventEnvelope {
-    openbitfun_events::AgenticEventEnvelope::new(
+pub(super) fn session_in_use_stream_envelope() -> starmate_events::AgenticEventEnvelope {
+    starmate_events::AgenticEventEnvelope::new(
         AgenticEvent::SystemError {
             session_id: None,
             error: SESSION_IN_USE_ERROR_CODE.to_string(),
             recoverable: true,
         },
-        openbitfun_events::AgenticEventPriority::Critical,
+        starmate_events::AgenticEventPriority::Critical,
     )
 }
 
@@ -621,7 +621,7 @@ impl ExecMode {
         let mut goal_run = ThreadGoalRunTracker::new(
             self.runtime
                 .agent_runtime()
-                .get_thread_goal(openbitfun_agent_runtime::sdk::AgentThreadGoalGetRequest {
+                .get_thread_goal(starmate_agent_runtime::sdk::AgentThreadGoalGetRequest {
                     session_id: session_id.clone(),
                     workspace_path: self.workspace_display(),
                     remote_connection_id: None,
@@ -718,19 +718,19 @@ impl ExecMode {
         // Observe the shared Agentic event stream without consuming other clients' events.
         let mut total_tool_calls = 0usize;
         let mut subagent_parent_turns: HashMap<String, (String, String)> = HashMap::new();
-        let mut pending_goal_turn: Option<openbitfun_events::AgenticEventEnvelope> = None;
+        let mut pending_goal_turn: Option<starmate_events::AgenticEventEnvelope> = None;
         let mut terminal_outcome: Option<Result<()>> = None;
         let mut terminal_status: Option<ExecTerminalStatus> = None;
         let mut terminal_message: Option<String> = None;
         let mut assistant_text = String::new();
         let mut usage: Option<ExecTokenUsage> = None;
-        let mut deferred_terminal_envelope: Option<openbitfun_events::AgenticEventEnvelope> = None;
+        let mut deferred_terminal_envelope: Option<starmate_events::AgenticEventEnvelope> = None;
         let mut terminal_exit_kind: Option<ExitKind> = None;
         let mut final_stream_error: Option<String> = None;
         let mut cancellation_observation: Option<
             Result<(
-                Vec<openbitfun_events::AgenticEventEnvelope>,
-                openbitfun_events::AgenticEventEnvelope,
+                Vec<starmate_events::AgenticEventEnvelope>,
+                starmate_events::AgenticEventEnvelope,
             )>,
         > = None;
         let mut cancellation_settlement: Option<std::result::Result<(), RuntimeError>> = None;
@@ -792,9 +792,9 @@ impl ExecMode {
                         Err(error) => format!("Failed to listen for execution interrupt: {error}"),
                     };
                     let cancellation = if pending_goal_turn.is_some() {
-                        self.runtime.agent_runtime().cancel_turn(openbitfun_agent_runtime::sdk::AgentTurnCancellationRequest {
+                        self.runtime.agent_runtime().cancel_turn(starmate_agent_runtime::sdk::AgentTurnCancellationRequest {
                             session_id: session_id.clone(), turn_id: None,
-                            source: Some(openbitfun_agent_runtime::sdk::AgentSubmissionSource::Cli),
+                            source: Some(starmate_agent_runtime::sdk::AgentSubmissionSource::Cli),
                             requester_session_id: None, reason: Some("user_cancelled".into()),
                             wait_timeout_ms: None, cancel_descendants: true,
                         }).await.map(|_| ()).map_err(|error| anyhow::anyhow!(error.into_message()))
@@ -806,9 +806,9 @@ impl ExecMode {
                     }
                     if pending_goal_turn.is_some() {
                         if let Err(error) = self.runtime.agent_runtime().update_thread_goal_status(
-                            openbitfun_agent_runtime::sdk::AgentThreadGoalUpdateStatusRequest {
+                            starmate_agent_runtime::sdk::AgentThreadGoalUpdateStatusRequest {
                                 session_id: session_id.clone(), workspace_path: self.workspace_display(),
-                                status: openbitfun_agent_runtime::sdk::ThreadGoalStatus::Paused,
+                                status: starmate_agent_runtime::sdk::ThreadGoalStatus::Paused,
                                 turn_id: None,
                             }
                         ).await {
@@ -923,7 +923,7 @@ impl ExecMode {
                             parent_session_id == &session_id && subagent_turn_id == event_turn_id
                         }) {
                             self.emit_stream_envelope(&envelope)?;
-                            use openbitfun_events::ToolEventData;
+                            use starmate_events::ToolEventData;
                             match tool_event {
                                 ToolEventData::Started {
                                     identity, params, ..
@@ -1314,7 +1314,7 @@ impl ExecMode {
 
     async fn project_exec_nonterminal_event(
         &self,
-        envelope: &openbitfun_events::AgenticEventEnvelope,
+        envelope: &starmate_events::AgenticEventEnvelope,
         session_id: &str,
         turn_id: &str,
         assistant_text: &mut String,
@@ -1368,7 +1368,7 @@ impl ExecMode {
                 tool_event,
                 ..
             } if event_turn_id == turn_id => {
-                use openbitfun_events::ToolEventData;
+                use starmate_events::ToolEventData;
                 match tool_event {
                     ToolEventData::ConfirmationNeeded { .. } => {}
                     ToolEventData::Started {
@@ -1487,7 +1487,7 @@ impl ExecMode {
 
     fn emit_stream_envelope(
         &self,
-        envelope: &openbitfun_events::AgenticEventEnvelope,
+        envelope: &starmate_events::AgenticEventEnvelope,
     ) -> Result<()> {
         if self.output_format == ExecOutputFormat::StreamJson {
             let stdout = std::io::stdout();
@@ -1499,13 +1499,13 @@ impl ExecMode {
     }
 
     fn emit_stream_error(&self, session_id: &str, message: &str) -> Result<()> {
-        let envelope = openbitfun_events::AgenticEventEnvelope::new(
+        let envelope = starmate_events::AgenticEventEnvelope::new(
             AgenticEvent::SystemError {
                 session_id: Some(session_id.to_string()),
                 error: message.to_string(),
                 recoverable: false,
             },
-            openbitfun_events::AgenticEventPriority::Critical,
+            starmate_events::AgenticEventPriority::Critical,
         );
         self.emit_stream_envelope(&envelope)
     }
@@ -1532,13 +1532,13 @@ impl ExecMode {
 
     async fn observe_cancelled_turn_settlement(
         &self,
-        event_rx: &mut tokio::sync::broadcast::Receiver<openbitfun_events::AgenticEventEnvelope>,
+        event_rx: &mut tokio::sync::broadcast::Receiver<starmate_events::AgenticEventEnvelope>,
         session_id: &str,
         turn_id: &str,
     ) -> (
         Result<(
-            Vec<openbitfun_events::AgenticEventEnvelope>,
-            openbitfun_events::AgenticEventEnvelope,
+            Vec<starmate_events::AgenticEventEnvelope>,
+            starmate_events::AgenticEventEnvelope,
         )>,
         std::result::Result<(), RuntimeError>,
     ) {
@@ -1550,12 +1550,12 @@ impl ExecMode {
 }
 
 pub(super) async fn drain_interrupted_turn_events(
-    event_rx: &mut tokio::sync::broadcast::Receiver<openbitfun_events::AgenticEventEnvelope>,
+    event_rx: &mut tokio::sync::broadcast::Receiver<starmate_events::AgenticEventEnvelope>,
     session_id: &str,
     turn_id: &str,
 ) -> Result<(
-    Vec<openbitfun_events::AgenticEventEnvelope>,
-    openbitfun_events::AgenticEventEnvelope,
+    Vec<starmate_events::AgenticEventEnvelope>,
+    starmate_events::AgenticEventEnvelope,
 )> {
     let deadline = Instant::now() + TURN_SETTLEMENT_TIMEOUT;
     let mut buffered = Vec::new();

@@ -1,7 +1,7 @@
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortError, PortErrorKind, PortResult, RuntimeServiceCapability, RuntimeServicePort,
     SessionStorageKind, SessionStoragePathRequest, SessionStoragePathResolution, SessionStorePort,
 };
@@ -265,7 +265,7 @@ impl SessionStorePort for CoreSessionStorePort {
                 (
                     runtime
                         .context_for_remote_workspace(
-                            &openbitfun_services_core::workspace_identity::ssh_workspace_identity_host(
+                            &starmate_services_core::workspace_identity::ssh_workspace_identity_host(
                                 host,
                                 Some(connection_id),
                                 &workspace.root_path.to_string_lossy(),

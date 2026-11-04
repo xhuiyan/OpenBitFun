@@ -5,7 +5,7 @@ use crate::stream::types::unified::UnifiedResponse;
 use anyhow::{anyhow, Result};
 use eventsource_stream::Eventsource;
 use log::{error, trace};
-use openbitfun_core_types::errors::AiProviderError;
+use starmate_core_types::errors::AiProviderError;
 use reqwest::Response;
 use serde_json::Value;
 use std::collections::HashMap;
@@ -97,11 +97,11 @@ fn extract_api_error(event_json: &Value) -> Option<AiProviderError> {
     // Preserve more specific quota/context classifications from the message.
     if matches!(
         detail.category,
-        openbitfun_core_types::errors::ErrorCategory::Unknown
-            | openbitfun_core_types::errors::ErrorCategory::ModelError
+        starmate_core_types::errors::ErrorCategory::Unknown
+            | starmate_core_types::errors::ErrorCategory::ModelError
     ) && detail.provider_code.as_deref() == Some("RESOURCE_EXHAUSTED")
     {
-        detail.category = openbitfun_core_types::errors::ErrorCategory::RateLimit;
+        detail.category = starmate_core_types::errors::ErrorCategory::RateLimit;
     }
     Some(detail)
 }
@@ -293,7 +293,7 @@ async fn handle_gemini_stream_inner(
 mod tests {
     use super::{extract_api_error, GeminiToolCallState};
     use crate::stream::types::unified::UnifiedToolCall;
-    use openbitfun_core_types::errors::ErrorCategory;
+    use starmate_core_types::errors::ErrorCategory;
 
     async fn parse_http_event(
         event: serde_json::Value,
@@ -321,7 +321,7 @@ mod tests {
             .await
             .unwrap();
         });
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let response = reqwest::Client::builder()
             .no_proxy()
             .build()

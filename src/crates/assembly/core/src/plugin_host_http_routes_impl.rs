@@ -1,6 +1,6 @@
 use crate::service::session::ToolItemIdentityExt;
-use openbitfun_runtime_ports::{GitPort, WorkspaceDiffFileStatus};
-use openbitfun_services_core::filesystem::{FileSearchOptions, FileSearchResult, FileTreeNode};
+use starmate_runtime_ports::{GitPort, WorkspaceDiffFileStatus};
+use starmate_services_core::filesystem::{FileSearchOptions, FileSearchResult, FileTreeNode};
 use serde::Deserialize;
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -66,7 +66,7 @@ fn coordinator() -> Result<Arc<crate::agentic::coordination::ConversationCoordin
 /// Session storage is owned by the plugin instance's workspace ID; the instance
 /// directory is only the execution root handed to file and git routes.
 async fn session_storage_root(context: &PluginHostInstance) -> Result<PathBuf, Failure> {
-    use openbitfun_runtime_ports::SessionStorePort;
+    use starmate_runtime_ports::SessionStorePort;
     crate::agentic::session::session_store_port::CoreSessionStorePort::default()
         .resolve_workspace_storage(&context.workspace_id)
         .await
@@ -78,7 +78,7 @@ async fn session_metadata(
     context: &PluginHostInstance,
     session_id: &str,
 ) -> Result<crate::service::session::SessionMetadata, Failure> {
-    openbitfun_core_types::validate_session_id(session_id)
+    starmate_core_types::validate_session_id(session_id)
         .map_err(|error| Failure::bad_request(error.to_string()))?;
     let coordinator = coordinator()?;
     coordinator
@@ -333,7 +333,7 @@ struct MessageProjectionContext<'a> {
     instance: &'a PluginHostInstance,
     session: &'a crate::service::session::SessionMetadata,
     models: &'a [crate::service::config::AIModelConfig],
-    catalog: &'a openbitfun_core_types::ProviderCatalog,
+    catalog: &'a starmate_core_types::ProviderCatalog,
 }
 
 fn message_model_identity<'a>(
@@ -973,7 +973,7 @@ async fn file_read(
 
 async fn file_status(context: &PluginHostInstance) -> RouteResult {
     let snapshot =
-        openbitfun_services_integrations::git::GitWorkspaceDiffPort::new(&context.directory)
+        starmate_services_integrations::git::GitWorkspaceDiffPort::new(&context.directory)
             .workspace_diff()
             .await
             .map_err(|error| Failure::backend(error.to_string()))?;

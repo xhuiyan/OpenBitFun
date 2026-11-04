@@ -2,7 +2,7 @@
 //!
 //! This is the Phase 2 wiring point: [`OpenBitFunAppRuntime`] holds an externally
 //! assembled [`AgentRuntime`] (built by product assembly from `AgenticSystem`,
-//! the same way `openbitfun_acp::OpenBitFunAcpRuntime` receives its runtime) and exposes
+//! the same way `starmate_acp::OpenBitFunAcpRuntime` receives its runtime) and exposes
 //! the agent kernel operations the JSON-RPC handlers delegate to. Like the ACP
 //! runtime boundary, this crate does not own product assembly or the
 //! compatibility facade; the host injects a ready runtime.
@@ -10,9 +10,9 @@
 use std::sync::Arc;
 
 use agent_client_protocol::{Error, Result};
-use openbitfun_agent_runtime::sdk::{AgentEventSource, AgentRuntime, PortErrorKind, RuntimeError};
-use openbitfun_core::service::git::GitError;
-use openbitfun_runtime_ports::{AgentContextReloadPort, ProductSearchPort};
+use starmate_agent_runtime::sdk::{AgentEventSource, AgentRuntime, PortErrorKind, RuntimeError};
+use starmate_core::service::git::GitError;
+use starmate_runtime_ports::{AgentContextReloadPort, ProductSearchPort};
 
 /// Host-injected OpenBitFun agent runtime exposed over the app-server surface.
 ///
@@ -119,7 +119,7 @@ pub fn runtime_call<T>(result: std::result::Result<T, RuntimeError>) -> Result<T
     result.map_err(OpenBitFunAppRuntime::runtime_error)
 }
 
-/// Map a `openbitfun_core::service::git::GitError` onto a JSON-RPC `Error`. Mirrors
+/// Map a `starmate_core::service::git::GitError` onto a JSON-RPC `Error`. Mirrors
 /// the runtime boundary's intent: argument/path problems surface as
 /// `invalid_params`, everything else as `internal_error` with the message in
 /// `data`. Used by the `git/*` schema handlers.
@@ -133,7 +133,7 @@ pub fn git_service_error(error: GitError) -> Error {
             ref repository_path,
             ..
         } => Error::invalid_params().data(serde_json::json!(
-            openbitfun_core::service::git::trust::untrusted_repository_error_message(
+            starmate_core::service::git::trust::untrusted_repository_error_message(
                 repository_path
             )
         )),
@@ -146,13 +146,13 @@ pub fn git_service_error(error: GitError) -> Error {
     }
 }
 
-/// Map a `openbitfun_core::OpenBitFunError` (the unified core error type) onto a
+/// Map a `starmate_core::OpenBitFunError` (the unified core error type) onto a
 /// JSON-RPC `Error`. `OpenBitFunError` already derives `Serialize`, so the whole
 /// enum is attached as `data` (carrying the variant + message) for the client
 /// to inspect; the human-readable `Display` form goes into the message. Used
 /// by host-service handlers (`config/*`, and the upcoming `workspace/*`,
 /// `snapshot/*` batches) that call into `openbitfun-core` service singletons.
-pub fn openbitfun_error(error: openbitfun_core::OpenBitFunError) -> Error {
+pub fn openbitfun_error(error: starmate_core::OpenBitFunError) -> Error {
     Error::internal_error().data(serde_json::to_value(&error).unwrap_or(serde_json::Value::Null))
 }
 
@@ -172,9 +172,9 @@ pub fn openbitfun_error(error: openbitfun_core::OpenBitFunError) -> Error {
 /// web mode the same way it does on desktop. The structured `OpenBitFunError` is
 /// still attached as `data` for callers that inspect it. Other config errors
 /// fall back to the generic [`openbitfun_error`] shape.
-pub fn config_get_error(error: openbitfun_core::OpenBitFunError) -> Error {
+pub fn config_get_error(error: starmate_core::OpenBitFunError) -> Error {
     match &error {
-        openbitfun_core::OpenBitFunError::NotFound(_) => Error::new(
+        starmate_core::OpenBitFunError::NotFound(_) => Error::new(
             agent_client_protocol::ErrorCode::InternalError.into(),
             format!("Failed to get config: {}", error),
         )
@@ -204,7 +204,7 @@ mod tests {
             .and_then(serde_json::Value::as_str)
             .expect("ownership rejections carry their code in data");
         assert!(data
-            .starts_with(openbitfun_core::service::git::trust::REPOSITORY_UNTRUSTED_ERROR_PREFIX));
+            .starts_with(starmate_core::service::git::trust::REPOSITORY_UNTRUSTED_ERROR_PREFIX));
         assert!(data.contains("/srv/shared/repo"));
         assert_eq!(mapped.code, Error::invalid_params().code);
     }
@@ -218,7 +218,7 @@ mod tests {
     fn config_get_error_not_found_message_matches_frontend_substrings() {
         let path = "ai.review_teams.default";
         let error =
-            openbitfun_core::OpenBitFunError::NotFound(format!("Config path '{}' not found", path));
+            starmate_core::OpenBitFunError::NotFound(format!("Config path '{}' not found", path));
         let mapped = config_get_error(error);
 
         let message = mapped.message.to_lowercase();
@@ -248,7 +248,7 @@ mod tests {
     /// real errors.
     #[test]
     fn config_get_error_non_not_found_falls_back_to_internal_error_message() {
-        let error = openbitfun_core::OpenBitFunError::config("something else broke");
+        let error = starmate_core::OpenBitFunError::config("something else broke");
         let mapped = config_get_error(error);
 
         assert_eq!(

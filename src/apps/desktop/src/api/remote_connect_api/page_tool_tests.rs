@@ -1,7 +1,7 @@
 //! Exercise the Desktop registration used by startup, not only the shared handler.
 use super::*;
 use axum::{extract::Json, http::HeaderMap, routing::get, Router};
-use openbitfun_core::agentic::tools::{
+use starmate_core::agentic::tools::{
     framework::{Tool, ToolResult, ToolUseContext},
     implementations::PageManageTool,
 };
@@ -14,7 +14,7 @@ async fn desktop_page_manage_registration_reaches_the_executing_account() {
     // and account state from other Desktop tests and from the developer's login.
     if std::env::var_os("OPENBITFUN_PAGE_TOOL_TEST_CHILD").is_none() {
         let root = tempfile::tempdir().unwrap();
-        let mut command = openbitfun_services_core::process_manager::create_tokio_command(
+        let mut command = starmate_services_core::process_manager::create_tokio_command(
             std::env::current_exe().unwrap(),
         );
         command.args([

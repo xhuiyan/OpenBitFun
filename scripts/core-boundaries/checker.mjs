@@ -410,8 +410,8 @@ function forbiddenRuleTextForPath(path) {
 }
 
 function checkCargoManifest(crateDir) {
-  checkForbiddenManifestDeps(crateDir, ['openbitfun-core'], () => {
-    return 'extracted crate must not depend on openbitfun-core';
+  checkForbiddenManifestDeps(crateDir, ['starmate-core'], () => {
+    return 'extracted crate must not depend on starmate-core';
   });
 }
 
@@ -746,11 +746,11 @@ function checkRustImports(crateDir) {
     }
     const lines = readText(path).split(/\r?\n/);
     lines.forEach((line, index) => {
-      if (/\bopenbitfun_core::/.test(line)) {
+      if (/\bstarmate_core::/.test(line)) {
         failures.push({
           path,
           line: index + 1,
-          message: 'extracted crate must not import openbitfun_core',
+          message: 'extracted crate must not import starmate_core',
         });
       }
     });

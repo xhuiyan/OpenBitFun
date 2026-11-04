@@ -3,7 +3,7 @@ use super::super::tests::fixture;
 use super::tests::{create_source, publish};
 use super::*;
 use crate::external_session_import::auto_discovery::tests::{candidate, document};
-use openbitfun_product_domains::session_import::ExternalSessionItem;
+use starmate_product_domains::session_import::ExternalSessionItem;
 
 async fn open_document(
     root: &Path,

@@ -16,7 +16,7 @@ use crate::infrastructure::events::event_system::{
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::event::BackgroundCommandLifecycleInfo;
 use async_trait::async_trait;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     RemoteExecCommandRequest, RemoteExecOneShotCommandRequest, RemoteExecPort,
     RemoteExecProcessLifecycleEvent, RemoteExecProcessLifecycleStatus, TerminalExecCommandRequest,
     TerminalExecProcessLifecycleEvent, TerminalExecProcessLifecycleStatus,
@@ -231,7 +231,7 @@ impl ExecCommandTool {
         #[cfg(target_os = "linux")]
         let environment = {
             let mut environment = environment;
-            if let Some(path) = openbitfun_services_core::process_manager::platform_path_env() {
+            if let Some(path) = starmate_services_core::process_manager::platform_path_env() {
                 environment.insert("PATH".to_string(), path.to_string_lossy().into_owned());
             }
             environment
@@ -980,22 +980,22 @@ mod tests {
     #[derive(Debug)]
     struct ShellProbeRemoteExecPort {
         probes: std::sync::atomic::AtomicUsize,
-        response: openbitfun_runtime_ports::RemoteExecOneShotCommandResponse,
+        response: starmate_runtime_ports::RemoteExecOneShotCommandResponse,
     }
 
-    impl openbitfun_runtime_ports::RuntimeServicePort for ShellProbeRemoteExecPort {
-        fn capability(&self) -> openbitfun_runtime_ports::RuntimeServiceCapability {
-            openbitfun_runtime_ports::RuntimeServiceCapability::RemoteExec
+    impl starmate_runtime_ports::RuntimeServicePort for ShellProbeRemoteExecPort {
+        fn capability(&self) -> starmate_runtime_ports::RuntimeServiceCapability {
+            starmate_runtime_ports::RuntimeServiceCapability::RemoteExec
         }
     }
 
     #[async_trait::async_trait]
-    impl openbitfun_runtime_ports::RemoteExecPort for ShellProbeRemoteExecPort {
+    impl starmate_runtime_ports::RemoteExecPort for ShellProbeRemoteExecPort {
         async fn exec_command_once(
             &self,
-            _request: openbitfun_runtime_ports::RemoteExecOneShotCommandRequest,
-        ) -> openbitfun_runtime_ports::PortResult<
-            openbitfun_runtime_ports::RemoteExecOneShotCommandResponse,
+            _request: starmate_runtime_ports::RemoteExecOneShotCommandRequest,
+        ) -> starmate_runtime_ports::PortResult<
+            starmate_runtime_ports::RemoteExecOneShotCommandResponse,
         > {
             self.probes
                 .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
@@ -1004,49 +1004,49 @@ mod tests {
 
         async fn exec_command(
             &self,
-            _request: openbitfun_runtime_ports::RemoteExecCommandRequest,
-        ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::RemoteExecCommandResponse>
+            _request: starmate_runtime_ports::RemoteExecCommandRequest,
+        ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::RemoteExecCommandResponse>
         {
             panic!("shell probe must not use managed remote exec sessions");
         }
 
         async fn exec_command_streaming(
             &self,
-            _request: openbitfun_runtime_ports::RemoteExecCommandRequest,
-            _output_sink: openbitfun_runtime_ports::RemoteExecStreamingOutputSink,
-        ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::RemoteExecCommandResponse>
+            _request: starmate_runtime_ports::RemoteExecCommandRequest,
+            _output_sink: starmate_runtime_ports::RemoteExecStreamingOutputSink,
+        ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::RemoteExecCommandResponse>
         {
             panic!("shell probe must not use managed remote exec sessions");
         }
 
         async fn write_stdin(
             &self,
-            _request: openbitfun_runtime_ports::RemoteWriteStdinRequest,
-        ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::RemoteExecCommandResponse>
+            _request: starmate_runtime_ports::RemoteWriteStdinRequest,
+        ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::RemoteExecCommandResponse>
         {
             panic!("shell probe must not write stdin");
         }
 
         async fn write_stdin_streaming(
             &self,
-            _request: openbitfun_runtime_ports::RemoteWriteStdinRequest,
-            _output_sink: openbitfun_runtime_ports::RemoteExecStreamingOutputSink,
-        ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::RemoteExecCommandResponse>
+            _request: starmate_runtime_ports::RemoteWriteStdinRequest,
+            _output_sink: starmate_runtime_ports::RemoteExecStreamingOutputSink,
+        ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::RemoteExecCommandResponse>
         {
             panic!("shell probe must not write stdin");
         }
 
         async fn send_stdin(
             &self,
-            _request: openbitfun_runtime_ports::RemoteSendStdinRequest,
-        ) -> openbitfun_runtime_ports::PortResult<()> {
+            _request: starmate_runtime_ports::RemoteSendStdinRequest,
+        ) -> starmate_runtime_ports::PortResult<()> {
             panic!("shell probe must not send stdin");
         }
 
         async fn control_session(
             &self,
-            _request: openbitfun_runtime_ports::RemoteExecControlRequest,
-        ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::RemoteExecCommandResponse>
+            _request: starmate_runtime_ports::RemoteExecControlRequest,
+        ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::RemoteExecCommandResponse>
         {
             panic!("shell probe must not control managed sessions");
         }
@@ -1056,7 +1056,7 @@ mod tests {
     async fn complete_shell_remote_selection_is_reused_until_dispatch() {
         let port = Arc::new(ShellProbeRemoteExecPort {
             probes: Default::default(),
-            response: openbitfun_runtime_ports::RemoteExecOneShotCommandResponse {
+            response: starmate_runtime_ports::RemoteExecOneShotCommandResponse {
                 stdout: "/bin/zsh\n".into(),
                 stderr: String::new(),
                 exit_code: 0,
@@ -1095,7 +1095,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1120,7 +1120,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1341,10 +1341,10 @@ mod tests {
 
     #[tokio::test]
     async fn remote_shell_probe_uses_stdout_only() {
-        let remote_exec_port: Arc<dyn openbitfun_runtime_ports::RemoteExecPort> =
+        let remote_exec_port: Arc<dyn starmate_runtime_ports::RemoteExecPort> =
             Arc::new(ShellProbeRemoteExecPort {
                 probes: Default::default(),
-                response: openbitfun_runtime_ports::RemoteExecOneShotCommandResponse {
+                response: starmate_runtime_ports::RemoteExecOneShotCommandResponse {
                     stdout: "/bin/bash\n".to_string(),
                     stderr: "/tmp/not-a-shell-from-stderr\n".to_string(),
                     exit_code: 0,
@@ -1402,7 +1402,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
         let workdir = std::env::current_dir().expect("test workdir should exist");
 
@@ -1433,13 +1433,13 @@ mod tests {
         let path = environment
             .get("PATH")
             .expect("a Linux non-interactive shell needs PATH");
-        let expected = openbitfun_services_core::process_manager::platform_path_env()
+        let expected = starmate_services_core::process_manager::platform_path_env()
             .expect("Linux always resolves a platform PATH");
         assert_eq!(path, &expected.to_string_lossy());
         // A shell launched without a login-shell PATH must still reach the
         // directories the app restores for every other child process.
         let entries: Vec<PathBuf> = std::env::split_paths(path).collect();
-        for platform_entry in openbitfun_services_core::system::platform_path_entries() {
+        for platform_entry in starmate_services_core::system::platform_path_entries() {
             assert!(
                 entries.contains(&platform_entry),
                 "shell PATH is missing {}: {path}",

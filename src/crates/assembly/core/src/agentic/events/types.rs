@@ -3,11 +3,11 @@
 //! Uses openbitfun-events layer event definitions, extending core-specific functionality here
 
 use crate::agentic::core::SessionState;
-use openbitfun_agent_runtime::session_state::session_state_label_for_state;
+use starmate_agent_runtime::session_state::session_state_label_for_state;
 
 // ============ Re-export events layer types ============
-pub use openbitfun_events::agentic::ErrorCategory;
-pub use openbitfun_events::{
+pub use starmate_events::agentic::ErrorCategory;
+pub use starmate_events::{
     AgenticEvent as BaseAgenticEvent, AgenticEventEnvelope as EventEnvelope,
     AgenticEventPriority as EventPriority, DeepReviewQueueReason, DeepReviewQueueState,
     DeepReviewQueueStatus, ModelRoundAttemptDiagnostic, ModelRoundAttemptToolDiagnostic,

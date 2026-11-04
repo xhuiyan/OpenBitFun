@@ -9,15 +9,15 @@ use std::time::Duration;
 
 use anyhow::{anyhow, Result};
 use async_trait::async_trait;
-use openbitfun_product_domains::account::{AccountDevice, AccountInfo, AccountSnapshotProjection};
+use starmate_product_domains::account::{AccountDevice, AccountInfo, AccountSnapshotProjection};
 use tokio::sync::RwLock;
 
-use openbitfun_core::service::remote_connect::account::AccountSession;
-use openbitfun_core::service::remote_connect::account_runtime::{
+use starmate_core::service::remote_connect::account::AccountSession;
+use starmate_core::service::remote_connect::account_runtime::{
     AccountRoutingStartRequest, AccountRuntime, AccountRuntimeHost,
     BackgroundRoutingOwnerRetirementError,
 };
-use openbitfun_core::service::remote_connect::{
+use starmate_core::service::remote_connect::{
     self, encryption,
     relay_client::{ConnectionState, DeviceRoutingPriority, RelayClient, RelayEvent},
     session_store, DeviceIdentity, RemoteServer,
@@ -40,7 +40,7 @@ pub(crate) fn build_management_account_runtime() -> Arc<AccountRuntime> {
 }
 
 pub(crate) fn account_snapshot_projection(
-    snapshot: openbitfun_core::service::remote_connect::account_runtime::AccountSnapshot,
+    snapshot: starmate_core::service::remote_connect::account_runtime::AccountSnapshot,
 ) -> AccountSnapshotProjection {
     AccountSnapshotProjection {
         logged_in: snapshot.logged_in,
@@ -71,7 +71,7 @@ pub(crate) fn account_snapshot_projection(
 }
 
 pub(crate) fn account_login_status_message(
-    result: &openbitfun_core::service::remote_connect::account_runtime::AccountLoginResult,
+    result: &starmate_core::service::remote_connect::account_runtime::AccountLoginResult,
 ) -> String {
     if result.routing_standby {
         format!(
@@ -129,7 +129,7 @@ pub(crate) fn bounded_account_error(message: &str) -> String {
 /// CLI-owned routing effects injected into the shared Account Runtime.
 pub(crate) struct CliAccountRoutingHost {
     host_stream_hub:
-        RwLock<Option<Arc<openbitfun_core::service::remote_connect::host_stream::HostStreamHub>>>,
+        RwLock<Option<Arc<starmate_core::service::remote_connect::host_stream::HostStreamHub>>>,
     self_ref: Weak<CliAccountRoutingHost>,
     runtime: OnceLock<Weak<AccountRuntime>>,
     relay_client: RwLock<Option<Arc<RelayClient>>>,
@@ -155,7 +155,7 @@ impl CliAccountRoutingHost {
     /// Host streams served to controllers while this device's routing is alive.
     pub(crate) async fn host_stream_hub(
         &self,
-    ) -> Option<Arc<openbitfun_core::service::remote_connect::host_stream::HostStreamHub>> {
+    ) -> Option<Arc<starmate_core::service::remote_connect::host_stream::HostStreamHub>> {
         self.host_stream_hub.read().await.clone()
     }
 
@@ -257,11 +257,11 @@ impl CliAccountRoutingHost {
 
     pub(crate) async fn connection_state(
         &self,
-    ) -> openbitfun_core::service::remote_connect::relay_client::ConnectionState {
+    ) -> starmate_core::service::remote_connect::relay_client::ConnectionState {
         let client = self.relay_client.read().await.clone();
         match client {
             Some(client) => client.connection_state().await,
-            None => openbitfun_core::service::remote_connect::relay_client::ConnectionState::Disconnected,
+            None => starmate_core::service::remote_connect::relay_client::ConnectionState::Disconnected,
         }
     }
 
@@ -416,7 +416,7 @@ impl CliAccountRoutingHost {
                             .routing_loop_is_current(account_generation, relay_client)
                             .await
                     {
-                        let hub = openbitfun_core::service::remote_connect::start_host_stream_hub(
+                        let hub = starmate_core::service::remote_connect::start_host_stream_hub(
                             Arc::new(CliHostStreamNotifier {
                                 routing: self.self_ref.clone(),
                             }),
@@ -522,7 +522,7 @@ impl CliAccountRoutingHost {
                 let model_write = matches!(&command, RemoteCommand::SetSessionModel { .. });
                 let execute = async {
                     let hub = self.host_stream_hub().await;
-                    match openbitfun_core::service::remote_connect::handle_host_stream_command(
+                    match starmate_core::service::remote_connect::handle_host_stream_command(
                         hub.as_ref(),
                         &source_device_id,
                         &command,
@@ -816,7 +816,7 @@ struct CliHostStreamNotifier {
     routing: Weak<CliAccountRoutingHost>,
 }
 
-impl openbitfun_core::service::remote_connect::host_stream::HostStreamNotifier
+impl starmate_core::service::remote_connect::host_stream::HostStreamNotifier
     for CliHostStreamNotifier
 {
     fn notify(&self, target_device_id: &str, payload: serde_json::Value) {
@@ -839,10 +839,10 @@ impl openbitfun_core::service::remote_connect::host_stream::HostStreamNotifier
                     return;
                 }
             };
-            use openbitfun_core::service::remote_connect::remote_server::RemoteCommand;
+            use starmate_core::service::remote_connect::remote_server::RemoteCommand;
             let envelope = match serde_json::to_string(&RemoteCommand::DeviceEvent {
                 event:
-                    openbitfun_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT
+                    starmate_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT
                         .to_owned(),
                 payload,
             }) {
@@ -903,7 +903,7 @@ mod tests {
     #[test]
     fn standby_login_does_not_claim_connected_routing() {
         let result =
-            openbitfun_core::service::remote_connect::account_runtime::AccountLoginResult {
+            starmate_core::service::remote_connect::account_runtime::AccountLoginResult {
                 user_id: "user".into(),
                 relay_url: "https://relay.example.test".into(),
                 routing_owner_replaced: false,

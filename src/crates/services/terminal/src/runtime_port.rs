@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortError, PortErrorKind, PortResult, RuntimeServiceCapability, RuntimeServicePort,
     TerminalExecCommandRequest, TerminalExecCommandResponse, TerminalExecControlAction,
     TerminalExecControlOrigin, TerminalExecControlRequest, TerminalExecLifecycleSink,
@@ -56,7 +56,7 @@ impl RuntimeServicePort for TerminalRuntimePort {
 
 #[async_trait::async_trait]
 impl TerminalPort for TerminalRuntimePort {
-    fn exec_terminal_size(&self) -> Option<openbitfun_runtime_ports::ExecTerminalSize> {
+    fn exec_terminal_size(&self) -> Option<starmate_runtime_ports::ExecTerminalSize> {
         Some(crate::exec::EXEC_TERMINAL_SIZE)
     }
 
@@ -256,7 +256,7 @@ fn terminal_port_error(error: TerminalError) -> PortError {
 #[cfg(test)]
 mod tests {
     use super::TerminalRuntimePort;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         RuntimeServiceCapability, RuntimeServicePort, TerminalExecCommandRequest,
         TerminalExecSessionCompletionStatus, TerminalPort, TerminalSendStdinRequest,
     };
@@ -324,7 +324,7 @@ mod tests {
 
         assert_eq!(
             error.kind,
-            openbitfun_runtime_ports::PortErrorKind::NotFound
+            starmate_runtime_ports::PortErrorKind::NotFound
         );
     }
 }

@@ -1,4 +1,4 @@
-use openbitfun_agent_runtime::custom_agent::{
+use starmate_agent_runtime::custom_agent::{
     custom_agent_possible_dirs, custom_agent_read_markdown_file, custom_agent_read_markdown_str,
     custom_agent_review_writable_tools, custom_agent_save_markdown_file,
     default_custom_agent_tools, default_custom_agent_user_context_policy,
@@ -7,7 +7,7 @@ use openbitfun_agent_runtime::custom_agent::{
     CustomAgentModelFallback, CustomAgentValidationContext, ParsedCustomAgentDefinition,
     DEFAULT_CUSTOM_MODE_MODEL, DEFAULT_CUSTOM_MODE_READONLY,
 };
-use openbitfun_agent_runtime::prompt::UserContextPolicy;
+use starmate_agent_runtime::prompt::UserContextPolicy;
 use std::fs;
 use std::path::{Path, PathBuf};
 

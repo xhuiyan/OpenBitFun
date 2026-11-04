@@ -1,11 +1,11 @@
-use openbitfun_agent_runtime::prompt::{
+use starmate_agent_runtime::prompt::{
     render_project_layout, render_prompt_environment_info, render_runtime_context_reminder,
     render_user_context_reminder, render_workspace_context, PrependedPromptReminders,
     ProjectLayoutFacts, PromptEnvironmentFacts, PromptRelatedPath, RemoteExecutionHints,
     RuntimeContextFacts, RuntimeContextNeeds, RuntimeShellFacts, ToolListingSections,
     UserContextPolicy, UserContextSection, WorkspaceContextFacts, WorktreeContextFacts,
 };
-use openbitfun_core_types::{
+use starmate_core_types::{
     SessionExecutionTarget, SessionExecutionTargetKind, WorktreeLifecycle,
 };
 

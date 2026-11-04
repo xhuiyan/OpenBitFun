@@ -4,4 +4,4 @@
 //! in-memory runtime store. Core keeps this module for old import paths and
 //! concrete session persistence wiring.
 
-pub use openbitfun_agent_runtime::prompt_cache::*;
+pub use starmate_agent_runtime::prompt_cache::*;

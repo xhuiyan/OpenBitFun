@@ -10,11 +10,11 @@ use image::codecs::jpeg::JpegEncoder;
 #[cfg(any(test, target_os = "macos", target_os = "windows"))]
 use image::DynamicImage;
 use image::RgbImage;
-use openbitfun_agent_tools::computer_use_geometry::CaptureGeometry;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_geometry::CaptureGeometry;
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 #[cfg(any(test, target_os = "macos", target_os = "windows"))]
-use openbitfun_agent_tools::computer_use_host::ComputerUseZoomRegion;
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::ComputerUseZoomRegion;
+use starmate_agent_tools::computer_use_host::{
     ComputerScreenshot, ComputerUseDisplayInfo, ComputerUseImageContentRect,
     ComputerUseImageGlobalBounds, ComputerUseScreenshotParams, OcrRegionNative, OcrTextMatch,
 };
@@ -500,7 +500,7 @@ impl NativeComputerUseHost {
     /// recorded as the latest image with its own window-relative mapping.
     pub(super) async fn zoom_observation_impl(
         &self,
-        app: openbitfun_agent_tools::computer_use_host::AppSelector,
+        app: starmate_agent_tools::computer_use_host::AppSelector,
         region: ComputerUseZoomRegion,
     ) -> OpenBitFunResult<ComputerScreenshot> {
         crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::tool)?;
@@ -832,7 +832,7 @@ impl NativeComputerUseHost {
     pub(super) async fn ocr_find_text_matches_impl(
         &self,
         text_query: &str,
-        region_native: Option<openbitfun_agent_tools::computer_use_host::OcrRegionNative>,
+        region_native: Option<starmate_agent_tools::computer_use_host::OcrRegionNative>,
     ) -> OpenBitFunResult<Vec<OcrTextMatch>> {
         let shot = self.control_ocr_capture(region_native).await?;
         let query = text_query.to_string();
@@ -856,7 +856,7 @@ impl NativeComputerUseHost {
         Ok(desktop_matches
             .into_iter()
             .map(
-                |m| openbitfun_agent_tools::computer_use_host::OcrTextMatch {
+                |m| starmate_agent_tools::computer_use_host::OcrTextMatch {
                     text: m.text,
                     confidence: m.confidence,
                     center_x: m.center_x,
@@ -888,7 +888,7 @@ mod window_projection_tests {
     use super::NativeComputerUseHost;
     use super::{bound_window_identity, CaptureGeometry, PointerMap};
     #[cfg(target_os = "macos")]
-    use openbitfun_agent_tools::computer_use_host::ComputerUseHost;
+    use starmate_agent_tools::computer_use_host::ComputerUseHost;
 
     #[test]
     fn native_capture_identity_never_accepts_an_unbound_or_partial_target() {

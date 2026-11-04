@@ -11,17 +11,17 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::Message as AIMessage;
 use log::warn;
 #[cfg(test)]
-use openbitfun_agent_runtime::router_context::Utf8ByteBudget;
-use openbitfun_agent_runtime::router_context::{
+use starmate_agent_runtime::router_context::Utf8ByteBudget;
+use starmate_agent_runtime::router_context::{
     CachedRouterTokenCounter, EstimatedRouterTokens, PreparedRouterContext,
     RouterCompressionRecord, RouterContextState, RouterEntryKind, RouterInputBudget,
     RouterSummaryBudget, RouterSummaryWork, RouterTokenCounter,
 };
-use openbitfun_agent_runtime::router_summary_queue::{RouterSummaryQueue, RouterSummaryUpdate};
-use openbitfun_agent_tools::effective_tool_invocation;
-use openbitfun_ai_adapters::local_tokenizer::LocalTokenizer;
-use openbitfun_ai_adapters::{types::GeminiResponse, AIClient};
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_agent_runtime::router_summary_queue::{RouterSummaryQueue, RouterSummaryUpdate};
+use starmate_agent_tools::effective_tool_invocation;
+use starmate_ai_adapters::local_tokenizer::LocalTokenizer;
+use starmate_ai_adapters::{types::GeminiResponse, AIClient};
+use starmate_services_core::json_store::JsonFileStore;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::path::PathBuf;
@@ -688,7 +688,7 @@ impl RoundRouterContext {
 
     pub(in crate::agentic::execution) fn token_metrics(
         &self,
-    ) -> openbitfun_agent_runtime::router_context::RouterTokenMetrics {
+    ) -> starmate_agent_runtime::router_context::RouterTokenMetrics {
         self.factory.counter.metrics()
     }
 

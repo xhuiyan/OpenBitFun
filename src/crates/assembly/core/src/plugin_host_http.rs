@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use openbitfun_opencode_plugin_host::{
+use starmate_opencode_plugin_host::{
     BackendDiagnosticError, BackendDiagnosticEvent, BackendRouteFailure, BackendRouteRequest,
     OpenCodeBackendHandler, PluginHostBackendBridge, PluginHostClient,
 };
@@ -82,7 +82,7 @@ pub(crate) async fn register_plugin_host_backend_handlers(
             ));
         }
     }
-    let bridge = openbitfun_opencode_plugin_host::register_backend_handlers(
+    let bridge = starmate_opencode_plugin_host::register_backend_handlers(
         client,
         Arc::new(CoreOpenCodeBackend),
     )

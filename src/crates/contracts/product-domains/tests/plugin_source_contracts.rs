@@ -1,6 +1,6 @@
 #![cfg(feature = "plugin-source")]
 
-use openbitfun_product_domains::plugin_source::{
+use starmate_product_domains::plugin_source::{
     PluginPackageInput, PluginPackageManifest, PluginPackageSourceIdentity,
     PluginPackageTrustLevel, PluginTrustDecision, PluginTrustStore,
 };

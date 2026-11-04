@@ -2,7 +2,7 @@
 //!
 //! Full workspace management system: open, manage, scan, statistics, etc.
 
-pub use openbitfun_core_types::workspace_icon::*;
+pub use starmate_core_types::workspace_icon::*;
 
 #[cfg(feature = "workspace-runtime")]
 pub mod assistant_naming;

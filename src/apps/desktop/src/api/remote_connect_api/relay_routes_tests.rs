@@ -1,7 +1,7 @@
 use super::*;
-use openbitfun_core::service::remote_connect::embedded_relay_host::EmbeddedRelayHost;
-use openbitfun_relay_service::{build_relay_router, db, MemoryAssetStore};
-use openbitfun_services_integrations::remote_connect::device_crypto;
+use starmate_core::service::remote_connect::embedded_relay_host::EmbeddedRelayHost;
+use starmate_relay_service::{build_relay_router, db, MemoryAssetStore};
+use starmate_services_integrations::remote_connect::device_crypto;
 
 struct FixtureHost {
     database: Arc<db::DbPool>,
@@ -104,7 +104,7 @@ async fn rpc(
 
 async fn assert_hint(
     receiver: &mut tokio::sync::broadcast::Receiver<
-        Option<openbitfun_services_integrations::remote_connect::account::StreamHint>,
+        Option<starmate_services_integrations::remote_connect::account::StreamHint>,
     >,
     cursor: u64,
 ) {
@@ -131,7 +131,7 @@ async fn assert_hint(
 async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
     if std::env::var_os("OPENBITFUN_RELAY_ROUTE_TEST_CHILD").is_none() {
         let root = tempfile::tempdir().unwrap();
-        let mut command = openbitfun_services_core::process_manager::create_tokio_command(
+        let mut command = starmate_services_core::process_manager::create_tokio_command(
             std::env::current_exe().unwrap(),
         );
         command.args(["api::remote_connect_api::relay_routes_tests::dual_relay_rpc_persistence_and_teardown_are_independent", "--exact", "--nocapture"])
@@ -275,7 +275,7 @@ async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
     let mut public_hints = official_controller.stream_hints();
     let mut lan_hints = lan_controller.stream_hints();
     fanout_peer_device_event(
-        openbitfun_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT.into(),
+        starmate_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT.into(),
         serde_json::json!({"stream_id":"dual", "epoch":1, "cursor":1}),
     );
     assert_hint(&mut public_hints, 1).await;
@@ -307,7 +307,7 @@ async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
         "pong"
     );
     fanout_peer_device_event(
-        openbitfun_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT.into(),
+        starmate_core::service::remote_connect::host_stream::HOST_STREAM_CHANGED_EVENT.into(),
         serde_json::json!({"stream_id":"dual", "epoch":1, "cursor":2}),
     );
     assert_hint(&mut lan_hints, 2).await;
@@ -326,7 +326,7 @@ async fn dual_relay_rpc_persistence_and_teardown_are_independent() {
     );
 
     remote_connect_stop(Some(StopRemoteConnectRequest {
-        method: "openbitfun_server".into(),
+        method: "starmate_server".into(),
     }))
     .await
     .unwrap();
@@ -476,10 +476,10 @@ async fn html_preview_encrypted_peer_loading_benchmark() {
 }
 
 async fn peer_preview_fixture(benchmark: bool) {
-    use openbitfun_product_domains::html_preview::{
+    use starmate_product_domains::html_preview::{
         HtmlPreviewResourceReply, HtmlPreviewResourceRequest, PREVIEW_CHUNK_BYTES,
     };
-    use openbitfun_services_integrations::remote_connect::{
+    use starmate_services_integrations::remote_connect::{
         file_projection::SessionFileTarget,
         html_preview::HtmlPreviewSource,
         relay_client::{RelayClient, RelayEvent},
@@ -542,7 +542,7 @@ async fn peer_preview_fixture(benchmark: bool) {
     }
     let source = HtmlPreviewSource::new(
         SessionFileTarget {
-            fs: Arc::new(openbitfun_services_core::workspace::LocalWorkspaceFs),
+            fs: Arc::new(starmate_services_core::workspace::LocalWorkspaceFs),
             root: root.to_string_lossy().into_owned(),
             path: entry.clone(),
             remote: false,

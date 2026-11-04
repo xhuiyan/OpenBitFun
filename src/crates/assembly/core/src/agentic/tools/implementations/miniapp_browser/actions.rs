@@ -12,7 +12,7 @@ use crate::agentic::tools::miniapp_surface::{
     refresh_bridge_capabilities, resolve_target, sessions_snapshot, sessions_snapshot_all,
     MiniAppWebCommand, MiniAppWebOpenRequest, MiniAppWebSessionSnapshot,
 };
-use openbitfun_product_domains::miniapp::web_surface::{
+use starmate_product_domains::miniapp::web_surface::{
     match_installed_app, validate_bridge_payload_size, MiniAppWebAppMatch, MiniAppWebAppSummary,
     MiniAppWebCapability, MiniAppWebCapture, MiniAppWebErrorCode, MiniAppWebLocator,
     MINIAPP_WEB_DEFAULT_CAPTURE_EDGE, MINIAPP_WEB_DEFAULT_WAIT_MS, MINIAPP_WEB_DEFAULT_WATCH_MS,
@@ -1361,9 +1361,9 @@ mod tests {
         async fn open(
             &self,
             request: crate::agentic::tools::miniapp_surface::MiniAppWebOpenRequest,
-        ) -> Result<openbitfun_product_domains::miniapp::web_surface::MiniAppWebSurfaceInfo, String>
+        ) -> Result<starmate_product_domains::miniapp::web_surface::MiniAppWebSurfaceInfo, String>
         {
-            use openbitfun_product_domains::miniapp::web_surface::MiniAppWebSurfaceInfo;
+            use starmate_product_domains::miniapp::web_surface::MiniAppWebSurfaceInfo;
             Ok(MiniAppWebSurfaceInfo {
                 app_id: request.app_id,
                 ..Default::default()

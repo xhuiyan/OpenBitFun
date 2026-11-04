@@ -45,7 +45,7 @@ pub(crate) mod tool_result_storage;
 pub mod user_input_manager;
 pub mod workspace_paths;
 pub use integer_parser::{parse_i64_value, parse_u64_value};
-pub use openbitfun_agent_tools::input_validator;
+pub use starmate_agent_tools::input_validator;
 
 pub use framework::{
     PortableToolContextProvider, Tool, ToolContextFacts, ToolResult, ToolUseContext,

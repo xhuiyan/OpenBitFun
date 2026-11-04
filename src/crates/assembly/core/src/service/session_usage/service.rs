@@ -18,7 +18,7 @@ use chrono::Utc;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::Path;
 
-pub use openbitfun_runtime_ports::AgentSessionUsageRequest as SessionUsageReportRequest;
+pub use starmate_runtime_ports::AgentSessionUsageRequest as SessionUsageReportRequest;
 
 pub async fn generate_session_usage_report(
     persistence_manager: &PersistenceManager,
@@ -91,7 +91,7 @@ pub async fn generate_session_usage_report_from_storage_path(
             .await?
             .and_then(|cache| cache.system_prompt)
             .filter(|prompt| !prompt.text.content.trim().is_empty())
-            .map(|prompt| openbitfun_core_types::UsageSystemPromptPreview {
+            .map(|prompt| starmate_core_types::UsageSystemPromptPreview {
                 content: prompt.text.content,
                 cached_at: prompt.text.created_at_ms,
             })
@@ -100,7 +100,7 @@ pub async fn generate_session_usage_report_from_storage_path(
     };
     let context_preview = if let Some(category) = request
         .context_preview_category
-        .filter(|category| *category != openbitfun_core_types::UsageContextCategory::Unknown)
+        .filter(|category| *category != starmate_core_types::UsageContextCategory::Unknown)
     {
         persistence_manager
             .load_usage_context_snapshot(session_storage_path, &request.session_id)
@@ -113,7 +113,7 @@ pub async fn generate_session_usage_report_from_storage_path(
             })
             .and_then(|mut snapshot| {
                 snapshot.contents.remove(&category).map(|content| {
-                    openbitfun_core_types::UsageContextPreview {
+                    starmate_core_types::UsageContextPreview {
                         category,
                         content,
                         captured_at: snapshot.captured_at,
@@ -1662,7 +1662,7 @@ mod tests {
         use crate::agentic::core::Session;
         use crate::agentic::persistence::manager::SessionUsageContextSnapshot;
         use crate::infrastructure::PathManager;
-        use openbitfun_core_types::UsageContextCategory::*;
+        use starmate_core_types::UsageContextCategory::*;
         use std::sync::Arc;
 
         let temp = tempfile::tempdir().unwrap();
@@ -2231,7 +2231,7 @@ mod tests {
         let request = test_request(None);
         let tool = test_tool_item_with_input(
             "tool-deferred",
-            openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME,
+            starmate_agent_tools::CALL_DEFERRED_TOOL_NAME,
             Some(true),
             120,
             serde_json::json!({
@@ -2976,7 +2976,7 @@ mod tests {
 
     #[test]
     fn context_composition_uses_latest_parent_request_and_never_reuses_stale_data() {
-        let composition = openbitfun_core_types::UsageContextBreakdown {
+        let composition = starmate_core_types::UsageContextBreakdown {
             system_prompt: 100,
             conversation: 900,
             ..Default::default()

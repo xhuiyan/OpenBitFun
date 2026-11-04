@@ -2,13 +2,13 @@ use super::common::{
     backup_domain_dir, backup_file_once, read_bounded_json, read_optional_bounded_json,
     restore_unverified_file, stage_domain_dir,
 };
-use openbitfun_config_contracts::validate_current_config_value;
-use openbitfun_config_contracts::{AIModelConfig, GlobalConfig};
-use openbitfun_legacy_migration::{
+use starmate_config_contracts::validate_current_config_value;
+use starmate_config_contracts::{AIModelConfig, GlobalConfig};
+use starmate_legacy_migration::{
     atomic_write_json, DomainContext, DomainScan, LegacyDomainAdapter, LegacyMigrationError,
     LegacyMigrationResult, MigrationRoots,
 };
-use openbitfun_product_domains::legacy_migration::{
+use starmate_product_domains::legacy_migration::{
     ConflictResolution, FindingSeverity, MigrationConflict, MigrationDiagnostic, MigrationDomainId,
     MigrationDomainResult, MigrationDomainState, ScanFinding,
 };
@@ -50,7 +50,7 @@ struct MergeOutcome {
     skipped: u64,
     conflicts: Vec<MigrationConflict>,
     rejected: Vec<String>,
-    repairs: Vec<openbitfun_config_contracts::ConfigDiagnostic>,
+    repairs: Vec<starmate_config_contracts::ConfigDiagnostic>,
 }
 
 impl LegacyDomainAdapter for SettingsAdapter {
@@ -465,7 +465,7 @@ fn merge_settings(
     })?;
     merge_models(source_models, &mut merged.ai.models, &mut outcome)?;
     outcome.repairs =
-        openbitfun_config_contracts::normalization::recover_persisted_config(&mut merged);
+        starmate_config_contracts::normalization::recover_persisted_config(&mut merged);
     merged.product_id = defaults.product_id;
     merged.schema_version = defaults.schema_version;
     merged.version = defaults.version;
@@ -506,7 +506,7 @@ fn convert_source_config(
         .and_then(Value::as_object_mut)
     {
         *profiles =
-            openbitfun_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
+            starmate_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
                 profiles,
             )
             .map_err(LegacyMigrationError::InvalidRequest)?;
@@ -940,10 +940,10 @@ fn credentials_backup_path(context: &DomainContext<'_>) -> PathBuf {
 mod tests {
     use super::*;
     use crate::adapters_for_groups;
-    use openbitfun_legacy_migration::{
+    use starmate_legacy_migration::{
         probe_legacy_source, CancellationToken, MigrationEngine, NoCrashInjection, ProbeLimits,
     };
-    use openbitfun_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
+    use starmate_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
     use sha2::{Digest, Sha256};
     use std::collections::BTreeSet;
     use std::path::Path;

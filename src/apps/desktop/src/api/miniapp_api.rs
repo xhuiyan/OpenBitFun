@@ -3,27 +3,27 @@
 use crate::api::app_state::AppState;
 use crate::startup_trace::DesktopStartupTrace;
 use futures::StreamExt;
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::miniapp::ai_bridge::{
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::miniapp::ai_bridge::{
     ai_stream_chunk_payload, ai_stream_done_payload, ai_stream_error_payload,
     available_models_for_permissions, plan_ai_chat_request, plan_ai_complete_request,
     require_enabled_ai_permissions, require_non_empty_ai_messages, require_non_empty_stream_id,
     MiniAppAiMessagePlan, MiniAppAiMessageRole, MiniAppAiModelDescriptor, MiniAppAiModelInfo,
     MiniAppAiUsage,
 };
-use openbitfun_core::miniapp::lifecycle::{
+use starmate_core::miniapp::lifecycle::{
     draft_worker_key, miniapp_runtime_event_payload, miniapp_worker_stopped_payload,
     should_emit_worker_restarted, should_stop_worker_for_runtime_update, worker_restart_reason,
     workspace_root_from_input, MiniAppCreateInput, MiniAppUpdatePatch,
 };
-use openbitfun_core::miniapp::rate_limit::{MiniAppRateLimitState, MiniAppRateLimitSubject};
-use openbitfun_core::miniapp::{
+use starmate_core::miniapp::rate_limit::{MiniAppRateLimitState, MiniAppRateLimitSubject};
+use starmate_core::miniapp::{
     dispatch_host, is_host_primitive, InstallResult as CoreInstallResult, MiniApp,
     MiniAppAiContext, MiniAppCustomizationMetadata, MiniAppDraft, MiniAppMeta,
     MiniAppPermissionDiff, MiniAppPermissions, MiniAppSource,
 };
-use openbitfun_core::service::config::types::GlobalConfig;
-use openbitfun_core::util::types::Message;
+use starmate_core::service::config::types::GlobalConfig;
+use starmate_core::util::types::Message;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::HashMap;
@@ -63,7 +63,7 @@ pub struct CreateMiniAppRequest {
     pub permissions: MiniAppPermissions,
     pub ai_context: Option<MiniAppAiContext>,
     #[serde(default)]
-    pub chrome: Option<openbitfun_product_domains::miniapp::chrome::MiniAppChrome>,
+    pub chrome: Option<starmate_product_domains::miniapp::chrome::MiniAppChrome>,
     #[serde(default)]
     pub workspace_path: Option<String>,
 }
@@ -105,7 +105,7 @@ impl From<MiniAppSourceDto> for MiniAppSource {
             esm_dependencies: d
                 .esm_dependencies
                 .into_iter()
-                .map(|x| openbitfun_core::miniapp::EsmDep {
+                .map(|x| starmate_core::miniapp::EsmDep {
                     name: x.name,
                     version: x.version,
                     url: x.url,
@@ -115,7 +115,7 @@ impl From<MiniAppSourceDto> for MiniAppSource {
             npm_dependencies: d
                 .npm_dependencies
                 .into_iter()
-                .map(|x| openbitfun_core::miniapp::NpmDep {
+                .map(|x| starmate_core::miniapp::NpmDep {
                     name: x.name,
                     version: x.version,
                 })
@@ -136,7 +136,7 @@ pub struct UpdateMiniAppRequest {
     pub permissions: Option<MiniAppPermissions>,
     pub ai_context: Option<MiniAppAiContext>,
     #[serde(default)]
-    pub chrome: Option<openbitfun_product_domains::miniapp::chrome::MiniAppChrome>,
+    pub chrome: Option<starmate_product_domains::miniapp::chrome::MiniAppChrome>,
     #[serde(default)]
     pub workspace_path: Option<String>,
 }
@@ -588,8 +588,8 @@ pub async fn miniapp_runtime_status(state: State<'_, AppState>) -> Result<Runtim
     Ok(RuntimeStatus {
         available: true,
         kind: Some(match info.kind {
-            openbitfun_core::miniapp::RuntimeKind::Bun => "bun".to_string(),
-            openbitfun_core::miniapp::RuntimeKind::Node => "node".to_string(),
+            starmate_core::miniapp::RuntimeKind::Bun => "bun".to_string(),
+            starmate_core::miniapp::RuntimeKind::Node => "node".to_string(),
         }),
         version: Some(info.version.clone()),
         path: Some(info.path.to_string_lossy().to_string()),
@@ -662,7 +662,7 @@ pub async fn miniapp_worker_call(
 /// Host-side framework primitive RPC.
 ///
 /// Routes `fs.*` / `shell.*` / `os.*` / `net.*` calls directly to the Rust
-/// implementation in `openbitfun_core::miniapp::host_dispatch`, no Bun/Node Worker
+/// implementation in `starmate_core::miniapp::host_dispatch`, no Bun/Node Worker
 /// required. Used for MiniApps with `permissions.node.enabled = false` (and as
 /// the future migration target for everyone, since these calls don't actually
 /// need a JS sandbox).
@@ -1652,7 +1652,7 @@ pub async fn miniapp_ai_list_models(
                 supports_text_chat: model.capabilities.iter().any(|capability| {
                     matches!(
                         capability,
-                        openbitfun_core::service::config::types::ModelCapability::TextChat
+                        starmate_core::service::config::types::ModelCapability::TextChat
                     )
                 }),
             }),

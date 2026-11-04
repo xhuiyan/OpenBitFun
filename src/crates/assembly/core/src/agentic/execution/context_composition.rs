@@ -3,9 +3,9 @@ use crate::agentic::core::{
     InternalReminderKind, Message, MessageContent, MessageRole, MessageSemanticKind,
 };
 use crate::util::{types::ToolDefinition, TokenCounter};
-use openbitfun_agent_runtime::prompt::PrependedPromptReminders;
-use openbitfun_agent_runtime::prompt_markup::render_system_reminder;
-use openbitfun_core_types::{UsageContextBreakdown, UsageContextCategory};
+use starmate_agent_runtime::prompt::PrependedPromptReminders;
+use starmate_agent_runtime::prompt_markup::render_system_reminder;
+use starmate_core_types::{UsageContextBreakdown, UsageContextCategory};
 use std::collections::BTreeMap;
 
 fn preview_category(message: &Message) -> Option<UsageContextCategory> {

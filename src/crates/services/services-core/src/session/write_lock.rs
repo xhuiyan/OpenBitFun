@@ -41,7 +41,7 @@ impl SessionWriteLock {
         session_id: &str,
         reuse_process_writer: bool,
     ) -> Result<Self, SessionWriteLockError> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(|_| SessionWriteLockError::InvalidSessionId)?;
         std::fs::create_dir_all(session_storage_root).map_err(|source| {
             SessionWriteLockError::CreateStorageDirectory {

@@ -1,4 +1,4 @@
-use openbitfun_services_integrations::remote_ssh::{
+use starmate_services_integrations::remote_ssh::{
     canonicalize_local_workspace_root, local_workspace_roots_equal,
     local_workspace_stable_storage_id, normalize_local_workspace_root_for_stable_id,
     normalize_remote_workspace_path, remote_root_to_mirror_subpath, remote_workspace_runtime_root,
@@ -161,7 +161,7 @@ fn remote_target_contract_carries_proxy_command_and_stays_back_compatible() {
 #[test]
 #[cfg(feature = "remote-persistence")]
 fn saved_connection_record_tolerates_legacy_payloads_without_proxy_command() {
-    let saved: openbitfun_services_integrations::remote_persistence::SavedConnectionRecord =
+    let saved: starmate_services_integrations::remote_persistence::SavedConnectionRecord =
         serde_json::from_value(serde_json::json!({
             "id": "conn-1",
             "name": "coder",

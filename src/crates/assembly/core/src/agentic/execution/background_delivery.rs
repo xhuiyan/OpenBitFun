@@ -4,7 +4,7 @@ use crate::agentic::core::{Message, MessageContent};
 use crate::agentic::session::SessionManager;
 use crate::infrastructure::ai::get_global_ai_client_factory;
 use log::warn;
-use openbitfun_core_types::background_delivery::{
+use starmate_core_types::background_delivery::{
     BackgroundDecisionUsage, BackgroundDelivery, BackgroundReport,
     BackgroundReportDisposition as Disposition, BackgroundReportPolicy as Policy,
 };
@@ -191,7 +191,7 @@ pub(crate) async fn finalize_background_delivery(
         .as_millis()
         .try_into()
         .unwrap_or(u64::MAX);
-    let mut resolved = openbitfun_agent_runtime::scheduler::result_delivery::resolve_report(
+    let mut resolved = starmate_agent_runtime::scheduler::result_delivery::resolve_report(
         current,
         success,
         finish_reason,

@@ -1,6 +1,6 @@
 use crate::agentic::tools::framework::ToolUseContext;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::deep_review::{
+use starmate_agent_runtime::deep_review::{
     FocusedReviewAssignment, FocusedReviewPathAccess, ReviewTargetEvidence,
 };
 use serde_json::Value;

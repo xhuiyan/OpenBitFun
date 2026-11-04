@@ -1,1 +1,1 @@
-pub use openbitfun_core_types::ToolImageAttachment;
+pub use starmate_core_types::ToolImageAttachment;

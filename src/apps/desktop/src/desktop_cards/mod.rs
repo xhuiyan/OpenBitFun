@@ -19,14 +19,14 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, Weak};
 use std::time::Duration;
 
-use openbitfun_core::agentic::tools::desktop_card_host::{
+use starmate_core::agentic::tools::desktop_card_host::{
     clamp_size, set_desktop_card_handler, DesktopCardDataSnapshot, DesktopCardDataSource,
     DesktopCardDataSourceKind, DesktopCardDraft, DesktopCardHostRequest, DesktopCardOrigin,
     DesktopCardPatch, DesktopCardPosition, DesktopCardRecord, DesktopCardSize, DesktopCardTemplate,
     DesktopCardTemplateKind, DESKTOP_CARD_MAX_CARDS,
 };
-use openbitfun_core::infrastructure::try_get_path_manager_arc;
-use openbitfun_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
+use starmate_core::infrastructure::try_get_path_manager_arc;
+use starmate_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
 use serde::Serialize;
 use serde_json::{json, Map, Value};
 use tauri::async_runtime::JoinHandle;
@@ -147,7 +147,7 @@ async fn due_notification_body(message: Option<&str>) -> String {
         return message.to_string();
     }
     let language =
-        match openbitfun_core::service::config::global::GlobalConfigManager::get_service().await {
+        match starmate_core::service::config::global::GlobalConfigManager::get_service().await {
             Ok(service) => service
                 .get_config::<String>(Some("app.language"))
                 .await
@@ -1083,7 +1083,7 @@ fn countdown_task(
 }
 
 async fn configured_enabled() -> bool {
-    match openbitfun_core::service::config::global::GlobalConfigManager::get_service().await {
+    match starmate_core::service::config::global::GlobalConfigManager::get_service().await {
         Ok(service) => service
             .get_config::<bool>(Some(DESKTOP_CARDS_CONFIG_PATH))
             .await

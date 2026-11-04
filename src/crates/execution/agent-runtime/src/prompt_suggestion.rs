@@ -11,8 +11,8 @@
 use std::sync::Arc;
 
 use dashmap::DashMap;
-use openbitfun_core_types::SessionKind;
-use openbitfun_runtime_ports::DialogTriggerSource;
+use starmate_core_types::SessionKind;
+use starmate_runtime_ports::DialogTriggerSource;
 use tokio_util::sync::CancellationToken;
 
 /// Execution-context flag set by the coordinator for turns whose submitter can

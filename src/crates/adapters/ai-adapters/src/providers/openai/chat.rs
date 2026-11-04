@@ -432,7 +432,7 @@ mod tests {
     use crate::types::AIConfig;
     use axum::{routing::post, Json, Router};
     use futures::StreamExt;
-    use openbitfun_core_types::errors::AiProviderError;
+    use starmate_core_types::errors::AiProviderError;
     use std::sync::{
         atomic::{AtomicUsize, Ordering},
         Arc, Mutex,

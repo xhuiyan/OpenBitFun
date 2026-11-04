@@ -7,13 +7,13 @@ use super::types::{
     RemoteModelInfo,
 };
 use super::MAIN_APP_EXE;
-use openbitfun_core_types::{
+use starmate_core_types::{
     installer_config_handoff::{
         InstallerConfigHandoff, InstallerModelHandoff, INSTALLER_CONFIG_HANDOFF_FILE_NAME,
     },
     product_identity::{data_namespace, hidden_data_directory},
 };
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use sha2::{Digest, Sha256};
@@ -924,7 +924,7 @@ pub(crate) async fn test_model_config_connection(
     let model_name = ai_config.name.clone();
     let supports_image_input = super::ai_config::supports_image_input(&model_config);
 
-    let ai_client = openbitfun_ai_adapters::AIClient::new(ai_config);
+    let ai_client = starmate_ai_adapters::AIClient::new(ai_config);
 
     match ai_client.test_connection().await {
         Ok(result) => {
@@ -1016,7 +1016,7 @@ pub(crate) async fn list_model_config_models(
     }
     let ai_config = super::ai_config::ai_config_from_installer_model(&model_config)
         .map_err(|e| e.to_string())?;
-    let ai_client = openbitfun_ai_adapters::AIClient::new(ai_config);
+    let ai_client = starmate_ai_adapters::AIClient::new(ai_config);
     ai_client
         .list_models()
         .await
@@ -1030,7 +1030,7 @@ fn storage_format(model: &ModelConfig) -> String {
     model.format.trim().to_ascii_lowercase()
 }
 
-/// Stored `request_url` aligned with settings `resolveRequestUrl` (no openbitfun_core).
+/// Stored `request_url` aligned with settings `resolveRequestUrl` (no starmate_core).
 fn resolve_stored_request_url(base_url: &str, format: &str) -> String {
     let trimmed = base_url.trim().trim_end_matches('/');
     if trimmed.ends_with('#') {
@@ -1905,7 +1905,7 @@ mod tests {
         preflight_validate_payload_zip_archive, INSTALLER_APP_LANGUAGE_ALIASES_BY_PRIORITY,
         MAIN_APP_EXE, MIN_WINDOWS_APP_EXE_BYTES, REQUIRED_PAYLOAD_FILES,
     };
-    use openbitfun_core_types::installer_config_handoff::{
+    use starmate_core_types::installer_config_handoff::{
         InstallerConfigHandoff, INSTALLER_CONFIG_HANDOFF_FILE_NAME,
     };
     use std::io::{Cursor, Write};

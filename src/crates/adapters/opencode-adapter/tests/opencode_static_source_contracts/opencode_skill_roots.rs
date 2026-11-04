@@ -1,7 +1,7 @@
-use openbitfun_opencode_adapter::{
+use starmate_opencode_adapter::{
     OpenCodeCommandProviderOptions, OpenCodeSkillRootProvider, OpenCodeSkillRootProviderOptions,
 };
-use openbitfun_product_domains::external_sources::ExternalSourceScope;
+use starmate_product_domains::external_sources::ExternalSourceScope;
 use std::fs;
 use std::path::{Path, PathBuf};
 

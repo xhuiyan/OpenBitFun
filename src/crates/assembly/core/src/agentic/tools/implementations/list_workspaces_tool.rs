@@ -6,8 +6,8 @@ use crate::agentic::tools::framework::{
 use crate::service_agent_runtime::CoreWorkspaceCatalogPort;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_core_types::WorkspaceKind;
-use openbitfun_runtime_ports::{AgentWorkspaceCatalogEntry, AgentWorkspaceCatalogPort};
+use starmate_core_types::WorkspaceKind;
+use starmate_runtime_ports::{AgentWorkspaceCatalogEntry, AgentWorkspaceCatalogPort};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::sync::Arc;
@@ -340,7 +340,7 @@ mod tests {
     use crate::service::workspace::{
         WorkspaceActivityMode, WorkspaceCreateOptions, WorkspaceService,
     };
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         AgentWorkspaceRemoteInfo, PortError, PortErrorKind, PortResult,
     };
     use std::collections::HashMap;

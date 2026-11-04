@@ -8,7 +8,7 @@ fn doctor_reports_the_validated_cli_runtime_assembly() {
     std::fs::create_dir_all(&workspace).expect("create workspace");
 
     let output =
-        openbitfun_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
+        starmate_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
             .arg("doctor")
             .current_dir(&workspace)
             .env_remove("OPENBITFUN_USER_ROOT")
@@ -57,7 +57,7 @@ fn health_reports_assembly_and_compatibility_boundaries() {
     std::fs::create_dir_all(&workspace).expect("create workspace");
 
     let output =
-        openbitfun_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
+        starmate_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
             .arg("health")
             .current_dir(&workspace)
             .env_remove("OPENBITFUN_USER_ROOT")
@@ -104,7 +104,7 @@ fn doctor_rejects_incomplete_e2e_storage_roots() {
         let config_root = temp.path().join("host-config");
         std::fs::create_dir_all(&workspace).expect("create workspace");
 
-        let mut command = openbitfun_services_core::process_manager::create_command(env!(
+        let mut command = starmate_services_core::process_manager::create_command(env!(
             "CARGO_BIN_EXE_openbitfun"
         ));
         command
@@ -326,10 +326,10 @@ fn interactive_tui_separates_runtime_deployment_from_domain_services() {
         "CliAgentRuntimeClient must own Embedded/Shared deployment and expose Remote workspace scope"
     );
     assert!(
-        CLI_MANIFEST.contains("openbitfun-app-server =")
-            && !CLI_MANIFEST.contains("openbitfun-app-server-client =")
-            && !CLI_MANIFEST.contains("openbitfun-app-server-protocol")
-            && !CLI_MANIFEST.contains("openbitfun-tui-management =")
+        CLI_MANIFEST.contains("starmate-app-server =")
+            && !CLI_MANIFEST.contains("starmate-app-server-client =")
+            && !CLI_MANIFEST.contains("starmate-app-server-protocol")
+            && !CLI_MANIFEST.contains("starmate-tui-management =")
             && !CHAT_MODE.contains("trait ModelService")
             && !CHAT_MODE.contains("trait ExternalSourceService"),
         "CLI may host the App Server stdio surface but must not depend on the typed App Server client transport, wire DTOs, or a shared TUI management crate"
@@ -407,7 +407,7 @@ fn interactive_tui_operations_use_runtime_and_domain_services() {
     const CLI_CARGO: &str = include_str!("../../Cargo.toml");
 
     assert!(
-        !STARTUP_PAGE.contains("openbitfun_agent_runtime::sdk::AgentRuntime"),
+        !STARTUP_PAGE.contains("starmate_agent_runtime::sdk::AgentRuntime"),
         "the startup controller must use the existing CLI runtime client instead of AgentRuntime"
     );
     assert!(
@@ -432,8 +432,8 @@ fn interactive_tui_operations_use_runtime_and_domain_services() {
         "interactive chat and startup must use Runtime plus existing owners without service wrappers"
     );
     assert!(
-        !CLI_CARGO.contains("openbitfun-sdk-host")
-            && CLI_CARGO.contains("openbitfun-agent-runtime-ipc"),
+        !CLI_CARGO.contains("starmate-sdk-host")
+            && CLI_CARGO.contains("starmate-agent-runtime-ipc"),
         "Shared TUI must use the private Runtime IPC adapter without making CLI depend on SDK Host"
     );
     assert!(
@@ -459,7 +459,7 @@ fn interactive_tui_operations_use_runtime_and_domain_services() {
         CHAT_EXTERNAL_SOURCES.contains("apply_external_source_control_action")
             && CHAT_EXTERNAL_SOURCES.contains("set_external_tool_target_decision")
             && CHAT_RUN.contains("subscribe_external_source_updates")
-            && CHAT_COMMANDS.contains("openbitfun_core::external_sources")
+            && CHAT_COMMANDS.contains("starmate_core::external_sources")
             && !CHAT_COMMANDS.contains("external_source_service"),
         "TUI external-source controllers must call the existing owner API directly"
     );

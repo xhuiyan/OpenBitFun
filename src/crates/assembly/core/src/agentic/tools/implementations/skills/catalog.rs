@@ -2,7 +2,7 @@
 //!
 //! The provider-neutral owner lives in `openbitfun-agent-runtime`.
 
-pub use openbitfun_agent_runtime::skills::builtin_skill_group_key;
+pub use starmate_agent_runtime::skills::builtin_skill_group_key;
 
 #[cfg(test)]
 mod tests {

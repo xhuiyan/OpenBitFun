@@ -161,7 +161,7 @@ fn http_status(lower: &str) -> Option<u16> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::account::DEFAULT_RELAY_URL;
+    use starmate_product_domains::account::DEFAULT_RELAY_URL;
 
     #[test]
     fn a_retired_version_is_an_update_not_a_network_fault() {

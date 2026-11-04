@@ -1,6 +1,6 @@
 //! MiniApp compiler compatibility facade.
 
-pub use openbitfun_product_domains::miniapp::compiler::{
+pub use starmate_product_domains::miniapp::compiler::{
     MiniAppCompileError, MiniAppCompileRequest, MiniAppCompileResult,
 };
 
@@ -16,7 +16,7 @@ pub fn compile(
     workspace_dir: &str,
     appearance_mode: &str,
 ) -> OpenBitFunResult<String> {
-    openbitfun_product_domains::miniapp::compiler::compile(
+    starmate_product_domains::miniapp::compiler::compile(
         source,
         permissions,
         app_id,
@@ -32,7 +32,7 @@ pub fn compile_with_request(
     permissions: &MiniAppPermissions,
     request: &MiniAppCompileRequest,
 ) -> OpenBitFunResult<String> {
-    openbitfun_product_domains::miniapp::compiler::compile_with_request(
+    starmate_product_domains::miniapp::compiler::compile_with_request(
         source,
         permissions,
         request,
@@ -45,7 +45,7 @@ pub fn compile_market_with_request(
     permissions: &MiniAppPermissions,
     request: &MiniAppCompileRequest,
 ) -> OpenBitFunResult<String> {
-    openbitfun_product_domains::miniapp::compiler::compile_market_with_request(
+    starmate_product_domains::miniapp::compiler::compile_market_with_request(
         source,
         permissions,
         request,

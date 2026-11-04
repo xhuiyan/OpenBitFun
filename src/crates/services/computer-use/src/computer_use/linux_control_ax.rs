@@ -3,8 +3,8 @@ use atspi::{
     connection::P2P, proxy::proxy_ext::ProxyExt, AccessibilityConnection, CoordType,
     ObjectRefOwned, State,
 };
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{AppInfo, AppSelector, AppStateSnapshot, AxNode};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{AppInfo, AppSelector, AppStateSnapshot, AxNode};
 use std::{
     collections::{HashMap, HashSet, VecDeque},
     sync::{Mutex, OnceLock},
@@ -13,7 +13,7 @@ use std::{
 
 #[derive(Clone)]
 struct CachedNode {
-    scope: openbitfun_agent_tools::computer_use_control::ObservationScope,
+    scope: starmate_agent_tools::computer_use_control::ObservationScope,
     pid: i32,
     object: ObjectRefOwned,
     role: String,
@@ -524,7 +524,7 @@ mod native_tests {
     #[tokio::test]
     #[ignore = "requires the dedicated GTK fixture and a live AT-SPI bus"]
     async fn atspi_semantic_fixture() {
-        use openbitfun_agent_tools::computer_use_control::ControlMode;
+        use starmate_agent_tools::computer_use_control::ControlMode;
         let pid: i32 = std::env::var("OPENBITFUN_ATSPI_FIXTURE_PID")
             .expect("run scripts/test-linux-computer-use-atspi.sh")
             .parse()
@@ -534,7 +534,7 @@ mod native_tests {
             .unwrap();
         let mut lease =
             super::super::control_session::acquire("native-atspi-fixture", "app_click").unwrap();
-        let query = openbitfun_agent_tools::computer_use_host::UiElementLocateQuery {
+        let query = starmate_agent_tools::computer_use_host::UiElementLocateQuery {
             text_contains: Some("Activate fixture".into()),
             ..Default::default()
         };

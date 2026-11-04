@@ -8,7 +8,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-use openbitfun_core::agentic::tools::frontend_workbench_host::{
+use starmate_core::agentic::tools::frontend_workbench_host::{
     set_frontend_workbench_handler, FrontendWorkbenchHostRequest,
 };
 use serde::{Deserialize, Serialize};

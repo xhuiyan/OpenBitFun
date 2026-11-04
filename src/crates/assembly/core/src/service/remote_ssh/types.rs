@@ -1,1 +1,1 @@
-pub use openbitfun_services_integrations::remote_ssh::types::*;
+pub use starmate_services_integrations::remote_ssh::types::*;

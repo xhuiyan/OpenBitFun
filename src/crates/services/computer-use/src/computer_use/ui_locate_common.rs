@@ -1,8 +1,8 @@
 //! Shared validation, filter matching, and global→native pixel mapping for UI locate tools.
 
 use crate::computer_use::displays::DisplayInfo;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{UiElementLocateQuery, UiElementLocateResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{UiElementLocateQuery, UiElementLocateResult};
 
 pub(super) fn validate_query(q: &UiElementLocateQuery) -> OpenBitFunResult<()> {
     // node_idx alone is enough: it short-circuits BFS via the per-pid AX cache.

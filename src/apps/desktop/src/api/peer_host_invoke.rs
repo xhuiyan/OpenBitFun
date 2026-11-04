@@ -3,7 +3,7 @@
 //! Commands are executed through the same frontend invoke surface as local UI
 //! (peer webview → `invoke`), so handler signatures stay single-sourced.
 //! Which commands may run here on a controller's behalf is decided by the
-//! Product Operation Registry (`openbitfun_product_domains::remote_surface`); this
+//! Product Operation Registry (`starmate_product_domains::remote_surface`); this
 //! module only applies its verdict before any bridge call. The frontend and
 //! the CLI peer host derive their tables from the same registry, so the three
 //! surfaces cannot drift apart. See `docs/architecture/remote-surface-contract.md`.
@@ -13,7 +13,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Mutex, OnceLock};
 use std::time::Duration;
 
-use openbitfun_product_domains::remote_surface::{
+use starmate_product_domains::remote_surface::{
     capability_map, digest as remote_surface_digest, peer_host_verdict, peer_stance,
     retired_reason, PeerHostKind, PeerHostVerdict, PeerStance,
 };
@@ -181,13 +181,13 @@ pub(crate) fn disconnect_route_controllers(route: RelayRoute) -> Vec<String> {
 }
 
 pub fn track_permission_event(
-    event: &openbitfun_agent_runtime::sdk::PermissionRequestEvent,
+    event: &starmate_agent_runtime::sdk::PermissionRequestEvent,
 ) -> bool {
     let Ok(mut state) = peer_control_state().lock() else {
         return false;
     };
     match event {
-        openbitfun_agent_runtime::sdk::PermissionRequestEvent::Asked { request } => {
+        starmate_agent_runtime::sdk::PermissionRequestEvent::Asked { request } => {
             if !state.controllers.is_empty() {
                 state
                     .permission_request_ids
@@ -197,8 +197,8 @@ pub fn track_permission_event(
                 false
             }
         }
-        openbitfun_agent_runtime::sdk::PermissionRequestEvent::Replied { request_id, .. }
-        | openbitfun_agent_runtime::sdk::PermissionRequestEvent::Cancelled { request_id, .. } => {
+        starmate_agent_runtime::sdk::PermissionRequestEvent::Replied { request_id, .. }
+        | starmate_agent_runtime::sdk::PermissionRequestEvent::Cancelled { request_id, .. } => {
             let was_tracked = state.permission_request_ids.remove(request_id);
             was_tracked && !state.controllers.is_empty()
         }
@@ -219,7 +219,7 @@ pub async fn fail_closed_permission_requests(
     if request_ids.is_empty() {
         return Ok(());
     }
-    let manager = openbitfun_core::product_runtime::core_permission_request_manager()?;
+    let manager = starmate_core::product_runtime::core_permission_request_manager()?;
     let mut failures = Vec::new();
     for request_id in request_ids {
         if let Err(error) = manager
@@ -356,7 +356,7 @@ pub async fn dispatch(command: &str, args: Value) -> HostInvokeBridgeResult {
     }
 
     if command == "product_control_invoke" {
-        use openbitfun_product_domains::{
+        use starmate_product_domains::{
             product_control::{ProductControlAction, ProductControlRequest},
             remote_control::RemoteControlRequest,
         };
@@ -395,7 +395,7 @@ pub async fn dispatch(command: &str, args: Value) -> HostInvokeBridgeResult {
         }
     };
 
-    use openbitfun_core_types::agent_identity_wire::{
+    use starmate_core_types::agent_identity_wire::{
         translate_agent_identity_command, translate_agent_identity_response, AgentIdentityDialect,
     };
     let args =
@@ -592,7 +592,7 @@ mod tests {
         );
         assert_eq!(
             capabilities.len(),
-            openbitfun_product_domains::remote_surface::advertised_by(PeerHostKind::Desktop).len()
+            starmate_product_domains::remote_surface::advertised_by(PeerHostKind::Desktop).len()
         );
         assert!(value
             .get("surface_registry_digest")
@@ -697,7 +697,7 @@ mod tests {
     /// host and the frontend derive the same control plane.
     #[test]
     fn control_plane_commands_are_host_control_plane_in_registry() {
-        use openbitfun_product_domains::remote_surface::operation;
+        use starmate_product_domains::remote_surface::operation;
         for command in [
             "peer_control_attach",
             "peer_control_detach",

@@ -10,11 +10,11 @@ use super::patch::write_patch_to_path;
 use super::patch::{git_diff_base, untracked_files};
 use super::verification::{changed_files, detect_verify_command, needs_change_baseline};
 use crate::diagnostics::ExitKind;
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     PermissionDelegationContext, PermissionRequest, PermissionRequestSource,
     PermissionRequestSourceKind, PortError, PortErrorKind, RuntimeError,
 };
-use openbitfun_events::{
+use starmate_events::{
     AgenticEvent, AgenticEventEnvelope, AgenticEventPriority, ToolEventIdentity,
 };
 use serde_json::json;
@@ -103,7 +103,7 @@ fn git_patch_includes_staged_and_untracked_files_from_a_repo_subdirectory() {
     let temp = tempfile::tempdir().expect("tempdir");
     let repo = temp.path();
     let run_git = |args: &[&str]| {
-        let output = openbitfun_core::util::process_manager::create_command("git")
+        let output = starmate_core::util::process_manager::create_command("git")
             .args(args)
             .current_dir(repo)
             .output()
@@ -141,7 +141,7 @@ fn git_patch_excludes_a_preexisting_output_artifact_inside_the_repository() {
     let temp = tempfile::tempdir().expect("tempdir");
     let repo = temp.path();
     let run_git = |args: &[&str]| {
-        let output = openbitfun_core::util::process_manager::create_command("git")
+        let output = starmate_core::util::process_manager::create_command("git")
             .args(args)
             .current_dir(repo)
             .output()
@@ -181,7 +181,7 @@ fn git_patch_excludes_a_tracked_output_artifact_inside_the_repository() {
     let temp = tempfile::tempdir().expect("tempdir");
     let repo = temp.path();
     let run_git = |args: &[&str]| {
-        let output = openbitfun_core::util::process_manager::create_command("git")
+        let output = starmate_core::util::process_manager::create_command("git")
             .args(args)
             .current_dir(repo)
             .output()
@@ -321,8 +321,8 @@ fn json_usage_accumulates_all_model_round_updates_for_the_turn() {
 
 #[test]
 fn observed_model_backfill_preserves_stored_smart_alias_when_release_is_closed() {
-    use openbitfun_agent_runtime::session::SessionConfig;
-    use openbitfun_core::agentic::execution::round_model_routing::configuration::routing_enabled;
+    use starmate_agent_runtime::session::SessionConfig;
+    use starmate_core::agentic::execution::round_model_routing::configuration::routing_enabled;
 
     let stored = SessionConfig {
         model_id: Some("primary".into()),
@@ -740,7 +740,7 @@ fn settlement_failure_overrides_an_observed_cancellation_terminal() {
 fn deferred_exec_event_projects_effective_name_and_input() {
     let identity = ToolEventIdentity::resolved(
         "tool-1",
-        openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME,
+        starmate_agent_tools::CALL_DEFERRED_TOOL_NAME,
         "CreatePlan",
     );
     let wire_input = json!({
@@ -756,7 +756,7 @@ fn deferred_exec_event_projects_effective_name_and_input() {
 }
 
 fn run_git(workspace: &std::path::Path, args: &[&str]) {
-    let output = openbitfun_core::util::process_manager::create_command("git")
+    let output = starmate_core::util::process_manager::create_command("git")
         .args(args)
         .current_dir(workspace)
         .output()

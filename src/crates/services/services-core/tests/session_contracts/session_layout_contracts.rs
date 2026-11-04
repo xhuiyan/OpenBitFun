@@ -1,4 +1,4 @@
-use openbitfun_services_core::session::SessionStorageLayout;
+use starmate_services_core::session::SessionStorageLayout;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 

@@ -9,13 +9,13 @@ use crate::service::mcp::server::{MCPConnection, MCPServerConfig, MCPServerStatu
 use crate::util::errors::OpenBitFunResult;
 
 pub struct MCPServerProcess {
-    inner: openbitfun_services_integrations::mcp::server::MCPServerProcess,
+    inner: starmate_services_integrations::mcp::server::MCPServerProcess,
 }
 
 impl MCPServerProcess {
     pub fn new(id: String, name: String, server_type: MCPServerType) -> Self {
         Self {
-            inner: openbitfun_services_integrations::mcp::server::MCPServerProcess::new(
+            inner: starmate_services_integrations::mcp::server::MCPServerProcess::new(
                 id,
                 name,
                 server_type,

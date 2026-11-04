@@ -10,8 +10,8 @@ use crate::agentic::tools::framework::{
 use crate::agentic::tools::ToolPathOperation;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_agent_tools::strip_invalid_windows_drive_path_prefix;
-use openbitfun_core_types::product_identity::hidden_data_directory;
+use starmate_agent_tools::strip_invalid_windows_drive_path_prefix;
+use starmate_core_types::product_identity::hidden_data_directory;
 use serde_json::{json, Value};
 use tool_runtime::fs::{
     write_file_success_outcome, write_same_content_outcome, WriteLocalFileOutcome,
@@ -585,7 +585,7 @@ mod tests {
     use crate::agentic::tools::ToolRuntimeRestrictions;
     use crate::agentic::WorkspaceBinding;
     use async_trait::async_trait;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         ToolRuntimeHandles, WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceDirEntry,
         WorkspaceFileSystem, WorkspaceServices, WorkspaceShell,
     };
@@ -607,7 +607,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 

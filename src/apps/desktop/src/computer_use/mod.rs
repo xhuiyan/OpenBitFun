@@ -1,6 +1,6 @@
 //! Desktop wiring for the shared native Computer Use provider.
-pub use openbitfun_computer_use::NativeComputerUseHost as DesktopComputerUseHost;
-pub(crate) use openbitfun_computer_use::{
+pub use starmate_computer_use::NativeComputerUseHost as DesktopComputerUseHost;
+pub(crate) use starmate_computer_use::{
     control_session, grants, permissions, share_grants, share_targets, shared_preview,
 };
 

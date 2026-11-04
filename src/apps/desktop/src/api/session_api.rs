@@ -6,17 +6,17 @@ use crate::runtime::{
     UiSessionMetadataField,
 };
 use crate::startup_trace::DesktopStartupTrace;
-use openbitfun_agent_runtime::sdk::AgentSessionLineageSnapshot;
-use openbitfun_core::agentic::coordination::get_global_scheduler;
-use openbitfun_core::agentic::persistence::{SessionBranchResult, SessionMetadataPage};
-use openbitfun_core::service::remote_ssh::normalize_remote_workspace_path;
-use openbitfun_core::service::session::{
+use starmate_agent_runtime::sdk::AgentSessionLineageSnapshot;
+use starmate_core::agentic::coordination::get_global_scheduler;
+use starmate_core::agentic::persistence::{SessionBranchResult, SessionMetadataPage};
+use starmate_core::service::remote_ssh::normalize_remote_workspace_path;
+use starmate_core::service::session::{
     DialogTurnData, SessionKind, SessionMetadata, SessionStatus, SessionTranscriptExport,
     SessionTranscriptExportOptions,
 };
-use openbitfun_core::service::session_usage::SessionUsageReport;
-use openbitfun_core::service::workspace::WorkspaceKind;
-use openbitfun_product_domains::product_search::{
+use starmate_core::service::session_usage::SessionUsageReport;
+use starmate_core::service::workspace::WorkspaceKind;
+use starmate_product_domains::product_search::{
     SessionContentSearchRequest, SessionContentSearchResponse,
 };
 use serde::{Deserialize, Serialize};
@@ -64,7 +64,7 @@ pub struct ListPersistedSessionsPageRequest {
     #[serde(default, alias = "sessionIds")]
     pub session_ids: Option<Vec<String>>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub query: Option<openbitfun_services_core::session::page::SessionCatalogQuery>,
+    pub query: Option<starmate_services_core::session::page::SessionCatalogQuery>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub refresh_external_discovery: Option<bool>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -238,7 +238,7 @@ pub struct GetSessionUsageReportRequest {
     #[serde(default)]
     pub include_system_prompt_preview: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub context_preview_category: Option<openbitfun_core_types::UsageContextCategory>,
+    pub context_preview_category: Option<starmate_core_types::UsageContextCategory>,
 }
 
 fn default_include_hidden_subagents() -> bool {

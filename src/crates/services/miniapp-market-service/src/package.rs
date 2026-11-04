@@ -1,10 +1,10 @@
 use crate::error::{MarketError, MarketResult};
 use image::GenericImageView;
-use openbitfun_product_domains::miniapp::market::{
+use starmate_product_domains::miniapp::market::{
     MarketPackageMeta, MARKET_MAX_PACKAGE_BYTES, MARKET_MAX_SCREENSHOT_BYTES,
     MARKET_MAX_UNCOMPRESSED_BYTES,
 };
-use openbitfun_product_domains::product_release::OPENBITFUN_INITIAL_RELEASE_VERSION;
+use starmate_product_domains::product_release::OPENBITFUN_INITIAL_RELEASE_VERSION;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, HashSet};
@@ -328,7 +328,7 @@ fn validate_package_meta(meta: &MarketPackageMeta) -> MarketResult<()> {
             "MiniApp descriptions must contain between 1 and 500 characters.",
         ));
     }
-    if !openbitfun_product_domains::miniapp::market::validate_market_category(&meta.category) {
+    if !starmate_product_domains::miniapp::market::validate_market_category(&meta.category) {
         return Err(MarketError::bad_request(
             "invalid_category",
             "The MiniApp category is not supported.",

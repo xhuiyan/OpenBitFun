@@ -21,7 +21,7 @@ pub const RELAY_INBOUND_IDLE_TIMEOUT: Duration = Duration::from_secs(60);
 const PRIMARY_ROUTING_WAIT: Duration = Duration::from_secs(10);
 
 pub fn ensure_rustls_crypto_provider() {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
 }
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DevicePresenceEntry {

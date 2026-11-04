@@ -1,6 +1,6 @@
 use anyhow::Context;
-use openbitfun_skin_market_service::build_skin_market_router;
-use openbitfun_skin_market_service::config::SkinMarketConfig;
+use starmate_skin_market_service::build_skin_market_router;
+use starmate_skin_market_service::config::SkinMarketConfig;
 use tracing_subscriber::EnvFilter;
 
 #[tokio::main]

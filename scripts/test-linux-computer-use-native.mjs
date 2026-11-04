@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 if (process.platform !== 'linux') throw new Error('Native provider tests require Linux.');
 const root = fileURLToPath(new URL('../', import.meta.url));
 process.exitCode = await new Promise((resolve, reject) => {
-  const child = spawn('cargo', ['test', '--locked', '-p', 'openbitfun-computer-use', '--lib', ...process.argv.slice(2)], {
+  const child = spawn('cargo', ['test', '--locked', '-p', 'starmate-computer-use', '--lib', ...process.argv.slice(2)], {
     cwd: root, stdio: 'inherit', windowsHide: true,
   });
   child.on('error', reject);

@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-cli"
+name = "starmate-cli"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -29,9 +29,9 @@ name = "terminal_process_contracts"
 path = "tests/terminal_process_contracts.rs"
 
 [dependencies]
-openbitfun-computer-use = { path = "../../crates/services/computer-use" }
+starmate-computer-use = { path = "../../crates/services/computer-use" }
 # Internal crates
-openbitfun-core = { path = "../../crates/assembly/core", features = [
+starmate-core = { path = "../../crates/assembly/core", features = [
     "agent-runtime",
     "workspace-icons",
     "product-search",
@@ -54,17 +54,17 @@ openbitfun-core = { path = "../../crates/assembly/core", features = [
     "tools-image-generation",
     "tools-agent-control",
 ] }
-openbitfun-events = { path = "../../crates/contracts/events" }
-openbitfun-core-types = { path = "../../crates/contracts/core-types" }
-openbitfun-acp = { path = "../../crates/interfaces/acp", default-features = false, features = ["client", "server"] }
-openbitfun-agent-runtime = { path = "../../crates/execution/agent-runtime", features = ["agent-runtime"] }
-openbitfun-agent-runtime-ipc = { path = "../../crates/adapters/agent-runtime-ipc" }
-openbitfun-app-server = { path = "../../crates/interfaces/app-server" }
-openbitfun-runtime-ports = { path = "../../crates/contracts/runtime-ports", features = ["agent-api", "git-port", "permission", "plugin-runtime", "workspace-ports"] }
-openbitfun-runtime-services = { path = "../../crates/execution/runtime-services" }
-openbitfun-services-core = { path = "../../crates/services/services-core", features = ["dispatch-workspace", "local-storage", "process-runtime", "runtime-ownership", "tls-provider"] }
-openbitfun-agent-tools = { path = "../../crates/execution/tool-contracts" }
-openbitfun-product-domains = { path = "../../crates/contracts/product-domains", features = ["external-sources"] }
+starmate-events = { path = "../../crates/contracts/events" }
+starmate-core-types = { path = "../../crates/contracts/core-types" }
+starmate-acp = { path = "../../crates/interfaces/acp", default-features = false, features = ["client", "server"] }
+starmate-agent-runtime = { path = "../../crates/execution/agent-runtime", features = ["agent-runtime"] }
+starmate-agent-runtime-ipc = { path = "../../crates/adapters/agent-runtime-ipc" }
+starmate-app-server = { path = "../../crates/interfaces/app-server" }
+starmate-runtime-ports = { path = "../../crates/contracts/runtime-ports", features = ["agent-api", "git-port", "permission", "plugin-runtime", "workspace-ports"] }
+starmate-runtime-services = { path = "../../crates/execution/runtime-services" }
+starmate-services-core = { path = "../../crates/services/services-core", features = ["dispatch-workspace", "local-storage", "process-runtime", "runtime-ownership", "tls-provider"] }
+starmate-agent-tools = { path = "../../crates/execution/tool-contracts" }
+starmate-product-domains = { path = "../../crates/contracts/product-domains", features = ["external-sources"] }
 
 # CLI framework
 clap = { workspace = true }
@@ -134,7 +134,7 @@ shlex = { workspace = true }
 
 [dev-dependencies]
 hex = { workspace = true }
-openbitfun-core = { path = "../../crates/assembly/core", features = ["test-support"] }
+starmate-core = { path = "../../crates/assembly/core", features = ["test-support"] }
 tokio = { workspace = true, features = ["io-util", "net"] }
 
 [target.'cfg(windows)'.dependencies]

@@ -19,7 +19,7 @@ use std::time::{Duration, Instant};
 
 use anyhow::{bail, Context, Result};
 use base64::Engine as _;
-use openbitfun_services_core::dispatch_workspace::sha256_file;
+use starmate_services_core::dispatch_workspace::sha256_file;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -1573,7 +1573,7 @@ fn commit_exists(repo: &Path, commit: &str) -> Result<bool> {
 }
 
 fn git_command(dir: &Path) -> Command {
-    let mut command = openbitfun_services_core::process_manager::create_command("git");
+    let mut command = starmate_services_core::process_manager::create_command("git");
     command
         .current_dir(dir)
         // A detached dispatch worker has nobody to answer a credential or
@@ -2420,7 +2420,7 @@ mod tests {
         let dir = tempfile::tempdir().expect("tempdir");
         let openbitfun_home = dir.path().join("openbitfun-home");
         let user_root = dir.path().join("user-root");
-        let output = openbitfun_services_core::process_manager::create_command(
+        let output = starmate_services_core::process_manager::create_command(
             std::env::current_exe().expect("test executable"),
         )
         .args([

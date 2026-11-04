@@ -1,7 +1,7 @@
 #![cfg(feature = "git")]
 
-use openbitfun_runtime_ports::{GitPort, WorkspaceDiffContent, WorkspaceDiffFileStatus};
-use openbitfun_services_integrations::git::{
+use starmate_runtime_ports::{GitPort, WorkspaceDiffContent, WorkspaceDiffFileStatus};
+use starmate_services_integrations::git::{
     build_git_changed_files_args, build_git_diff_args, parse_branch_line, parse_git_log_line,
     parse_name_status_output, parse_worktree_list, GitAuthor, GitChangedFile, GitChangedFileStatus,
     GitChangedFilesParams, GitCommandOutput, GitCommitParams, GitDiffParams, GitError, GitGraph,
@@ -761,7 +761,7 @@ impl Drop for TempRepoDir {
 }
 
 fn run_git(repo_dir: &std::path::Path, args: &[&str]) {
-    let output = openbitfun_services_core::process_manager::create_command("git")
+    let output = starmate_services_core::process_manager::create_command("git")
         .current_dir(repo_dir)
         .args(args)
         .output()
@@ -776,7 +776,7 @@ fn run_git(repo_dir: &std::path::Path, args: &[&str]) {
 }
 
 fn run_git_expect_failure(repo_dir: &std::path::Path, args: &[&str]) {
-    let output = openbitfun_services_core::process_manager::create_command("git")
+    let output = starmate_services_core::process_manager::create_command("git")
         .current_dir(repo_dir)
         .args(args)
         .output()

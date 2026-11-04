@@ -7,7 +7,7 @@ use crate::agentic::WorkspaceBinding;
 use crate::infrastructure::{get_path_manager_arc, PathManager};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::debug;
-use openbitfun_services_core::workspace_identity::normalize_remote_workspace_path;
+use starmate_services_core::workspace_identity::normalize_remote_workspace_path;
 use serde::Serialize;
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
@@ -385,7 +385,7 @@ mod tests {
         let context = service.context_for_remote_workspace("example-host", "/root/repo");
         let nested_sessions = context
             .sessions_dir
-            .join(openbitfun_core_types::product_identity::hidden_data_directory())
+            .join(starmate_core_types::product_identity::hidden_data_directory())
             .join("sessions");
         fs::create_dir_all(&nested_sessions).expect("nested sessions should exist");
         fs::write(nested_sessions.join("not-imported.json"), "{}")

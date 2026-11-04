@@ -6,7 +6,7 @@ use super::{
 };
 use base64::Engine;
 use futures::FutureExt;
-use openbitfun_core::agentic::tools::computer_use_host::AppInputAction;
+use starmate_core::agentic::tools::computer_use_host::AppInputAction;
 use serde_json::{json, Value};
 use std::io::{BufRead, Write};
 use std::path::PathBuf;
@@ -227,7 +227,7 @@ async fn run_inner() -> Result<(), String> {
         std::fs::create_dir_all(directory).map_err(|error| error.to_string())?;
     }
     let scope = Scope { pid, window };
-    let identity = openbitfun_computer_use::test_support::ProcessIdentity::read(pid)?;
+    let identity = starmate_computer_use::test_support::ProcessIdentity::read(pid)?;
     let host = Arc::new(DesktopComputerUseHost::new());
     let mut context = ToolUseContext::for_tool_listing(None, None);
     context.session_id = Some(OWNER.into());

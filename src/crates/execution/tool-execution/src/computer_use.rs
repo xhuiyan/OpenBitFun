@@ -8,7 +8,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 /// Maximum actions to track in history
 const MAX_HISTORY_SIZE: usize = 50;
 
-pub use openbitfun_agent_tools::computer_use_host::{ActionRecord, LoopDetectionResult};
+pub use starmate_agent_tools::computer_use_host::{ActionRecord, LoopDetectionResult};
 
 /// Computer Use session optimizer
 #[derive(Debug)]

@@ -59,7 +59,7 @@ try {
   const args = ['--ignored', '--exact', testName, '--nocapture'];
   const exitCode = await new Promise((resolve, reject) => {
     const child = spawn(process.env.OPENBITFUN_TEST_BINARY || 'cargo', process.env.OPENBITFUN_TEST_BINARY ? args : [
-      'test', '-p', 'openbitfun-core', '--no-default-features', '--features',
+      'test', '-p', 'starmate-core', '--no-default-features', '--features',
       'agent-runtime,tools-browser-web,tools-computer-use,git', '--lib', 'real_browser_workflow', '--', ...args,
     ], {
       cwd: root, stdio: 'inherit', windowsHide: true,

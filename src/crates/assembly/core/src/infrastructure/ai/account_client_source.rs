@@ -7,9 +7,9 @@ use super::{
 };
 use crate::service::config::types::AuthConfig;
 use anyhow::{anyhow, Result};
-use openbitfun_agent_runtime::account_routing::{AccountAffinity, AccountPolicy, RouteScope};
-use openbitfun_core_types::{ModelAccountOrigin, ModelResponseReplayItem};
-use openbitfun_services_core::routing_state::{
+use starmate_agent_runtime::account_routing::{AccountAffinity, AccountPolicy, RouteScope};
+use starmate_core_types::{ModelAccountOrigin, ModelResponseReplayItem};
+use starmate_services_core::routing_state::{
     ResourceBinding, ResourceCooldown, RoutingStateStore,
 };
 use std::{
@@ -96,7 +96,7 @@ pub(crate) trait AccountClientSource: fmt::Debug + Send + Sync {
 /// Opaque replay binds requests to the account that produced it. Unproven
 /// historical replay must never authorize moving to a different account.
 pub(crate) fn opaque_replay_origin(
-    messages: &[openbitfun_core_types::Message],
+    messages: &[starmate_core_types::Message],
 ) -> Result<Option<ModelAccountOrigin>> {
     let mut origin = None;
     for message in messages {
@@ -488,9 +488,9 @@ impl AccountClientSource for FactoryAccountClientSource {
                     // all-cooling route can still probe it.
                     return Err(anyhow::Error::new(
                         super::client_factory::AccountPoolUnavailable::new(vec![
-                            openbitfun_agent_runtime::account_routing::RejectedAccount {
+                            starmate_agent_runtime::account_routing::RejectedAccount {
                                 account_id,
-                                reason: openbitfun_agent_runtime::account_routing::AccountRejection::Cooldown,
+                                reason: starmate_agent_runtime::account_routing::AccountRejection::Cooldown,
                                 recovery_at: Some(cooldown.until),
                             },
                         ]),
@@ -573,7 +573,7 @@ impl AccountClientSource for FactoryAccountClientSource {
 #[cfg(test)]
 mod replay_tests {
     use super::*;
-    use openbitfun_core_types::{Message, ModelResponseReplay};
+    use starmate_core_types::{Message, ModelResponseReplay};
     #[test]
     fn signed_subscription_history_pins_its_account_even_without_opaque_responses_items() {
         let mut signed = Message::assistant("prior answer".into());

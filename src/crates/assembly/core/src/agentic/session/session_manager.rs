@@ -56,12 +56,12 @@ use crate::util::sanitize_plain_model_output;
 use crate::util::timing::elapsed_ms_u64;
 use dashmap::{mapref::entry::Entry, DashMap};
 use log::{debug, error, info, warn};
-use openbitfun_core_types::SessionExecutionTarget;
-pub use openbitfun_runtime_ports::SessionViewRestoreTiming;
-use openbitfun_runtime_ports::{
+use starmate_core_types::SessionExecutionTarget;
+pub use starmate_runtime_ports::SessionViewRestoreTiming;
+use starmate_runtime_ports::{
     AgentTurnSettlementResult, PermissionMode, SessionStoragePathRequest, SessionStorePort,
 };
-use openbitfun_services_core::session::{
+use starmate_services_core::session::{
     apply_session_lineage, collect_hidden_subagent_cascade as collect_hidden_subagent_cascade_ids,
     merge_session_custom_metadata as merge_session_custom_metadata_value,
     set_deep_review_run_manifest, set_review_target_evidence, set_session_relationship,
@@ -487,7 +487,7 @@ impl SessionManager {
         &self,
         session_id: &str,
     ) -> OpenBitFunResult<KeyedAsyncLockGuard> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         Ok(self.lock_session_mutation(session_id).await)
     }
@@ -566,7 +566,7 @@ impl SessionManager {
         requested_path: &Path,
         allow_existing_same_path: bool,
     ) -> OpenBitFunResult<bool> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let requested_path = Self::normalize_session_storage_path(requested_path);
         match self
@@ -686,7 +686,7 @@ impl SessionManager {
         session_id: &str,
         requested_path: &Path,
     ) -> OpenBitFunResult<()> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let requested_path = Self::normalize_session_storage_path(requested_path);
         let Some(binding) = self.session_storage_path_index.get(session_id) else {
@@ -709,7 +709,7 @@ impl SessionManager {
         storage_path: &Path,
         session_id: &str,
     ) -> OpenBitFunResult<bool> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         if !self.sessions.contains_key(session_id) {
             return Ok(false);
@@ -1240,7 +1240,7 @@ impl SessionManager {
         &self,
         session_id: &str,
     ) -> OpenBitFunResult<PathBuf> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         if let Some(path) =
             Self::committed_session_storage_path(&self.session_storage_path_index, session_id)
@@ -1381,11 +1381,11 @@ impl SessionManager {
         reference: &SessionReferenceLocator,
         reference_artifact_stem: &str,
     ) -> OpenBitFunResult<MaterializedSessionReference> {
-        openbitfun_core_types::validate_session_id(source_session_id)
+        starmate_core_types::validate_session_id(source_session_id)
             .map_err(OpenBitFunError::Validation)?;
-        openbitfun_core_types::validate_session_id(&reference.session_id)
+        starmate_core_types::validate_session_id(&reference.session_id)
             .map_err(OpenBitFunError::Validation)?;
-        openbitfun_core_types::validate_session_id(reference_artifact_stem)
+        starmate_core_types::validate_session_id(reference_artifact_stem)
             .map_err(OpenBitFunError::Validation)?;
         let workspace_id = reference
             .workspace_id
@@ -4452,7 +4452,7 @@ impl SessionManager {
     pub async fn update_session_model_target(
         &self,
         session_id: &str,
-        selection: &openbitfun_core_types::model_pool::ModelSelection,
+        selection: &starmate_core_types::model_pool::ModelSelection,
     ) -> OpenBitFunResult<Session> {
         self.update_session_model_target_with_reasoning(session_id, selection, None)
             .await
@@ -4461,10 +4461,10 @@ impl SessionManager {
     pub(crate) async fn update_session_model_target_with_reasoning(
         &self,
         session_id: &str,
-        selection: &openbitfun_core_types::model_pool::ModelSelection,
+        selection: &starmate_core_types::model_pool::ModelSelection,
         reasoning_preset: Option<&str>,
     ) -> OpenBitFunResult<Session> {
-        use openbitfun_core_types::model_pool::ModelSelection;
+        use starmate_core_types::model_pool::ModelSelection;
         let model_id = match selection {
             ModelSelection::Model { model_ref } => model_ref.as_str(),
             ModelSelection::Pool { .. } => "",
@@ -4491,7 +4491,7 @@ impl SessionManager {
         reasoning_preset: Option<&str>,
         routing_mode: Option<&str>,
         include_internal: bool,
-        selection: Option<&openbitfun_core_types::model_pool::ModelSelection>,
+        selection: Option<&starmate_core_types::model_pool::ModelSelection>,
         validate_binding: impl FnOnce(&Session) -> OpenBitFunResult<()>,
     ) -> OpenBitFunResult<Session> {
         let _mutation_guard = self.acquire_session_mutation(session_id).await?;
@@ -4604,7 +4604,7 @@ impl SessionManager {
                 .model_pool_selection_revision
                 .saturating_add(1);
             updated_session.config.model_pool_binding = None;
-            use openbitfun_core_types::model_pool::ModelSelection;
+            use starmate_core_types::model_pool::ModelSelection;
             match selection {
                 ModelSelection::Pool { pool_id } => {
                     let config_service =
@@ -4734,7 +4734,7 @@ impl SessionManager {
         &self,
         session_id: &str,
         selection_revision: u64,
-        binding: openbitfun_core_types::model_pool::ModelPoolBinding,
+        binding: starmate_core_types::model_pool::ModelPoolBinding,
     ) -> OpenBitFunResult<()> {
         let _guard = self.acquire_session_mutation(session_id).await?;
         let Some(mut session) = self.get_session(session_id) else {
@@ -5088,7 +5088,7 @@ impl SessionManager {
         workspace_path: &Path,
         session_id: &str,
     ) -> OpenBitFunResult<()> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let _mutation_guard = self.lock_session_mutation(session_id).await;
         self.delete_session_locked(workspace_path, session_id).await
@@ -5119,7 +5119,7 @@ impl SessionManager {
     }
 
     pub(crate) async fn delete_session_by_id(&self, session_id: &str) -> OpenBitFunResult<()> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let _mutation_guard = self.lock_session_mutation(session_id).await;
         let session_storage_path = self.require_session_storage_path(session_id).await?;
@@ -5148,7 +5148,7 @@ impl SessionManager {
         remote_ssh_host: Option<&str>,
         session_id: &str,
     ) -> OpenBitFunResult<bool> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let Some(root) = self.get_session(session_id) else {
             return Ok(false);
@@ -5197,7 +5197,7 @@ impl SessionManager {
         remote_ssh_host: Option<&str>,
         session_id: &str,
     ) -> OpenBitFunResult<Vec<String>> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let Some(root) = self.get_session(session_id) else {
             return Ok(Vec::new());
@@ -5344,7 +5344,7 @@ impl SessionManager {
         &self,
         session_id: &str,
     ) -> OpenBitFunResult<bool> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let _mutation_guard = self.lock_session_mutation(session_id).await;
         let Some(session) = self.get_session(session_id) else {
@@ -5924,7 +5924,7 @@ impl SessionManager {
         usize,
         SessionViewRestoreTiming,
     )> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let restore_started_at = Instant::now();
         let resolve_storage_path_duration_ms = 0;
@@ -8370,7 +8370,7 @@ impl SessionManager {
         &self,
         session_id: &str,
         turn_id: &str,
-    ) -> OpenBitFunResult<Option<openbitfun_core_types::background_delivery::BackgroundDelivery>>
+    ) -> OpenBitFunResult<Option<starmate_core_types::background_delivery::BackgroundDelivery>>
     {
         let path = self
             .effective_session_storage_path(session_id)
@@ -8385,11 +8385,11 @@ impl SessionManager {
             .load_runtime_dialog_turn(&path, session_id, index)
             .await?;
         Ok(turn.and_then(|turn| {
-            let mut delivery = openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(turn.user_message.metadata.as_ref(), turn_id)?;
+            let mut delivery = starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(turn.user_message.metadata.as_ref(), turn_id)?;
             let generation = turn.recovery.as_ref().map(|recovery| recovery.execution_generation).or(turn.recovery_epoch).unwrap_or(0);
             if generation > delivery.execution_generation {
                 delivery.execution_generation = generation;
-                delivery.disposition = openbitfun_core_types::background_delivery::BackgroundReportDisposition::Pending;
+                delivery.disposition = starmate_core_types::background_delivery::BackgroundReportDisposition::Pending;
                 delivery.proposal = None;
                 delivery.resolved_at_ms = None;
                 delivery.decision_usage = None;
@@ -8425,9 +8425,9 @@ impl SessionManager {
         &self,
         session_id: &str,
         turn_id: &str,
-        delivery: &openbitfun_core_types::background_delivery::BackgroundDelivery,
+        delivery: &starmate_core_types::background_delivery::BackgroundDelivery,
     ) -> OpenBitFunResult<()> {
-        use openbitfun_core_types::background_delivery::{
+        use starmate_core_types::background_delivery::{
             BackgroundDelivery, BACKGROUND_DELIVERY_METADATA_KEY,
         };
         let path = self
@@ -8498,9 +8498,9 @@ impl SessionManager {
         &self,
         session_id: &str,
         turn_id: &str,
-        proposal: openbitfun_core_types::background_delivery::BackgroundReport,
+        proposal: starmate_core_types::background_delivery::BackgroundReport,
     ) -> OpenBitFunResult<()> {
-        use openbitfun_core_types::background_delivery::{
+        use starmate_core_types::background_delivery::{
             BackgroundReportDisposition as Disposition, BackgroundReportPolicy as Policy,
         };
         if proposal.reason.trim().is_empty()
@@ -10770,14 +10770,14 @@ mod tests {
     use crate::service::WorkspaceRuntimeService;
     use crate::util::errors::OpenBitFunError;
     use dashmap::{try_result::TryResult, DashMap};
-    use openbitfun_core_types::{
+    use starmate_core_types::{
         ReasoningCatalogBinding, ReasoningConfig, ReasoningPreset, ReasoningPresetAction,
         SessionExecutionTarget,
     };
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         AgentTurnSettlementResult, AgentTurnSettlementStatus, SessionStoragePathRequest,
     };
-    use openbitfun_services_core::session::SessionBranchBoundary;
+    use starmate_services_core::session::SessionBranchBoundary;
     use serde_json::json;
     use std::collections::HashSet;
     use std::path::{Path, PathBuf};
@@ -10800,7 +10800,7 @@ mod tests {
             Some(crate::agentic::core::message::ModelExecutionMetadata {
                 model_config_id: "economy-config".into(),
                 effective_model_name: "economy-api-model".into(),
-                routing: Some(openbitfun_events::agentic::ModelRoutingDecision {
+                routing: Some(starmate_events::agentic::ModelRoutingDecision {
                     route: "economy".into(),
                     latency_ms: 17,
                     fallback_reason: None,
@@ -11151,7 +11151,7 @@ mod tests {
             String::new(),
             vec![ToolCall {
                 tool_id: "tool-1".to_string(),
-                tool_name: openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
+                tool_name: starmate_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
                 arguments: json!({
                     "tool_name": "WebFetch",
                     "args": { "url": "https://example.test" }
@@ -11167,7 +11167,7 @@ mod tests {
         .with_round_id("round-1".to_string());
         let result = Message::tool_result(ToolResult {
             tool_id: "tool-1".to_string(),
-            tool_name: openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
+            tool_name: starmate_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
             effective_tool_name: Some("WebFetch".to_string()),
             result: json!({ "content": "external content" }),
             result_for_assistant: Some("external content".to_string()),
@@ -11185,7 +11185,7 @@ mod tests {
         let provider_result: crate::util::types::Message = (&persisted_messages[1]).into();
         assert_eq!(
             provider_result.name.as_deref(),
-            Some(openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME)
+            Some(starmate_agent_tools::CALL_DEFERRED_TOOL_NAME)
         );
 
         let rounds =
@@ -11196,7 +11196,7 @@ mod tests {
         let tool = &rounds[0].tool_items[0];
         assert_eq!(
             tool.tool_name,
-            openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME
+            starmate_agent_tools::CALL_DEFERRED_TOOL_NAME
         );
         assert_eq!(
             tool.tool_call.input,
@@ -11234,7 +11234,7 @@ mod tests {
     #[tokio::test]
     async fn background_delivery_is_bound_to_an_admitted_run_and_survives_completion_and_checkpoints(
     ) {
-        use openbitfun_core_types::background_delivery::{
+        use starmate_core_types::background_delivery::{
             BackgroundDelivery, BackgroundReport, BackgroundReportDisposition as Disposition,
             BackgroundReportPolicy as Policy, BACKGROUND_DELIVERY_METADATA_KEY,
         };
@@ -11293,7 +11293,7 @@ mod tests {
             .unwrap()
             .unwrap();
         assert_eq!(admitted.proposal, Some(proposal.clone()));
-        let resolved = openbitfun_agent_runtime::scheduler::result_delivery::resolve_report(
+        let resolved = starmate_agent_runtime::scheduler::result_delivery::resolve_report(
             admitted,
             true,
             "complete",
@@ -11374,7 +11374,7 @@ mod tests {
         assert_eq!(recovering.execution_generation, 1);
         assert_eq!(recovering.disposition, Disposition::Pending);
         assert!(recovering.resolved_at_ms.is_none());
-        let recovered = openbitfun_agent_runtime::scheduler::result_delivery::resolve_report(
+        let recovered = starmate_agent_runtime::scheduler::result_delivery::resolve_report(
             recovering,
             true,
             "complete",
@@ -14349,7 +14349,7 @@ mod tests {
                 enabled: true,
                 ..Default::default()
             });
-        let target = openbitfun_core_types::model_pool::ModelSelection::Model {
+        let target = starmate_core_types::model_pool::ModelSelection::Model {
             model_ref: "chosen-model".into(),
         };
         let updated = TEST_MODEL_RESOLUTION_AI_CONFIG
@@ -15873,7 +15873,7 @@ mod tests {
 
     #[tokio::test]
     async fn btw_typed_model_choice_leaves_inherited_pool_without_mutating_parent() {
-        use openbitfun_core_types::model_pool::{ModelPoolBinding, ModelSelection};
+        use starmate_core_types::model_pool::{ModelPoolBinding, ModelSelection};
         let workspace = TestWorkspace::new();
         let manager = test_manager(Arc::new(
             PersistenceManager::new(workspace.path_manager()).unwrap(),
@@ -16198,8 +16198,8 @@ mod tests {
         ai_config.default_models.primary = Some("primary-model".to_string());
         ai_config
             .set_model_selections(
-                openbitfun_config_contracts::model_pool::AgentModelSelections {
-                    mode: openbitfun_core_types::model_pool::ModelSelection::Model {
+                starmate_config_contracts::model_pool::AgentModelSelections {
+                    mode: starmate_core_types::model_pool::ModelSelection::Model {
                         model_ref: "agent-model".into(),
                     },
                     ..Default::default()
@@ -16227,8 +16227,8 @@ mod tests {
 
         ai_config
             .set_model_selections(
-                openbitfun_config_contracts::model_pool::AgentModelSelections {
-                    mode: openbitfun_core_types::model_pool::ModelSelection::Model {
+                starmate_config_contracts::model_pool::AgentModelSelections {
+                    mode: starmate_core_types::model_pool::ModelSelection::Model {
                         model_ref: "primary".into(),
                     },
                     ..Default::default()
@@ -16256,8 +16256,8 @@ mod tests {
         ai_config.default_models.primary = Some("primary-model".to_string());
         ai_config
             .set_model_selections(
-                openbitfun_config_contracts::model_pool::AgentModelSelections {
-                    mode: openbitfun_core_types::model_pool::ModelSelection::Model {
+                starmate_config_contracts::model_pool::AgentModelSelections {
+                    mode: starmate_core_types::model_pool::ModelSelection::Model {
                         model_ref: "mode-model".into(),
                     },
                     ..Default::default()
@@ -16984,7 +16984,7 @@ mod tests {
 
     #[tokio::test]
     async fn core_session_store_port_resolves_local_storage_to_sessions_dir() {
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             SessionStorageKind, SessionStoragePathRequest, SessionStorePort,
         };
 
@@ -17025,7 +17025,7 @@ mod tests {
     #[tokio::test]
     async fn core_session_store_port_keeps_colliding_local_and_ssh_owners_separate() {
         use crate::service::workspace::legacy_compat::register_remote_fixture;
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             SessionStorageKind, SessionStoragePathRequest, SessionStorePort,
         };
 
@@ -17082,7 +17082,7 @@ mod tests {
 
     #[tokio::test]
     async fn core_session_store_port_legacy_worktree_uses_its_registered_project_storage() {
-        use openbitfun_runtime_ports::{SessionStoragePathRequest, SessionStorePort};
+        use starmate_runtime_ports::{SessionStoragePathRequest, SessionStorePort};
         let project = TestWorkspace::new();
         let execution = project.path().join("worktree");
         std::fs::create_dir_all(&execution).unwrap();
@@ -17269,7 +17269,7 @@ mod tests {
     #[cfg(feature = "remote-workspace")]
     #[tokio::test]
     async fn core_session_store_port_resolves_unresolved_remote_storage_path() {
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             PortErrorKind, SessionStorageKind, SessionStoragePathRequest, SessionStorePort,
         };
 
@@ -17298,7 +17298,7 @@ mod tests {
         // Sessions already persisted under a legacy `_unresolved` mirror stay
         // readable: the resolved sessions dir passes through with its kind.
         let legacy_unresolved_dir =
-            openbitfun_services_core::workspace_identity::unresolved_remote_session_storage_dir(
+            starmate_services_core::workspace_identity::unresolved_remote_session_storage_dir(
                 path_manager.remote_ssh_mirror_root_dir(),
                 "conn-1",
                 "/remote/project",
@@ -17324,7 +17324,7 @@ mod tests {
     #[tokio::test]
     async fn core_session_store_port_resolved_remote_sessions_dir_passes_through_only_sessions_root(
     ) {
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             SessionStorageKind, SessionStoragePathRequest, SessionStorePort,
         };
 

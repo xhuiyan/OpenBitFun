@@ -16,8 +16,8 @@ use crate::runtime::{
     DesktopRuntimeContext, DesktopSessionApplicationError, DesktopSessionScopeRequest,
 };
 use crate::startup_trace::DesktopStartupTrace;
-use openbitfun_agent_runtime::deep_review::sanitize_focused_review_public_metadata;
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::deep_review::sanitize_focused_review_public_metadata;
+use starmate_agent_runtime::sdk::{
     AgentDialogSteerRequest, AgentDialogTurnExecution, AgentDialogTurnRecoveryOutcome,
     AgentDialogTurnRecoveryRequest, AgentDialogTurnRequest, AgentInputAttachment,
     AgentSessionCreateResult, AgentSessionModeUpdateRequest, AgentSessionModelSelection,
@@ -26,23 +26,23 @@ use openbitfun_agent_runtime::sdk::{
     PermissionAuditRecord, PermissionGrant, PermissionGrantKey, PermissionReply, PermissionRequest,
     RuntimeError, SessionEventBackfill, SessionEventProjectionSnapshot, SessionInteractionSnapshot,
 };
-use openbitfun_core::agentic::agents::AgentSource;
-use openbitfun_core::agentic::coordination::{
+use starmate_core::agentic::agents::AgentSource;
+use starmate_core::agentic::coordination::{
     AssistantBootstrapBlockReason, AssistantBootstrapEnsureOutcome, AssistantBootstrapSkipReason,
     ConversationCoordinator, DialogScheduler, DialogSubmissionPolicy, DialogTriggerSource,
     SubagentTimeoutAction,
 };
-use openbitfun_core::agentic::core::*;
-use openbitfun_core::agentic::deep_review_policy::{
+use starmate_core::agentic::core::*;
+use starmate_core::agentic::deep_review_policy::{
     apply_deep_review_queue_control, default_review_team_definition, DeepReviewQueueControlAction,
     ReviewTeamDefinition,
 };
-use openbitfun_core::agentic::goal_mode::{ThreadGoal, ThreadGoalStatus};
-use openbitfun_core::agentic::image_analysis::ImageContextData;
-use openbitfun_core::agentic::memories::{db::MemoryDatabase, workspace::reset_memory_workspace};
-use openbitfun_core::agentic::session::SessionViewRestoreTiming;
-use openbitfun_core::agentic::tools::image_context::get_image_context;
-use openbitfun_core::agentic::tools::implementations::exec_command::{
+use starmate_core::agentic::goal_mode::{ThreadGoal, ThreadGoalStatus};
+use starmate_core::agentic::image_analysis::ImageContextData;
+use starmate_core::agentic::memories::{db::MemoryDatabase, workspace::reset_memory_workspace};
+use starmate_core::agentic::session::SessionViewRestoreTiming;
+use starmate_core::agentic::tools::image_context::get_image_context;
+use starmate_core::agentic::tools::implementations::exec_command::{
     background_command_output_capture, control_exec_command_session, send_exec_command_input,
     ExecCommandControlAction, ExecCommandControlOrigin, ExecCommandControlRequest,
     ExecCommandInputRequest, ListBackgroundCommandOutputRequest,
@@ -50,25 +50,25 @@ use openbitfun_core::agentic::tools::implementations::exec_command::{
     ReadBackgroundCommandOutputRequest as CoreReadBackgroundCommandOutputRequest,
     ReadBackgroundCommandOutputResponse,
 };
-use openbitfun_core::service::config::project_permission_store::{
+use starmate_core::service::config::project_permission_store::{
     deserialize_project_permission_config, project_permission_file_path,
     project_permission_file_path_for_remote, ProjectPermissionConfig,
 };
-use openbitfun_core::service::session::{
+use starmate_core::service::session::{
     DialogTurnData, SessionContextUsage, SessionMemoryMode, SessionMetadata, SessionRelationship,
     SessionRelationshipKind, SessionTurnCatalog, SessionTurnWindowResponse,
 };
-use openbitfun_core::service::workspace::WorkspaceKind;
-use openbitfun_core::service::workspace::{WorkspaceActivityMode, WorkspaceCreateOptions};
-use openbitfun_core::service::worktree::{
+use starmate_core::service::workspace::WorkspaceKind;
+use starmate_core::service::workspace::{WorkspaceActivityMode, WorkspaceCreateOptions};
+use starmate_core::service::worktree::{
     WorktreeCreateRequest, WorktreeListRequest, WorktreeService,
 };
-use openbitfun_core_types::{
+use starmate_core_types::{
     SessionExecutionTarget, SessionExecutionTargetKind, SessionExecutionTargetRequest,
     WorktreeError, WorktreeErrorCode,
 };
-use openbitfun_product_domains::tool_permissions::PermissionRule;
-use openbitfun_runtime_ports::{PermissionMode, PortErrorKind, SessionTurnWindowRequest};
+use starmate_product_domains::tool_permissions::PermissionRule;
+use starmate_runtime_ports::{PermissionMode, PortErrorKind, SessionTurnWindowRequest};
 
 const SESSION_VIEW_TOOL_RESULT_TOTAL_CHAR_BUDGET: usize = 512 * 1024;
 const SESSION_VIEW_TOOL_RESULT_STRING_CHAR_LIMIT: usize = 16 * 1024;
@@ -655,7 +655,7 @@ fn frontend_event_projection_snapshot(
         events: snapshot
             .events
             .into_iter()
-            .filter_map(openbitfun_events::project_agentic_frontend_event)
+            .filter_map(starmate_events::project_agentic_frontend_event)
             .map(|event| FrontendProjectedAgenticEvent {
                 event_name: event.event_name,
                 payload: event.payload,
@@ -696,7 +696,7 @@ fn session_event_backfill_to_response(
             interaction_snapshot,
             events: events
                 .into_iter()
-                .filter_map(openbitfun_events::project_agentic_frontend_event)
+                .filter_map(starmate_events::project_agentic_frontend_event)
                 .map(|event| FrontendProjectedAgenticEvent {
                     event_name: event.event_name,
                     payload: event.payload,
@@ -1192,10 +1192,10 @@ async fn permission_project_id_for_workspace(
     let remote = workspace.workspace_kind == WorkspaceKind::Remote;
     // The record already names the workspace; its persistence identity is a
     // projection of that record, never a path lookup.
-    let binding = openbitfun_core::agentic::workspace::WorkspaceBinding::resolve(&workspace.id)
+    let binding = starmate_core::agentic::workspace::WorkspaceBinding::resolve(&workspace.id)
         .await
         .map_err(|error| format!("Workspace identity is unavailable: {workspace_id}: {error}"))?;
-    openbitfun_core::agentic::tools::pipeline::permission_project_id_for_workspace_identity(
+    starmate_core::agentic::tools::pipeline::permission_project_id_for_workspace_identity(
         &binding.session_identity,
         remote,
     )
@@ -1825,7 +1825,7 @@ pub async fn create_session(
         ))
         .await
     {
-        openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+        starmate_core::plugin_host::report_configured_plugin_activation_failure(
             "Desktop session creation",
             request.workspace_id.as_deref(),
             error,
@@ -2187,7 +2187,7 @@ pub async fn get_model_routing_status(
     coordinator: State<'_, Arc<ConversationCoordinator>>,
     request: ModelRoutingStatusRequest,
 ) -> Result<
-    openbitfun_core::agentic::execution::round_model_routing::configuration::ModelRoutingStatus,
+    starmate_core::agentic::execution::round_model_routing::configuration::ModelRoutingStatus,
     String,
 > {
     let session = if let Some(id) = request.session_id.as_deref() {
@@ -2210,7 +2210,7 @@ pub async fn get_model_routing_status(
     } else {
         None
     };
-    openbitfun_core::agentic::execution::round_model_routing::configuration::session_status(
+    starmate_core::agentic::execution::round_model_routing::configuration::session_status(
         session.as_ref(),
         request.probe,
     )
@@ -2464,7 +2464,7 @@ fn selector_update_restore_error(error: DesktopSessionApplicationError) -> Strin
 #[tauri::command]
 pub async fn reload_session_context(
     runtime: State<'_, DesktopRuntimeContext>,
-    request: openbitfun_runtime_ports::AgentContextReloadRequest,
+    request: starmate_runtime_ports::AgentContextReloadRequest,
 ) -> Result<(), String> {
     runtime
         .session_application()
@@ -2549,8 +2549,8 @@ pub async fn ensure_coordinator_session(
 #[tauri::command]
 pub async fn manage_dialog_queue(
     runtime: State<'_, DesktopRuntimeContext>,
-    request: openbitfun_runtime_ports::DialogQueueRequest,
-) -> Result<openbitfun_runtime_ports::DialogQueueSnapshot, String> {
+    request: starmate_runtime_ports::DialogQueueRequest,
+) -> Result<starmate_runtime_ports::DialogQueueSnapshot, String> {
     runtime
         .agent_runtime()
         .manage_dialog_queue(request)
@@ -3555,16 +3555,16 @@ pub async fn control_background_command(
     .map(|response| {
         if response.session_id.is_none() {
             let status = match response.completion.map(|completion| completion.status) {
-                Some(openbitfun_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Interrupted) => {
-                    openbitfun_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Interrupted
+                Some(starmate_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Interrupted) => {
+                    starmate_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Interrupted
                 }
-                Some(openbitfun_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Killed) => {
-                    openbitfun_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Killed
+                Some(starmate_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Killed) => {
+                    starmate_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Killed
                 }
-                Some(openbitfun_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Pruned) => {
-                    openbitfun_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Pruned
+                Some(starmate_core::agentic::tools::implementations::exec_command::ExecCommandCompletionStatus::Pruned) => {
+                    starmate_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Pruned
                 }
-                _ => openbitfun_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Exited,
+                _ => starmate_core::agentic::tools::implementations::exec_command::BackgroundCommandOutputStatus::Exited,
             };
             let capture = background_command_output_capture();
             tauri::async_runtime::spawn(async move {
@@ -3904,7 +3904,7 @@ pub struct LoadSessionTrajectoryRequest {
 pub async fn load_session_trajectory(
     runtime: State<'_, DesktopRuntimeContext>,
     request: LoadSessionTrajectoryRequest,
-) -> Result<openbitfun_services_core::session::trajectory::SessionTrajectoryPage, String> {
+) -> Result<starmate_services_core::session::trajectory::SessionTrajectoryPage, String> {
     let window = request.window;
     let response = runtime
         .session_application()
@@ -3937,7 +3937,7 @@ pub async fn load_session_trajectory(
         | SessionTurnWindowResponse::Stale { catalog } = response
         {
             return Ok(
-                openbitfun_services_core::session::trajectory::SessionTrajectoryPage::Catalog {
+                starmate_services_core::session::trajectory::SessionTrajectoryPage::Catalog {
                     catalog,
                 },
             );
@@ -3945,7 +3945,7 @@ pub async fn load_session_trajectory(
         return Err("Unexpected trajectory catalog response".into());
     }
     Ok(
-        openbitfun_services_core::session::trajectory::project_session_trajectory(
+        starmate_services_core::session::trajectory::project_session_trajectory(
             response,
             &request.query,
             request.node_offset,
@@ -4105,8 +4105,8 @@ pub async fn list_sessions(
     request: ListSessionsRequest,
 ) -> Result<Vec<SessionResponse>, String> {
     let effective_path = if let Some(id) = request.workspace_id.as_deref() {
-        use openbitfun_runtime_ports::SessionStorePort;
-        openbitfun_core::agentic::session::CoreSessionStorePort::default()
+        use starmate_runtime_ports::SessionStorePort;
+        starmate_core::agentic::session::CoreSessionStorePort::default()
             .resolve_workspace_storage(id)
             .await
             .map_err(|error| error.to_string())?
@@ -4185,7 +4185,7 @@ pub async fn get_available_modes(
         None
     };
     let external_sources_supported = workspace.as_ref().is_some_and(|record| {
-        record.workspace_kind != openbitfun_core::service::workspace::WorkspaceKind::Remote
+        record.workspace_kind != starmate_core::service::workspace::WorkspaceKind::Remote
     });
     let local_scope = workspace.as_ref().and_then(local_mode_catalog_scope);
     if let Some(scope) = local_scope {
@@ -4194,7 +4194,7 @@ pub async fn get_available_modes(
             .ensure_configured_plugin_instance(scope)
             .await
         {
-            openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+            starmate_core::plugin_host::report_configured_plugin_activation_failure(
                 "Desktop mode catalog",
                 workspace.as_ref().map(|record| record.id.as_str()),
                 error,
@@ -4202,7 +4202,7 @@ pub async fn get_available_modes(
             .await;
         }
         if let Err(error) =
-            openbitfun_core::external_sources::ensure_external_source_workspace_snapshot(
+            starmate_core::external_sources::ensure_external_source_workspace_snapshot(
                 workspace.as_ref().map(|record| record.id.as_str()),
             )
             .await
@@ -4257,9 +4257,9 @@ pub struct GetAvailableModesRequest {
 }
 
 fn local_mode_catalog_scope(
-    record: &openbitfun_core::service::workspace::WorkspaceInfo,
+    record: &starmate_core::service::workspace::WorkspaceInfo,
 ) -> Option<DesktopSessionScopeRequest> {
-    if record.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote {
+    if record.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote {
         return None;
     }
     Some(DesktopSessionScopeRequest {
@@ -4381,16 +4381,16 @@ fn system_time_to_unix_secs(time: std::time::SystemTime) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_core::service::session::{
+    use starmate_core::service::session::{
         ModelRoundData, ToolCallData, ToolItemData, ToolResultData, TurnStatus, UserMessageData,
     };
-    use openbitfun_events::AgenticEvent;
-    use openbitfun_product_domains::tool_permissions::{PermissionEffect, PermissionRule};
+    use starmate_events::AgenticEvent;
+    use starmate_product_domains::tool_permissions::{PermissionEffect, PermissionRule};
     use serde_json::json;
 
     #[tokio::test]
     async fn mode_catalog_uses_record_kind_even_when_local_and_remote_paths_are_identical() {
-        use openbitfun_core::service::workspace::{
+        use starmate_core::service::workspace::{
             WorkspaceInfo, WorkspaceInfoRuntimeExt, WorkspaceKind, WorkspaceOpenOptions,
         };
         let folder = tempfile::tempdir().unwrap();
@@ -5183,7 +5183,7 @@ mod tests {
 #[tauri::command]
 pub async fn ensure_control_conversation(
     coordinator: State<'_, Arc<ConversationCoordinator>>,
-) -> Result<openbitfun_core::agentic::coordination::ControlConversation, String> {
+) -> Result<starmate_core::agentic::coordination::ControlConversation, String> {
     coordinator
         .ensure_control_conversation()
         .await
@@ -5193,8 +5193,8 @@ pub async fn ensure_control_conversation(
 #[tauri::command]
 pub async fn create_control_conversation(
     coordinator: State<'_, Arc<ConversationCoordinator>>,
-    request: openbitfun_core::agentic::coordination::CreateControlConversationRequest,
-) -> Result<openbitfun_core::agentic::coordination::ControlConversation, String> {
+    request: starmate_core::agentic::coordination::CreateControlConversationRequest,
+) -> Result<starmate_core::agentic::coordination::ControlConversation, String> {
     coordinator
         .create_control_conversation(request)
         .await
@@ -5204,7 +5204,7 @@ pub async fn create_control_conversation(
 #[tauri::command]
 pub async fn record_voice_exchange(
     coordinator: State<'_, Arc<ConversationCoordinator>>,
-    request: openbitfun_core::agentic::coordination::VoiceExchangeRequest,
+    request: starmate_core::agentic::coordination::VoiceExchangeRequest,
 ) -> Result<(), String> {
     coordinator
         .record_voice_exchange(request)

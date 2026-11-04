@@ -1,7 +1,7 @@
 use crate::{
     atomic_write_json, LegacyMigrationError, LegacyMigrationResult, MigrationLayout, MigrationRoots,
 };
-use openbitfun_product_domains::legacy_migration::{
+use starmate_product_domains::legacy_migration::{
     MigrationPlan, MigratorHandoffRequest, MigratorProtocolCapabilities, MigratorRequestMode,
 };
 use serde::{Deserialize, Serialize};
@@ -822,7 +822,7 @@ fn platform_process_entries() -> LegacyMigrationResult<Vec<ProcessEntry>> {
     // macOS has no /proc. Use the system ps with unlimited output width so
     // application bundle paths (including spaces) cannot truncate writer names.
     // `comm` excludes arguments, which may contain user content or credentials.
-    let output = openbitfun_services_core::process_manager::create_command("/bin/ps")
+    let output = starmate_services_core::process_manager::create_command("/bin/ps")
         .args(["-ww", "-axo", "pid=,comm="])
         .env("LC_ALL", "C")
         .stdin(std::process::Stdio::null())
@@ -938,7 +938,7 @@ pub fn launch_trusted_executable(
     executable: &TrustedExecutable,
     arguments: &[&OsStr],
 ) -> LegacyMigrationResult<u32> {
-    let initial_spawn = openbitfun_services_core::process_manager::create_detached_command(
+    let initial_spawn = starmate_services_core::process_manager::create_detached_command(
         executable.target_executable(),
     )
     .args(arguments)
@@ -948,7 +948,7 @@ pub fn launch_trusted_executable(
     let child = match initial_spawn {
         Ok(child) => child,
         Err(error) if allow_inherited_job_dev_retry(&error) => {
-            openbitfun_services_core::process_manager::create_inherited_job_process_group_command(
+            starmate_services_core::process_manager::create_inherited_job_process_group_command(
                 executable.target_executable(),
             )
             .args(arguments)
@@ -1036,7 +1036,7 @@ fn reject_linked_executable(path: &Path) -> LegacyMigrationResult<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::legacy_migration::{
+    use starmate_product_domains::legacy_migration::{
         MigrationSelection, MigratorProtocolCapability, MigratorRequestOrigin,
         CURRENT_MIGRATION_FORMAT_VERSION, CURRENT_MIGRATOR_PROTOCOL_VERSION,
     };

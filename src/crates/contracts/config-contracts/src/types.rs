@@ -2,12 +2,12 @@
 //!
 //! Defines all configuration-related types shared between backend and frontend.
 
-use openbitfun_core_types::{product_identity, ToolPresentationMode, WorktreeSettings};
-pub use openbitfun_core_types::{
+use starmate_core_types::{product_identity, ToolPresentationMode, WorktreeSettings};
+pub use starmate_core_types::{
     ImageDialect, ReasoningConfig, ReasoningPreset, ReasoningPresetAction,
     MAX_IMAGES_PER_GENERATION_REQUEST,
 };
-use openbitfun_product_domains::tool_permissions::{PermissionRule, ToolPermissionConfig};
+use starmate_product_domains::tool_permissions::{PermissionRule, ToolPermissionConfig};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
@@ -439,13 +439,13 @@ pub struct AppFlowChatConfig {
     /// Optional fixed ChatInput mode id.
     #[serde(
         skip_serializing_if = "Option::is_none",
-        deserialize_with = "openbitfun_core_types::agent_identity::deserialize_optional_agent_id"
+        deserialize_with = "starmate_core_types::agent_identity::deserialize_optional_agent_id"
     )]
     pub default_mode_id: Option<String>,
     /// Most recent mode explicitly selected from the ChatInput Harness control.
     #[serde(
         skip_serializing_if = "Option::is_none",
-        deserialize_with = "openbitfun_core_types::agent_identity::deserialize_optional_agent_id"
+        deserialize_with = "starmate_core_types::agent_identity::deserialize_optional_agent_id"
     )]
     pub last_mode_id: Option<String>,
     /// Whether the chat input exposes the global permission-mode shortcut.
@@ -2048,7 +2048,7 @@ pub enum AuthConfig {
     },
 }
 
-pub use openbitfun_core_types::ProxyConfig;
+pub use starmate_core_types::ProxyConfig;
 
 /// Configuration change event.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -2762,7 +2762,7 @@ mod tests {
         NotificationConfig, OpenCodePlan, SubagentBatchExecutionPolicy, SubagentModelSelection,
         SubscriptionProvider, UserSkillGroupsConfig, UserToolGroupsConfig, WebSearchConfig,
     };
-    use openbitfun_product_domains::tool_permissions::ToolPermissionConfig;
+    use starmate_product_domains::tool_permissions::ToolPermissionConfig;
 
     fn current_global_config_with(overrides: serde_json::Value) -> serde_json::Value {
         let mut value =
@@ -3581,7 +3581,7 @@ mod tests {
         .expect("AI config without tool presentation should deserialize");
         assert_eq!(
             legacy.tool_presentation_mode,
-            openbitfun_core_types::ToolPresentationMode::Native
+            starmate_core_types::ToolPresentationMode::Native
         );
         assert_eq!(
             serde_json::to_value(&legacy).unwrap()["tool_presentation_mode"],
@@ -3595,14 +3595,14 @@ mod tests {
         .expect("PTC AI config should deserialize");
         assert_eq!(
             ptc.tool_presentation_mode,
-            openbitfun_core_types::ToolPresentationMode::Ptc
+            starmate_core_types::ToolPresentationMode::Ptc
         );
         let written = serde_json::to_value(ptc).unwrap();
         assert_eq!(written["tool_presentation_mode"], "ptc");
         let restored: super::AIConfig = serde_json::from_value(written).unwrap();
         assert_eq!(
             restored.tool_presentation_mode,
-            openbitfun_core_types::ToolPresentationMode::Ptc
+            starmate_core_types::ToolPresentationMode::Ptc
         );
 
         let future: super::AIConfig = serde_json::from_value(serde_json::json!({
@@ -3612,7 +3612,7 @@ mod tests {
         .expect("future tool presentation values should degrade to native");
         assert_eq!(
             future.tool_presentation_mode,
-            openbitfun_core_types::ToolPresentationMode::Native
+            starmate_core_types::ToolPresentationMode::Native
         );
 
         let global: super::GlobalConfig =
@@ -3624,7 +3624,7 @@ mod tests {
             .expect("global config should read the runtime tool presentation setting");
         assert_eq!(
             global.ai.tool_presentation_mode,
-            openbitfun_core_types::ToolPresentationMode::Ptc
+            starmate_core_types::ToolPresentationMode::Ptc
         );
         let global_written = serde_json::to_value(global).unwrap();
         assert_eq!(global_written["ai"]["tool_presentation_mode"], "ptc");

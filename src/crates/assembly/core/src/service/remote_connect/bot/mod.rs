@@ -16,7 +16,7 @@ pub use command_router::{
     set_delegated_identity_provider, BotChatState, ForwardRequest, ForwardedTurnResult,
     HandleResult,
 };
-pub use openbitfun_services_integrations::remote_connect::bot::{
+pub use starmate_services_integrations::remote_connect::bot::{
     auto_push_failed_message, auto_push_intro, auto_push_skip_too_large_message,
     collect_auto_push_files, detect_mime_type, extract_computer_file_paths,
     extract_downloadable_file_paths, extract_output_file_references, format_file_size,

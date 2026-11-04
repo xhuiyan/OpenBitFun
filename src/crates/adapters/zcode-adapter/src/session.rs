@@ -1,6 +1,6 @@
 //! Zcode selects its source path and identity for the OpenCode-compatible store reader.
-use openbitfun_opencode_adapter::session::OpenCodeSessionReader;
-use openbitfun_product_domains::session_import::*;
+use starmate_opencode_adapter::session::OpenCodeSessionReader;
+use starmate_product_domains::session_import::*;
 use std::path::PathBuf;
 
 pub const SOURCE_REVISION: &str = "zcode-session-sqlite-v1";

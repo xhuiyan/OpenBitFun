@@ -2,8 +2,8 @@
 //! filesystem revisions remain authoritative, including writes by other hosts.
 
 use super::*;
-use openbitfun_services_core::json_store::JsonFileRevision;
-use openbitfun_services_core::session::page::{PreparedSessionCatalog, SessionCatalogQuery};
+use starmate_services_core::json_store::JsonFileRevision;
+use starmate_services_core::session::page::{PreparedSessionCatalog, SessionCatalogQuery};
 use std::collections::{HashSet, VecDeque};
 
 const MAX_CATALOGS: usize = 8;

@@ -1,6 +1,6 @@
 //! Explicit foreground recovery. Activation never runs inside an input retry.
 use super::NativeComputerUseHost;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 
 pub(super) fn parse_native_target(target: &str) -> Option<(i32, u64)> {
     let (pid, window) = target.strip_prefix("pid:")?.split_once("/window:")?;

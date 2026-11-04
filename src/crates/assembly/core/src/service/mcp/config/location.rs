@@ -1,1 +1,1 @@
-pub use openbitfun_services_integrations::mcp::config::ConfigLocation;
+pub use starmate_services_integrations::mcp::config::ConfigLocation;

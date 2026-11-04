@@ -1,7 +1,7 @@
 //! WorkspaceInfo → frontend DTO JSON (aligned with desktop WorkspaceInfoDto).
 
-use openbitfun_core::service::remote_ssh::LOCAL_WORKSPACE_SSH_HOST;
-use openbitfun_core::service::workspace::manager::{WorkspaceInfo, WorkspaceKind};
+use starmate_core::service::remote_ssh::LOCAL_WORKSPACE_SSH_HOST;
+use starmate_core::service::workspace::manager::{WorkspaceInfo, WorkspaceKind};
 use serde_json::{json, Value};
 
 pub(crate) fn workspace_info_to_json(info: &WorkspaceInfo) -> Value {
@@ -42,7 +42,7 @@ pub(crate) fn workspace_info_to_json(info: &WorkspaceInfo) -> Value {
         "workspaceType": info.workspace_type,
         "workspaceKind": workspace_kind,
         "assistantId": info.assistant_id,
-        "defaultNameNumber": openbitfun_core::service::workspace::assistant_naming::default_name_number(info),
+        "defaultNameNumber": starmate_core::service::workspace::assistant_naming::default_name_number(info),
         "languages": info.languages,
         "openedAt": info.opened_at.to_rfc3339(),
         "lastAccessed": info.last_accessed.to_rfc3339(),

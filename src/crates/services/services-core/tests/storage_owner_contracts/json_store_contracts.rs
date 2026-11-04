@@ -1,4 +1,4 @@
-use openbitfun_services_core::json_store::{JsonFileStore, JsonFileStoreError};
+use starmate_services_core::json_store::{JsonFileStore, JsonFileStoreError};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};

@@ -7,7 +7,7 @@
 use crate::traits::TransportAdapter;
 use async_trait::async_trait;
 use log::warn;
-use openbitfun_events::{project_agentic_frontend_event, AgenticEvent};
+use starmate_events::{project_agentic_frontend_event, AgenticEvent};
 use std::fmt;
 
 #[cfg(feature = "tauri-adapter")]

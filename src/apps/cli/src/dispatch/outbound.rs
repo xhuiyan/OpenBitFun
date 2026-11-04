@@ -10,14 +10,14 @@ use std::sync::Arc;
 
 use anyhow::{anyhow, bail, Context, Result};
 use clap::{Subcommand, ValueEnum};
-use openbitfun_core::infrastructure::try_get_path_manager_arc;
-use openbitfun_core::service::dispatch::{
+use starmate_core::infrastructure::try_get_path_manager_arc;
+use starmate_core::service::dispatch::{
     execute_dispatch_control, AccountRuntimeDispatchAccess, DispatchControlContext,
     OutboundDispatchStore,
 };
-use openbitfun_core::service::remote_connect::account_runtime::AccountRuntime;
-use openbitfun_core::service::remote_connect::DeviceIdentity;
-use openbitfun_product_domains::detached_dispatch_control::{
+use starmate_core::service::remote_connect::account_runtime::AccountRuntime;
+use starmate_core::service::remote_connect::DeviceIdentity;
+use starmate_product_domains::detached_dispatch_control::{
     DetachedDispatchApprovalPolicy, DetachedDispatchControlRequest,
     MAX_DETACHED_DISPATCH_PROMPT_BYTES,
 };
@@ -113,7 +113,7 @@ pub(crate) async fn run(action: OutboundAction) -> Result<()> {
 }
 
 async fn run_action(action: OutboundAction) -> Result<Value> {
-    openbitfun_core::service::config::initialize_global_config()
+    starmate_core::service::config::initialize_global_config()
         .await
         .context("initialize global config")?;
     let request = match action {
@@ -169,7 +169,7 @@ pub(crate) async fn execute_for_host(
     let path_manager = try_get_path_manager_arc().context("resolve StarMate data directory")?;
     let store = OutboundDispatchStore::new(path_manager.as_ref());
     let access = AccountRuntimeDispatchAccess::new(account);
-    let ssh = match openbitfun_core::service::remote_ssh::workspace_state::ensure_saved_connection_services().await
+    let ssh = match starmate_core::service::remote_ssh::workspace_state::ensure_saved_connection_services().await
     {
         Ok(state) => state
             .get_ssh_manager()

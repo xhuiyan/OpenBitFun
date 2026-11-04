@@ -17,7 +17,7 @@ use crate::remote_ssh::types::{
 };
 use anyhow::{anyhow, Context};
 use async_trait::async_trait;
-use openbitfun_services_core::{process_manager, product_identity::hidden_data_directory};
+use starmate_services_core::{process_manager, product_identity::hidden_data_directory};
 use russh::client::{DisconnectReason, Handle, Handler, Msg};
 use russh::Sig;
 use russh_keys::key::{KeyPair, PublicKey};
@@ -2209,8 +2209,8 @@ fn parse_container_file_output(
 
 fn parse_workspace_stat_output(
     output: &str,
-) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceMetadata> {
-    use openbitfun_runtime_ports::{WorkspaceMetadata, WorkspacePathKind};
+) -> anyhow::Result<starmate_runtime_ports::WorkspaceMetadata> {
+    use starmate_runtime_ports::{WorkspaceMetadata, WorkspacePathKind};
     let fields = output.split_whitespace().collect::<Vec<_>>();
     if fields.len() != 5 || !matches!(fields[0], "hex" | "oct") {
         anyhow::bail!("Container stat returned malformed workspace metadata");
@@ -3121,7 +3121,7 @@ impl SSHConnectionManager {
     /// Whether two saved-profile ids name the same connection through the
     /// legacy `ssh-user@host:port` spelling.
     fn connection_ids_are_aliases(left: &str, right: &str) -> bool {
-        use openbitfun_services_core::workspace_identity::canonical_ssh_connection_id;
+        use starmate_services_core::workspace_identity::canonical_ssh_connection_id;
         left == right
             || canonical_ssh_connection_id(left) == right
             || canonical_ssh_connection_id(right) == left
@@ -5561,7 +5561,7 @@ impl SSHConnectionManager {
         &self,
         connection_id: &str,
         path: &str,
-    ) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceWriter> {
+    ) -> anyhow::Result<starmate_runtime_ports::WorkspaceWriter> {
         let path = self.resolve_sftp_path(connection_id, path).await?;
         if self.is_shell_workspace(connection_id).await {
             anyhow::bail!("Streaming upload requires an SFTP workspace provider");
@@ -5597,7 +5597,7 @@ impl SSHConnectionManager {
         &self,
         connection_id: &str,
         path: &str,
-    ) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceReader> {
+    ) -> anyhow::Result<starmate_runtime_ports::WorkspaceReader> {
         let path = self.resolve_sftp_path(connection_id, path).await?;
         if self.is_shell_workspace(connection_id).await {
             let command = format!(
@@ -6223,7 +6223,7 @@ impl SSHConnectionManager {
         connection_id: &str,
         path: &str,
         follow_symlinks: bool,
-    ) -> anyhow::Result<Option<openbitfun_runtime_ports::WorkspaceMetadata>> {
+    ) -> anyhow::Result<Option<starmate_runtime_ports::WorkspaceMetadata>> {
         let mut path = self.resolve_sftp_path(connection_id, path).await?;
         let follow = if follow_symlinks { "-L " } else { "" };
         // Query stat itself: `test -e` also returns false for inaccessible
@@ -6252,7 +6252,7 @@ impl SSHConnectionManager {
             }
             let metadata = parse_workspace_stat_output(std::str::from_utf8(&stdout)?)?;
             if !follow_symlinks
-                || metadata.kind != openbitfun_runtime_ports::WorkspacePathKind::Symlink
+                || metadata.kind != starmate_runtime_ports::WorkspacePathKind::Symlink
             {
                 return Ok(Some(metadata));
             }
@@ -8281,7 +8281,7 @@ mod tests {
     #[cfg(unix)]
     #[tokio::test]
     async fn workspace_recursive_directory_delete_shell() {
-        use openbitfun_runtime_ports::WorkspaceFileSystem;
+        use starmate_runtime_ports::WorkspaceFileSystem;
         use std::os::unix::fs::symlink;
         let temp = tempfile::tempdir().unwrap();
         let (_manager, provider) = shell_workspace_provider_fixture(temp.path()).await;
@@ -8390,7 +8390,7 @@ mod tests {
     #[cfg(unix)]
     #[tokio::test]
     async fn workspace_container_metadata_preserves_errors_and_follows_links() {
-        use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
+        use starmate_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
         use std::os::unix::fs::{symlink, PermissionsExt};
         let temp = tempfile::tempdir().unwrap();
         let (_manager, provider) = shell_workspace_provider_fixture(temp.path()).await;
@@ -8496,7 +8496,7 @@ mod tests {
     #[cfg(unix)]
     #[tokio::test]
     async fn workspace_container_write_preserves_inode_links_and_modes_without_changing_uploads() {
-        use openbitfun_runtime_ports::WorkspaceFileSystem;
+        use starmate_runtime_ports::WorkspaceFileSystem;
         use std::os::unix::fs::{symlink, MetadataExt, PermissionsExt};
         let temp = tempfile::tempdir().unwrap();
         let (manager, provider) = shell_workspace_provider_fixture(temp.path()).await;
@@ -8681,7 +8681,7 @@ mod tests {
 
     #[test]
     fn workspace_metadata_parses_permissions_and_rejects_malformed_stat() {
-        use openbitfun_runtime_ports::WorkspacePathKind;
+        use starmate_runtime_ports::WorkspacePathKind;
         let gnu = parse_workspace_stat_output("hex 81a4 7 1700000000 644\n").unwrap();
         let bsd = parse_workspace_stat_output("oct 100644 7 1700000000 644\n").unwrap();
         assert_eq!(gnu, bsd);

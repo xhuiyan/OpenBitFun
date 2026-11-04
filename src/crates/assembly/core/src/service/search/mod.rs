@@ -5,7 +5,7 @@ mod remote_content;
 mod remote_disabled;
 pub mod service;
 
-pub use openbitfun_services_integrations::workspace_search::{
+pub use starmate_services_integrations::workspace_search::{
     ContentSearchOutputMode, ContentSearchRequest, ContentSearchResult, GlobSearchRequest,
     GlobSearchResult, IndexTaskHandle, WorkspaceIndexStatus, WorkspaceSearchAutoIndexDecision,
     WorkspaceSearchAutoIndexPriority, WorkspaceSearchAutoIndexStatus, WorkspaceSearchBackend,

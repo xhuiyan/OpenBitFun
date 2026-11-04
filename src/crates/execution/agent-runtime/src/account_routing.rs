@@ -2,7 +2,7 @@
 //! current account facts, quota observations, scope and the existing attempt
 //! budget. This module performs no credential, configuration or network IO.
 
-use openbitfun_core_types::{
+use starmate_core_types::{
     errors::ErrorCategory,
     subscription::{ModelQuotaEligibility, ModelQuotaObservation},
 };

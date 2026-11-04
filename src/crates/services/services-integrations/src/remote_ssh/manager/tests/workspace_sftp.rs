@@ -1018,7 +1018,7 @@ async fn openssh_html_preview_reads_nested_site_resources() {
     };
     use crate::remote_ssh::workspace_services::RemoteWorkspaceFs;
     use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
-    use openbitfun_product_domains::html_preview::{
+    use starmate_product_domains::html_preview::{
         HtmlPreviewErrorCode, HtmlPreviewResourceRequest, PREVIEW_CHUNK_BYTES,
     };
     let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER").unwrap();
@@ -1130,7 +1130,7 @@ async fn openssh_html_preview_loading_benchmark() {
         html_preview::{transfer::tests::benchmark_loading, HtmlPreviewSource},
     };
     use crate::remote_ssh::workspace_services::RemoteWorkspaceFs;
-    use openbitfun_product_domains::html_preview::HtmlPreviewResourceRequest;
+    use starmate_product_domains::html_preview::HtmlPreviewResourceRequest;
     let executable = std::env::var("OPENBITFUN_TEST_SFTP_SERVER").unwrap();
     let f = Fixture::with_openssh(Some(executable)).await;
     f.state.response_delay_ms.store(40, Ordering::SeqCst);

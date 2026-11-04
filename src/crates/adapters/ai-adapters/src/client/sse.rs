@@ -7,8 +7,8 @@ use anyhow::{anyhow, Result};
 use chrono::{DateTime, Utc};
 use futures::Stream;
 use log::{debug, error, warn};
-use openbitfun_agent_stream::ToolCallCompletion;
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_agent_stream::ToolCallCompletion;
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use reqwest::{
     header::{HeaderMap, RETRY_AFTER},
     StatusCode,
@@ -712,7 +712,7 @@ mod tests {
     use axum::routing::post;
     use axum::{Json, Router};
     use futures::StreamExt;
-    use openbitfun_core_types::errors::ErrorCategory;
+    use starmate_core_types::errors::ErrorCategory;
     use reqwest::header::HeaderValue;
     use std::sync::{
         atomic::{AtomicBool, AtomicUsize, Ordering},

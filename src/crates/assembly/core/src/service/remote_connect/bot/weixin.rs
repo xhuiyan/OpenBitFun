@@ -7,9 +7,9 @@
 use anyhow::{anyhow, Result};
 use base64::{engine::general_purpose::STANDARD as B64, Engine as _};
 use log::{debug, error, info, warn};
-use openbitfun_services_integrations::remote_connect::bot::weixin as weixin_provider;
-use openbitfun_services_integrations::remote_connect::bot::weixin::WeixinProviderClient;
-pub use openbitfun_services_integrations::remote_connect::bot::weixin::{
+use starmate_services_integrations::remote_connect::bot::weixin as weixin_provider;
+use starmate_services_integrations::remote_connect::bot::weixin::WeixinProviderClient;
+pub use starmate_services_integrations::remote_connect::bot::weixin::{
     WeixinConfig, WeixinQrPollResponse, WeixinQrPollStatus, WeixinQrStartResponse,
     MAX_INBOUND_IMAGES, MAX_WEIXIN_FILE_BYTES, WEIXIN_SESSION_EXPIRED_ERRCODE,
 };
@@ -30,7 +30,7 @@ use super::{
 use crate::agentic::coordination::get_global_coordinator;
 use crate::agentic::events::{AgenticEvent, EventSubscriber};
 use crate::service::remote_connect::remote_server::ImageAttachment;
-use openbitfun_agent_runtime::event_bus::EventSubscriberResult;
+use starmate_agent_runtime::event_bus::EventSubscriberResult;
 
 const LONG_POLL_TIMEOUT_SECS: u64 = 36;
 
@@ -98,7 +98,7 @@ fn pending_matches_binding(state: &BotChatState, item: &PendingOutbound) -> bool
 }
 
 fn append_remote_push_notice(result: &mut HandleResult, language: super::BotLanguage) {
-    let notice = openbitfun_services_integrations::remote_connect::bot::strings_for(language)
+    let notice = starmate_services_integrations::remote_connect::bot::strings_for(language)
         .weixin_remote_push_unsupported;
     result.reply.push_str("\n\n");
     result.reply.push_str(notice);
@@ -162,7 +162,7 @@ fn settled_turn_text(mut poll: Value, turn_id: &str) -> Option<String> {
     // a partial overlay until its own subscriber sees the persistence fence.
     // Prefer the persisted record regardless of subscriber execution order.
     poll["active_turn"] = Value::Null;
-    let turn = openbitfun_services_integrations::remote_connect::bot::remote_turn::observe_turn(
+    let turn = starmate_services_integrations::remote_connect::bot::remote_turn::observe_turn(
         &poll, turn_id,
     )?;
     if let Some(delivery) = turn.background_delivery.as_ref() {
@@ -518,7 +518,7 @@ impl WeixinBot {
     /// Reads the assistant text of `turn_id` through the replay-safe turn
     /// projection the inbound reply path already relies on.
     async fn read_turn_text(&self, session_id: &str, turn_id: &str) -> String {
-        use openbitfun_services_integrations::remote_connect::{
+        use starmate_services_integrations::remote_connect::{
             handle_remote_poll_command, RemoteCommand,
         };
 
@@ -1203,7 +1203,7 @@ impl WeixinBot {
         message: &Value,
         identity_epoch: u64,
     ) -> Result<()> {
-        use openbitfun_services_integrations::remote_connect::bot::inbound_files::{
+        use starmate_services_integrations::remote_connect::bot::inbound_files::{
             attachment_prompt, save_inbound_file,
         };
         // Resolve against the immutable routed session, not current UI/workspace state.
@@ -1664,7 +1664,7 @@ mod tests {
 
     #[test]
     fn background_delivery_suppresses_quiet_but_preserves_failure_and_old_host_output() {
-        use openbitfun_core_types::background_delivery::{
+        use starmate_core_types::background_delivery::{
             BackgroundDelivery, BackgroundReportDisposition, BackgroundReportPolicy,
         };
         let mut delivery = BackgroundDelivery::pending(
@@ -2104,7 +2104,7 @@ mod tests {
             };
             append_remote_push_notice(&mut result, language);
             let notice =
-                openbitfun_services_integrations::remote_connect::bot::strings_for(language)
+                starmate_services_integrations::remote_connect::bot::strings_for(language)
                     .weixin_remote_push_unsupported;
             assert!(result.reply.contains(notice));
             assert!(result.menu.render_plain_text(language).contains(notice));

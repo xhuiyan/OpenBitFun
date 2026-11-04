@@ -45,19 +45,19 @@ impl ConnectionEventState {
 
     pub(super) fn cursor(
         &self,
-        stream: openbitfun_app_server_protocol::event::EventStream,
-    ) -> openbitfun_app_server_protocol::event::EventCursor {
+        stream: starmate_app_server_protocol::event::EventStream,
+    ) -> starmate_app_server_protocol::event::EventCursor {
         let sequence = match stream {
-            openbitfun_app_server_protocol::event::EventStream::Agent => &self.agent_sequence,
-            openbitfun_app_server_protocol::event::EventStream::Permission => {
+            starmate_app_server_protocol::event::EventStream::Agent => &self.agent_sequence,
+            starmate_app_server_protocol::event::EventStream::Permission => {
                 &self.permission_sequence
             }
-            openbitfun_app_server_protocol::event::EventStream::Config => &self.config_sequence,
-            openbitfun_app_server_protocol::event::EventStream::ExternalSource => {
+            starmate_app_server_protocol::event::EventStream::Config => &self.config_sequence,
+            starmate_app_server_protocol::event::EventStream::ExternalSource => {
                 &self.external_source_sequence
             }
         };
-        openbitfun_app_server_protocol::event::EventCursor {
+        starmate_app_server_protocol::event::EventCursor {
             connection_id: self.id.clone(),
             stream,
             sequence: sequence.load(Ordering::Acquire),
@@ -66,19 +66,19 @@ impl ConnectionEventState {
 
     pub(super) fn next_cursor(
         &self,
-        stream: openbitfun_app_server_protocol::event::EventStream,
-    ) -> openbitfun_app_server_protocol::event::EventCursor {
+        stream: starmate_app_server_protocol::event::EventStream,
+    ) -> starmate_app_server_protocol::event::EventCursor {
         let sequence = match stream {
-            openbitfun_app_server_protocol::event::EventStream::Agent => &self.agent_sequence,
-            openbitfun_app_server_protocol::event::EventStream::Permission => {
+            starmate_app_server_protocol::event::EventStream::Agent => &self.agent_sequence,
+            starmate_app_server_protocol::event::EventStream::Permission => {
                 &self.permission_sequence
             }
-            openbitfun_app_server_protocol::event::EventStream::Config => &self.config_sequence,
-            openbitfun_app_server_protocol::event::EventStream::ExternalSource => {
+            starmate_app_server_protocol::event::EventStream::Config => &self.config_sequence,
+            starmate_app_server_protocol::event::EventStream::ExternalSource => {
                 &self.external_source_sequence
             }
         };
-        openbitfun_app_server_protocol::event::EventCursor {
+        starmate_app_server_protocol::event::EventCursor {
             connection_id: self.id.clone(),
             stream,
             sequence: sequence.fetch_add(1, Ordering::AcqRel) + 1,

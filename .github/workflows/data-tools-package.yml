@@ -61,8 +61,8 @@ jobs:
           node --test scripts/data-tools-tauri-build.test.mjs
       - name: Check offline data compatibility
         run: |
-          cargo test --locked -p openbitfun-services-core --no-default-features --features session-recovery --lib session_recovery
-          cargo test --locked -p openbitfun-data-tools -p openbitfun-legacy-migration-adapters -p openbitfun-legacy-migration -p openbitfun-config-contracts --lib --test migration_engine_contracts
+          cargo test --locked -p starmate-services-core --no-default-features --features session-recovery --lib session_recovery
+          cargo test --locked -p starmate-data-tools -p starmate-legacy-migration-adapters -p starmate-legacy-migration -p starmate-config-contracts --lib --test migration_engine_contracts
       - name: Build independent package
         run: pnpm run data-tools:build -- --target ${{ matrix.target }} ${{ matrix.bundles }}
       - name: Stage package and checksum

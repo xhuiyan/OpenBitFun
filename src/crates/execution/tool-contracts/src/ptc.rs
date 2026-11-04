@@ -5,7 +5,7 @@
 //! into the selected PTC source language before the program is executed by a
 //! host runtime.
 
-use openbitfun_core_types::PtcLanguage;
+use starmate_core_types::PtcLanguage;
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 
@@ -993,7 +993,7 @@ mod tests {
         render_ptc_tool_calling_guide_with_options, render_ptc_typescript_sdk,
         render_ptc_typescript_sdk_with_options, PtcToolContract,
     };
-    use openbitfun_core_types::PtcLanguage;
+    use starmate_core_types::PtcLanguage;
     use serde_json::json;
 
     #[test]

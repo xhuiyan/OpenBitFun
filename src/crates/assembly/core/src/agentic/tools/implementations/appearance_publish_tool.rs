@@ -5,15 +5,15 @@ use crate::agentic::tools::framework::{PermissionIntent, Tool, ToolResult, ToolU
 use crate::infrastructure::events::{emit_global_event, BackendEvent};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_product_domains::appearance_market::{
+use starmate_product_domains::appearance_market::{
     validate_appearance_market_slug, AppearanceMarketLicense,
     AppearanceMarketSubmissionDraftRequest,
 };
-use openbitfun_services_integrations::appearance_market::{
+use starmate_services_integrations::appearance_market::{
     resolve_appearance_release_target, submit_appearance_package, suggest_appearance_slug,
     AppearanceMarketClient, AppearanceReleaseTarget,
 };
-use openbitfun_services_integrations::miniapp_market::DesktopAuthPollRequest;
+use starmate_services_integrations::miniapp_market::DesktopAuthPollRequest;
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};

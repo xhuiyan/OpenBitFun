@@ -305,7 +305,7 @@ impl PreparedSessionCatalog {
 }
 
 fn catalog_workspace_id(metadata: &SessionMetadata) -> Option<&str> {
-    use openbitfun_core_types::SessionExecutionTargetKind;
+    use starmate_core_types::SessionExecutionTargetKind;
     let isolated = metadata
         .execution_target
         .as_ref()

@@ -1,12 +1,12 @@
 [package]
-name = "openbitfun-desktop"
+name = "starmate-desktop"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
 description = "OpenBitFun Desktop Application (Tauri)"
 
 [lib]
-name = "openbitfun_desktop_lib"
+name = "starmate_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [[bin]]
@@ -18,22 +18,22 @@ tauri-build = { workspace = true }
 serde_json = { workspace = true }
 
 [dependencies]
-openbitfun-computer-use = { path = "../../crates/services/computer-use" }
-openbitfun-miniapp-ipc = { path = "../../crates/adapters/miniapp-ipc" }
-openbitfun-services-core = { path = "../../crates/services/services-core", features = ["pet-packages", "local-storage"] }
+starmate-computer-use = { path = "../../crates/services/computer-use" }
+starmate-miniapp-ipc = { path = "../../crates/adapters/miniapp-ipc" }
+starmate-services-core = { path = "../../crates/services/services-core", features = ["pet-packages", "local-storage"] }
 # Internal crates
-openbitfun-core = { path = "../../crates/assembly/core", features = ["product-full"] }
-openbitfun-relay-service = { path = "../../crates/services/relay-service" }
-openbitfun-agent-runtime = { path = "../../crates/execution/agent-runtime", features = ["agent-runtime"] }
-openbitfun-runtime-ports = { path = "../../crates/contracts/runtime-ports", features = ["agent-api", "permission", "workspace-ports"] }
-openbitfun-product-domains = { path = "../../crates/contracts/product-domains", features = ["appearance-market"] }
-openbitfun-services-integrations = { path = "../../crates/services/services-integrations", features = ["canvas-runtime", "miniapp-market", "skillhub", "remote-ssh-concrete", "speech-realtime"] }
-openbitfun-core-types = { path = "../../crates/contracts/core-types" }
-openbitfun-agent-tools = { path = "../../crates/execution/tool-contracts", features = ["element-token", "computer-use-contract"] }
-openbitfun-transport = { path = "../../crates/adapters/transport", features = ["tauri-adapter"] }
-openbitfun-events = { path = "../../crates/contracts/events" }
-openbitfun-webdriver = { path = "../../crates/adapters/webdriver" }
-openbitfun-acp = { path = "../../crates/interfaces/acp", default-features = false, features = ["client"] }
+starmate-core = { path = "../../crates/assembly/core", features = ["product-full"] }
+starmate-relay-service = { path = "../../crates/services/relay-service" }
+starmate-agent-runtime = { path = "../../crates/execution/agent-runtime", features = ["agent-runtime"] }
+starmate-runtime-ports = { path = "../../crates/contracts/runtime-ports", features = ["agent-api", "permission", "workspace-ports"] }
+starmate-product-domains = { path = "../../crates/contracts/product-domains", features = ["appearance-market"] }
+starmate-services-integrations = { path = "../../crates/services/services-integrations", features = ["canvas-runtime", "miniapp-market", "skillhub", "remote-ssh-concrete", "speech-realtime"] }
+starmate-core-types = { path = "../../crates/contracts/core-types" }
+starmate-agent-tools = { path = "../../crates/execution/tool-contracts", features = ["element-token", "computer-use-contract"] }
+starmate-transport = { path = "../../crates/adapters/transport", features = ["tauri-adapter"] }
+starmate-events = { path = "../../crates/contracts/events" }
+starmate-webdriver = { path = "../../crates/adapters/webdriver" }
+starmate-acp = { path = "../../crates/interfaces/acp", default-features = false, features = ["client"] }
 
 # Tauri
 tauri = { workspace = true, features = ["unstable", "macos-private-api", "tray-icon"] }
@@ -141,7 +141,7 @@ default = []
 # Enable webview devtools and element inspector for development builds.
 # Only active in debug builds or when explicitly requested via --features devtools.
 # Never enabled in release profile intended for end users.
-devtools = ["openbitfun-computer-use/test-support", "tauri/devtools", "openbitfun-webdriver/embedded"]
+devtools = ["starmate-computer-use/test-support", "tauri/devtools", "starmate-webdriver/embedded"]
 
 [target.'cfg(target_os = "linux")'.dependencies]
 libc = { workspace = true }

@@ -192,7 +192,7 @@ mod tests {
         DeleteFileTool, FileEditTool, FileReadTool, FileWriteTool,
     };
     use crate::agentic::WorkspaceBinding;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         PermissionConstraintLayer, PermissionEffect, PermissionEvaluator, PermissionRule,
     };
     use serde_json::{json, Value};

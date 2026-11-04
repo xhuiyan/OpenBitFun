@@ -4,8 +4,8 @@ use std::ffi::{OsStr, OsString};
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use openbitfun_core::service::remote_ssh::{SSHCommandOptions, SSHConnectionManager};
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::service::remote_ssh::{SSHCommandOptions, SSHConnectionManager};
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use tokio::process::Command;
 
 use super::builtin_clients::builtin_acp_client_preset;
@@ -413,7 +413,7 @@ where
     I: IntoIterator<Item = S>,
     S: AsRef<OsStr>,
 {
-    let mut command = openbitfun_core::util::process_manager::create_tokio_command(program);
+    let mut command = starmate_core::util::process_manager::create_tokio_command(program);
     command.args(args);
     apply_command_environment(&mut command, None);
     match tokio::time::timeout(timeout, command.output()).await {

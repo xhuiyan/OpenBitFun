@@ -5,11 +5,11 @@ use async_trait::async_trait;
 use super::session_application::DesktopSessionHostEffects;
 
 pub(super) struct ProductionDesktopSessionHostEffects {
-    acp_client_service: Option<Arc<openbitfun_acp::AcpClientService>>,
+    acp_client_service: Option<Arc<starmate_acp::AcpClientService>>,
 }
 
 impl ProductionDesktopSessionHostEffects {
-    pub(super) fn new(acp_client_service: Option<Arc<openbitfun_acp::AcpClientService>>) -> Self {
+    pub(super) fn new(acp_client_service: Option<Arc<starmate_acp::AcpClientService>>) -> Self {
         Self { acp_client_service }
     }
 }

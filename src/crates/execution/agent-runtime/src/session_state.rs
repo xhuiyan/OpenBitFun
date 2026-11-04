@@ -1,6 +1,6 @@
 //! Provider-neutral session state facts.
 
-use openbitfun_runtime_ports::DialogSessionStateFact;
+use starmate_runtime_ports::DialogSessionStateFact;
 use serde::{Deserialize, Serialize};
 
 /// Session state shared by runtime coordination and product event projection.

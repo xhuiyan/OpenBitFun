@@ -1,7 +1,7 @@
 //! Interactive Win32/WGC regression, using only this test process's own windows.
 use super::find_default_window_for_pid;
 use crate::computer_use::{control_session, windows_wgc_capture};
-use openbitfun_agent_tools::computer_use_control::ControlMode;
+use starmate_agent_tools::computer_use_control::ControlMode;
 use windows::core::w;
 use windows::Win32::Foundation::{HWND, LPARAM, WPARAM};
 use windows::Win32::System::Threading::GetCurrentThreadId;

@@ -2,8 +2,8 @@
 
 use crate::infrastructure::get_path_manager_arc;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_core_types::product_identity::hidden_data_directory;
-use openbitfun_runtime_ports::{PermissionRule, WorkspaceFileSystem};
+use starmate_core_types::product_identity::hidden_data_directory;
+use starmate_runtime_ports::{PermissionRule, WorkspaceFileSystem};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::path::{Path, PathBuf};
@@ -87,7 +87,7 @@ pub async fn load_project_permission_config_remote(
 #[cfg(test)]
 mod tests {
     use super::{deserialize_project_permission_config, project_permission_file_path_for_remote};
-    use openbitfun_runtime_ports::{PermissionEffect, PermissionRule};
+    use starmate_runtime_ports::{PermissionEffect, PermissionRule};
 
     #[test]
     fn parses_object_permission_config() {

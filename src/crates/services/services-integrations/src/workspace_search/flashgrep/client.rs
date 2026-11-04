@@ -9,7 +9,7 @@ use std::{
 };
 
 use async_trait::async_trait;
-use openbitfun_services_core::{process_manager, process_tree::ProcessTreeChild};
+use starmate_services_core::{process_manager, process_tree::ProcessTreeChild};
 use tokio::{
     io::{AsyncBufReadExt, AsyncWriteExt, BufReader, BufWriter},
     process::{ChildStderr, ChildStdin, ChildStdout},

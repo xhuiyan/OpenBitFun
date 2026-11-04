@@ -322,7 +322,7 @@ async fn page_manage_list_returns_published_metadata_and_preserves_legacy_payloa
     assert_eq!(result["pages"][0]["slug"], "draft");
     assert_eq!(result["pages"][0]["generation"], "");
     assert_eq!(result["pages"][0]["published"], false);
-    let legacy: openbitfun_services_integrations::remote_connect::PageInfo =
+    let legacy: starmate_services_integrations::remote_connect::PageInfo =
         serde_json::from_value(result["pages"][0].clone()).unwrap();
     let round_trip = serde_json::to_value(legacy).unwrap();
     assert_eq!(round_trip["title"], "Demo");

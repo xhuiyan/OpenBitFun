@@ -1,8 +1,8 @@
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortErrorKind, ScriptToolExpectedExport, ScriptToolInvokeRequest, ScriptToolLoadRequest,
     ScriptToolRuntime, ScriptToolRuntimeAvailability,
 };
-use openbitfun_services_integrations::script_tool::NodeScriptToolRuntime;
+use starmate_services_integrations::script_tool::NodeScriptToolRuntime;
 use serde_json::json;
 
 fn sample_source(output: &str) -> String {

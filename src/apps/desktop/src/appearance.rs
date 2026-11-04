@@ -5,8 +5,8 @@ use std::time::Instant;
 
 use dark_light::Mode;
 use log::{debug, error, warn};
-use openbitfun_core::infrastructure::try_get_path_manager_arc;
-use openbitfun_core::service::config::types::GlobalConfig;
+use starmate_core::infrastructure::try_get_path_manager_arc;
+use starmate_core::service::config::types::GlobalConfig;
 use tauri::webview::PageLoadEvent;
 use tauri::{Manager, WebviewUrl};
 
@@ -673,7 +673,7 @@ pub fn create_main_window(
         #[cfg(target_os = "windows")]
         if persistent_test_store {
             builder = builder.data_directory(
-                openbitfun_core::infrastructure::get_path_manager_arc()
+                starmate_core::infrastructure::get_path_manager_arc()
                     .user_data_dir()
                     .join("e2e-webview"),
             );

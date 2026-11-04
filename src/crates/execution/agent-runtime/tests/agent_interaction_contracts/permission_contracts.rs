@@ -1,10 +1,10 @@
 use async_trait::async_trait;
-use openbitfun_agent_runtime::permission::{
+use starmate_agent_runtime::permission::{
     plan_permission_intents, PermissionIntentPlan, PermissionRequestManager,
     PermissionRequestManagerError, PermissionWaitOutcome,
 };
-use openbitfun_agent_tools::PermissionIntent;
-use openbitfun_runtime_ports::{
+use starmate_agent_tools::PermissionIntent;
+use starmate_runtime_ports::{
     ClockPort, PermissionAuditRecord, PermissionAuditStorePort, PermissionConstraintLayer,
     PermissionEffect, PermissionGrant, PermissionGrantKey, PermissionGrantStorePort,
     PermissionPolicyPreset, PermissionReply, PermissionReplySource, PermissionReplyStorePort,

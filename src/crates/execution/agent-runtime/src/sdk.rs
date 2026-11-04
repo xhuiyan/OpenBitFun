@@ -58,14 +58,14 @@ pub use crate::runtime::{
 };
 pub use crate::session_state::{session_state_label_for_state, ProcessingPhase, SessionState};
 pub use crate::user_questions::{PendingUserQuestion, PendingUserQuestionSnapshot};
-pub use openbitfun_agent_tools::{ToolRegistry, ToolRegistryItem};
-pub use openbitfun_core_types::SessionUsageReport;
+pub use starmate_agent_tools::{ToolRegistry, ToolRegistryItem};
+pub use starmate_core_types::SessionUsageReport;
 // Event envelope types re-exported so protocol surfaces (e.g. `openbitfun-app-server`)
 // can carry the runtime event stream over a JSON-RPC transport without depending
 // on `openbitfun-events` directly. These are the exact types the runtime's event
 // subscribers receive; the app-server forwards them as `agent/event` notifications.
-pub use openbitfun_events::{AgenticEvent, AgenticEventEnvelope};
-pub use openbitfun_runtime_ports::{
+pub use starmate_events::{AgenticEvent, AgenticEventEnvelope};
+pub use starmate_runtime_ports::{
     AgentBackgroundResultRequest, AgentContextReloadPort, AgentDialogSteerRequest,
     AgentDialogTurnExecution, AgentDialogTurnPort, AgentDialogTurnRecoveryOutcome,
     AgentDialogTurnRecoveryRequest, AgentDialogTurnRequest, AgentInputAttachment,
@@ -112,7 +112,7 @@ pub use openbitfun_runtime_ports::{
     TranscriptContent, TranscriptMessage, TranscriptToolCall, WorkspaceDiffContent,
     WorkspaceDiffFile, WorkspaceDiffFileStatus, WorkspaceDiffSnapshot, WorkspacePort,
 };
-pub use openbitfun_runtime_services::{
+pub use starmate_runtime_services::{
     CapabilityAvailability, RuntimeServices, RuntimeServicesBuilder, RuntimeServicesError,
     RuntimeServicesProvider, RuntimeServicesRegistry,
 };
@@ -548,8 +548,8 @@ impl AgentRuntime {
     pub async fn update_session_model_target(
         &self,
         session_id: &str,
-        selection: openbitfun_core_types::model_pool::ModelSelection,
-    ) -> Result<openbitfun_core_types::model_pool::SessionModelTarget, RuntimeError> {
+        selection: starmate_core_types::model_pool::ModelSelection,
+    ) -> Result<starmate_core_types::model_pool::SessionModelTarget, RuntimeError> {
         self.inner
             .update_session_model_target(session_id, selection)
             .await
@@ -558,7 +558,7 @@ impl AgentRuntime {
     pub async fn get_session_model_target(
         &self,
         session_id: &str,
-    ) -> Result<openbitfun_core_types::model_pool::SessionModelTarget, RuntimeError> {
+    ) -> Result<starmate_core_types::model_pool::SessionModelTarget, RuntimeError> {
         self.inner.get_session_model_target(session_id).await
     }
 
@@ -697,8 +697,8 @@ impl AgentRuntime {
 
     pub async fn manage_dialog_queue(
         &self,
-        request: openbitfun_runtime_ports::DialogQueueRequest,
-    ) -> Result<openbitfun_runtime_ports::DialogQueueSnapshot, RuntimeError> {
+        request: starmate_runtime_ports::DialogQueueRequest,
+    ) -> Result<starmate_runtime_ports::DialogQueueSnapshot, RuntimeError> {
         self.inner.manage_dialog_queue(request).await
     }
 

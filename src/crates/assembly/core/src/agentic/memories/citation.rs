@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::agentic::core::message::{MemoryCitation, MemoryCitationEntry};
-use openbitfun_agent_stream::{HiddenTextStreamParser, HiddenTextTag};
+use starmate_agent_stream::{HiddenTextStreamParser, HiddenTextTag};
 
 const OPENBITFUN_MEMORY_CITATION_OPEN: &str = "<openbitfun-mem-citation>";
 const OPENBITFUN_MEMORY_CITATION_CLOSE: &str = "</openbitfun-mem-citation>";

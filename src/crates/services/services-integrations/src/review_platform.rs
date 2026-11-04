@@ -14,7 +14,7 @@ use crate::review_platform_http::{
     ReviewHttpHeaders, ReviewHttpRequest, ReviewJsonResponse, ReviewTextResponse,
 };
 use futures::{stream, StreamExt};
-use openbitfun_services_core::process_manager;
+use starmate_services_core::process_manager;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};

@@ -1,7 +1,7 @@
 //! Shared `/btw` prompt helpers and compatibility exports for runtime tracking.
 
 use crate::agentic::core::{InternalReminderKind, Message};
-pub use openbitfun_agent_runtime::side_question::{
+pub use starmate_agent_runtime::side_question::{
     ActiveBtwTurn, BtwTurnWatch, SideQuestionRuntime, BTW_TURN_POLL_INTERVAL,
 };
 

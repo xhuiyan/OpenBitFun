@@ -3,7 +3,7 @@ use super::{
     search_client, transport_error, validate_search_request,
 };
 use async_trait::async_trait;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     WebSearchError, WebSearchErrorKind, WebSearchProvider, WebSearchProviderId, WebSearchRequest,
     WebSearchResponse, WebSearchResult,
 };

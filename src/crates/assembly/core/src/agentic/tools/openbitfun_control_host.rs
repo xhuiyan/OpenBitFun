@@ -4,7 +4,7 @@ use std::sync::{Arc, OnceLock};
 
 use serde_json::Value;
 
-pub use openbitfun_product_domains::product_control::{
+pub use starmate_product_domains::product_control::{
     ProductControlAction, ProductControlPort,
     ProductControlRequest as OpenBitFunControlHostRequest, ProductControlSource,
 };

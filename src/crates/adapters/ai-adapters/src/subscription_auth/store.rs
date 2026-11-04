@@ -958,7 +958,7 @@ fn overridden_store_path() -> Option<PathBuf> {
         .and_then(|guard| guard.as_ref().map(|override_| override_.path.clone()))
 }
 
-fn overridden_file_vault() -> Option<openbitfun_services_core::credential_vault::CredentialVault> {
+fn overridden_file_vault() -> Option<starmate_services_core::credential_vault::CredentialVault> {
     store_path_override().read().ok().and_then(|guard| {
         guard
             .as_ref()
@@ -973,7 +973,7 @@ pub(super) fn store_path() -> Result<PathBuf> {
     }
     let base = dirs::config_dir().ok_or_else(|| anyhow!("system config directory unavailable"))?;
     Ok(base
-        .join(openbitfun_core_types::product_identity::data_namespace())
+        .join(starmate_core_types::product_identity::data_namespace())
         .join("data")
         .join("subscription_auth.json"))
 }
@@ -1106,9 +1106,9 @@ fn open_native_keyring_entry(entry_name: &str) -> std::result::Result<keyring_co
 
 fn file_credential_vault(
     metadata_path: &Path,
-) -> openbitfun_services_core::credential_vault::CredentialVault {
+) -> starmate_services_core::credential_vault::CredentialVault {
     let parent = metadata_path.parent().unwrap_or_else(|| Path::new("."));
-    openbitfun_services_core::credential_vault::CredentialVault::new(
+    starmate_services_core::credential_vault::CredentialVault::new(
         parent.join(".subscription_auth_vault.key"),
         parent.join("subscription_auth_vault.json"),
     )
@@ -1686,7 +1686,7 @@ pub(super) async fn load_account_quota(
     slot: &str,
 ) -> Result<(
     u64,
-    Option<openbitfun_core_types::subscription::SubscriptionQuotaSnapshot>,
+    Option<starmate_core_types::subscription::SubscriptionQuotaSnapshot>,
 )> {
     let (path, _transaction) = acquire_store_transaction().await?;
     let revision = read_secure_file(&path).await?.provider_revision(slot);
@@ -1697,7 +1697,7 @@ pub(super) async fn load_account_quota(
         .map(|value| {
             validate_quota_details(value)?;
             serde_json::from_value::<
-                    openbitfun_core_types::subscription::SubscriptionQuotaSnapshot,
+                    starmate_core_types::subscription::SubscriptionQuotaSnapshot,
                 >(value.clone()).map_err(anyhow::Error::from)
         })
         .transpose()?;
@@ -1712,7 +1712,7 @@ pub(super) async fn load_account_quota(
 /// Compare the observed credential epoch before publishing a quota result. A
 /// request started before logout/re-login must not write a new account's cache.
 pub(super) async fn save_account_quota(
-    snapshot: &openbitfun_core_types::subscription::SubscriptionQuotaSnapshot,
+    snapshot: &starmate_core_types::subscription::SubscriptionQuotaSnapshot,
 ) -> Result<bool> {
     let (path, _transaction) = acquire_store_transaction().await?;
     let revision = read_secure_file(&path)
@@ -2317,7 +2317,7 @@ mod file_lock_tests {
         )
         .await
         .expect("stage cleanup intent before vault write and metadata commit");
-        let mut child = openbitfun_services_core::process_manager::create_command(
+        let mut child = starmate_services_core::process_manager::create_command(
             std::env::current_exe().expect("test binary"),
         )
         .arg("--exact")

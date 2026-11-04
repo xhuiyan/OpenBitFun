@@ -6,12 +6,12 @@ use agent_client_protocol::schema::{
 };
 use agent_client_protocol::{Client, ConnectionTo, Error, Result};
 use log::warn;
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentDialogTurnRequest, AgentSessionEventReceiver, AgentSubmissionSource,
     AgentTurnCancellationRequest, DialogSubmissionPolicy, DialogSubmitOutcome, PermissionReply,
     PermissionRequest, PermissionRequestEvent, PermissionRequestEventReceiver,
 };
-use openbitfun_events::AgenticEvent as CoreEvent;
+use starmate_events::AgenticEvent as CoreEvent;
 use serde_json::json;
 use tokio::sync::broadcast;
 
@@ -418,12 +418,12 @@ async fn handle_permission_request(
 
 #[cfg(test)]
 mod tests {
-    use openbitfun_agent_runtime::sdk::{
+    use starmate_agent_runtime::sdk::{
         AgentInputAttachment, AgentSubmissionSource, DialogSubmitOutcome,
         PermissionDelegationContext, PermissionRequest, PermissionRequestSource,
         PermissionRequestSourceKind,
     };
-    use openbitfun_events::AgenticEvent;
+    use starmate_events::AgenticEvent;
 
     use super::{
         dialog_turn_request, permission_request_targets_session, prompt_event_matches_turn,

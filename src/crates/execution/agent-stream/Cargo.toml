@@ -1,19 +1,19 @@
 [package]
-name = "openbitfun-agent-stream"
+name = "starmate-agent-stream"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
 description = "Lightweight agent stream processing for OpenBitFun"
 
 [lib]
-name = "openbitfun_agent_stream"
+name = "starmate_agent_stream"
 crate-type = ["rlib"]
 
 [dependencies]
 anyhow = { workspace = true }
 async-trait = { workspace = true }
-openbitfun-events = { path = "../../contracts/events" }
-openbitfun-core-types = { path = "../../contracts/core-types" }
+starmate-events = { path = "../../contracts/events" }
+starmate-core-types = { path = "../../contracts/core-types" }
 futures = { workspace = true }
 jsonrepair-rs = { workspace = true }
 log = { workspace = true }
@@ -24,7 +24,7 @@ tokio-util = { workspace = true }
 uuid = { workspace = true }
 
 [dev-dependencies]
-openbitfun-agent-tools = { path = "../tool-contracts" }
+starmate-agent-tools = { path = "../tool-contracts" }
 tokio-stream = { workspace = true }
 
 [lints]

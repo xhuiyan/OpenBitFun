@@ -9,11 +9,11 @@ use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use dashmap::DashMap;
 use log::{debug, warn};
-use openbitfun_ai_adapters::{
+use starmate_ai_adapters::{
     ModelExchangeRequestAttempt, ModelExchangeRequestTraceHandle, ModelExchangeResponseTrace,
     ModelExchangeRoundAttempt, ModelExchangeTraceConfig, ModelExchangeTraceSink,
 };
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::path::{Path, PathBuf};

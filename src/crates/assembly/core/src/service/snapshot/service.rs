@@ -8,7 +8,7 @@ use crate::service::snapshot::types::{
 };
 use crate::service::workspace_runtime::WorkspaceRuntimeContext;
 use log::{debug, info};
-use openbitfun_runtime_ports::WorkspaceFileSystem;
+use starmate_runtime_ports::WorkspaceFileSystem;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Instant;

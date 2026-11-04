@@ -16,7 +16,7 @@ async fn standalone_sdk_host_negotiates_and_shuts_down_without_cli() {
         std::fs::create_dir_all(path).expect("SDK Host fixture directory");
     }
 
-    let mut child = openbitfun_services_core::process_manager::create_tokio_command(env!(
+    let mut child = starmate_services_core::process_manager::create_tokio_command(env!(
         "CARGO_BIN_EXE_openbitfun-sdk-host"
     ))
     .current_dir(&workspace)

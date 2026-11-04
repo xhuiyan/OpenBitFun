@@ -1,5 +1,5 @@
 use super::*;
-use openbitfun_services_core::session_recovery as recovery;
+use starmate_services_core::session_recovery as recovery;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 
@@ -274,7 +274,7 @@ impl DataToolsCoordinator {
                     }
                     // Includes other Data Tools processes; current PID is ignored.
                     let blockers =
-                        openbitfun_legacy_migration::blocking_writer_processes_for_product(
+                        starmate_legacy_migration::blocking_writer_processes_for_product(
                             0,
                             &["openbitfun-data-tools", "openbitfun-data-migrator"],
                         )
@@ -331,7 +331,7 @@ mod tests {
         let source = roots
             .target_home_root
             .join("projects/legacy/sessions/session-1");
-        let metadata = openbitfun_services_core::session::SessionMetadata::new(
+        let metadata = starmate_services_core::session::SessionMetadata::new(
             "session-1".into(),
             "Fixture".into(),
             "agent".into(),

@@ -15,8 +15,8 @@ use crate::{
     ConfigAction, DispatchAction, ExternalAccessArg, ExternalCapabilityArg, ExternalConfigAction,
     ExternalPolicyModeArg, ExternalPolicyScopeArg, SessionAction,
 };
-use openbitfun_agent_runtime::sdk::{AgentSessionRestoreRequest, SessionTranscriptRequest};
-use openbitfun_core::external_sources::{
+use starmate_agent_runtime::sdk::{AgentSessionRestoreRequest, SessionTranscriptRequest};
+use starmate_core::external_sources::{
     external_source_snapshot, sanitize_external_source_operation_error,
     update_external_integration_policy, EcosystemId, ExternalIntegrationAccess,
     ExternalIntegrationCapabilityId, ExternalIntegrationMode, ExternalIntegrationPolicyMutation,
@@ -49,7 +49,7 @@ pub(crate) async fn handle_dispatch_action(action: DispatchAction) -> Result<()>
     // worker builds its runtime. Select the CLI profile at the process entry
     // point so config canonicalization cannot lazily claim product-full first.
     crate::agent::agentic_system::select_agentic_system_profile(
-        openbitfun_core::product_assembly::DeliveryProfile::Cli,
+        starmate_core::product_assembly::DeliveryProfile::Cli,
     )?;
     let verb = match action {
         DispatchAction::Outbound { action } => return crate::dispatch::outbound::run(action).await,
@@ -108,8 +108,8 @@ pub(crate) async fn handle_dispatch_action(action: DispatchAction) -> Result<()>
         }
         Err(error) => {
             let response = serde_json::json!({
-                "productId": openbitfun_services_core::product_identity::product_id(),
-                "dataNamespace": openbitfun_services_core::product_identity::data_namespace(),
+                "productId": starmate_services_core::product_identity::product_id(),
+                "dataNamespace": starmate_services_core::product_identity::data_namespace(),
                 "protocolVersion": crate::dispatch::protocol::DISPATCH_PROTOCOL_VERSION,
                 "error": format!("{error:#}"),
             });
@@ -148,14 +148,14 @@ pub(crate) async fn handle_exec_command(config: CliConfig, args: ExecCommandArgs
     }
     if let Some(session_id) = resume.as_deref().filter(|session_id| *session_id != "last") {
         if let Err(error) =
-            openbitfun_agent_runtime::session_control::validate_session_id(session_id)
+            starmate_agent_runtime::session_control::validate_session_id(session_id)
         {
             return exec_preflight_error(args.output_format, anyhow::anyhow!(error));
         }
     }
     if let Some(session_id) = args.session_id.as_deref() {
         if let Err(error) =
-            openbitfun_agent_runtime::session_control::validate_session_id(session_id)
+            starmate_agent_runtime::session_control::validate_session_id(session_id)
         {
             return exec_preflight_error(args.output_format, anyhow::anyhow!(error));
         }
@@ -369,11 +369,11 @@ pub(crate) async fn handle_session_action(
         }
 
         SessionAction::Delete { id } => {
-            openbitfun_agent_runtime::session_control::validate_session_id(&id)
+            starmate_agent_runtime::session_control::validate_session_id(&id)
                 .map_err(anyhow::Error::msg)?;
             runtime
                 .agent_runtime()
-                .delete_session(openbitfun_runtime_ports::AgentSessionDeleteRequest {
+                .delete_session(starmate_runtime_ports::AgentSessionDeleteRequest {
                     workspace_id: Some(runtime.workspace().id.clone()),
                     workspace_path: String::new(),
                     session_id: id.clone(),
@@ -405,7 +405,7 @@ pub(crate) async fn handle_session_action(
                     .await?;
             let result = runtime
                 .agent_runtime()
-                .fork_session(openbitfun_agent_runtime::sdk::AgentSessionForkRequest {
+                .fork_session(starmate_agent_runtime::sdk::AgentSessionForkRequest {
                     workspace_id: Some(runtime.workspace().id.clone()),
                     workspace_path: String::new(),
                     source_session_id: session_id.clone(),
@@ -431,7 +431,7 @@ pub(crate) async fn handle_session_action(
 }
 
 async fn resolve_cli_session_id(
-    runtime: &openbitfun_agent_runtime::sdk::AgentRuntime,
+    runtime: &starmate_agent_runtime::sdk::AgentRuntime,
     workspace_id: &str,
     id: &str,
 ) -> Result<String> {
@@ -443,17 +443,17 @@ async fn resolve_cli_session_id(
             .ok_or_else(|| anyhow::anyhow!("No history sessions"));
     }
 
-    openbitfun_agent_runtime::session_control::validate_session_id(id)
+    starmate_agent_runtime::session_control::validate_session_id(id)
         .map_err(anyhow::Error::msg)?;
     Ok(id.to_string())
 }
 
 async fn list_cli_sessions(
-    runtime: &openbitfun_agent_runtime::sdk::AgentRuntime,
+    runtime: &starmate_agent_runtime::sdk::AgentRuntime,
     workspace_id: &str,
-) -> Result<Vec<openbitfun_runtime_ports::AgentSessionSummary>> {
+) -> Result<Vec<starmate_runtime_ports::AgentSessionSummary>> {
     runtime
-        .list_sessions(openbitfun_runtime_ports::AgentSessionListRequest {
+        .list_sessions(starmate_runtime_ports::AgentSessionListRequest {
             workspace_id: Some(workspace_id.to_owned()),
             workspace_path: String::new(),
             remote_connection_id: None,
@@ -718,8 +718,8 @@ async fn resolve_external_ecosystem(requested: Option<String>) -> Result<Ecosyst
 }
 
 fn print_external_policy_ecosystems(
-    policy: &openbitfun_core::external_sources::ExternalIntegrationPolicySnapshot,
-    effective: &openbitfun_core::external_sources::EffectiveExternalIntegrationPolicy,
+    policy: &starmate_core::external_sources::ExternalIntegrationPolicySnapshot,
+    effective: &starmate_core::external_sources::EffectiveExternalIntegrationPolicy,
     indent: &str,
 ) {
     for descriptor in &policy.registered_ecosystems {
@@ -877,11 +877,11 @@ async fn handle_external_config_action(action: ExternalConfigAction) -> Result<(
 }
 
 pub(crate) fn handle_health_command() -> Result<()> {
-    use openbitfun_core::runtime_ports::PluginRuntimeAvailability;
+    use starmate_core::runtime_ports::PluginRuntimeAvailability;
 
     let workspace = std::env::current_dir().context("Failed to resolve current directory")?;
     let (_, services) =
-        openbitfun_core::product_runtime::build_local_runtime_services(&workspace, 16)?;
+        starmate_core::product_runtime::build_local_runtime_services(&workspace, 16)?;
     let product_runtime = crate::product_assembly::assemble_cli_runtime_parts(services)?;
 
     println!("StarMate CLI health");
@@ -914,14 +914,14 @@ pub(crate) async fn serve_acp_stdio() -> Result<()> {
     let workspace_root = std::env::current_dir().context("Failed to resolve ACP workspace")?;
 
     crate::agent::agentic_system::select_agentic_system_profile(
-        openbitfun_core::product_assembly::DeliveryProfile::Acp,
+        starmate_core::product_assembly::DeliveryProfile::Acp,
     )?;
-    openbitfun_core::service::config::initialize_global_config()
+    starmate_core::service::config::initialize_global_config()
         .await
         .context("Failed to initialize global config service")?;
     tracing::info!("Global config service initialized");
 
-    use openbitfun_core::infrastructure::ai::AIClientFactory;
+    use starmate_core::infrastructure::ai::AIClientFactory;
     AIClientFactory::initialize_global()
         .await
         .context("Failed to initialize global AIClientFactory")?;
@@ -937,11 +937,11 @@ pub(crate) async fn serve_acp_stdio() -> Result<()> {
         .context("Failed to open the ACP workspace record")?;
     tracing::info!(workspace_id = %workspace.id, "ACP workspace record opened");
 
-    let path_manager = openbitfun_core::infrastructure::try_get_path_manager_arc()
+    let path_manager = starmate_core::infrastructure::try_get_path_manager_arc()
         .map_err(|error| anyhow::anyhow!(error.to_string()))?;
-    let deployment = openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded;
+    let deployment = starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded;
     let runtime_ownership =
-        openbitfun_core::runtime_ownership::CoreRuntimeOwnership::fixed_workspace(
+        starmate_core::runtime_ownership::CoreRuntimeOwnership::fixed_workspace(
             path_manager.as_ref(),
             "acp",
             &workspace_root,
@@ -950,7 +950,7 @@ pub(crate) async fn serve_acp_stdio() -> Result<()> {
         .map_err(|error| anyhow::anyhow!(error.startup_message(deployment, "acp")))?;
 
     let agentic_system = crate::agent::agentic_system::init_agentic_system(
-        openbitfun_core::product_assembly::DeliveryProfile::Acp,
+        starmate_core::product_assembly::DeliveryProfile::Acp,
         std::sync::Arc::new(runtime_ownership),
         // This protocol host has no negotiated native GUI provider.
         None,
@@ -961,7 +961,7 @@ pub(crate) async fn serve_acp_stdio() -> Result<()> {
 
     let runtime = crate::runtime::AcpRuntimeContext::build(agentic_system, workspace_root)?;
     let (agent_runtime, compatibility) = runtime.parts();
-    openbitfun_acp::OpenBitFunAcpRuntime::serve_stdio(agent_runtime, compatibility).await?;
+    starmate_acp::OpenBitFunAcpRuntime::serve_stdio(agent_runtime, compatibility).await?;
     Ok(())
 }
 

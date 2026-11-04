@@ -6,7 +6,7 @@ pub mod manager;
 pub mod session_branch;
 
 pub use manager::{MaterializedSessionReferenceTranscript, PersistenceManager};
-pub use openbitfun_runtime_ports::SessionTurnLoadTiming;
-pub use openbitfun_services_core::session::{
+pub use starmate_runtime_ports::SessionTurnLoadTiming;
+pub use starmate_services_core::session::{
     SessionBranchRequest, SessionBranchResult, SessionLineageSnapshot, SessionMetadataPage,
 };

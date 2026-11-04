@@ -622,7 +622,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -978,7 +978,7 @@ mod tests {
     #[tokio::test]
     async fn escaped_glob_directories_keep_native_and_workspace_searches_in_scope() {
         use crate::agentic::workspace::{LocalWorkspaceFs, LocalWorkspaceShell};
-        use openbitfun_runtime_ports::WorkspaceShell;
+        use starmate_runtime_ports::WorkspaceShell;
         use tool_runtime::search::glob_search::{
             build_remote_rg_command, collect_remote_glob_result, validate_remote_glob_exit,
         };
@@ -1027,7 +1027,7 @@ mod tests {
     #[cfg(unix)]
     #[tokio::test]
     async fn remote_glob_without_rg_executes_the_workspace_io_fallback() {
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             ToolRuntimeHandles, WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceServices,
             WorkspaceShell,
         };

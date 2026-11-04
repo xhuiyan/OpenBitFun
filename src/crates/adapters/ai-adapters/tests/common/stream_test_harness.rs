@@ -1,12 +1,12 @@
 use super::fixture_loader::load_fixture_bytes;
 use super::sse_fixture_server::{FixtureSseServer, FixtureSseServerOptions};
 use futures::StreamExt;
-use openbitfun_agent_stream::{StreamEventSink, StreamProcessError, StreamProcessor, StreamResult};
-use openbitfun_ai_adapters::stream::{
+use starmate_agent_stream::{StreamEventSink, StreamProcessError, StreamProcessor, StreamResult};
+use starmate_ai_adapters::stream::{
     handle_anthropic_stream, handle_gemini_stream, handle_openai_stream, handle_responses_stream,
     UnifiedResponse,
 };
-use openbitfun_events::{AgenticEvent, AgenticEventPriority as EventPriority};
+use starmate_events::{AgenticEvent, AgenticEventPriority as EventPriority};
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::{mpsc, Mutex};
@@ -98,7 +98,7 @@ pub(crate) async fn run_stream_fixture_with_options(
 ) -> StreamFixtureRunOutput {
     let fixture_bytes = load_fixture_bytes(fixture_relative_path);
     let fixture_server = FixtureSseServer::spawn(fixture_bytes, options.server_options).await;
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
 
     let response = tokio::time::timeout(
         options.request_timeout,

@@ -16,8 +16,8 @@ use crate::tool_call_accumulator::{
 use futures::{Stream, StreamExt};
 pub use hidden_text::{HiddenTextBlock, HiddenTextStreamParser, HiddenTextTag};
 use log::{debug, error, trace};
-use openbitfun_core_types::{errors::AiProviderError, ReasoningContentKind};
-use openbitfun_events::{AgenticEvent, AgenticEventPriority as EventPriority, ToolEventData};
+use starmate_core_types::{errors::AiProviderError, ReasoningContentKind};
+use starmate_events::{AgenticEvent, AgenticEventPriority as EventPriority, ToolEventData};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::{HashSet, VecDeque};
@@ -706,7 +706,7 @@ impl StreamProcessor {
                 tool_call.tool_id
             );
 
-            let identity = openbitfun_events::ToolEventIdentity::direct(
+            let identity = starmate_events::ToolEventIdentity::direct(
                 tool_call.tool_id,
                 tool_call.tool_name,
             );
@@ -823,7 +823,7 @@ impl StreamProcessor {
                         attempt_id: Some(ctx.attempt_id.clone()),
                         attempt_index: Some(ctx.attempt_index),
                         tool_event: ToolEventData::EarlyDetected {
-                            identity: openbitfun_events::ToolEventIdentity::direct(
+                            identity: starmate_events::ToolEventIdentity::direct(
                                 early_detected.tool_id,
                                 early_detected.tool_name,
                             ),
@@ -847,7 +847,7 @@ impl StreamProcessor {
                         attempt_id: Some(ctx.attempt_id.clone()),
                         attempt_index: Some(ctx.attempt_index),
                         tool_event: ToolEventData::ParamsPartial {
-                            identity: openbitfun_events::ToolEventIdentity::direct(
+                            identity: starmate_events::ToolEventIdentity::direct(
                                 params_partial.tool_id,
                                 params_partial.tool_name,
                             ),
@@ -1344,9 +1344,9 @@ mod tests {
     };
     use super::{UnifiedResponse, UnifiedTokenUsage, UnifiedToolCall};
     use futures::StreamExt;
-    use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
-    use openbitfun_core_types::{ModelResponseReplayItem, ReasoningContentKind};
-    use openbitfun_events::{AgenticEvent, AgenticEventPriority as EventPriority, ToolEventData};
+    use starmate_core_types::errors::{AiProviderError, ErrorCategory};
+    use starmate_core_types::{ModelResponseReplayItem, ReasoningContentKind};
+    use starmate_events::{AgenticEvent, AgenticEventPriority as EventPriority, ToolEventData};
     use serde_json::json;
     use std::sync::Arc;
     use std::time::Duration;

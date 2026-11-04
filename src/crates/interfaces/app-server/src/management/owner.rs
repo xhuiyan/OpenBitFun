@@ -5,21 +5,21 @@ use std::path::Path;
 use std::sync::{Arc, Mutex};
 
 use anyhow::{Context, Result};
-use openbitfun_app_server_protocol::account::*;
-use openbitfun_app_server_protocol::agent::{
+use starmate_app_server_protocol::account::*;
+use starmate_app_server_protocol::agent::{
     AgentModeSummary, ListAgentModesRequest, ListAgentModesResponse,
 };
-use openbitfun_app_server_protocol::external_source::*;
-use openbitfun_app_server_protocol::hook::*;
-use openbitfun_app_server_protocol::mcp::*;
-use openbitfun_app_server_protocol::model::*;
-use openbitfun_app_server_protocol::skill::*;
-use openbitfun_app_server_protocol::subagent::*;
-use openbitfun_app_server_protocol::worktree::*;
-use openbitfun_core::service::config::model_projection::{
+use starmate_app_server_protocol::external_source::*;
+use starmate_app_server_protocol::hook::*;
+use starmate_app_server_protocol::mcp::*;
+use starmate_app_server_protocol::model::*;
+use starmate_app_server_protocol::skill::*;
+use starmate_app_server_protocol::subagent::*;
+use starmate_app_server_protocol::worktree::*;
+use starmate_core::service::config::model_projection::{
     model_catalog_projection, model_edit_projection, model_list_projection, selector_is_unset,
 };
-use openbitfun_core::service::remote_connect::account_runtime::AccountRuntime;
+use starmate_core::service::remote_connect::account_runtime::AccountRuntime;
 
 use super::{
     AppManagementCapabilities, AppManagementError, AppManagementResult, ACCOUNT_CAPABILITY,
@@ -32,11 +32,11 @@ use super::{
 /// source owners. Local-only capabilities must be enabled through the local
 /// Host constructor; constructing an App Server does not enable them by default.
 pub struct AppManagementService {
-    config: Arc<openbitfun_core::service::config::ConfigService>,
-    mcp: Option<Arc<openbitfun_core::service::mcp::MCPService>>,
+    config: Arc<starmate_core::service::config::ConfigService>,
+    mcp: Option<Arc<starmate_core::service::mcp::MCPService>>,
     external_source_updates: tokio::sync::broadcast::Sender<(
         String,
-        openbitfun_product_domains::external_sources::ExternalSourcePublicSnapshot,
+        starmate_product_domains::external_sources::ExternalSourcePublicSnapshot,
     )>,
     external_source_subscriptions: Arc<Mutex<HashSet<String>>>,
     account: Option<Arc<AccountRuntime>>,
@@ -56,13 +56,13 @@ impl AppManagementService {
         account: Option<Arc<AccountRuntime>>,
         local_worktrees_enabled: bool,
     ) -> Result<Self> {
-        let config = openbitfun_core::service::config::get_global_config_service()
+        let config = starmate_core::service::config::get_global_config_service()
             .await
             .context("Failed to load the Host management configuration owner")?;
         let (external_source_updates, _) = tokio::sync::broadcast::channel(64);
         Ok(Self {
             config,
-            mcp: openbitfun_core::service::mcp::get_global_mcp_service(),
+            mcp: starmate_core::service::mcp::get_global_mcp_service(),
             external_source_updates,
             external_source_subscriptions: Arc::new(Mutex::new(HashSet::new())),
             account,
@@ -89,7 +89,7 @@ impl AppManagementService {
     async fn model_config(
         &self,
         model_id: &str,
-    ) -> AppManagementResult<openbitfun_core::service::config::AIModelConfig> {
+    ) -> AppManagementResult<starmate_core::service::config::AIModelConfig> {
         self.config
             .get_ai_models()
             .await
@@ -110,7 +110,7 @@ impl AppManagementService {
         &self,
     ) -> tokio::sync::broadcast::Receiver<(
         String,
-        openbitfun_product_domains::external_sources::ExternalSourcePublicSnapshot,
+        starmate_product_domains::external_sources::ExternalSourcePublicSnapshot,
     )> {
         self.external_source_updates.subscribe()
     }
@@ -130,7 +130,7 @@ impl AppManagementService {
             }
         }
         let mut subscription =
-            match openbitfun_core::external_sources::subscribe_external_source_updates(Some(
+            match starmate_core::external_sources::subscribe_external_source_updates(Some(
                 workspace,
             ))
             .await
@@ -152,7 +152,7 @@ impl AppManagementService {
                     Ok(snapshot) => {
                         let _ = updates.send((
                             workspace_path.clone(),
-                            openbitfun_product_domains::external_sources::ExternalSourcePublicSnapshot::from(snapshot),
+                            starmate_product_domains::external_sources::ExternalSourcePublicSnapshot::from(snapshot),
                         ));
                     }
                     Err(tokio::sync::broadcast::error::RecvError::Lagged(_)) => continue,
@@ -169,9 +169,9 @@ impl AppManagementService {
 }
 
 fn external_source_error(
-    error: openbitfun_product_domains::external_sources::ExternalSourceOperationError,
+    error: starmate_product_domains::external_sources::ExternalSourceOperationError,
 ) -> AppManagementError {
-    use openbitfun_product_domains::external_sources::ExternalSourceOperationErrorCode as Code;
+    use starmate_product_domains::external_sources::ExternalSourceOperationErrorCode as Code;
     let encoded = error.encode();
     match error.code {
         Code::InvalidRequest => AppManagementError::invalid_request(encoded),
@@ -185,13 +185,13 @@ fn external_source_error(
 
 fn external_source_string_error(error: String) -> AppManagementError {
     external_source_error(
-        openbitfun_core::external_sources::sanitize_external_source_operation_error(error),
+        starmate_core::external_sources::sanitize_external_source_operation_error(error),
     )
 }
 
 fn external_source_string_error_with_id(error: String, operation_id: &str) -> AppManagementError {
     let mut typed =
-        openbitfun_core::external_sources::sanitize_external_source_operation_error(error);
+        starmate_core::external_sources::sanitize_external_source_operation_error(error);
     if typed.correlation_id.is_none() {
         typed = typed.with_correlation_id(operation_id);
     } else if typed.causation_id.is_none() {
@@ -201,7 +201,7 @@ fn external_source_string_error_with_id(error: String, operation_id: &str) -> Ap
 }
 
 fn validate_external_operation(operation_id: &str) -> AppManagementResult<()> {
-    openbitfun_app_server_protocol::external_source::validate_operation_id(operation_id)
+    starmate_app_server_protocol::external_source::validate_operation_id(operation_id)
         .map_err(AppManagementError::invalid_request)
 }
 
@@ -267,10 +267,10 @@ fn native_hook_location(path: &Path, workspace: &Path, user_hooks_file: Option<&
 }
 
 fn project_native_hook_overview(
-    overview: openbitfun_core::native_hooks::NativeHookOverview,
+    overview: starmate_core::native_hooks::NativeHookOverview,
     workspace: &Path,
 ) -> NativeHookOverview {
-    let user_hooks_file = openbitfun_core::infrastructure::try_get_path_manager_arc()
+    let user_hooks_file = starmate_core::infrastructure::try_get_path_manager_arc()
         .ok()
         .map(|manager| manager.user_hooks_file());
     let path_labels = overview
@@ -339,7 +339,7 @@ fn project_native_hook_overview(
 }
 
 async fn external_source_preferences() -> AppManagementResult<ExternalSourceConflictPreferences> {
-    openbitfun_core::external_sources::external_source_conflict_choices()
+    starmate_core::external_sources::external_source_conflict_choices()
         .await
         .map(
             |(choices, lineage_current_keys, conflicted_candidate_ids)| {
@@ -357,10 +357,10 @@ async fn external_source_snapshot_response(
     workspace: &str,
     force_refresh: bool,
 ) -> AppManagementResult<ExternalSourceSnapshotResponse> {
-    let surface = openbitfun_core::external_sources::get_external_source_control_snapshot(
+    let surface = starmate_core::external_sources::get_external_source_control_snapshot(
         Some(workspace),
         force_refresh,
-        openbitfun_product_domains::external_sources::ExternalSourceHostCapabilities::read_write(),
+        starmate_product_domains::external_sources::ExternalSourceHostCapabilities::read_write(),
     )
     .await
     .map_err(external_source_error)?;
@@ -371,7 +371,7 @@ async fn external_source_snapshot_response(
     })
 }
 
-fn core_error(error: openbitfun_core::OpenBitFunError) -> AppManagementError {
+fn core_error(error: starmate_core::OpenBitFunError) -> AppManagementError {
     AppManagementError::internal(sanitize_management_error(error.to_string()))
 }
 
@@ -424,14 +424,14 @@ fn string_update(
 
 fn model_from_mutation(
     mutation: ModelMutation,
-    existing: Option<openbitfun_core::service::config::AIModelConfig>,
-) -> AppManagementResult<openbitfun_core::service::config::AIModelConfig> {
+    existing: Option<starmate_core::service::config::AIModelConfig>,
+) -> AppManagementResult<starmate_core::service::config::AIModelConfig> {
     let current = existing.unwrap_or_default();
     let api_key = secret_update_value(mutation.api_key, Some(current.api_key))?;
     let custom_headers = headers_update(mutation.custom_headers, current.custom_headers)?;
     let custom_request_body =
         string_update(mutation.custom_request_body, current.custom_request_body)?;
-    Ok(openbitfun_core::service::config::AIModelConfig {
+    Ok(starmate_core::service::config::AIModelConfig {
         id: mutation.id,
         name: mutation.name,
         provider: mutation.provider,
@@ -476,7 +476,7 @@ fn validate_model_update_identity(
 }
 
 fn skill_from_info(
-    info: openbitfun_core::agentic::tools::implementations::skills::SkillInfo,
+    info: starmate_core::agentic::tools::implementations::skills::SkillInfo,
 ) -> SkillSummary {
     SkillSummary {
         key: info.key,
@@ -495,7 +495,7 @@ fn skill_from_info(
 }
 
 fn skill_from_mode_info(
-    info: openbitfun_core::agentic::tools::implementations::skills::ModeSkillInfo,
+    info: starmate_core::agentic::tools::implementations::skills::ModeSkillInfo,
 ) -> SkillSummary {
     let skill = info.skill;
     SkillSummary {
@@ -514,9 +514,9 @@ fn skill_from_mode_info(
     }
 }
 
-fn subagent_from_info(info: openbitfun_core::agentic::agents::AgentInfo) -> SubagentSummary {
+fn subagent_from_info(info: starmate_core::agentic::agents::AgentInfo) -> SubagentSummary {
     let is_external =
-        info.subagent_source == Some(openbitfun_core::agentic::agents::SubAgentSource::External);
+        info.subagent_source == Some(starmate_core::agentic::agents::SubAgentSource::External);
     SubagentSummary {
         key: info.key,
         id: info.id,
@@ -525,7 +525,7 @@ fn subagent_from_info(info: openbitfun_core::agentic::agents::AgentInfo) -> Suba
         source: format!(
             "{:?}",
             info.subagent_source
-                .unwrap_or(openbitfun_core::agentic::agents::SubAgentSource::Builtin)
+                .unwrap_or(starmate_core::agentic::agents::SubAgentSource::Builtin)
         )
         .to_ascii_lowercase(),
         enabled: info.effective_enabled,
@@ -534,10 +534,10 @@ fn subagent_from_info(info: openbitfun_core::agentic::agents::AgentInfo) -> Suba
     }
 }
 
-fn native_mcp_detail(config: &openbitfun_core::service::mcp::MCPServerConfig) -> String {
+fn native_mcp_detail(config: &starmate_core::service::mcp::MCPServerConfig) -> String {
     let server_type = format!("{:?}", config.server_type).to_ascii_lowercase();
     let transport = config.resolved_transport().as_str();
-    if config.server_type == openbitfun_core::service::mcp::MCPServerType::Local {
+    if config.server_type == starmate_core::service::mcp::MCPServerType::Local {
         format!("type: {server_type}; transport: {transport}; command: {}; arguments: {}; environment variables set: {}",
             config.command.as_deref().unwrap_or("unknown"),
             config.args.len(),
@@ -568,10 +568,10 @@ fn native_mcp_detail(config: &openbitfun_core::service::mcp::MCPServerConfig) ->
 }
 
 fn external_mcp_action(
-    entry: &openbitfun_product_domains::external_sources::ExternalMcpCatalogEntry,
-    snapshot: &openbitfun_product_domains::external_sources::ExternalSourceCatalogSnapshot,
+    entry: &starmate_product_domains::external_sources::ExternalMcpCatalogEntry,
+    snapshot: &starmate_product_domains::external_sources::ExternalSourceCatalogSnapshot,
 ) -> McpServerAction {
-    use openbitfun_product_domains::external_sources::ExternalMcpActivationState as State;
+    use starmate_product_domains::external_sources::ExternalMcpActivationState as State;
     match &entry.activation_state {
         State::ApprovalRequired | State::Declined | State::ConfigurationChanged => {
             McpServerAction::ExternalDecision {
@@ -626,10 +626,10 @@ fn external_mcp_action(
 }
 
 async fn external_mcp_status(
-    entry: &openbitfun_product_domains::external_sources::ExternalMcpCatalogEntry,
-    manager: &openbitfun_core::service::mcp::MCPServerManager,
+    entry: &starmate_product_domains::external_sources::ExternalMcpCatalogEntry,
+    manager: &starmate_core::service::mcp::MCPServerManager,
 ) -> String {
-    use openbitfun_product_domains::external_sources::ExternalMcpActivationState as State;
+    use starmate_product_domains::external_sources::ExternalMcpActivationState as State;
     match &entry.activation_state {
         State::Active => match entry.runtime_id.as_deref() {
             Some(id) => match tokio::time::timeout(
@@ -659,17 +659,17 @@ async fn external_mcp_status(
 }
 
 fn external_mcp_detail(
-    entry: &openbitfun_product_domains::external_sources::ExternalMcpCatalogEntry,
+    entry: &starmate_product_domains::external_sources::ExternalMcpCatalogEntry,
 ) -> String {
     let definition = &entry.definition;
     match definition.transport {
-        openbitfun_product_domains::external_sources::ExternalMcpTransportKind::LocalStdio => format!(
+        starmate_product_domains::external_sources::ExternalMcpTransportKind::LocalStdio => format!(
             "source MCP configuration; local command: {}; arguments: {}; environment variables set: {}",
             definition.command_preview.as_deref().unwrap_or("unknown"),
             definition.argument_count,
             if definition.environment_keys.is_empty() { "none" } else { "configured" },
         ),
-        openbitfun_product_domains::external_sources::ExternalMcpTransportKind::StreamableHttp => format!(
+        starmate_product_domains::external_sources::ExternalMcpTransportKind::StreamableHttp => format!(
             "source MCP configuration; remote origin: {}; HTTP headers: {}",
             definition.remote_url_preview.as_deref().unwrap_or("unknown"),
             if definition.header_names.is_empty() { "none" } else { "configured" },
@@ -681,19 +681,19 @@ fn external_mcp_detail(
 fn mcp_config_from_mutation(
     name: &str,
     mutation: McpServerMutation,
-) -> AppManagementResult<openbitfun_core::service::mcp::MCPServerConfig> {
+) -> AppManagementResult<starmate_core::service::mcp::MCPServerConfig> {
     let (server_type, transport) = match mutation.transport {
         McpTransport::Stdio => (
-            openbitfun_core::service::mcp::MCPServerType::Local,
-            openbitfun_core::service::mcp::MCPServerTransport::Stdio,
+            starmate_core::service::mcp::MCPServerType::Local,
+            starmate_core::service::mcp::MCPServerTransport::Stdio,
         ),
         McpTransport::Sse => (
-            openbitfun_core::service::mcp::MCPServerType::Remote,
-            openbitfun_core::service::mcp::MCPServerTransport::Sse,
+            starmate_core::service::mcp::MCPServerType::Remote,
+            starmate_core::service::mcp::MCPServerTransport::Sse,
         ),
         McpTransport::StreamableHttp => (
-            openbitfun_core::service::mcp::MCPServerType::Remote,
-            openbitfun_core::service::mcp::MCPServerTransport::StreamableHttp,
+            starmate_core::service::mcp::MCPServerType::Remote,
+            starmate_core::service::mcp::MCPServerTransport::StreamableHttp,
         ),
     };
     let oauth = mutation
@@ -714,7 +714,7 @@ fn mcp_config_from_mutation(
                 "MCP XAA configuration does not match the supported schema",
             )
         })?;
-    Ok(openbitfun_core::service::mcp::MCPServerConfig {
+    Ok(starmate_core::service::mcp::MCPServerConfig {
         id: name.to_string(),
         name: name.to_string(),
         server_type,
@@ -728,7 +728,7 @@ fn mcp_config_from_mutation(
         url: mutation.url,
         auto_start: mutation.auto_start,
         enabled: mutation.enabled,
-        location: openbitfun_core::service::mcp::ConfigLocation::User,
+        location: starmate_core::service::mcp::ConfigLocation::User,
         capabilities: Vec::new(),
         settings: HashMap::new(),
         oauth,
@@ -743,20 +743,20 @@ impl AppManagementService {
         let mut capabilities = AppManagementCapabilities::available();
         if self.mcp.is_none() {
             capabilities.mcp =
-                openbitfun_app_server_protocol::app::CapabilityAvailability::Unavailable {
+                starmate_app_server_protocol::app::CapabilityAvailability::Unavailable {
                     reason: "The Host MCP owner is unavailable".to_string(),
                 };
         }
         if self.account.is_none() {
             let reason = "The Host did not provide an account owner".to_string();
             capabilities.account =
-                openbitfun_app_server_protocol::app::CapabilityAvailability::Unavailable {
+                starmate_app_server_protocol::app::CapabilityAvailability::Unavailable {
                     reason: reason.clone(),
                 };
         }
         if !self.local_worktrees_enabled {
             capabilities.worktrees =
-                openbitfun_app_server_protocol::app::CapabilityAvailability::Unavailable {
+                starmate_app_server_protocol::app::CapabilityAvailability::Unavailable {
                     reason: "The Host did not enable local Worktree management".to_string(),
                 };
         }
@@ -859,7 +859,7 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let workspace = record.id.as_str();
-        let overview = openbitfun_core::native_hooks::overview(Some(workspace))
+        let overview = starmate_core::native_hooks::overview(Some(workspace))
             .await
             .map_err(AppManagementError::invalid_request)?;
         Ok(NativeHookOverviewResponse(project_native_hook_overview(
@@ -872,7 +872,7 @@ impl AppManagementService {
         &self,
         request: ExternalHookSnapshotRequest,
     ) -> AppManagementResult<ExternalHookSnapshotResponse> {
-        openbitfun_core::external_hook_import::external_hook_import_snapshot(
+        starmate_core::external_hook_import::external_hook_import_snapshot(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -892,7 +892,7 @@ impl AppManagementService {
         &self,
         request: ExternalHookPlanRequest,
     ) -> AppManagementResult<ExternalHookPlanResponse> {
-        openbitfun_core::external_hook_import::plan_external_hook_import(
+        starmate_core::external_hook_import::plan_external_hook_import(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -913,7 +913,7 @@ impl AppManagementService {
         request: ExternalHookApplyRequest,
     ) -> AppManagementResult<ExternalHookApplyResponse> {
         validate_external_operation(&request.operation_id)?;
-        openbitfun_core::external_hook_import::apply_external_hook_import(
+        starmate_core::external_hook_import::apply_external_hook_import(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -934,7 +934,7 @@ impl AppManagementService {
         request: ExternalHookMutationRequest,
     ) -> AppManagementResult<ExternalHookMutationResponse> {
         validate_external_operation(&request.operation_id)?;
-        openbitfun_core::external_hook_import::mutate_external_hook_import(
+        starmate_core::external_hook_import::mutate_external_hook_import(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -974,7 +974,7 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let workspace = record.id.as_str();
-        let surface = openbitfun_core::external_sources::apply_external_source_control_action(
+        let surface = starmate_core::external_sources::apply_external_source_control_action(
             Some(workspace),
             request.request,
         )
@@ -998,7 +998,7 @@ impl AppManagementService {
         let operation_id = request.operation_id.clone();
         let result = match request.action {
             ExternalSourceReviewAction::Refresh => {
-                openbitfun_core::external_sources::external_source_snapshot(Some(workspace), true)
+                starmate_core::external_sources::external_source_snapshot(Some(workspace), true)
                     .await
             }
             ExternalSourceReviewAction::SetPromptCommandConflictChoice {
@@ -1006,7 +1006,7 @@ impl AppManagementService {
                 candidate_id,
                 expected_preference_revision,
             } => {
-                openbitfun_core::external_sources::set_external_prompt_command_conflict_choice(
+                starmate_core::external_sources::set_external_prompt_command_conflict_choice(
                     Some(workspace),
                     &conflict_key,
                     &candidate_id,
@@ -1020,7 +1020,7 @@ impl AppManagementService {
                 approved,
                 expected_preference_revision,
             } => {
-                openbitfun_core::external_sources::set_external_tool_target_decision(
+                starmate_core::external_sources::set_external_tool_target_decision(
                     Some(workspace),
                     &approval_key,
                     &decision_key,
@@ -1034,7 +1034,7 @@ impl AppManagementService {
                 candidate_id,
                 expected_preference_revision,
             } => {
-                openbitfun_core::external_sources::set_external_tool_conflict_choice(
+                starmate_core::external_sources::set_external_tool_conflict_choice(
                     Some(workspace),
                     &conflict_key,
                     &candidate_id,
@@ -1049,7 +1049,7 @@ impl AppManagementService {
                 expected_preference_revision,
                 decision_key,
             } => {
-                openbitfun_core::external_sources::set_external_subagent_activation(
+                starmate_core::external_sources::set_external_subagent_activation(
                     Some(workspace),
                     &candidate_id,
                     approved,
@@ -1065,7 +1065,7 @@ impl AppManagementService {
                 expected_subagent_generation,
                 expected_preference_revision,
             } => {
-                openbitfun_core::external_sources::set_external_subagent_model_binding(
+                starmate_core::external_sources::set_external_subagent_model_binding(
                     Some(workspace),
                     &binding_key,
                     target,
@@ -1081,7 +1081,7 @@ impl AppManagementService {
                 expected_subagent_generation,
                 expected_preference_revision,
             } => {
-                openbitfun_core::external_sources::choose_external_subagent_conflict(
+                starmate_core::external_sources::choose_external_subagent_conflict(
                     Some(workspace),
                     &conflict_key,
                     &candidate_id,
@@ -1105,7 +1105,7 @@ impl AppManagementService {
         validate_external_operation(&request.operation_id)?;
         let operation_id = request.operation_id.clone();
         let conflicts =
-            openbitfun_core::external_sources::set_native_prompt_command_conflict_choice(
+            starmate_core::external_sources::set_native_prompt_command_conflict_choice(
                 Some(
                     &resolve_management_workspace(
                         request.workspace_id.as_deref(),
@@ -1132,7 +1132,7 @@ impl AppManagementService {
     ) -> AppManagementResult<ExpandExternalCommandResponse> {
         validate_external_operation(&request.operation_id)?;
         let operation_id = request.operation_id.clone();
-        openbitfun_core::external_sources::expand_external_prompt_command(
+        starmate_core::external_sources::expand_external_prompt_command(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -1172,11 +1172,11 @@ impl AppManagementService {
         };
         let include_external = request.include_external
             && record.as_ref().is_some_and(|record| {
-                record.workspace_kind != openbitfun_core::service::workspace::WorkspaceKind::Remote
+                record.workspace_kind != starmate_core::service::workspace::WorkspaceKind::Remote
             });
         if include_external {
             if let Err(error) =
-                openbitfun_core::external_sources::ensure_external_source_workspace_snapshot(
+                starmate_core::external_sources::ensure_external_source_workspace_snapshot(
                     record.as_ref().map(|record| record.id.as_str()),
                 )
                 .await
@@ -1184,7 +1184,7 @@ impl AppManagementService {
                 tracing::warn!("Failed to initialize external agent sources: {error}");
             }
         }
-        let modes = openbitfun_core::agentic::agents::get_agent_registry()
+        let modes = starmate_core::agentic::agents::get_agent_registry()
             .get_modes_info_for_workspace(
                 record.as_ref().map(|record| record.id.as_str()),
                 include_external,
@@ -1196,7 +1196,7 @@ impl AppManagementService {
                 route_key: mode.key,
                 description: mode.description,
                 model_id: mode.model,
-                is_external: mode.source == openbitfun_core::agentic::agents::AgentSource::External,
+                is_external: mode.source == starmate_core::agentic::agents::AgentSource::External,
             })
             .collect();
         Ok(ListAgentModesResponse { modes })
@@ -1207,7 +1207,7 @@ impl AppManagementService {
         _request: ListModelsRequest,
     ) -> AppManagementResult<ListModelsResponse> {
         let models = self.config.get_ai_models().await.map_err(core_error)?;
-        let config: openbitfun_core::service::config::GlobalConfig =
+        let config: starmate_core::service::config::GlobalConfig =
             self.config.get_config(None).await.map_err(core_error)?;
         let projection = model_list_projection(&models, &config);
         Ok(ListModelsResponse {
@@ -1231,7 +1231,7 @@ impl AppManagementService {
         &self,
         _request: TuiModelCatalogRequest,
     ) -> AppManagementResult<TuiModelCatalogResponse> {
-        let catalog = openbitfun_core::get_ai_model_catalog()
+        let catalog = starmate_core::get_ai_model_catalog()
             .await
             .map_err(AppManagementError::internal)?;
         let projection = model_catalog_projection(catalog);
@@ -1246,7 +1246,7 @@ impl AppManagementService {
         request: ProjectReasoningCatalogRequest,
     ) -> AppManagementResult<ProjectReasoningCatalogResponse> {
         Ok(ProjectReasoningCatalogResponse {
-            projection: openbitfun_core::project_ai_model_reasoning_catalog(request.0).await,
+            projection: starmate_core::project_ai_model_reasoning_catalog(request.0).await,
         })
     }
 
@@ -1258,7 +1258,7 @@ impl AppManagementService {
         let model_id = model.id.clone();
         self.config.add_ai_model(model).await.map_err(core_error)?;
         if request.make_primary_if_empty {
-            let config: openbitfun_core::service::config::GlobalConfig =
+            let config: starmate_core::service::config::GlobalConfig =
                 self.config.get_config(None).await.map_err(core_error)?;
             if selector_is_unset(&config.ai.default_models.primary) {
                 self.config
@@ -1282,7 +1282,7 @@ impl AppManagementService {
             .config
             .update_config(
                 "ai.models",
-                |models: &mut Vec<openbitfun_core::service::config::AIModelConfig>| {
+                |models: &mut Vec<starmate_core::service::config::AIModelConfig>| {
                     let Some(existing) =
                         models.iter_mut().find(|model| model.id == request.model_id)
                     else {
@@ -1346,21 +1346,21 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let remote =
-            record.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote;
+            record.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote;
         if remote {
             return Err(AppManagementError::invalid_request(
                 "This management operation is unsupported for remote workspaces",
             ));
         }
-        let workspace = openbitfun_core::agentic::workspace::WorkspaceBinding::resolve(&record.id)
+        let workspace = starmate_core::agentic::workspace::WorkspaceBinding::resolve(&record.id)
             .await
             .map_err(core_error)?;
         let registry =
-            openbitfun_core::agentic::tools::implementations::skills::get_skill_registry();
+            starmate_core::agentic::tools::implementations::skills::get_skill_registry();
         let skills = if request.manageable {
             registry
                 .get_mode_skill_infos_for_workspace(
-                    openbitfun_core::agentic::tools::implementations::skills::mode_overrides::SkillPolicyWorkspace::from_binding(&workspace),
+                    starmate_core::agentic::tools::implementations::skills::mode_overrides::SkillPolicyWorkspace::from_binding(&workspace),
                     &request.mode_id,
                 )
                 .await
@@ -1386,7 +1386,7 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let remote =
-            record.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote;
+            record.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote;
         if remote {
             return Err(AppManagementError::invalid_request(
                 "This management operation is unsupported for remote workspaces",
@@ -1394,7 +1394,7 @@ impl AppManagementService {
         }
         match request.level.as_str() {
             "user" => {
-                let _ = openbitfun_core::agentic::tools::implementations::skills::mode_overrides::set_user_mode_skill_state(
+                let _ = starmate_core::agentic::tools::implementations::skills::mode_overrides::set_user_mode_skill_state(
                     &request.mode_id,
                     &request.skill_key,
                     request.enabled,
@@ -1404,17 +1404,17 @@ impl AppManagementService {
                 .map_err(core_error)?;
             }
             "project" => {
-                let mut document = openbitfun_core::agentic::tools::implementations::skills::mode_overrides::load_project_mode_skills_document_local(&record.root_path)
+                let mut document = starmate_core::agentic::tools::implementations::skills::mode_overrides::load_project_mode_skills_document_local(&record.root_path)
                     .await
                     .map_err(core_error)?;
-                openbitfun_core::agentic::tools::implementations::skills::mode_overrides::set_mode_skill_disabled_in_document(
+                starmate_core::agentic::tools::implementations::skills::mode_overrides::set_mode_skill_disabled_in_document(
                     &mut document,
                     &request.mode_id,
                     &request.skill_key,
                     !request.enabled,
                 )
                 .map_err(core_error)?;
-                openbitfun_core::agentic::tools::implementations::skills::mode_overrides::save_project_mode_skills_document_local(
+                starmate_core::agentic::tools::implementations::skills::mode_overrides::save_project_mode_skills_document_local(
                     &record.root_path,
                     &document,
                 )
@@ -1438,14 +1438,14 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let remote =
-            record.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote;
+            record.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote;
         let scope = if request.management {
-            openbitfun_core::agentic::agents::SubagentListScope::RegistryManagement
+            starmate_core::agentic::agents::SubagentListScope::RegistryManagement
         } else {
-            openbitfun_core::agentic::agents::SubagentListScope::TaskVisible
+            starmate_core::agentic::agents::SubagentListScope::TaskVisible
         };
-        let values = openbitfun_core::agentic::agents::get_agent_registry()
-            .get_subagents_for_query(&openbitfun_core::agentic::agents::SubagentQueryContext {
+        let values = starmate_core::agentic::agents::get_agent_registry()
+            .get_subagents_for_query(&starmate_core::agentic::agents::SubagentQueryContext {
                 parent_agent_type: Some(&request.parent_mode_id),
                 workspace_id: (!remote).then_some(record.id.as_str()),
                 list_scope: scope,
@@ -1454,7 +1454,7 @@ impl AppManagementService {
             })
             .await;
         let has_external = values.iter().any(|info| {
-            info.subagent_source == Some(openbitfun_core::agentic::agents::SubAgentSource::External)
+            info.subagent_source == Some(starmate_core::agentic::agents::SubAgentSource::External)
         });
         Ok(ListSubagentsResponse {
             subagents: values
@@ -1462,7 +1462,7 @@ impl AppManagementService {
                 .filter(|info| {
                     !request.management
                         || info.subagent_source
-                            != Some(openbitfun_core::agentic::agents::SubAgentSource::External)
+                            != Some(starmate_core::agentic::agents::SubAgentSource::External)
                 })
                 .map(subagent_from_info)
                 .collect(),
@@ -1478,13 +1478,13 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let remote =
-            record.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote;
+            record.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote;
         if remote {
             return Err(AppManagementError::invalid_request(
                 "This management operation is unsupported for remote workspaces",
             ));
         }
-        openbitfun_core::agentic::agents::get_agent_registry()
+        starmate_core::agentic::agents::get_agent_registry()
             .update_subagent_override(
                 &request.parent_mode_id,
                 &request.subagent_id,
@@ -1508,10 +1508,10 @@ impl AppManagementService {
             resolve_management_workspace(request.workspace_id.as_deref(), &request.workspace_path)
                 .await?;
         let external =
-            openbitfun_core::external_sources::external_source_snapshot(Some(&workspace.id), false)
+            starmate_core::external_sources::external_source_snapshot(Some(&workspace.id), false)
                 .await
                 .map_err(|error| AppManagementError::internal(sanitize_management_error(error)))?;
-        let tool_registry = openbitfun_core::agentic::tools::registry::get_global_tool_registry();
+        let tool_registry = starmate_core::agentic::tools::registry::get_global_tool_registry();
         let tools = tool_registry.read().await.get_all_tools();
         let configs = mcp
             .config_service()
@@ -1539,7 +1539,7 @@ impl AppManagementService {
                 .iter()
                 .filter(|tool| tool.name().starts_with(&prefix))
                 .count();
-            let native_id = openbitfun_core::external_sources::native_mcp_candidate_id(&config.id);
+            let native_id = starmate_core::external_sources::native_mcp_candidate_id(&config.id);
             let conflict = external.mcp_conflicts.iter().find(|conflict| {
                 conflict
                     .candidates
@@ -1630,7 +1630,7 @@ impl AppManagementService {
                 },
             });
         }
-        let config_path = openbitfun_core::infrastructure::try_get_path_manager_arc()
+        let config_path = starmate_core::infrastructure::try_get_path_manager_arc()
             .ok()
             .map(|manager| manager.app_config_file().display().to_string());
         Ok(ListMcpServersResponse {
@@ -1649,8 +1649,8 @@ impl AppManagementService {
             .ok_or_else(|| AppManagementError::unsupported("The Host MCP owner is unavailable"))?;
         let manager = mcp.server_manager();
         match manager.get_server_status(&request.server_id).await {
-            Ok(openbitfun_core::service::mcp::MCPServerStatus::Connected)
-            | Ok(openbitfun_core::service::mcp::MCPServerStatus::Healthy) => {
+            Ok(starmate_core::service::mcp::MCPServerStatus::Connected)
+            | Ok(starmate_core::service::mcp::MCPServerStatus::Healthy) => {
                 manager.stop_server(&request.server_id).await
             }
             _ => manager.start_server(&request.server_id).await,
@@ -1695,7 +1695,7 @@ impl AppManagementService {
         &self,
         request: ExternalMcpDecisionRequest,
     ) -> AppManagementResult<ExternalMcpDecisionResponse> {
-        openbitfun_core::external_sources::set_external_mcp_server_decision(
+        starmate_core::external_sources::set_external_mcp_server_decision(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -1719,7 +1719,7 @@ impl AppManagementService {
         &self,
         request: McpConflictChoiceRequest,
     ) -> AppManagementResult<McpConflictChoiceResponse> {
-        openbitfun_core::external_sources::choose_external_mcp_conflict(
+        starmate_core::external_sources::choose_external_mcp_conflict(
             Some(
                 &resolve_management_workspace(
                     request.workspace_id.as_deref(),
@@ -1741,7 +1741,7 @@ impl AppManagementService {
 }
 
 fn project_account_snapshot(
-    snapshot: openbitfun_core::service::remote_connect::account_runtime::AccountSnapshot,
+    snapshot: starmate_core::service::remote_connect::account_runtime::AccountSnapshot,
 ) -> AccountSnapshotResponse {
     AccountSnapshotResponse {
         logged_in: snapshot.logged_in,
@@ -1772,7 +1772,7 @@ fn project_account_snapshot(
 }
 
 fn account_login_status_message(
-    result: &openbitfun_core::service::remote_connect::account_runtime::AccountLoginResult,
+    result: &starmate_core::service::remote_connect::account_runtime::AccountLoginResult,
 ) -> String {
     if result.routing_standby {
         format!(
@@ -1828,25 +1828,25 @@ mod tests {
     use crate::AppManagementErrorKind;
     use std::path::PathBuf;
 
-    fn native_overview_with_sensitive_paths() -> openbitfun_core::native_hooks::NativeHookOverview {
-        openbitfun_core::native_hooks::NativeHookOverview {
+    fn native_overview_with_sensitive_paths() -> starmate_core::native_hooks::NativeHookOverview {
+        starmate_core::native_hooks::NativeHookOverview {
             enabled: true,
             project_hooks_enabled: true,
             remote_workspace_unsupported: false,
             files: vec![
-                openbitfun_core::native_hooks::NativeHookFileView {
+                starmate_core::native_hooks::NativeHookFileView {
                     scope: "user",
                     path: PathBuf::from("C:/Users/private/AppData/Roaming/OpenBitFun/config/hooks.json"),
                     exists: true,
                     loaded: true,
                 },
-                openbitfun_core::native_hooks::NativeHookFileView {
+                starmate_core::native_hooks::NativeHookFileView {
                     scope: "project",
                     path: PathBuf::from("D:/secret/project/.openbitfun/config/hooks.json"),
                     exists: true,
                     loaded: true,
                 },
-                openbitfun_core::native_hooks::NativeHookFileView {
+                starmate_core::native_hooks::NativeHookFileView {
                     scope: "user",
                     path: PathBuf::from(
                         "C:/Users/private/AppData/Roaming/OpenBitFun/runtime/hook-imports/bundles/import-one/version/hooks.json",
@@ -1855,13 +1855,13 @@ mod tests {
                     loaded: true,
                 },
             ],
-            rules: vec![openbitfun_core::native_hooks::NativeHookRuleView {
+            rules: vec![starmate_core::native_hooks::NativeHookRuleView {
                 event: "PreToolUse",
                 matcher: "Bash".to_string(),
                 matcher_is_valid: true,
                 scope: "project",
                 source: "D:/secret/project/.openbitfun/config/hooks.json".to_string(),
-                handlers: vec![openbitfun_core::native_hooks::NativeHookHandlerView {
+                handlers: vec![starmate_core::native_hooks::NativeHookHandlerView {
                     command: format!("secret-token {}", "x".repeat(240)),
                     timeout_seconds: 5,
                     status_message: Some("Checking".to_string()),
@@ -1898,7 +1898,7 @@ mod tests {
 
     #[test]
     fn model_mutation_preserves_and_replaces_write_only_values() {
-        let existing = openbitfun_core::service::config::AIModelConfig {
+        let existing = starmate_core::service::config::AIModelConfig {
             api_key: "existing-key".to_string(),
             max_images_per_request: Some(3),
             custom_headers: Some(HashMap::from([(
@@ -1951,7 +1951,7 @@ mod tests {
         cleared.max_images_per_request = Some(None);
         let cleared = model_from_mutation(
             cleared,
-            Some(openbitfun_core::service::config::AIModelConfig {
+            Some(starmate_core::service::config::AIModelConfig {
                 max_images_per_request: Some(3),
                 ..Default::default()
             }),
@@ -2013,7 +2013,7 @@ mod tests {
 
     #[test]
     fn model_summary_exposes_only_sorted_header_names() {
-        let model = openbitfun_core::service::config::AIModelConfig {
+        let model = starmate_core::service::config::AIModelConfig {
             api_key: "secret-key".to_string(),
             max_images_per_request: Some(3),
             custom_headers: Some(HashMap::from([
@@ -2023,7 +2023,7 @@ mod tests {
             ..Default::default()
         };
 
-        let summary = openbitfun_core::service::config::model_projection::model_summary(&model);
+        let summary = starmate_core::service::config::model_projection::model_summary(&model);
         assert!(summary.api_key_configured);
         assert_eq!(summary.max_images_per_request, Some(3));
         assert_eq!(summary.custom_header_names, ["A-Header", "Z-Header"]);
@@ -2058,11 +2058,11 @@ mod tests {
 
     #[test]
     fn native_mcp_detail_omits_remote_credentials_path_and_query() {
-        let config = openbitfun_core::service::mcp::MCPServerConfig {
+        let config = starmate_core::service::mcp::MCPServerConfig {
             id: "remote".to_string(),
             name: "Remote".to_string(),
-            server_type: openbitfun_core::service::mcp::MCPServerType::Remote,
-            transport: Some(openbitfun_core::service::mcp::MCPServerTransport::StreamableHttp),
+            server_type: starmate_core::service::mcp::MCPServerType::Remote,
+            transport: Some(starmate_core::service::mcp::MCPServerTransport::StreamableHttp),
             command: None,
             args: Vec::new(),
             env: HashMap::new(),
@@ -2074,7 +2074,7 @@ mod tests {
             ),
             auto_start: true,
             enabled: true,
-            location: openbitfun_core::service::mcp::ConfigLocation::User,
+            location: starmate_core::service::mcp::ConfigLocation::User,
             capabilities: Vec::new(),
             settings: HashMap::new(),
             oauth: None,
@@ -2097,8 +2097,8 @@ mod tests {
 async fn resolve_management_workspace(
     workspace_id: Option<&str>,
     legacy_path: &str,
-) -> AppManagementResult<openbitfun_core::service::workspace::WorkspaceInfo> {
-    let service = openbitfun_core::service::workspace::get_global_workspace_service()
+) -> AppManagementResult<starmate_core::service::workspace::WorkspaceInfo> {
+    let service = starmate_core::service::workspace::get_global_workspace_service()
         .ok_or_else(|| AppManagementError::invalid_request("Workspace service is unavailable"))?;
     service
         .resolve_legacy_workspace_reference(workspace_id, legacy_path, None, None)

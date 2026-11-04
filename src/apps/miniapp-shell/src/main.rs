@@ -31,11 +31,11 @@ fn main() {
     if std::env::args_os().any(|arg| arg == "--miniapp-shell-info") {
         println!(
             "{}",
-            serde_json::json!({"role":"miniapp-shell", "version":env!("CARGO_PKG_VERSION"), "protocolVersion":openbitfun_miniapp_ipc::MINIAPP_PRESENTATION_PROTOCOL, "launchRecordVersions":[1,2], "tauriDevMode": tauri::is_dev(), "capabilities":[openbitfun_miniapp_ipc::MINIAPP_CUSTOM_CHROME_CAPABILITY,openbitfun_miniapp_ipc::MINIAPP_CHAT_SNAPSHOT_CAPABILITY]})
+            serde_json::json!({"role":"miniapp-shell", "version":env!("CARGO_PKG_VERSION"), "protocolVersion":starmate_miniapp_ipc::MINIAPP_PRESENTATION_PROTOCOL, "launchRecordVersions":[1,2], "tauriDevMode": tauri::is_dev(), "capabilities":[starmate_miniapp_ipc::MINIAPP_CUSTOM_CHROME_CAPABILITY,starmate_miniapp_ipc::MINIAPP_CHAT_SNAPSHOT_CAPABILITY]})
         );
         return;
     }
-    let path = match openbitfun_miniapp_ipc::launcher::launch_manifest() {
+    let path = match starmate_miniapp_ipc::launcher::launch_manifest() {
         Ok(Some(path)) => path,
         Ok(None) => {
             show_fatal_startup_error(

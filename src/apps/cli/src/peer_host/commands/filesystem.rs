@@ -1,8 +1,8 @@
 //! Filesystem HostInvoke handlers.
 
-use openbitfun_core::service::filesystem::path_operations;
-use openbitfun_core::service::workspace::WorkspaceKind;
-use openbitfun_core::service::{filesystem::FileSystemService, workspace::WorkspaceService};
+use starmate_core::service::filesystem::path_operations;
+use starmate_core::service::workspace::WorkspaceKind;
+use starmate_core::service::{filesystem::FileSystemService, workspace::WorkspaceService};
 use serde_json::{json, Value};
 
 use crate::peer_host::args::{get_string, optional_bool, optional_string, request_value};
@@ -12,7 +12,7 @@ pub(crate) async fn html_preview_read_resource(args: &Value) -> Result<Value, St
     let request = serde_json::from_value(request_value(args).clone())
         .map_err(|error| format!("Invalid HTML preview request: {error}"))?;
     let reply =
-        openbitfun_core::service::filesystem::html_preview::html_preview_read_resource(request)
+        starmate_core::service::filesystem::html_preview::html_preview_read_resource(request)
             .await;
     serde_json::to_value(reply).map_err(|error| error.to_string())
 }
@@ -52,7 +52,7 @@ async fn directory_connection(
 }
 
 fn directory_nodes_to_json(
-    nodes: Vec<openbitfun_core::infrastructure::FileTreeNode>,
+    nodes: Vec<starmate_core::infrastructure::FileTreeNode>,
 ) -> Vec<Value> {
     nodes
         .into_iter()
@@ -99,7 +99,7 @@ pub(crate) async fn get_directory_children_paginated(
         .get_directory_contents_on_connection(&path, preferred.as_deref())
         .await
         .map_err(|e| format!("Failed to get paginated directory children: {e}"))?;
-    openbitfun_services_core::filesystem::sort_directory_nodes(
+    starmate_services_core::filesystem::sort_directory_nodes(
         &mut nodes,
         request.get("sortBy").and_then(Value::as_str),
         request.get("sortOrder").and_then(Value::as_str),
@@ -129,7 +129,7 @@ pub(crate) async fn get_file_tree(
         .build_file_tree_on_connection(&path, preferred.as_deref())
         .await
         .map_err(|error| format!("Failed to build file tree: {error}"))?;
-    fn node_value(mut node: openbitfun_core::infrastructure::FileTreeNode) -> Value {
+    fn node_value(mut node: starmate_core::infrastructure::FileTreeNode) -> Value {
         let children = node.children.take();
         let mut value = directory_nodes_to_json(vec![node]).pop().unwrap();
         if let Some(children) = children {
@@ -230,18 +230,18 @@ async fn watch_target(
 
 pub(crate) async fn start_file_watch(state: &PeerHostState, args: &Value) -> Result<Value, String> {
     let (path, recursive) = watch_target(state, request_value(args)).await?;
-    openbitfun_core::service::start_file_watch(path, recursive).await?;
+    starmate_core::service::start_file_watch(path, recursive).await?;
     Ok(Value::Null)
 }
 
 pub(crate) async fn stop_file_watch(state: &PeerHostState, args: &Value) -> Result<Value, String> {
     let (path, _) = watch_target(state, request_value(args)).await?;
-    openbitfun_core::service::stop_file_watch(path).await?;
+    starmate_core::service::stop_file_watch(path).await?;
     Ok(Value::Null)
 }
 
 pub(crate) async fn get_watched_paths() -> Result<Value, String> {
-    let paths = openbitfun_core::service::get_watched_paths().await?;
+    let paths = starmate_core::service::get_watched_paths().await?;
     Ok(json!(paths))
 }
 
@@ -252,7 +252,7 @@ pub(crate) async fn check_path_exists(
     let request = request_value(args);
     let path = get_string(request, "path")?;
     let hint = file_connection(state, request, &path).await?;
-    openbitfun_core::service::filesystem::path_operations::exists(
+    starmate_core::service::filesystem::path_operations::exists(
         &state.filesystem_service,
         &path,
         hint.as_deref(),
@@ -265,7 +265,7 @@ pub(crate) async fn create_directory(state: &PeerHostState, args: &Value) -> Res
     let request = request_value(args);
     let path = get_string(request, "path")?;
     let hint = file_connection(state, request, &path).await?;
-    openbitfun_core::service::filesystem::path_operations::create_directory(
+    starmate_core::service::filesystem::path_operations::create_directory(
         &state.filesystem_service,
         &path,
         hint.as_deref(),
@@ -286,7 +286,7 @@ pub(crate) async fn read_file_content(
             return Err(format!("Unsupported text encoding: {encoding}"));
         }
     }
-    openbitfun_core::service::filesystem::path_operations::read_text(
+    starmate_core::service::filesystem::path_operations::read_text(
         &state.filesystem_service,
         &path,
         hint.as_deref(),
@@ -303,7 +303,7 @@ pub(crate) async fn write_file_content(
     let path = get_string(request, "filePath")?;
     let content = get_string(request, "content")?;
     let hint = file_connection(state, request, &path).await?;
-    openbitfun_core::service::filesystem::path_operations::write_text_checked(
+    starmate_core::service::filesystem::path_operations::write_text_checked(
         &state.filesystem_service,
         &path,
         &content,
@@ -322,7 +322,7 @@ pub(crate) async fn rename_file(state: &PeerHostState, args: &Value) -> Result<V
     let from = get_string(request, "oldPath")?;
     let to = get_string(request, "newPath")?;
     let hint = file_connection(state, request, &from).await?;
-    openbitfun_core::service::filesystem::path_operations::rename(
+    starmate_core::service::filesystem::path_operations::rename(
         &state.filesystem_service,
         &from,
         &to,
@@ -344,7 +344,7 @@ pub(crate) async fn delete_path(
         .get("recursive")
         .and_then(Value::as_bool)
         .unwrap_or(false);
-    openbitfun_core::service::filesystem::path_operations::remove(
+    starmate_core::service::filesystem::path_operations::remove(
         &state.filesystem_service,
         &path,
         directory,
@@ -400,7 +400,7 @@ pub(crate) async fn workspace_file_upload(
         .ok_or("Sign in to use workspace transfers")?;
     let request = serde_json::from_value(request_value(args).clone())
         .map_err(|error| format!("Invalid workspace upload request: {error}"))?;
-    let result = openbitfun_core::service::filesystem::upload::workspace_file_upload(
+    let result = starmate_core::service::filesystem::upload::workspace_file_upload(
         account.user_id,
         request,
     )

@@ -297,9 +297,9 @@ function validateProductControlWorkflowGate() {
   } else {
     const command = String(ownerGate.run ?? '');
     for (const required of [
-      'cargo test --locked -p openbitfun-product-domains --no-default-features product_control',
-      'cargo test --locked -p openbitfun-product-domains --no-default-features remote_surface',
-      'cargo test --locked -p openbitfun-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery',
+      'cargo test --locked -p starmate-product-domains --no-default-features product_control',
+      'cargo test --locked -p starmate-product-domains --no-default-features remote_surface',
+      'cargo test --locked -p starmate-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery',
     ]) {
       if (!command.includes(required)) {
         errors.push(`.github/workflows/ci.yml: ProductControl owner gate must include ${JSON.stringify(required)}.`);
@@ -319,8 +319,8 @@ function validateProductControlWorkflowGate() {
     .filter((step) => step?.run && step['continue-on-error'] !== true)
     .map((step) => String(step.run));
   for (const required of [
-    'cargo test --locked -p openbitfun-cli -p openbitfun-acp',
-    'cargo test --locked -p openbitfun-cli -p openbitfun-acp -p openbitfun-agent-runtime',
+    'cargo test --locked -p starmate-cli -p starmate-acp',
+    'cargo test --locked -p starmate-cli -p starmate-acp -p starmate-agent-runtime',
   ]) {
     if (!cliCommands.includes(required)) {
       errors.push(

@@ -541,7 +541,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -570,7 +570,7 @@ mod tests {
             "remote-session".to_string(),
             session_identity,
         ));
-        context.runtime_handles = openbitfun_runtime_ports::ToolRuntimeHandles::new(
+        context.runtime_handles = starmate_runtime_ports::ToolRuntimeHandles::new(
             Some(WorkspaceServices {
                 fs: Arc::new(FakeRemoteFs),
                 shell: Arc::new(FakeShell),

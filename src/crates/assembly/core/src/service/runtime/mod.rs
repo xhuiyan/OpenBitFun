@@ -5,10 +5,10 @@
 
 use crate::infrastructure::get_path_manager_arc;
 use crate::util::errors::OpenBitFunResult;
-use openbitfun_services_core::managed_runtime::ManagedRuntimeResolver;
+use starmate_services_core::managed_runtime::ManagedRuntimeResolver;
 use std::path::{Path, PathBuf};
 
-pub use openbitfun_services_core::managed_runtime::{
+pub use starmate_services_core::managed_runtime::{
     ResolvedCommand, RuntimeCommandCapability, RuntimeSource,
 };
 

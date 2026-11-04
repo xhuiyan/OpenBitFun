@@ -9,7 +9,7 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::warn;
 use serde_json::Value;
 
-pub use openbitfun_agent_runtime::deep_review::{
+pub use starmate_agent_runtime::deep_review::{
     adaptive_review_max_focused_calls, apply_deep_review_queue_control,
     canonical_review_worker_agent_type, classify_deep_review_capacity_error,
     clear_deep_review_queue_control_for_tool, deep_review_active_reviewer_count,

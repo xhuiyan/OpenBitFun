@@ -3,10 +3,10 @@ use std::sync::atomic::{AtomicBool, AtomicI32, AtomicU64, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
 
-use openbitfun_services_integrations::mcp::adapter::render_mcp_tool_result_for_assistant;
-use openbitfun_services_integrations::mcp::config::ConfigLocation;
-use openbitfun_services_integrations::mcp::protocol::MCPToolResultContent;
-use openbitfun_services_integrations::mcp::server::{
+use starmate_services_integrations::mcp::adapter::render_mcp_tool_result_for_assistant;
+use starmate_services_integrations::mcp::config::ConfigLocation;
+use starmate_services_integrations::mcp::protocol::MCPToolResultContent;
+use starmate_services_integrations::mcp::server::{
     MCPConnection, MCPProcessStartContext, MCPRuntimeErrorKind, MCPServerConfig,
     MCPServerRuntimeState, MCPServerStatus, MCPServerTimeouts, MCPServerTransport, MCPServerType,
 };

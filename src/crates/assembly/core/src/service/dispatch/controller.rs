@@ -1,4 +1,4 @@
-use openbitfun_services_integrations::remote_ssh::{
+use starmate_services_integrations::remote_ssh::{
     dispatch_ssh::{
         self, DispatchCliRelease, DispatchInstallPoll, DispatchInstallStart, DispatchSshProbe,
     },
@@ -21,7 +21,7 @@ use super::{
 };
 
 pub(super) const DISPATCH_PROTOCOL_VERSION: u64 =
-    openbitfun_services_core::dispatch_contract::DISPATCH_PROTOCOL_VERSION as u64;
+    starmate_services_core::dispatch_contract::DISPATCH_PROTOCOL_VERSION as u64;
 pub(super) const MAX_DISPATCH_TEXT_BYTES: usize = 32 * 1024;
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
@@ -172,12 +172,12 @@ pub struct DispatchAppendRequest {
 
 /// The wire shape and structural limits come from the shared contract; the
 /// controller only adds transport-owned policy (the device inline budget).
-pub(super) use openbitfun_services_core::dispatch_contract::DispatchAttachment as DispatchAttachmentPayload;
+pub(super) use starmate_services_core::dispatch_contract::DispatchAttachment as DispatchAttachmentPayload;
 
 pub(super) fn validate_attachment_payloads(
     attachments: &[DispatchAttachmentPayload],
 ) -> anyhow::Result<()> {
-    openbitfun_services_core::dispatch_contract::validate_dispatch_attachments(attachments)
+    starmate_services_core::dispatch_contract::validate_dispatch_attachments(attachments)
         .map_err(|error| anyhow::anyhow!(error))
 }
 
@@ -189,7 +189,7 @@ pub(super) fn validate_device_attachment_budget(
         .map(|attachment| attachment.data_url.len())
         .sum();
     if total
-        > openbitfun_services_core::dispatch_contract::MAX_DEVICE_DISPATCH_ATTACHMENTS_TOTAL_BYTES
+        > starmate_services_core::dispatch_contract::MAX_DEVICE_DISPATCH_ATTACHMENTS_TOTAL_BYTES
     {
         anyhow::bail!(
             "Device dispatch carries at most 192 KiB of inline images; use an SSH target for larger screenshots"
@@ -209,7 +209,7 @@ pub struct DispatchQueryJobRequest {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub file_path: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub file_chunk: Option<openbitfun_services_core::dispatch_contract::DispatchFileChunkRequest>,
+    pub file_chunk: Option<starmate_services_core::dispatch_contract::DispatchFileChunkRequest>,
 }
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
@@ -309,7 +309,7 @@ struct SubscriptionModelSyncUnsupported {
 
 fn protected_model_sync_payload(config: &Value) -> anyhow::Result<Value> {
     let mut protected = config.clone();
-    openbitfun_config_contracts::protected_account_models::protect_account_models(&mut protected);
+    starmate_config_contracts::protected_account_models::protect_account_models(&mut protected);
     let ai = protected
         .get("ai")
         .and_then(Value::as_object)
@@ -333,7 +333,7 @@ fn subscription_model_sync_requirements(
     payload: &Value,
 ) -> Result<Vec<&'static str>, SubscriptionModelSyncUnsupported> {
     use crate::service::config::AuthConfig;
-    use openbitfun_services_core::dispatch_contract::{
+    use starmate_services_core::dispatch_contract::{
         DISPATCH_SUBSCRIPTION_ACCOUNT_BINDINGS_CAPABILITY,
         DISPATCH_SUBSCRIPTION_ACCOUNT_FAILOVER_CAPABILITY,
     };
@@ -341,7 +341,7 @@ fn subscription_model_sync_requirements(
     // supported live auth facts instead of duplicating version rules here.
     let mut provider_accounts = false;
     let mut restored = json!({"ai":payload});
-    if !openbitfun_config_contracts::protected_account_models::restore_account_models(&mut restored)
+    if !starmate_config_contracts::protected_account_models::restore_account_models(&mut restored)
         .is_empty()
     {
         return Err(SubscriptionModelSyncUnsupported {
@@ -361,7 +361,7 @@ fn subscription_model_sync_requirements(
             .get("channel_routing")
             .filter(|value| !value.is_null())
         {
-            let route: openbitfun_config_contracts::channel_routing::ModelChannelRouting =
+            let route: starmate_config_contracts::channel_routing::ModelChannelRouting =
                 serde_json::from_value(route.clone()).map_err(|_| {
                     SubscriptionModelSyncUnsupported {
                         reason: "Unsupported channel routing record; configuration was preserved"
@@ -405,11 +405,11 @@ fn subscription_model_sync_requirements(
     }
     let mut required = Vec::new();
     if provider_accounts {
-        required.push(openbitfun_services_core::dispatch_contract::DISPATCH_SUBSCRIPTION_PROVIDER_ACCOUNTS_CAPABILITY);
+        required.push(starmate_services_core::dispatch_contract::DISPATCH_SUBSCRIPTION_PROVIDER_ACCOUNTS_CAPABILITY);
     }
     if channels {
         required.push(
-            openbitfun_services_core::dispatch_contract::DISPATCH_MODEL_CHANNEL_ROUTING_CAPABILITY,
+            starmate_services_core::dispatch_contract::DISPATCH_MODEL_CHANNEL_ROUTING_CAPABILITY,
         );
     }
     if bindings {
@@ -1003,7 +1003,7 @@ async fn append_model_sync_audit(
             &format!("{attempt}:model-sync:{sequence}"),
             json!({
                 "timestamp": chrono::Utc::now().to_rfc3339(),
-                "action": openbitfun_services_core::dispatch_contract::DISPATCH_MODEL_SYNC_SETUP_AUDIT_ACTION,
+                "action": starmate_services_core::dispatch_contract::DISPATCH_MODEL_SYNC_SETUP_AUDIT_ACTION,
                 "details": {
                     "stage": stage,
                     // Never the synced payload itself: it carries API keys.
@@ -1030,7 +1030,7 @@ fn setup_audit_for_target(events: Vec<Value>, protocol: &Value) -> Vec<Value> {
                 .get("action")
                 .and_then(Value::as_str)
                 .is_some_and(|action| {
-                    openbitfun_services_core::dispatch_contract::
+                    starmate_services_core::dispatch_contract::
                         dispatch_target_accepts_setup_audit_action(action, &capabilities)
                 })
         })
@@ -1307,9 +1307,9 @@ pub(super) fn validate_file_query_capability(
     kind: &str,
 ) -> anyhow::Result<()> {
     let required = if kind == "readFileChunk" {
-        openbitfun_services_core::dispatch_contract::DISPATCH_FILE_CHUNKS_CAPABILITY
+        starmate_services_core::dispatch_contract::DISPATCH_FILE_CHUNKS_CAPABILITY
     } else {
-        openbitfun_services_core::dispatch_contract::DISPATCH_READ_FILE_CAPABILITY
+        starmate_services_core::dispatch_contract::DISPATCH_READ_FILE_CAPABILITY
     };
     let supported = protocol
         .and_then(|value| value.get("capabilities"))
@@ -1351,7 +1351,7 @@ pub(super) fn validate_query_request(request: &DispatchQueryJobRequest) -> anyho
             .ok_or_else(|| anyhow::anyhow!("Dispatch chunk query requires fileChunk"))?;
         if chunk.limit == 0
             || chunk.limit
-                > openbitfun_services_core::dispatch_contract::DISPATCH_FILE_CHUNK_MAX_BYTES
+                > starmate_services_core::dispatch_contract::DISPATCH_FILE_CHUNK_MAX_BYTES
         {
             anyhow::bail!("Invalid dispatch output chunk size");
         }
@@ -1917,11 +1917,11 @@ mod tests {
 
     fn subscription_sync_protocol(extra: &[&str]) -> Value {
         let mut capabilities: Vec<_> =
-            openbitfun_services_core::dispatch_contract::dispatch_required_target_capabilities()
+            starmate_services_core::dispatch_contract::dispatch_required_target_capabilities()
                 .collect();
         capabilities.extend_from_slice(extra);
-        json!({"productId":openbitfun_services_core::product_identity::product_id(),
-            "dataNamespace":openbitfun_services_core::product_identity::data_namespace(),
+        json!({"productId":starmate_services_core::product_identity::product_id(),
+            "dataNamespace":starmate_services_core::product_identity::data_namespace(),
             "protocolVersion":DISPATCH_PROTOCOL_VERSION,"capabilities":capabilities})
     }
 
@@ -1969,7 +1969,7 @@ mod tests {
     #[test]
     fn subscription_model_sync_uses_guarded_export_and_restores_the_exact_binding() {
         use crate::service::config::{AuthConfig, SubscriptionProvider};
-        use openbitfun_config_contracts::protected_account_models::{
+        use starmate_config_contracts::protected_account_models::{
             restore_account_models, ACCOUNT_MODEL_GUARD_KEY, ACCOUNT_MODEL_GUARD_URL,
         };
         for auth in [
@@ -2046,7 +2046,7 @@ mod tests {
     #[test]
     fn channel_model_sync_negotiates_channels_independently_and_preserves_unsupported_records() {
         use crate::service::config::AuthConfig;
-        use openbitfun_services_core::dispatch_contract::DISPATCH_MODEL_CHANNEL_ROUTING_CAPABILITY as CHANNELS;
+        use starmate_services_core::dispatch_contract::DISPATCH_MODEL_CHANNEL_ROUTING_CAPABILITY as CHANNELS;
         let mut original = subscription_sync_fixture(AuthConfig::ApiKey);
         let mut backup = original["ai"]["models"][0].clone();
         backup["id"] = json!("sync-backup");
@@ -2094,7 +2094,7 @@ mod tests {
     #[test]
     fn other_provider_model_sync_requires_explicit_support_before_any_remote_write() {
         use crate::service::config::{AuthConfig, SubscriptionProvider};
-        use openbitfun_services_core::dispatch_contract::{
+        use starmate_services_core::dispatch_contract::{
             DISPATCH_SUBSCRIPTION_ACCOUNT_BINDINGS_CAPABILITY as BINDINGS,
             DISPATCH_SUBSCRIPTION_ACCOUNT_FAILOVER_CAPABILITY as FAILOVER,
             DISPATCH_SUBSCRIPTION_PROVIDER_ACCOUNTS_CAPABILITY as PROVIDERS,
@@ -2133,7 +2133,7 @@ mod tests {
     #[test]
     fn subscription_model_sync_requires_runtime_bindings_and_failover_independently() {
         use crate::service::config::{AuthConfig, SubscriptionProvider};
-        use openbitfun_services_core::dispatch_contract::{
+        use starmate_services_core::dispatch_contract::{
             DISPATCH_SUBSCRIPTION_ACCOUNT_BINDINGS_CAPABILITY as BINDINGS,
             DISPATCH_SUBSCRIPTION_ACCOUNT_FAILOVER_CAPABILITY as FAILOVER,
         };
@@ -2197,7 +2197,7 @@ mod tests {
             }))
             .unwrap();
         let valid = subscription_sync_protocol(
-            openbitfun_services_core::dispatch_contract::DISPATCH_SUBSCRIPTION_ACCOUNT_CAPABILITIES,
+            starmate_services_core::dispatch_contract::DISPATCH_SUBSCRIPTION_ACCOUNT_CAPABILITIES,
         );
         assert!(validate_subscription_model_sync(&payload, Some(&valid)).is_ok());
         for (field, value) in [
@@ -2237,7 +2237,7 @@ mod tests {
     #[test]
     fn subscription_model_sync_preserves_but_rejects_future_guards_before_transport() {
         use crate::service::config::{AuthConfig, SubscriptionProvider};
-        use openbitfun_config_contracts::protected_account_models::ACCOUNT_MODEL_GUARD_KEY;
+        use starmate_config_contracts::protected_account_models::ACCOUNT_MODEL_GUARD_KEY;
         let mut payload =
             protected_model_sync_payload(&subscription_sync_fixture(AuthConfig::Subscription {
                 provider: SubscriptionProvider::Codex,

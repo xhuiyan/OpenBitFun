@@ -13,12 +13,12 @@ use super::macos;
 use super::{NativeComputerUseHost, PointerMap};
 use enigo::{Axis, Button, Coordinate, Direction, Enigo, Key, Keyboard, Mouse, Settings};
 use log::debug;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 #[cfg(target_os = "windows")]
-use openbitfun_agent_tools::computer_use_host::AppSelector;
+use starmate_agent_tools::computer_use_host::AppSelector;
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-use openbitfun_agent_tools::computer_use_host::ClickTarget;
-use openbitfun_agent_tools::computer_use_host::{ComputerUseHost, ComputerUseLastMutationKind};
+use starmate_agent_tools::computer_use_host::ClickTarget;
+use starmate_agent_tools::computer_use_host::{ComputerUseHost, ComputerUseLastMutationKind};
 use std::time::Duration;
 
 impl NativeComputerUseHost {

@@ -12,11 +12,11 @@ use tauri::State;
 
 use crate::api::app_state::AppState;
 
-use openbitfun_core::agentic::coordination::{
+use starmate_core::agentic::coordination::{
     ConversationCoordinator, DialogSubmissionPolicy, DialogTriggerSource,
 };
-use openbitfun_core::agentic::image_analysis::ImageContextData;
-use openbitfun_core::agentic::side_question::{BtwTurnWatch, BTW_TURN_POLL_INTERVAL};
+use starmate_core::agentic::image_analysis::ImageContextData;
+use starmate_core::agentic::side_question::{BtwTurnWatch, BTW_TURN_POLL_INTERVAL};
 
 fn desktop_btw_submission_policy() -> DialogSubmissionPolicy {
     DialogSubmissionPolicy::for_source(DialogTriggerSource::DesktopUi)
@@ -40,10 +40,10 @@ pub struct BtwAskStreamRequest {
     #[serde(default)]
     pub user_message_metadata: Option<serde_json::Value>,
     #[serde(default)]
-    pub initial_model_selection: Option<openbitfun_runtime_ports::AgentSessionModelSelection>,
+    pub initial_model_selection: Option<starmate_runtime_ports::AgentSessionModelSelection>,
     /// Requires btw_model_pool_selection_v1; omitted means inherit the parent binding.
     #[serde(default)]
-    pub initial_model_target: Option<openbitfun_runtime_ports::AgentSessionModelTargetSelection>,
+    pub initial_model_target: Option<starmate_runtime_ports::AgentSessionModelTargetSelection>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -148,7 +148,7 @@ pub async fn btw_ask_stream(
         loop {
             let processing = matches!(
                 coordinator.get_session_manager().get_session_state(&child_session_id),
-                Some(openbitfun_core::agentic::core::SessionState::Processing {
+                Some(starmate_core::agentic::core::SessionState::Processing {
                     current_turn_id,
                     ..
                 }) if current_turn_id == turn_id
@@ -207,7 +207,7 @@ mod tests {
                 .as_deref(),
             Some("high")
         );
-        let auto: openbitfun_runtime_ports::AgentSessionModelSelection =
+        let auto: starmate_runtime_ports::AgentSessionModelSelection =
             serde_json::from_value(serde_json::json!({ "modelId": "primary" })).unwrap();
         assert!(auto.reasoning_preset.is_none());
     }

@@ -1,6 +1,6 @@
 //! Model pool definitions and typed Agent selections persisted in the main AI configuration.
 
-use openbitfun_core_types::model_pool::ModelPoolStrategy;
+use starmate_core_types::model_pool::ModelPoolStrategy;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashSet};
 
@@ -99,7 +99,7 @@ pub struct SubagentModelSelections {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AgentModelSelections {
-    pub mode: openbitfun_core_types::model_pool::ModelSelection,
+    pub mode: starmate_core_types::model_pool::ModelSelection,
     pub subagents: SubagentModelSelections,
 }
 
@@ -113,10 +113,10 @@ impl AgentModelSelections {
             }
         }
         let mode_valid = match &self.mode {
-            openbitfun_core_types::model_pool::ModelSelection::Model { model_ref } => {
+            starmate_core_types::model_pool::ModelSelection::Model { model_ref } => {
                 !model_ref.trim().is_empty()
             }
-            openbitfun_core_types::model_pool::ModelSelection::Pool { pool_id } => {
+            starmate_core_types::model_pool::ModelSelection::Pool { pool_id } => {
                 !pool_id.trim().is_empty()
             }
         };
@@ -151,7 +151,7 @@ pub(crate) fn deserialize_model_selections<'de, D: serde::Deserializer<'de>>(
 impl Default for AgentModelSelections {
     fn default() -> Self {
         Self {
-            mode: openbitfun_core_types::model_pool::ModelSelection::Model {
+            mode: starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: "primary".into(),
             },
             subagents: SubagentModelSelections {
@@ -171,7 +171,7 @@ impl Default for AgentModelSelections {
 impl AgentModelSelections {
     pub fn from_legacy(legacy: &crate::types::AgentModelDefaultsConfig) -> Self {
         Self {
-            mode: openbitfun_core_types::model_pool::ModelSelection::Model {
+            mode: starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: legacy.mode.clone(),
             },
             subagents: SubagentModelSelections {
@@ -205,8 +205,8 @@ impl crate::types::AIConfig {
     /// Scalar-only surfaces must explicitly handle a pool instead of reading stale legacy defaults.
     pub fn mode_model_reference(&self) -> Result<String, String> {
         match self.effective_model_selections()?.mode {
-            openbitfun_core_types::model_pool::ModelSelection::Model { model_ref } => Ok(model_ref),
-            openbitfun_core_types::model_pool::ModelSelection::Pool { .. } => Err(
+            starmate_core_types::model_pool::ModelSelection::Model { model_ref } => Ok(model_ref),
+            starmate_core_types::model_pool::ModelSelection::Pool { .. } => Err(
                 "The default selection is a model pool; this operation requires a specific model"
                     .into(),
             ),
@@ -290,11 +290,11 @@ mod tests {
         let mut typed = ai.effective_model_selections().unwrap();
         assert_eq!(
             typed.mode,
-            openbitfun_core_types::model_pool::ModelSelection::Model {
+            starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: "original".into()
             }
         );
-        typed.mode = openbitfun_core_types::model_pool::ModelSelection::Pool {
+        typed.mode = starmate_core_types::model_pool::ModelSelection::Pool {
             pool_id: "p".into(),
         };
         typed.subagents.default = AgentModelSelection::Pool {
@@ -320,7 +320,7 @@ mod tests {
             serde_json::to_value(old.agent_model_defaults).unwrap(),
             legacy
         );
-        typed.mode = openbitfun_core_types::model_pool::ModelSelection::Model {
+        typed.mode = starmate_core_types::model_pool::ModelSelection::Model {
             model_ref: "new".into(),
         };
         ai.set_model_selections(typed).unwrap();

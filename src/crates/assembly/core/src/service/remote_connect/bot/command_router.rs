@@ -24,7 +24,7 @@ use std::sync::{Arc, OnceLock};
 pub use super::locale::{current_bot_language, BotLanguage};
 use super::locale::{fmt_count, strings_for, BotStrings};
 use super::menu::{MenuItem, MenuView};
-pub use openbitfun_services_integrations::remote_connect::bot::{
+pub use starmate_services_integrations::remote_connect::bot::{
     parse_command, BotAction, BotActionStyle, BotChatState, BotCommand, BotDisplayMode,
     BotInteractionHandler, BotInteractiveRequest, BotMessageSender, BotQuestion, BotQuestionOption,
     BotWorkspaceChoice, BotWorkspaceRef, PendingAction, RemoteBotTarget, RemoteDeviceTarget,
@@ -1197,12 +1197,12 @@ fn show_workspace_choices(
 }
 
 fn local_pro_workspace_choices(
-    workspaces: Vec<openbitfun_runtime_ports::RemoteRecentWorkspaceFacts>,
+    workspaces: Vec<starmate_runtime_ports::RemoteRecentWorkspaceFacts>,
 ) -> Vec<BotWorkspaceChoice> {
     workspaces
         .into_iter()
         .filter(|workspace| {
-            workspace.kind != openbitfun_runtime_ports::RemoteWorkspaceKind::Assistant
+            workspace.kind != starmate_runtime_ports::RemoteWorkspaceKind::Assistant
         })
         .map(|workspace| {
             BotWorkspaceChoice::new(
@@ -1253,7 +1253,7 @@ async fn start_local_switch(
         let options: Vec<_> = workspaces
             .into_iter()
             .filter(|workspace| {
-                workspace.kind == openbitfun_runtime_ports::RemoteWorkspaceKind::Assistant
+                workspace.kind == starmate_runtime_ports::RemoteWorkspaceKind::Assistant
             })
             .map(|workspace| (workspace.workspace_id, workspace.name))
             .collect();
@@ -1752,7 +1752,7 @@ async fn select_local_assistant(
 ) -> HandleResult {
     let workspaces = remote_opened_workspace_catalog(ws_service).await;
     let Some(workspace) = workspaces.iter().find(|workspace| {
-        workspace.kind == openbitfun_runtime_ports::RemoteWorkspaceKind::Assistant
+        workspace.kind == starmate_runtime_ports::RemoteWorkspaceKind::Assistant
             && workspace.workspace_id == workspace_id
     }) else {
         let result = start_local_switch(state, ws_service, s).await;
@@ -1814,7 +1814,7 @@ async fn resolve_bot_session_storage_path_for_ref(
     workspace: &BotWorkspaceRef,
 ) -> Option<std::path::PathBuf> {
     use crate::agentic::session::CoreSessionStorePort;
-    use openbitfun_runtime_ports::SessionStorePort;
+    use starmate_runtime_ports::SessionStorePort;
     let record = resolve_bot_workspace(workspace).await.ok()?;
     CoreSessionStorePort::default()
         .resolve_workspace_storage(&record.id)
@@ -2577,8 +2577,8 @@ async fn create_session(state: &mut BotChatState, agent_type: &str) -> HandleRes
     use crate::agentic::coordination::get_global_coordinator;
     use crate::service::workspace::get_global_workspace_service;
     use crate::service_agent_runtime::CoreServiceAgentRuntime;
-    use openbitfun_runtime_ports::RemoteSessionWorkspaceIdentity;
-    use openbitfun_services_integrations::remote_connect::{
+    use starmate_runtime_ports::RemoteSessionWorkspaceIdentity;
+    use starmate_services_integrations::remote_connect::{
         build_remote_session_create_request, RemoteConnectSubmissionSource,
     };
 
@@ -3569,7 +3569,7 @@ pub(crate) async fn execute_forwarded_turn_with_submission(
     use crate::service::remote_connect::remote_server::{
         get_or_init_global_dispatcher, TrackerEvent,
     };
-    use openbitfun_services_integrations::remote_connect::RemoteConnectSubmissionSource;
+    use starmate_services_integrations::remote_connect::RemoteConnectSubmissionSource;
 
     let language = current_bot_language().await;
     let s = strings_for(language);
@@ -3729,9 +3729,9 @@ pub(crate) async fn execute_forwarded_turn_with_submission(
         // have started the next turn and replaced the tracker's text buffer.
         let poll_host =
             crate::service_agent_runtime::CoreServiceAgentRuntime::remote_poll_host(&dispatcher);
-        let poll = openbitfun_services_integrations::remote_connect::handle_remote_poll_command(
+        let poll = starmate_services_integrations::remote_connect::handle_remote_poll_command(
             &poll_host,
-            &openbitfun_services_integrations::remote_connect::RemoteCommand::PollSession {
+            &starmate_services_integrations::remote_connect::RemoteCommand::PollSession {
                 session_id: forward.session_id.clone(),
                 since_version: 0,
                 known_msg_count: 0,
@@ -3742,7 +3742,7 @@ pub(crate) async fn execute_forwarded_turn_with_submission(
         let full_text = serde_json::to_value(poll)
             .ok()
             .and_then(|poll| {
-                openbitfun_services_integrations::remote_connect::bot::remote_turn::observe_turn(
+                starmate_services_integrations::remote_connect::bot::remote_turn::observe_turn(
                     &poll,
                     &target_turn_id,
                 )
@@ -3785,7 +3785,7 @@ async fn execute_remote_forward(
     epoch: u64,
     submission_finished: Option<tokio::sync::oneshot::Sender<()>>,
 ) -> ForwardedTurnResult {
-    use openbitfun_services_integrations::remote_connect::bot::remote_turn::observe_turn;
+    use starmate_services_integrations::remote_connect::bot::remote_turn::observe_turn;
     let s = strings_for(current_bot_language().await);
     let target = forward.remote_target.as_ref().unwrap();
     let current = || fence.is_lifecycle_current() && fence.identity_epoch() == epoch;
@@ -4013,7 +4013,7 @@ mod parse_command_tests {
 
     #[tokio::test]
     async fn bot_partial_answer_stops_unattended_timeout() {
-        use openbitfun_agent_runtime::user_questions::{
+        use starmate_agent_runtime::user_questions::{
             get_user_input_manager, PendingUserQuestion,
         };
         let manager = get_user_input_manager();
@@ -4145,7 +4145,7 @@ mod parse_command_tests {
 
     #[test]
     fn remote_picker_accepts_legacy_catalog_after_wire_round_trip() {
-        use openbitfun_services_integrations::remote_connect::RemoteResponse;
+        use starmate_services_integrations::remote_connect::RemoteResponse;
         let legacy = serde_json::json!({
             "resp": "recent_workspaces",
             "workspaces": [{"path": "/legacy", "name": "Legacy project", "last_opened": ""}]
@@ -4190,8 +4190,8 @@ mod parse_command_tests {
     #[tokio::test]
     async fn local_bot_identity_repairs_legacy_state_without_retargeting_remote_workspaces() {
         use crate::service::workspace::{WorkspaceKind, WorkspaceService};
-        use openbitfun_runtime_ports::RemoteSessionWorkspaceIdentity;
-        use openbitfun_services_integrations::remote_connect::{
+        use starmate_runtime_ports::RemoteSessionWorkspaceIdentity;
+        use starmate_services_integrations::remote_connect::{
             build_remote_session_create_request, RemoteConnectSubmissionSource,
         };
         let root = tempfile::tempdir().unwrap();
@@ -5033,7 +5033,7 @@ mod handle_chat_tests {
     }
 
     async fn assert_remote_question_round_trip(supports_interaction: bool) {
-        use openbitfun_services_integrations::remote_connect::{device_crypto, encryption};
+        use starmate_services_integrations::remote_connect::{device_crypto, encryption};
         use std::sync::{Arc, Mutex};
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
@@ -5209,7 +5209,7 @@ mod handle_chat_tests {
         let capable = target.require_session_attachments().await;
         if supports_interaction {
             capable.unwrap();
-            let path = target.store_attachment(&openbitfun_services_integrations::remote_connect::bot::inbound_files::InboundFile {
+            let path = target.store_attachment(&starmate_services_integrations::remote_connect::bot::inbound_files::InboundFile {
                 name: "key.pem".into(), bytes: vec![0, 255, 1],
             }).await.unwrap();
             assert_eq!(path, "/remote/session-a/key.pem");
@@ -5357,7 +5357,7 @@ mod remote_device_flow_tests {
     /// Loopback relay that answers encrypted device RPCs for `device-a` with
     /// `respond`, recording every decrypted command.
     async fn spawn_device_fixture(respond: Responder) -> (String, Vec<u8>, Arc<Mutex<Vec<Value>>>) {
-        use openbitfun_services_integrations::remote_connect::{device_crypto, encryption};
+        use starmate_services_integrations::remote_connect::{device_crypto, encryption};
         use tokio::io::{AsyncReadExt, AsyncWriteExt};
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let relay_url = format!("http://{}", listener.local_addr().unwrap());

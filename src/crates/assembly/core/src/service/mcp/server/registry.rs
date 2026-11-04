@@ -2,4 +2,4 @@
 //!
 //! The reusable registry owner lives in `openbitfun-services-integrations`.
 
-pub use openbitfun_services_integrations::mcp::server::MCPServerRegistry;
+pub use starmate_services_integrations::mcp::server::MCPServerRegistry;

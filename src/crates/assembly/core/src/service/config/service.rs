@@ -103,7 +103,7 @@ fn translate_legacy_model_selection_write(
     path: &str,
     value: serde_json::Value,
 ) -> OpenBitFunResult<(String, serde_json::Value)> {
-    use openbitfun_config_contracts::model_pool::{AgentModelSelection, AgentModelSelections};
+    use starmate_config_contracts::model_pool::{AgentModelSelection, AgentModelSelections};
     let Some(suffix) = path.strip_prefix("ai.agent_model_defaults") else {
         return Ok((path.into(), value));
     };
@@ -460,7 +460,7 @@ impl ConfigService {
         let config: GlobalConfig = serde_json::from_value(config_value)?;
 
         Ok(ConfigExport {
-            product_id: openbitfun_core_types::product_identity::product_id().to_string(),
+            product_id: starmate_core_types::product_identity::product_id().to_string(),
             format_version: CURRENT_CONFIG_EXPORT_FORMAT_VERSION,
             config,
             export_timestamp: chrono::Utc::now().to_rfc3339(),
@@ -863,17 +863,17 @@ impl ConfigService {
 }
 
 #[async_trait::async_trait]
-impl openbitfun_runtime_ports::ConfigReadPort for ConfigService {
+impl starmate_runtime_ports::ConfigReadPort for ConfigService {
     async fn get_config_value(
         &self,
         key: &str,
-    ) -> openbitfun_runtime_ports::PortResult<Option<serde_json::Value>> {
+    ) -> starmate_runtime_ports::PortResult<Option<serde_json::Value>> {
         self.get_config::<serde_json::Value>(Some(key))
             .await
             .map(Some)
             .map_err(|error| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::Backend,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::Backend,
                     error.to_string(),
                 )
             })
@@ -971,7 +971,7 @@ mod tests {
 
     #[tokio::test]
     async fn model_pool_main_config_defaults_roundtrip() {
-        use openbitfun_config_contracts::model_pool::{AgentModelSelection, ModelPoolDefinition};
+        use starmate_config_contracts::model_pool::{AgentModelSelection, ModelPoolDefinition};
         let (service, _dir) = test_service("model-pool-main-config").await;
         service
             .add_ai_model(runtime_model("a", "fixture-key"))
@@ -1037,7 +1037,7 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(updated.get(&pool_id).unwrap().name, "Renamed");
-        let before: openbitfun_config_contracts::model_pool::AgentModelSelections = service
+        let before: starmate_config_contracts::model_pool::AgentModelSelections = service
             .get_config(Some("ai.agent_model_selections"))
             .await
             .unwrap();
@@ -1054,13 +1054,13 @@ mod tests {
             )
             .await
             .unwrap();
-        let after: openbitfun_config_contracts::model_pool::AgentModelSelections = service
+        let after: starmate_config_contracts::model_pool::AgentModelSelections = service
             .get_config(Some("ai.agent_model_selections"))
             .await
             .unwrap();
         assert_eq!(
             after.mode,
-            openbitfun_core_types::model_pool::ModelSelection::Model {
+            starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: "b".into()
             }
         );
@@ -1120,20 +1120,20 @@ mod tests {
         );
         mode.unwrap();
         child.unwrap();
-        let defaults: openbitfun_config_contracts::model_pool::AgentModelSelections = service
+        let defaults: starmate_config_contracts::model_pool::AgentModelSelections = service
             .get_config(Some("ai.agent_model_selections"))
             .await
             .unwrap();
         let selections = defaults.clone();
         assert_eq!(
             selections.mode,
-            openbitfun_core_types::model_pool::ModelSelection::Model {
+            starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: "a".into()
             }
         );
         assert_eq!(
             selections.subagents.default,
-            openbitfun_config_contracts::model_pool::AgentModelSelection::Inherit
+            starmate_config_contracts::model_pool::AgentModelSelection::Inherit
         );
         assert!(defaults
             .subagents
@@ -1287,7 +1287,7 @@ mod tests {
 
     fn current_export(config: GlobalConfig) -> ConfigExport {
         ConfigExport {
-            product_id: openbitfun_core_types::product_identity::product_id().to_string(),
+            product_id: starmate_core_types::product_identity::product_id().to_string(),
             format_version: CURRENT_CONFIG_EXPORT_FORMAT_VERSION,
             config,
             export_timestamp: "2026-09-04T00:00:00Z".to_string(),
@@ -2500,10 +2500,10 @@ mod tests {
             .expect("valid models should save");
 
         let invalid_models = vec![AIModelConfig {
-            reasoning: Some(openbitfun_core_types::ReasoningConfig {
-                presets: vec![openbitfun_core_types::ReasoningPreset {
+            reasoning: Some(starmate_core_types::ReasoningConfig {
+                presets: vec![starmate_core_types::ReasoningPreset {
                     id: "bad-budget".to_string(),
-                    actions: vec![openbitfun_core_types::ReasoningPresetAction::BudgetTokens {
+                    actions: vec![starmate_core_types::ReasoningPresetAction::BudgetTokens {
                         value: 0,
                     }],
                     ..Default::default()
@@ -2534,18 +2534,18 @@ mod tests {
         let (service, _dir) = test_service("invalid-reasoning-import").await;
         let mut config = GlobalConfig::default();
         config.ai.models.push(AIModelConfig {
-            reasoning: Some(openbitfun_core_types::ReasoningConfig {
+            reasoning: Some(starmate_core_types::ReasoningConfig {
                 presets: vec![
-                    openbitfun_core_types::ReasoningPreset {
+                    starmate_core_types::ReasoningPreset {
                         id: "same".to_string(),
-                        actions: vec![openbitfun_core_types::ReasoningPresetAction::Toggle {
+                        actions: vec![starmate_core_types::ReasoningPresetAction::Toggle {
                             enabled: true,
                         }],
                         ..Default::default()
                     },
-                    openbitfun_core_types::ReasoningPreset {
+                    starmate_core_types::ReasoningPreset {
                         id: "same".to_string(),
-                        actions: vec![openbitfun_core_types::ReasoningPresetAction::Toggle {
+                        actions: vec![starmate_core_types::ReasoningPresetAction::Toggle {
                             enabled: false,
                         }],
                         ..Default::default()
@@ -2782,7 +2782,7 @@ mod tests {
         let mut raw_config =
             serde_json::to_value(GlobalConfig::default()).expect("default config should serialize");
         raw_config["ai"]["agent_model_selections"] = serde_json::to_value(
-            openbitfun_config_contracts::model_pool::AgentModelSelections::default(),
+            starmate_config_contracts::model_pool::AgentModelSelections::default(),
         )
         .unwrap();
         raw_config["version"] = serde_json::json!(env!("CARGO_PKG_VERSION"));

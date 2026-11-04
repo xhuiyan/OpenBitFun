@@ -1,9 +1,9 @@
-use openbitfun_core::external_session_import::{
+use starmate_core::external_session_import::{
     list_removed_external_sessions as list_removed,
     restore_removed_external_session as restore_removed,
 };
-use openbitfun_product_domains::external_sources::ExternalSourceOperationResult;
-use openbitfun_product_domains::session_import::{
+use starmate_product_domains::external_sources::ExternalSourceOperationResult;
+use starmate_product_domains::session_import::{
     RemovedExternalSession, RestoreRemovedExternalSessionRequest,
 };
 use serde::Deserialize;

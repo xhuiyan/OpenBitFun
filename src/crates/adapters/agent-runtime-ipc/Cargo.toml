@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-agent-runtime-ipc"
+name = "starmate-agent-runtime-ipc"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,15 +7,15 @@ publish = false
 description = "Private pre-integration IPC seam for a shared OpenBitFun Agent Runtime"
 
 [lib]
-name = "openbitfun_agent_runtime_ipc"
+name = "starmate_agent_runtime_ipc"
 crate-type = ["rlib"]
 
 [dependencies]
 async-trait = { workspace = true }
-openbitfun-transport = { path = "../transport" }
-openbitfun-events = { path = "../../contracts/events" }
-openbitfun-product-domains = { path = "../../contracts/product-domains" }
-openbitfun-runtime-ports = { path = "../../contracts/runtime-ports", features = ["agent-api", "git-port"] }
+starmate-transport = { path = "../transport" }
+starmate-events = { path = "../../contracts/events" }
+starmate-product-domains = { path = "../../contracts/product-domains" }
+starmate-runtime-ports = { path = "../../contracts/runtime-ports", features = ["agent-api", "git-port"] }
 dunce = { workspace = true }
 fs2 = { workspace = true }
 serde = { workspace = true }

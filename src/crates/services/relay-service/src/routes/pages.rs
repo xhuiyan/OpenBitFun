@@ -11,7 +11,7 @@ use axum::routing::{get, post};
 use axum::{Extension, Json, Router};
 use base64::{engine::general_purpose::STANDARD as B64, Engine};
 use dashmap::DashMap;
-use openbitfun_page_function_runtime::{
+use starmate_page_function_runtime::{
     run_fetch, FetchRequest, PageFunctionError, PageMeta, DEFAULT_TIMEOUT, WORKER_ENTRY_PATH,
 };
 use serde::{Deserialize, Serialize};

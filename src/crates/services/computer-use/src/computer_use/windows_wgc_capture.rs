@@ -4,7 +4,7 @@
 
 #![allow(dead_code)]
 
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 use std::time::{Duration, Instant};
 use windows::core::{Interface, HRESULT};
 use windows::Graphics::Capture::{
@@ -58,7 +58,7 @@ impl RetainedFrame {
         Vec<u8>,
         u32,
         u32,
-        openbitfun_agent_tools::computer_use_host::CaptureFrameInfo,
+        starmate_agent_tools::computer_use_host::CaptureFrameInfo,
     )> {
         (i64::from(width) == i64::from(self.width) && i64::from(height) == i64::from(self.height))
             .then(|| {
@@ -297,9 +297,9 @@ impl WgcCaptureSession {
     /// for the next observation, and never read back intermediate frames.
     fn settle(
         &mut self,
-        policy: openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::AppInputSettle> {
-        use openbitfun_agent_tools::computer_use_host::{
+        policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
+        use starmate_agent_tools::computer_use_host::{
             app_input_settle_decision, app_input_settle_next_wait_ms, AppInputSettle,
             AppInputSettleStatus,
         };
@@ -484,8 +484,8 @@ fn checked_frame_result(
 fn frame_info(
     reused: bool,
     age: Duration,
-) -> openbitfun_agent_tools::computer_use_host::CaptureFrameInfo {
-    openbitfun_agent_tools::computer_use_host::CaptureFrameInfo {
+) -> starmate_agent_tools::computer_use_host::CaptureFrameInfo {
+    starmate_agent_tools::computer_use_host::CaptureFrameInfo {
         reused,
         age_ms: age.as_millis().min(u64::MAX as u128) as u64,
     }
@@ -529,7 +529,7 @@ type CaptureResult = OpenBitFunResult<(
     Vec<u8>,
     u32,
     u32,
-    openbitfun_agent_tools::computer_use_host::CaptureFrameInfo,
+    starmate_agent_tools::computer_use_host::CaptureFrameInfo,
 )>;
 enum CaptureCommand {
     Ensure(
@@ -545,7 +545,7 @@ enum CaptureCommand {
     Settle(
         usize,
         crate::computer_use::control_session::ControlToken,
-        openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
+        starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
         std::sync::mpsc::SyncSender<SettleResult>,
     ),
     Snapshot(
@@ -556,13 +556,13 @@ enum CaptureCommand {
     ),
     Stop(std::sync::mpsc::SyncSender<()>),
 }
-type SettleResult = OpenBitFunResult<openbitfun_agent_tools::computer_use_host::AppInputSettle>;
+type SettleResult = OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle>;
 
 // A generation change must not retain a prior owner's native capture session.
 fn ensure_stream(
     active: &mut Option<(
         usize,
-        openbitfun_agent_tools::computer_use_control::ObservationScope,
+        starmate_agent_tools::computer_use_control::ObservationScope,
         WgcCaptureSession,
     )>,
     handle: usize,
@@ -608,7 +608,7 @@ fn capture_worker() -> &'static std::sync::mpsc::Sender<CaptureCommand> {
             let initialized = unsafe { CoInitializeEx(None, COINIT_MULTITHREADED) }.is_ok();
             let mut active: Option<(
                 usize,
-                openbitfun_agent_tools::computer_use_control::ObservationScope,
+                starmate_agent_tools::computer_use_control::ObservationScope,
                 WgcCaptureSession,
             )> = None;
             while let Ok(command) = rx.recv() {
@@ -661,7 +661,7 @@ fn capture_worker() -> &'static std::sync::mpsc::Sender<CaptureCommand> {
                                 ensure_stream(&mut active, handle)?.settle(policy)
                             })
                         } else {
-                            Ok(openbitfun_agent_tools::computer_use_host::AppInputSettle::unavailable(
+                            Ok(starmate_agent_tools::computer_use_host::AppInputSettle::unavailable(
                                 "No live window stream; the observation was taken without waiting for repaint",
                             ))
                         };
@@ -740,7 +740,7 @@ pub(super) fn snapshot_popup(hwnd: HWND, popup: HWND) -> OpenBitFunResult<(Vec<u
 /// Wait on the worker until the bound stream stops repainting after input.
 pub(super) fn wait_settled(
     hwnd: HWND,
-    policy: openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
+    policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
 ) -> SettleResult {
     crate::computer_use::control_session::capture_allowed().map_err(OpenBitFunError::service)?;
     let (tx, rx) = std::sync::mpsc::sync_channel(1);

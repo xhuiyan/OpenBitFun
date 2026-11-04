@@ -3,12 +3,12 @@
 //! Source travels as data, so remote workspaces and controllers never have to
 //! interpret a product-host path as a workspace or controller-local path.
 
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::miniapp::lifecycle::{
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::miniapp::lifecycle::{
     miniapp_runtime_event_payload, should_stop_worker_for_runtime_update, MiniAppCreateInput,
     MiniAppUpdatePatch,
 };
-use openbitfun_core::miniapp::{
+use starmate_core::miniapp::{
     EsmDep, JsWorkerPool, MiniApp, MiniAppManager, MiniAppPermissions, MiniAppSource, NpmDep,
 };
 use serde::Deserialize;
@@ -45,7 +45,7 @@ struct Input {
     category: Option<String>,
     tags: Option<Vec<String>>,
     permissions: Option<MiniAppPermissions>,
-    chrome: Option<openbitfun_product_domains::miniapp::chrome::MiniAppChrome>,
+    chrome: Option<starmate_product_domains::miniapp::chrome::MiniAppChrome>,
     html: Option<String>,
     css: Option<String>,
     ui_js: Option<String>,
@@ -228,7 +228,7 @@ mod tests {
     #[test]
     fn installed_miniapp_crud_uses_isolated_product_storage() {
         let root = tempfile::tempdir().unwrap();
-        let output = openbitfun_core::util::process_manager::create_command(
+        let output = starmate_core::util::process_manager::create_command(
             std::env::current_exe().unwrap(),
         )
         .args([
@@ -259,7 +259,7 @@ mod tests {
             Ok("1")
         );
         let paths =
-            std::sync::Arc::new(openbitfun_core::infrastructure::PathManager::new().unwrap());
+            std::sync::Arc::new(starmate_core::infrastructure::PathManager::new().unwrap());
         let manager = MiniAppManager::new(paths.clone());
         let created = execute(
             &manager,

@@ -22,10 +22,10 @@ use crate::service_agent_runtime::CoreServiceAgentRuntime;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use chrono::{Local, SecondsFormat, TimeZone, Utc};
 use log::{debug, error, info, warn};
-use openbitfun_agent_runtime::scheduled_job::ScheduledJobEnqueueFailureAction;
-use openbitfun_agent_runtime::sdk::AgentRuntime;
-use openbitfun_runtime_ports::{AgentDialogPrependedReminder, AgentDialogTurnRequest};
-use openbitfun_services_core::exclusive_file_lease::{ExclusiveFileLease, ExclusiveFileLeaseError};
+use starmate_agent_runtime::scheduled_job::ScheduledJobEnqueueFailureAction;
+use starmate_agent_runtime::sdk::AgentRuntime;
+use starmate_runtime_ports::{AgentDialogPrependedReminder, AgentDialogTurnRequest};
+use starmate_services_core::exclusive_file_lease::{ExclusiveFileLease, ExclusiveFileLeaseError};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -750,13 +750,13 @@ impl CronService {
 
     async fn submit_enqueue_input(&self, enqueue_input: &EnqueueInput) -> Result<(), String> {
         let resolved = self.resolve_enqueue_submission(enqueue_input).await?;
-        let delivery = openbitfun_core_types::background_delivery::BackgroundDelivery::pending(
+        let delivery = starmate_core_types::background_delivery::BackgroundDelivery::pending(
             enqueue_input.job_id.clone(),
             enqueue_input.turn_id.clone(),
             enqueue_input.report_policy.clone(),
         );
         let metadata = serde_json::Map::from_iter([(
-            openbitfun_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(),
+            starmate_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(),
             serde_json::to_value(delivery).map_err(|error| error.to_string())?,
         )]);
         self.runtime
@@ -1323,7 +1323,7 @@ struct EnqueueInput {
     target: CronJobTarget,
     user_input: String,
     prepended_messages: Vec<AgentDialogPrependedReminder>,
-    report_policy: openbitfun_core_types::background_delivery::BackgroundReportPolicy,
+    report_policy: starmate_core_types::background_delivery::BackgroundReportPolicy,
 }
 
 struct ResolvedEnqueueSubmission {

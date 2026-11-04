@@ -3,21 +3,21 @@
 //! Product assembly supplies OpenBitFun path ownership. Concrete discovery,
 //! integrity checks, locking, and trust persistence are service concerns.
 
-use openbitfun_services_integrations::plugin_source::ManagedPluginSourceService;
+use starmate_services_integrations::plugin_source::ManagedPluginSourceService;
 use std::path::Path;
 
 pub type ManagedPluginTrustLevel =
-    openbitfun_services_integrations::plugin_source::ManagedPluginTrustLevel;
+    starmate_services_integrations::plugin_source::ManagedPluginTrustLevel;
 pub type ManagedPluginTrustDecision =
-    openbitfun_services_integrations::plugin_source::ManagedPluginTrustDecision;
+    starmate_services_integrations::plugin_source::ManagedPluginTrustDecision;
 pub type ManagedPluginPackageView =
-    openbitfun_services_integrations::plugin_source::ManagedPluginPackageView;
+    starmate_services_integrations::plugin_source::ManagedPluginPackageView;
 pub type ManagedPluginSourceIssue =
-    openbitfun_services_integrations::plugin_source::ManagedPluginSourceIssue;
+    starmate_services_integrations::plugin_source::ManagedPluginSourceIssue;
 pub type ManagedPluginSourceSnapshot =
-    openbitfun_services_integrations::plugin_source::ManagedPluginSourceSnapshot;
+    starmate_services_integrations::plugin_source::ManagedPluginSourceSnapshot;
 pub type ManagedPluginSourceError =
-    openbitfun_services_integrations::plugin_source::ManagedPluginSourceError;
+    starmate_services_integrations::plugin_source::ManagedPluginSourceError;
 
 /// Refresh OpenBitFun-managed user and workspace package roots.
 pub async fn refresh_managed_plugin_sources(

@@ -37,7 +37,7 @@ async fn ensure_markdown_placeholder(path: &Path, content: &str) -> OpenBitFunRe
 }
 
 fn gitignore_already_ignores_openbitfun(content: &str) -> bool {
-    let directory = openbitfun_core_types::product_identity::hidden_data_directory();
+    let directory = starmate_core_types::product_identity::hidden_data_directory();
     content.lines().any(|line| {
         let entry = line.trim();
         !entry.starts_with('#')
@@ -54,7 +54,7 @@ pub(crate) async fn ensure_workspace_gitignore_ignores_openbitfun(
     let gitignore_path = workspace_root.join(".gitignore");
     let openbitfun_entry = format!(
         "{}/",
-        openbitfun_core_types::product_identity::hidden_data_directory()
+        starmate_core_types::product_identity::hidden_data_directory()
     );
 
     let content = match fs::read_to_string(&gitignore_path).await {
@@ -95,14 +95,14 @@ pub(crate) async fn ensure_workspace_gitignore_ignores_openbitfun(
         OpenBitFunError::service(format!(
             "Failed to update {} for {}: {}",
             gitignore_path.display(),
-            openbitfun_core_types::product_identity::hidden_data_directory(),
+            starmate_core_types::product_identity::hidden_data_directory(),
             e
         ))
     })?;
 
     debug!(
         "Added workspace .gitignore entry for {}: path={}",
-        openbitfun_core_types::product_identity::hidden_data_directory(),
+        starmate_core_types::product_identity::hidden_data_directory(),
         gitignore_path.display(),
     );
 
@@ -115,7 +115,7 @@ async fn ensure_workspace_gitignore_ignores_openbitfun_best_effort(workspace_roo
         Err(e) => {
             warn!(
                 "Failed to ensure workspace .gitignore ignores {}: workspace={}, error={}",
-                openbitfun_core_types::product_identity::hidden_data_directory(),
+                starmate_core_types::product_identity::hidden_data_directory(),
                 workspace_root.display(),
                 e
             );

@@ -182,7 +182,7 @@ pub trait RemoteWorkspaceRuntimeHost: Send + Sync {
     async fn workspace_icon(
         &self,
         _workspace_id: &str,
-    ) -> Result<openbitfun_core_types::workspace_icon::WorkspaceIconSnapshot, String> {
+    ) -> Result<starmate_core_types::workspace_icon::WorkspaceIconSnapshot, String> {
         Err("This host does not support workspace icons".into())
     }
     async fn current_workspace(&self) -> Option<RemoteWorkspaceFacts>;

@@ -1,4 +1,4 @@
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PermissionPromptDenyState, PermissionPromptDescriptor, PermissionPromptEffectKind,
     PluginArtifactRef, PluginAuditRef, PluginCapabilityRef, PluginConfigValidationIssue,
     PluginConfigValidationState, PluginConfigValidationStatus, PluginDiagnostic,

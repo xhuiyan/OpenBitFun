@@ -7,7 +7,7 @@
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "agent-api")]
-pub use openbitfun_core_types::{
+pub use starmate_core_types::{
     SessionExecutionTarget, SessionExecutionTargetKind, SessionExecutionTargetRequest,
     SessionUsageReport, WorktreeError, WorktreeErrorCode, WorktreeLifecycle, WorktreeSettings,
     WorktreeSummary,
@@ -37,11 +37,11 @@ pub use local_workspace_snapshot::{
     LocalWorkspaceSnapshotTurnRequest,
 };
 #[cfg(feature = "product-search")]
-pub use openbitfun_product_domains::product_search::{
+pub use starmate_product_domains::product_search::{
     SessionContentSearchRequest, SessionContentSearchResponse,
 };
 #[cfg(feature = "permission")]
-pub use openbitfun_product_domains::tool_permissions::{
+pub use starmate_product_domains::tool_permissions::{
     deserialize_optional_permission_mode, resolve_child_permission_policy, resolve_permission_mode,
     resolve_permission_policy, wildcard_matches, ChildPermissionPolicyLayers, PermissionAuditEvent,
     PermissionAuditRecord, PermissionConstraintLayer, PermissionDelegationContext,

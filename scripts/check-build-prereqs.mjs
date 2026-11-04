@@ -12,7 +12,7 @@
  *   without content, and nested tools fail with a confusing "Cannot find
  *   module .../bin/<tool>" error, for example
  *   ".../design-system/packages/ui/node_modules/typescript/bin/tsc"
- * - src/mobile-web/dist missing → cargo check -p openbitfun-desktop and
+ * - src/mobile-web/dist missing → cargo check -p starmate-desktop and
  *   cargo check --workspace fail with "resource path '../../mobile-web/dist'
  *   doesn't exist" in the openbitfun-desktop build script
  * - OpenCode extension Host dist missing → Desktop, CLI, and app-server
@@ -145,7 +145,7 @@ function runChecks(rootDir) {
     errors.push({
       name: 'mobile-web dist',
       message:
-        "src/mobile-web/dist is missing. The openbitfun-desktop Tauri build script references '../../mobile-web/dist' as a resource, so 'cargo check -p openbitfun-desktop' and 'cargo check --workspace' will fail with \"resource path doesn't exist\".",
+        "src/mobile-web/dist is missing. The openbitfun-desktop Tauri build script references '../../mobile-web/dist' as a resource, so 'cargo check -p starmate-desktop' and 'cargo check --workspace' will fail with \"resource path doesn't exist\".",
       fix: ['pnpm', 'run', 'prepare:mobile-web'],
     });
   }

@@ -31,7 +31,7 @@ use crate::agentic::tools::framework::{
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::ToolImageAttachment;
 use async_trait::async_trait;
-use openbitfun_services_core::system::{truncate_with_marker, LocalSystemProvider};
+use starmate_services_core::system::{truncate_with_marker, LocalSystemProvider};
 use serde_json::{json, Value};
 use std::sync::Arc;
 
@@ -4200,7 +4200,7 @@ mod control_hub_tests {
             custom_data: std::collections::HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -4400,7 +4400,7 @@ mod control_hub_tests {
         let token = tokio_util::sync::CancellationToken::new();
         let mut ctx = empty_context();
         ctx.runtime_handles =
-            openbitfun_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
+            starmate_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
 
         let started = std::time::Instant::now();
         // Driven through `call_impl` so this also covers the envelope layer,

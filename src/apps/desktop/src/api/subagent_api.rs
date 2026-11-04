@@ -2,11 +2,11 @@
 
 use crate::api::app_state::AppState;
 use log::warn;
-use openbitfun_core::agentic::agents::{
+use starmate_core::agentic::agents::{
     AgentInfo, CustomSubagent, CustomSubagentDetail, CustomSubagentKind, SubAgentSource,
     SubagentListScope, SubagentQueryContext,
 };
-use openbitfun_core::service::config::model_pool::AgentModelSelection;
+use starmate_core::service::config::model_pool::AgentModelSelection;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use tauri::State;
@@ -60,7 +60,7 @@ async fn query_workspace_from_request(
         .await
         .map_err(|error| error.to_string())?
         .ok_or("Unknown workspace reference")?;
-    let local = record.workspace_kind != openbitfun_core::service::workspace::WorkspaceKind::Remote;
+    let local = record.workspace_kind != starmate_core::service::workspace::WorkspaceKind::Remote;
     Ok((Some(record.id), local))
 }
 
@@ -244,7 +244,7 @@ pub async fn delete_subagent(
         }
     }
 
-    if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+    if let Err(e) = starmate_core::service::config::reload_global_config().await {
         warn!(
             "Failed to reload global config after subagent deletion: subagent_id={}, error={}",
             subagent_id, e
@@ -617,7 +617,7 @@ pub async fn update_subagent_config(
         if request.clear_model_override || request.model.is_some() {
             let mut builtin_models: std::collections::HashMap<
                 String,
-                openbitfun_core::service::config::model_pool::AgentModelSelection,
+                starmate_core::service::config::model_pool::AgentModelSelection,
             > = config_service
                 .get_config(Some("ai.agent_model_selections.subagents.builtin"))
                 .await
@@ -650,7 +650,7 @@ pub async fn update_subagent_config(
         }
 
         if model_updated || availability_updated {
-            if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+            if let Err(e) = starmate_core::service::config::reload_global_config().await {
                 warn!(
                     "Failed to reload global config after subagent config update: subagent_id={}, error={}",
                     subagent_id, e

@@ -2,7 +2,7 @@
 
 export const publicApiContractSlices = [
   'frontend-backend-capability-service',
-  'openbitfun-plugin-extension-contract',
+  'starmate-plugin-extension-contract',
   'plugin-runtime-internal-abi',
   'opencode-adapter-boundary',
   'external-source-control-contract',
@@ -71,7 +71,7 @@ export const agentRuntimeRootPublicModules = [
 
 const contractSlices = {
   frontendBackendCapabilityService: 'frontend-backend-capability-service',
-  openbitfunPluginExtension: 'openbitfun-plugin-extension-contract',
+  openbitfunPluginExtension: 'starmate-plugin-extension-contract',
   pluginRuntimeInternalAbi: 'plugin-runtime-internal-abi',
   opencodeAdapterBoundary: 'opencode-adapter-boundary',
   externalSourceControlContract: 'external-source-control-contract',
@@ -246,7 +246,7 @@ function opencodeHookAdapterEntry(symbol, consumer) {
     owner: 'opencode-adapter static Hook source owner',
     consumer,
     verification:
-      'OpenCode static Hook fixture tests, openbitfun-core catalog composition tests, and core-boundary public API budget checks',
+      'OpenCode static Hook fixture tests, starmate-core catalog composition tests, and core-boundary public API budget checks',
     p0: 'runtime-free OpenCode Hook discovery and catalog projection',
     contractSlice: contractSlices.opencodeAdapterBoundary,
     wireImpact: false,
@@ -261,9 +261,9 @@ function opencodePluginConfigProjectionEntry(symbol) {
   return {
     symbol,
     owner: 'opencode-adapter managed Plugin Host Config projection owner',
-    consumer: 'openbitfun-core plugin Config publication composition root',
+    consumer: 'starmate-core plugin Config publication composition root',
     verification:
-      'OpenCode plugin Config projection tests, openbitfun-core publication tests, and core-boundary public API budget checks',
+      'OpenCode plugin Config projection tests, starmate-core publication tests, and core-boundary public API budget checks',
     p0: 'typed OpenCode Config Hook projection for the managed Plugin Host runtime slice',
     contractSlice: contractSlices.opencodeAdapterBoundary,
     wireImpact: false,
@@ -280,7 +280,7 @@ function opencodeReferenceAdapterEntry(symbol, consumer) {
     owner: 'opencode-adapter workspace Reference source owner',
     consumer,
     verification:
-      'OpenCode workspace Reference fixtures, openbitfun-core composition tests, and core-boundary public API budget checks',
+      'OpenCode workspace Reference fixtures, starmate-core composition tests, and core-boundary public API budget checks',
     p0: 'runtime-free OpenCode local workspace Reference discovery',
     contractSlice: contractSlices.opencodeAdapterBoundary,
     wireImpact: false,
@@ -295,7 +295,7 @@ export const opencodeAdapterPublicApiEntries = [
   {
     symbol: 'session',
     owner: 'OpenCode-compatible SQLite session history translator',
-    consumer: 'openbitfun-core external_session_import and the Zcode source identity adapter',
+    consumer: 'starmate-core external_session_import and the Zcode source identity adapter',
     verification: 'OpenCode and Zcode history fixtures, committed WAL test, and installed-session follow/fork verification',
     p0: 'read-only persisted history import through the existing native lifecycle',
     contractSlice: contractSlices.externalSessionImportContract,
@@ -305,19 +305,19 @@ export const opencodeAdapterPublicApiEntries = [
   },
   opencodeAdapterEntry(
     'load_opencode_package_adapter',
-    'openbitfun-core managed plugin composition root and DefaultPluginRuntimeClient integration tests',
+    'starmate-core managed plugin composition root and DefaultPluginRuntimeClient integration tests',
   ),
   opencodeAdapterEntry(
     'load_opencode_config_snapshot',
-    'openbitfun-core live Plugin Host composition root and OpenCode config snapshot contract tests',
+    'starmate-core live Plugin Host composition root and OpenCode config snapshot contract tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeConfigSnapshot',
-    'openbitfun-core live Plugin Host config input and OpenCode config snapshot contract tests',
+    'starmate-core live Plugin Host config input and OpenCode config snapshot contract tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeConfigSnapshotError',
-    'openbitfun-core live Plugin Host config validation and OpenCode config snapshot contract tests',
+    'starmate-core live Plugin Host config validation and OpenCode config snapshot contract tests',
   ),
   ...[
     'project_plugin_config',
@@ -326,7 +326,7 @@ export const opencodeAdapterPublicApiEntries = [
   ].map(opencodePluginConfigProjectionEntry),
   opencodeAdapterEntry(
     'OpenCodeCommandProvider',
-    'openbitfun-core external source composition root and OpenCode command adapter tests',
+    'starmate-core external source composition root and OpenCode command adapter tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeCommandProviderOptions',
@@ -334,12 +334,12 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeAdapterEntry(
     'OpenCodeConfiguredSkillRoot',
-    'openbitfun-core external source composition root and OpenCode configured Skill fixtures',
+    'starmate-core external source composition root and OpenCode configured Skill fixtures',
   ),
   ...['OpenCodeSkillRootDiagnostic', 'OpenCodeSkillRootReport'].map((symbol) => ({
     symbol,
     owner: 'opencode-adapter configured Skill root source owner',
-    consumer: 'openbitfun-core external_sources::opencode_configured_skill_roots_with_provider',
+    consumer: 'starmate-core external_sources::opencode_configured_skill_roots_with_provider',
     verification:
       'opencode_static_source_contracts::opencode_skill_roots diagnostics fixtures and core-boundary public API checks',
     p0: 'runtime-free configured local Skill root discovery with bounded diagnostics',
@@ -352,7 +352,7 @@ export const opencodeAdapterPublicApiEntries = [
   })),
   opencodeAdapterEntry(
     'OpenCodeSkillRootProvider',
-    'openbitfun-core external source composition root and OpenCode configured Skill fixtures',
+    'starmate-core external source composition root and OpenCode configured Skill fixtures',
   ),
   opencodeAdapterEntry(
     'OpenCodeSkillRootProviderOptions',
@@ -360,7 +360,7 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeAdapterEntry(
     'OpenCodeToolProvider',
-    'openbitfun-core external source composition root and OpenCode standalone-tool adapter tests',
+    'starmate-core external source composition root and OpenCode standalone-tool adapter tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeToolProviderOptions',
@@ -368,7 +368,7 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeAdapterEntry(
     'OpenCodeSubagentProvider',
-    'openbitfun-core external source composition root and OpenCode subagent adapter tests',
+    'starmate-core external source composition root and OpenCode subagent adapter tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeSubagentProviderOptions',
@@ -376,7 +376,7 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeAdapterEntry(
     'OpenCodeMcpProvider',
-    'openbitfun-core external source composition root and OpenCode MCP adapter tests',
+    'starmate-core external source composition root and OpenCode MCP adapter tests',
   ),
   opencodeAdapterEntry(
     'OpenCodeMcpProviderOptions',
@@ -384,7 +384,7 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeHookAdapterEntry(
     'OpenCodeHookProvider',
-    'openbitfun-core external Hook catalog composition root and OpenCode static Hook fixtures',
+    'starmate-core external Hook catalog composition root and OpenCode static Hook fixtures',
   ),
   opencodeHookAdapterEntry(
     'OpenCodeHookProviderOptions',
@@ -392,7 +392,7 @@ export const opencodeAdapterPublicApiEntries = [
   ),
   opencodeReferenceAdapterEntry(
     'OpenCodeWorkspaceReferenceProvider',
-    'openbitfun-core workspace Reference composition root and OpenCode adapter fixtures',
+    'starmate-core workspace Reference composition root and OpenCode adapter fixtures',
   ),
   opencodeReferenceAdapterEntry(
     'OpenCodeWorkspaceReferenceProviderOptions',
@@ -462,7 +462,7 @@ function declarativeSourceAdapterEntry(
     owner,
     consumer,
     verification:
-      `${capability} adapter fixtures, openbitfun-core composition tests, and core-boundary public API budget checks`,
+      `${capability} adapter fixtures, starmate-core composition tests, and core-boundary public API budget checks`,
     p0: `runtime-free ${capability} discovery and ecosystem-neutral catalog projection`,
     contractSlice,
     wireImpact: false,
@@ -477,9 +477,9 @@ function userInstructionSourceAdapterEntry(symbol, ecosystem) {
   return {
     symbol,
     owner: `${ecosystem} adapter user Instruction source owner`,
-    consumer: 'openbitfun-core instruction_sources composition root',
+    consumer: 'starmate-core instruction_sources composition root',
     verification:
-      `${ecosystem} user Instruction fixtures, openbitfun-core prompt composition tests, and core-boundary public API budget checks`,
+      `${ecosystem} user Instruction fixtures, starmate-core prompt composition tests, and core-boundary public API budget checks`,
     p0: 'runtime-free local user Instruction source discovery',
     contractSlice: contractSlices.userInstructionSourceBoundary,
     wireImpact: false,
@@ -494,7 +494,7 @@ function userInstructionSourceServiceEntry(symbol) {
   return {
     symbol,
     owner: 'services-core bounded local user Instruction file owner',
-    consumer: 'reviewed OpenCode, Claude Code, and Codex adapters plus openbitfun-core prompt composition',
+    consumer: 'reviewed OpenCode, Claude Code, and Codex adapters plus starmate-core prompt composition',
     verification:
       'services-core bounded file tests, ecosystem Instruction fixtures, prompt composition tests, and core-boundary public API checks',
     p0: 'runtime-free bounded local user Instruction reads and accumulation',
@@ -524,7 +524,7 @@ export const claudeCodeAdapterPublicApiEntries = [
 ].map((symbol) => staticHookAdapterEntry(
   symbol,
   'claude-code-adapter static Hook owner',
-  'openbitfun-core composition root and Claude Code Hook fixtures',
+  'starmate-core composition root and Claude Code Hook fixtures',
 )).concat([
   ['ClaudeCodeCommandProvider', 'command', contractSlices.externalSourceCommandContract],
   ['ClaudeCodeCommandProviderOptions', 'command', contractSlices.externalSourceCommandContract],
@@ -535,7 +535,7 @@ export const claudeCodeAdapterPublicApiEntries = [
 ].map(([symbol, capability, contractSlice]) => declarativeSourceAdapterEntry(
   symbol,
   'claude-code-adapter declarative source owner',
-  `openbitfun-core composition root and Claude Code ${capability} fixtures`,
+  `starmate-core composition root and Claude Code ${capability} fixtures`,
   capability,
   contractSlice,
 ))).concat([
@@ -544,7 +544,7 @@ export const claudeCodeAdapterPublicApiEntries = [
 ].map((symbol) => userInstructionSourceAdapterEntry(symbol, 'Claude Code'))).concat([{
   symbol: 'session',
   owner: 'Claude Code adapter read-only session history translator',
-  consumer: 'openbitfun-core external_session_import composition facade',
+  consumer: 'starmate-core external_session_import composition facade',
   verification: 'Claude Code transcript fixtures and installed-session follow/fork verification',
   p0: 'read-only Claude Code history import with native continuation and preserved provenance',
   contractSlice: contractSlices.externalSessionImportContract,
@@ -559,7 +559,7 @@ export const codexAdapterPublicApiEntries = [
 ].map((symbol) => staticHookAdapterEntry(
   symbol,
   'codex-adapter static Hook owner',
-  'openbitfun-core composition root and Codex Hook fixtures',
+  'starmate-core composition root and Codex Hook fixtures',
 )).concat([
   ['CodexSubagentProvider', 'subagent', contractSlices.externalSourceSubagentContract],
   ['CodexSubagentProviderOptions', 'subagent', contractSlices.externalSourceSubagentContract],
@@ -568,7 +568,7 @@ export const codexAdapterPublicApiEntries = [
 ].map(([symbol, capability, contractSlice]) => declarativeSourceAdapterEntry(
   symbol,
   'codex-adapter declarative source owner',
-  `openbitfun-core composition root and Codex ${capability} fixtures`,
+  `starmate-core composition root and Codex ${capability} fixtures`,
   capability,
   contractSlice,
 ))).concat([
@@ -577,7 +577,7 @@ export const codexAdapterPublicApiEntries = [
 ].map((symbol) => userInstructionSourceAdapterEntry(symbol, 'Codex'))).concat(['pet_source_root', 'builtin_pet_sources', 'BuiltinPetCatalog', 'BuiltinPetSource'].map((symbol) => ({
   symbol,
   owner: 'Codex adapter static pet source owner',
-  consumer: 'openbitfun-core external source composition facade',
+  consumer: 'starmate-core external source composition facade',
   verification: 'Codex pet source fixtures, installed bundle smoke test, and services-core pet package tests',
   p0: 'local custom and bundled pet source discovery without execution or installation',
   contractSlice: contractSlices.externalSourcePetContract,
@@ -587,7 +587,7 @@ export const codexAdapterPublicApiEntries = [
 }))).concat([{
   symbol: 'session',
   owner: 'Codex adapter read-only session history translator',
-  consumer: 'openbitfun-core external_session_import composition facade',
+  consumer: 'starmate-core external_session_import composition facade',
   verification: 'Codex session parser fixtures and core external_session_import tests',
   p0: 'read-only Codex history import with native continuation and preserved provenance',
   contractSlice: contractSlices.externalSessionImportContract,
@@ -684,9 +684,9 @@ export const pluginCapabilityProjectionPublicApiEntries = [
 ].map((symbol) => ({
   symbol,
   owner: 'product-domains plugin capability projection contract owner',
-  consumer: 'ecosystem plugin adapters and openbitfun-core capability publication',
+  consumer: 'ecosystem plugin adapters and starmate-core capability publication',
   verification:
-    'product-domain projection contract tests, OpenCode projection tests, openbitfun-core publication tests, and core-boundary checks',
+    'product-domain projection contract tests, OpenCode projection tests, starmate-core publication tests, and core-boundary checks',
   p0: 'provider-neutral Agent, Tool, and Skill contributions from executable plugin adapters',
   contractSlice: contractSlices.openbitfunPluginExtension,
   wireImpact: false,
@@ -714,7 +714,7 @@ export const externalHookCatalogPublicApiEntries = [
   externalHookContractEntry(
     symbol,
     'product-domains external Hook catalog contract owner',
-    'ecosystem Hook source adapters, external-sources catalog coordinator, openbitfun-core, and read-only product surfaces',
+    'ecosystem Hook source adapters, external-sources catalog coordinator, starmate-core, and read-only product surfaces',
     true,
   ),
 );
@@ -755,7 +755,7 @@ function externalSourceControlEntry(symbol, owner, consumer, wireImpact = true) 
 function externalIntegrationPolicyEntry(
   symbol,
   owner = 'product-domains external integration policy contract owner',
-  consumer = 'openbitfun-core product composition and cross-host product surfaces',
+  consumer = 'starmate-core product composition and cross-host product surfaces',
   wireImpact = true,
 ) {
   return {
@@ -803,7 +803,7 @@ export const externalIntegrationPolicyPublicApiEntries = [
   ...externalIntegrationPolicyEntry(
     'automatic_discovery_enabled',
     'product-domains external integration policy contract owner',
-    'openbitfun-core discovery catalog preference evaluation',
+    'starmate-core discovery catalog preference evaluation',
     false,
   ),
   verification: 'external_source_contracts legacy discovery preference, scope precedence, and old-reader round-trip tests',
@@ -899,7 +899,7 @@ export const workspaceReferenceContractPublicApiEntries = [
   externalReferenceEntry(
     symbol,
     'product-domains workspace Reference contract owner',
-    'OpenCode provider, external-sources coordinator, openbitfun-core composition, and Desktop/Web workspace surfaces',
+    'OpenCode provider, external-sources coordinator, starmate-core composition, and Desktop/Web workspace surfaces',
     true,
   ),
 );
@@ -964,7 +964,7 @@ export const externalSourceContractPublicApiEntries = [
   externalDiscoveryEntry(
     'ExternalSourceDiscoverySnapshotV1',
     'product-domains external source discovery contract owner',
-    'openbitfun-core discovery catalog and Desktop and CLI peer host discovery responses',
+    'starmate-core discovery catalog and Desktop and CLI peer host discovery responses',
   ),
   [
     'SourceQualifiedToolTargetId',
@@ -1059,7 +1059,7 @@ export const externalSourceControlPublicApiEntries = [
   externalSourceControlEntry(
     symbol,
     'product-domains external source control contract owner',
-    'openbitfun-core control composition and neutral Desktop, TUI, Peer Host, Server, and Web surfaces',
+    'starmate-core control composition and neutral Desktop, TUI, Peer Host, Server, and Web surfaces',
   ),
 );
 
@@ -1110,30 +1110,30 @@ export const externalSourceCoordinatorPublicApiEntries = [
     externalSourceControlEntry(
       symbol,
       'external-sources assembly control-plane owner',
-      'openbitfun-core bounded capability discovery and deferred-completion scheduler',
+      'starmate-core bounded capability discovery and deferred-completion scheduler',
       false,
     ),
   ),
   externalSourceEntry(
     'ExternalSourceCoordinator',
     'external-sources assembly owner',
-    'openbitfun-core product composition root',
+    'starmate-core product composition root',
   ),
   externalHookContractEntry(
     'ExternalHookCatalogCoordinator',
     'external-sources Hook catalog coordinator owner',
-    'openbitfun-core local-workspace Hook catalog service',
+    'starmate-core local-workspace Hook catalog service',
   ),
   externalHookContractEntry(
     'ExternalHookDiscoveryResult',
     'external-sources Hook discovery scheduler owner',
-    'openbitfun-core local-workspace Hook catalog service',
+    'starmate-core local-workspace Hook catalog service',
   ),
   ...['ExternalSourceDiscoveryRequest', 'ExternalSourceDiscoveryResult'].map((symbol) =>
     externalSourceEntry(
       symbol,
       'external-sources assembly owner',
-      'openbitfun-core bounded concurrent provider scheduler',
+      'starmate-core bounded concurrent provider scheduler',
     ),
   ),
   ...[
@@ -1145,7 +1145,7 @@ export const externalSourceCoordinatorPublicApiEntries = [
     externalToolEntry(
       symbol,
       'external-sources assembly owner',
-      'openbitfun-core bounded concurrent external-tool provider scheduler',
+      'starmate-core bounded concurrent external-tool provider scheduler',
     ),
   ),
   ...[
@@ -1157,7 +1157,7 @@ export const externalSourceCoordinatorPublicApiEntries = [
     externalSubagentEntry(
       symbol,
       'external-sources assembly owner',
-      'openbitfun-core bounded concurrent external-subagent provider scheduler',
+      'starmate-core bounded concurrent external-subagent provider scheduler',
     ),
   ),
   ...[
@@ -1169,7 +1169,7 @@ export const externalSourceCoordinatorPublicApiEntries = [
     externalMcpEntry(
       symbol,
       'external-sources assembly owner',
-      'openbitfun-core bounded concurrent external-MCP provider scheduler',
+      'starmate-core bounded concurrent external-MCP provider scheduler',
     ),
   ),
   ...[
@@ -1181,7 +1181,7 @@ export const externalSourceCoordinatorPublicApiEntries = [
     externalReferenceEntry(
       symbol,
       'external-sources workspace Reference coordinator owner',
-      'openbitfun-core bounded concurrent workspace Reference provider scheduler',
+      'starmate-core bounded concurrent workspace Reference provider scheduler',
     ),
   ),
 ];
@@ -1192,7 +1192,7 @@ export const externalSourceCorePublicApiEntries = [
     'external_source_discovery_snapshot',
   ].map((symbol) => externalDiscoveryEntry(
     symbol,
-    'openbitfun-core read-only discovery catalog composition facade',
+    'starmate-core read-only discovery catalog composition facade',
     'Desktop and CLI peer host get_external_source_discovery_snapshot adapters',
   )),
   ...[
@@ -1208,7 +1208,7 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalSourceControlEntry(
       symbol,
-      'openbitfun-core external source control composition facade',
+      'starmate-core external source control composition facade',
       'OpenBitFun CLI, Desktop, Server, Peer Host, and Web API adapters',
     ),
   ),
@@ -1232,7 +1232,7 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalIntegrationPolicyEntry(
       symbol,
-      'openbitfun-core external integration policy composition facade',
+      'starmate-core external integration policy composition facade',
       'OpenBitFun CLI, Desktop, Server, Peer Host, and Web API adapters',
       true,
     ),
@@ -1285,25 +1285,25 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalSourceEntry(
       symbol,
-      'openbitfun-core external source composition facade',
+      'starmate-core external source composition facade',
       'OpenBitFun CLI and desktop host APIs',
     ),
   ),
   externalReferenceEntry(
     'workspace_reference_snapshot',
-    'openbitfun-core workspace Reference composition facade',
+    'starmate-core workspace Reference composition facade',
     'Desktop and Web workspace directory surfaces',
     true,
   ),
   externalSourceEntry(
     'external_source_location_for_host_action',
-    'openbitfun-core external source composition owner',
+    'starmate-core external source composition owner',
     'Desktop external-source configuration host adapter',
     true,
   ),
   {
     symbol: 'ecosystem_for_imported_mcp_candidate',
-    owner: 'openbitfun-core external MCP provider registration composition',
+    owner: 'starmate-core external MCP provider registration composition',
     consumer: 'Desktop MCP list projection for legacy native import receipts',
     verification: 'core imported_mcp_legacy_receipt_keeps_registered_origin_without_discovery test',
     p0: 'preserve source identity for existing native MCP imports',
@@ -1319,7 +1319,7 @@ export const externalSourceCorePublicApiEntries = [
     'acknowledge_external_ecosystems',
   ].map((symbol) => ({
     symbol,
-    owner: 'openbitfun-core external source composition facade',
+    owner: 'starmate-core external source composition facade',
     consumer: 'Desktop external-source host adapter and Web settings navigation',
     verification:
       'core acknowledgement persistence and execution-domain scoping tests, Desktop command contract tests, and Web settings awareness tests',
@@ -1345,7 +1345,7 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalToolEntry(
       symbol,
-      'openbitfun-core external tool composition facade',
+      'starmate-core external tool composition facade',
       'OpenBitFun CLI and desktop host APIs',
     ),
   ),
@@ -1368,7 +1368,7 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalSubagentEntry(
       symbol,
-      'openbitfun-core external subagent composition facade',
+      'starmate-core external subagent composition facade',
       'OpenBitFun CLI and desktop host APIs',
     ),
   ),
@@ -1385,7 +1385,7 @@ export const externalSourceCorePublicApiEntries = [
   ].map((symbol) =>
     externalMcpEntry(
       symbol,
-      'openbitfun-core external MCP composition facade',
+      'starmate-core external MCP composition facade',
       'OpenBitFun CLI and desktop host APIs',
     ),
   ),
@@ -1422,7 +1422,7 @@ export const pluginSourceContractPublicApiEntries = [
   pluginSourceEntry(
     symbol,
     'product-domains plugin-source contract owner',
-    'services-integrations managed package source owner, openbitfun-core compatibility facade, and plugin-source contract tests',
+    'services-integrations managed package source owner, starmate-core compatibility facade, and plugin-source contract tests',
     'product-domains plugin_source_contracts tests and services-integrations managed package discovery tests',
     true,
   ),
@@ -1440,7 +1440,7 @@ export const managedPluginSourcePublicApiEntries = [
 ].map((symbol) =>
   pluginSourceEntry(
     symbol,
-    'openbitfun-core managed plugin source compatibility facade',
+    'starmate-core managed plugin source compatibility facade',
     'OpenBitFun CLI plugins and doctor commands',
     'services-integrations plugin_source tests, core boundary checks, and OpenBitFun CLI plugin command tests',
     false,
@@ -1457,9 +1457,9 @@ export const managedPluginActivationPublicApiEntries = [
 ].map((symbol) =>
   pluginSourceEntry(
     symbol,
-    'openbitfun-core managed plugin composition root',
+    'starmate-core managed plugin composition root',
     'OpenBitFun CLI plugin activation commands',
-    'openbitfun-core plugin_runtime tests, OpenBitFun CLI plugin source tests, and core boundary checks',
+    'starmate-core plugin_runtime tests, OpenBitFun CLI plugin source tests, and core boundary checks',
     false,
   ),
 );
@@ -1476,7 +1476,7 @@ export const managedPluginSourceServicePublicApiEntries = [
   pluginSourceEntry(
     symbol,
     'services-integrations managed plugin source owner',
-    'openbitfun-core managed plugin source compatibility facade',
+    'starmate-core managed plugin source compatibility facade',
     'services-integrations plugin_source tests and core boundary checks',
     false,
   ),

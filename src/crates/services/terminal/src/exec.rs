@@ -26,8 +26,8 @@ use tokio::task::JoinHandle;
 use uuid::Uuid;
 
 const DEFAULT_YIELD_TIME_MS: u64 = 10_000;
-pub(crate) const EXEC_TERMINAL_SIZE: openbitfun_runtime_ports::ExecTerminalSize =
-    openbitfun_runtime_ports::ExecTerminalSize { cols: 80, rows: 24 };
+pub(crate) const EXEC_TERMINAL_SIZE: starmate_runtime_ports::ExecTerminalSize =
+    starmate_runtime_ports::ExecTerminalSize { cols: 80, rows: 24 };
 const MAX_RETAINED_OUTPUT_BYTES: usize = 1024 * 1024;
 const MAX_EXEC_SESSIONS: usize = 64;
 const MAX_COMPLETED_EXEC_SESSIONS: usize = 64;

@@ -1,7 +1,7 @@
 #![cfg(feature = "file-watch")]
 
-use openbitfun_events::EventEmitter;
-use openbitfun_services_integrations::file_watch::{
+use starmate_events::EventEmitter;
+use starmate_services_integrations::file_watch::{
     FileWatchEventKind, FileWatchService, FileWatcherConfig, FILE_WATCH_STATUS_CHANGED_EVENT,
 };
 use std::fs;

@@ -138,14 +138,14 @@ jobs:
           set -euo pipefail
           cargo build --release \
             --target ${{ matrix.platform.target }} \
-            -p openbitfun-cli
+            -p starmate-cli
 
       - name: Build CLI (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         env:
           RUSTFLAGS: -C target-feature=+crt-static
-        run: cargo build --release --target ${{ matrix.platform.target }} -p openbitfun-cli
+        run: cargo build --release --target ${{ matrix.platform.target }} -p starmate-cli
 
       - name: Test installer (Unix)
         if: runner.os != 'Windows'

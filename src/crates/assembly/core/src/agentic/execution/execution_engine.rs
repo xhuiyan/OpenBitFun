@@ -74,20 +74,20 @@ use crate::util::types::ToolDefinition;
 use crate::util::{elapsed_ms_u64, truncate_at_char_boundary};
 use dashmap::DashMap;
 use log::{debug, error, info, trace, warn};
-use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
-use openbitfun_agent_runtime::prompt_suggestion::{
+use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+use starmate_agent_runtime::prompt_suggestion::{
     turn_outcome_allows_prompt_suggestion, PromptSuggestionRuntime, PromptSuggestionTurnOutcome,
     PROMPT_SUGGESTION_ELIGIBLE_CONTEXT_KEY,
 };
-use openbitfun_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
+use starmate_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     PTC_NESTED_ALLOWED_TOOLS_CONTEXT_KEY, PTC_TOOL_PRESENTATION_CONTEXT_KEY,
     PTC_TOOL_PRESENTATION_MODE,
 };
-use openbitfun_ai_adapters::ModelExchangeTraceConfig;
-use openbitfun_core_types::{ModelRequestContext, SessionModelBindingPolicy};
-use openbitfun_runtime_ports::{resolve_permission_mode, PermissionMode, PermissionModeLayers};
+use starmate_ai_adapters::ModelExchangeTraceConfig;
+use starmate_core_types::{ModelRequestContext, SessionModelBindingPolicy};
+use starmate_runtime_ports::{resolve_permission_mode, PermissionMode, PermissionModeLayers};
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
 use std::sync::atomic::{AtomicU8, Ordering};
@@ -577,7 +577,7 @@ struct TurnPromptScaffoldInput<'a> {
 
 struct FinalizeRoundInput<'a> {
     prompt_reminders: &'a PrependedPromptReminders,
-    permission_constraints: openbitfun_runtime_ports::PermissionConstraintLayer,
+    permission_constraints: starmate_runtime_ports::PermissionConstraintLayer,
     context_window: usize,
     tool_definitions: Option<Vec<ToolDefinition>>,
     reminder_text: &'a str,
@@ -669,7 +669,7 @@ struct RoundExecutionModel {
     route: RoundModelRoute,
     client: RoundExecutionClient,
     model_facts: PrimaryModelFacts,
-    routing: Option<openbitfun_events::agentic::ModelRoutingDecision>,
+    routing: Option<starmate_events::agentic::ModelRoutingDecision>,
 }
 
 /// Execution engine
@@ -702,7 +702,7 @@ impl ExecutionEngine {
         ModelRequestContext {
             prompt_cache_route_key: Some(prompt_cache_lineage_id.to_string()),
             output_schema: context
-                .get(openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY)
+                .get(starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY)
                 .and_then(|schema| serde_json::from_str(schema).ok()),
         }
     }
@@ -2137,7 +2137,7 @@ impl ExecutionEngine {
         context_window: usize,
         current_turn_id: &str,
         attach_images: bool,
-    ) -> openbitfun_core_types::UsageContextBreakdown {
+    ) -> starmate_core_types::UsageContextBreakdown {
         let kept_images = if attach_images {
             Self::image_bearing_indices_to_keep(messages)
         } else {
@@ -4222,7 +4222,7 @@ impl ExecutionEngine {
                         client,
                         model_facts,
                         routing: (turn_router.is_some() || routing_setup_failure.is_some()).then(
-                            || openbitfun_events::agentic::ModelRoutingDecision {
+                            || starmate_events::agentic::ModelRoutingDecision {
                                 route: route.model_selector().into(),
                                 latency_ms: routing_started.elapsed().as_millis() as u64,
                                 fallback_reason,
@@ -4540,7 +4540,7 @@ impl ExecutionEngine {
                 if enable_context_compression
                     && prefetch_enabled
                     && compression_prefetch.is_none()
-                    && openbitfun_agent_runtime::compression_prefetch::in_prefetch_window(
+                    && starmate_agent_runtime::compression_prefetch::in_prefetch_window(
                         token_pressure.total_tokens,
                         token_pressure.input_limit,
                     )
@@ -4550,7 +4550,7 @@ impl ExecutionEngine {
                         "Compression prefetch admitted: session_id={}, turn_id={}, round_index={}, total_tokens={}, prefetch_limit={}, input_limit={}, context_window={}",
                         context.session_id, context.dialog_turn_id, round_index,
                         token_pressure.total_tokens,
-                        token_pressure.input_limit.saturating_sub(openbitfun_agent_runtime::compression_prefetch::PREFETCH_LEAD_TOKENS),
+                        token_pressure.input_limit.saturating_sub(starmate_agent_runtime::compression_prefetch::PREFETCH_LEAD_TOKENS),
                         token_pressure.input_limit, context_window
                     );
                     let trace_dir = self
@@ -4905,12 +4905,12 @@ impl ExecutionEngine {
                     let attempt = pool_attempt.as_ref().expect("pool attempt checked");
                     let provider_error = match &error {
                         OpenBitFunError::AIProvider(error) => error.clone(),
-                        _ => openbitfun_core_types::errors::AiProviderError::classified(
+                        _ => starmate_core_types::errors::AiProviderError::classified(
                             error.to_string(),
                             error.error_category(),
                         ),
                     };
-                    let delay = openbitfun_agent_stream::retry::delay_ms(
+                    let delay = starmate_agent_stream::retry::delay_ms(
                         round_lifecycle
                             .attempts_started()
                             .saturating_sub(attempts_before_member)
@@ -5045,7 +5045,7 @@ impl ExecutionEngine {
                     if let Some(attempt) = &pool_attempt {
                         let provider_error = match &err {
                             OpenBitFunError::AIProvider(error) => error.clone(),
-                            _ => openbitfun_core_types::errors::AiProviderError::classified(
+                            _ => starmate_core_types::errors::AiProviderError::classified(
                                 err.to_string(),
                                 err.error_category(),
                             ),
@@ -5053,7 +5053,7 @@ impl ExecutionEngine {
                         attempt
                             .fail(
                                 &provider_error,
-                                openbitfun_agent_stream::retry::delay_ms(
+                                starmate_agent_stream::retry::delay_ms(
                                     0,
                                     &provider_error.message,
                                     Some(&provider_error),
@@ -5468,7 +5468,7 @@ impl ExecutionEngine {
                     .await
                     .ok()
                     .flatten();
-                openbitfun_agent_runtime::scheduler::result_delivery::accepts_quiet_model_end(
+                starmate_agent_runtime::scheduler::result_delivery::accepts_quiet_model_end(
                     delivery.as_ref(),
                     false,
                     false,
@@ -5862,13 +5862,13 @@ impl ExecutionEngine {
         // dialog success) so other agents and failed turns are unaffected.
         #[cfg(feature = "deep-research")]
         {
-            if openbitfun_agent_workflows::deep_research::should_post_process_research_report(
+            if starmate_agent_workflows::deep_research::should_post_process_research_report(
                 &agent_type,
                 success && effective_finish_reason != "user_steering",
             ) {
                 if let Some(workspace) = context.workspace.as_ref() {
                     if let Some(workspace_services) = context.workspace_services.as_ref() {
-                        openbitfun_services_integrations::deep_research::run_for_session_workspace(
+                        starmate_services_integrations::deep_research::run_for_session_workspace(
                             workspace_services.fs.as_ref(),
                             &workspace.root_path().to_string_lossy(),
                             &context.session_id,
@@ -5890,7 +5890,7 @@ impl ExecutionEngine {
             .get(super::background_delivery::BACKGROUND_DELIVERY_CONTEXT_KEY)
             .and_then(|value| {
                 serde_json::from_str::<
-                        openbitfun_core_types::background_delivery::BackgroundDelivery,
+                        starmate_core_types::background_delivery::BackgroundDelivery,
                     >(value)
                     .ok()
             })
@@ -6131,7 +6131,7 @@ mod tests {
     use crate::service::config::types::AIModelConfig;
     use crate::service::remote_ssh::workspace_state::workspace_session_identity;
     use crate::util::types::ToolDefinition;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         PermissionMode, WorkspaceDirEntry, WorkspaceFileSystem, WorkspacePathKind,
     };
     use serde_json::json;
@@ -6205,7 +6205,7 @@ mod tests {
     #[tokio::test]
     async fn computer_use_pixels_and_geometry_reach_real_provider_wire() {
         use base64::Engine;
-        use openbitfun_ai_adapters::providers::{
+        use starmate_ai_adapters::providers::{
             anthropic::AnthropicMessageConverter, gemini::GeminiMessageConverter,
             openai::OpenAIMessageConverter,
         };
@@ -6341,7 +6341,7 @@ mod tests {
         use crate::agentic::execution::round_executor::tests::{
             retry_test_success, RetryTestServer,
         };
-        use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+        use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 
         let server = RetryTestServer::new(vec![
             (
@@ -6599,12 +6599,12 @@ mod tests {
         );
         for restrictions in [ToolRuntimeRestrictions::default(), miniapp_restrictions] {
             context.runtime_tool_restrictions = restrictions;
-            let visible = openbitfun_agent_tools::resolve_contextual_visible_tools(
+            let visible = starmate_agent_tools::resolve_contextual_visible_tools(
                 &tools,
                 &agent.default_tools(),
                 agent.tool_exposure_overrides(),
                 &context,
-                openbitfun_agent_tools::GET_TOOL_SPEC_TOOL_NAME,
+                starmate_agent_tools::GET_TOOL_SPEC_TOOL_NAME,
             )
             .await;
             let analysis_available = visible
@@ -6967,7 +6967,7 @@ mod tests {
             subagent_parent_info: None,
             permission_delegation: None,
             permission_runtime_ceiling: None,
-            delegation_policy: openbitfun_runtime_ports::DelegationPolicy::top_level(),
+            delegation_policy: starmate_runtime_ports::DelegationPolicy::top_level(),
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
             workspace_services: Some(local_workspace_services(
                 workspace_root.to_string_lossy().to_string(),
@@ -7533,7 +7533,7 @@ mod tests {
             subagent_parent_info: None,
             permission_delegation: None,
             permission_runtime_ceiling: None,
-            delegation_policy: openbitfun_runtime_ports::DelegationPolicy::top_level(),
+            delegation_policy: starmate_runtime_ports::DelegationPolicy::top_level(),
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
             workspace_services: Some(local_workspace_services(
                 workspace_root.to_string_lossy().to_string(),
@@ -7641,7 +7641,7 @@ mod tests {
             .with_round_id(round_id.to_string());
         let tool_result = Message::tool_result(ToolResult {
             tool_id: format!("{round_id}-read"),
-            tool_name: openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
+            tool_name: starmate_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
             effective_tool_name: Some("Read".to_string()),
             result: json!({ "file_path": workspace_root.join("src/lib.rs") }),
             result_for_assistant: Some("source".to_string()),
@@ -8111,7 +8111,7 @@ mod tests {
             subagent_parent_info: None,
             permission_delegation: None,
             permission_runtime_ceiling: None,
-            delegation_policy: openbitfun_runtime_ports::DelegationPolicy::top_level(),
+            delegation_policy: starmate_runtime_ports::DelegationPolicy::top_level(),
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
             workspace_services: None,
             terminal_port: None,
@@ -8408,7 +8408,7 @@ mod tests {
         });
         let mut context = HashMap::new();
         context.insert(
-            openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
+            starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
             schema.to_string(),
         );
 

@@ -92,7 +92,7 @@ pub(super) struct CaptureFrame {
     pub height: u32,
     pub window_id: u32,
     pub bounds: [f64; 4],
-    pub scope: openbitfun_agent_tools::computer_use_control::ObservationScope,
+    pub scope: starmate_agent_tools::computer_use_control::ObservationScope,
     /// Same-process popups composited over (or missing from) `rgba`, front to back.
     pub auxiliary: Vec<super::overlay_windows::CapturedOverlay>,
 }
@@ -234,7 +234,7 @@ impl CaptureSession {
             window_id,
             bounds,
             auxiliary: Vec::new(),
-            scope: openbitfun_agent_tools::computer_use_control::ObservationScope {
+            scope: starmate_agent_tools::computer_use_control::ObservationScope {
                 generation: self.generation,
                 target_revision: self.target_revision,
                 target: Some(format!("pid:{}/window:{}", self.pid, window_id)),
@@ -417,7 +417,7 @@ pub(super) fn detail_frame(pid: i32, window_id: u32) -> Result<CaptureFrame, Str
             return Err("CAPTURE_TARGET_CHANGED: Re-observe the intended target".into());
         }
         session.check().map(
-            |()| openbitfun_agent_tools::computer_use_control::ObservationScope {
+            |()| starmate_agent_tools::computer_use_control::ObservationScope {
                 generation: session.generation,
                 target_revision: session.target_revision,
                 target: Some(format!("pid:{pid}/window:{window_id}")),
@@ -600,9 +600,9 @@ impl Drop for RetainedCapture {
 pub(super) fn wait_settled(
     pid: i32,
     window_id: u32,
-    policy: openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
-) -> Result<openbitfun_agent_tools::computer_use_host::AppInputSettle, String> {
-    use openbitfun_agent_tools::computer_use_host::{
+    policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
+) -> Result<starmate_agent_tools::computer_use_host::AppInputSettle, String> {
+    use starmate_agent_tools::computer_use_host::{
         app_input_settle_decision, app_input_settle_next_wait_ms, AppInputSettle,
         AppInputSettleStatus,
     };

@@ -2,32 +2,32 @@ use super::common::{
     backup_domain_dir, backup_file_once, io_error, read_bounded_json, read_optional_bounded_json,
     relative_display, restore_unverified_file, stage_domain_dir, validate_regular_file,
 };
-use openbitfun_core_types::product_identity::product_id;
-use openbitfun_core_types::validate_session_id;
-use openbitfun_legacy_migration::copy_directory as copy_tree;
-use openbitfun_legacy_migration::{
+use starmate_core_types::product_identity::product_id;
+use starmate_core_types::validate_session_id;
+use starmate_legacy_migration::copy_directory as copy_tree;
+use starmate_legacy_migration::{
     atomic_write_bytes, atomic_write_json, DomainContext, DomainScan, LegacyDomainAdapter,
     LegacyMigrationError, LegacyMigrationResult, MigrationRoots,
 };
-use openbitfun_product_domains::legacy_migration::{
+use starmate_product_domains::legacy_migration::{
     ConflictResolution, FindingSeverity, MigrationConflict, MigrationDiagnostic, MigrationDomainId,
     MigrationDomainResult, MigrationDomainState, ScanFinding,
 };
-use openbitfun_services_core::session::{
+use starmate_services_core::session::{
     OfflineSessionBundle, OfflineSessionImportStore, SessionMetadata, SessionRelationship,
     StoredDialogTurnFile, StoredSessionMetadataFile, SESSION_STORAGE_SCHEMA_VERSION,
 };
-use openbitfun_services_core::session_projection_format::validate_runtime_event_log;
-use openbitfun_services_core::workspace_identity::build_project_runtime_slug;
-use openbitfun_services_core::workspace_identity::{
+use starmate_services_core::session_projection_format::validate_runtime_event_log;
+use starmate_services_core::workspace_identity::build_project_runtime_slug;
+use starmate_services_core::workspace_identity::{
     canonicalize_local_workspace_root, local_workspace_stable_storage_id,
     normalize_remote_workspace_path, remote_workspace_stable_id, LOCAL_WORKSPACE_SSH_HOST,
 };
-use openbitfun_services_core::workspace_persistence::{
+use starmate_services_core::workspace_persistence::{
     unsupported_workspace_persistence, validate_workspace_persistence_data,
     WorkspacePersistenceData, WORKSPACE_PERSISTENCE_FORMAT_VERSION,
 };
-use openbitfun_services_core::workspace_records::{
+use starmate_services_core::workspace_records::{
     PrimaryAssistantKey, WorkspaceInfo, WorkspaceKind,
 };
 use serde::{Deserialize, Serialize};
@@ -73,15 +73,15 @@ pub struct WorkspaceReportCounts {
 /// Auxiliary exclusions remain in the original manifest, not in these totals.
 pub fn workspace_report_counts(
     roots: &MigrationRoots,
-    report: &openbitfun_product_domains::legacy_migration::MigrationRunReport,
+    report: &starmate_product_domains::legacy_migration::MigrationRunReport,
 ) -> LegacyMigrationResult<WorkspaceReportCounts> {
     uuid::Uuid::parse_str(&report.run_id)
         .map_err(|_| LegacyMigrationError::InvalidRequest("invalid migration run id".into()))?;
-    let layout = openbitfun_legacy_migration::MigrationLayout::new(roots, &report.run_id);
+    let layout = starmate_legacy_migration::MigrationLayout::new(roots, &report.run_id);
     let root = layout.stage_root().join("workspace-sessions");
     let manifest: WorkspaceSessionsManifest =
         read_bounded_json(&root, &root.join("manifest.json"))?;
-    let plan: openbitfun_product_domains::legacy_migration::MigrationPlan = layout
+    let plan: starmate_product_domains::legacy_migration::MigrationPlan = layout
         .read_json(&layout.plan_path())?
         .ok_or_else(|| LegacyMigrationError::InvalidPlan("migration plan is missing".into()))?;
     let counts = |actions: Vec<SessionImportAction>| MigrationItemCounts {
@@ -1632,7 +1632,7 @@ fn read_session_turns(
     session_dir: &Path,
     session_id: &str,
 ) -> LegacyMigrationResult<(
-    Vec<openbitfun_services_core::session::DialogTurnData>,
+    Vec<starmate_services_core::session::DialogTurnData>,
     Vec<String>,
 )> {
     let turns_dir = session_dir.join("turns");
@@ -2070,7 +2070,7 @@ fn hash_entries(mut entries: Vec<(PathBuf, Vec<u8>)>) -> String {
 
 fn tree_entries(root: &Path) -> LegacyMigrationResult<Vec<(PathBuf, bool)>> {
     let mut entries = Vec::new();
-    openbitfun_legacy_migration::visit_directory(root, |path, directory| {
+    starmate_legacy_migration::visit_directory(root, |path, directory| {
         if path != root {
             entries.push((path.to_path_buf(), directory));
         }
@@ -2382,7 +2382,7 @@ fn json_error(error: serde_json::Error) -> LegacyMigrationError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_core_types::SessionExecutionTarget;
+    use starmate_core_types::SessionExecutionTarget;
 
     #[test]
     fn damaged_turns_and_filename_mismatches_recover_valid_history() {
@@ -2538,7 +2538,7 @@ mod tests {
         std::os::unix::fs::symlink(&real, &alias).unwrap();
         #[cfg(windows)]
         {
-            let output = openbitfun_services_core::process_manager::create_command("cmd.exe")
+            let output = starmate_services_core::process_manager::create_command("cmd.exe")
                 .args(["/C", "mklink", "/J"])
                 .arg(&alias)
                 .arg(&real)
@@ -2820,10 +2820,10 @@ mod tests {
             Some(source_display.as_str())
         );
 
-        use openbitfun_legacy_migration::{
+        use starmate_legacy_migration::{
             probe_legacy_source, CancellationToken, MigrationEngine, NoCrashInjection, ProbeLimits,
         };
-        use openbitfun_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
+        use starmate_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
         let source = probe_legacy_source(&roots, ProbeLimits::default())
             .unwrap()
             .unwrap();
@@ -2941,10 +2941,10 @@ mod tests {
     #[test]
     fn damaged_session_is_skipped_and_stale_turn_count_is_rebuilt_on_import() {
         use crate::adapters_for_groups;
-        use openbitfun_legacy_migration::{
+        use starmate_legacy_migration::{
             probe_legacy_source, CancellationToken, MigrationEngine, NoCrashInjection, ProbeLimits,
         };
-        use openbitfun_product_domains::legacy_migration::{
+        use starmate_product_domains::legacy_migration::{
             MigrationGroupId, MigrationRunStatus, MigrationSelection,
         };
         let temp = test_tempdir("partial-sessions");
@@ -3048,7 +3048,7 @@ mod tests {
 // normal catalog loading must never recompute identity from a filesystem path.
 fn legacy_workspace_storage_id(
     workspace: &WorkspaceInfo,
-) -> openbitfun_services_core::storage_error::StorageResult<String> {
+) -> starmate_services_core::storage_error::StorageResult<String> {
     match workspace.workspace_kind {
         WorkspaceKind::Remote => {
             let ssh_host = workspace

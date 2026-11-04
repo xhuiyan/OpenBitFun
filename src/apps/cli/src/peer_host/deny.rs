@@ -1,6 +1,6 @@
 //! CLI peer host command policy, derived from the Product Operation Registry.
 //!
-//! The registry (`openbitfun_product_domains::remote_surface`) is the single owner
+//! The registry (`starmate_product_domains::remote_surface`) is the single owner
 //! of which HostInvoke commands a CLI peer host may run on a controller's
 //! behalf, which it must refuse because the controller keeps them, and which
 //! it cannot implement. This module only exposes the CLI-side predicates the
@@ -8,7 +8,7 @@
 //! tables from the same registry, so the three surfaces cannot drift apart.
 //! See `docs/architecture/remote-surface-contract.md`.
 
-use openbitfun_product_domains::remote_surface::{
+use starmate_product_domains::remote_surface::{
     peer_host_verdict, peer_stance, retired_reason, PeerHostKind, PeerHostVerdict, PeerRefusal,
     PeerStance,
 };

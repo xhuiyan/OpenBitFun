@@ -2,12 +2,12 @@
 use super::ipc;
 use image::{imageops, Rgba, RgbaImage};
 #[cfg(target_os = "macos")]
-use openbitfun_services_core::process_manager::create_command;
+use starmate_services_core::process_manager::create_command;
 use sha2::{Digest, Sha256};
 use std::io::Cursor;
 use std::path::{Path, PathBuf};
 
-pub(crate) use openbitfun_miniapp_ipc::launcher::{read_record, write_record, LaunchRecord};
+pub(crate) use starmate_miniapp_ipc::launcher::{read_record, write_record, LaunchRecord};
 
 fn png(image: &RgbaImage) -> Result<Vec<u8>, String> {
     let mut out = Cursor::new(Vec::new());

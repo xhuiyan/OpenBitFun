@@ -2,13 +2,13 @@
 
 use serde_json::{json, Value};
 
-use openbitfun_core::service::git::{trust, GitError, GitService};
+use starmate_core::service::git::{trust, GitError, GitService};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
 use crate::peer_host::args::{get_string, optional_string, request_value};
 
 async fn repository_path_for_workspace(request: &Value) -> Result<String, String> {
-    let service = openbitfun_core::service::workspace::get_global_workspace_service()
+    let service = starmate_core::service::workspace::get_global_workspace_service()
         .ok_or("Workspace service is unavailable")?;
     let path = optional_string(request, "repositoryPath").unwrap_or_default();
     let workspace = match optional_string(request, "workspaceId") {
@@ -31,12 +31,12 @@ async fn repository_path_for_workspace(request: &Value) -> Result<String, String
 }
 
 fn resolved_repository_path(
-    kind: openbitfun_core::service::workspace::WorkspaceKind,
+    kind: starmate_core::service::workspace::WorkspaceKind,
     root: &str,
     legacy_path: String,
     has_workspace_id: bool,
 ) -> Result<String, String> {
-    if kind == openbitfun_core::service::workspace::WorkspaceKind::Remote {
+    if kind == starmate_core::service::workspace::WorkspaceKind::Remote {
         return Err("CLI peer Git inspection does not support remote workspaces; local filesystem fallback was not attempted".into());
     }
     Ok(if has_workspace_id || legacy_path.is_empty() {
@@ -156,8 +156,8 @@ pub(crate) async fn git_get_repository_trust(args: &Value) -> Result<Value, Stri
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_core::service::workspace::WorkspaceKind;
-    use openbitfun_services_core::process_manager::create_command;
+    use starmate_core::service::workspace::WorkspaceKind;
+    use starmate_services_core::process_manager::create_command;
     use std::path::Path;
 
     fn git(path: &Path, args: &[&str]) -> String {

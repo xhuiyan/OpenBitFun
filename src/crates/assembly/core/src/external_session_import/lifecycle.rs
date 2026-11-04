@@ -1,7 +1,7 @@
 //! Explicit local-view lifecycle. Discovery never clears a removal marker.
 use super::*;
 use crate::service::workspace::WorkspaceKind;
-use openbitfun_product_domains::session_import::{
+use starmate_product_domains::session_import::{
     RemovedExternalSession, RestoreRemovedExternalSessionRequest,
 };
 

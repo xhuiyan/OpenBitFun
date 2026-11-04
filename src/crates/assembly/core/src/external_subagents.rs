@@ -21,11 +21,11 @@ use crate::infrastructure::ai::reasoning_catalog::{
 use crate::service::config::global::GlobalConfigManager;
 use crate::service::config::types::{model_runtime_binding_fingerprint, AIConfig, AIModelConfig};
 use crate::util::OpenBitFunError;
-use openbitfun_ai_adapters::models_dev::ModelsDevCatalog;
-use openbitfun_external_sources::ExternalSubagentCoordinatorSnapshot;
-use openbitfun_product_domains::external_sources::EcosystemId;
-use openbitfun_product_domains::external_sources::{ExternalSourceScope, ProviderId, SourceKey};
-use openbitfun_product_domains::external_subagents::{
+use starmate_ai_adapters::models_dev::ModelsDevCatalog;
+use starmate_external_sources::ExternalSubagentCoordinatorSnapshot;
+use starmate_product_domains::external_sources::EcosystemId;
+use starmate_product_domains::external_sources::{ExternalSourceScope, ProviderId, SourceKey};
+use starmate_product_domains::external_subagents::{
     external_subagent_approval_key, external_subagent_conflict_key,
     external_subagent_model_binding_key, ExternalSubagentActivationState,
     ExternalSubagentCompatibilityState, ExternalSubagentConflict,
@@ -317,7 +317,7 @@ async fn gather_product_facts(
             (Some(_), Some(ai_config)) => {
                 match registry
                     .get_explicit_subagent_model_selection(&info.id, workspace_id)
-                    .map(openbitfun_config_contracts::model_pool::AgentModelSelection::from)
+                    .map(starmate_config_contracts::model_pool::AgentModelSelection::from)
                     .map(Ok)
                     .unwrap_or_else(|| {
                         ai_config
@@ -524,7 +524,7 @@ fn configured_reasoning_effort(
     resolve_default_reasoning_preset(&project_model_reasoning_catalog(model, models_dev))
         .and_then(|preset| {
             preset.actions.iter().rev().find_map(|action| match action {
-                openbitfun_core_types::ReasoningPresetAction::Effort { value } => {
+                starmate_core_types::ReasoningPresetAction::Effort { value } => {
                     Some(value.clone())
                 }
                 _ => None,
@@ -969,7 +969,7 @@ fn resolve_external_candidate(
     definition: &ExternalSubagentDefinition,
     sources: &BTreeMap<
         SourceKey,
-        &openbitfun_product_domains::external_sources::ExternalSourceRecord,
+        &starmate_product_domains::external_sources::ExternalSourceRecord,
     >,
     provider_labels: &BTreeMap<ProviderId, String>,
     facts: &ProductFacts,
@@ -1496,7 +1496,7 @@ fn stable_digest(parts: impl IntoIterator<Item = impl AsRef<str>>) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_config_contracts::model_pool::{AgentModelSelection, AgentModelSelections};
+    use starmate_config_contracts::model_pool::{AgentModelSelection, AgentModelSelections};
 
     fn test_active_ecosystems() -> &'static BTreeSet<EcosystemId> {
         static ECOSYSTEMS: std::sync::OnceLock<BTreeSet<EcosystemId>> = std::sync::OnceLock::new();
@@ -1510,11 +1510,11 @@ mod tests {
             std::sync::OnceLock::new();
         BINDINGS.get_or_init(BTreeMap::new)
     }
-    use openbitfun_product_domains::external_sources::{
+    use starmate_product_domains::external_sources::{
         EcosystemId, ExecutionDomainId, ExternalSourceCatalogEntry, ExternalSourceHealth,
         ExternalSourceLifecycleState, ExternalSourceRecord,
     };
-    use openbitfun_product_domains::external_subagents::{
+    use starmate_product_domains::external_subagents::{
         ExternalSubagentBehaviorVersion, ExternalSubagentCandidateId,
         ExternalSubagentContributionId, ExternalSubagentContributionRole, ExternalSubagentLocalId,
         ExternalSubagentMode, ExternalSubagentModelBindingMethod,
@@ -1522,7 +1522,7 @@ mod tests {
         ExternalSubagentProvenanceRef, ExternalSubagentToolCapability, ExternalSubagentToolRequest,
         ExternalSubagentToolSelector, SecretText,
     };
-    use openbitfun_product_domains::tool_permissions::{
+    use starmate_product_domains::tool_permissions::{
         PermissionConstraintLayer, PermissionEffect, PermissionRule,
     };
 
@@ -1838,7 +1838,7 @@ mod tests {
             model_name: "fast-model".to_string(),
             base_url: "https://api.fake.example/v1".to_string(),
             reasoning: Some(crate::service::config::types::ReasoningConfig {
-                catalog: openbitfun_core_types::ReasoningCatalogBinding::ModelsDev {
+                catalog: starmate_core_types::ReasoningCatalogBinding::ModelsDev {
                     provider: "fake".to_string(),
                     model: "fast-model".to_string(),
                 },

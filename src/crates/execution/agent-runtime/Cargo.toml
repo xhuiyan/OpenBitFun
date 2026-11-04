@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-agent-runtime"
+name = "starmate-agent-runtime"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,7 +7,7 @@ description = "Agent runtime contracts and owner decisions for OpenBitFun"
 autotests = false
 
 [lib]
-name = "openbitfun_agent_runtime"
+name = "starmate_agent_runtime"
 crate-type = ["rlib"]
 
 [[example]]
@@ -17,10 +17,10 @@ required-features = ["agent-runtime"]
 
 [features]
 default = []
-account-routing = ["dep:openbitfun-core-types"]
+account-routing = ["dep:starmate-core-types"]
 definition-contracts = [
     "native-hook-settings",
-    "dep:openbitfun-core-types",
+    "dep:starmate-core-types",
     "dep:regex",
     "dep:serde",
     "dep:serde_json",
@@ -49,12 +49,12 @@ agent-runtime = [
     "definition-contracts",
     "native-hook-runtime",
     "dep:async-trait",
-    "dep:openbitfun-agent-stream",
-    "dep:openbitfun-agent-tools",
-    "dep:openbitfun-core-types",
-    "dep:openbitfun-events",
-    "dep:openbitfun-runtime-ports",
-    "dep:openbitfun-runtime-services",
+    "dep:starmate-agent-stream",
+    "dep:starmate-agent-tools",
+    "dep:starmate-core-types",
+    "dep:starmate-events",
+    "dep:starmate-runtime-ports",
+    "dep:starmate-runtime-services",
     "dep:dashmap",
     "dep:hex",
     "dep:log",
@@ -74,12 +74,12 @@ agent-runtime = [
 
 [dependencies]
 async-trait = { workspace = true, optional = true }
-openbitfun-agent-stream = { path = "../agent-stream", optional = true }
-openbitfun-agent-tools = { path = "../tool-contracts", optional = true }
-openbitfun-core-types = { path = "../../contracts/core-types", optional = true }
-openbitfun-events = { path = "../../contracts/events", optional = true }
-openbitfun-runtime-ports = { path = "../../contracts/runtime-ports", optional = true, features = ["agent-api", "git-port", "permission", "plugin-runtime", "remote-workspace-ports", "runtime-event-port", "terminal-port", "workspace-ports"] }
-openbitfun-runtime-services = { path = "../runtime-services", optional = true }
+starmate-agent-stream = { path = "../agent-stream", optional = true }
+starmate-agent-tools = { path = "../tool-contracts", optional = true }
+starmate-core-types = { path = "../../contracts/core-types", optional = true }
+starmate-events = { path = "../../contracts/events", optional = true }
+starmate-runtime-ports = { path = "../../contracts/runtime-ports", optional = true, features = ["agent-api", "git-port", "permission", "plugin-runtime", "remote-workspace-ports", "runtime-event-port", "terminal-port", "workspace-ports"] }
+starmate-runtime-services = { path = "../runtime-services", optional = true }
 dashmap = { workspace = true, optional = true }
 hex = { workspace = true, optional = true }
 log = { workspace = true, optional = true }

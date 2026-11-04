@@ -17,51 +17,51 @@ mod permission_publication;
 pub mod remote_server;
 
 pub mod device {
-    pub use openbitfun_services_integrations::remote_connect::device::*;
+    pub use starmate_services_integrations::remote_connect::device::*;
 }
 
 pub mod encryption {
-    pub use openbitfun_services_integrations::remote_connect::encryption::*;
+    pub use starmate_services_integrations::remote_connect::encryption::*;
 }
 
 pub mod pairing {
-    pub use openbitfun_services_integrations::remote_connect::pairing::*;
+    pub use starmate_services_integrations::remote_connect::pairing::*;
 }
 
 pub mod qr_generator {
-    pub use openbitfun_services_integrations::remote_connect::qr_generator::*;
+    pub use starmate_services_integrations::remote_connect::qr_generator::*;
 }
 
 pub mod relay_client {
-    pub use openbitfun_services_integrations::remote_connect::relay_client::*;
+    pub use starmate_services_integrations::remote_connect::relay_client::*;
 }
 
 pub mod relay_failure {
-    pub use openbitfun_services_integrations::remote_connect::relay_failure::*;
+    pub use starmate_services_integrations::remote_connect::relay_failure::*;
 }
 
 pub mod account {
-    pub use openbitfun_services_integrations::remote_connect::account::*;
+    pub use starmate_services_integrations::remote_connect::account::*;
 }
 
 pub mod host_stream {
-    pub use openbitfun_services_integrations::remote_connect::host_stream::*;
+    pub use starmate_services_integrations::remote_connect::host_stream::*;
 }
 
 pub mod host_stream_subscriber {
-    pub use openbitfun_services_integrations::remote_connect::host_stream_subscriber::*;
+    pub use starmate_services_integrations::remote_connect::host_stream_subscriber::*;
 }
 
 pub mod rpc_execution {
-    pub use openbitfun_services_integrations::remote_connect::rpc_execution::*;
+    pub use starmate_services_integrations::remote_connect::rpc_execution::*;
 }
 
 pub mod session_records {
-    pub use openbitfun_services_integrations::remote_connect::session_records::*;
+    pub use starmate_services_integrations::remote_connect::session_records::*;
 }
 
 pub mod session_store {
-    pub use openbitfun_services_integrations::remote_connect::session_store::*;
+    pub use starmate_services_integrations::remote_connect::session_store::*;
 }
 
 pub use account::{validate_relay_base_url, AccountClient, AccountSession, DelegateToken};
@@ -88,7 +88,7 @@ pub enum ConnectionMethod {
     Lan {
         ip: Option<String>,
     },
-    #[serde(rename = "openbitfun_server")]
+    #[serde(rename = "starmate_server")]
     OpenBitFunServer,
     BotFeishu,
     BotTelegram,
@@ -110,7 +110,7 @@ impl Default for RemoteConnectConfig {
     fn default() -> Self {
         Self {
             lan_port: 9700,
-            openbitfun_server_url: openbitfun_product_domains::account::DEFAULT_RELAY_URL
+            openbitfun_server_url: starmate_product_domains::account::DEFAULT_RELAY_URL
                 .to_string(),
             bot_feishu: None,
             bot_telegram: None,
@@ -251,7 +251,7 @@ impl RemoteConnectService {
 
     pub async fn clear_bot_delegated_identities(&self) {
         self.set_bot_account(None).await;
-        openbitfun_services_integrations::remote_connect::bot::clear_persisted_bot_account_contexts(
+        starmate_services_integrations::remote_connect::bot::clear_persisted_bot_account_contexts(
         );
     }
 
@@ -1408,8 +1408,8 @@ fn start_host_catalog_publication(hub: &Arc<host_stream::HostStreamHub>) {
 
 /// Live session-list state is runtime-owned but not always a metadata write.
 /// Only semantic lifecycle facts invalidate the catalog; output chunks do not.
-pub fn notify_session_catalog_event(event: &openbitfun_events::AgenticEvent) {
-    use openbitfun_events::AgenticEvent;
+pub fn notify_session_catalog_event(event: &starmate_events::AgenticEvent) {
+    use starmate_events::AgenticEvent;
     if matches!(
         event,
         AgenticEvent::SessionCreated { .. }

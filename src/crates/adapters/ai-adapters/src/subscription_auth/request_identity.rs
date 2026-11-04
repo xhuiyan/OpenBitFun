@@ -3,7 +3,7 @@
 use super::{accounts::validate_account_id, store, StoredCredential, SubscriptionProvider};
 use crate::client::AIClient;
 use anyhow::Result;
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use sha2::{Digest, Sha256};
 
 fn admission_error(message: impl std::fmt::Display, credentials_changed: bool) -> anyhow::Error {
@@ -71,8 +71,8 @@ impl AccountRequestIdentity {
     pub(crate) fn origin(
         &self,
         account_id: &str,
-    ) -> Option<openbitfun_core_types::ModelAccountOrigin> {
-        (account_id == self.account_id).then(|| openbitfun_core_types::ModelAccountOrigin {
+    ) -> Option<starmate_core_types::ModelAccountOrigin> {
+        (account_id == self.account_id).then(|| starmate_core_types::ModelAccountOrigin {
             provider: self.provider.key().into(),
             account_id: self.account_id.clone(),
             upstream_account_id: self.upstream_account_id.clone(),

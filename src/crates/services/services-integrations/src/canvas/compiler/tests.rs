@@ -1,7 +1,7 @@
 #[cfg(feature = "canvas-runtime")]
 use super::*;
 #[cfg(feature = "canvas-runtime")]
-use openbitfun_product_domains::canvas::types::{CanvasId, CanvasRevision};
+use starmate_product_domains::canvas::types::{CanvasId, CanvasRevision};
 
 #[cfg(feature = "canvas-runtime")]
 mod enabled {

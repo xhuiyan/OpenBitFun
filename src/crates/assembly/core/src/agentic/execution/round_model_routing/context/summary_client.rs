@@ -10,10 +10,10 @@ use crate::infrastructure::ai::reasoning_catalog::{
 use crate::service::config::get_global_config_service;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::Message as AIMessage;
-use openbitfun_agent_runtime::router_context::{EstimatedRouterTokens, RouterTokenCounter};
-use openbitfun_ai_adapters::models_dev::is_protocol_generic_reasoning_preset;
-use openbitfun_ai_adapters::{AIClient, GeminiResponse};
-use openbitfun_core_types::{
+use starmate_agent_runtime::router_context::{EstimatedRouterTokens, RouterTokenCounter};
+use starmate_ai_adapters::models_dev::is_protocol_generic_reasoning_preset;
+use starmate_ai_adapters::{AIClient, GeminiResponse};
+use starmate_core_types::{
     ReasoningCatalogProjection, ReasoningPresetAction, ReasoningPresetDescriptor,
     ReasoningPresetSource,
 };

@@ -1,7 +1,7 @@
 //! Host-local Router service capacity. No request payload or Session state is shared.
 
 use super::{parse_env_usize, OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::router_summary_queue::{RouterSummaryPermit, RouterSummaryQueue};
+use starmate_agent_runtime::router_summary_queue::{RouterSummaryPermit, RouterSummaryQueue};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex, OnceLock, Weak};
 use tokio::sync::Semaphore;

@@ -380,7 +380,7 @@ async function rebuildDesktopDebugBinary() {
 
   await spawnCommand(
     process.platform === 'win32' ? 'cargo.exe' : 'cargo',
-    ['build', '-p', 'openbitfun-desktop'],
+    ['build', '-p', 'starmate-desktop'],
     ROOT_DIR,
     buildEnv,
   );
@@ -498,7 +498,7 @@ async function startDesktopPreview() {
 
   if (!fs.existsSync(desktopBinary)) {
     printError(`Debug desktop binary not found: ${desktopBinary}`);
-    printInfo('Retry with `pnpm run desktop:preview:debug -- --force-rebuild` or build it with `cargo build -p openbitfun-desktop`');
+    printInfo('Retry with `pnpm run desktop:preview:debug -- --force-rebuild` or build it with `cargo build -p starmate-desktop`');
     process.exit(1);
   }
 

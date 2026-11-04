@@ -6,7 +6,7 @@
 
 use std::path::{Path, PathBuf};
 
-use openbitfun_core::agentic::tools::desktop_card_host::{
+use starmate_core::agentic::tools::desktop_card_host::{
     DesktopCardRecord, DESKTOP_CARD_STORE_VERSION,
 };
 use serde::{Deserialize, Serialize};

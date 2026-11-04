@@ -7,7 +7,7 @@
 
 use crate::service::config::types::{GlobalConfig, MemoriesConfig};
 use crate::service::config::ConfigService;
-use openbitfun_product_domains::product_control::{
+use starmate_product_domains::product_control::{
     catalog as product_control_catalog, inspect_contract, validate_option_value, ProductCapability,
     ProductCapabilityOption, ProductCapabilityOptionHandler, ProductControlDeliveryProfile,
     ProductControlRequest,
@@ -55,7 +55,7 @@ impl SharedProductControlExecutor {
         capability_id: &str,
         delivery_profile: ProductControlDeliveryProfile,
     ) -> Result<Value, String> {
-        let capability = openbitfun_product_domains::product_control::capability(capability_id)?;
+        let capability = starmate_product_domains::product_control::capability(capability_id)?;
         let mut result = inspect_contract(capability_id)?;
         let object = result
             .as_object_mut()
@@ -107,7 +107,7 @@ impl SharedProductControlExecutor {
             .map(|operation_id| {
                 let definition_id = format!("{capability_id}:operation:{operation_id}");
                 let declared_availability =
-                    openbitfun_product_domains::product_control::ProductControlRegistry::global()
+                    starmate_product_domains::product_control::ProductControlRegistry::global()
                         .definition(&definition_id)
                         .ok()
                         .and_then(|definition| definition.availability.get(&delivery_profile));
@@ -186,7 +186,7 @@ impl SharedProductControlExecutor {
             .value
             .as_ref()
             .ok_or_else(|| "value is required".to_string())?;
-        let capability = openbitfun_product_domains::product_control::capability(capability_id)?;
+        let capability = starmate_product_domains::product_control::capability(capability_id)?;
         let option = capability
             .options
             .iter()
@@ -655,7 +655,7 @@ mod tests {
     use crate::infrastructure::PathManager;
     use crate::service::config::types::GlobalConfig;
     use crate::service::config::{ConfigManagerSettings, ConfigService};
-    use openbitfun_product_domains::product_control::{
+    use starmate_product_domains::product_control::{
         capability as product_capability, catalog, ProductControlAction, ProductControlSource,
         ProductControlValueSchema, ProductControlValueType,
     };

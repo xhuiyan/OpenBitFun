@@ -5,7 +5,7 @@
 //! core paths compatible while concrete report shaping and product tool side
 //! effects remain in core until separately migrated.
 
-pub use openbitfun_agent_runtime::deep_review::{
+pub use starmate_agent_runtime::deep_review::{
     budget, concurrency_policy, constants, diagnostics, execution_policy, incremental_cache,
     manifest, queue, shared_context, team_definition, tool_context,
 };

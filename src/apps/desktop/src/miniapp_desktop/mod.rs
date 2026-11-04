@@ -7,16 +7,16 @@ mod sdk;
 mod system_install;
 
 use crate::api::{app_state::AppState, miniapp_api};
-use openbitfun_product_domains::miniapp::instances::*;
-use openbitfun_services_core::process_manager::create_command;
-use openbitfun_services_integrations::miniapp::instances::MiniAppInstances;
+use starmate_product_domains::miniapp::instances::*;
+use starmate_services_core::process_manager::create_command;
+use starmate_services_integrations::miniapp::instances::MiniAppInstances;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::sync::{Arc, Mutex};
 use tauri::{Emitter, Listener, Manager};
 
-pub(crate) use openbitfun_miniapp_ipc::launcher::launch_manifest;
+pub(crate) use starmate_miniapp_ipc::launcher::launch_manifest;
 
 /// Old shortcuts may still target the Desktop executable.
 /// Delegate them to the installed lightweight shell before starting any runtime.
@@ -77,7 +77,7 @@ pub(crate) async fn claim_host(
     channel: ipc::HostChannel,
 ) -> Result<Option<std::fs::File>, String> {
     let paths =
-        openbitfun_core::infrastructure::try_get_path_manager_arc().map_err(|e| e.to_string())?;
+        starmate_core::infrastructure::try_get_path_manager_arc().map_err(|e| e.to_string())?;
     let owner = host_lock(&paths.user_data_dir(), channel)?;
     let deadline = tokio::time::Instant::now() + std::time::Duration::from_secs(70);
     loop {
@@ -241,7 +241,7 @@ impl DesktopMiniApps {
             "requestId": request_id,
             "method": method,
             "expiresAt": expires_at as u64,
-            "schemaVersion": openbitfun_product_domains::miniapp::web_surface::MINIAPP_WEB_SCHEMA_VERSION,
+            "schemaVersion": starmate_product_domains::miniapp::web_surface::MINIAPP_WEB_SCHEMA_VERSION,
         });
         if let Some(action) = action {
             relayed["action"] = action;
@@ -337,7 +337,7 @@ impl DesktopMiniApps {
                 // Shell names its own transport failure in `code`, which is why the
                 // failure kind is data here instead of something parsed out of prose.
                 _ => Err({
-                    use openbitfun_product_domains::miniapp::web_surface::MiniAppWebErrorCode;
+                    use starmate_product_domains::miniapp::web_surface::MiniAppWebErrorCode;
                     let message = answer
                         .get("error")
                         .and_then(Value::as_str)
@@ -1519,9 +1519,9 @@ mod tests {
 
     #[tokio::test]
     async fn worker_framework_storage_uses_host_owner_and_custom_handlers_still_win() {
-        use openbitfun_product_domains::miniapp::runtime::{DetectedRuntime, RuntimeKind};
-        use openbitfun_services_integrations::miniapp::worker::JsWorker;
-        let output = openbitfun_services_core::process_manager::create_command("node")
+        use starmate_product_domains::miniapp::runtime::{DetectedRuntime, RuntimeKind};
+        use starmate_services_integrations::miniapp::worker::JsWorker;
+        let output = starmate_services_core::process_manager::create_command("node")
             .arg("-p")
             .arg("process.execPath")
             .output()

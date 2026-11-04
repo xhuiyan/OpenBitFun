@@ -1,7 +1,7 @@
 //! Pool editing uses the main configuration owner and its atomic mutation lock.
 use super::{AIConfig, ConfigService};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-pub use openbitfun_config_contracts::model_pool::{ModelPoolDefinition, ModelPoolDocument};
+pub use starmate_config_contracts::model_pool::{ModelPoolDefinition, ModelPoolDocument};
 use std::collections::HashSet;
 use std::path::PathBuf;
 

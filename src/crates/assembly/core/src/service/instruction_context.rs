@@ -1,7 +1,7 @@
 use crate::util::errors::*;
-use openbitfun_runtime_ports::WorkspaceFileSystem;
-use openbitfun_services_core::local_instructions::LocalInstructionFile;
-use openbitfun_services_core::workspace_instructions::WorkspaceInstructionFile;
+use starmate_runtime_ports::WorkspaceFileSystem;
+use starmate_services_core::local_instructions::LocalInstructionFile;
+use starmate_services_core::workspace_instructions::WorkspaceInstructionFile;
 use std::path::Path;
 
 const MAX_RENDERED_INSTRUCTION_FILES: usize = 256;
@@ -53,7 +53,7 @@ pub(crate) async fn build_workspace_instruction_files_context_detailed(
     let (user_instruction_files, user_instruction_files_cacheable) =
         load_user_instruction_files(workspace_root).await;
     let workspace_instruction_files =
-        openbitfun_services_core::workspace_instructions::read_workspace_instruction_files(
+        starmate_services_core::workspace_instructions::read_workspace_instruction_files(
             workspace_root,
         )
         .await
@@ -74,7 +74,7 @@ pub(crate) async fn build_local_workspace_instruction_files_context_with_fs_deta
     let (user_instruction_files, user_instruction_files_cacheable) =
         load_user_instruction_files(workspace_root).await;
     let workspace_instruction_files =
-        openbitfun_services_core::workspace_instructions::read_workspace_instruction_files_with_fs(
+        starmate_services_core::workspace_instructions::read_workspace_instruction_files_with_fs(
             fs,
             workspace_root_path,
         )
@@ -110,7 +110,7 @@ fn merge_local_instruction_sources(
     user_instruction_files: Vec<LocalInstructionFile>,
     mut workspace_instruction_files: Vec<WorkspaceInstructionFile>,
 ) -> Vec<WorkspaceInstructionFile> {
-    openbitfun_services_core::workspace_instructions::retain_distinct_local_workspace_instruction_files(
+    starmate_services_core::workspace_instructions::retain_distinct_local_workspace_instruction_files(
         workspace_root,
         user_instruction_files
             .iter()
@@ -134,7 +134,7 @@ pub(crate) async fn load_local_conditional_instruction_files(
 ) -> OpenBitFunResult<Vec<WorkspaceInstructionFile>> {
     let user_instruction_files = load_user_conditional_instruction_files().await;
     let workspace_instruction_files =
-        openbitfun_services_core::workspace_instructions::read_workspace_conditional_instruction_sources(
+        starmate_services_core::workspace_instructions::read_workspace_conditional_instruction_sources(
             workspace_root,
         )
         .await
@@ -153,7 +153,7 @@ pub(crate) async fn load_local_conditional_instruction_files_with_fs(
 ) -> OpenBitFunResult<Vec<WorkspaceInstructionFile>> {
     let user_instruction_files = load_user_conditional_instruction_files().await;
     let workspace_instruction_files =
-        openbitfun_services_core::workspace_instructions::read_workspace_conditional_instruction_sources_with_fs(
+        starmate_services_core::workspace_instructions::read_workspace_conditional_instruction_sources_with_fs(
             fs,
             workspace_root_path,
         )
@@ -170,7 +170,7 @@ pub(crate) async fn load_workspace_conditional_instruction_files_with_fs(
     fs: &dyn WorkspaceFileSystem,
     workspace_root: &str,
 ) -> OpenBitFunResult<Vec<WorkspaceInstructionFile>> {
-    Ok(openbitfun_services_core::workspace_instructions::read_workspace_conditional_instruction_sources_with_fs(
+    Ok(starmate_services_core::workspace_instructions::read_workspace_conditional_instruction_sources_with_fs(
             fs,
             workspace_root,
         )
@@ -183,7 +183,7 @@ pub(crate) async fn build_workspace_instruction_files_context_with_fs(
     workspace_root: &str,
 ) -> OpenBitFunResult<Option<String>> {
     let instruction_files =
-        openbitfun_services_core::workspace_instructions::read_workspace_instruction_files_with_fs(
+        starmate_services_core::workspace_instructions::read_workspace_instruction_files_with_fs(
             fs,
             workspace_root,
         )
@@ -251,7 +251,7 @@ mod tests {
     #[cfg(feature = "external-sources")]
     use crate::instruction_sources::test_support::{lock_environment, EnvironmentGuard};
     #[cfg(feature = "external-sources")]
-    use openbitfun_services_core::workspace::LocalWorkspaceFs;
+    use starmate_services_core::workspace::LocalWorkspaceFs;
 
     #[cfg(feature = "external-sources")]
     #[tokio::test]
@@ -565,7 +565,7 @@ mod tests {
             claude.join("rules/oversized.md"),
             vec![
                 b'x';
-                openbitfun_services_core::local_instructions::MAX_LOCAL_INSTRUCTION_FILE_BYTES + 1
+                starmate_services_core::local_instructions::MAX_LOCAL_INSTRUCTION_FILE_BYTES + 1
             ],
         )
         .expect("oversized user rule");

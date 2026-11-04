@@ -1,6 +1,6 @@
 use anyhow::Context;
-use openbitfun_miniapp_market_service::build_market_router;
-use openbitfun_miniapp_market_service::config::MarketConfig;
+use starmate_miniapp_market_service::build_market_router;
+use starmate_miniapp_market_service::config::MarketConfig;
 use tracing_subscriber::EnvFilter;
 
 #[tokio::main]

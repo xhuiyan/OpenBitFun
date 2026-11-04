@@ -1,5 +1,5 @@
 use super::*;
-use openbitfun_services_integrations::mcp::server::{
+use starmate_services_integrations::mcp::server::{
     detect_mcp_list_changed_kind, MCPListChangedKind,
 };
 use std::collections::HashSet;

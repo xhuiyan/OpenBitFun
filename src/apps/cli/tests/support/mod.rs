@@ -214,7 +214,7 @@ impl CliTestEnvironment {
         let base_url = format!("{}/v1", server_base_url.trim_end_matches('/'));
         let request_url = format!("{base_url}/chat/completions");
         let mut config =
-            serde_json::to_value(openbitfun_core::service::config::GlobalConfig::default())
+            serde_json::to_value(starmate_core::service::config::GlobalConfig::default())
                 .expect("serialize default CLI config");
         config["app"]["ai_experience"]["enable_session_title_generation"] = json!(false);
         config["ai"]["models"] = json!([{
@@ -255,7 +255,7 @@ impl CliTestEnvironment {
     }
 
     pub(crate) fn std_command(&self) -> Command {
-        let mut command = openbitfun_services_core::process_manager::create_command(env!(
+        let mut command = starmate_services_core::process_manager::create_command(env!(
             "CARGO_BIN_EXE_openbitfun"
         ));
         command.current_dir(&self.workspace);
@@ -313,7 +313,7 @@ impl CliTestEnvironment {
     }
 
     fn run_git(&self, args: &[&str]) {
-        let output = openbitfun_services_core::process_manager::create_command("git")
+        let output = starmate_services_core::process_manager::create_command("git")
             .args(args)
             .current_dir(&self.workspace)
             .output()

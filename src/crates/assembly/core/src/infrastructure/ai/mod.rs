@@ -11,13 +11,13 @@ pub mod tool_call_accumulator;
 
 use std::time::Duration;
 
-pub use openbitfun_ai_adapters::providers;
-pub use openbitfun_ai_adapters::stream as ai_stream_handlers;
+pub use starmate_ai_adapters::providers;
+pub use starmate_ai_adapters::stream as ai_stream_handlers;
 
 pub use client_factory::{
     get_global_ai_client_factory, initialize_global_ai_client_factory, AIClientFactory,
 };
-pub use openbitfun_ai_adapters::{AIClient, StreamOptions, StreamResponse};
+pub use starmate_ai_adapters::{AIClient, StreamOptions, StreamResponse};
 
 use crate::service::config::types::{AIConfig, AIModelConfig};
 
@@ -46,7 +46,7 @@ mod tests {
     fn model_reasoning_config_does_not_override_stream_timeouts() {
         let config = AIConfig::default();
         let model = AIModelConfig {
-            reasoning: Some(openbitfun_core_types::ReasoningConfig::default()),
+            reasoning: Some(starmate_core_types::ReasoningConfig::default()),
             ..Default::default()
         };
 

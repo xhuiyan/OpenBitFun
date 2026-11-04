@@ -1,7 +1,7 @@
 //! MCP server runtime helper contracts.
 
 use super::{MCPRuntimeError, MCPRuntimeResult};
-use openbitfun_services_core::managed_runtime::{
+use starmate_services_core::managed_runtime::{
     ManagedRuntimeResolver, ResolvedCommand, RuntimeSource,
 };
 use std::path::PathBuf;

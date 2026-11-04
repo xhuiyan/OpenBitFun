@@ -8,8 +8,8 @@ use crate::agentic::tools::registry::get_global_tool_registry;
 use crate::agentic::workspace::workspace_route_key;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_external_sources::{ExternalSourceControlPlane, ExternalToolCoordinatorSnapshot};
-use openbitfun_product_domains::external_sources::{
+use starmate_external_sources::{ExternalSourceControlPlane, ExternalToolCoordinatorSnapshot};
+use starmate_product_domains::external_sources::{
     external_tool_approval_key, external_tool_conflict_key, external_tool_decision_key,
     EcosystemId, ExternalSourceAssetKind, ExternalSourceDiagnostic,
     ExternalSourceDiagnosticSeverity, ExternalSourceScope, ExternalToolActivationState,
@@ -17,11 +17,11 @@ use openbitfun_product_domains::external_sources::{
     ExternalToolConflictCandidate, ExternalToolConflictCandidateKind, ExternalToolDefinition,
     ExternalToolStaticStatus, PreparedExternalToolTarget, SourceQualifiedToolTargetId,
 };
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortErrorKind, ScriptToolDescriptor, ScriptToolExpectedExport, ScriptToolInvokeRequest,
     ScriptToolLoadRequest, ScriptToolRuntime, ScriptToolRuntimeAvailability,
 };
-use openbitfun_services_integrations::script_tool::NodeScriptToolRuntime;
+use starmate_services_integrations::script_tool::NodeScriptToolRuntime;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
@@ -2412,7 +2412,7 @@ fn runtime_target_id(workspace_key: &str, target: &SourceQualifiedToolTargetId) 
 fn tool_diagnostic(
     code: impl Into<String>,
     message: impl Into<String>,
-    source: Option<openbitfun_product_domains::external_sources::SourceKey>,
+    source: Option<starmate_product_domains::external_sources::SourceKey>,
 ) -> ExternalSourceDiagnostic {
     ExternalSourceDiagnostic {
         severity: ExternalSourceDiagnosticSeverity::Warning,
@@ -2424,10 +2424,10 @@ fn tool_diagnostic(
 }
 
 pub(super) fn merge_tool_state(
-    mut snapshot: openbitfun_product_domains::external_sources::ExternalSourceCatalogSnapshot,
+    mut snapshot: starmate_product_domains::external_sources::ExternalSourceCatalogSnapshot,
     tool_snapshot: &ExternalToolCoordinatorSnapshot,
     state: ExternalToolProductState,
-) -> openbitfun_product_domains::external_sources::ExternalSourceCatalogSnapshot {
+) -> starmate_product_domains::external_sources::ExternalSourceCatalogSnapshot {
     snapshot.generation = snapshot.generation.max(tool_snapshot.generation);
     snapshot.discovery_pending |= tool_snapshot.discovery_pending;
     snapshot.sources.extend(tool_snapshot.sources.clone());
@@ -2864,7 +2864,7 @@ mod tests {
 
     #[tokio::test]
     async fn live_plugin_conflict_preserves_builtin_until_selected() {
-        use openbitfun_product_domains::external_sources::{
+        use starmate_product_domains::external_sources::{
             ExecutionDomainId, ExternalMcpRevisionKey, ExternalSourceContext,
         };
 
@@ -3346,7 +3346,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
 
         assert!(!mux

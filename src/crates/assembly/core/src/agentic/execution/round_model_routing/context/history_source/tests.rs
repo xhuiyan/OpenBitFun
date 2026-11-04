@@ -5,7 +5,7 @@ use crate::agentic::session::revert::{
 };
 use crate::infrastructure::PathManager;
 use crate::service::session::{DialogTurnKind, UserMessageData};
-use openbitfun_services_core::session::SessionStorageLayout;
+use starmate_services_core::session::SessionStorageLayout;
 
 fn turn_fixture() -> DialogTurnData {
     let mut turn = DialogTurnData::new(

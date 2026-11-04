@@ -51,13 +51,13 @@ fn open_entry() -> Result<keyring_core::Entry, String> {
 
 #[cfg(target_os = "macos")]
 fn macos_credential_vault(
-) -> Result<openbitfun_services_core::credential_vault::CredentialVault, String> {
+) -> Result<starmate_services_core::credential_vault::CredentialVault, String> {
     let base = dirs::config_dir()
         .ok_or_else(|| "system config directory unavailable".to_string())?
-        .join(openbitfun_services_core::product_identity::data_namespace())
+        .join(starmate_services_core::product_identity::data_namespace())
         .join("data");
     Ok(
-        openbitfun_services_core::credential_vault::CredentialVault::new(
+        starmate_services_core::credential_vault::CredentialVault::new(
             base.join(".market_credentials_vault.key"),
             base.join("market_credentials_vault.json"),
         ),

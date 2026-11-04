@@ -1,1 +1,1 @@
-pub use openbitfun_config_contracts::conversion::*;
+pub use starmate_config_contracts::conversion::*;

@@ -4,12 +4,12 @@ use crate::infrastructure::try_get_path_manager_arc;
 use crate::service::config::types::{AIConfig, WebSearchConfig};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     WebSearchError, WebSearchErrorKind, WebSearchProvider, WebSearchProviderId, WebSearchRequest,
     WebSearchResponse,
 };
-use openbitfun_services_core::credential_vault::CredentialVault;
-use openbitfun_services_integrations::web_tools::{
+use starmate_services_core::credential_vault::CredentialVault;
+use starmate_services_integrations::web_tools::{
     DeepSeekSearchProvider, ExaSearchApiProvider, FreeExaMcpProvider, OpenBitFunSearchHttpAuth,
     OpenBitFunSearchHttpProvider, TavilySearchProvider,
 };
@@ -360,7 +360,7 @@ pub async fn clear_web_search_credential(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_runtime_ports::WebSearchResult;
+    use starmate_runtime_ports::WebSearchResult;
     use std::time::Duration;
     use tempfile::Builder;
     use tokio::sync::Notify;

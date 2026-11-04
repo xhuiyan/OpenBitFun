@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use openbitfun_services_core::process_manager;
+use starmate_services_core::process_manager;
 use tokio::task::spawn_blocking;
 
 pub(crate) const DEFAULT_AUTO_INDEX_MIN_FILES: usize = 2_000;

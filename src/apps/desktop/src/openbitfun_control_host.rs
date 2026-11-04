@@ -11,18 +11,18 @@ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 use std::time::Duration;
 
-use openbitfun_core::agentic::tools::openbitfun_control_config::{
+use starmate_core::agentic::tools::openbitfun_control_config::{
     apply_legacy_config_mutation, apply_legacy_config_mutation_with_model_snapshot,
     config_handler_path, configure_config_backed_option, exact_config_binding,
     read_config_backed_option, ProductConfigBinding,
 };
-use openbitfun_core::agentic::tools::openbitfun_control_host::{
+use starmate_core::agentic::tools::openbitfun_control_host::{
     set_openbitfun_control_port, OpenBitFunControlHostRequest, ProductControlAction,
     ProductControlPort, ProductControlSource,
 };
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::service::config::types::{AIExperienceConfig, AgentCompanionPetSelection};
-use openbitfun_product_domains::product_control::{
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::service::config::types::{AIExperienceConfig, AgentCompanionPetSelection};
+use starmate_product_domains::product_control::{
     capability as product_capability, inspect_contract, validate_open_target,
     validate_operation_arguments, validate_option_value, ProductCapabilityOperationHandler,
     ProductCapabilityOption, ProductCapabilityOptionHandler, ProductControlRisk,
@@ -494,7 +494,7 @@ async fn configure_option_transaction(
     };
     let revision = commit_revision();
     Ok(json!({
-        "catalogDigest": openbitfun_product_domains::product_control::catalog()?.digest.clone(),
+        "catalogDigest": starmate_product_domains::product_control::catalog()?.digest.clone(),
         "capabilityId": capability_id,
         "optionId": option_id,
         "configured": true,
@@ -550,7 +550,7 @@ async fn inspect_desktop(
     option_values.insert(
         "catalogDigest".to_string(),
         Value::String(
-            openbitfun_product_domains::product_control::catalog()?
+            starmate_product_domains::product_control::catalog()?
                 .digest
                 .clone(),
         ),
@@ -570,7 +570,7 @@ async fn inspect_desktop(
     }
     if capability_id == "feature.remote-connect" {
         let status = crate::api::remote_connect_api::execute_remote_control(
-            openbitfun_product_domains::remote_control::RemoteControlRequest::Status,
+            starmate_product_domains::remote_control::RemoteControlRequest::Status,
         )
         .await;
         option_values.insert(
@@ -743,7 +743,7 @@ pub(crate) async fn set_config_from_gui(
     .await?;
     if !applied.changed {
         return Ok(json!({
-            "catalogDigest": openbitfun_product_domains::product_control::catalog()?.digest.clone(),
+            "catalogDigest": starmate_product_domains::product_control::catalog()?.digest.clone(),
             "configured": true,
             "changedPaths": [],
             "controlledBindings": applied.controlled_bindings,
@@ -785,7 +785,7 @@ pub(crate) async fn set_config_from_gui(
     };
     let revision = commit_revision();
     Ok(json!({
-        "catalogDigest": openbitfun_product_domains::product_control::catalog()?.digest.clone(),
+        "catalogDigest": starmate_product_domains::product_control::catalog()?.digest.clone(),
         "configured": true,
         "changedPaths": [applied.changed_path],
         "controlledBindings": applied.controlled_bindings,
@@ -854,7 +854,7 @@ async fn configure_desktop_provider_option(
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum DesktopProviderOperation {
     MiniApp(miniapps::Operation),
-    Mcp(openbitfun_core::service::mcp::control::MCPControlOperation),
+    Mcp(starmate_core::service::mcp::control::MCPControlOperation),
     RemoteConnect(&'static str),
     DetachedDispatch(&'static str),
     ListCompanionPets,
@@ -885,7 +885,7 @@ fn desktop_provider_operation(
             .map(DesktopProviderOperation::DetachedDispatch),
         ("miniapp", id) => miniapps::operation(id).map(DesktopProviderOperation::MiniApp),
         ("mcp", id) => {
-            openbitfun_core::service::mcp::control::operation(id).map(DesktopProviderOperation::Mcp)
+            starmate_core::service::mcp::control::operation(id).map(DesktopProviderOperation::Mcp)
         }
         ("agent-companion-pet", "list") => Some(DesktopProviderOperation::ListCompanionPets),
         ("agent-companion-pet", "use") => Some(DesktopProviderOperation::UseCompanionPet),
@@ -923,17 +923,17 @@ async fn execute_desktop_provider_operation(
     match operation {
         DesktopProviderOperation::RemoteConnect(operation) => {
             let request =
-                openbitfun_product_domains::remote_control::RemoteControlRequest::from_operation(
+                starmate_product_domains::remote_control::RemoteControlRequest::from_operation(
                     operation, arguments,
                 )?;
             crate::api::remote_connect_api::execute_remote_control(request).await
         }
         DesktopProviderOperation::DetachedDispatch(operation) => {
-            let request = openbitfun_product_domains::detached_dispatch_control::DetachedDispatchControlRequest::from_operation(
+            let request = starmate_product_domains::detached_dispatch_control::DetachedDispatchControlRequest::from_operation(
                 operation, arguments,
             )?;
             let path_manager =
-                app.state::<std::sync::Arc<openbitfun_core::infrastructure::PathManager>>();
+                app.state::<std::sync::Arc<starmate_core::infrastructure::PathManager>>();
             crate::api::dispatch_api::execute_agent_dispatch_control(
                 &state,
                 path_manager.as_ref(),
@@ -951,7 +951,7 @@ async fn execute_desktop_provider_operation(
                 })?
                 .execute_control(operation, arguments)
                 .await?;
-            if operation != openbitfun_core::service::mcp::control::MCPControlOperation::List {
+            if operation != starmate_core::service::mcp::control::MCPControlOperation::List {
                 result["presentationSync"] =
                     emit_applied("setting.tools.mcp", None, None, &["mcp_servers"], None).await;
             }
@@ -1121,7 +1121,7 @@ async fn execute_desktop(
     let dispatch_job = matches!(
         &operation.handler,
         ProductCapabilityOperationHandler::Provider { provider_id, .. }
-            if provider_id == openbitfun_product_domains::detached_dispatch_control::DETACHED_DISPATCH_CONTROL_PROVIDER
+            if provider_id == starmate_product_domains::detached_dispatch_control::DETACHED_DISPATCH_CONTROL_PROVIDER
     );
     let _transaction = if operation.risk == ProductControlRisk::Read || dispatch_job {
         None
@@ -1148,7 +1148,7 @@ async fn execute_desktop(
         object.insert(
             "catalogDigest".to_string(),
             Value::String(
-                openbitfun_product_domains::product_control::catalog()?
+                starmate_product_domains::product_control::catalog()?
                     .digest
                     .clone(),
             ),
@@ -1195,7 +1195,7 @@ impl ProductControlPort for DesktopProductControlPort {
     fn invoke<'a>(
         &'a self,
         request: OpenBitFunControlHostRequest,
-    ) -> openbitfun_product_domains::product_control::ProductControlFuture<'a> {
+    ) -> starmate_product_domains::product_control::ProductControlFuture<'a> {
         Box::pin(async move { dispatch_request(&self.app, request).await })
     }
 }
@@ -1295,7 +1295,7 @@ mod tests {
 
     #[test]
     fn every_provider_operation_in_the_catalog_has_a_desktop_binding() {
-        let catalog = openbitfun_product_domains::product_control::catalog().unwrap();
+        let catalog = starmate_product_domains::product_control::catalog().unwrap();
         for operation in catalog
             .capabilities
             .iter()
@@ -1316,7 +1316,7 @@ mod tests {
 
     #[test]
     fn every_provider_option_in_the_catalog_has_a_desktop_binding() {
-        let catalog = openbitfun_product_domains::product_control::catalog().unwrap();
+        let catalog = starmate_product_domains::product_control::catalog().unwrap();
         for option in catalog
             .capabilities
             .iter()

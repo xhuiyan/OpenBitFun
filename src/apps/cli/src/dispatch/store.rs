@@ -3,7 +3,7 @@ use std::io::{Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
 
 use anyhow::{anyhow, bail, Context, Result};
-use openbitfun_agent_runtime::sdk::{PermissionReply, PermissionRequest};
+use starmate_agent_runtime::sdk::{PermissionReply, PermissionRequest};
 use serde::{Deserialize, Serialize};
 
 use super::protocol::{
@@ -218,7 +218,7 @@ pub(crate) struct DispatchStore {
 
 impl DispatchStore {
     pub(crate) fn open_default() -> Result<Self> {
-        let path_manager = openbitfun_core::infrastructure::PathManager::new()
+        let path_manager = starmate_core::infrastructure::PathManager::new()
             .map_err(|error| anyhow!("resolve StarMate storage root: {error}"))?;
         let store = Self::open(path_manager.product_home_dir().join("dispatch"))?;
         if let Err(error) = store.maybe_collect_expired_terminal_jobs() {
@@ -2241,7 +2241,7 @@ mod tests {
     use crate::dispatch::protocol::{
         DispatchApprovalPolicy, DispatchSetupAuditEvent, DispatchSubmitRequest,
     };
-    use openbitfun_agent_runtime::sdk::{PermissionRequestSource, PermissionRequestSourceKind};
+    use starmate_agent_runtime::sdk::{PermissionRequestSource, PermissionRequestSourceKind};
     use serde_json::Map;
 
     fn request(job_id: &str) -> DispatchSubmitRequest {
@@ -3228,14 +3228,14 @@ mod tests {
         let executable = std::env::current_exe().expect("test executable");
         let test_name =
             "dispatch::store::tests::cross_process_reader_and_writer_remain_consistent_during_rotation";
-        let mut reader = openbitfun_services_core::process_manager::create_command(&executable)
+        let mut reader = starmate_services_core::process_manager::create_command(&executable)
             .args(["--exact", test_name, "--nocapture"])
             .env(MODE_ENV, "reader")
             .env(ROOT_ENV, &root)
             .env(DONE_ENV, &done)
             .spawn()
             .expect("spawn stress reader");
-        let writer = openbitfun_services_core::process_manager::create_command(&executable)
+        let writer = starmate_services_core::process_manager::create_command(&executable)
             .args(["--exact", test_name, "--nocapture"])
             .env(MODE_ENV, "writer")
             .env(ROOT_ENV, &root)
@@ -3388,7 +3388,7 @@ mod tests {
         let dir = tempfile::tempdir().expect("tempdir");
         let openbitfun_home = dir.path().join("openbitfun-home");
         let user_root = dir.path().join("user-root");
-        let output = openbitfun_services_core::process_manager::create_command(
+        let output = starmate_services_core::process_manager::create_command(
             std::env::current_exe().expect("test executable"),
         )
         .args([

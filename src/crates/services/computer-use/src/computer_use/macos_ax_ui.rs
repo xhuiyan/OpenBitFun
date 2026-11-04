@@ -14,8 +14,8 @@ use core_foundation::array::{CFArray, CFArrayRef};
 use core_foundation::base::{CFGetTypeID, CFTypeRef, TCFType};
 use core_foundation::string::{CFString, CFStringRef};
 use core_graphics::geometry::{CGPoint, CGSize};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     OcrAccessibilityHit, UiElementLocateQuery, UiElementLocateResult,
 };
 use std::collections::VecDeque;

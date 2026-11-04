@@ -4,11 +4,11 @@ use crate::agentic::agents::{PromptBuilderContext, UserContextPolicy};
 use crate::agentic::session::SystemPromptCacheIdentity;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_agent_runtime::custom_agent::{
+use starmate_agent_runtime::custom_agent::{
     custom_agent_read_markdown_file, default_custom_agent_user_context_policy,
     CustomAgentDefinition, CustomAgentKind,
 };
-pub use openbitfun_agent_runtime::custom_subagent::CustomSubagentKind;
+pub use starmate_agent_runtime::custom_subagent::CustomSubagentKind;
 type CustomSubagentDefinition = CustomAgentDefinition;
 
 pub struct CustomSubagent {

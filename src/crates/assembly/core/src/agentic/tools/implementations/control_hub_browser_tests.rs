@@ -340,7 +340,7 @@ async fn browser_validation_and_remote_gate_run_before_host_io() {
         let (invalid, _) = call(action, params, &ctx).await;
         assert_eq!(invalid["error"]["code"], "INVALID_PARAMS", "{invalid}");
     }
-    let identity = openbitfun_services_core::workspace_identity::workspace_session_identity(
+    let identity = starmate_services_core::workspace_identity::workspace_session_identity(
         "/srv/project",
         Some("browser-ssh"),
         Some("ssh.fixture"),

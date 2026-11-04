@@ -33,7 +33,7 @@ pub struct ModelRequestUsageContext {
     pub started_at: DateTime<Utc>,
     pub authentication: UsageAuthenticationKind,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub account: Option<openbitfun_core_types::ModelAccountOrigin>,
+    pub account: Option<starmate_core_types::ModelAccountOrigin>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub channel: Option<ModelRequestChannel>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -46,14 +46,14 @@ pub struct ModelRequestUsageContext {
     pub outcome: ModelRequestOutcome,
     pub usage_known: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub retry_reason: Option<openbitfun_core_types::errors::ErrorCategory>,
+    pub retry_reason: Option<starmate_core_types::errors::ErrorCategory>,
     /// Nonfatal routing observations from the executing host. Open strings keep
     /// future observations readable by older statistics and replay consumers.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub routing_warnings: Vec<String>,
     /// Optional runtime estimate; older persisted attempts have no composition data.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub context_composition: Option<openbitfun_core_types::UsageContextBreakdown>,
+    pub context_composition: Option<starmate_core_types::UsageContextBreakdown>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

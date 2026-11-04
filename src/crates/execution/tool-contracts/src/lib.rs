@@ -107,8 +107,8 @@ pub use mcp_tool_bridge::{
     McpToolBridgeDefinition, McpToolBridgeDefinitionInput, McpToolBridgeToolInfo,
     MCP_TOOL_DELIMITER, MCP_TOOL_PREFIX,
 };
-pub use openbitfun_core_types::ToolImageAttachment;
-pub use openbitfun_runtime_ports::{
+pub use starmate_core_types::ToolImageAttachment;
+pub use starmate_runtime_ports::{
     DynamicToolDescriptor, DynamicToolProvider, PortError, PortErrorKind, PortResult, ToolDecorator,
 };
 pub use permission_intent::PermissionIntent;

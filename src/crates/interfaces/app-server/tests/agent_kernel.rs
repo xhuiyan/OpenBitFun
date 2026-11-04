@@ -1,7 +1,7 @@
 #![recursion_limit = "512"]
 
 //! Phase 2 integration tests: the generic app-server role exposes real
-//! `openbitfun_agent_runtime` SDK operations over the in-memory channel transport.
+//! `starmate_agent_runtime` SDK operations over the in-memory channel transport.
 //!
 //! The mock provider only implements `AgentSubmissionPort` (the port behind
 //! `run`, `create_session`, and `submit_turn`), matching `sdk_minimal.rs`. The
@@ -20,8 +20,8 @@ use std::time::Duration;
 
 use agent_client_protocol::{ConnectionTo, ErrorCode, SentRequest};
 use async_trait::async_trait;
-use openbitfun_agent_runtime::event_queue::{EventQueue, EventQueueConfig};
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::event_queue::{EventQueue, EventQueueConfig};
+use starmate_agent_runtime::sdk::{
     AgentEventSource, AgentEventStream, AgentRuntimeBuilder, AgentSessionArchiveStateRequest,
     AgentSessionCreateRequest, AgentSessionCreateResult, AgentSessionDeleteRequest,
     AgentSessionForkAtTurnRequest, AgentSessionForkPort, AgentSessionForkRequest,
@@ -34,7 +34,7 @@ use openbitfun_agent_runtime::sdk::{
     AgentSubmissionResult, AgentSubmissionSource, AgentTurnCancellationRequest, AgenticEvent,
     PortResult, ProcessingPhase, SessionState,
 };
-use openbitfun_app_server::schema::{
+use starmate_app_server::schema::{
     CancelTurnMessage, CreateSessionMessage, CreateSessionResponse, DeleteSessionMessage,
     ForkSessionAtTurnMessage, ForkSessionResponse, ListSessionsMessage, RenameSessionMessage,
     RenameSessionResponse, RespondPermissionMessage, RestoreSessionMessage, RunMessage,
@@ -43,19 +43,19 @@ use openbitfun_app_server::schema::{
     SubmitDialogTurnResponse, SubmitTurnMessage, SubmitTurnResponse, UpdateSessionModeMessage,
     UpdateSessionModeResponse, UpdateSessionModelMessage, UpdateSessionModelResponse,
 };
-use openbitfun_app_server::{
+use starmate_app_server::{
     transport, AppClient, AppServer, OpenBitFunAppRuntime, OpenBitFunAppServer,
 };
-use openbitfun_app_server_protocol::agent as protocol_agent;
-use openbitfun_app_server_protocol::app::{ClientInfo, HealthStatus, InitializeRequest};
-use openbitfun_app_server_protocol::error::{AppServerErrorData, AppServerErrorKind};
-use openbitfun_app_server_protocol::event::{
+use starmate_app_server_protocol::agent as protocol_agent;
+use starmate_app_server_protocol::app::{ClientInfo, HealthStatus, InitializeRequest};
+use starmate_app_server_protocol::error::{AppServerErrorData, AppServerErrorKind};
+use starmate_app_server_protocol::event::{
     AgentEventNotification, EventStream, SyncEventsRequest,
 };
-use openbitfun_app_server_protocol::session as protocol_session;
-use openbitfun_app_server_protocol::workspace as protocol_workspace;
-use openbitfun_app_server_protocol::PROTOCOL_VERSION;
-use openbitfun_runtime_ports as ports;
+use starmate_app_server_protocol::session as protocol_session;
+use starmate_app_server_protocol::workspace as protocol_workspace;
+use starmate_app_server_protocol::PROTOCOL_VERSION;
+use starmate_runtime_ports as ports;
 use tokio::task::LocalSet;
 
 /// Minimal `AgentSubmissionPort` mock modeled on `sdk_minimal.rs`.
@@ -63,7 +63,7 @@ use tokio::task::LocalSet;
 struct ExampleAgentProvider {
     created_sessions: Mutex<Vec<AgentSessionCreateRequest>>,
     submitted_turns: Mutex<Vec<AgentSubmissionRequest>>,
-    submitted_dialog_turns: Mutex<Vec<openbitfun_agent_runtime::sdk::AgentDialogTurnRequest>>,
+    submitted_dialog_turns: Mutex<Vec<starmate_agent_runtime::sdk::AgentDialogTurnRequest>>,
 }
 
 #[async_trait]
@@ -99,17 +99,17 @@ impl AgentSubmissionPort for ExampleAgentProvider {
 }
 
 #[async_trait::async_trait]
-impl openbitfun_agent_runtime::sdk::AgentDialogTurnPort for ExampleAgentProvider {
+impl starmate_agent_runtime::sdk::AgentDialogTurnPort for ExampleAgentProvider {
     async fn submit_dialog_turn(
         &self,
-        request: openbitfun_agent_runtime::sdk::AgentDialogTurnRequest,
-    ) -> PortResult<openbitfun_agent_runtime::sdk::DialogSubmitOutcome> {
+        request: starmate_agent_runtime::sdk::AgentDialogTurnRequest,
+    ) -> PortResult<starmate_agent_runtime::sdk::DialogSubmitOutcome> {
         self.submitted_dialog_turns
             .lock()
             .unwrap()
             .push(request.clone());
         Ok(
-            openbitfun_agent_runtime::sdk::DialogSubmitOutcome::Started {
+            starmate_agent_runtime::sdk::DialogSubmitOutcome::Started {
                 session_id: request.session_id,
                 turn_id: request
                     .turn_id
@@ -119,7 +119,7 @@ impl openbitfun_agent_runtime::sdk::AgentDialogTurnPort for ExampleAgentProvider
     }
 }
 
-fn build_runtime() -> openbitfun_agent_runtime::sdk::AgentRuntime {
+fn build_runtime() -> starmate_agent_runtime::sdk::AgentRuntime {
     let provider = Arc::new(ExampleAgentProvider::default());
     let events = AgentEventStream::new();
     AgentRuntimeBuilder::new()
@@ -377,12 +377,12 @@ impl ports::AgentSessionManagementPort for Phase2Provider {
 }
 
 #[async_trait]
-impl openbitfun_agent_runtime::sdk::AgentSessionRestorePort for Phase2Provider {
+impl starmate_agent_runtime::sdk::AgentSessionRestorePort for Phase2Provider {
     async fn restore_session(
         &self,
-        request: openbitfun_agent_runtime::sdk::AgentSessionRestoreRequest,
-    ) -> PortResult<openbitfun_agent_runtime::sdk::AgentSessionRestoreResult> {
-        Ok(openbitfun_agent_runtime::sdk::AgentSessionRestoreResult {
+        request: starmate_agent_runtime::sdk::AgentSessionRestoreRequest,
+    ) -> PortResult<starmate_agent_runtime::sdk::AgentSessionRestoreResult> {
+        Ok(starmate_agent_runtime::sdk::AgentSessionRestoreResult {
             session: ports::AgentSessionSummary {
                 session_id: request.session_id,
                 session_name: "Phase 2".to_string(),
@@ -520,9 +520,9 @@ impl ports::AgentSessionUsagePort for Phase2Provider {
     async fn generate_session_usage(
         &self,
         request: ports::AgentSessionUsageRequest,
-    ) -> PortResult<openbitfun_agent_runtime::sdk::SessionUsageReport> {
+    ) -> PortResult<starmate_agent_runtime::sdk::SessionUsageReport> {
         Ok(
-            openbitfun_agent_runtime::sdk::SessionUsageReport::partial_unavailable(
+            starmate_agent_runtime::sdk::SessionUsageReport::partial_unavailable(
                 request.session_id,
                 1_778_347_200_000,
             ),
@@ -738,7 +738,7 @@ impl ports::RuntimeEventSink for TestRuntimeEventSink {
 
 fn build_phase2_app_runtime() -> (OpenBitFunAppRuntime, Arc<Phase2Provider>) {
     let provider = Arc::new(Phase2Provider::default());
-    let services = openbitfun_agent_runtime::sdk::RuntimeServicesBuilder::new()
+    let services = starmate_agent_runtime::sdk::RuntimeServicesBuilder::new()
         .with_filesystem(Arc::new(TestRuntimeService(
             ports::RuntimeServiceCapability::FileSystem,
         )))
@@ -793,7 +793,7 @@ async fn phase2_sync_aggregates_authoritative_session_state() {
             let (runtime, _provider) = build_phase2_app_runtime();
             spawn_server(runtime, server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("connect app server client");
             let response = client
@@ -841,7 +841,7 @@ async fn phase2_mutations_route_through_runtime_owner_ports() {
             let (runtime, provider) = build_phase2_app_runtime();
             spawn_server(runtime, server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("connect app server client");
             let steer = client
@@ -944,7 +944,7 @@ async fn phase2_read_models_cover_usage_settlement_references_lineage_and_diff()
             let (runtime, provider) = build_phase2_app_runtime();
             spawn_server(runtime, server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("connect app server client");
             let usage = client
@@ -1080,7 +1080,7 @@ async fn lightweight_client_negotiates_with_the_production_server() {
             let (runtime, provider) = build_phase2_app_runtime();
             spawn_server(runtime, server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("lightweight client should connect");
             let initialized = client
@@ -1196,7 +1196,7 @@ async fn lightweight_client_does_not_negotiate_context_reload_without_provider()
             let (server_transport, client_transport) = transport::in_memory_channel_pair();
             spawn_server(build_app_runtime(), server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("lightweight client should connect");
             let initialized = client
@@ -1439,7 +1439,7 @@ async fn respond_permission_routes_to_the_permission_surface() {
                 .connect_with(client_transport, async |cx: ConnectionTo<AppServer>| {
                     let result = recv(cx.send_request(RespondPermissionMessage {
                         request_id: "perm-1".to_string(),
-                        reply: openbitfun_agent_runtime::sdk::PermissionReply::Once,
+                        reply: starmate_agent_runtime::sdk::PermissionReply::Once,
                     }))
                     .await;
                     assert!(
@@ -1738,7 +1738,7 @@ struct UnknownAgentResponse;
 #[allow(dead_code)]
 fn _document_run_response_shape_in_tests(_r: RunResponse) {}
 /// The Server Host drives the app-server through the real
-/// `openbitfun_app_server_client::connect`
+/// `starmate_app_server_client::connect`
 /// handle (not an inline `AppClient::builder().connect_with` main_fn like the
 /// round-trip tests above). `connect` parks its main loop on a shutdown
 /// receiver and returns an `AppServerClient` the host holds for the process
@@ -1760,7 +1760,7 @@ async fn client_connect_keeps_connection_alive_after_return() {
             let runtime = build_app_runtime();
             spawn_server(runtime, server_transport);
 
-            let client = openbitfun_app_server_client::connect(client_transport)
+            let client = starmate_app_server_client::connect(client_transport)
                 .await
                 .expect("app-server client should connect");
 

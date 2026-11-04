@@ -4,7 +4,7 @@ use super::types::SkillData;
 use crate::service::config::global::GlobalConfigManager;
 use crate::service::config::types::AIExperienceConfig;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::skills::OPENBITFUN_SYSTEM_SKILL_SLOT;
+use starmate_agent_runtime::skills::OPENBITFUN_SYSTEM_SKILL_SLOT;
 
 const COMMIT_SKILL_KEY: &str = "user::openbitfun-system::commit-push-pr";
 const COMMIT_COAUTHOR_POLICY_PLACEHOLDER: &str = "{{OPENBITFUN_GIT_COMMIT_COAUTHOR_POLICY}}";

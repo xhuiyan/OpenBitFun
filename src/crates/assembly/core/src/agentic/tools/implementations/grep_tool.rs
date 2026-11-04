@@ -959,7 +959,7 @@ mod tests {
         WorkspaceSearchMatch, WorkspaceSearchMatchLocation, WorkspaceSearchRepoPhase,
         WorkspaceSearchRepoStatus,
     };
-    use openbitfun_runtime_ports::ToolRuntimeHandles;
+    use starmate_runtime_ports::ToolRuntimeHandles;
     use serde_json::json;
     use std::collections::HashMap;
     use tool_runtime::search::grep_search::relativize_result_text;
@@ -1521,7 +1521,7 @@ mod tests {
 
     mod workspace_io {
         use crate::agentic::workspace::{LocalWorkspaceFs, LocalWorkspaceShell};
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceDirEntry,
             WorkspaceFileSystem, WorkspaceMetadata, WorkspaceReader, WorkspaceShell,
         };
@@ -2306,7 +2306,7 @@ mod tests {
         #[tokio::test]
         async fn remote_tool_uses_shared_options_results_and_no_rg_io_provider() {
             use super::*;
-            use openbitfun_runtime_ports::WorkspaceServices;
+            use starmate_runtime_ports::WorkspaceServices;
             let dir = fixture();
             let root = dir.path().to_string_lossy().into_owned();
             let identity = crate::service::remote_ssh::workspace_state::workspace_session_identity(

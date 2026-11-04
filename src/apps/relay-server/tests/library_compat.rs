@@ -1,4 +1,4 @@
-use openbitfun_relay_server::{
+use starmate_relay_server::{
     admin, build_relay_router, db, relay, routes, AppState, DiskAssetStore, MemoryAssetStore,
     WebAssetStore,
 };
@@ -26,7 +26,7 @@ async fn openbitfun_library_path_exposes_supported_relay_api() {
         page_access_manager: Arc::new(routes::pages::PageAccessManager::new()),
         page_upload_manager: Arc::new(routes::pages::PageUploadManager::new()),
         page_execution_guard: Arc::new(
-            openbitfun_relay_server::page_execution::PageExecutionGuard::new(),
+            starmate_relay_server::page_execution::PageExecutionGuard::new(),
         ),
         login_rate_limiter: Arc::new(routes::auth::LoginRateLimiter::new()),
         device_manager: relay::DeviceManager::new(),

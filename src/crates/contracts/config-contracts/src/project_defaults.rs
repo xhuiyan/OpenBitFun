@@ -30,7 +30,7 @@ impl ProjectDefaultsConfig {
         if let Some(id) = &self.primary_model {
             ai.default_models.primary = Some(id.clone());
             let mut selections = ai.effective_model_selections()?;
-            selections.mode = openbitfun_core_types::model_pool::ModelSelection::Model {
+            selections.mode = starmate_core_types::model_pool::ModelSelection::Model {
                 model_ref: "primary".into(),
             };
             ai.set_model_selections(selections)?;

@@ -2,7 +2,7 @@
 
 use crate::util::errors::OpenBitFunResult;
 use async_trait::async_trait;
-pub use openbitfun_config_contracts::*;
+pub use starmate_config_contracts::*;
 
 /// Configuration provider interface.
 #[async_trait]

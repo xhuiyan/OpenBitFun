@@ -17,7 +17,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-clipboard_test=(cargo test --locked -p openbitfun-services-core --no-default-features
+clipboard_test=(cargo test --locked -p starmate-services-core --no-default-features
   --features process-runtime --lib system::local_actions::clipboard::tests::native_clipboard_roundtrip
   -- --ignored --exact --nocapture)
 

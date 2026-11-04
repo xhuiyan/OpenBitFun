@@ -17,7 +17,7 @@ use grep_regex::{RegexMatcher, RegexMatcherBuilder};
 use grep_searcher::{BinaryDetection, Searcher, SearcherBuilder, Sink, SinkContext, SinkMatch};
 use ignore::types::TypesBuilder;
 use ignore::{DirEntry, WalkBuilder, WalkState};
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind, WorkspaceShell};
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind, WorkspaceShell};
 use std::collections::HashSet;
 
 const MAX_DISPLAY_COLUMNS: usize = 500;
@@ -1469,7 +1469,7 @@ async fn recursive_grep_candidates(
                 options.case_insensitive,
                 &candidate_excluded_directories(options),
             ),
-            openbitfun_runtime_ports::WorkspaceCommandOptions {
+            starmate_runtime_ports::WorkspaceCommandOptions {
                 timeout_ms: Some(INTERACTIVE_CANDIDATE_COMMAND_TIMEOUT_MS),
                 cancellation_token: Some(cancellation.token.clone()),
             },
@@ -1634,7 +1634,7 @@ impl Drop for WorkspaceSearchWorkerGuard {
 }
 
 struct CancellableWorkspaceReader {
-    reader: openbitfun_runtime_ports::WorkspaceReader,
+    reader: starmate_runtime_ports::WorkspaceReader,
     cancelled: std::pin::Pin<Box<dyn std::future::Future<Output = ()> + Send>>,
     bytes_read: Arc<std::sync::atomic::AtomicU64>,
 }
@@ -1716,7 +1716,7 @@ impl WorkspaceGrepCollector<'_> {
 
     async fn scan_batch(
         &mut self,
-        files: &mut Vec<(String, openbitfun_runtime_ports::WorkspaceMetadata)>,
+        files: &mut Vec<(String, starmate_runtime_ports::WorkspaceMetadata)>,
         grep_prefilter: Option<(&dyn WorkspaceShell, &[&str])>,
     ) -> Result<(), String> {
         if files.is_empty() {
@@ -1736,7 +1736,7 @@ impl WorkspaceGrepCollector<'_> {
             let result = shell
                 .exec_with_options(
                     &grep_batch_command(literals, &paths),
-                    openbitfun_runtime_ports::WorkspaceCommandOptions {
+                    starmate_runtime_ports::WorkspaceCommandOptions {
                         timeout_ms: Some(30_000),
                         cancellation_token: Some(cancellation.token.clone()),
                     },
@@ -1933,7 +1933,7 @@ async fn grep_search_workspace_inner(
         let command_result = shell
             .exec_with_options(
                 &build_grep_candidate_command(&options),
-                openbitfun_runtime_ports::WorkspaceCommandOptions {
+                starmate_runtime_ports::WorkspaceCommandOptions {
                     timeout_ms: Some(candidate_timeout_ms),
                     cancellation_token: Some(cancellation.token.clone()),
                 },
@@ -1978,7 +1978,7 @@ async fn grep_search_workspace_inner(
                     let probe = shell
                         .exec_with_options(
                             grep_probe_command(),
-                            openbitfun_runtime_ports::WorkspaceCommandOptions {
+                            starmate_runtime_ports::WorkspaceCommandOptions {
                                 timeout_ms: Some(30_000),
                                 cancellation_token: Some(cancellation.token.clone()),
                             },

@@ -417,9 +417,9 @@ impl LinuxControlSession {
     /// as a repaint. The newest sample stays available for the next capture.
     pub(super) async fn wait_settled(
         &self,
-        policy: openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
-    ) -> Result<openbitfun_agent_tools::computer_use_host::AppInputSettle, String> {
-        use openbitfun_agent_tools::computer_use_host::{
+        policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
+    ) -> Result<starmate_agent_tools::computer_use_host::AppInputSettle, String> {
+        use starmate_agent_tools::computer_use_host::{
             app_input_settle_decision, app_input_settle_next_wait_ms, AppInputSettle,
             AppInputSettleStatus,
         };
@@ -875,7 +875,7 @@ mod native_tests {
     #[test]
     fn portal_scope_does_not_rebind_app_targets_or_accept_stale_authorization() {
         use super::super::control_session as control;
-        use openbitfun_agent_tools::computer_use_control::ControlMode;
+        use starmate_agent_tools::computer_use_control::ControlMode;
         let owner = "portal-scope-fixture";
         let initial = control::start(owner, ControlMode::Observe).unwrap();
         let token = control::capture_token().unwrap();
@@ -904,7 +904,7 @@ mod native_tests {
     #[tokio::test]
     #[ignore = "requires a real desktop portal and interactive consent for the dedicated fixture window"]
     async fn portal_observe_lifecycle() {
-        use openbitfun_agent_tools::computer_use_control::ControlMode;
+        use starmate_agent_tools::computer_use_control::ControlMode;
         super::super::control_session::start("native-linux-portal-fixture", ControlMode::Observe)
             .unwrap();
         start_session(false)

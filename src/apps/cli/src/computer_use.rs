@@ -1,6 +1,6 @@
 //! CLI composition only. Native behavior and resources live in Services.
 use super::BootstrapProfile;
-use openbitfun_core::agentic::tools::computer_use_host::ComputerUseHostRef;
+use starmate_core::agentic::tools::computer_use_host::ComputerUseHostRef;
 use std::sync::Arc;
 
 fn profile_allows_gui(profile: BootstrapProfile) -> bool {
@@ -16,20 +16,20 @@ pub(crate) fn provider(profile: BootstrapProfile) -> Option<ComputerUseHostRef> 
     }
     // No OS prompts, application launch or implicit grants during bootstrap.
     // Permission requests remain an explicit user action.
-    if let Err(reason) = openbitfun_computer_use::host_runtime::initialize() {
+    if let Err(reason) = starmate_computer_use::host_runtime::initialize() {
         tracing::info!(%reason, "Native Computer Use provider unavailable");
         return None;
     }
-    if let Ok(paths) = openbitfun_core::infrastructure::try_get_path_manager_arc() {
-        openbitfun_computer_use::set_ocr_debug_directory(
+    if let Ok(paths) = starmate_core::infrastructure::try_get_path_manager_arc() {
+        starmate_computer_use::set_ocr_debug_directory(
             paths
                 .default_assistant_workspace_dir(None)
-                .join(openbitfun_core_types::product_identity::hidden_data_directory())
+                .join(starmate_core_types::product_identity::hidden_data_directory())
                 .join("computer_use_debug"),
         );
     }
     Some(Arc::new(
-        openbitfun_computer_use::NativeComputerUseHost::new(),
+        starmate_computer_use::NativeComputerUseHost::new(),
     ))
 }
 
@@ -69,8 +69,8 @@ pub(crate) enum PermissionKind {
 }
 
 pub(crate) async fn run(action: Action) -> anyhow::Result<()> {
-    use openbitfun_agent_tools::computer_use_permissions::ComputerPermissionKind as Kind;
-    use openbitfun_core::service::config;
+    use starmate_agent_tools::computer_use_permissions::ComputerPermissionKind as Kind;
+    use starmate_core::service::config;
     config::initialize_global_config().await?;
     let config = config::get_global_config_service().await?;
     match action {
@@ -82,11 +82,11 @@ pub(crate) async fn run(action: Action) -> anyhow::Result<()> {
             println!("{}", serde_json::json!({"computer_use_enabled": enabled}));
         }
         Action::Status => {
-            let available = openbitfun_computer_use::host_runtime::availability();
+            let available = starmate_computer_use::host_runtime::availability();
             // Without a graphical session the OS permission probe cannot improve
             // availability and must not connect to another user's session bus.
             let permissions = if available.is_ok() {
-                Some(openbitfun_computer_use::permissions::status().await)
+                Some(starmate_computer_use::permissions::status().await)
             } else {
                 None
             };
@@ -102,14 +102,14 @@ pub(crate) async fn run(action: Action) -> anyhow::Result<()> {
             );
         }
         Action::RequestPermission { kind } => {
-            openbitfun_computer_use::host_runtime::initialize().map_err(anyhow::Error::msg)?;
+            starmate_computer_use::host_runtime::initialize().map_err(anyhow::Error::msg)?;
             let kind = match kind {
                 PermissionKind::Accessibility => Kind::Accessibility,
                 PermissionKind::ScreenRecording => Kind::ScreenRecording,
                 PermissionKind::InputPosting => Kind::InputPosting,
                 PermissionKind::InputMonitoring => Kind::InputMonitoring,
             };
-            let receipt = openbitfun_computer_use::permissions::request(kind)
+            let receipt = starmate_computer_use::permissions::request(kind)
                 .await
                 .map_err(anyhow::Error::msg)?;
             println!("{}", serde_json::to_string(&receipt)?);

@@ -54,18 +54,18 @@ mod window_state_support;
 #[cfg(target_os = "windows")]
 mod window_webview_geometry;
 
-use openbitfun_agent_runtime::sdk::{attach_session_event_cursor, SessionEventJournal};
-use openbitfun_core::agentic::tools::computer_use_capability::set_computer_use_host_available;
-use openbitfun_core::agentic::tools::computer_use_host::ComputerUseHostRef;
-use openbitfun_core::infrastructure::ai::AIClientFactory;
-use openbitfun_core::infrastructure::{get_path_manager_arc, try_get_path_manager_arc};
-use openbitfun_core::service::search::get_global_workspace_search_service;
-use openbitfun_core::service::session_projection_store::{
+use starmate_agent_runtime::sdk::{attach_session_event_cursor, SessionEventJournal};
+use starmate_core::agentic::tools::computer_use_capability::set_computer_use_host_available;
+use starmate_core::agentic::tools::computer_use_host::ComputerUseHostRef;
+use starmate_core::infrastructure::ai::AIClientFactory;
+use starmate_core::infrastructure::{get_path_manager_arc, try_get_path_manager_arc};
+use starmate_core::service::search::get_global_workspace_search_service;
+use starmate_core::service::session_projection_store::{
     runtime_event_log_dir, FileSessionProjectionStore,
 };
-use openbitfun_core::util::{elapsed_ms, TimingCollector};
-use openbitfun_events::AgenticEvent;
-use openbitfun_transport::{TauriTransportAdapter, TransportAdapter};
+use starmate_core::util::{elapsed_ms, TimingCollector};
+use starmate_events::AgenticEvent;
+use starmate_transport::{TauriTransportAdapter, TransportAdapter};
 use serde::Deserialize;
 use std::path::PathBuf;
 use std::sync::{
@@ -110,23 +110,23 @@ use api::system_api::*;
 use api::tool_api::*;
 use startup_trace::{DesktopStartupTrace, DesktopStartupTraceSnapshot};
 
-pub(crate) const PLUGIN_HOST_LAUNCH_POLICY: openbitfun_core::plugin_host::PluginHostLaunchPolicy =
-    openbitfun_core::plugin_host::PluginHostLaunchPolicy::Enabled;
+pub(crate) const PLUGIN_HOST_LAUNCH_POLICY: starmate_core::plugin_host::PluginHostLaunchPolicy =
+    starmate_core::plugin_host::PluginHostLaunchPolicy::Enabled;
 
 pub(crate) fn ensure_rustls_crypto_provider() {
-    openbitfun_core::service::remote_connect::ensure_rustls_crypto_provider();
+    starmate_core::service::remote_connect::ensure_rustls_crypto_provider();
 }
 
 /// Agentic Coordinator state
 #[derive(Clone)]
 pub struct CoordinatorState {
-    pub coordinator: Arc<openbitfun_core::agentic::coordination::ConversationCoordinator>,
+    pub coordinator: Arc<starmate_core::agentic::coordination::ConversationCoordinator>,
 }
 
 /// Dialog scheduler state (primary entry point for user messages)
 #[derive(Clone)]
 pub struct SchedulerState {
-    pub scheduler: Arc<openbitfun_core::agentic::coordination::DialogScheduler>,
+    pub scheduler: Arc<starmate_core::agentic::coordination::DialogScheduler>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -421,7 +421,7 @@ pub(crate) fn restore_main_window_state(window: &tauri::WebviewWindow) -> bool {
 #[tauri::command]
 async fn webdriver_bridge_result(request: WebdriverBridgeResultRequest) -> Result<(), String> {
     log::debug!("webdriver_bridge_result command invoked");
-    openbitfun_webdriver::handle_bridge_result(request.payload)
+    starmate_webdriver::handle_bridge_result(request.payload)
 }
 
 #[tauri::command]
@@ -438,14 +438,14 @@ pub async fn run() {
     // Use the existing encrypted fixture vault on every platform, before any
     // account discovery or background refresh can touch the normal profile.
     if e2e_storage_guard_enabled() {
-        let paths = match openbitfun_core::infrastructure::PathManager::new() {
+        let paths = match starmate_core::infrastructure::PathManager::new() {
             Ok(paths) => paths,
             Err(error) => {
                 eprintln!("Failed to initialize isolated E2E authentication storage: {error}");
                 return;
             }
         };
-        openbitfun_core::infrastructure::subscription_auth::store::set_store_path_and_file_vault_for_test(
+        starmate_core::infrastructure::subscription_auth::store::set_store_path_and_file_vault_for_test(
             paths.user_data_dir().join("subscription_auth.json"),
         );
         #[cfg(not(debug_assertions))]
@@ -457,7 +457,7 @@ pub async fn run() {
         if let Some(certificate_path) = std::env::var_os("OPENBITFUN_E2E_SUBSCRIPTION_CA_FILE") {
             let result = std::fs::read(certificate_path)
                 .map_err(|error| error.to_string())
-                .and_then(|pem| openbitfun_core::infrastructure::subscription_auth::set_isolated_http_root_certificate_for_test(&pem).map_err(|error| error.to_string()));
+                .and_then(|pem| starmate_core::infrastructure::subscription_auth::set_isolated_http_root_certificate_for_test(&pem).map_err(|error| error.to_string()));
             if let Err(error) = result {
                 eprintln!("Failed to initialize isolated E2E subscription TLS: {error}");
                 return;
@@ -527,8 +527,8 @@ pub async fn run() {
 
     eprintln!("=== OpenBitFun Desktop Starting ===");
 
-    if let Err(error) = openbitfun_core::agentic::system::select_agentic_system_profile(
-        openbitfun_core::agentic::system::DeliveryProfile::Desktop,
+    if let Err(error) = starmate_core::agentic::system::select_agentic_system_profile(
+        starmate_core::agentic::system::DeliveryProfile::Desktop,
     ) {
         log::error!("Failed to select Desktop agent profile: {}", error);
         show_fatal_startup_error(&format!(
@@ -538,14 +538,14 @@ pub async fn run() {
     }
 
     let step_started = Instant::now();
-    if let Err(e) = openbitfun_core::service::config::initialize_global_config().await {
+    if let Err(e) = starmate_core::service::config::initialize_global_config().await {
         log::error!("Failed to initialize global config service: {}", e);
         show_fatal_startup_error(&format!(
             "StarMate could not initialize its configuration and cannot continue.\n\n{e}\n\nSee early-startup.log for details."
         ));
         return;
     }
-    if let Ok(config_service) = openbitfun_core::service::config::get_global_config_service().await
+    if let Ok(config_service) = starmate_core::service::config::get_global_config_service().await
     {
         for diagnostic in config_service.load_diagnostics().await {
             log::warn!(
@@ -560,17 +560,17 @@ pub async fn run() {
     startup_trace.record_elapsed_step("native_pre_tauri", "initialize_global_config", step_started);
 
     let step_started = Instant::now();
-    match openbitfun_core::plugin_host::initialize_configured_plugin_host_with_log_file(
+    match starmate_core::plugin_host::initialize_configured_plugin_host_with_log_file(
         PLUGIN_HOST_LAUNCH_POLICY,
         Some(session_log_dir.join("plugin-host.log")),
     )
     .await
     {
-        Ok(openbitfun_core::plugin_host::PluginHostStartup::Disabled) => {}
+        Ok(starmate_core::plugin_host::PluginHostStartup::Disabled) => {}
         Ok(status) => log::info!("Plugin host initialization completed: {:?}", status),
         Err(error) => {
             log::error!("Failed to initialize configured plugin host: {}", error);
-            openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+            starmate_core::plugin_host::report_configured_plugin_activation_failure(
                 "Desktop startup",
                 None,
                 error,
@@ -591,8 +591,8 @@ pub async fn run() {
         (startup_log_level, log_level_duration_ms),
         (ai_factory_result, ai_factory_duration_ms),
     ) = {
-        use openbitfun_core::service::config::get_global_config_service;
-        use openbitfun_core::service::i18n::initialize_global_i18n_service;
+        use starmate_core::service::config::get_global_config_service;
+        use starmate_core::service::i18n::initialize_global_i18n_service;
 
         // Initialize global I18nService so bot/remote-connect language is always in sync.
         let i18n_task = async {
@@ -675,7 +675,7 @@ pub async fn run() {
 
     let step_started = Instant::now();
     let workspace_search_enabled =
-        openbitfun_core::service::search::workspace_search_feature_enabled().await;
+        starmate_core::service::search::workspace_search_feature_enabled().await;
     startup_trace.record_elapsed_step(
         "native_pre_tauri",
         "workspace_search_feature_enabled",
@@ -827,7 +827,7 @@ pub async fn run() {
                 };
                 let url = payload.url().to_string();
                 api::browser_api::update_browser_target_page_load(label, event, &url);
-                openbitfun_core::agentic::tools::browser_control::builtin_browser::publish_builtin_browser_page_load(
+                starmate_core::agentic::tools::browser_control::builtin_browser::publish_builtin_browser_page_load(
                     label,
                     event,
                     &url,
@@ -969,7 +969,7 @@ pub async fn run() {
                 let step_started = Instant::now();
                 let flashgrep_path = startup_flashgrep_path.clone().or_else(|| {
                     let binary_names =
-                        openbitfun_core::service::search::workspace_search_daemon_binary_names();
+                        starmate_core::service::search::workspace_search_daemon_binary_names();
                     for binary_name in binary_names {
                         let primary = format!("flashgrep/{}", binary_name);
                         if let Ok(path) = app
@@ -1007,7 +1007,7 @@ pub async fn run() {
                 } else {
                     log::warn!(
                         "Workspace search daemon startup check failed: {}",
-                        openbitfun_core::service::search::workspace_search_daemon_missing_hint()
+                        starmate_core::service::search::workspace_search_daemon_missing_hint()
                     );
                 }
                 startup_trace.record_elapsed_step(
@@ -1137,7 +1137,7 @@ pub async fn run() {
                 window_duration_ms
             );
             let webdriver_started = Instant::now();
-            openbitfun_webdriver::maybe_start(app_handle.clone());
+            starmate_webdriver::maybe_start(app_handle.clone());
             builtin_browser_host::install(app_handle.clone());
             openbitfun_control_host::install(app_handle.clone());
             miniapp_web_host::install(app_handle.clone());
@@ -1311,7 +1311,7 @@ pub async fn run() {
                 if let tauri::WindowEvent::CloseRequested { api: _api, .. } = event {
                     if window.label() == "main" {
                         if window.app_handle().state::<miniapp_desktop::DesktopMiniApps>().instances.snapshot().instances.iter().any(|instance|
-                            instance.primary_view.iter().chain(instance.pending_view.iter()).any(|view| view.kind == openbitfun_product_domains::miniapp::instances::MiniAppViewKind::Window)) {
+                            instance.primary_view.iter().chain(instance.pending_view.iter()).any(|view| view.kind == starmate_product_domains::miniapp::instances::MiniAppViewKind::Window)) {
                             _api.prevent_close();
                             let _ = window.hide();
                             return;
@@ -2140,14 +2140,14 @@ pub async fn run() {
 }
 
 async fn init_agentic_system() -> anyhow::Result<(
-    Arc<openbitfun_core::agentic::coordination::ConversationCoordinator>,
-    Arc<openbitfun_core::agentic::coordination::DialogScheduler>,
-    Arc<openbitfun_core::agentic::events::EventQueue>,
-    Arc<openbitfun_core::agentic::events::EventRouter>,
+    Arc<starmate_core::agentic::coordination::ConversationCoordinator>,
+    Arc<starmate_core::agentic::coordination::DialogScheduler>,
+    Arc<starmate_core::agentic::events::EventQueue>,
+    Arc<starmate_core::agentic::events::EventRouter>,
     Arc<AIClientFactory>,
-    Arc<openbitfun_core::service::token_usage::TokenUsageService>,
+    Arc<starmate_core::service::token_usage::TokenUsageService>,
 )> {
-    use openbitfun_core::agentic::*;
+    use starmate_core::agentic::*;
 
     let ai_client_factory = AIClientFactory::get_global().await?;
 
@@ -2159,11 +2159,11 @@ async fn init_agentic_system() -> anyhow::Result<(
     // The round executor captures this service at construction so failed or
     // cancelled attempts with unknown usage persist without a usage event.
     let token_usage_service = Arc::new(
-        openbitfun_core::service::token_usage::TokenUsageService::new(path_manager.clone())
+        starmate_core::service::token_usage::TokenUsageService::new(path_manager.clone())
             .await
             .map_err(|e| anyhow::anyhow!("Failed to initialize token usage service: {}", e))?,
     );
-    openbitfun_core::service::token_usage::set_global_token_usage_service(
+    starmate_core::service::token_usage::set_global_token_usage_service(
         token_usage_service.clone(),
     );
 
@@ -2179,14 +2179,14 @@ async fn init_agentic_system() -> anyhow::Result<(
     let tool_registry = tools::registry::get_global_tool_registry();
     let tool_state_manager = Arc::new(tools::pipeline::ToolStateManager::new(event_queue.clone()));
     let permission_request_manager =
-        openbitfun_core::product_runtime::core_permission_request_manager()
+        starmate_core::product_runtime::core_permission_request_manager()
             .map_err(anyhow::Error::msg)?;
 
-    if let Ok(paths) = openbitfun_core::infrastructure::try_get_path_manager_arc() {
-        openbitfun_computer_use::set_ocr_debug_directory(
+    if let Ok(paths) = starmate_core::infrastructure::try_get_path_manager_arc() {
+        starmate_computer_use::set_ocr_debug_directory(
             paths
                 .default_assistant_workspace_dir(None)
-                .join(openbitfun_core_types::product_identity::hidden_data_directory())
+                .join(starmate_core_types::product_identity::hidden_data_directory())
                 .join("computer_use_debug"),
         );
     }
@@ -2222,7 +2222,7 @@ async fn init_agentic_system() -> anyhow::Result<(
     let execution_engine = Arc::new(execution_engine);
 
     let runtime_ownership = Arc::new(
-        openbitfun_core::runtime_ownership::CoreRuntimeOwnership::embedded(
+        starmate_core::runtime_ownership::CoreRuntimeOwnership::embedded(
             path_manager.as_ref(),
             "desktop",
         ),
@@ -2236,10 +2236,10 @@ async fn init_agentic_system() -> anyhow::Result<(
         runtime_ownership,
     ));
     coordinator.set_terminal_port(
-        openbitfun_core::product_runtime::CoreRuntimeServicesProvider::terminal_port(),
+        starmate_core::product_runtime::CoreRuntimeServicesProvider::terminal_port(),
     );
     coordinator.set_remote_exec_port(
-        openbitfun_core::product_runtime::CoreRuntimeServicesProvider::remote_exec_port(),
+        starmate_core::product_runtime::CoreRuntimeServicesProvider::remote_exec_port(),
     );
 
     coordination::ConversationCoordinator::set_global(coordinator.clone());
@@ -2247,7 +2247,7 @@ async fn init_agentic_system() -> anyhow::Result<(
     // The subscriber reuses the round executor's authority. Known-usage events
     // deduplicate by attempt ID; unknown usage is recorded directly by the round.
     let token_usage_subscriber = Arc::new(
-        openbitfun_core::service::token_usage::TokenUsageSubscriber::new(
+        starmate_core::service::token_usage::TokenUsageSubscriber::new(
             token_usage_service.clone(),
         ),
     );
@@ -2255,7 +2255,7 @@ async fn init_agentic_system() -> anyhow::Result<(
     event_router.subscribe_internal(
         "session_context_usage".to_string(),
         Arc::new(
-            openbitfun_core::agentic::session::SessionContextUsageSubscriber::new(
+            starmate_core::agentic::session::SessionContextUsageSubscriber::new(
                 session_manager.clone(),
             ),
         ),
@@ -2271,15 +2271,15 @@ async fn init_agentic_system() -> anyhow::Result<(
     coordination::set_global_scheduler(scheduler.clone());
     api::remote_connect_api::set_dialog_scheduler(scheduler.clone());
 
-    let cron_service = openbitfun_core::service::cron::CronService::new(
+    let cron_service = starmate_core::service::cron::CronService::new(
         path_manager.clone(),
         coordinator.clone(),
         scheduler.clone(),
     )
     .await
     .map_err(|e| anyhow::anyhow!("Failed to initialize cron service: {}", e))?;
-    openbitfun_core::service::cron::set_global_cron_service(cron_service.clone());
-    let cron_subscriber = Arc::new(openbitfun_core::service::cron::CronEventSubscriber::new(
+    starmate_core::service::cron::set_global_cron_service(cron_service.clone());
+    let cron_subscriber = Arc::new(starmate_core::service::cron::CronEventSubscriber::new(
         cron_service.clone(),
     ));
     event_router.subscribe_internal("cron_jobs".to_string(), cron_subscriber);
@@ -2311,7 +2311,7 @@ async fn init_agentic_system() -> anyhow::Result<(
 }
 
 async fn init_function_agents(ai_client_factory: Arc<AIClientFactory>) -> anyhow::Result<()> {
-    let _ = openbitfun_core::function_agents::git_func_agent::GitFunctionAgent::new(
+    let _ = starmate_core::function_agents::git_func_agent::GitFunctionAgent::new(
         ai_client_factory.clone(),
     );
 
@@ -2420,7 +2420,7 @@ pub(crate) async fn perform_process_exit_cleanup() -> bool {
     }
 
     log::info!("Desktop process graceful shutdown started");
-    match openbitfun_core::plugin_host::shutdown_configured_plugin_host().await {
+    match starmate_core::plugin_host::shutdown_configured_plugin_host().await {
         Ok(Some(report)) => log::info!(
             "Desktop plugin host shutdown completed: generation={}, disposition={:?}, rpc_completed={}, exit_code={:?}, duration_ms={}",
             report.generation,
@@ -2435,7 +2435,7 @@ pub(crate) async fn perform_process_exit_cleanup() -> bool {
     if let Some(search_service) = get_global_workspace_search_service() {
         search_service.shutdown_blocking();
     }
-    openbitfun_core::util::process_manager::cleanup_all_processes();
+    starmate_core::util::process_manager::cleanup_all_processes();
     api::remote_connect_api::cleanup_on_exit();
     PROCESS_EXIT_CLEANUP_COMPLETE.store(true, Ordering::Release);
     notify.notify_waiters();
@@ -2469,13 +2469,13 @@ pub(crate) fn perform_process_exit_cleanup_emergency() -> bool {
     if let Some(search_service) = get_global_workspace_search_service() {
         search_service.shutdown_blocking();
     }
-    openbitfun_core::util::process_manager::cleanup_all_processes();
+    starmate_core::util::process_manager::cleanup_all_processes();
     api::remote_connect_api::cleanup_on_exit();
     true
 }
 
 fn configure_workspace_search_daemon_env() -> Option<std::path::PathBuf> {
-    let path = openbitfun_core::service::search::resolve_workspace_search_daemon_program_path();
+    let path = starmate_core::service::search::resolve_workspace_search_daemon_program_path();
     if let Some(path) = path.as_ref() {
         std::env::set_var("FLASHGREP_DAEMON_BIN", path);
     }
@@ -2490,9 +2490,9 @@ async fn deliver_event_to_webview(
     event: AgenticEvent,
     session_event_journal: &SessionEventJournal,
 ) {
-    openbitfun_core::service::remote_connect::notify_session_catalog_event(&event);
+    starmate_core::service::remote_connect::notify_session_catalog_event(&event);
     let cursor = session_event_journal.record(&event);
-    let Some(mut projected) = openbitfun_events::project_agentic_frontend_event(event) else {
+    let Some(mut projected) = starmate_events::project_agentic_frontend_event(event) else {
         log::warn!("Unhandled AgenticEvent type in desktop delivery");
         return;
     };
@@ -2509,7 +2509,7 @@ async fn deliver_event_to_webview(
         {
             let name = projected.event_name.as_str();
             let policy =
-            openbitfun_core::service::remote_connect::session_records::session_event_publication(
+            starmate_core::service::remote_connect::session_records::session_event_publication(
                 name,
                 &projected.payload,
             );
@@ -2521,12 +2521,12 @@ async fn deliver_event_to_webview(
                         .or_else(|| projected.payload.get("settledTurnId"))
                         .and_then(serde_json::Value::as_str)
                     {
-                        openbitfun_core::service::remote_connect::synchronize_session_record_turn(
+                        starmate_core::service::remote_connect::synchronize_session_record_turn(
                             &hub, session_id, turn,
                         )
                         .await
                     } else if name == "agentic://session-history-changed" {
-                        openbitfun_core::service::remote_connect::synchronize_session_records(
+                        starmate_core::service::remote_connect::synchronize_session_records(
                             &hub, session_id,
                         )
                         .await
@@ -2617,8 +2617,8 @@ async fn flush_coalesced<D, F>(
 ///   flushed in place before processing continues. Text therefore waits at
 ///   most one window regardless of queue pressure.
 async fn event_loop_driver<D, F>(
-    event_queue: Arc<openbitfun_core::agentic::events::EventQueue>,
-    event_router: Arc<openbitfun_core::agentic::events::EventRouter>,
+    event_queue: Arc<starmate_core::agentic::events::EventQueue>,
+    event_router: Arc<starmate_core::agentic::events::EventRouter>,
     mut deliver: D,
 ) where
     D: FnMut(AgenticEvent) -> F,
@@ -2757,8 +2757,8 @@ async fn event_loop_driver<D, F>(
 }
 
 fn start_event_loop_with_transport(
-    event_queue: Arc<openbitfun_core::agentic::events::EventQueue>,
-    event_router: Arc<openbitfun_core::agentic::events::EventRouter>,
+    event_queue: Arc<starmate_core::agentic::events::EventQueue>,
+    event_router: Arc<starmate_core::agentic::events::EventRouter>,
     transport: Arc<TauriTransportAdapter>,
     session_event_journal: Arc<SessionEventJournal>,
 ) {
@@ -2775,7 +2775,7 @@ fn start_event_loop_with_transport(
 }
 
 fn init_services(app_handle: tauri::AppHandle, default_log_level: log::LevelFilter) {
-    use openbitfun_core::{infrastructure, service};
+    use starmate_core::{infrastructure, service};
 
     spawn_runtime_log_level_listener(default_log_level);
     spawn_workspace_search_feature_listener(app_handle.clone());
@@ -2790,7 +2790,7 @@ fn init_services(app_handle: tauri::AppHandle, default_log_level: log::LevelFilt
 
         service::snapshot::initialize_snapshot_event_emitter(emitter.clone());
 
-        openbitfun_core::service::initialize_file_watch_service(emitter.clone());
+        starmate_core::service::initialize_file_watch_service(emitter.clone());
 
         if let Err(e) = workspace_identity_watch_service
             .set_event_emitter(emitter.clone())
@@ -2813,7 +2813,7 @@ fn init_services(app_handle: tauri::AppHandle, default_log_level: log::LevelFilt
 }
 
 async fn resolve_runtime_log_level(default_level: log::LevelFilter) -> log::LevelFilter {
-    use openbitfun_core::service::config::get_global_config_service;
+    use starmate_core::service::config::get_global_config_service;
 
     if let Ok(config_service) = get_global_config_service().await {
         if let Ok(config_level) = config_service
@@ -2835,7 +2835,7 @@ async fn resolve_runtime_log_level(default_level: log::LevelFilter) -> log::Leve
 }
 
 fn spawn_runtime_log_level_listener(default_level: log::LevelFilter) {
-    use openbitfun_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
+    use starmate_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
 
     tokio::spawn(async move {
         if let Some(mut receiver) = subscribe_config_updates() {
@@ -2845,7 +2845,7 @@ fn spawn_runtime_log_level_listener(default_level: log::LevelFilter) {
                         if let Some(level) = logging::parse_log_level(&new_level) {
                             logging::apply_runtime_log_level(level, "config_update_event");
                             if let Err(error) =
-                                openbitfun_core::plugin_host::set_configured_plugin_host_log_level(
+                                starmate_core::plugin_host::set_configured_plugin_host_log_level(
                                     logging::level_to_str(level),
                                 )
                                 .await
@@ -2863,7 +2863,7 @@ fn spawn_runtime_log_level_listener(default_level: log::LevelFilter) {
                         let level = resolve_runtime_log_level(default_level).await;
                         logging::apply_runtime_log_level(level, "config_reloaded");
                         if let Err(error) =
-                            openbitfun_core::plugin_host::set_configured_plugin_host_log_level(
+                            starmate_core::plugin_host::set_configured_plugin_host_log_level(
                                 logging::level_to_str(level),
                             )
                             .await
@@ -2889,16 +2889,16 @@ fn spawn_runtime_log_level_listener(default_level: log::LevelFilter) {
 
 fn create_event_emitter(
     transport: Arc<TauriTransportAdapter>,
-) -> Arc<dyn openbitfun_core::infrastructure::events::EventEmitter> {
-    use openbitfun_transport::TransportEmitter;
-    let inner: Arc<dyn openbitfun_core::infrastructure::events::EventEmitter> =
+) -> Arc<dyn starmate_core::infrastructure::events::EventEmitter> {
+    use starmate_transport::TransportEmitter;
+    let inner: Arc<dyn starmate_core::infrastructure::events::EventEmitter> =
         Arc::new(TransportEmitter::new(transport));
     let inner = api::remote_connect_api::wrap_peer_aware_emitter(inner);
     api::miniapp_agent_api::wrap_miniapp_agent_context_cleanup_emitter(inner)
 }
 
 fn spawn_workspace_search_feature_listener(app_handle: tauri::AppHandle) {
-    use openbitfun_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
+    use starmate_core::service::config::{subscribe_config_updates, ConfigUpdateEvent};
 
     let app_state: tauri::State<'_, api::AppState> = app_handle.state();
     let workspace_search_service = app_state.workspace_search_service.clone();
@@ -2907,7 +2907,7 @@ fn spawn_workspace_search_feature_listener(app_handle: tauri::AppHandle) {
 
     tokio::spawn(async move {
         let mut feature_enabled =
-            openbitfun_core::service::search::workspace_search_feature_enabled().await;
+            starmate_core::service::search::workspace_search_feature_enabled().await;
 
         let Some(mut receiver) = subscribe_config_updates() else {
             log::warn!("Config update subscription unavailable for workspace search listener");
@@ -2918,7 +2918,7 @@ fn spawn_workspace_search_feature_listener(app_handle: tauri::AppHandle) {
             match receiver.recv().await {
                 Ok(ConfigUpdateEvent::AppUpdated) | Ok(ConfigUpdateEvent::ConfigReloaded) => {
                     let next_enabled =
-                        openbitfun_core::service::search::workspace_search_feature_enabled().await;
+                        starmate_core::service::search::workspace_search_feature_enabled().await;
 
                     if next_enabled == feature_enabled {
                         continue;
@@ -2934,11 +2934,11 @@ fn spawn_workspace_search_feature_listener(app_handle: tauri::AppHandle) {
                     }
 
                     let resolved_path = configure_workspace_search_daemon_env();
-                    if !openbitfun_core::service::search::workspace_search_daemon_available() {
+                    if !starmate_core::service::search::workspace_search_daemon_available() {
                         log::warn!(
                             "Workspace search feature enabled but daemon is unavailable: path={:?}, hint={}",
                             resolved_path.as_ref().map(|path| path.display().to_string()),
-                            openbitfun_core::service::search::workspace_search_daemon_missing_hint()
+                            starmate_core::service::search::workspace_search_daemon_missing_hint()
                         );
                         feature_enabled = true;
                         continue;
@@ -2952,14 +2952,14 @@ fn spawn_workspace_search_feature_listener(app_handle: tauri::AppHandle) {
                     };
                     if let Some(current_workspace) = current_workspace {
                         if current_workspace.workspace_kind
-                            != openbitfun_core::service::workspace::WorkspaceKind::Remote
+                            != starmate_core::service::workspace::WorkspaceKind::Remote
                         {
                             let current_workspace = current_workspace.root_path;
                             match workspace_search_service.open_repo(&current_workspace).await {
                                 Ok(_) => {
                                     workspace_search_service.schedule_auto_index(
                                         &current_workspace,
-                                        openbitfun_core::service::search::WorkspaceSearchAutoIndexPriority::Focused,
+                                        starmate_core::service::search::WorkspaceSearchAutoIndexPriority::Focused,
                                     ).await;
                                     log::info!(
                                         "Workspace search feature enabled; warmed current workspace: path={}",
@@ -2997,7 +2997,7 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 #[cfg(test)]
 mod event_loop_driver_tests {
     use super::*;
-    use openbitfun_core::agentic::events::{EventQueue, EventQueueConfig, EventRouter};
+    use starmate_core::agentic::events::{EventQueue, EventQueueConfig, EventRouter};
 
     fn text_chunk(text: &str) -> AgenticEvent {
         AgenticEvent::TextChunk {

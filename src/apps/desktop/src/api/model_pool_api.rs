@@ -1,10 +1,10 @@
 //! Desktop transport for execution-host-owned model pools.
 
 use crate::runtime::DesktopRuntimeContext;
-use openbitfun_core::agentic::coordination::ConversationCoordinator;
-use openbitfun_core::service::config::get_global_config_service;
-use openbitfun_core::service::config::model_pool_store::{ModelPoolDefinition, ModelPoolDocument};
-use openbitfun_core_types::model_pool::{
+use starmate_core::agentic::coordination::ConversationCoordinator;
+use starmate_core::service::config::get_global_config_service;
+use starmate_core::service::config::model_pool_store::{ModelPoolDefinition, ModelPoolDocument};
+use starmate_core_types::model_pool::{
     ModelPoolMemberStatus, ModelSelection, SessionModelTarget,
 };
 use serde::Deserialize;
@@ -95,7 +95,7 @@ async fn ensure_session(
     runtime: &DesktopRuntimeContext,
     request: &SessionModelTargetRequest,
 ) -> Result<(), String> {
-    openbitfun_core_types::validate_session_id(&request.session_id)?;
+    starmate_core_types::validate_session_id(&request.session_id)?;
     super::agentic_api::ensure_session_loaded_for_selector_update(
         runtime,
         &request.session_id,

@@ -24,7 +24,7 @@ pub(crate) async fn allocate_number(
     high_water: u64,
     known: HashMap<String, u64>,
 ) -> OpenBitFunResult<u64> {
-    let (number, _) = openbitfun_services_core::json_store::JsonFileStore
+    let (number, _) = starmate_services_core::json_store::JsonFileStore
         .update_locked(path, NameRegistry::default(), |registry| {
             registry.high_water = registry.high_water.max(high_water);
             for (id, number) in known {

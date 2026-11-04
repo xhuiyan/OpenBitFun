@@ -7,24 +7,24 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, OnceLock, Weak};
 
 use anyhow::{anyhow, Result};
-use openbitfun_core::agentic::tools::openbitfun_control_config::global_shared_product_control_executor;
-use openbitfun_core::agentic::tools::openbitfun_control_host::set_openbitfun_control_port;
-use openbitfun_core::service::remote_connect::{
+use starmate_core::agentic::tools::openbitfun_control_config::global_shared_product_control_executor;
+use starmate_core::agentic::tools::openbitfun_control_host::set_openbitfun_control_port;
+use starmate_core::service::remote_connect::{
     bot,
     control::{RemoteBotControl, RemoteConnectServiceHolder},
     embedded_relay_host::EmbeddedRelayHost,
     relay_client::ConnectionState,
     AccountClient, DeviceIdentity, QrGenerator, RemoteConnectConfig, RemoteConnectService,
 };
-use openbitfun_product_domains::detached_dispatch_control::{
+use starmate_product_domains::detached_dispatch_control::{
     DetachedDispatchControlRequest, DETACHED_DISPATCH_CONTROL_PROVIDER,
 };
-use openbitfun_product_domains::product_control::{
+use starmate_product_domains::product_control::{
     capability, discover, validate_operation_arguments, ProductCapabilityOperationHandler,
     ProductControlAction, ProductControlDeliveryProfile, ProductControlFuture, ProductControlPort,
     ProductControlRequest,
 };
-use openbitfun_product_domains::remote_control::{
+use starmate_product_domains::remote_control::{
     RemoteControlMethod, RemoteControlRequest, REMOTE_CONTROL_PROVIDER,
 };
 use serde_json::{json, Value};
@@ -361,16 +361,16 @@ impl ProductControlPort for CliProductControlPort {
 
 #[cfg(test)]
 mod product_control_binding_tests {
-    use openbitfun_product_domains::detached_dispatch_control::DETACHED_DISPATCH_CONTROL_PROVIDER;
-    use openbitfun_product_domains::product_control::{
+    use starmate_product_domains::detached_dispatch_control::DETACHED_DISPATCH_CONTROL_PROVIDER;
+    use starmate_product_domains::product_control::{
         ProductCapabilityOperationHandler, ProductControlDeliveryProfile, ProductControlRegistry,
     };
-    use openbitfun_product_domains::remote_control::REMOTE_CONTROL_PROVIDER;
+    use starmate_product_domains::remote_control::REMOTE_CONTROL_PROVIDER;
 
     #[test]
     fn every_cli_available_provider_operation_has_a_cli_binding() {
         let registry = ProductControlRegistry::global();
-        let catalog = openbitfun_product_domains::product_control::catalog().unwrap();
+        let catalog = starmate_product_domains::product_control::catalog().unwrap();
         for capability in &catalog.capabilities {
             for operation in &capability.operations {
                 let ProductCapabilityOperationHandler::Provider { provider_id, .. } =

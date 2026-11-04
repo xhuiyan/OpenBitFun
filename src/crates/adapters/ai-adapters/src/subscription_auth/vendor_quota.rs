@@ -2,7 +2,7 @@
 //! headers stay in this adapter; display observations never gate model routing.
 use super::{accounts, browser_poll, quota, store, SubscriptionHttpOptions, SubscriptionProvider};
 use anyhow::{anyhow, Result};
-use openbitfun_core_types::subscription::{
+use starmate_core_types::subscription::{
     SubscriptionQuotaDisplay, SubscriptionQuotaMeter, SubscriptionQuotaSnapshot,
     SubscriptionQuotaState, SubscriptionQuotaWindow,
 };
@@ -607,7 +607,7 @@ mod tests {
     #[tokio::test]
     async fn grok_billing_uses_selected_account_token_and_cli_headers() {
         use axum::{extract::Request, routing::any, Json, Router};
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let router = Router::new().fallback(any(|request: Request| async move {
             assert_eq!(request.uri(), "/billing?format=credits");
             assert_eq!(
@@ -667,14 +667,14 @@ mod tests {
         assert!(q.details.is_none());
         assert!(matches!(
             quota::model_quota_observation(&q, "any-model", 1000).eligibility,
-            openbitfun_core_types::subscription::ModelQuotaEligibility::Unknown
+            starmate_core_types::subscription::ModelQuotaEligibility::Unknown
         ));
     }
     #[tokio::test]
     async fn billing_transport_preserves_vendor_auth_account_headers_and_team_queries() {
         use axum::{extract::Request, routing::any, Json, Router};
         use std::sync::{Arc, Mutex};
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         for provider in [SubscriptionProvider::Zcode, SubscriptionProvider::ZcodeCn] {
             for team in [false, true] {
                 let requests = Arc::new(Mutex::new(Vec::new()));

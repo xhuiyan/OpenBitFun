@@ -4,8 +4,8 @@ use crate::agentic::persistence::SessionBranchRequest;
 use crate::external_session_import::auto_discovery::tests::{candidate, document};
 use crate::external_session_import::deferred::tests::fixture;
 use crate::service::session::SessionTurnWindowResponse;
-use openbitfun_runtime_ports::SessionTurnWindowRequest;
-use openbitfun_services_core::session::SessionBranchBoundary;
+use starmate_runtime_ports::SessionTurnWindowRequest;
+use starmate_services_core::session::SessionBranchBoundary;
 
 async fn evict(root: &Path) {
     let mut cache = HISTORIES.lock().await;

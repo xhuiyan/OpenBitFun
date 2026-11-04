@@ -1,7 +1,7 @@
 use super::{apply_model_default_reasoning, AIClient};
 use crate::service::config::types::AIModelConfig;
-use openbitfun_ai_adapters::ConnectionTestResult;
-use openbitfun_core_types::{ReasoningCatalogBinding, ReasoningConfig};
+use starmate_ai_adapters::ConnectionTestResult;
+use starmate_core_types::{ReasoningCatalogBinding, ReasoningConfig};
 use serde_json::{json, Value};
 use std::io::{BufRead, BufReader, Read, Write};
 use std::time::Duration;

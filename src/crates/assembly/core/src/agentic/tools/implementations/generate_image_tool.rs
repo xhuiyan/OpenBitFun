@@ -7,10 +7,10 @@ use crate::agentic::tools::framework::{
 use crate::service::config::types::{ImageGenerationParams, ImageServiceConfig};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_ai_adapters::client::image_generation::{
+use starmate_ai_adapters::client::image_generation::{
     generate, GeneratedImage, ImageGenerationRequest,
 };
-use openbitfun_core_types::MAX_IMAGES_PER_GENERATION_REQUEST;
+use starmate_core_types::MAX_IMAGES_PER_GENERATION_REQUEST;
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 use tokio::fs;

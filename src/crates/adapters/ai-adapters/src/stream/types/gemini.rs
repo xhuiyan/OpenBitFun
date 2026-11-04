@@ -1,5 +1,5 @@
 use crate::stream::types::unified::{UnifiedResponse, UnifiedTokenUsage, UnifiedToolCall};
-use openbitfun_agent_stream::ToolCallCompletion;
+use starmate_agent_stream::ToolCallCompletion;
 use serde::Deserialize;
 use serde_json::{json, Value};
 
@@ -532,7 +532,7 @@ impl GeminiSSEData {
 #[cfg(test)]
 mod tests {
     use super::{map_gemini_finish_reason, GeminiSSEData};
-    use openbitfun_agent_stream::ToolCallCompletion;
+    use starmate_agent_stream::ToolCallCompletion;
 
     #[test]
     fn maps_gemini_output_limit_and_safety_finishes() {

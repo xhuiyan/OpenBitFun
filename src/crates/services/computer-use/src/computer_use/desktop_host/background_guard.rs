@@ -1,7 +1,7 @@
 //! Operation-boundary desktop witnesses adapted from computer-use-rust's
 //! background-interference check. They never restore focus or replay input.
 use super::*;
-use openbitfun_agent_tools::computer_use_control::{
+use starmate_agent_tools::computer_use_control::{
     BackgroundObservation, ControlMode, ObservationScope,
 };
 

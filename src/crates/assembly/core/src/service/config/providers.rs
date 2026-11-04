@@ -8,9 +8,9 @@ use crate::util::errors::*;
 use async_trait::async_trait;
 use log::{error, info};
 #[cfg(test)]
-use openbitfun_core_types::ReasoningCatalogBinding;
+use starmate_core_types::ReasoningCatalogBinding;
 #[cfg(test)]
-use openbitfun_core_types::{ReasoningConfig, ReasoningPreset, ReasoningPresetAction};
+use starmate_core_types::{ReasoningConfig, ReasoningPreset, ReasoningPresetAction};
 use std::collections::HashMap;
 
 fn serialize_default_config(section: &str, value: impl serde::Serialize) -> serde_json::Value {
@@ -166,7 +166,7 @@ impl ConfigProvider for AIConfigProvider {
             }
 
             for (index, model) in ai_config.models.iter().enumerate() {
-                openbitfun_config_contracts::normalization::validate_model_config(model, index)
+                starmate_config_contracts::normalization::validate_model_config(model, index)
                     .map_err(OpenBitFunError::validation)?;
                 if !model.enabled {
                     continue;

@@ -6,9 +6,9 @@
 
 use std::path::PathBuf;
 
-use openbitfun_product_domains::function_agents::common::{AgentError, AgentResult};
-use openbitfun_product_domains::function_agents::git_func_agent::ContextAnalyzer;
-use openbitfun_product_domains::function_agents::ports::GitCommitSnapshot;
+use starmate_product_domains::function_agents::common::{AgentError, AgentResult};
+use starmate_product_domains::function_agents::git_func_agent::ContextAnalyzer;
+use starmate_product_domains::function_agents::ports::GitCommitSnapshot;
 
 use crate::git::{GitDiffParams, GitService};
 

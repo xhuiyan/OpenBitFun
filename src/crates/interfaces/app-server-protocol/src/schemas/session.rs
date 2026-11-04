@@ -2,9 +2,9 @@
 
 #[cfg(feature = "rpc")]
 use agent_client_protocol::{JsonRpcRequest, JsonRpcResponse};
-use openbitfun_core_types::SessionUsageReport;
-use openbitfun_product_domains::tool_permissions::PermissionRequest;
-use openbitfun_runtime_ports::{
+use starmate_core_types::SessionUsageReport;
+use starmate_product_domains::tool_permissions::PermissionRequest;
+use starmate_runtime_ports::{
     AgentContextReloadRequest, AgentSessionArchiveStateRequest, AgentSessionCompactionRequest,
     AgentSessionCompactionResult, AgentSessionForkAtTurnRequest, AgentSessionForkBeforeTurnRequest,
     AgentSessionForkRequest, AgentSessionForkResult, AgentSessionLineageCancellationRequest,

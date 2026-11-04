@@ -174,7 +174,7 @@ mod tests {
 
     #[test]
     fn forked_session_inherits_the_parent_permission_mode_selection() {
-        use openbitfun_runtime_ports::PermissionMode;
+        use starmate_runtime_ports::PermissionMode;
 
         let mut parent = parent_session();
         parent.config.permission_mode = Some(PermissionMode::FullAccess);

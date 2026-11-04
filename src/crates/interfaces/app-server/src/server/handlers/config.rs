@@ -10,7 +10,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .name("config handlers")
         .on_receive_request(
             async move |_: GetAgentProfileConfigsMessage, responder, _cx| {
-                let result = openbitfun_core::service::config::mode_config_canonicalizer::get_agent_profile_views()
+                let result = starmate_core::service::config::mode_config_canonicalizer::get_agent_profile_views()
                     .await
                     .map(|profiles| GetAgentProfileConfigsResponse {
                         profiles: profiles
@@ -25,7 +25,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         )
         .on_receive_request(
             async move |request: GetAgentProfileConfigMessage, responder, _cx| {
-                let result = openbitfun_core::service::config::mode_config_canonicalizer::get_agent_profile_view(&request.agent_id)
+                let result = starmate_core::service::config::mode_config_canonicalizer::get_agent_profile_view(&request.agent_id)
                     .await
                     .map(|profile| GetAgentProfileConfigResponse(wire::agent_profile_view(profile)))
                     .map_err(openbitfun_error);
@@ -36,13 +36,13 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |_: GetModelConfigsMessage, responder, _cx| {
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     let models = service.get_ai_models().await?;
                     models
                         .into_iter()
                         .map(wire::model_config)
                         .collect::<Result<Vec<_>, _>>()
-                        .map_err(openbitfun_core::OpenBitFunError::from)
+                        .map_err(starmate_core::OpenBitFunError::from)
                 }
                 .await
                 .map(|models| GetModelConfigsResponse { models })
@@ -55,7 +55,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
             async move |request: GetConfigMessage, responder, _cx| {
                 log::debug!("server getConfig request: {:?}", request);
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     service
                         .get_config::<serde_json::Value>(request.path.as_deref())
                         .await
@@ -70,7 +70,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |request: GetConfigsMessage, responder, _cx| {
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     let mut configs = std::collections::BTreeMap::new();
                     for path in request.paths {
                         if configs.contains_key(&path) {
@@ -93,7 +93,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |request: SetConfigMessage, responder, _cx| {
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     service
                         .set_config::<serde_json::Value>(&request.path, request.value)
                         .await
@@ -108,10 +108,10 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |request: SaveCloudSpeechConfigMessage, responder, _cx| {
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     service
                         .save_cloud_speech_config(
-                            openbitfun_core::service::config::SaveCloudSpeechConfigRequest {
+                            starmate_core::service::config::SaveCloudSpeechConfigRequest {
                                 config_id: request.request.config_id,
                                 preset: request.request.preset,
                                 name: request.request.name,
@@ -137,7 +137,7 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         )
         .on_receive_request(
             async move |request: GetWebSearchCredentialStatusMessage, responder, _cx| {
-                let result = openbitfun_core::service::web_search::get_web_search_credential_status(
+                let result = starmate_core::service::web_search::get_web_search_credential_status(
                     &request.request.provider,
                 )
                 .await
@@ -154,8 +154,8 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         )
         .on_receive_request(
             async move |request: SaveWebSearchCredentialMessage, responder, _cx| {
-                let result = openbitfun_core::service::web_search::save_web_search_credential(
-                    openbitfun_core::service::web_search::SaveWebSearchCredentialRequest {
+                let result = starmate_core::service::web_search::save_web_search_credential(
+                    starmate_core::service::web_search::SaveWebSearchCredentialRequest {
                         provider: request.request.provider,
                         secret: request.request.secret,
                     },
@@ -174,8 +174,8 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         )
         .on_receive_request(
             async move |request: ClearWebSearchCredentialMessage, responder, _cx| {
-                let result = openbitfun_core::service::web_search::clear_web_search_credential(
-                    openbitfun_core::service::web_search::ClearWebSearchCredentialRequest {
+                let result = starmate_core::service::web_search::clear_web_search_credential(
+                    starmate_core::service::web_search::ClearWebSearchCredentialRequest {
                         provider: request.request.provider,
                     },
                 )
@@ -194,9 +194,9 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |_: ValidateConfigMessage, responder, _cx| {
                 let result = async {
-                    let service = openbitfun_core::service::config::get_global_config_service().await?;
+                    let service = starmate_core::service::config::get_global_config_service().await?;
                     let validation = service.validate_config().await?;
-                    serde_json::to_value(validation).map_err(openbitfun_core::OpenBitFunError::from)
+                    serde_json::to_value(validation).map_err(starmate_core::OpenBitFunError::from)
                 }
                 .await
                 .map(ValidateConfigResponse)
@@ -208,12 +208,12 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |request: SetAgentProfileConfigMessage, responder, _cx| {
                 let result = async {
-                    openbitfun_core::service::config::mode_config_canonicalizer::persist_agent_profile_from_value(
+                    starmate_core::service::config::mode_config_canonicalizer::persist_agent_profile_from_value(
                         &request.agent_id,
                         request.config,
                     )
                     .await?;
-                    openbitfun_core::service::config::mode_config_canonicalizer::get_agent_profile_view(
+                    starmate_core::service::config::mode_config_canonicalizer::get_agent_profile_view(
                         &request.agent_id,
                     )
                     .await
@@ -228,11 +228,11 @@ pub(in crate::server) fn builder() -> Builder<AppServer, impl HandleDispatchFrom
         .on_receive_request(
             async move |request: ResetAgentProfileConfigMessage, responder, _cx| {
                 let result = async {
-                    openbitfun_core::service::config::mode_config_canonicalizer::reset_agent_profile_to_default(
+                    starmate_core::service::config::mode_config_canonicalizer::reset_agent_profile_to_default(
                         &request.agent_id,
                     )
                     .await?;
-                    openbitfun_core::service::config::mode_config_canonicalizer::get_agent_profile_view(
+                    starmate_core::service::config::mode_config_canonicalizer::get_agent_profile_view(
                         &request.agent_id,
                     )
                     .await

@@ -1,7 +1,7 @@
 //! Custom agent portable schema and serialization decisions.
 
 use crate::prompt::{UserContextPolicy, UserContextSection};
-use openbitfun_core_types::product_identity::hidden_data_directory;
+use starmate_core_types::product_identity::hidden_data_directory;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use serde_yaml::{Mapping, Value};

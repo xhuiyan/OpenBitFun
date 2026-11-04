@@ -13,15 +13,15 @@ use axum::{
     Router,
 };
 use futures::TryStreamExt;
-use openbitfun_core::service::filesystem::html_preview::resolve_html_preview_source;
-use openbitfun_product_domains::{
+use starmate_core::service::filesystem::html_preview::resolve_html_preview_source;
+use starmate_product_domains::{
     html_preview::{
         HtmlPreviewError, HtmlPreviewErrorCode as Code, HtmlPreviewResource,
         HtmlPreviewResourceReply, HtmlPreviewResourceRequest,
     },
     remote_surface::PeerHostCapability,
 };
-use openbitfun_services_integrations::remote_connect::{
+use starmate_services_integrations::remote_connect::{
     html_preview::transfer::{HtmlPreviewReader as PreviewReader, HtmlPreviewTransfer},
     RemoteCommand, RemoteResponse,
 };
@@ -238,7 +238,7 @@ pub async fn html_preview_create(
 pub async fn html_preview_read_resource(
     request: HtmlPreviewResourceRequest,
 ) -> HtmlPreviewResourceReply {
-    openbitfun_core::service::filesystem::html_preview::html_preview_read_resource(request).await
+    starmate_core::service::filesystem::html_preview::html_preview_read_resource(request).await
 }
 
 async fn start_preview(

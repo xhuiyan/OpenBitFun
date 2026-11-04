@@ -19,7 +19,7 @@ use crate::service::config::mode_config_canonicalizer::persist_agent_profile_fro
 use crate::service::config::types::AgentSubagentOverrideState;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::{debug, error, warn};
-use openbitfun_agent_runtime::custom_agent::{
+use starmate_agent_runtime::custom_agent::{
     custom_agent_review_writable_tools, default_custom_agent_tools, load_custom_agent_definitions,
     validate_custom_agent_definition, CustomAgentDefinition, CustomAgentDiscoveryRoots,
     CustomAgentFrontMatterMetadata, CustomAgentKind, CustomAgentLevel,
@@ -596,16 +596,16 @@ impl AgentRegistry {
                 .sections
                 .iter()
                 .map(|section| match section {
-                    openbitfun_agent_runtime::prompt::UserContextSection::WorkspaceContext => {
+                    starmate_agent_runtime::prompt::UserContextSection::WorkspaceContext => {
                         "workspace_context"
                     }
-                    openbitfun_agent_runtime::prompt::UserContextSection::WorkspaceInstructions => {
+                    starmate_agent_runtime::prompt::UserContextSection::WorkspaceInstructions => {
                         "workspace_instructions"
                     }
-                    openbitfun_agent_runtime::prompt::UserContextSection::ProjectLayout => {
+                    starmate_agent_runtime::prompt::UserContextSection::ProjectLayout => {
                         "project_layout"
                     }
-                    openbitfun_agent_runtime::prompt::UserContextSection::MemorySummary => {
+                    starmate_agent_runtime::prompt::UserContextSection::MemorySummary => {
                         "memory_summary"
                     }
                 })
@@ -626,7 +626,7 @@ impl AgentRegistry {
         tools: Option<Vec<String>>,
         readonly: Option<bool>,
         review: Option<bool>,
-        user_context_policy: Option<openbitfun_agent_runtime::prompt::UserContextPolicy>,
+        user_context_policy: Option<starmate_agent_runtime::prompt::UserContextPolicy>,
         model: Option<String>,
     ) -> OpenBitFunResult<()> {
         self.ensure_user_custom_agents_loaded().await;

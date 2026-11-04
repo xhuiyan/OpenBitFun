@@ -4,7 +4,7 @@
 //! [`agent_client_protocol`] using custom roles ([`AppServer`]/[`AppClient`]),
 //! instead of the built-in ACP `Agent`/`Client` roles. Consumers register their
 //! own `JsonRpcRequest` / `JsonRpcNotification` types; the crate binds no
-//! schema method set, unlike [`openbitfun_acp`].
+//! schema method set, unlike [`starmate_acp`].
 //!
 //! [`OpenBitFunAppServer`] exposes the selected Agent Kernel and management
 //! operations over a host-injected runtime. Behavior-light wire contracts are
@@ -15,8 +15,8 @@
 //! # Example
 //!
 //! ```no_run
-//! use openbitfun_app_server::{AppServer, AppClient, transport};
-//! use openbitfun_app_server::prelude::*;
+//! use starmate_app_server::{AppServer, AppClient, transport};
+//! use starmate_app_server::prelude::*;
 //! # use serde::{Deserialize, Serialize};
 //! #
 //! # #[derive(Debug, Clone, Serialize, Deserialize, agent_client_protocol::JsonRpcRequest)]
@@ -32,7 +32,7 @@
 //! # }
 //! ```
 //!
-//! [`openbitfun_acp`]: openbitfun_acp
+//! [`starmate_acp`]: starmate_acp
 //!
 //! # Crate boundary
 //!

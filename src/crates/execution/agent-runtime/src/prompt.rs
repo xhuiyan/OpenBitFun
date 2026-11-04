@@ -1,6 +1,6 @@
 //! Prompt-loop owner facts and reminder ordering.
 
-use openbitfun_core_types::{SessionExecutionTarget, SessionExecutionTargetKind};
+use starmate_core_types::{SessionExecutionTarget, SessionExecutionTargetKind};
 use serde::{Deserialize, Serialize};
 
 const SKILL_LISTING_TITLE: &str = "# Skill Listing";

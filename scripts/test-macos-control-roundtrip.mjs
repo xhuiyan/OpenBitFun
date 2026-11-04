@@ -27,7 +27,7 @@ try {
   await run('xcrun', ['clang', '-fobjc-arc', '-Wall', '-Werror', 'scripts/fixtures/computer-use-input-controls.m', '-framework', 'AppKit', '-o', observerBinary]);
   // Build before either disposable window is opened. The host's AppKit startup
   // must also finish before the observer establishes the foreground baseline.
-  if (!process.env.OPENBITFUN_TEST_BINARY) await run('cargo', ['test', '-p', 'openbitfun-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip', '--no-run']);
+  if (!process.env.OPENBITFUN_TEST_BINARY) await run('cargo', ['test', '-p', 'starmate-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip', '--no-run']);
   fixture = spawn(binary, [result], { cwd: root, stdio: ['ignore', 'pipe', 'inherit'], windowsHide: true });
   const [pid, x, y] = await new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Input fixture failed to become ready')), 10_000);
@@ -41,7 +41,7 @@ try {
     });
   });
   const command = process.env.OPENBITFUN_TEST_BINARY || 'cargo';
-  const args = process.env.OPENBITFUN_TEST_BINARY ? [] : ['test', '-p', 'openbitfun-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip'];
+  const args = process.env.OPENBITFUN_TEST_BINARY ? [] : ['test', '-p', 'starmate-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip'];
   const hostReady = join(directory, 'host-ready');
   const observerResult = join(directory, 'observer.json');
   const roundtrip = run(command, args, {

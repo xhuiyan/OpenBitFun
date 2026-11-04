@@ -1,7 +1,7 @@
 //! Stable on-disk envelope for in-flight Session runtime events.
 
 use crate::storage_error::{StorageError as OpenBitFunError, StorageResult as OpenBitFunResult};
-use openbitfun_events::AgenticEvent;
+use starmate_events::AgenticEvent;
 use std::collections::BTreeSet;
 use std::io::{BufRead, BufReader};
 use std::path::Path;

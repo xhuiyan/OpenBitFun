@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-dsh-adapter"
+name = "starmate-dsh-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,17 +7,17 @@ description = "DeepSeek Harness (dsh) bundle source projection adapter for OpenB
 autotests = false
 
 [lib]
-name = "openbitfun_dsh_adapter"
+name = "starmate_dsh_adapter"
 crate-type = ["rlib"]
 
 [dependencies]
 async-trait = { workspace = true }
-openbitfun-plugin-runtime-client = { path = "../../execution/plugin-runtime-client" }
-openbitfun-product-domains = { path = "../../contracts/product-domains", features = ["plugin-source", "external-sources"] }
-openbitfun-static-hook-support = { path = "../static-hook-support" }
-openbitfun-services-core = { path = "../../services/services-core" }
+starmate-plugin-runtime-client = { path = "../../execution/plugin-runtime-client" }
+starmate-product-domains = { path = "../../contracts/product-domains", features = ["plugin-source", "external-sources"] }
+starmate-static-hook-support = { path = "../static-hook-support" }
+starmate-services-core = { path = "../../services/services-core" }
 dirs = { workspace = true }
-openbitfun-runtime-ports = { path = "../../contracts/runtime-ports", features = ["plugin-runtime"] }
+starmate-runtime-ports = { path = "../../contracts/runtime-ports", features = ["plugin-runtime"] }
 hex = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

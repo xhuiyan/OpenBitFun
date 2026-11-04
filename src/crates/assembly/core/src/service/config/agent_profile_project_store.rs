@@ -1,7 +1,7 @@
 use crate::infrastructure::get_path_manager_arc;
 use crate::service::config::types::{AgentSubagentOverrideState, ParentSubagentOverrideConfig};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_core_types::product_identity::hidden_data_directory;
+use starmate_core_types::product_identity::hidden_data_directory;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
@@ -116,7 +116,7 @@ pub fn deserialize_project_agent_profiles_document(
 ) -> OpenBitFunResult<ProjectAgentProfilesDocument> {
     let raw = serde_json::from_str(content)?;
     let migrated =
-        openbitfun_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
+        starmate_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
             &raw,
         )
         .map_err(OpenBitFunError::config)?;

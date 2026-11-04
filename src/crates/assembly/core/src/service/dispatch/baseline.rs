@@ -454,7 +454,7 @@ fn finish_bundle(path: PathBuf) -> Result<PreparedBundle> {
     let size = std::fs::symlink_metadata(&path)
         .with_context(|| format!("inspect dispatch bundle {}", path.display()))?
         .len();
-    let sha256 = openbitfun_services_core::dispatch_workspace::sha256_file(&path)?;
+    let sha256 = starmate_services_core::dispatch_workspace::sha256_file(&path)?;
     Ok(PreparedBundle { path, sha256, size })
 }
 

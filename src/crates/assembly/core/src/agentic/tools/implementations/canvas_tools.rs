@@ -4,7 +4,7 @@ use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
 use chrono::Utc;
-use openbitfun_product_domains::canvas::{
+use starmate_product_domains::canvas::{
     parse_canvas_artifact_ref, CanvasArtifact, CanvasArtifactRef, CanvasId, CanvasRevision,
     CanvasScope, CanvasSessionId, CanvasSnapshot, CanvasSource, CanvasStatus, CanvasStoragePort,
     CanvasWorkspaceId, OPENBITFUN_CANVAS_SDK_VERSION,
@@ -837,7 +837,7 @@ fn now_millis() -> i64 {
 }
 
 fn canvas_port_error(
-    error: openbitfun_product_domains::canvas::CanvasPortError,
+    error: starmate_product_domains::canvas::CanvasPortError,
 ) -> OpenBitFunError {
     OpenBitFunError::tool(error.to_string())
 }
@@ -848,7 +848,7 @@ mod tests {
     use crate::agentic::tools::framework::Tool;
     use crate::agentic::tools::ToolRuntimeRestrictions;
     use crate::agentic::WorkspaceBinding;
-    use openbitfun_runtime_ports::ToolRuntimeHandles;
+    use starmate_runtime_ports::ToolRuntimeHandles;
     use std::collections::HashMap;
 
     fn test_context(session_id: &str) -> ToolUseContext {

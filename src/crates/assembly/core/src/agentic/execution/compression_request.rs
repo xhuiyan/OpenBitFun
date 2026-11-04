@@ -3,11 +3,11 @@
 use crate::agentic::session::ContextCompressor;
 use crate::infrastructure::ai::AIClient;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_stream::retry::{delay_ms, should_retry, MAX_MODEL_ATTEMPTS};
-use openbitfun_ai_adapters::{
+use starmate_agent_stream::retry::{delay_ms, should_retry, MAX_MODEL_ATTEMPTS};
+use starmate_ai_adapters::{
     Message, ModelExchangeTraceConfig, ModelRequestContext, ToolDefinition,
 };
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use std::sync::Arc;
 
 pub(super) async fn request_summary(
@@ -31,7 +31,7 @@ pub(super) async fn request_summary(
 async fn request_summary_with<F, Fut>(mut request: F) -> OpenBitFunResult<String>
 where
     F: FnMut() -> Fut,
-    Fut: std::future::Future<Output = anyhow::Result<openbitfun_ai_adapters::GeminiResponse>>,
+    Fut: std::future::Future<Output = anyhow::Result<starmate_ai_adapters::GeminiResponse>>,
 {
     for attempt in 0..MAX_MODEL_ATTEMPTS {
         let result = request().await;
@@ -94,8 +94,8 @@ mod tests {
     use crate::agentic::execution::round_executor::tests::{retry_test_success, RetryTestServer};
     use std::collections::VecDeque;
 
-    fn empty() -> anyhow::Result<openbitfun_ai_adapters::GeminiResponse> {
-        Ok(openbitfun_ai_adapters::GeminiResponse {
+    fn empty() -> anyhow::Result<starmate_ai_adapters::GeminiResponse> {
+        Ok(starmate_ai_adapters::GeminiResponse {
             text: " \n\t".into(),
             reasoning_content: None,
             tool_calls: None,

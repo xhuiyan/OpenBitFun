@@ -6,10 +6,10 @@ use crate::agentic::tools::pipeline::SubagentParentInfo;
 use crate::agentic::tools::ToolRuntimeRestrictions;
 use crate::agentic::workspace::WorkspaceServices;
 use crate::agentic::WorkspaceBinding;
-pub use openbitfun_agent_runtime::events::FinishReason;
-use openbitfun_agent_tools::LoadedDeferredToolSpec;
-use openbitfun_core_types::ModelRequestContext;
-use openbitfun_runtime_ports::{
+pub use starmate_agent_runtime::events::FinishReason;
+use starmate_agent_tools::LoadedDeferredToolSpec;
+use starmate_core_types::ModelRequestContext;
+use starmate_runtime_ports::{
     DelegationPolicy, PermissionConstraintLayer, PermissionDelegationContext,
     PermissionRuntimeCeiling, RemoteExecPort, TerminalPort,
 };
@@ -56,7 +56,7 @@ pub struct ExecutionContext {
 /// Round context
 #[derive(Debug, Clone)]
 pub struct RoundContext {
-    pub context_composition: Option<openbitfun_core_types::UsageContextBreakdown>,
+    pub context_composition: Option<starmate_core_types::UsageContextBreakdown>,
     pub session_id: String,
     pub subagent_parent_info: Option<SubagentParentInfo>,
     pub permission_delegation: Option<PermissionDelegationContext>,

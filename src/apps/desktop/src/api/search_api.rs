@@ -1,14 +1,14 @@
 use crate::api::app_state::AppState;
-use openbitfun_core::infrastructure::{
+use starmate_core::infrastructure::{
     FileSearchOutcome, FileSearchResult, FileSearchResultGroup, SearchMatchType,
 };
-use openbitfun_core::service::search::{
+use starmate_core::service::search::{
     remote_workspace_search_service_for_workspace, search_remote_workspace_contents,
     workspace_search_daemon_available, workspace_search_feature_enabled, ContentSearchRequest,
     ContentSearchResult, RemoteContentSearch, RemoteWorkspaceSearchService, WorkspaceSearchBackend,
     WorkspaceSearchRepoPhase,
 };
-use openbitfun_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
+use starmate_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
@@ -41,7 +41,7 @@ pub struct SearchMetadataResponse {
 
 #[derive(Clone)]
 pub(crate) enum WorkspaceContentSearchRunner {
-    Local(Arc<openbitfun_core::service::search::WorkspaceSearchService>),
+    Local(Arc<starmate_core::service::search::WorkspaceSearchService>),
     Remote(RemoteWorkspaceSearchService),
 }
 
@@ -129,7 +129,7 @@ async fn local_workspace_search_unavailable_message(root_path: &str) -> Option<S
         );
     }
 
-    if !openbitfun_services_integrations::workspace_search::workspace_search_supports_local_root(
+    if !starmate_services_integrations::workspace_search::workspace_search_supports_local_root(
         root_path,
     )
     .await
@@ -243,7 +243,7 @@ pub(crate) async fn search_file_contents_via_workspace_search(
     use_regex: bool,
     whole_word: bool,
     max_results: usize,
-) -> Result<openbitfun_core::service::search::ContentSearchResult, String> {
+) -> Result<starmate_core::service::search::ContentSearchResult, String> {
     search_content_request_via_workspace_search(
         state,
         workspace,
@@ -271,7 +271,7 @@ pub(crate) fn build_content_search_request(
         repo_root: root_path.into(),
         search_path: None,
         pattern: pattern.to_string(),
-        output_mode: openbitfun_core::service::search::ContentSearchOutputMode::Content,
+        output_mode: starmate_core::service::search::ContentSearchOutputMode::Content,
         case_sensitive,
         use_regex,
         whole_word,
@@ -357,7 +357,7 @@ async fn index_workspace_root(
             .map_err(|e| e.to_string())?
             .ok_or("Legacy search workspace cannot be resolved; select its ID")?
     };
-    if workspace.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote {
+    if workspace.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote {
         return Err("Flashgrep is not supported for remote workspaces".into());
     }
     let root = workspace.root_path.to_string_lossy().into_owned();

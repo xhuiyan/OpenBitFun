@@ -165,28 +165,28 @@ jobs:
 
       - name: Run CLI and ACP tests on macOS
         if: runner.os == 'macOS'
-        run: cargo test --locked -p openbitfun-cli -p openbitfun-acp
+        run: cargo test --locked -p starmate-cli -p starmate-acp
 
       - name: Run CLI, ACP, and agent runtime tests
         if: runner.os == 'Linux'
-        run: cargo test --locked -p openbitfun-cli -p openbitfun-acp -p openbitfun-agent-runtime
+        run: cargo test --locked -p starmate-cli -p starmate-acp -p starmate-agent-runtime
 
       # ConPTY is a Windows-only execution path. Keep its interactive contracts
       # serialized: concurrent native PTYs contend on hosted runners and used to
       # race action delivery, TUI restoration, and output observation in Nightly.
       - name: Run Windows CLI terminal contracts
         if: runner.os == 'Windows'
-        run: cargo test --locked -p openbitfun-cli --test terminal_process_contracts -- --test-threads=1
+        run: cargo test --locked -p starmate-cli --test terminal_process_contracts -- --test-threads=1
 
       # Windows file replacement and process ownership differ from POSIX. The
       # terminal process target does not run these daemon and TUI unit tests.
       - name: Run Windows CLI daemon and QR regressions
         if: runner.os == 'Windows'
-        run: "cargo test --locked -p openbitfun-cli --bin openbitfun -- daemon:: ui::tool_cards::tests::"
+        run: "cargo test --locked -p starmate-cli --bin openbitfun -- daemon:: ui::tool_cards::tests::"
 
       - name: Run SDK Host tests
         if: runner.os == 'Linux'
-        run: cargo test --locked -p openbitfun-sdk-host -p openbitfun-sdk-host-app
+        run: cargo test --locked -p starmate-sdk-host -p starmate-sdk-host-app
 
       - name: Run SDK Host terminal cleanup regressions
         if: runner.os == 'Linux'
@@ -322,21 +322,21 @@ jobs:
 
       - name: Run core library tests
         if: runner.os != 'Linux'
-        run: cargo test --locked -p openbitfun-core --lib
+        run: cargo test --locked -p starmate-core --lib
 
       - name: Run full core library tests on Linux
         if: runner.os == 'Linux'
-        run: cargo test --locked -p openbitfun-core --features product-full --lib
+        run: cargo test --locked -p starmate-core --features product-full --lib
 
       - name: Run desktop library tests
         if: runner.os != 'Windows'
-        run: cargo test --locked -p openbitfun-desktop --lib
+        run: cargo test --locked -p starmate-desktop --lib
 
       # Native tests moved out of Desktop with the shared provider. Run them
       # on every OS, independently of Tauri's Windows test-loader limitation.
       # Interactive delivery fixtures remain explicitly ignored.
       - name: Run shared Computer Use provider regressions
-        run: cargo test --locked -p openbitfun-computer-use --lib
+        run: cargo test --locked -p starmate-computer-use --lib
 
       # Tauri issue #13419 prevents some Windows MSVC lib-test harnesses from
       # entering Rust's test runner at all. Keep probing on every run so the
@@ -348,7 +348,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $testOutput = cargo test --locked -p openbitfun-desktop --lib 2>&1
+          $testOutput = cargo test --locked -p starmate-desktop --lib 2>&1
           $testExitCode = $LASTEXITCODE
           $testOutput | ForEach-Object { Write-Output $_ }
           if ($testExitCode -eq 0) {
@@ -372,16 +372,16 @@ jobs:
       - name: Run product-control domain and delivery-profile contracts
         shell: bash
         run: |
-          cargo test --locked -p openbitfun-product-domains --no-default-features product_control
-          cargo test --locked -p openbitfun-product-domains --no-default-features remote_surface
-          cargo test --locked -p openbitfun-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery
+          cargo test --locked -p starmate-product-domains --no-default-features product_control
+          cargo test --locked -p starmate-product-domains --no-default-features remote_surface
+          cargo test --locked -p starmate-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery
 
       # These crates own platform-sensitive behavior that is not exercised by
       # testing openbitfun-core/openbitfun-desktop alone. Keep their focused contract
       # suites in the OS matrix so Linux success cannot hide Windows/macOS
       # regressions in worker interruption, relay storage, or OAuth handling.
       - name: Run Page Functions runtime tests
-        run: cargo test --locked -p openbitfun-page-function-runtime
+        run: cargo test --locked -p starmate-page-function-runtime
 
       # Every clipboard helper is a separate process: PowerShell plus WinForms on
       # Windows, xclip/xsel or wl-copy on Linux. Parallel test threads starve each
@@ -389,7 +389,7 @@ jobs:
       # single contended process into a whole-suite failure. Keep this
       # process-spawning suite serial.
       - name: Run Computer Use clipboard contracts
-        run: cargo test --locked -p openbitfun-services-core --no-default-features --features process-runtime --lib system::local_actions -- --test-threads=1
+        run: cargo test --locked -p starmate-services-core --no-default-features --features process-runtime --lib system::local_actions -- --test-threads=1
 
       # The native round trip needs a disposable clipboard. macOS uses a named
       # pasteboard and Linux uses disposable X11/Wayland seats (below). Windows has
@@ -405,25 +405,25 @@ jobs:
           bash scripts/test-linux-clipboard.sh
 
       - name: Run Relay service tests
-        run: cargo test --locked -p openbitfun-relay-service
+        run: cargo test --locked -p starmate-relay-service
 
       - name: Run subscription authentication tests
-        run: cargo test --locked -p openbitfun-ai-adapters --features subscription-auth --lib subscription_auth
+        run: cargo test --locked -p starmate-ai-adapters --features subscription-auth --lib subscription_auth
 
       # File watching is backed by a different OS API on every platform
       # (ReadDirectoryChangesW / FSEvents / inotify), so watch registration,
       # debounce, and atomic-rename regressions must stay in the full OS matrix.
       # The suite is behind a non-default feature and would otherwise never run.
       - name: Run file watch contract tests
-        run: cargo test --locked -p openbitfun-services-integrations --no-default-features --features file-watch --test file_watch_contracts
+        run: cargo test --locked -p starmate-services-integrations --no-default-features --features file-watch --test file_watch_contracts
 
       # Exercise native child cleanup outside the Tauri test harness. In
       # particular, Windows update/restart cleanup must leave the host alive.
       - name: Run process lifecycle contract tests
         shell: bash
         run: |
-          cargo test --locked -p openbitfun-services-core --no-default-features --features process-runtime --test process_runtime_contracts
-          cargo test --locked -p openbitfun-services-core --no-default-features --features process-runtime --lib process_tree::tests::
+          cargo test --locked -p starmate-services-core --no-default-features --features process-runtime --test process_runtime_contracts
+          cargo test --locked -p starmate-services-core --no-default-features --features process-runtime --lib process_tree::tests::
 
       # Search tools share matching but retain provider-specific path and
       # symlink handling. Keep the search module in the full OS matrix.
@@ -435,9 +435,9 @@ jobs:
       - name: Run workspace provider contracts
         shell: bash
         run: |
-          cargo test --locked -p openbitfun-services-core --no-default-features --features workspace-runtime --lib workspace::tests::
-          cargo test --locked -p openbitfun-services-integrations --no-default-features --features remote-ssh-concrete --lib remote_ssh::manager::tests::workspace_
-          cargo test --locked -p openbitfun-services-integrations --no-default-features --features remote-connect --lib remote_connect::html_preview
+          cargo test --locked -p starmate-services-core --no-default-features --features workspace-runtime --lib workspace::tests::
+          cargo test --locked -p starmate-services-integrations --no-default-features --features remote-ssh-concrete --lib remote_ssh::manager::tests::workspace_
+          cargo test --locked -p starmate-services-integrations --no-default-features --features remote-connect --lib remote_connect::html_preview
           cargo test --locked -p tool-runtime --no-default-features --lib fs::read_file::tests::
           cargo test --locked -p tool-runtime --no-default-features --test tool_io_contracts
 
@@ -446,7 +446,7 @@ jobs:
       - name: Run workspace Agent contracts
         if: runner.os != 'Linux'
         run: >-
-          cargo test --locked -p openbitfun-core --no-default-features
+          cargo test --locked -p starmate-core --no-default-features
           --features agent-runtime,git,remote-workspace,document-read --lib --
           file_read_tool::tests file_write_tool::tests file_edit_tool::tests
           delete_file_tool::tests grep_tool::tests glob_tool::tests ls_tool::tests

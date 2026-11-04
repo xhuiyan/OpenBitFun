@@ -7,7 +7,7 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use serde_json::Value;
 use std::path::{Path, PathBuf};
 
-pub use openbitfun_services_integrations::miniapp::host_dispatch::is_host_primitive;
+pub use starmate_services_integrations::miniapp::host_dispatch::is_host_primitive;
 
 pub async fn dispatch_host(
     perms: &MiniAppPermissions,
@@ -18,7 +18,7 @@ pub async fn dispatch_host(
     method: &str,
     params: Value,
 ) -> OpenBitFunResult<Value> {
-    openbitfun_services_integrations::miniapp::host_dispatch::dispatch_host(
+    starmate_services_integrations::miniapp::host_dispatch::dispatch_host(
         perms,
         app_id,
         app_data_dir,
@@ -32,9 +32,9 @@ pub async fn dispatch_host(
 }
 
 fn map_host_dispatch_error(
-    err: openbitfun_services_integrations::miniapp::host_dispatch::MiniAppHostDispatchError,
+    err: starmate_services_integrations::miniapp::host_dispatch::MiniAppHostDispatchError,
 ) -> OpenBitFunError {
-    use openbitfun_services_integrations::miniapp::host_dispatch::MiniAppHostDispatchErrorKind;
+    use starmate_services_integrations::miniapp::host_dispatch::MiniAppHostDispatchErrorKind;
 
     match err.kind() {
         MiniAppHostDispatchErrorKind::Parse => OpenBitFunError::parse(err.message().to_string()),

@@ -15,7 +15,7 @@ use crate::agentic::tools::openbitfun_control_host::{
 use crate::service::config::ConfigService;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_product_domains::product_control::{
+use starmate_product_domains::product_control::{
     capability as product_capability, discover as discover_product_capabilities,
     validate_open_target, validate_operation_argument_scopes, validate_operation_arguments,
     validate_option_value, ProductControlDeliveryProfile, ProductControlRisk, ProductControlSource,
@@ -70,7 +70,7 @@ impl OpenBitFunControlTool {
                 .map_err(OpenBitFunError::tool),
             Err(error) => {
                 let mut result =
-                    openbitfun_product_domains::product_control::inspect_contract(capability_id)
+                    starmate_product_domains::product_control::inspect_contract(capability_id)
                         .map_err(OpenBitFunError::tool)?;
                 let object = result.as_object_mut().ok_or_else(|| {
                     OpenBitFunError::tool(
@@ -262,7 +262,7 @@ impl OpenBitFunControlTool {
         let reason = definition_id
             .as_deref()
             .and_then(|definition_id| {
-                openbitfun_product_domains::product_control::ProductControlRegistry::global()
+                starmate_product_domains::product_control::ProductControlRegistry::global()
                     .definition(definition_id)
                     .ok()
             })
@@ -424,7 +424,7 @@ impl Tool for OpenBitFunControlTool {
     }
 
     async fn is_available_in_context(&self, _context: Option<&ToolUseContext>) -> bool {
-        openbitfun_product_domains::product_control::catalog().is_ok()
+        starmate_product_domains::product_control::catalog().is_ok()
     }
 
     fn is_readonly(&self) -> bool {
@@ -821,7 +821,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -833,7 +833,7 @@ mod tests {
             "connection-1".to_string(),
             "Remote".to_string(),
             crate::service::remote_ssh::workspace_state::WorkspaceSessionIdentity {
-                workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+                workspace_kind: starmate_core_types::WorkspaceKind::Remote,
                 hostname: "remote.example".to_string(),
                 logical_workspace_path: "/remote/workspace".to_string(),
                 remote_connection_id: Some("connection-1".to_string()),

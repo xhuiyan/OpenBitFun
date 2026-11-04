@@ -2,14 +2,14 @@
 
 use crate::api::app_state::AppState;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
-use openbitfun_core::agentic::tools::workspace_paths::{
+use starmate_core::agentic::tools::workspace_paths::{
     is_openbitfun_runtime_uri, parse_openbitfun_runtime_uri,
 };
-use openbitfun_core::infrastructure::get_path_manager_arc;
-use openbitfun_core::infrastructure::FileOperationOptions;
-use openbitfun_core::service::remote_ssh::workspace_state::remote_workspace_runtime_root;
-use openbitfun_core::service::remote_ssh::{normalize_remote_workspace_path, RemoteWorkspaceEntry};
-use openbitfun_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
+use starmate_core::infrastructure::get_path_manager_arc;
+use starmate_core::infrastructure::FileOperationOptions;
+use starmate_core::service::remote_ssh::workspace_state::remote_workspace_runtime_root;
+use starmate_core::service::remote_ssh::{normalize_remote_workspace_path, RemoteWorkspaceEntry};
+use starmate_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
 use serde::Serialize;
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
@@ -77,7 +77,7 @@ fn runtime_root_for_workspace_info(workspace: &WorkspaceInfo) -> Result<PathBuf,
 
         let remote_root = normalize_remote_workspace_path(&workspace.root_path.to_string_lossy());
         let identity_host =
-            openbitfun_core::service::remote_ssh::workspace_state::ssh_workspace_identity_host(
+            starmate_core::service::remote_ssh::workspace_state::ssh_workspace_identity_host(
                 ssh_host,
                 workspace.remote_ssh_connection_id(),
                 &remote_root,
@@ -161,7 +161,7 @@ pub async fn resolve_desktop_path_target(
             .map_err(|error| error.to_string())?,
     };
     if let Some(id) = connection {
-        let connection_id = openbitfun_core::service::filesystem::path_operations::resolve_explicit_path_connection(raw_path, &id).await?;
+        let connection_id = starmate_core::service::filesystem::path_operations::resolve_explicit_path_connection(raw_path, &id).await?;
         return Ok(DesktopPathTarget::Remote {
             requested_path: raw_path.to_string(),
             entry: RemotePathConnection { connection_id },

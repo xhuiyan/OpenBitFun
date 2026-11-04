@@ -1,4 +1,4 @@
-use openbitfun_agent_runtime::custom_agent::CustomAgentDiscoveryRoots;
+use starmate_agent_runtime::custom_agent::CustomAgentDiscoveryRoots;
 
 /// The mutex owning this state serializes discovery and publication. Watch events
 /// are consumed before a scan, so events arriving during it remain pending.
@@ -37,7 +37,7 @@ impl CustomAgentLoadState {
 }
 
 #[cfg(feature = "file-watch")]
-use openbitfun_services_integrations::file_watch::{
+use starmate_services_integrations::file_watch::{
     FileWatchEvent, FileWatchEventKind, FileWatchService, FileWatcherConfig,
 };
 #[cfg(feature = "file-watch")]

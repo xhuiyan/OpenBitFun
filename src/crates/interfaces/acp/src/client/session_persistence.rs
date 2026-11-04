@@ -1,12 +1,12 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use openbitfun_core::agentic::persistence::PersistenceManager;
-use openbitfun_core::infrastructure::PathManager;
-use openbitfun_core::service::session::{
+use starmate_core::agentic::persistence::PersistenceManager;
+use starmate_core::infrastructure::PathManager;
+use starmate_core::service::session::{
     SessionMetadata, SESSION_PROVIDER_ACP, SESSION_PROVIDER_METADATA_KEY,
 };
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 

@@ -7,7 +7,7 @@
 
 use crate::agentic::tools::framework::ToolResult;
 use crate::agentic::tools::miniapp_surface::{classify_surface_error, mint_target};
-use openbitfun_product_domains::miniapp::web_surface::{MiniAppWebErrorCode, MiniAppWebNode};
+use starmate_product_domains::miniapp::web_surface::{MiniAppWebErrorCode, MiniAppWebNode};
 use serde_json::{json, Value};
 
 /// Cap on how many node lines a single summary carries, so an `inspect` of a

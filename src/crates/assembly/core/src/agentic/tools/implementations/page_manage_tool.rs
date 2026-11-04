@@ -436,7 +436,7 @@ mod tests {
             "page-connection".into(),
             "Remote".into(),
             crate::service::remote_ssh::workspace_state::WorkspaceSessionIdentity {
-                workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+                workspace_kind: starmate_core_types::WorkspaceKind::Remote,
                 hostname: "remote.example".into(),
                 logical_workspace_path: "/srv/page".into(),
                 remote_connection_id: Some("page-connection".into()),

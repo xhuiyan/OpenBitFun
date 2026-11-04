@@ -5,8 +5,8 @@ use crate::{
     CapabilityAvailability, RuntimeServiceMarkerPort, RuntimeServicesBuilder, RuntimeServicesError,
     RuntimeServicesProvider, RuntimeServicesRegistry,
 };
-use openbitfun_runtime_ports::FileSystemPort;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::FileSystemPort;
+use starmate_runtime_ports::{
     RemoteWorkspaceKind, RuntimeServiceCapability, SessionStorageKind, SessionStoragePathRequest,
 };
 

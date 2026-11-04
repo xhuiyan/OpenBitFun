@@ -9,8 +9,8 @@ use crate::agentic::tools::workspace_paths::posix_style_path_is_absolute;
 use crate::service_agent_runtime::CoreServiceAgentRuntime;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_core_types::SessionExecutionTarget;
-use openbitfun_runtime_ports::{
+use starmate_core_types::SessionExecutionTarget;
+use starmate_runtime_ports::{
     AgentDialogPrependedReminder, AgentDialogTurnRequest, AgentSessionCreateRequest,
     AgentSessionListRequest, AgentSessionReplyRoute, AgentSessionSummary,
     AgentSessionWorkspaceBinding, AgentSessionWorkspaceRequest,
@@ -44,11 +44,11 @@ impl SessionMessageTool {
     }
 
     fn validate_session_id(session_id: &str) -> Result<(), String> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
     }
 
     fn forwarded_user_input_metadata(context: &ToolUseContext) -> serde_json::Map<String, Value> {
-        use openbitfun_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
+        use starmate_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
 
         let mut metadata = serde_json::Map::new();
         if let Some(value @ (Value::Bool(_) | Value::String(_))) =
@@ -778,7 +778,7 @@ mod tests {
     use super::*;
     use crate::agentic::tools::framework::ToolUseContext;
     use crate::agentic::WorkspaceBinding;
-    use openbitfun_core_types::{
+    use starmate_core_types::{
         SessionExecutionTarget, SessionExecutionTargetKind, WorktreeLifecycle,
     };
     use serde_json::json;
@@ -799,7 +799,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -943,7 +943,7 @@ mod tests {
 
     #[test]
     fn session_message_forwards_noninteractive_user_input_fact() {
-        use openbitfun_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
+        use starmate_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
 
         let mut context = empty_context();
         context.custom_data.insert(

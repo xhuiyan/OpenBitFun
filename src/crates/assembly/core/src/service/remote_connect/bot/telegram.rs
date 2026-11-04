@@ -6,8 +6,8 @@
 
 use anyhow::{anyhow, Result};
 use log::{error, info, warn};
-use openbitfun_services_integrations::remote_connect::bot::telegram::TelegramBotApi;
-pub use openbitfun_services_integrations::remote_connect::bot::telegram::{
+use starmate_services_integrations::remote_connect::bot::telegram::TelegramBotApi;
+pub use starmate_services_integrations::remote_connect::bot::telegram::{
     TelegramConfig, MAX_TELEGRAM_FILE_BYTES,
 };
 use std::collections::HashMap;

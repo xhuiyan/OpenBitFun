@@ -15,8 +15,8 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use admission::RouterAdmission;
 use context::{RoundRouterContext, RouterContextConfig, RouterContextFactory};
 use log::{debug, info, warn};
-use openbitfun_agent_runtime::router_context::PreparedRouterContext;
-use openbitfun_ai_adapters::round_router::{
+use starmate_agent_runtime::router_context::PreparedRouterContext;
+use starmate_ai_adapters::round_router::{
     RouterClientError, RouterHttpClient, RouterPrediction, RouterProtocol,
 };
 use serde::Serialize;
@@ -116,7 +116,7 @@ pub struct HttpRoundModelRouterConfig {
     pub context: RouterContextConfig,
     /// Optional exact local counter; absent or unusable paths use Router estimation.
     pub tokenizer_path: Option<PathBuf>,
-    pub proxy: Option<openbitfun_ai_adapters::types::ProxyConfig>,
+    pub proxy: Option<starmate_ai_adapters::types::ProxyConfig>,
     pub custom_headers: std::collections::HashMap<String, String>,
     pub skip_ssl_verify: bool,
 }
@@ -744,7 +744,7 @@ mod tests {
     #[tokio::test]
     async fn classifier_receives_only_complete_history_and_resumes_after_summary() {
         use super::{HttpRoundModelRouter, HttpRoundModelRouterConfig};
-        use openbitfun_agent_runtime::router_context::{
+        use starmate_agent_runtime::router_context::{
             RouterContextState, RouterEntryKind, Utf8ByteBudget,
         };
         use serde_json::{json, Value};

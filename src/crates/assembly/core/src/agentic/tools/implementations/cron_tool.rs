@@ -16,8 +16,8 @@ use crate::service_agent_runtime::CoreServiceAgentRuntime;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
 use chrono::{DateTime, Local, SecondsFormat, TimeZone};
-use openbitfun_agent_runtime::sdk::AgentRuntime;
-use openbitfun_runtime_ports::{
+use starmate_agent_runtime::sdk::AgentRuntime;
+use starmate_runtime_ports::{
     AgentSessionListRequest, AgentSessionWorkspaceBinding, AgentSessionWorkspaceRequest,
 };
 use serde::{Deserialize, Serialize};
@@ -35,7 +35,7 @@ impl CronTool {
     }
 
     fn validate_session_id(session_id: &str) -> Result<(), String> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
     }
 
     fn validate_job_id(job_id: &str) -> Result<(), String> {
@@ -459,7 +459,7 @@ struct CronToolJobInput {
     payload: String,
     enabled: Option<bool>,
     #[serde(default)]
-    report_policy: openbitfun_core_types::background_delivery::BackgroundReportPolicy,
+    report_policy: starmate_core_types::background_delivery::BackgroundReportPolicy,
 }
 
 #[derive(Debug, Clone, Default, Deserialize)]
@@ -468,7 +468,7 @@ struct CronToolJobPatchInput {
     schedule: Option<CronToolScheduleInput>,
     payload: Option<String>,
     enabled: Option<bool>,
-    report_policy: Option<openbitfun_core_types::background_delivery::BackgroundReportPolicy>,
+    report_policy: Option<starmate_core_types::background_delivery::BackgroundReportPolicy>,
 }
 
 impl CronToolJobPatchInput {
@@ -489,7 +489,7 @@ struct CronToolInput {
     job: Option<CronToolJobInput>,
     patch: Option<CronToolJobPatchInput>,
     job_id: Option<String>,
-    report: Option<openbitfun_core_types::background_delivery::BackgroundReport>,
+    report: Option<starmate_core_types::background_delivery::BackgroundReport>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -642,7 +642,7 @@ struct CronToolJobOutput {
     schedule: CronToolScheduleOutput,
     payload: String,
     enabled: bool,
-    report_policy: openbitfun_core_types::background_delivery::BackgroundReportPolicy,
+    report_policy: starmate_core_types::background_delivery::BackgroundReportPolicy,
     session_id: String,
     workspace_path: String,
     created_at_ms: i64,
@@ -890,7 +890,7 @@ Patch schema for "update":
         match parsed.action {
             CronAction::Report => {
                 let valid = parsed.report.as_ref().is_some_and(|report| !report.reason.trim().is_empty()
-                    && matches!(report.disposition, openbitfun_core_types::background_delivery::BackgroundReportDisposition::Quiet | openbitfun_core_types::background_delivery::BackgroundReportDisposition::Report | openbitfun_core_types::background_delivery::BackgroundReportDisposition::Attention));
+                    && matches!(report.disposition, starmate_core_types::background_delivery::BackgroundReportDisposition::Quiet | starmate_core_types::background_delivery::BackgroundReportDisposition::Report | starmate_core_types::background_delivery::BackgroundReportDisposition::Attention));
                 ValidationResult {
                     result: valid,
                     message: (!valid)
@@ -1416,7 +1416,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1444,7 +1444,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 

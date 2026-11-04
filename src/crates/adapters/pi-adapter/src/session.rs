@@ -1,6 +1,6 @@
 //! Read-only Pi session trees, including legacy v1/v2 records.
-use openbitfun_product_domains::session_import::*;
-use openbitfun_services_core::bounded_fs::{
+use starmate_product_domains::session_import::*;
+use starmate_services_core::bounded_fs::{
     collect_bounded_regular_files, is_symlink_or_reparse, read_bounded_text,
     BoundedDirectoryWalkLimits, BoundedTextRead,
 };

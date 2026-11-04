@@ -34,4 +34,4 @@ Gtk.main()
 PY
 fixture_pid=$!
 trap 'kill "$fixture_pid" 2>/dev/null || true' EXIT
-cargo test --locked -p openbitfun-computer-use --lib portal_observe_lifecycle -- --ignored --nocapture --test-threads=1
+cargo test --locked -p starmate-computer-use --lib portal_observe_lifecycle -- --ignored --nocapture --test-threads=1

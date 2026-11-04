@@ -5,7 +5,7 @@ use crate::agentic::agents::{
 use crate::agentic::session::SystemPromptCacheIdentity;
 use crate::util::errors::OpenBitFunResult;
 use async_trait::async_trait;
-use openbitfun_runtime_ports::PermissionConstraintLayer;
+use starmate_runtime_ports::PermissionConstraintLayer;
 
 /// Immutable, generation-keyed projection of an approved external definition.
 /// Prompt text remains backend-only and the type deliberately implements no

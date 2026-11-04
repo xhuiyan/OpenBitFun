@@ -1,5 +1,5 @@
 //! One host-owned presentation registry shared by tabs and independently launched shells.
-use openbitfun_product_domains::miniapp::instances::*;
+use starmate_product_domains::miniapp::instances::*;
 use std::collections::HashMap;
 use std::sync::Mutex;
 use std::time::{Duration, Instant};

@@ -1,5 +1,5 @@
 use crate::util::errors::OpenBitFunResult;
-use openbitfun_services_core::coordination_persistence as storage;
+use starmate_services_core::coordination_persistence as storage;
 use rusqlite::Connection;
 
 pub(crate) fn initialize_coordination_schema(connection: &Connection) -> OpenBitFunResult<()> {

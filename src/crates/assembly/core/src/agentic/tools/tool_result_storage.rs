@@ -8,14 +8,14 @@ use crate::agentic::core::ToolResult;
 use crate::agentic::tools::tool_context_runtime::ToolUseContext;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::{debug, warn};
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_persisted_tool_output_message, count_tool_result_lines, generate_tool_result_preview,
     sanitize_tool_result_file_component, select_tool_result_indices_for_persistence,
     tool_result_is_persisted_output, PersistedToolOutput, ToolResultPersistenceCandidate,
     ToolResultStoragePolicy, GET_TOOL_SPEC_TOOL_NAME,
 };
 #[cfg(test)]
-use openbitfun_agent_tools::{DEFAULT_MAX_TOOL_RESULT_CHARS, PERSISTED_OUTPUT_TAG};
+use starmate_agent_tools::{DEFAULT_MAX_TOOL_RESULT_CHARS, PERSISTED_OUTPUT_TAG};
 use std::collections::HashSet;
 use std::path::Path;
 
@@ -367,7 +367,7 @@ mod tests {
             custom_data,
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -486,7 +486,7 @@ mod tests {
         let context = test_context(root.clone());
         let result = tool_result(
             "mcp_call_1",
-            openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME,
+            starmate_agent_tools::CALL_DEFERRED_TOOL_NAME,
             "x".repeat(DEFAULT_MAX_TOOL_RESULT_CHARS + 1),
         );
 
@@ -496,7 +496,7 @@ mod tests {
 
         assert_eq!(
             processed.tool_name,
-            openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME
+            starmate_agent_tools::CALL_DEFERRED_TOOL_NAME
         );
         assert!(processed
             .result_for_assistant

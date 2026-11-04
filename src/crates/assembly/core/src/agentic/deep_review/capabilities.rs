@@ -4,7 +4,7 @@ use crate::agentic::agents::{
 use crate::agentic::tools::framework::ToolUseContext;
 use crate::agentic::tools::implementations::skills::get_skill_registry;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::skills::{SkillData, SkillInfo};
+use starmate_agent_runtime::skills::{SkillData, SkillInfo};
 use sha2::{Digest, Sha256};
 
 const CAPABILITY_CATALOG_LIMIT: usize = 24;
@@ -457,7 +457,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 

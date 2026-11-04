@@ -35,29 +35,29 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 #[cfg(feature = "git")]
 use log::warn;
 #[cfg(feature = "git")]
-use openbitfun_agent_runtime::checkpoint::GitStatusCheckpointFacts;
-use openbitfun_agent_runtime::checkpoint::{
+use starmate_agent_runtime::checkpoint::GitStatusCheckpointFacts;
+use starmate_agent_runtime::checkpoint::{
     build_light_checkpoint as build_runtime_light_checkpoint, LightCheckpointWorkspaceFacts,
 };
-use openbitfun_agent_runtime::permission::{
+use starmate_agent_runtime::permission::{
     AUTO_APPROVE_ASK_CONTEXT_KEY, PERMISSION_MODE_CONTEXT_KEY,
 };
-use openbitfun_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
-use openbitfun_agent_runtime::user_questions::{
+use starmate_agent_runtime::remote_file_delivery::TOOL_CONTEXT_REMOTE_FILE_DELIVERY_KEY;
+use starmate_agent_runtime::user_questions::{
     UserQuestionController, USER_INPUT_AVAILABLE_CONTEXT_KEY, USER_INPUT_MODEL_ROUND_CONTEXT_KEY,
     USER_INPUT_PARENT_CONTEXT_KEY,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     LoadedDeferredToolSpec, PortableToolContextProvider, ToolContextFacts, ToolWorkspaceKind,
     PTC_LANGUAGE_CONTEXT_KEY, PTC_TOOL_PRESENTATION_CONTEXT_KEY,
 };
 #[cfg(feature = "canvas-runtime")]
-use openbitfun_product_domains::canvas::CanvasStoragePort;
-use openbitfun_runtime_ports::{
+use starmate_product_domains::canvas::CanvasStoragePort;
+use starmate_runtime_ports::{
     DelegationPolicy, PermissionMode, RemoteExecPort, TerminalPort, ToolRuntimeHandles,
 };
 #[cfg(feature = "canvas-runtime")]
-use openbitfun_services_integrations::canvas::CanvasService;
+use starmate_services_integrations::canvas::CanvasService;
 use serde_json::Value;
 #[cfg(feature = "git")]
 use sha2::{Digest, Sha256};
@@ -924,7 +924,7 @@ mod context_facts_tests {
     };
     use crate::agentic::WorkspaceBinding;
     use crate::service::remote_ssh::workspace_state::workspace_session_identity;
-    use openbitfun_agent_tools::LoadedDeferredToolSpec;
+    use starmate_agent_tools::LoadedDeferredToolSpec;
     use std::collections::{BTreeSet, HashMap};
     use std::path::PathBuf;
     use tool_runtime::context::PrimaryModelFacts;
@@ -948,7 +948,7 @@ mod context_facts_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -971,7 +971,7 @@ mod context_facts_tests {
                 path_policy: Default::default(),
                 miniapp_context_scope: None,
             },
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
 
         let facts = context.to_tool_context_facts();
@@ -1019,7 +1019,7 @@ mod context_facts_tests {
                 path_policy: Default::default(),
                 miniapp_context_scope: None,
             },
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(
                 None,
                 Some(tokio_util::sync::CancellationToken::new()),
             ),
@@ -1078,7 +1078,7 @@ mod context_facts_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
 
         let facts = context.to_tool_context_facts();
@@ -1131,7 +1131,7 @@ mod path_resolution_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1155,7 +1155,7 @@ mod path_resolution_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1196,7 +1196,7 @@ mod path_resolution_tests {
         let services = crate::agentic::workspace::local_workspace_services("/unused".into());
         let provider = Arc::clone(&services.fs);
         context.runtime_handles =
-            openbitfun_runtime_ports::ToolRuntimeHandles::new(Some(services), None);
+            starmate_runtime_ports::ToolRuntimeHandles::new(Some(services), None);
         let workspace_file = context.resolve_tool_path("source.txt").unwrap();
         assert!(Arc::ptr_eq(
             &provider,
@@ -1239,7 +1239,7 @@ mod path_resolution_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1526,7 +1526,7 @@ mod call_runtime_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(
                 None,
                 Some(cancellation_token),
             ),
@@ -1563,7 +1563,7 @@ mod call_runtime_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
 
         let result: OpenBitFunResult<Vec<ToolResult>> =
@@ -1604,7 +1604,7 @@ mod call_runtime_tests {
             custom_data,
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         };
         let tool = MeasurementReadTool;
 
@@ -1690,14 +1690,14 @@ mod task_context_tests {
         SubagentParentInfo, ToolExecutionContext, ToolExecutionOptions, ToolTask,
     };
     use crate::agentic::tools::ToolRuntimeRestrictions;
-    use openbitfun_agent_runtime::permission::AUTO_APPROVE_ASK_CONTEXT_KEY;
-    use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
-    use openbitfun_agent_runtime::user_questions::{
+    use starmate_agent_runtime::permission::AUTO_APPROVE_ASK_CONTEXT_KEY;
+    use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+    use starmate_agent_runtime::user_questions::{
         USER_INPUT_AVAILABLE_CONTEXT_KEY, USER_INPUT_MODEL_ROUND_CONTEXT_KEY,
     };
-    use openbitfun_agent_tools::LoadedDeferredToolSpec;
-    use openbitfun_agent_tools::PTC_TOOL_PRESENTATION_CONTEXT_KEY;
-    use openbitfun_runtime_ports::DelegationPolicy;
+    use starmate_agent_tools::LoadedDeferredToolSpec;
+    use starmate_agent_tools::PTC_TOOL_PRESENTATION_CONTEXT_KEY;
+    use starmate_runtime_ports::DelegationPolicy;
     use serde_json::json;
     use std::collections::{BTreeSet, HashMap};
     use tokio_util::sync::CancellationToken;
@@ -1831,7 +1831,7 @@ mod task_context_tests {
         let mut task = task_with_context_vars();
         task.context.subagent_parent_info = None;
         task.context.permission_delegation =
-            Some(openbitfun_agent_runtime::sdk::PermissionDelegationContext {
+            Some(starmate_agent_runtime::sdk::PermissionDelegationContext {
                 parent_session_id: "restored-parent".into(),
                 parent_dialog_turn_id: None,
                 parent_tool_call_id: "parent-tool".into(),
@@ -1840,7 +1840,7 @@ mod task_context_tests {
         let context = build_tool_use_context_for_task(&task, None, CancellationToken::new());
         assert_eq!(
             context.custom_data
-                [openbitfun_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY],
+                [starmate_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY],
             json!({
                 "session_id": "restored-parent", "dialog_turn_id": null,
             })
@@ -1907,7 +1907,7 @@ mod task_context_tests {
         );
         assert_eq!(
             context.custom_data
-                [openbitfun_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY],
+                [starmate_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY],
             json!({
                 "session_id": "parent_session", "dialog_turn_id": "parent_turn"
             })

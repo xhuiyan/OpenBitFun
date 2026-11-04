@@ -2,7 +2,7 @@ use super::{OpenBitFunError, OpenBitFunResult, SpeechService};
 use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine;
 use futures_util::{SinkExt, StreamExt};
-use openbitfun_core_types::speech::{
+use starmate_core_types::speech::{
     SpeechAppendRealtimeAudioRequest, SpeechRealtimeEvent, SpeechRealtimeEventKind,
     SpeechRealtimeFunctionCall, SpeechRealtimeSession, SpeechRealtimeSessionRequest,
     SpeechRealtimeSpeakRequest, SpeechRealtimeToolResultRequest,
@@ -347,7 +347,7 @@ async fn run_realtime_actor(
     ready_sender: oneshot::Sender<Result<(), String>>,
     on_event: RealtimeEventHandler,
 ) {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
     let mut request = match VOLCENGINE_REALTIME_URL.into_client_request() {
         Ok(request) => request,
         Err(error) => {

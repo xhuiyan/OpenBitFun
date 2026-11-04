@@ -46,12 +46,12 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::timing::elapsed_ms_u64;
 use futures::{stream, StreamExt};
 use log::{debug, info, warn};
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     SessionTurnLoadRequest, SessionTurnLoadTiming, SessionTurnWindowRequest,
 };
 #[cfg(feature = "product-search")]
-use openbitfun_services_core::session_search::SessionSearchSqliteIndex;
-use openbitfun_services_core::{
+use starmate_services_core::session_search::SessionSearchSqliteIndex;
+use starmate_services_core::{
     json_store::{JsonFileStore, JsonFileStoreError},
     session::{
         build_session_metadata as build_persisted_session_metadata,
@@ -73,7 +73,7 @@ use tokio::fs;
 use tokio::io::AsyncWriteExt;
 use tokio::sync::{Mutex, Semaphore};
 
-pub use openbitfun_services_core::session::SessionMetadataPage;
+pub use starmate_services_core::session::SessionMetadataPage;
 
 const TRANSCRIPT_SCHEMA_VERSION: u32 = 1;
 const COMPRESSION_TRANSCRIPT_SCHEMA_VERSION: u32 = 1;
@@ -190,7 +190,7 @@ struct StoredTurnActivity {
     #[serde(default, alias = "recovery_epoch")]
     recovery_epoch: Option<u32>,
     #[serde(default)]
-    recovery: Option<openbitfun_services_core::session::DialogTurnRecoveryData>,
+    recovery: Option<starmate_services_core::session::DialogTurnRecoveryData>,
 }
 
 struct ReadTurnPathsResult {
@@ -606,7 +606,7 @@ impl PersistenceManager {
     }
 
     fn validate_session_id(session_id: &str) -> OpenBitFunResult<()> {
-        openbitfun_core_types::validate_session_id(session_id).map_err(OpenBitFunError::Validation)
+        starmate_core_types::validate_session_id(session_id).map_err(OpenBitFunError::Validation)
     }
 
     /// Get PathManager reference
@@ -1473,7 +1473,7 @@ impl PersistenceManager {
                 recovery_pending: Some(turn.status == TurnStatus::Cancelled
                     && turn.finish_reason.as_deref() == Some("interrupted")
                     && turn.recovery.as_ref().is_some_and(|recovery|
-                        recovery.status == openbitfun_services_core::session::DialogTurnRecoveryStatus::Interrupted)),
+                        recovery.status == starmate_services_core::session::DialogTurnRecoveryStatus::Interrupted)),
             });
             // Repair outcome only. Inferring a read receipt from old history
             // would revive notifications the user has already acknowledged.
@@ -1505,9 +1505,9 @@ impl PersistenceManager {
         workspace_path: &Path,
         cursor: Option<&str>,
         limit: usize,
-        query: Option<&openbitfun_services_core::session::page::SessionCatalogQuery>,
+        query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
     ) -> OpenBitFunResult<SessionMetadataPage> {
-        use openbitfun_services_core::session::page::build_session_metadata_page_with_query;
+        use starmate_services_core::session::page::build_session_metadata_page_with_query;
         if !workspace_path.exists() {
             return Ok(build_session_metadata_page_with_query(
                 Vec::new(),
@@ -1541,9 +1541,9 @@ impl PersistenceManager {
         workspace_path: &Path,
         cursor: Option<&str>,
         limit: usize,
-        query: Option<&openbitfun_services_core::session::page::SessionCatalogQuery>,
+        query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
     ) -> OpenBitFunResult<SessionMetadataPage> {
-        use openbitfun_services_core::session::page::build_session_metadata_page_with_query;
+        use starmate_services_core::session::page::build_session_metadata_page_with_query;
 
         #[cfg(feature = "external-sources")]
         {
@@ -1721,7 +1721,7 @@ impl PersistenceManager {
             })?;
         let mut updated = original.clone();
         updated.session_name = session_name.to_string();
-        openbitfun_services_core::session::naming::clear_default_title(&mut updated, user_edited);
+        starmate_services_core::session::naming::clear_default_title(&mut updated, user_edited);
         updated.last_active_at = last_active_at;
         if updated.session_name != original.session_name {
             if let Some(custom) = updated
@@ -3985,7 +3985,7 @@ impl PersistenceManager {
         if let Some(delivery) = previous_turn
             .as_ref()
             .and_then(|previous| {
-                openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(
+                starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(
                     previous.user_message.metadata.as_ref(),
                     &previous.turn_id,
                 )
@@ -3996,7 +3996,7 @@ impl PersistenceManager {
             })
         {
             let incoming =
-                openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(
+                starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(
                     turn.user_message.metadata.as_ref(),
                     &turn.turn_id,
                 );
@@ -4009,7 +4009,7 @@ impl PersistenceManager {
                     .metadata
                     .get_or_insert_with(|| serde_json::json!({}));
                 if let Some(object) = metadata.as_object_mut() {
-                    object.insert(openbitfun_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(), serde_json::to_value(delivery).map_err(OpenBitFunError::Serialization)?);
+                    object.insert(starmate_core_types::background_delivery::BACKGROUND_DELIVERY_METADATA_KEY.to_owned(), serde_json::to_value(delivery).map_err(OpenBitFunError::Serialization)?);
                 }
             }
         }
@@ -4765,7 +4765,7 @@ impl PersistenceManager {
                 )));
             }
 
-            let uri = openbitfun_agent_tools::build_openbitfun_current_session_uri(&format!(
+            let uri = starmate_agent_tools::build_openbitfun_current_session_uri(&format!(
                 "artifacts/compression-transcripts/{}.txt",
                 stem
             ))
@@ -5256,8 +5256,8 @@ mod tests {
         SessionTurnWindowResponse, StoredSessionIndexFile, TextItemData, UserMessageData,
     };
     use crate::OpenBitFunError;
-    use openbitfun_runtime_ports::SessionTurnWindowRequest;
-    use openbitfun_services_core::session::SessionWriteLock;
+    use starmate_runtime_ports::SessionTurnWindowRequest;
+    use starmate_services_core::session::SessionWriteLock;
     use std::collections::HashSet;
     use std::path::{Path, PathBuf};
     use std::process::{Command, Stdio};
@@ -5480,7 +5480,7 @@ mod tests {
         assert_eq!(restored.session_name, "Keep title");
         assert_eq!(
             restored.config.workspace_kind,
-            Some(openbitfun_core_types::WorkspaceKind::Normal)
+            Some(starmate_core_types::WorkspaceKind::Normal)
         );
         assert!(restored.config.remote_ssh_host.is_none());
         assert!(!restored.config.is_remote_workspace());
@@ -6893,7 +6893,7 @@ mod tests {
     #[tokio::test]
     #[ignore = "local first-page performance comparison"]
     async fn history_page_benchmark_against_full_materialization() {
-        use openbitfun_services_integrations::remote_connect::{
+        use starmate_services_integrations::remote_connect::{
             host_stream::{HistoryBatch, HostStreamHub, HostStreamNotifier, StreamReadRequest},
             session_records::records_from_turns,
         };
@@ -6981,7 +6981,7 @@ mod tests {
                 .unwrap();
             new_times.push(start.elapsed().as_micros());
             let content = |events: Vec<
-                openbitfun_services_integrations::remote_connect::host_stream::StreamEvent,
+                starmate_services_integrations::remote_connect::host_stream::StreamEvent,
             >| {
                 events
                     .into_iter()
@@ -8377,7 +8377,7 @@ mod tests {
             .build()
             .unwrap()
             .block_on(async {
-                let store = openbitfun_services_core::session::SessionMetadataStore::new(
+                let store = starmate_services_core::session::SessionMetadataStore::new(
                     PathBuf::from(root),
                 );
                 let mut metadata = store.load_metadata("catalog-11").await.unwrap().unwrap();
@@ -8388,7 +8388,7 @@ mod tests {
 
     #[tokio::test]
     async fn catalog_snapshot_reuses_pages_and_invalidates_after_another_process_writes() {
-        use openbitfun_services_core::session::page::{
+        use starmate_services_core::session::page::{
             SessionCatalogOrdering, SessionCatalogQuery,
         };
         let workspace = TestWorkspace::new();
@@ -8432,7 +8432,7 @@ mod tests {
         assert_eq!(manager.session_catalog_build_count_for_test().await, 1);
 
         let executable = std::env::current_exe().unwrap();
-        let mut child = openbitfun_services_core::process_manager::create_command(
+        let mut child = starmate_services_core::process_manager::create_command(
             executable.to_string_lossy().as_ref(),
         );
         let output = child

@@ -1,6 +1,6 @@
 //! Pure cross-channel failover admission. The caller supplies the existing
 //! round budget and replay/output facts; this policy starts no retry loop.
-use openbitfun_core_types::errors::ErrorCategory;
+use starmate_core_types::errors::ErrorCategory;
 
 pub fn may_switch_channel(
     category: &ErrorCategory,

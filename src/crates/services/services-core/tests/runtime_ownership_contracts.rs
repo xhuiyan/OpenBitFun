@@ -1,6 +1,6 @@
 #![cfg(feature = "runtime-ownership")]
 
-use openbitfun_services_core::runtime_ownership::{
+use starmate_services_core::runtime_ownership::{
     RuntimeDeployment, RuntimeOwnershipError, RuntimeOwnershipKey, WorkspaceRuntimeOwnership,
 };
 use std::path::PathBuf;

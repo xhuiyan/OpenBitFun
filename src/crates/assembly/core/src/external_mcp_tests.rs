@@ -2,8 +2,8 @@ use crate::external_mcp::{
     prepared_mcp_config, reconcile_external_mcp_catalog, ActiveExternalMcpCandidate,
     ExternalMcpDecision, ExternalMcpDecisions, NativeMcpCandidate,
 };
-use openbitfun_external_sources::ExternalMcpCoordinatorSnapshot;
-use openbitfun_product_domains::external_sources::{
+use starmate_external_sources::ExternalMcpCoordinatorSnapshot;
+use starmate_product_domains::external_sources::{
     external_mcp_approval_key, external_mcp_conflict_key, EcosystemId, ExecutionDomainId,
     ExternalMcpActivationState, ExternalMcpServerDefinition, ExternalMcpStaticStatus,
     ExternalMcpTimeouts, ExternalMcpTransportKind, ExternalSourceCatalogEntry,

@@ -14,7 +14,7 @@ use serde_json::Value;
 use std::sync::{Arc, OnceLock};
 
 use super::encryption;
-use openbitfun_services_integrations::remote_connect::{
+use starmate_services_integrations::remote_connect::{
     build_remote_image_contexts, cancel_remote_task, generate_remote_initial_sync,
     handle_remote_command, handle_remote_interaction_command, handle_remote_poll_command,
     handle_remote_session_command, handle_remote_workspace_command,
@@ -23,7 +23,7 @@ use openbitfun_services_integrations::remote_connect::{
     RemoteDialogSteerRequest, RemoteDialogSubmissionPolicy, RemoteDialogSubmissionRequest,
     RemoteDialogSubmitOutcome, RemoteImageContext, RemoteSessionTrackerRegistry,
 };
-pub use openbitfun_services_integrations::remote_connect::{
+pub use starmate_services_integrations::remote_connect::{
     ActiveTurnSnapshot, AssistantEntry, ChatImageAttachment, ChatMessage, ChatMessageItem,
     ImageAttachment, RecentWorkspaceEntry, RemoteCommand, RemoteDefaultModelsConfig,
     RemoteModelCatalog, RemoteModelConfig, RemoteResponse, RemoteSessionStateTracker,
@@ -211,8 +211,8 @@ impl RemoteCommandRuntimeHost for CoreRemoteCommandRuntimeHost<'_> {
     async fn handle_device_command(&self, command: &RemoteCommand) -> RemoteResponse {
         match command {
             RemoteCommand::DeviceQueryInfo => {
-                use openbitfun_runtime_ports::RemoteSessionWorkspaceIdentity;
-                use openbitfun_services_integrations::remote_connect::{
+                use starmate_runtime_ports::RemoteSessionWorkspaceIdentity;
+                use starmate_services_integrations::remote_connect::{
                     RemoteInitialSyncRuntimeHost, RemoteWorkspaceRuntimeHost,
                 };
 
@@ -282,8 +282,8 @@ impl RemoteCommandRuntimeHost for CoreRemoteCommandRuntimeHost<'_> {
 
     async fn manage_dialog_queue(
         &self,
-        request: openbitfun_runtime_ports::DialogQueueRequest,
-    ) -> std::result::Result<openbitfun_runtime_ports::DialogQueueSnapshot, String> {
+        request: starmate_runtime_ports::DialogQueueRequest,
+    ) -> std::result::Result<starmate_runtime_ports::DialogQueueSnapshot, String> {
         CoreServiceAgentRuntime::remote_dialog_host(self.dispatcher)?
             .manage_dialog_queue(request)
             .await
@@ -394,7 +394,7 @@ impl RemoteServer {
 mod tests {
     use super::*;
     use crate::service::remote_connect::encryption::KeyPair;
-    use openbitfun_services_integrations::remote_connect::{
+    use starmate_services_integrations::remote_connect::{
         remote_session_restore_target, resolve_remote_cancel_decision,
         resolve_remote_execution_image_contexts, RemoteCancelDecision,
         RemoteDialogWorkspaceBinding,
@@ -468,7 +468,7 @@ mod tests {
 
     #[tokio::test]
     async fn remote_question_interaction_stops_timeout_without_answering() {
-        use openbitfun_agent_runtime::user_questions::{
+        use starmate_agent_runtime::user_questions::{
             wait_for_user_question_response, PendingUserQuestion, UserQuestionWaitOutcome,
         };
         let manager = crate::agentic::tools::user_input_manager::get_user_input_manager();

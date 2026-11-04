@@ -5,7 +5,7 @@
 //! document, and dispatch input events. This adapter therefore owns transport
 //! only — request correlation, surface readiness, and timeouts — while the
 //! product-domain contract, session registry, target handles, and method
-//! whitelist stay in `openbitfun_core::agentic::tools::miniapp_surface`.
+//! whitelist stay in `starmate_core::agentic::tools::miniapp_surface`.
 //!
 //! It never lets the Agent reach host paths, Tauri commands, or arbitrary
 //! JavaScript: only the whitelisted surface methods cross this boundary.
@@ -15,12 +15,12 @@ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Mutex, OnceLock};
 use std::time::Duration;
 
-use openbitfun_core::agentic::tools::miniapp_surface::{
+use starmate_core::agentic::tools::miniapp_surface::{
     set_miniapp_web_host, MiniAppWebCommand, MiniAppWebHost, MiniAppWebOpenRequest,
 };
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::miniapp::try_get_global_miniapp_manager;
-use openbitfun_product_domains::miniapp::web_surface::{
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::miniapp::try_get_global_miniapp_manager;
+use starmate_product_domains::miniapp::web_surface::{
     MiniAppWebAppSummary, MiniAppWebErrorCode, MiniAppWebSurfaceInfo,
     MINIAPP_WEB_BRIDGE_TIMEOUT_MS, MINIAPP_WEB_MAX_APPS, MINIAPP_WEB_MAX_DESCRIPTION_CHARS,
 };
@@ -499,7 +499,7 @@ impl MiniAppWebHost for DesktopMiniAppWebHost {
             .map(|meta| {
                 let strict_runtime = matches!(
                     meta.runtime_profile,
-                    openbitfun_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict
+                    starmate_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict
                 );
                 MiniAppWebAppSummary {
                     app_id: meta.id,
@@ -655,7 +655,7 @@ mod tests {
     #[test]
     fn only_commands_bound_to_the_window_are_relayed_to_it() {
         let mut host = crate::miniapp_desktop::DesktopMiniApps::new(
-            openbitfun_miniapp_ipc::HostChannel::Development,
+            starmate_miniapp_ipc::HostChannel::Development,
         );
         let window = host.test_window("demo");
 
@@ -707,7 +707,7 @@ mod tests {
     #[test]
     fn the_surface_open_reports_is_the_instance_the_window_answers_for() {
         let mut host = crate::miniapp_desktop::DesktopMiniApps::new(
-            openbitfun_miniapp_ipc::HostChannel::Development,
+            starmate_miniapp_ipc::HostChannel::Development,
         );
         let window = host.test_window("demo");
         // This is what `open` returns to the tool, and the tool then binds its
@@ -733,7 +733,7 @@ mod tests {
     #[tokio::test]
     async fn dom_actions_on_a_window_report_the_capability_gap() {
         let host = crate::miniapp_desktop::DesktopMiniApps::new(
-            openbitfun_miniapp_ipc::HostChannel::Development,
+            starmate_miniapp_ipc::HostChannel::Development,
         );
         let error = relay_to_window(
             &host,

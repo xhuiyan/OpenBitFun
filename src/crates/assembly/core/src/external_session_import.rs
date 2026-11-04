@@ -5,25 +5,25 @@ pub(crate) mod deferred;
 mod lifecycle;
 pub use lifecycle::{list_removed_external_sessions, restore_removed_external_session};
 
-use openbitfun_claude_code_adapter::session::ClaudeCodeSessionReader;
-use openbitfun_codex_adapter::session::CodexSessionReader;
-use openbitfun_cursor_adapter::session::CursorSessionReader;
-use openbitfun_dsh_adapter::session::DshSessionReader;
-use openbitfun_opencode_adapter::session::OpenCodeSessionReader;
-use openbitfun_pi_adapter::session::PiSessionReader;
-use openbitfun_product_domains::external_sources::{
+use starmate_claude_code_adapter::session::ClaudeCodeSessionReader;
+use starmate_codex_adapter::session::CodexSessionReader;
+use starmate_cursor_adapter::session::CursorSessionReader;
+use starmate_dsh_adapter::session::DshSessionReader;
+use starmate_opencode_adapter::session::OpenCodeSessionReader;
+use starmate_pi_adapter::session::PiSessionReader;
+use starmate_product_domains::external_sources::{
     ExternalSourceOperationError, ExternalSourceOperationErrorCode, ExternalSourceOperationResult,
 };
-use openbitfun_product_domains::session_import::{
+use starmate_product_domains::session_import::{
     ExternalSessionCandidate, ExternalSessionDocument, ExternalSessionImportMode,
 };
-use openbitfun_runtime_ports::SessionStorePort;
-use openbitfun_services_core::session::{
+use starmate_runtime_ports::SessionStorePort;
+use starmate_services_core::session::{
     DialogTurnData, ModelRoundData, OfflineSessionBundle, OfflineSessionImportStore,
     SessionMemoryMode, SessionMetadata, SessionStatus, TextItemData, ThinkingItemData,
     ToolCallData, ToolItemData, ToolResultData, TurnStatus, UserMessageData,
 };
-use openbitfun_zcode_adapter::session::ZcodeSessionReader;
+use starmate_zcode_adapter::session::ZcodeSessionReader;
 use serde_json::json;
 use sha2::{Digest, Sha256};
 #[cfg(test)]
@@ -100,13 +100,13 @@ impl ImportSource {
 
     fn revision(self) -> &'static str {
         match self {
-            Self::Codex => openbitfun_codex_adapter::session::SOURCE_REVISION,
-            Self::Cursor => openbitfun_cursor_adapter::session::SOURCE_REVISION,
-            Self::Zcode => openbitfun_zcode_adapter::session::SOURCE_REVISION,
-            Self::ClaudeCode => openbitfun_claude_code_adapter::session::SOURCE_REVISION,
-            Self::OpenCode => openbitfun_opencode_adapter::session::SOURCE_REVISION,
-            Self::Pi => openbitfun_pi_adapter::session::SOURCE_REVISION,
-            Self::Dsh => openbitfun_dsh_adapter::session::SOURCE_REVISION,
+            Self::Codex => starmate_codex_adapter::session::SOURCE_REVISION,
+            Self::Cursor => starmate_cursor_adapter::session::SOURCE_REVISION,
+            Self::Zcode => starmate_zcode_adapter::session::SOURCE_REVISION,
+            Self::ClaudeCode => starmate_claude_code_adapter::session::SOURCE_REVISION,
+            Self::OpenCode => starmate_opencode_adapter::session::SOURCE_REVISION,
+            Self::Pi => starmate_pi_adapter::session::SOURCE_REVISION,
+            Self::Dsh => starmate_dsh_adapter::session::SOURCE_REVISION,
         }
     }
 
@@ -132,7 +132,7 @@ impl ImportSource {
 
     fn discover_all(
         self,
-    ) -> Result<openbitfun_product_domains::session_import::ExternalSessionCatalog, String> {
+    ) -> Result<starmate_product_domains::session_import::ExternalSessionCatalog, String> {
         match self {
             Self::Codex => codex_reader().discover_all(),
             Self::Cursor => CursorSessionReader::default().discover_all(),
@@ -315,7 +315,7 @@ fn convert_document_turns(
             source.timestamp
         };
         let mut turn = DialogTurnData::new_with_kind(
-            openbitfun_services_core::session::DialogTurnKind::UserDialog,
+            starmate_services_core::session::DialogTurnKind::UserDialog,
             turn_id.clone(),
             turn_index,
             session_id.to_string(),
@@ -360,7 +360,7 @@ fn convert_document_turns(
         let mut order = 0usize;
         for item in &source.items {
             match item {
-                openbitfun_product_domains::session_import::ExternalSessionItem::Text { text } => {
+                starmate_product_domains::session_import::ExternalSessionItem::Text { text } => {
                     round.text_items.push(TextItemData {
                         id: format!("{turn_id}-text-{order}"),
                         content: text.clone(),
@@ -376,7 +376,7 @@ fn convert_document_turns(
                         attempt_index: None,
                     });
                 }
-                openbitfun_product_domains::session_import::ExternalSessionItem::Thinking {
+                starmate_product_domains::session_import::ExternalSessionItem::Thinking {
                     text,
                 } if include_thinking => {
                     round.thinking_items.push(ThinkingItemData {
@@ -395,10 +395,10 @@ fn convert_document_turns(
                         attempt_index: None,
                     });
                 }
-                openbitfun_product_domains::session_import::ExternalSessionItem::Thinking {
+                starmate_product_domains::session_import::ExternalSessionItem::Thinking {
                     ..
                 } => {}
-                openbitfun_product_domains::session_import::ExternalSessionItem::Tool {
+                starmate_product_domains::session_import::ExternalSessionItem::Tool {
                     id,
                     name,
                     input,
@@ -448,7 +448,7 @@ fn convert_document_turns(
                         interruption_reason: None,
                     });
                 }
-                openbitfun_product_domains::session_import::ExternalSessionItem::Tool {
+                starmate_product_domains::session_import::ExternalSessionItem::Tool {
                     ..
                 } => {}
             }
@@ -460,14 +460,14 @@ fn convert_document_turns(
         turn.has_final_response = Some(source.items.iter().any(|item| {
             matches!(
                 item,
-                openbitfun_product_domains::session_import::ExternalSessionItem::Text { .. }
+                starmate_product_domains::session_import::ExternalSessionItem::Text { .. }
             )
         }));
         turn.status = match source.status {
-            openbitfun_product_domains::session_import::ExternalSessionStatus::Interrupted => {
+            starmate_product_domains::session_import::ExternalSessionStatus::Interrupted => {
                 TurnStatus::Cancelled
             }
-            openbitfun_product_domains::session_import::ExternalSessionStatus::Corrupt => {
+            starmate_product_domains::session_import::ExternalSessionStatus::Corrupt => {
                 TurnStatus::Error
             }
             _ => TurnStatus::Completed,
@@ -533,7 +533,7 @@ mod tests {
 
     #[tokio::test]
     async fn zcode_history_round_trips_through_native_storage_with_its_own_provenance() {
-        use openbitfun_product_domains::session_import::{
+        use starmate_product_domains::session_import::{
             ExternalSessionItem, ExternalSessionStatus, ExternalSessionTurn,
         };
         let root = tempfile::tempdir().unwrap();

@@ -3,7 +3,7 @@
 use super::{decode_data_url, ImageContextData};
 use crate::agentic::tools::framework::{build_tool_runtime_artifact_reference, ToolUseContext};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use sha2::{Digest, Sha256};
 use std::path::Path;
 

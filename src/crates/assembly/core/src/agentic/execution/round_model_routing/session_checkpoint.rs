@@ -6,8 +6,8 @@
 
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::warn;
-use openbitfun_agent_runtime::router_context::RouterContextState;
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_agent_runtime::router_context::RouterContextState;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
@@ -615,7 +615,7 @@ mod tests {
 
     #[tokio::test]
     async fn bootstrap_record_fences_legacy_readers_and_returns_to_v1_after_host_merge() {
-        use openbitfun_agent_runtime::router_context::RouterHistoryBootstrap;
+        use starmate_agent_runtime::router_context::RouterHistoryBootstrap;
 
         // This is the old outer envelope: its parser ignores new state fields,
         // so its existing version == 1 admission check must reject this cache.

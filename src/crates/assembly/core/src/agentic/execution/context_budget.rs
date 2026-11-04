@@ -1,7 +1,7 @@
 //! Input admission budgets shared by ordinary requests and pool routing.
 
 use crate::service::config::types::automatic_max_output_tokens;
-use openbitfun_core_types::model_pool::ModelPoolContextBudget;
+use starmate_core_types::model_pool::ModelPoolContextBudget;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(super) struct CompressionTriggerBudget {

@@ -11,7 +11,7 @@ use crate::agentic::tools::computer_use_host::{
 };
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_core::system::{
+use starmate_services_core::system::{
     LocalSystemActionError, LocalSystemProvider, RunScriptRequest,
 };
 use serde_json::{json, Value};
@@ -1788,7 +1788,7 @@ fn error_code_from_local(code: &str) -> ErrorCode {
 mod tests {
     use super::{ComputerUseActions, ToolResult};
     use super::{OPEN_FILE_ROUTING_NOTE, OPEN_URL_ROUTING_NOTE};
-    use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
     use serde_json::json;
 
     use crate::agentic::tools::computer_use_host as h;

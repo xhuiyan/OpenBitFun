@@ -1,6 +1,6 @@
 //! Bounded, read-only Codex rollout and paginated SQLite history import.
 //! Discovery reads metadata, never full histories.
-use openbitfun_product_domains::session_import::*;
+use starmate_product_domains::session_import::*;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeSet, HashMap, HashSet};

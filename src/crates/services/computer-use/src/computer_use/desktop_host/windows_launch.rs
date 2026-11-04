@@ -1,6 +1,6 @@
 //! Literal Shell launch with an explicit activation policy; no cmd.exe parsing.
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::OpenAppResult;
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::OpenAppResult;
 use windows::core::{w, HSTRING};
 use windows::Win32::Foundation::RPC_E_CHANGED_MODE;
 use windows::Win32::System::Com::{

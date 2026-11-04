@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-miniapp-shell"
+name = "starmate-miniapp-shell"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -10,8 +10,8 @@ description = "Lightweight native MiniApp window; execution remains in the share
 tauri-build = { workspace = true }
 
 [dependencies]
-openbitfun-miniapp-ipc = { path = "../../crates/adapters/miniapp-ipc" }
-openbitfun-services-core = { path = "../../crates/services/services-core", features = ["process-runtime"] }
+starmate-miniapp-ipc = { path = "../../crates/adapters/miniapp-ipc" }
+starmate-services-core = { path = "../../crates/services/services-core", features = ["process-runtime"] }
 # The shell always serves its bundled HTML, even beside a development host.
 # Tauri's dev mode otherwise replaces each macOS bundle's Dock icon with the
 # compile-time OpenBitFun icon when the native event loop becomes ready.

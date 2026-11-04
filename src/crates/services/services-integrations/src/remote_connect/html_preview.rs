@@ -3,11 +3,11 @@
 
 use super::file_projection::SessionFileTarget;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
-use openbitfun_product_domains::html_preview::{
+use starmate_product_domains::html_preview::{
     HtmlPreviewError, HtmlPreviewErrorCode as Code, HtmlPreviewResource,
     HtmlPreviewResourceRequest, MAX_PREVIEW_BYTES, PREVIEW_CHUNK_BYTES,
 };
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspaceMetadata, WorkspacePathKind};
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspaceMetadata, WorkspacePathKind};
 use sha2::{Digest, Sha256};
 use std::{path::Path, sync::Arc};
 use tokio::io::{AsyncReadExt, AsyncSeekExt};

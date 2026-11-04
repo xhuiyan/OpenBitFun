@@ -479,7 +479,7 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.equal(
     cliJob.steps.find((step) => step.name === 'Run Windows CLI terminal contracts')?.run,
-    'cargo test --locked -p openbitfun-cli --test terminal_process_contracts -- --test-threads=1',
+    'cargo test --locked -p starmate-cli --test terminal_process_contracts -- --test-threads=1',
   );
 
   const rustCache = rustJob.steps.find((step) =>
@@ -558,7 +558,7 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.equal(
     commandByStep.get('Run subscription authentication tests'),
-    'cargo test --locked -p openbitfun-ai-adapters --features subscription-auth --lib subscription_auth',
+    'cargo test --locked -p starmate-ai-adapters --features subscription-auth --lib subscription_auth',
   );
   const installerCheck = rustJob.steps.find(
     (step) => step.name === 'Check installer compilation',
@@ -575,7 +575,7 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
     (step) => step.name === 'Run full core library tests on Linux',
   );
   const coreLibraryTestSteps = rustJob.steps.filter(
-    (step) => /^cargo test --locked -p openbitfun-core\b.*\s--lib$/.test(step.run ?? ''),
+    (step) => /^cargo test --locked -p starmate-core\b.*\s--lib$/.test(step.run ?? ''),
   );
   const desktopLibraryTests = rustJob.steps.find(
     (step) => step.name === 'Run desktop library tests',
@@ -592,7 +592,7 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.equal(
     coreLibraryTests?.run,
-    'cargo test --locked -p openbitfun-core --lib',
+    'cargo test --locked -p starmate-core --lib',
   );
   assert.equal(
     linuxFullCoreLibraryTests?.if,
@@ -600,18 +600,18 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.equal(
     linuxFullCoreLibraryTests?.run,
-    'cargo test --locked -p openbitfun-core --features product-full --lib',
+    'cargo test --locked -p starmate-core --features product-full --lib',
   );
   assert.deepEqual(
     coreLibraryTestSteps.map((step) => ({ if: step.if, run: step.run })),
     [
       {
         if: "runner.os != 'Linux'",
-        run: 'cargo test --locked -p openbitfun-core --lib',
+        run: 'cargo test --locked -p starmate-core --lib',
       },
       {
         if: "runner.os == 'Linux'",
-        run: 'cargo test --locked -p openbitfun-core --features product-full --lib',
+        run: 'cargo test --locked -p starmate-core --features product-full --lib',
       },
     ],
     'Core library validation must contain exactly the reviewed complementary steps',
@@ -619,13 +619,13 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   assert.equal(desktopLibraryTests?.if, "runner.os != 'Windows'");
   assert.equal(
     desktopLibraryTests?.run,
-    'cargo test --locked -p openbitfun-desktop --lib',
+    'cargo test --locked -p starmate-desktop --lib',
   );
   assert.equal(windowsDesktopProbe?.if, "runner.os == 'Windows'");
   assert.equal(windowsDesktopProbe?.shell, 'pwsh');
   assert.match(
     windowsDesktopProbe?.run ?? '',
-    /cargo test --locked -p openbitfun-desktop --lib 2>&1/,
+    /cargo test --locked -p starmate-desktop --lib 2>&1/,
   );
   assert.match(windowsDesktopProbe?.run ?? '', /0xc0000139/);
   assert.match(windowsDesktopProbe?.run ?? '', /STATUS_ENTRYPOINT_NOT_FOUND/);
@@ -649,7 +649,7 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.equal(
     fileWatchContracts?.run,
-    'cargo test --locked -p openbitfun-services-integrations --no-default-features --features file-watch --test file_watch_contracts',
+    'cargo test --locked -p starmate-services-integrations --no-default-features --features file-watch --test file_watch_contracts',
   );
   assert.equal(
     fileWatchContracts?.if,
@@ -1033,7 +1033,7 @@ test('nightly validates generated inputs and projected lockfiles before packagin
   );
   assert.equal(
     steps.find((step) => step.name === 'Run Windows CLI terminal contracts')?.run,
-    'cargo test --locked -p openbitfun-cli --test terminal_process_contracts -- --test-threads=1',
+    'cargo test --locked -p starmate-cli --test terminal_process_contracts -- --test-threads=1',
   );
 });
 

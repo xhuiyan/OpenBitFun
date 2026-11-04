@@ -3,7 +3,7 @@
 use std::path::Path;
 use std::time::Duration;
 
-use openbitfun_core::agentic::tools::desktop_card_host::{
+use starmate_core::agentic::tools::desktop_card_host::{
     desktop_card_command_argv, DesktopCardDataParse, DesktopCardDataSourceKind,
     DESKTOP_CARD_DEFAULT_COMMAND_TIMEOUT_SECONDS,
 };
@@ -128,7 +128,7 @@ async fn fetch_http(
 
 fn shell_command(command: &str) -> tokio::process::Command {
     let argv = desktop_card_command_argv(command);
-    let mut process = openbitfun_core::util::process_manager::create_tokio_command(&argv[0]);
+    let mut process = starmate_core::util::process_manager::create_tokio_command(&argv[0]);
     process.args(&argv[1..]);
     process
 }

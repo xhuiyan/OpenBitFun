@@ -1,18 +1,18 @@
 //! MiniApp storage - persist and load MiniApp data under user data dir.
 
-use openbitfun_product_domains::miniapp::customization::MiniAppCustomizationMetadata;
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::customization::MiniAppCustomizationMetadata;
+use starmate_product_domains::miniapp::ports::{
     MiniAppPortError, MiniAppPortErrorKind, MiniAppPortFuture, MiniAppStoragePort,
 };
-use openbitfun_product_domains::miniapp::storage::{
+use starmate_product_domains::miniapp::storage::{
     build_package_json, parse_npm_dependencies, MiniAppImportBundleWriteRequest,
     MiniAppImportLayout, MiniAppStorageLayout, COMPILED_HTML, CUSTOMIZATION_JSON,
     DRAFTS_CLEANUP_MARKER, DRAFTS_CLEANUP_PREFIX, DRAFTS_DIR, DRAFT_JSON, ESM_DEPS_JSON,
     INDEX_HTML, META_JSON, PACKAGE_JSON, REQUIRED_SOURCE_FILES, STORAGE_JSON, STYLE_CSS, UI_JS,
     VERSIONS_DIR, WORKER_JS,
 };
-use openbitfun_product_domains::miniapp::types::{MiniApp, MiniAppMeta, MiniAppSource, NpmDep};
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_product_domains::miniapp::types::{MiniApp, MiniAppMeta, MiniAppSource, NpmDep};
+use starmate_services_core::json_store::JsonFileStore;
 use serde_json;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
@@ -1413,10 +1413,10 @@ fn map_miniapp_port_error(error: MiniAppStorageError) -> MiniAppPortError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::miniapp::customization::{
+    use starmate_product_domains::miniapp::customization::{
         MiniAppCustomizationMetadata, MiniAppCustomizationOrigin, MiniAppCustomizationOriginKind,
     };
-    use openbitfun_product_domains::miniapp::market::InstalledMarketOrigin;
+    use starmate_product_domains::miniapp::market::InstalledMarketOrigin;
     use std::fs;
     use std::path::{Path, PathBuf};
 
@@ -1863,7 +1863,7 @@ mod tests {
         previous.source.npm_dependencies.clear();
         previous.source.worker_js.clear();
         previous.runtime_profile =
-            openbitfun_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict;
+            starmate_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict;
         let initial_metadata = market_metadata(1, "release-one");
 
         storage

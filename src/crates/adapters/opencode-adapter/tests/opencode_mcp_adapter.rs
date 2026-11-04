@@ -1,7 +1,7 @@
-use openbitfun_opencode_adapter::{
+use starmate_opencode_adapter::{
     OpenCodeCommandProviderOptions, OpenCodeMcpProvider, OpenCodeMcpProviderOptions,
 };
-use openbitfun_product_domains::external_sources::{
+use starmate_product_domains::external_sources::{
     ExecutionDomainId, ExternalMcpDiscoveryInput, ExternalMcpRevisionKey,
     ExternalMcpSourceProvider, ExternalMcpStaticStatus, ExternalMcpTransportKind,
     ExternalSourceContext, ExternalSourceScope, PreparedExternalMcpImportTransport,

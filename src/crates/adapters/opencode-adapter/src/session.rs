@@ -1,6 +1,6 @@
 //! Bounded read-only translation of OpenCode-compatible session/message/part stores.
 //! Zcode reuses this persisted protocol with its own path and source identity.
-use openbitfun_product_domains::session_import::*;
+use starmate_product_domains::session_import::*;
 use rusqlite::{Connection, OpenFlags, OptionalExtension};
 use serde_json::Value;
 use sha2::{Digest, Sha256};

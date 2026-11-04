@@ -461,7 +461,7 @@ mod tests {
     fn smart_release_gate_ignores_legacy_environment_without_router_or_summary_io() {
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
-        let mut command = openbitfun_services_core::process_manager::create_command(
+        let mut command = starmate_services_core::process_manager::create_command(
             std::env::current_exe().unwrap(),
         );
         let output = command.args([

@@ -13,8 +13,8 @@
 //! constructs the [`OpenBitFunAppRuntime`] and wraps it in a [`OpenBitFunAppServer`]
 //! (cheap `Clone` via the inner `Arc`); `serve` runs once per WS connection.
 
-use openbitfun_agent_runtime::sdk::{AgentEventSource, AgentRuntime};
-use openbitfun_app_server::{OpenBitFunAppRuntime, OpenBitFunAppServer};
+use starmate_agent_runtime::sdk::{AgentEventSource, AgentRuntime};
+use starmate_app_server::{OpenBitFunAppRuntime, OpenBitFunAppServer};
 use std::sync::Arc;
 
 /// Build the in-process `OpenBitFunAppServer` for the Server Host.
@@ -30,7 +30,7 @@ use std::sync::Arc;
 pub(crate) fn build(
     runtime: AgentRuntime,
     event_source: AgentEventSource,
-    product_search: Arc<openbitfun_core::product_runtime::CoreAgentRuntimeCompatibility>,
+    product_search: Arc<starmate_core::product_runtime::CoreAgentRuntimeCompatibility>,
 ) -> OpenBitFunAppServer {
     let app_runtime =
         OpenBitFunAppRuntime::new(runtime, event_source).with_product_search(product_search);

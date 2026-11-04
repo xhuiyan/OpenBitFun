@@ -9,7 +9,7 @@ use std::sync::Arc;
 
 use anyhow::{anyhow, bail};
 use async_trait::async_trait;
-use openbitfun_product_domains::detached_dispatch_control::{
+use starmate_product_domains::detached_dispatch_control::{
     DetachedDispatchControlRequest, MAX_DETACHED_DISPATCH_PROMPT_BYTES,
 };
 use serde_json::{json, Value};
@@ -324,7 +324,7 @@ pub async fn execute_dispatch_control(
                 include_uncommitted,
                 job_id: uuid::Uuid::new_v4().to_string(),
                 session_id: uuid::Uuid::new_v4().to_string(),
-                agent_type: openbitfun_core_types::agent_identity::canonical_agent_id(
+                agent_type: starmate_core_types::agent_identity::canonical_agent_id(
                     agent.as_deref().unwrap_or("Standard"),
                 )
                 .to_string(),

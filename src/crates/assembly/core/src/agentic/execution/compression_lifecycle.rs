@@ -164,8 +164,8 @@ impl ExecutionEngine {
             )
             .await;
             let candidate = match claim {
-                Some(openbitfun_agent_runtime::compression_prefetch::PrefetchClaim::Ready(candidate)) => Some(candidate),
-                Some(openbitfun_agent_runtime::compression_prefetch::PrefetchClaim::Waiting(task)) => {
+                Some(starmate_agent_runtime::compression_prefetch::PrefetchClaim::Ready(candidate)) => Some(candidate),
+                Some(starmate_agent_runtime::compression_prefetch::PrefetchClaim::Waiting(task)) => {
                     Some(task.wait().await.map_err(|_| OpenBitFunError::AIClient(
                         "Compression prefetch worker stopped before publishing a result".into()
                     ))??)

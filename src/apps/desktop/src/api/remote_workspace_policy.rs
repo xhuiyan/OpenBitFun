@@ -2,7 +2,7 @@
 //!
 //! Every Tauri command registered in `lib.rs` (`tauri::generate_handler!`)
 //! must have exactly one row in
-//! `openbitfun_product_domains::remote_surface`, which declares how the command
+//! `starmate_product_domains::remote_surface`, which declares how the command
 //! behaves for remote SSH/Docker workspaces and in Peer Device Mode. Remote SSH
 //! workspaces have no central command router: each handler adapts itself
 //! (usually through `resolve_desktop_path_target` / `lookup_remote_connection`
@@ -16,17 +16,17 @@
 //! registry's `TauriCommand` rows are the same set. See
 //! `docs/architecture/remote-surface-contract.md`.
 
-pub use openbitfun_product_domains::remote_surface::RemoteWorkspaceStance as RemoteWorkspacePolicy;
+pub use starmate_product_domains::remote_surface::RemoteWorkspaceStance as RemoteWorkspacePolicy;
 
 /// The declared remote-workspace stance of a registered Tauri command.
 pub fn remote_workspace_policy(command: &str) -> Option<RemoteWorkspacePolicy> {
-    openbitfun_product_domains::remote_surface::operation(command).map(|op| op.remote_workspace)
+    starmate_product_domains::remote_surface::operation(command).map(|op| op.remote_workspace)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::remote_surface::{operations, OperationSurface};
+    use starmate_product_domains::remote_surface::{operations, OperationSurface};
     use std::collections::BTreeSet;
 
     /// Extracts the command names registered in `tauri::generate_handler!`.

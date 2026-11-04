@@ -1,9 +1,9 @@
 //! Bind preview reads to the owning host's persisted workspace and existing filesystem provider.
 
-use openbitfun_product_domains::html_preview::{
+use starmate_product_domains::html_preview::{
     HtmlPreviewError, HtmlPreviewResourceReply, HtmlPreviewResourceRequest,
 };
-use openbitfun_services_integrations::remote_connect::html_preview::HtmlPreviewSource;
+use starmate_services_integrations::remote_connect::html_preview::HtmlPreviewSource;
 
 pub async fn resolve_html_preview_source(
     workspace_id: &str,
@@ -35,7 +35,7 @@ pub async fn html_preview_read_resource(
 mod tests {
     use super::*;
     use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
-    use openbitfun_product_domains::html_preview::HtmlPreviewErrorCode;
+    use starmate_product_domains::html_preview::HtmlPreviewErrorCode;
 
     #[tokio::test]
     async fn html_preview_uses_registered_workspace_and_shared_local_resource_rules() {

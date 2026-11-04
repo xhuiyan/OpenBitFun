@@ -4,7 +4,7 @@ use crate::agentic::core::strip_prompt_markup;
 use crate::agentic::persistence::PersistenceManager;
 use crate::service::session::{DialogTurnData, ModelRoundData, ToolItemIdentityExt};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::router_context::RouterEntryKind;
+use starmate_agent_runtime::router_context::RouterEntryKind;
 use serde_json::{json, Map, Value};
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;

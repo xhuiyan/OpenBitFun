@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use openbitfun_core_types::product_identity::hidden_data_directory;
+use starmate_core_types::product_identity::hidden_data_directory;
 
 use super::types::SkillSourceDialect;
 

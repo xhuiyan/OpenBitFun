@@ -8,8 +8,8 @@ use atspi::proxy::accessible::AccessibleProxy;
 use atspi::proxy::proxy_ext::ProxyExt;
 use atspi::AccessibilityConnection;
 use atspi::CoordType;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{UiElementLocateQuery, UiElementLocateResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{UiElementLocateQuery, UiElementLocateResult};
 use std::collections::VecDeque;
 
 async fn component_extents_screen(acc: &AccessibleProxy<'_>) -> Option<(i32, i32, i32, i32)> {

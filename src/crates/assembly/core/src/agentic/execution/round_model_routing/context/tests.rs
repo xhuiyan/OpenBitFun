@@ -62,7 +62,7 @@ fn summary_environment_preserves_explicit_targets_and_generation_limits() {
     ] {
         // Exercise the real environment parser without racing tests that read the
         // host process environment. The child only parses synthetic settings.
-        let mut command = openbitfun_services_core::process_manager::create_command(
+        let mut command = starmate_services_core::process_manager::create_command(
             executable.to_string_lossy().as_ref(),
         );
         command
@@ -201,7 +201,7 @@ async fn summary_request_isolates_generation_limit_and_reasoning_on_the_wire() {
     });
     let shared = summary_client_fixture(&endpoint);
     let before = serde_json::to_value(&shared.config).unwrap();
-    let projection = openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+    let projection = starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
         "openai",
         "glm-5.3-flash",
         "https://open.bigmodel.cn/api/paas/v4",

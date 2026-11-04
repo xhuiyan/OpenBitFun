@@ -4,7 +4,7 @@
 use crate::{remote_control::CliRemoteControlHost, runtime::CliRuntimeContext};
 use anyhow::{anyhow, Context, Result};
 use fs2::FileExt;
-use openbitfun_product_domains::remote_control::{RemoteControlRequest, REMOTE_CONTROL_CAPABILITY};
+use starmate_product_domains::remote_control::{RemoteControlRequest, REMOTE_CONTROL_CAPABILITY};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{
@@ -46,7 +46,7 @@ struct Response {
 }
 
 fn directory() -> Result<PathBuf> {
-    let path = openbitfun_core::infrastructure::PathManager::new()?
+    let path = starmate_core::infrastructure::PathManager::new()?
         .product_home_dir()
         .join("cli-daemon-control");
     std::fs::create_dir_all(&path)?;
@@ -243,10 +243,10 @@ pub(crate) async fn invoke(
     if matches!(
         &command,
         RemoteControlRequest::Start {
-            method: openbitfun_product_domains::remote_control::RemoteControlMethod::Lan,
+            method: starmate_product_domains::remote_control::RemoteControlMethod::Lan,
             ..
         } | RemoteControlRequest::Stop {
-            method: openbitfun_product_domains::remote_control::RemoteControlMethod::Lan
+            method: starmate_product_domains::remote_control::RemoteControlMethod::Lan
         }
     ) {
         anyhow::bail!("unsupported: This CLI host has no embedded LAN Relay; use Mobile Web with the configured account Relay");
@@ -278,7 +278,7 @@ pub(crate) async fn invoke(
                 runtime.account_routing().stop_device_routing().await;
                 let executable = std::env::current_exe()?;
                 let mut process =
-                    openbitfun_services_core::process_manager::create_command(executable);
+                    starmate_services_core::process_manager::create_command(executable);
                 process
                     .arg("daemon")
                     .arg("run")

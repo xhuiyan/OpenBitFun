@@ -4,7 +4,7 @@ use crate::agentic::tools::framework::{Tool, ToolRenderOptions, ToolResult, Vali
 use crate::agentic::tools::tool_context_runtime::ToolUseContext;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     call_deferred_tool_description, call_deferred_tool_input_schema,
     call_deferred_tool_short_description, parse_call_deferred_tool_input, CALL_DEFERRED_TOOL_NAME,
 };

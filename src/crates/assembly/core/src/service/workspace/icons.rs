@@ -1,7 +1,7 @@
 //! Workspace-owned icon operations. Assets stay on the catalog host, including SSH workspaces.
 use super::*;
-use openbitfun_core_types::workspace_icon::*;
-use openbitfun_services_core::workspace_icon_assets::{
+use starmate_core_types::workspace_icon::*;
+use starmate_services_core::workspace_icon_assets::{
     normalize_icon, read_icon, store_icon, valid_asset_id,
 };
 

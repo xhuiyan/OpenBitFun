@@ -11,8 +11,8 @@
 //! dropped, so the two never describe the same thing at the same time.
 
 use super::session_projection_format::LoggedEvent;
-use openbitfun_agent_runtime::sdk::{SessionEventProjectionStore, StoredSessionEvents};
-use openbitfun_events::AgenticEvent;
+use starmate_agent_runtime::sdk::{SessionEventProjectionStore, StoredSessionEvents};
+use starmate_events::AgenticEvent;
 use std::collections::HashMap;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, Write};

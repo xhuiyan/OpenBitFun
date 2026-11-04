@@ -1,6 +1,6 @@
 use super::PersistenceManager;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_core_types::UsageContextCategory;
+use starmate_core_types::UsageContextCategory;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::path::Path;

@@ -1,6 +1,6 @@
 use log::{info, warn};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::ComputerScreenshot;
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 use std::fs;
 use std::io::Write;
 use std::path::PathBuf;
@@ -72,7 +72,7 @@ mod linux_native_fixture_tests {
     }
 }
 
-pub(super) use openbitfun_agent_tools::computer_use_host::OcrTextMatch;
+pub(super) use starmate_agent_tools::computer_use_host::OcrTextMatch;
 
 /// Read the best recognized text for every visible region. No search query,
 /// candidate ranking, or debug pixel persistence is involved.
@@ -166,10 +166,10 @@ fn computer_use_ocr_debug_dir() -> PathBuf {
     }
     dirs::home_dir()
         .map(|h| {
-            h.join(openbitfun_core_types::product_identity::hidden_data_directory())
+            h.join(starmate_core_types::product_identity::hidden_data_directory())
                 .join("personal_assistant")
                 .join("workspace")
-                .join(openbitfun_core_types::product_identity::hidden_data_directory())
+                .join(starmate_core_types::product_identity::hidden_data_directory())
                 .join("computer_use_debug")
         })
         .unwrap_or_else(|| std::env::temp_dir().join("computer_use_debug"))
@@ -256,8 +256,8 @@ mod macos {
         VNRecognizeTextRequestRevision3, VNRecognizedTextObservation, VNRequest,
         VNRequestTextRecognitionLevel,
     };
-    use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-    use openbitfun_agent_tools::computer_use_host::ComputerScreenshot;
+    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 
     /// Top-N candidates per observation; Chinese matches often appear below rank 1.
     const TOP_CANDIDATES_MAX: usize = 10;
@@ -478,8 +478,8 @@ mod windows_backend {
         filter_and_rank, fuzzy_text_matches_query, image_box_to_global_match,
         image_content_rect_or_full, normalize_for_match, OcrTextMatch,
     };
-    use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-    use openbitfun_agent_tools::computer_use_host::ComputerScreenshot;
+    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::ComputerScreenshot;
     use windows::core::HSTRING;
     use windows::Graphics::Imaging::BitmapDecoder;
     use windows::Media::Ocr::{OcrEngine, OcrWord};
@@ -688,8 +688,8 @@ mod linux_backend {
         filter_and_rank, fuzzy_text_matches_query, image_box_to_global_match,
         image_content_rect_or_full, normalize_for_match, tesseract_lines_from_tsv, OcrTextMatch,
     };
-    use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-    use openbitfun_agent_tools::computer_use_host::ComputerScreenshot;
+    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::ComputerScreenshot;
 
     pub(super) fn read_text(shot: &ComputerScreenshot) -> OpenBitFunResult<Vec<OcrTextMatch>> {
         recognize(shot, None)

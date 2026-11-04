@@ -14,7 +14,7 @@ use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use base64::Engine;
 use chrono::Utc;
 use hmac::{Hmac, Mac};
-use openbitfun_product_domains::appearance_market::{
+use starmate_product_domains::appearance_market::{
     compute_appearance_review_bundle_hash, validate_appearance_market_slug,
     AppearanceAdminSubmissionDetail, AppearanceCursorPage, AppearanceMarketListingDetail,
     AppearanceMarketListingSummary, AppearanceMarketPackageMeta, AppearanceMarketPublicationStatus,
@@ -25,7 +25,7 @@ use openbitfun_product_domains::appearance_market::{
     APPEARANCE_MARKET_MAX_PACKAGE_BYTES, APPEARANCE_MARKET_MAX_PAGE_SIZE,
     APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
 };
-use openbitfun_product_domains::product_release::OPENBITFUN_INITIAL_RELEASE_VERSION;
+use starmate_product_domains::product_release::OPENBITFUN_INITIAL_RELEASE_VERSION;
 use semver::Version;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -1661,7 +1661,7 @@ mod minimum_version_tests {
 }
 
 fn validate_license(
-    license: &openbitfun_product_domains::appearance_market::AppearanceMarketLicense,
+    license: &starmate_product_domains::appearance_market::AppearanceMarketLicense,
 ) -> SkinMarketResult<()> {
     let spdx = license
         .spdx_expression

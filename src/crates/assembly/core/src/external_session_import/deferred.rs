@@ -10,7 +10,7 @@ pub(crate) use legacy::has_native_view;
 use super::*;
 use crate::service::workspace::{WorkspaceInfo, WorkspaceKind};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_core::{json_store::JsonFileStore, session::SessionMetadataStore};
+use starmate_services_core::{json_store::JsonFileStore, session::SessionMetadataStore};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::{BTreeMap, HashSet};
@@ -88,7 +88,7 @@ impl Default for Index {
     }
 }
 
-type Stamp = openbitfun_services_core::json_store::JsonFileRevision;
+type Stamp = starmate_services_core::json_store::JsonFileRevision;
 type IndexCache = HashMap<PathBuf, (Stamp, Arc<Index>)>;
 static CACHE: LazyLock<tokio::sync::Mutex<IndexCache>> = LazyLock::new(Default::default);
 
@@ -403,7 +403,7 @@ pub(crate) async fn register(
                             changed = true;
                         }
                         if custom["externalContentVersion"].is_null() {
-                            let incomplete = json!(candidate.status != openbitfun_product_domains::session_import::ExternalSessionStatus::Complete);
+                            let incomplete = json!(candidate.status != starmate_product_domains::session_import::ExternalSessionStatus::Complete);
                             if custom["externalSourceIncomplete"] != incomplete {
                                 custom["externalSourceIncomplete"] = incomplete;
                                 changed = true;
@@ -466,7 +466,7 @@ pub(crate) async fn register(
                     "sourceSessionTitle": candidate.title,
                     "externalHistoryPending": true, "continuationMode": "fork_before_continue",
                     "externalHistoryMode": "follow", "externalObservedFingerprint": candidate.fingerprint,
-                    "externalSourceIncomplete": candidate.status != openbitfun_product_domains::session_import::ExternalSessionStatus::Complete
+                    "externalSourceIncomplete": candidate.status != starmate_product_domains::session_import::ExternalSessionStatus::Complete
                 }));
                 metadata
             };
@@ -1153,7 +1153,7 @@ mod tests {
 
     #[tokio::test]
     async fn persistence_recovers_a_prepared_legacy_repair_without_the_source() {
-        use openbitfun_services_core::session::StoredDialogTurnFile;
+        use starmate_services_core::session::StoredDialogTurnFile;
         let (_temp, workspace, root, manager) = fixture();
         let before = legacy_answerless_bundle("recover", &workspace);
         let mut source = document(candidate("codex", "recover", &workspace.root_path));
@@ -1561,7 +1561,7 @@ mod tests {
 
     #[tokio::test]
     async fn catalog_query_pages_native_and_external_metadata_without_materializing_history() {
-        use openbitfun_services_core::session::page::{
+        use starmate_services_core::session::page::{
             SessionCatalogOrdering, SessionCatalogQuery,
         };
         let (_temp, workspace, root, manager) = fixture();
@@ -2053,9 +2053,9 @@ mod tests {
         assert_eq!(page.sessions.len(), 1);
         assert_eq!(page.sessions[0].session_id, "native");
         assert_eq!(page.discovery_warnings.len(), 1);
-        let query = openbitfun_services_core::session::page::SessionCatalogQuery {
+        let query = starmate_services_core::session::page::SessionCatalogQuery {
             workspace_id: workspace.id.clone(),
-            ordering: openbitfun_services_core::session::page::SessionCatalogOrdering::Updated,
+            ordering: starmate_services_core::session::page::SessionCatalogOrdering::Updated,
             source: "all".into(),
             sources: Vec::new(),
             sort_timestamps: HashMap::new(),

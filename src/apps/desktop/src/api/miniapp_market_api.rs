@@ -5,20 +5,20 @@
 //! update transaction against the desktop MiniApp manager.
 
 use crate::api::app_state::AppState;
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::miniapp::lifecycle::miniapp_runtime_event_payload;
-use openbitfun_core::miniapp::{
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::miniapp::lifecycle::miniapp_runtime_event_payload;
+use starmate_core::miniapp::{
     MiniApp, MiniAppCustomizationMetadata, MiniAppPermissionDiff, MiniAppPermissions, MiniAppSource,
 };
-use openbitfun_product_domains::miniapp::customization::diff_permissions;
-use openbitfun_product_domains::miniapp::market::{
+use starmate_product_domains::miniapp::customization::diff_permissions;
+use starmate_product_domains::miniapp::market::{
     CursorPage, InstalledMarketOrigin, MarketListingDetail, MarketListingSummary, MarketRelease,
     MarketSubmission, MarketSubmissionDraftRequest,
 };
-use openbitfun_product_domains::product_release::{
+use starmate_product_domains::product_release::{
     supports_market_minimum_version, OPENBITFUN_INITIAL_RELEASE_VERSION,
 };
-use openbitfun_services_integrations::miniapp_market::{
+use starmate_services_integrations::miniapp_market::{
     submit_installed_app, validate_market_package, FavoriteAggregate, MarketBrowseRequest,
     MarketClient, RatingAggregate, ValidatedMarketPackage,
 };
@@ -368,12 +368,12 @@ pub async fn miniapp_market_install(
 }
 
 async fn stage_downloaded_package(bytes: &[u8]) -> Result<ValidatedMarketPackage, String> {
-    if bytes.len() as u64 > openbitfun_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES {
+    if bytes.len() as u64 > starmate_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES {
         return Err("The downloaded package exceeds 20 MiB.".to_string());
     }
     let temp_prefix = format!(
         "{}-miniapp-market-download-",
-        openbitfun_core_types::product_identity::data_namespace()
+        starmate_core_types::product_identity::data_namespace()
     );
     let directory = tempfile::Builder::new()
         .prefix(&temp_prefix)
@@ -420,7 +420,7 @@ pub async fn miniapp_market_import_package(
         .await
         .map_err(|error| format!("Could not read package metadata: {error}"))?;
     if !metadata.is_file()
-        || metadata.len() > openbitfun_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES
+        || metadata.len() > starmate_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES
     {
         return Err("The selected .bfminiapp file is invalid or exceeds 20 MiB.".to_string());
     }
@@ -607,7 +607,7 @@ async fn read_and_validate_package_file(path: &Path) -> Result<ValidatedMarketPa
         .await
         .map_err(|error| format!("Could not read package metadata: {error}"))?;
     if !metadata.is_file()
-        || metadata.len() > openbitfun_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES
+        || metadata.len() > starmate_product_domains::miniapp::market::MARKET_MAX_PACKAGE_BYTES
     {
         return Err("The selected .bfminiapp file is invalid or exceeds 20 MiB.".to_string());
     }

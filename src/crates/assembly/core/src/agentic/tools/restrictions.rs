@@ -1,5 +1,5 @@
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-pub use openbitfun_agent_tools::{
+pub use starmate_agent_tools::{
     is_miniapp_headless_agent_run, is_miniapp_market_strict_agent_run,
     is_remote_posix_path_within_root, miniapp_agent_run_tool_restrictions,
     miniapp_headless_agent_tool_restrictions, miniapp_market_strict_agent_tool_restrictions,

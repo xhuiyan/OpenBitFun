@@ -6,11 +6,11 @@ use crate::infrastructure::events::{emit_global_event, BackendEvent};
 use crate::miniapp::try_get_global_miniapp_manager;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_product_domains::miniapp::market::{
+use starmate_product_domains::miniapp::market::{
     MarketLicense, MarketSubmissionDraftRequest, MARKET_CATEGORIES, MARKET_MAX_SCREENSHOTS,
 };
-use openbitfun_product_domains::miniapp::types::MiniAppMeta;
-use openbitfun_services_integrations::miniapp_market::{
+use starmate_product_domains::miniapp::types::MiniAppMeta;
+use starmate_services_integrations::miniapp_market::{
     map_local_category_to_market, resolve_release_target, submit_installed_app,
     suggest_market_slug, DesktopAuthPollRequest, MarketClient, ReleaseTarget,
 };
@@ -546,7 +546,7 @@ mod tests {
         default_min_openbitfun_version, find_apps_by_name, listing_image_paths, PublishMiniAppTool,
     };
     use crate::agentic::tools::framework::{Tool, ToolExposure, ToolUseContext};
-    use openbitfun_product_domains::miniapp::types::MiniAppMeta;
+    use starmate_product_domains::miniapp::types::MiniAppMeta;
     use serde_json::json;
 
     #[test]
@@ -625,7 +625,7 @@ mod tests {
     }
 
     fn meta(id: &str, name: &str, locale_name: Option<&str>) -> MiniAppMeta {
-        use openbitfun_product_domains::miniapp::types::{MiniAppI18n, MiniAppLocaleStrings};
+        use starmate_product_domains::miniapp::types::{MiniAppI18n, MiniAppLocaleStrings};
         use std::collections::HashMap;
         MiniAppMeta {
             chrome: None,

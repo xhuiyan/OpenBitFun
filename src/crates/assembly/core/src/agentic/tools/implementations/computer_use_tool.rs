@@ -16,10 +16,10 @@ use crate::util::types::ToolImageAttachment;
 use async_trait::async_trait;
 use base64::{engine::general_purpose::STANDARD as B64, Engine as _};
 use log::{debug, warn};
-use openbitfun_agent_tools::computer_use::{
+use starmate_agent_tools::computer_use::{
     coordinate_mode, ensure_pointer_move_uses_screen_coordinates_only, use_screen_coordinates,
 };
-use openbitfun_core_types::product_identity::hidden_data_directory;
+use starmate_core_types::product_identity::hidden_data_directory;
 use serde_json::{json, Value};
 
 fn computer_use_permission_resource(input: &Value) -> String {
@@ -2006,7 +2006,7 @@ impl ComputerUseTool {
             .and_then(Value::as_str)
             .ok_or_else(|| OpenBitFunError::tool("action is required"))?;
         let policy =
-            openbitfun_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
+            starmate_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
                 .ok_or_else(|| {
                 OpenBitFunError::tool(format!(
                     "[CONTROL_ACTION_INVALID] Unknown ComputerUse action: {action}"
@@ -3205,7 +3205,7 @@ mod tests {
         ComputerUsePermissionSnapshot, ComputerUseScreenshotParams, ComputerUseSessionSnapshot,
     };
     use crate::agentic::tools::framework::{Tool, ToolExposure, ToolResult, ToolUseContext};
-    use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+    use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
     use serde_json::{json, Value};
 
     #[test]
@@ -5252,7 +5252,7 @@ mod tests {
             for action in schema["properties"]["action"]["enum"].as_array().unwrap() {
                 let name = action.as_str().unwrap();
                 assert!(
-                    openbitfun_agent_tools::computer_use_control::ControlActionPolicy::for_action(
+                    starmate_agent_tools::computer_use_control::ControlActionPolicy::for_action(
                         name
                     )
                     .is_some(),
@@ -5266,7 +5266,7 @@ mod tests {
     async fn remote_workspace_and_headless_hosts_never_fall_back_to_controller_gui() {
         let host = Arc::new(ControlRecordingHost::default());
         let mut remote = control_context(host.clone());
-        let identity = openbitfun_services_core::workspace_identity::workspace_session_identity(
+        let identity = starmate_services_core::workspace_identity::workspace_session_identity(
             "/srv/project",
             Some("fixture-ssh"),
             Some("ssh.fixture"),
@@ -5526,7 +5526,7 @@ mod tests {
             let mut context = control_context(host.clone());
             let token = tokio_util::sync::CancellationToken::new();
             context.runtime_handles =
-                openbitfun_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
+                starmate_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
             let error = ComputerUseTool::new()
                 .call_impl(
                     &json!({"action":"get_app_state","app":{"pid":421}}),
@@ -6754,7 +6754,7 @@ mod tests {
         let token = tokio_util::sync::CancellationToken::new();
         token.cancel();
         context.runtime_handles =
-            openbitfun_runtime_ports::ToolRuntimeHandles::new(None, Some(token));
+            starmate_runtime_ports::ToolRuntimeHandles::new(None, Some(token));
         let outcome = super::super::computer_use_program::execute(
             host.as_ref(),
             AppSelector {
@@ -6783,7 +6783,7 @@ mod tests {
         let mut context = control_context(host.clone());
         let token = tokio_util::sync::CancellationToken::new();
         context.runtime_handles =
-            openbitfun_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
+            starmate_runtime_ports::ToolRuntimeHandles::new(None, Some(token.clone()));
         let execution = super::super::computer_use_program::execute(
             host.as_ref(),
             AppSelector {

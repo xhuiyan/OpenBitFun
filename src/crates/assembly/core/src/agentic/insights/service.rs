@@ -16,7 +16,7 @@ use crate::service::i18n::LocaleId;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::{GeminiResponse, GeminiUsage, Message, ToolDefinition};
 use log::{debug, info, warn};
-use openbitfun_agent_content::insights::{
+use starmate_agent_content::insights::{
     AREAS as AREAS_PROMPT_TEMPLATE, AT_A_GLANCE as AT_A_GLANCE_PROMPT_TEMPLATE,
     FACET_EXTRACTION as FACET_PROMPT_TEMPLATE, FRICTION as FRICTION_PROMPT_TEMPLATE,
     FUN_ENDING as FUN_ENDING_PROMPT_TEMPLATE, HORIZON as HORIZON_PROMPT_TEMPLATE,

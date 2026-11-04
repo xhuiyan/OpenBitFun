@@ -4,7 +4,7 @@
 //! `openbitfun-product-capabilities`. Core-specific runtime service adapters live
 //! under `product_runtime`.
 
-pub use openbitfun_product_capabilities::{
+pub use starmate_product_capabilities::{
     default_product_assembly_plan, default_product_capability_assembly,
     default_product_capability_registry, product_assembly_plan_for_profile,
     product_delivery_profile_entries, DeliveryProfile, ProductAssembler, ProductAssemblyError,

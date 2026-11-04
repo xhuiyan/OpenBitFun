@@ -7,14 +7,14 @@
 use crate::bootstrap::ServerAppState;
 use anyhow::{anyhow, Result};
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
-use openbitfun_core::agentic::agents::SubAgentSource;
-use openbitfun_core::agentic::coordination::{DialogSubmissionPolicy, DialogTriggerSource};
-use openbitfun_core::agentic::core::SessionConfig;
-use openbitfun_core::agentic::deep_review_policy::{
+use starmate_core::agentic::agents::SubAgentSource;
+use starmate_core::agentic::coordination::{DialogSubmissionPolicy, DialogTriggerSource};
+use starmate_core::agentic::core::SessionConfig;
+use starmate_core::agentic::deep_review_policy::{
     apply_deep_review_queue_control, DeepReviewQueueControlAction,
 };
-use openbitfun_core::service::config::model_pool::AgentModelSelection;
-use openbitfun_core::service::i18n::{sync_global_i18n_service_locale, LocaleId, LocaleMetadata};
+use starmate_core::service::config::model_pool::AgentModelSelection;
+use starmate_core::service::i18n::{sync_global_i18n_service_locale, LocaleId, LocaleMetadata};
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
@@ -179,21 +179,21 @@ pub async fn dispatch(
             let request = extract_request(&params)?;
             let provider = get_string(&request, "provider")?;
             let status =
-                openbitfun_core::service::web_search::get_web_search_credential_status(&provider)
+                starmate_core::service::web_search::get_web_search_credential_status(&provider)
                     .await
                     .map_err(|error| anyhow!(error.to_string()))?;
             Ok(serde_json::to_value(status)?)
         }
         "save_web_search_credential" => {
             let request = serde_json::from_value(extract_request(&params)?.clone())?;
-            let status = openbitfun_core::service::web_search::save_web_search_credential(request)
+            let status = starmate_core::service::web_search::save_web_search_credential(request)
                 .await
                 .map_err(|error| anyhow!(error.to_string()))?;
             Ok(serde_json::to_value(status)?)
         }
         "clear_web_search_credential" => {
             let request = serde_json::from_value(extract_request(&params)?.clone())?;
-            let status = openbitfun_core::service::web_search::clear_web_search_credential(request)
+            let status = starmate_core::service::web_search::clear_web_search_credential(request)
                 .await
                 .map_err(|error| anyhow!(error.to_string()))?;
             Ok(serde_json::to_value(status)?)
@@ -338,7 +338,7 @@ pub async fn dispatch(
                 if clear_model_override || model.is_some() {
                     let mut builtin_models: std::collections::HashMap<
                         String,
-                        openbitfun_core::service::config::model_pool::AgentModelSelection,
+                        starmate_core::service::config::model_pool::AgentModelSelection,
                     > = state
                         .config_service
                         .get_config(Some("ai.agent_model_selections.subagents.builtin"))
@@ -367,7 +367,7 @@ pub async fn dispatch(
                         .map_err(|e| anyhow!("Failed to update model configuration: {}", e))?;
                 }
 
-                if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+                if let Err(e) = starmate_core::service::config::reload_global_config().await {
                     log::warn!(
                         "Failed to reload global config after server subagent config update: subagent_id={}, error={}",
                         subagent_id,

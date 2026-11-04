@@ -2,16 +2,16 @@
 //!
 //! Provide unified error types and handling for the whole application
 
-use openbitfun_core_types::errors::{
+use starmate_core_types::errors::{
     ai_error_detail_from_message, classify_ai_error_message, AiErrorDetail, AiProviderError,
     ErrorCategory,
 };
 use serde::Serialize;
 use thiserror::Error;
 
-impl From<openbitfun_services_core::storage_error::StorageError> for OpenBitFunError {
-    fn from(error: openbitfun_services_core::storage_error::StorageError) -> Self {
-        use openbitfun_services_core::storage_error::StorageError;
+impl From<starmate_services_core::storage_error::StorageError> for OpenBitFunError {
+    fn from(error: starmate_services_core::storage_error::StorageError) -> Self {
+        use starmate_services_core::storage_error::StorageError;
         match error {
             StorageError::Config(message) => Self::config(message),
             StorageError::Validation(message) => Self::validation(message),
@@ -37,7 +37,7 @@ pub enum OpenBitFunError {
     #[error("{message}")]
     ClassifiedTool {
         message: String,
-        detail: openbitfun_core_types::errors::ToolErrorDetail,
+        detail: starmate_core_types::errors::ToolErrorDetail,
     },
 
     #[error("AI client error: {0}")]
@@ -156,7 +156,7 @@ where
 }
 
 impl OpenBitFunError {
-    pub fn tool_error_detail(&self) -> Option<&openbitfun_core_types::errors::ToolErrorDetail> {
+    pub fn tool_error_detail(&self) -> Option<&starmate_core_types::errors::ToolErrorDetail> {
         match self {
             Self::ClassifiedTool { detail, .. } => Some(detail),
             _ => None,
@@ -291,36 +291,36 @@ impl OpenBitFunError {
 }
 
 #[cfg(feature = "agent-runtime")]
-impl From<openbitfun_agent_stream::StreamProcessorError> for OpenBitFunError {
-    fn from(error: openbitfun_agent_stream::StreamProcessorError) -> Self {
+impl From<starmate_agent_stream::StreamProcessorError> for OpenBitFunError {
+    fn from(error: starmate_agent_stream::StreamProcessorError) -> Self {
         match error {
-            openbitfun_agent_stream::StreamProcessorError::AiClient(msg) => Self::AIClient(msg),
-            openbitfun_agent_stream::StreamProcessorError::AiProvider(error) => {
+            starmate_agent_stream::StreamProcessorError::AiClient(msg) => Self::AIClient(msg),
+            starmate_agent_stream::StreamProcessorError::AiProvider(error) => {
                 Self::AIProvider(error)
             }
-            openbitfun_agent_stream::StreamProcessorError::Cancelled(msg) => Self::Cancelled(msg),
+            starmate_agent_stream::StreamProcessorError::Cancelled(msg) => Self::Cancelled(msg),
         }
     }
 }
 
 #[cfg(feature = "agent-runtime")]
-impl From<openbitfun_agent_runtime::event_bus::EventBusError> for OpenBitFunError {
-    fn from(error: openbitfun_agent_runtime::event_bus::EventBusError) -> Self {
+impl From<starmate_agent_runtime::event_bus::EventBusError> for OpenBitFunError {
+    fn from(error: starmate_agent_runtime::event_bus::EventBusError) -> Self {
         Self::Agent(error.to_string())
     }
 }
 
 #[cfg(feature = "agent-runtime")]
-impl From<openbitfun_agent_tools::computer_use::ComputerUseContractError> for OpenBitFunError {
-    fn from(error: openbitfun_agent_tools::computer_use::ComputerUseContractError) -> Self {
+impl From<starmate_agent_tools::computer_use::ComputerUseContractError> for OpenBitFunError {
+    fn from(error: starmate_agent_tools::computer_use::ComputerUseContractError) -> Self {
         Self::Tool(error.to_string())
     }
 }
 
 #[cfg(feature = "mcp-runtime")]
-impl From<openbitfun_services_integrations::mcp::MCPRuntimeError> for OpenBitFunError {
-    fn from(error: openbitfun_services_integrations::mcp::MCPRuntimeError) -> Self {
-        use openbitfun_services_integrations::mcp::MCPRuntimeErrorKind;
+impl From<starmate_services_integrations::mcp::MCPRuntimeError> for OpenBitFunError {
+    fn from(error: starmate_services_integrations::mcp::MCPRuntimeError) -> Self {
+        use starmate_services_integrations::mcp::MCPRuntimeErrorKind;
 
         let message = error.message().to_string();
         match error.kind() {
@@ -409,9 +409,9 @@ mod tests {
 }
 
 #[cfg(feature = "agent-runtime")]
-impl From<openbitfun_agent_tools::computer_use_host::error::ComputerUseError> for OpenBitFunError {
-    fn from(error: openbitfun_agent_tools::computer_use_host::error::ComputerUseError) -> Self {
-        use openbitfun_agent_tools::computer_use_host::error::ComputerUseError;
+impl From<starmate_agent_tools::computer_use_host::error::ComputerUseError> for OpenBitFunError {
+    fn from(error: starmate_agent_tools::computer_use_host::error::ComputerUseError) -> Self {
+        use starmate_agent_tools::computer_use_host::error::ComputerUseError;
         match error {
             ComputerUseError::Tool(message) => Self::Tool(message),
             ComputerUseError::Service(message) => Self::Service(message),

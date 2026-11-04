@@ -19,7 +19,7 @@ const run = cargoArgs => new Promise((resolve, reject) => {
   child.on('close', code => resolve(code ?? 1));
 });
 if (!check) {
-  process.exitCode = await run(['test', '--locked', '-p', 'openbitfun-computer-use', '--lib', ...args]);
+  process.exitCode = await run(['test', '--locked', '-p', 'starmate-computer-use', '--lib', ...args]);
 } else {
   const dir = await mkdtemp(join(tmpdir(), 'openbitfun-windows-native-'));
   try {

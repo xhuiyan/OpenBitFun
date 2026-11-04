@@ -10,7 +10,7 @@
 #![cfg(feature = "native-hook-runtime")]
 
 use async_trait::async_trait;
-use openbitfun_agent_runtime::native_hooks::{
+use starmate_agent_runtime::native_hooks::{
     AgentHookEngine, AgentHookEventPayload, AgentHookOutcome, AgentHookPayload,
     AgentHookPayloadCommon, AgentHookPermissionMode, AgentHookPermissionOutcome, AgentHookScope,
     AgentHookSettings, AgentHookSettingsLayer, CommandHookOptions, HookProcessProvider,
@@ -544,10 +544,10 @@ async fn events_without_configured_rules_execute_nothing() {
 #[cfg(feature = "agent-runtime")]
 mod skill_hooks {
     use super::*;
-    use openbitfun_agent_runtime::native_hooks::{
+    use starmate_agent_runtime::native_hooks::{
         AgentHookEvent, RuntimeHookKind, RuntimeHookRegistry,
     };
-    use openbitfun_agent_runtime::skills::SkillHooks;
+    use starmate_agent_runtime::skills::SkillHooks;
 
     fn install(
         registry: &RuntimeHookRegistry,

@@ -6,8 +6,8 @@
 
 use crate::agentic::tools::framework::{DynamicToolInfo, Tool, ToolExposure};
 use crate::agentic::tools::tool_context_runtime::ToolUseContext;
-use openbitfun_agent_runtime::deep_review::{ReviewTargetEvidence, ReviewTargetEvidenceSource};
-use openbitfun_agent_tools::{ContextualToolManifestItem, ToolRegistryItem};
+use starmate_agent_runtime::deep_review::{ReviewTargetEvidence, ReviewTargetEvidenceSource};
+use starmate_agent_tools::{ContextualToolManifestItem, ToolRegistryItem};
 use serde_json::Value;
 
 fn live_repository_context_allowed(context: &ToolUseContext) -> bool {

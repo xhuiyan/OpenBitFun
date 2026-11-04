@@ -13,7 +13,7 @@ use crate::types::ProxyConfig;
 use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine as _;
 use log::debug;
-use openbitfun_core_types::ImageDialect;
+use starmate_core_types::ImageDialect;
 use reqwest::Client;
 use serde_json::{json, Map, Value};
 use std::collections::HashMap;
@@ -1319,7 +1319,7 @@ mod tests {
             HashMap::from([("ChatGPT-Account-ID".to_string(), "test-account".to_string())]);
         let mut target = target(ImageDialect::ChatgptCodex, &base_url);
         target.custom_headers = Some(&headers);
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let client = Client::builder().no_proxy().build().unwrap();
         let result = discover_chatgpt_codex_model(&client, &target).await;
         server.abort();

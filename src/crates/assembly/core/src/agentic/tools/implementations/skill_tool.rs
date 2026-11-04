@@ -9,7 +9,7 @@ use crate::agentic::tools::framework::{
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
 use log::debug;
-use openbitfun_services_core::markdown::expand_prompt_template_arguments_with_names;
+use starmate_services_core::markdown::expand_prompt_template_arguments_with_names;
 use serde_json::{json, Value};
 
 // Use skills module
@@ -551,7 +551,7 @@ Use the remote project skill.
             custom_data: Default::default(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(None, None),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(None, None),
         }
     }
 
@@ -1080,7 +1080,7 @@ Use the remote project skill.
             custom_data: Default::default(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(
                 Some(WorkspaceServices {
                     fs: Arc::new(FakeRemoteFs),
                     shell: Arc::new(FakeShell),
@@ -1122,7 +1122,7 @@ Use the remote project skill.
             custom_data: Default::default(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(
                 Some(WorkspaceServices {
                     fs: Arc::new(FakeRemoteFs),
                     shell: Arc::new(FakeShell),
@@ -1170,7 +1170,7 @@ Use the remote project skill.
             custom_data: Default::default(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::new(None, None),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::new(None, None),
         };
 
         let results = SkillTool::new()

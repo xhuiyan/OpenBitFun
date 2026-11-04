@@ -28,8 +28,8 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use anyhow::{anyhow, Context};
-use openbitfun_services_core::process_manager;
-use openbitfun_services_core::process_tree::ProcessTreeChild;
+use starmate_services_core::process_manager;
+use starmate_services_core::process_tree::ProcessTreeChild;
 use tokio::io::{join, AsyncBufReadExt, BufReader, Join};
 use tokio::process::{ChildStderr, ChildStdin, ChildStdout};
 

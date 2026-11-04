@@ -4,12 +4,12 @@ use crate::agentic::session::{EvidenceLedgerEvent, SessionPromptCache};
 use crate::agentic::skill_agent_snapshot::TurnSkillAgentSnapshot;
 use crate::service::session::DialogTurnData;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_core::session::SessionBranchBoundary;
-use openbitfun_services_core::session::{
+use starmate_services_core::session::SessionBranchBoundary;
+use starmate_services_core::session::{
     build_branched_session_metadata, format_branch_session_name, resolve_branch_session_lineage,
     BranchSessionMetadataFacts,
 };
-pub use openbitfun_services_core::session::{SessionBranchRequest, SessionBranchResult};
+pub use starmate_services_core::session::{SessionBranchRequest, SessionBranchResult};
 use std::path::Path;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -61,7 +61,7 @@ impl PersistenceManager {
         request: &SessionBranchRequest,
         transient_source: Option<TransientSessionBranchSource>,
     ) -> OpenBitFunResult<SessionBranchResult> {
-        openbitfun_core_types::validate_session_id(&request.source_session_id)
+        starmate_core_types::validate_session_id(&request.source_session_id)
             .map_err(OpenBitFunError::Validation)?;
         let branch_allocation_lock = self
             .get_session_branch_allocation_lock(workspace_path)

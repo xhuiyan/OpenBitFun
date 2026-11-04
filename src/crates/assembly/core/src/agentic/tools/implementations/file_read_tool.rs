@@ -607,7 +607,7 @@ Returns numbered lines (line number, tab, text). Choose the window needed for th
                     meta: None,
                 };
             };
-            if metadata.kind != openbitfun_runtime_ports::WorkspacePathKind::File {
+            if metadata.kind != starmate_runtime_ports::WorkspacePathKind::File {
                 return ValidationResult {
                     result: false,
                     message: Some(format!("Path is not a file: {}", resolved.logical_path)),
@@ -953,8 +953,8 @@ mod tests {
         publish_agent_context_snapshot, remove_agent_context_snapshot, MiniAppAgentContextInput,
     };
     use async_trait::async_trait;
-    use openbitfun_runtime_ports::ToolRuntimeHandles;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::ToolRuntimeHandles;
+    use starmate_runtime_ports::{
         WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceDirEntry, WorkspaceFileSystem,
         WorkspaceServices, WorkspaceShell,
     };
@@ -1054,7 +1054,7 @@ mod tests {
         async fn open_read(
             &self,
             _path: &str,
-        ) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceReader> {
+        ) -> anyhow::Result<starmate_runtime_ports::WorkspaceReader> {
             Ok(Box::new(std::io::Cursor::new(self.bytes.clone())))
         }
 
@@ -1062,9 +1062,9 @@ mod tests {
             &self,
             _path: &str,
             _follow_symlinks: bool,
-        ) -> anyhow::Result<Option<openbitfun_runtime_ports::WorkspaceMetadata>> {
-            Ok(Some(openbitfun_runtime_ports::WorkspaceMetadata {
-                kind: openbitfun_runtime_ports::WorkspacePathKind::File,
+        ) -> anyhow::Result<Option<starmate_runtime_ports::WorkspaceMetadata>> {
+            Ok(Some(starmate_runtime_ports::WorkspaceMetadata {
+                kind: starmate_runtime_ports::WorkspacePathKind::File,
                 size: Some(self.bytes.len() as u64),
                 modified: None,
                 permissions: None,

@@ -2,7 +2,7 @@ use crate::account_identity::{
     AccountIdentityClient, DesktopAuthPollRequest, DesktopAuthPollResponse, DesktopAuthStart,
     MarketClientError, MarketMe,
 };
-use openbitfun_product_domains::miniapp::market::{
+use starmate_product_domains::miniapp::market::{
     CursorPage, MarketListingDetail, MarketListingSummary, MarketSort, MarketSubmission,
     MarketSubmissionDraftRequest, ReviewDecisionRequest, MARKET_PACKAGE_CONTENT_TYPE,
 };

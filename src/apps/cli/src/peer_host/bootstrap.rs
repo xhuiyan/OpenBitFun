@@ -3,12 +3,12 @@
 use std::sync::Arc;
 
 use anyhow::{Context, Result};
-use openbitfun_agent_runtime::sdk::SessionEventJournal;
-use openbitfun_core::service::filesystem::FileSystemServiceFactory;
-use openbitfun_core::service::session_projection_store::{
+use starmate_agent_runtime::sdk::SessionEventJournal;
+use starmate_core::service::filesystem::FileSystemServiceFactory;
+use starmate_core::service::session_projection_store::{
     runtime_event_log_dir, FileSessionProjectionStore,
 };
-use openbitfun_core::service::workspace::{self, WorkspaceService};
+use starmate_core::service::workspace::{self, WorkspaceService};
 
 use crate::runtime::CliRuntimeContext;
 
@@ -37,7 +37,7 @@ pub(crate) async fn ensure_peer_host_ready(runtime: &CliRuntimeContext) -> Resul
     // Same log the Desktop Host uses: either can own this Session at different
     // times, and a Turn left running by one must be replayable by the other.
     let session_event_journal = Arc::new(
-        match openbitfun_core::infrastructure::try_get_path_manager_arc() {
+        match starmate_core::infrastructure::try_get_path_manager_arc() {
             Ok(path_manager) => SessionEventJournal::new().with_store(Arc::new(
                 FileSessionProjectionStore::new(runtime_event_log_dir(&path_manager)),
             )),
@@ -83,7 +83,7 @@ pub(crate) async fn ensure_peer_host_ready(runtime: &CliRuntimeContext) -> Resul
     // The file explorer on an attached controller refreshes from
     // `file-system-changed`, so this host must publish its own watch events
     // instead of leaving the tree stale after the first read.
-    openbitfun_core::service::initialize_file_watch_service(Arc::new(PeerControllerEventEmitter));
+    starmate_core::service::initialize_file_watch_service(Arc::new(PeerControllerEventEmitter));
     tracing::info!("CLI peer host services ready");
     Ok(())
 }

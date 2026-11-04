@@ -1,7 +1,7 @@
 //! Linux application launch, separate from opening documents/URLs.
 //! A GUI process outlives its launch request; never wait for that process to exit.
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::OpenAppResult;
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::OpenAppResult;
 use std::process::Stdio;
 
 fn result(name: &str, pid: Option<u32>, path: &str) -> OpenAppResult {
@@ -24,7 +24,7 @@ pub(super) async fn open(name: &str) -> OpenBitFunResult<OpenAppResult> {
         ));
     }
     if !name.ends_with(".desktop") {
-        let mut command = openbitfun_services_core::process_manager::create_tokio_command(name);
+        let mut command = starmate_services_core::process_manager::create_tokio_command(name);
         command
             .stdin(Stdio::null())
             .stdout(Stdio::null())
@@ -48,7 +48,7 @@ pub(super) async fn open(name: &str) -> OpenBitFunResult<OpenAppResult> {
         }
     }
     let (program, args) = desktop_launcher(name);
-    let mut command = openbitfun_services_core::process_manager::create_tokio_command(program);
+    let mut command = starmate_services_core::process_manager::create_tokio_command(program);
     command
         .args(args)
         .stdin(Stdio::null())

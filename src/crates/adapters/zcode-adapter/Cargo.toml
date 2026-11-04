@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-zcode-adapter"
+name = "starmate-zcode-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,12 +7,12 @@ description = "Read-only Zcode session adapter for OpenBitFun"
 autotests = false
 
 [lib]
-name = "openbitfun_zcode_adapter"
+name = "starmate_zcode_adapter"
 crate-type = ["rlib"]
 
 [dependencies]
-openbitfun-opencode-adapter = { path = "../opencode-adapter" }
-openbitfun-product-domains = { path = "../../contracts/product-domains", features = ["external-sources"] }
+starmate-opencode-adapter = { path = "../opencode-adapter" }
+starmate-product-domains = { path = "../../contracts/product-domains", features = ["external-sources"] }
 dirs = { workspace = true }
 
 [dev-dependencies]

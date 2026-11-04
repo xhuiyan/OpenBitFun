@@ -3,7 +3,7 @@
 
 use super::{accounts, codex, store, SubscriptionHttpOptions, SubscriptionProvider};
 use anyhow::{anyhow, Result};
-use openbitfun_core_types::subscription::{
+use starmate_core_types::subscription::{
     SubscriptionModelQuota, SubscriptionQuotaBucket, SubscriptionQuotaDetails,
     SubscriptionQuotaSnapshot, SubscriptionQuotaState, SubscriptionQuotaWindow,
 };
@@ -16,8 +16,8 @@ pub fn model_quota_observation<'a>(
     snapshot: &'a SubscriptionQuotaSnapshot,
     model: &'a str,
     now: i64,
-) -> openbitfun_core_types::subscription::ModelQuotaObservation<'a> {
-    use openbitfun_core_types::subscription::{ModelQuotaEligibility, ModelQuotaObservation};
+) -> starmate_core_types::subscription::ModelQuotaObservation<'a> {
+    use starmate_core_types::subscription::{ModelQuotaEligibility, ModelQuotaObservation};
     let valid_until = snapshot
         .details
         .as_ref()
@@ -53,7 +53,7 @@ enum Allowance {
 }
 
 fn window_recovery(
-    windows: &[openbitfun_core_types::subscription::SubscriptionQuotaWindow],
+    windows: &[starmate_core_types::subscription::SubscriptionQuotaWindow],
     now: i64,
 ) -> Option<i64> {
     windows
@@ -64,7 +64,7 @@ fn window_recovery(
 }
 
 fn windows_expired(
-    windows: &[openbitfun_core_types::subscription::SubscriptionQuotaWindow],
+    windows: &[starmate_core_types::subscription::SubscriptionQuotaWindow],
     now: i64,
 ) -> bool {
     windows
@@ -918,7 +918,7 @@ mod tests {
 #[cfg(test)]
 mod routing_eligibility_tests {
     use super::*;
-    use openbitfun_core_types::subscription::ModelQuotaEligibility;
+    use starmate_core_types::subscription::ModelQuotaEligibility;
     fn quota() -> SubscriptionQuotaSnapshot {
         SubscriptionQuotaSnapshot {
             account_id: "primary".into(),
@@ -933,7 +933,7 @@ mod routing_eligibility_tests {
             unlimited_credits: None,
             windows: vec![],
             details: Some(
-                openbitfun_core_types::subscription::SubscriptionQuotaDetails {
+                starmate_core_types::subscription::SubscriptionQuotaDetails {
                     version: 1,
                     valid_until: Some(1060),
                     included_limit_reached: None,
@@ -966,8 +966,8 @@ mod routing_eligibility_tests {
     fn model_bucket(
         allowed: bool,
         reset: i64,
-    ) -> openbitfun_core_types::subscription::SubscriptionQuotaBucket {
-        use openbitfun_core_types::subscription::{
+    ) -> starmate_core_types::subscription::SubscriptionQuotaBucket {
+        use starmate_core_types::subscription::{
             SubscriptionQuotaBucket, SubscriptionQuotaWindow,
         };
         SubscriptionQuotaBucket {
@@ -1048,7 +1048,7 @@ mod routing_eligibility_tests {
 
     #[test]
     fn exact_model_availability_beats_plan_percentages_but_contradictions_stay_unknown() {
-        use openbitfun_core_types::subscription::SubscriptionModelQuota;
+        use starmate_core_types::subscription::SubscriptionModelQuota;
         let mut observation = quota();
         observation.allowed = Some(true);
         observation.has_credits = Some(true);

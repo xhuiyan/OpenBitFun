@@ -13,7 +13,7 @@ const run = (command, args, options = {}) => new Promise((resolve, reject) => {
   child.once('error', reject);
   child.once('close', (code, signal) => code === 0 ? resolve(output) : reject(new Error(`${command} failed: code=${code} signal=${signal}`)));
 });
-const args = ['test', '--locked', '-p', 'openbitfun-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip'];
+const args = ['test', '--locked', '-p', 'starmate-desktop', '--features', 'devtools', '--test', 'computer_use_native_roundtrip'];
 let executable = process.env.OPENBITFUN_TEST_BINARY;
 if (!executable) {
   const output = await run('cargo', [...args, '--no-run', '--message-format=json'], { stdio: ['ignore', 'pipe', 'inherit'] });

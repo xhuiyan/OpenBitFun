@@ -1,11 +1,11 @@
 //! Window-only WGC frames and authoritative DWM geometry.
 //! There is no desktop/GDI fallback and no encode/decode round trip.
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 use windows::Win32::Foundation::{HWND, RECT};
 use windows::Win32::Graphics::Dwm::{DwmGetWindowAttribute, DWMWA_EXTENDED_FRAME_BOUNDS};
 
 pub(super) struct WindowCapture {
-    pub frame_info: openbitfun_agent_tools::computer_use_host::CaptureFrameInfo,
+    pub frame_info: starmate_agent_tools::computer_use_host::CaptureFrameInfo,
     pub rgba: Vec<u8>,
     pub origin_x: i32,
     pub origin_y: i32,

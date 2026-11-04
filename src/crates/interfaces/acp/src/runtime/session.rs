@@ -8,12 +8,12 @@ use agent_client_protocol::schema::{
 use agent_client_protocol::{Client, ConnectionTo, Error, Result};
 use chrono::{DateTime, Utc};
 use dashmap::mapref::entry::Entry;
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentSessionCreateRequest, AgentSessionDeleteRequest, AgentSessionListRequest,
     AgentSessionModeUpdateRequest, SessionStoragePathRequest,
 };
-use openbitfun_core::agentic::agents::get_agent_registry;
-use openbitfun_core::service::workspace::{get_global_workspace_service, WorkspaceInfo};
+use starmate_core::agentic::agents::get_agent_registry;
+use starmate_core::service::workspace::{get_global_workspace_service, WorkspaceInfo};
 
 use super::model::{
     build_session_config_options, build_session_model_state, normalize_session_model_id,
@@ -23,7 +23,7 @@ use super::{AcpSessionState, OpenBitFunAcpRuntime};
 
 impl OpenBitFunAcpRuntime {
     fn validate_session_target(session_id: &str, cwd: &Path) -> Result<()> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(|message| Error::invalid_params().data(message))?;
         if !cwd.is_absolute() {
             return Err(Error::invalid_params().data("cwd must be an absolute path"));
@@ -105,8 +105,8 @@ impl OpenBitFunAcpRuntime {
             Err(error) => {
                 let core_cleanup_required = matches!(
                     &error,
-                    openbitfun_agent_runtime::sdk::RuntimeError::Port(port_error)
-                        if port_error.kind == openbitfun_agent_runtime::sdk::PortErrorKind::CleanupRequired
+                    starmate_agent_runtime::sdk::RuntimeError::Port(port_error)
+                        if port_error.kind == starmate_agent_runtime::sdk::PortErrorKind::CleanupRequired
                 );
                 let mcp_cleaned = self.release_mcp_servers(&mcp_server_ids).await.is_ok();
                 let core_cleaned = if core_cleanup_required {

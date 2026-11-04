@@ -372,7 +372,7 @@ mod tests {
     use super::{build_request_body, build_request_body_with_context};
     use crate::types::{ModelRequestContext, ToolDefinition};
     use crate::{client::AIClient, types::AIConfig};
-    use openbitfun_core_types::{
+    use starmate_core_types::{
         ReasoningPresetAction, ReasoningPresetDescriptor, ReasoningPresetSource,
     };
     use serde_json::json;

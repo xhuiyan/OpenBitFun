@@ -8,7 +8,7 @@
 use crate::infrastructure::get_path_manager_arc;
 use crate::service::remote_ssh::{RemoteFileService, RemoteTerminalManager, SSHConnectionManager};
 use crate::service::workspace_runtime::WorkspaceRuntimeService;
-pub use openbitfun_services_integrations::remote_ssh::{
+pub use starmate_services_integrations::remote_ssh::{
     local_workspace_stable_storage_id, normalize_remote_workspace_path,
     remote_root_to_mirror_subpath, remote_workspace_stable_id,
     remote_workspace_stable_id_for_connection, sanitize_remote_mirror_path_component,
@@ -41,7 +41,7 @@ pub async fn resolve_workspace_session_identity(
             lookup_remote_connection_with_hint(workspace_path, Some(connection_id)).await
         {
             return Some(WorkspaceSessionIdentity {
-                workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+                workspace_kind: starmate_core_types::WorkspaceKind::Remote,
                 hostname: entry.ssh_host,
                 logical_workspace_path: entry.remote_root,
                 remote_connection_id: Some(entry.connection_id),
@@ -49,7 +49,7 @@ pub async fn resolve_workspace_session_identity(
         }
 
         return Some(WorkspaceSessionIdentity {
-            workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+            workspace_kind: starmate_core_types::WorkspaceKind::Remote,
             hostname: "_unresolved".to_string(),
             logical_workspace_path: normalize_remote_workspace_path(workspace_path),
             remote_connection_id: Some(connection_id.to_string()),
@@ -67,7 +67,7 @@ pub async fn resolve_workspace_session_identity(
     // workspace must never be misclassified as an invalid local path.
     if let Some(entry) = lookup_remote_connection_with_hint(workspace_path, None).await {
         return Some(WorkspaceSessionIdentity {
-            workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+            workspace_kind: starmate_core_types::WorkspaceKind::Remote,
             hostname: entry.ssh_host,
             logical_workspace_path: entry.remote_root,
             remote_connection_id: Some(entry.connection_id),
@@ -90,17 +90,17 @@ pub fn remote_workspace_session_mirror_dir(ssh_host: &str, remote_root_norm: &st
 
 /// Canonical local root [`PathBuf`] plus normalized string form (single `canonicalize` call).
 pub fn canonicalize_local_workspace_root(path: &Path) -> Result<(PathBuf, String), String> {
-    openbitfun_services_integrations::remote_ssh::canonicalize_local_workspace_root(path)
+    starmate_services_integrations::remote_ssh::canonicalize_local_workspace_root(path)
 }
 
 /// Canonical absolute local path as a stable UTF-8 string (forward slashes, dunce-simplified).
 pub fn normalize_local_workspace_root_for_stable_id(path: &Path) -> Result<String, String> {
-    openbitfun_services_integrations::remote_ssh::normalize_local_workspace_root_for_stable_id(path)
+    starmate_services_integrations::remote_ssh::normalize_local_workspace_root_for_stable_id(path)
 }
 
 /// Whether two local paths refer to the same workspace root (canonical comparison when possible).
 pub fn local_workspace_roots_equal(a: &Path, b: &Path) -> bool {
-    openbitfun_services_integrations::remote_ssh::local_workspace_roots_equal(a, b)
+    starmate_services_integrations::remote_ssh::local_workspace_roots_equal(a, b)
 }
 
 /// When a remote scope has `connection_id` but no resolvable SSH host, we must not read/write the
@@ -111,7 +111,7 @@ pub fn unresolved_remote_session_storage_dir(
     connection_id: &str,
     workspace_path_norm: &str,
 ) -> PathBuf {
-    openbitfun_services_integrations::remote_ssh::unresolved_remote_session_storage_dir(
+    starmate_services_integrations::remote_ssh::unresolved_remote_session_storage_dir(
         get_path_manager_arc().remote_ssh_mirror_root_dir(),
         connection_id,
         workspace_path_norm,

@@ -1,10 +1,10 @@
 //! Scheduled job data types.
 
-use openbitfun_agent_runtime::scheduled_job::DEFAULT_SCHEDULED_JOB_RETRY_DELAY_MS;
-pub use openbitfun_agent_runtime::scheduled_job::{
+use starmate_agent_runtime::scheduled_job::DEFAULT_SCHEDULED_JOB_RETRY_DELAY_MS;
+pub use starmate_agent_runtime::scheduled_job::{
     ScheduledJobRunStatus as CronJobRunStatus, ScheduledJobRuntimeState as CronJobState,
 };
-use openbitfun_core_types::SessionExecutionTarget;
+use starmate_core_types::SessionExecutionTarget;
 use serde::{Deserialize, Serialize};
 
 pub const CRON_JOBS_VERSION: u32 = 2;
@@ -35,7 +35,7 @@ pub struct CronJob {
     pub schedule: CronSchedule,
     pub payload: CronJobPayload,
     #[serde(default)]
-    pub report_policy: openbitfun_core_types::background_delivery::BackgroundReportPolicy,
+    pub report_policy: starmate_core_types::background_delivery::BackgroundReportPolicy,
     pub enabled: bool,
     pub target: CronJobTarget,
     pub created_at_ms: i64,
@@ -186,7 +186,7 @@ pub struct CreateCronJobRequest {
     pub schedule: CronSchedule,
     pub payload: CronJobPayload,
     #[serde(default)]
-    pub report_policy: openbitfun_core_types::background_delivery::BackgroundReportPolicy,
+    pub report_policy: starmate_core_types::background_delivery::BackgroundReportPolicy,
     #[serde(default = "default_enabled")]
     pub enabled: bool,
     pub target: CronJobTarget,
@@ -199,7 +199,7 @@ pub struct UpdateCronJobRequest {
     pub schedule: Option<CronSchedule>,
     pub payload: Option<CronJobPayload>,
     #[serde(default)]
-    pub report_policy: Option<openbitfun_core_types::background_delivery::BackgroundReportPolicy>,
+    pub report_policy: Option<starmate_core_types::background_delivery::BackgroundReportPolicy>,
     pub enabled: Option<bool>,
     pub target: Option<CronJobTarget>,
 }
@@ -215,7 +215,7 @@ fn default_agent_type() -> String {
 #[cfg(test)]
 mod background_delivery_upgrade_tests {
     use super::*;
-    use openbitfun_core_types::background_delivery::BackgroundReportPolicy;
+    use starmate_core_types::background_delivery::BackgroundReportPolicy;
     use serde_json::json;
 
     #[test]

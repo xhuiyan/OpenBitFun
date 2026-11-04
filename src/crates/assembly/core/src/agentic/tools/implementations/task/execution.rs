@@ -75,10 +75,10 @@ fn forward_subagent_invocation_context(
     context: &ToolUseContext,
     subagent_context: &mut HashMap<String, String>,
 ) {
-    use openbitfun_agent_runtime::permission::{
+    use starmate_agent_runtime::permission::{
         AUTO_APPROVE_ASK_CONTEXT_KEY, PERMISSION_MODE_CONTEXT_KEY,
     };
-    use openbitfun_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
+    use starmate_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
 
     for key in [
         USER_INPUT_AVAILABLE_CONTEXT_KEY,
@@ -104,7 +104,7 @@ fn forward_subagent_invocation_context(
         .custom_data
         .get(PERMISSION_MODE_CONTEXT_KEY)
         .and_then(Value::as_str)
-        .and_then(openbitfun_runtime_ports::PermissionMode::parse)
+        .and_then(starmate_runtime_ports::PermissionMode::parse)
     {
         subagent_context.insert(
             PERMISSION_MODE_CONTEXT_KEY.to_string(),
@@ -141,7 +141,7 @@ async fn child_delegation_policy(
     coordinator: &crate::agentic::coordination::ConversationCoordinator,
     subagent_type: Option<&str>,
     target_session_id: Option<&str>,
-) -> OpenBitFunResult<openbitfun_runtime_ports::DelegationPolicy> {
+) -> OpenBitFunResult<starmate_runtime_ports::DelegationPolicy> {
     let target_type = target_session_id
         .and_then(|session_id| coordinator.get_session_manager().get_session(session_id))
         .map(|session| session.agent_type);
@@ -158,11 +158,11 @@ async fn child_delegation_policy(
             ));
         }
         return Ok(
-            openbitfun_runtime_ports::DelegationPolicy::top_level().spawn_child_for(target_type)
+            starmate_runtime_ports::DelegationPolicy::top_level().spawn_child_for(target_type)
         );
     }
     match context.delegation_policy().scope {
-        openbitfun_runtime_ports::DelegationScope::Swarm => {
+        starmate_runtime_ports::DelegationScope::Swarm => {
             let agent_type = subagent_type
                 .or(target_type.as_deref())
                 .or(context.agent_type.as_deref())
@@ -175,7 +175,7 @@ async fn child_delegation_policy(
                 )
                 .await
         }
-        openbitfun_runtime_ports::DelegationScope::Standard => {
+        starmate_runtime_ports::DelegationScope::Standard => {
             Ok(context.delegation_policy().spawn_child())
         }
     }
@@ -313,7 +313,7 @@ impl AgentExecutionTool {
             None => None,
         };
         let parent_is_swarm =
-            context.delegation_policy().scope == openbitfun_runtime_ports::DelegationScope::Swarm;
+            context.delegation_policy().scope == starmate_runtime_ports::DelegationScope::Swarm;
         if let Some(requested_type) = invocation.subagent_type.as_deref() {
             let requested_is_swarm = is_swarm_delegate_agent_type(requested_type);
             if !parent_is_swarm && requested_is_swarm {
@@ -1312,8 +1312,8 @@ impl AgentExecutionTool {
         };
 
         let (mut data, mut result_for_assistant) =
-            openbitfun_agent_runtime::subagent_task::subagent_task_completion_result(
-                openbitfun_agent_runtime::subagent_task::SubagentTaskCompletionResultInput {
+            starmate_agent_runtime::subagent_task::subagent_task_completion_result(
+                starmate_agent_runtime::subagent_task::SubagentTaskCompletionResultInput {
                     delegate_target_label: &delegate_target_label,
                     result_text: &result.text,
                     context_mode: context_mode.as_str(),
@@ -1352,11 +1352,11 @@ impl AgentExecutionTool {
 #[cfg(test)]
 mod target_context_tests {
     use super::*;
-    use openbitfun_agent_runtime::deep_review::{
+    use starmate_agent_runtime::deep_review::{
         append_tool_use_context_data, ReviewTargetEvidence,
     };
-    use openbitfun_agent_runtime::permission::AUTO_APPROVE_ASK_CONTEXT_KEY;
-    use openbitfun_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
+    use starmate_agent_runtime::permission::AUTO_APPROVE_ASK_CONTEXT_KEY;
+    use starmate_agent_runtime::user_questions::USER_INPUT_AVAILABLE_CONTEXT_KEY;
 
     fn parent_tool_context() -> ToolUseContext {
         ToolUseContext {
@@ -1370,7 +1370,7 @@ mod target_context_tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1395,7 +1395,7 @@ mod target_context_tests {
             .expect("ordinary child remains reusable after parent switches to Ultimate");
         assert_eq!(
             policy.scope,
-            openbitfun_runtime_ports::DelegationScope::Standard
+            starmate_runtime_ports::DelegationScope::Standard
         );
         assert!(!policy.allow_subagent_spawn);
     }
@@ -1519,7 +1519,7 @@ mod target_context_tests {
 
     #[test]
     fn child_context_inherits_the_parent_resolved_permission_mode() {
-        use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+        use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
 
         let mut parent = parent_tool_context();
         parent.custom_data.insert(
@@ -1535,7 +1535,7 @@ mod target_context_tests {
 
     #[test]
     fn child_context_rejects_an_unparseable_permission_mode() {
-        use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+        use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
 
         let mut parent = parent_tool_context();
         parent.custom_data.insert(
@@ -1553,7 +1553,7 @@ mod target_context_tests {
 
     #[test]
     fn child_context_leaves_unset_permission_mode_for_global_fallback() {
-        use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+        use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
 
         let parent = parent_tool_context();
         let mut child = HashMap::new();

@@ -11,11 +11,11 @@ use crate::service::config::types::{
     AIConfig as ServiceAIConfig, AuthConfig, ImageServiceConfig, MediaConfig, SubscriptionProvider,
 };
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_ai_adapters::client::image_generation::{
+use starmate_ai_adapters::client::image_generation::{
     generate, GeneratedImage, ImageGenerationError, ImageGenerationErrorKind,
     ImageGenerationRequest, ImageGenerationTarget,
 };
-use openbitfun_core_types::{AIConfig, ImageDialect, ProxyConfig};
+use starmate_core_types::{AIConfig, ImageDialect, ProxyConfig};
 use std::collections::HashMap;
 
 /// Authentication material for one image call.

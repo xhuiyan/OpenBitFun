@@ -42,7 +42,7 @@ mod ui;
 
 use anyhow::{anyhow, Result};
 use clap::{CommandFactory, FromArgMatches, Parser, Subcommand, ValueEnum};
-use openbitfun_core::service::remote_connect::DeviceIdentity;
+use starmate_core::service::remote_connect::DeviceIdentity;
 use std::sync::atomic::{AtomicU8, Ordering};
 use std::sync::{Arc, OnceLock};
 
@@ -53,12 +53,12 @@ use mcp_import::{McpImportCommand, McpImportOutputFormat};
 use modes::chat::ChatMode;
 use modes::exec::{ExecApprovalMode, ExecOutputFormat};
 
-pub(crate) const PLUGIN_HOST_LAUNCH_POLICY: openbitfun_core::plugin_host::PluginHostLaunchPolicy =
-    openbitfun_core::plugin_host::PluginHostLaunchPolicy::Enabled;
+pub(crate) const PLUGIN_HOST_LAUNCH_POLICY: starmate_core::plugin_host::PluginHostLaunchPolicy =
+    starmate_core::plugin_host::PluginHostLaunchPolicy::Enabled;
 
 // ======================== Global MCP Service ========================
 
-static MCP_SERVICE: OnceLock<std::sync::Arc<openbitfun_core::service::mcp::MCPService>> =
+static MCP_SERVICE: OnceLock<std::sync::Arc<starmate_core::service::mcp::MCPService>> =
     OnceLock::new();
 
 /// MCP initialization status: 0=not started, 1=in progress, 2=completed, 3=failed
@@ -90,18 +90,18 @@ fn final_change_verification_enabled(
 
 /// Get the global MCP service instance (if initialized)
 pub fn get_mcp_service(
-) -> Option<&'static std::sync::Arc<openbitfun_core::service::mcp::MCPService>> {
+) -> Option<&'static std::sync::Arc<starmate_core::service::mcp::MCPService>> {
     MCP_SERVICE.get()
 }
 
 pub(crate) fn ensure_cli_mcp_service(
-    config_service: Arc<openbitfun_core::service::config::ConfigService>,
-) -> Option<Arc<openbitfun_core::service::mcp::MCPService>> {
+    config_service: Arc<starmate_core::service::config::ConfigService>,
+) -> Option<Arc<starmate_core::service::mcp::MCPService>> {
     if let Some(service) = get_mcp_service() {
         return Some(service.clone());
     }
 
-    let service = match openbitfun_core::service::mcp::MCPService::new(config_service) {
+    let service = match starmate_core::service::mcp::MCPService::new(config_service) {
         Ok(service) => Arc::new(service),
         Err(error) => {
             tracing::warn!("Failed to create MCP service: {}", error);
@@ -113,7 +113,7 @@ pub(crate) fn ensure_cli_mcp_service(
     if MCP_SERVICE.set(service.clone()).is_err() {
         return get_mcp_service().cloned();
     }
-    openbitfun_core::service::mcp::set_global_mcp_service(service.clone());
+    starmate_core::service::mcp::set_global_mcp_service(service.clone());
     get_mcp_init_status().store(1, Ordering::Relaxed);
 
     // Shared TUI keeps the pre-migration CLI-local MCP compatibility path. It
@@ -176,7 +176,7 @@ struct Cli {
 }
 
 fn harness_profile_parser() -> clap::builder::PossibleValuesParser {
-    use openbitfun_core_types::agent_identity::HarnessId;
+    use starmate_core_types::agent_identity::HarnessId;
     clap::builder::PossibleValuesParser::new(HarnessId::ALL.map(|id| {
         clap::builder::PossibleValue::new(id.as_str()).aliases(id.legacy_ids().iter().copied())
     }))
@@ -216,7 +216,7 @@ fn resolved_command_harness_profile(
 }
 
 fn agent_type_with_harness_profile(agent_type: String, harness_profile: Option<&str>) -> String {
-    use openbitfun_core_types::agent_identity::canonical_agent_id;
+    use starmate_core_types::agent_identity::canonical_agent_id;
     match harness_profile {
         // The retired CLI profile was an overlay: balanced preserved --agent.
         Some("balanced") | None => canonical_agent_id(&agent_type).to_string(),
@@ -616,12 +616,12 @@ pub(crate) enum BootstrapProfile {
 impl BootstrapProfile {
     const fn starts_peer_host(
         self,
-        deployment: openbitfun_services_core::runtime_ownership::RuntimeDeployment,
+        deployment: starmate_services_core::runtime_ownership::RuntimeDeployment,
     ) -> bool {
         matches!(self, Self::Interactive)
             && matches!(
                 deployment,
-                openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded
+                starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded
             )
     }
 
@@ -631,21 +631,21 @@ impl BootstrapProfile {
 
     const fn starts_scheduled_jobs(
         self,
-        deployment: openbitfun_services_core::runtime_ownership::RuntimeDeployment,
+        deployment: starmate_services_core::runtime_ownership::RuntimeDeployment,
     ) -> bool {
         // Shared TUI owns one workspace and exits after the last controller
         // disconnects. It cannot own the host-wide durable scheduler lease.
         matches!(self, Self::Interactive | Self::Execution | Self::Detached)
             && matches!(
                 deployment,
-                openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded
+                starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded
             )
     }
 
     const fn starts_plugin_host(self) -> bool {
         matches!(
             PLUGIN_HOST_LAUNCH_POLICY,
-            openbitfun_core::plugin_host::PluginHostLaunchPolicy::Enabled
+            starmate_core::plugin_host::PluginHostLaunchPolicy::Enabled
         ) && matches!(self, Self::Interactive | Self::Execution | Self::Detached)
     }
 }
@@ -837,7 +837,7 @@ fn terminal_scripts_dir() -> std::path::PathBuf {
         .unwrap_or_else(|| {
             std::env::temp_dir().join(format!(
                 "{}-cli",
-                openbitfun_core_types::product_identity::data_namespace()
+                starmate_core_types::product_identity::data_namespace()
             ))
         })
         .join("temp")
@@ -845,9 +845,9 @@ fn terminal_scripts_dir() -> std::path::PathBuf {
 }
 
 async fn initialize_terminal_service() {
-    use openbitfun_core::infrastructure::try_get_path_manager_arc;
-    use openbitfun_core::service::runtime::RuntimeManager;
-    use openbitfun_core::service::terminal::{TerminalApi, TerminalConfig};
+    use starmate_core::infrastructure::try_get_path_manager_arc;
+    use starmate_core::service::runtime::RuntimeManager;
+    use starmate_core::service::terminal::{TerminalApi, TerminalConfig};
 
     let mut terminal_config = TerminalConfig::default();
     terminal_config.shell_integration.scripts_dir = Some(terminal_scripts_dir());
@@ -893,7 +893,7 @@ async fn initialize_core_services(
         workspace_root,
         approval_policy,
         bootstrap_profile,
-        openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded,
+        starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded,
     )
     .await
 }
@@ -902,14 +902,14 @@ async fn initialize_core_services_for_deployment(
     workspace_root: &std::path::Path,
     approval_policy: runtime::approval::CliApprovalPolicy,
     bootstrap_profile: BootstrapProfile,
-    deployment: openbitfun_services_core::runtime_ownership::RuntimeDeployment,
+    deployment: starmate_services_core::runtime_ownership::RuntimeDeployment,
 ) -> Result<std::sync::Arc<runtime::CliRuntimeContext>> {
-    use openbitfun_core::infrastructure::ai::AIClientFactory;
+    use starmate_core::infrastructure::ai::AIClientFactory;
 
     agent::agentic_system::select_agentic_system_profile(
-        openbitfun_core::product_assembly::DeliveryProfile::Cli,
+        starmate_core::product_assembly::DeliveryProfile::Cli,
     )?;
-    openbitfun_core::service::config::initialize_global_config()
+    starmate_core::service::config::initialize_global_config()
         .await
         .map_err(|error| anyhow!("Failed to initialize global config service: {error}"))?;
     tracing::info!("Global config service initialized");
@@ -920,7 +920,7 @@ async fn initialize_core_services_for_deployment(
         if let Err(error) =
             plugin_host_activation::ensure_configured_plugin_execution_supported().await
         {
-            openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+            starmate_core::plugin_host::report_configured_plugin_activation_failure(
                 "CLI startup configuration",
                 None,
                 error,
@@ -929,16 +929,16 @@ async fn initialize_core_services_for_deployment(
         }
     }
     if bootstrap_profile.starts_plugin_host() {
-        match openbitfun_core::plugin_host::initialize_configured_plugin_host_with_log_file(
+        match starmate_core::plugin_host::initialize_configured_plugin_host_with_log_file(
             PLUGIN_HOST_LAUNCH_POLICY,
             logging::active_plugin_host_log_path(),
         )
         .await
         {
-            Ok(openbitfun_core::plugin_host::PluginHostStartup::Disabled) => {}
+            Ok(starmate_core::plugin_host::PluginHostStartup::Disabled) => {}
             Ok(status) => tracing::info!("Plugin host initialization completed: {:?}", status),
             Err(error) => {
-                openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+                starmate_core::plugin_host::report_configured_plugin_activation_failure(
                     "CLI startup",
                     None,
                     error,
@@ -947,22 +947,22 @@ async fn initialize_core_services_for_deployment(
             }
         }
     }
-    let path_manager = openbitfun_core::infrastructure::try_get_path_manager_arc()
+    let path_manager = starmate_core::infrastructure::try_get_path_manager_arc()
         .map_err(|error| anyhow!(error.to_string()))?;
     let entrypoint = match (deployment, bootstrap_profile) {
         (
-            openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded,
+            starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded,
             BootstrapProfile::Interactive,
         ) => "cli-interactive",
-        (openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded, _) => {
+        (starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded, _) => {
             "cli-headless"
         }
-        (openbitfun_services_core::runtime_ownership::RuntimeDeployment::Shared, _) => {
+        (starmate_services_core::runtime_ownership::RuntimeDeployment::Shared, _) => {
             "shared-tui-runtime"
         }
     };
     let runtime_ownership =
-        openbitfun_core::runtime_ownership::CoreRuntimeOwnership::fixed_workspace(
+        starmate_core::runtime_ownership::CoreRuntimeOwnership::fixed_workspace(
             path_manager.as_ref(),
             entrypoint,
             workspace_root,
@@ -971,7 +971,7 @@ async fn initialize_core_services_for_deployment(
         .map_err(|error| anyhow!(error.startup_message(deployment, entrypoint)))?;
     let runtime_ownership = std::sync::Arc::new(runtime_ownership);
 
-    let config_service = openbitfun_core::service::config::get_global_config_service()
+    let config_service = starmate_core::service::config::get_global_config_service()
         .await
         .ok();
 
@@ -983,7 +983,7 @@ async fn initialize_core_services_for_deployment(
     initialize_terminal_service().await;
 
     let agentic_system = agent::agentic_system::init_agentic_system(
-        openbitfun_core::product_assembly::DeliveryProfile::Cli,
+        starmate_core::product_assembly::DeliveryProfile::Cli,
         runtime_ownership,
         computer_use::provider(bootstrap_profile),
     )
@@ -1272,7 +1272,7 @@ async fn resolve_startup_session_override(
             .map(|s| s.session_id.clone())
             .ok_or_else(|| anyhow!("No history sessions for current project"));
     }
-    openbitfun_agent_runtime::session_control::validate_session_id(session_spec)
+    starmate_agent_runtime::session_control::validate_session_id(session_spec)
         .map_err(anyhow::Error::msg)?;
     Ok(session_spec.to_string())
 }
@@ -1528,21 +1528,21 @@ async fn run_cli() -> Result<()> {
             Some(PluginAction::ApproveSource { package_id }) => {
                 management::set_plugin_trust(
                     &package_id,
-                    openbitfun_core::plugin_source::ManagedPluginTrustDecision::ApproveSource,
+                    starmate_core::plugin_source::ManagedPluginTrustDecision::ApproveSource,
                 )
                 .await?;
             }
             Some(PluginAction::Deny { package_id }) => {
                 management::set_plugin_trust(
                     &package_id,
-                    openbitfun_core::plugin_source::ManagedPluginTrustDecision::Denied,
+                    starmate_core::plugin_source::ManagedPluginTrustDecision::Denied,
                 )
                 .await?;
             }
             Some(PluginAction::Revoke { package_id }) => {
                 management::set_plugin_trust(
                     &package_id,
-                    openbitfun_core::plugin_source::ManagedPluginTrustDecision::Revoked,
+                    starmate_core::plugin_source::ManagedPluginTrustDecision::Revoked,
                 )
                 .await?;
             }
@@ -1568,7 +1568,7 @@ async fn run_cli() -> Result<()> {
         Some(Commands::Doctor) => {
             let workspace = std::env::current_dir()?;
             let (_, services) =
-                openbitfun_core::product_runtime::build_local_runtime_services(&workspace, 16)?;
+                starmate_core::product_runtime::build_local_runtime_services(&workspace, 16)?;
             let product_runtime = product_assembly::assemble_cli_runtime_parts(services)?;
             if !management::print_doctor(&product_runtime).await? {
                 std::process::exit(1);
@@ -1761,7 +1761,7 @@ fn main() {
     // Install the workspace-owned ring CryptoProvider before any TLS-capable
     // work (relay WS, reqwest rustls paths, Feishu wss) so every client uses
     // the same explicit process-level provider.
-    openbitfun_core::service::remote_connect::ensure_rustls_crypto_provider();
+    starmate_core::service::remote_connect::ensure_rustls_crypto_provider();
 
     let worker = std::thread::Builder::new()
         .stack_size(16 * 1024 * 1024)
@@ -1774,9 +1774,9 @@ fn main() {
                 .build()
                 .expect("failed to build tokio runtime");
             runtime.block_on(async {
-                let _native_cleanup = openbitfun_computer_use::host_runtime::StopOnExit;
+                let _native_cleanup = starmate_computer_use::host_runtime::StopOnExit;
                 let result = run_cli().await;
-                match openbitfun_core::plugin_host::shutdown_configured_plugin_host().await {
+                match starmate_core::plugin_host::shutdown_configured_plugin_host().await {
                     Ok(Some(report)) => tracing::info!(
                         generation = report.generation,
                         disposition = ?report.disposition,
@@ -1795,7 +1795,7 @@ fn main() {
         })
         .expect("failed to spawn openbitfun worker thread");
 
-    match openbitfun_computer_use::host_runtime::join(worker) {
+    match starmate_computer_use::host_runtime::join(worker) {
         Ok(Ok(())) => {}
         Ok(Err(err)) => {
             if let Some(reported) = err.downcast_ref::<ReportedCliError>() {
@@ -2025,13 +2025,13 @@ mod bootstrap_profile_tests {
         for (profile, starts_peer_host, starts_mcp, starts_plugin_host) in cases {
             assert_eq!(
                 profile.starts_peer_host(
-                    openbitfun_services_core::runtime_ownership::RuntimeDeployment::Embedded,
+                    starmate_services_core::runtime_ownership::RuntimeDeployment::Embedded,
                 ),
                 starts_peer_host
             );
             assert_eq!(profile.starts_mcp(), starts_mcp);
             assert_eq!(profile.starts_plugin_host(), starts_plugin_host);
-            use openbitfun_services_core::runtime_ownership::RuntimeDeployment;
+            use starmate_services_core::runtime_ownership::RuntimeDeployment;
             assert_eq!(
                 profile.starts_scheduled_jobs(RuntimeDeployment::Embedded),
                 starts_mcp
@@ -2193,7 +2193,7 @@ mod sdk_host_command_tests {
         assert_eq!(error.kind(), clap::error::ErrorKind::InvalidSubcommand);
         let help = Cli::command().render_long_help().to_string();
         assert!(!help.contains("sdk-host"));
-        assert!(!include_str!("../Cargo.toml").contains("openbitfun-sdk-host"));
+        assert!(!include_str!("../Cargo.toml").contains("starmate-sdk-host"));
     }
 }
 
@@ -2201,7 +2201,7 @@ mod sdk_host_command_tests {
 mod shared_tui_command_tests {
     use super::{shared_tui_requested, BootstrapProfile, Cli, Commands};
     use clap::{CommandFactory, Parser, Subcommand};
-    use openbitfun_services_core::runtime_ownership::RuntimeDeployment;
+    use starmate_services_core::runtime_ownership::RuntimeDeployment;
 
     #[test]
     fn shared_is_an_opt_in_interactive_tui_flag() {
@@ -2346,7 +2346,7 @@ mod harness_profile_compatibility_tests {
         let help = Cli::command().render_long_help().to_string();
         assert!(help.contains("Minimal, Standard, Ultimate, Creative"));
         assert!(!help.contains("balanced"));
-        for id in openbitfun_core_types::agent_identity::HarnessId::ALL {
+        for id in starmate_core_types::agent_identity::HarnessId::ALL {
             let cli =
                 Cli::try_parse_from(["openbitfun", "--harness-profile", id.as_str()]).unwrap();
             assert_eq!(
@@ -2460,8 +2460,8 @@ mod daemon_command_tests {
 /// opening a folder for the desktop UI is an explicit user action there.
 async fn create_cli_local_workspace(
     path: &std::path::Path,
-) -> Result<openbitfun_core::service::workspace::WorkspaceInfo> {
-    use openbitfun_core::service::workspace::{
+) -> Result<starmate_core::service::workspace::WorkspaceInfo> {
+    use starmate_core::service::workspace::{
         get_global_workspace_service, set_global_workspace_service, WorkspaceService,
     };
     let service = if let Some(service) = get_global_workspace_service() {

@@ -9,8 +9,8 @@ use core_foundation::dictionary::CFDictionary;
 use core_foundation::number::CFNumber;
 use core_foundation::string::CFString;
 use objc2_app_kit::{NSApplicationActivationPolicy, NSRunningApplication, NSWorkspace};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     AppInfo, AppWindowInfo, ComputerUseImageGlobalBounds,
 };
 use std::collections::HashSet;
@@ -218,11 +218,11 @@ pub(super) fn overlays_above(
 }
 
 pub(super) fn list_share_targets(
-) -> OpenBitFunResult<Vec<openbitfun_agent_tools::computer_use_control::ShareTarget>> {
+) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_control::ShareTarget>> {
     Ok(list_windows()?
         .into_iter()
         .map(
-            |window| openbitfun_agent_tools::computer_use_control::ShareTarget {
+            |window| starmate_agent_tools::computer_use_control::ShareTarget {
                 selection_id: String::new(),
                 unavailable_reason: None,
                 id: format!("pid:{}/window:{}", window.pid, window.window_id),

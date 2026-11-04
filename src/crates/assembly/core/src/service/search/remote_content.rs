@@ -6,7 +6,7 @@
 //! candidate files when available, and the native matcher produces every result. It
 //! never touches the controller filesystem, so failures reach the caller as errors.
 
-use openbitfun_services_core::filesystem::FileSearchOutcome;
+use starmate_services_core::filesystem::FileSearchOutcome;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 
@@ -39,7 +39,7 @@ pub async fn search_remote_workspace_contents(
         .await
         .ok_or_else(|| "the remote file service is not available".to_string())?;
     let root_path = crate::service::remote_ssh::normalize_remote_workspace_path(&search.root_path);
-    let services = openbitfun_services_integrations::remote_ssh::remote_workspace_services(
+    let services = starmate_services_integrations::remote_ssh::remote_workspace_services(
         search.connection_id.clone(),
         file_service,
         ssh_manager,
@@ -66,10 +66,10 @@ pub async fn search_remote_workspace_contents(
 #[cfg(all(feature = "ssh-remote", feature = "agent-runtime"))]
 mod enabled {
     use super::RemoteContentSearch;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         WorkspaceCommandOptions, WorkspaceFileSystem, WorkspacePathKind, WorkspaceShell,
     };
-    use openbitfun_services_core::filesystem::{
+    use starmate_services_core::filesystem::{
         compile_content_search_regex, ContentMatchPreviewBuilder, FileSearchOutcome,
         FileSearchResult, SearchMatchType, CONTENT_SEARCH_BINARY_SUFFIXES,
         CONTENT_SEARCH_MAX_FILE_BYTES, CONTENT_SEARCH_SKIPPED_DIRECTORIES,
@@ -270,10 +270,10 @@ mod enabled {
     mod tests {
         use super::*;
         use async_trait::async_trait;
-        use openbitfun_runtime_ports::{
+        use starmate_runtime_ports::{
             WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceDirEntry,
         };
-        use openbitfun_services_core::workspace::{LocalWorkspaceFs, LocalWorkspaceShell};
+        use starmate_services_core::workspace::{LocalWorkspaceFs, LocalWorkspaceShell};
         use std::sync::atomic::{AtomicBool, AtomicUsize};
         use std::sync::{Arc, Mutex};
 
@@ -408,13 +408,13 @@ mod enabled {
                 &self,
                 path: &str,
                 follow_symlinks: bool,
-            ) -> anyhow::Result<Option<openbitfun_runtime_ports::WorkspaceMetadata>> {
+            ) -> anyhow::Result<Option<starmate_runtime_ports::WorkspaceMetadata>> {
                 self.local.metadata(path, follow_symlinks).await
             }
             async fn open_read(
                 &self,
                 path: &str,
-            ) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceReader> {
+            ) -> anyhow::Result<starmate_runtime_ports::WorkspaceReader> {
                 self.opened.fetch_add(1, Ordering::Relaxed);
                 self.local.open_read(path).await
             }
@@ -864,13 +864,13 @@ mod enabled {
                 &self,
                 path: &str,
                 follow_symlinks: bool,
-            ) -> anyhow::Result<Option<openbitfun_runtime_ports::WorkspaceMetadata>> {
+            ) -> anyhow::Result<Option<starmate_runtime_ports::WorkspaceMetadata>> {
                 self.inner.metadata(path, follow_symlinks).await
             }
             async fn open_read(
                 &self,
                 path: &str,
-            ) -> anyhow::Result<openbitfun_runtime_ports::WorkspaceReader> {
+            ) -> anyhow::Result<starmate_runtime_ports::WorkspaceReader> {
                 if let Some(message) = (self.message)(path) {
                     anyhow::bail!("{message}");
                 }

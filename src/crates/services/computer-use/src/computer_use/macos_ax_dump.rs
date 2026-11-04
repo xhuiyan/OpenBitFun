@@ -29,8 +29,8 @@ use core_foundation::base::{CFGetTypeID, CFTypeRef, TCFType};
 use core_foundation::boolean::{CFBoolean, CFBooleanGetTypeID, CFBooleanRef};
 use core_foundation::string::{CFString, CFStringRef};
 use core_graphics::geometry::{CGPoint, CGSize};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{AppStateSnapshot, AxNode};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{AppStateSnapshot, AxNode};
 use std::collections::{HashMap, VecDeque};
 use std::ffi::c_void;
 use std::sync::{Mutex, OnceLock};
@@ -94,7 +94,7 @@ impl AxRef {
 // `AX_NODE_STALE`.
 
 struct CachedSnapshot {
-    scope: openbitfun_agent_tools::computer_use_control::ObservationScope,
+    scope: starmate_agent_tools::computer_use_control::ObservationScope,
     digest: String,
     refs: Vec<AxRef>,
 }
@@ -130,7 +130,7 @@ pub(crate) fn cached_ref(
     let cache = snapshot_cache().lock().ok()?;
     let snap = cache.get(&pid)?;
     if snap.scope
-        != openbitfun_agent_tools::computer_use_control::ObservationScope::from_control(
+        != starmate_agent_tools::computer_use_control::ObservationScope::from_control(
             &super::control_session::snapshot(),
         )
     {
@@ -716,7 +716,7 @@ fn is_closed_menu_container(role: &str, frame: Option<(f64, f64, f64, f64)>) -> 
 }
 
 pub(super) fn dump_app_ax(pid: i32, opts: DumpOpts) -> OpenBitFunResult<AppStateSnapshot> {
-    let scope = openbitfun_agent_tools::computer_use_control::ObservationScope::from_control(
+    let scope = starmate_agent_tools::computer_use_control::ObservationScope::from_control(
         &super::control_session::snapshot(),
     );
     let app = unsafe { AXUIElementCreateApplication(pid) };
@@ -967,7 +967,7 @@ equivalents, or AXPress the menu first.\n",
 
     Ok(AppStateSnapshot {
         observation_id: None,
-        app: openbitfun_agent_tools::computer_use_host::AppInfo {
+        app: starmate_agent_tools::computer_use_host::AppInfo {
             name: window_title.clone().unwrap_or_default(),
             bundle_id: None,
             pid: Some(pid),
@@ -1271,7 +1271,7 @@ mod tests {
                 "the same native element must not be emitted twice"
             );
         }
-        let query = openbitfun_agent_tools::computer_use_host::UiElementLocateQuery {
+        let query = starmate_agent_tools::computer_use_host::UiElementLocateQuery {
             text_contains: Some("Save report".into()),
             ..Default::default()
         };
@@ -1339,7 +1339,7 @@ mod tests {
             serde_json::from_value(serde_json::to_value(&snapshot).unwrap()).unwrap();
         assert_eq!(restored, snapshot);
     }
-    use openbitfun_agent_tools::computer_use_host::AxNode;
+    use starmate_agent_tools::computer_use_host::AxNode;
 
     fn n(idx: u32, parent: Option<u32>, role: &str, title: Option<&str>) -> AxNode {
         AxNode {

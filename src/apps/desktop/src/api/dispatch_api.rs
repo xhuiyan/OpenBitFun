@@ -7,8 +7,8 @@
 use std::sync::Arc;
 
 use async_trait::async_trait;
-use openbitfun_core::infrastructure::PathManager;
-use openbitfun_core::service::dispatch::{
+use starmate_core::infrastructure::PathManager;
+use starmate_core::service::dispatch::{
     answer_device_dispatch, answer_dispatch, append_device_dispatch, append_dispatch,
     cancel_device_dispatch, cancel_dispatch, cancel_dispatch_cli_install,
     continue_device_dispatch_job, continue_dispatch_job, decode_device_dispatch_response,
@@ -25,14 +25,14 @@ use openbitfun_core::service::dispatch::{
     DispatchSubmitRequest, DispatchSyncResultRequest, DispatchTarget, DispatchTargetOption,
     DispatchTargetRequest, DispatchTranscriptRequest, OutboundDispatchStore,
 };
-use openbitfun_core::service::dispatch::{
+use starmate_core::service::dispatch::{
     execute_dispatch_control, DispatchAccountAccess, DispatchControlContext,
 };
-use openbitfun_core::service::remote_connect::account_runtime::AccountDevice;
-use openbitfun_core::service::remote_ssh::dispatch_ssh::{
+use starmate_core::service::remote_connect::account_runtime::AccountDevice;
+use starmate_core::service::remote_ssh::dispatch_ssh::{
     self, DispatchInstallPoll, DispatchInstallStart, DispatchSshProbe,
 };
-use openbitfun_product_domains::detached_dispatch_control::DetachedDispatchControlRequest;
+use starmate_product_domains::detached_dispatch_control::DetachedDispatchControlRequest;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use tauri::State;

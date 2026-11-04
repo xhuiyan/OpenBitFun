@@ -2201,7 +2201,7 @@ mod tests {
     use ratatui::{backend::TestBackend, style::Color, widgets::List, Terminal};
 
     fn login_qr_state() -> ToolDisplayState {
-        let qr = openbitfun_core::service::remote_connect::QrGenerator::present_content(
+        let qr = starmate_core::service::remote_connect::QrGenerator::present_content(
             "https://example.test/wechat-login?code=terminal-fixture",
         )
         .unwrap();

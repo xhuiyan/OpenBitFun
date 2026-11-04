@@ -13,15 +13,15 @@ use crate::miniapp::types::{
 use crate::product_domain_runtime::CoreProductDomainRuntime;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use chrono::Utc;
-use openbitfun_product_domains::miniapp::customization::{
+use starmate_product_domains::miniapp::customization::{
     MiniAppCustomizationBaseline, MiniAppCustomizationMetadata, MiniAppPermissionDiff,
 };
-use openbitfun_product_domains::miniapp::draft::MiniAppDraft;
-use openbitfun_product_domains::miniapp::lifecycle::{
+use starmate_product_domains::miniapp::draft::MiniAppDraft;
+use starmate_product_domains::miniapp::lifecycle::{
     build_worker_revision, MiniAppCreateInput, MiniAppUpdatePatch,
 };
-use openbitfun_product_domains::miniapp::market::{InstalledMarketOrigin, MarketPackageMeta};
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::market::{InstalledMarketOrigin, MarketPackageMeta};
+use starmate_product_domains::miniapp::ports::{
     MiniAppCompilePort, MiniAppImportFromPathRequest, MiniAppPortError, MiniAppPortErrorKind,
     MiniAppPortFuture, MiniAppRuntimeFacade,
 };
@@ -127,7 +127,7 @@ impl MiniAppManager {
             .is_some_and(|meta| {
                 matches!(
                     meta.runtime_profile,
-                    openbitfun_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict
+                    starmate_product_domains::miniapp::types::MiniAppRuntimeProfile::MarketStrict
                 )
             })
     }
@@ -855,7 +855,7 @@ mod tests {
     use crate::miniapp::types::{
         FsPermissions, MiniAppMeta, MiniAppPermissions, MiniAppSource, NpmDep,
     };
-    use openbitfun_product_domains::miniapp::storage::{
+    use starmate_product_domains::miniapp::storage::{
         COMPILED_HTML, DRAFT_JSON, ESM_DEPS_JSON, INDEX_HTML, META_JSON, PACKAGE_JSON, SOURCE_DIR,
         STORAGE_JSON, STYLE_CSS, UI_JS, WORKER_JS,
     };

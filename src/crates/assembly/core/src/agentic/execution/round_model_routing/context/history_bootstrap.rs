@@ -2,7 +2,7 @@
 
 use super::history_source::RouterHistorySource;
 use super::*;
-use openbitfun_agent_runtime::router_context::RouterHistoryBatch;
+use starmate_agent_runtime::router_context::RouterHistoryBatch;
 use std::collections::{HashMap, HashSet};
 use std::sync::{Mutex, Weak};
 
@@ -43,7 +43,7 @@ impl RoundRouterContext {
     ) {
         if self.factory.config.summary_enabled && visible_turn_ids.len() > 1 {
             self.state.history_bootstrap = Some(
-                openbitfun_agent_runtime::router_context::RouterHistoryBootstrap {
+                starmate_agent_runtime::router_context::RouterHistoryBootstrap {
                     turn_ids: visible_turn_ids[..visible_turn_ids.len() - 1].to_vec(),
                     ..Default::default()
                 },

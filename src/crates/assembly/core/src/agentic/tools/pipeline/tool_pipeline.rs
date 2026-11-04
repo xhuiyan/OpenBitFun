@@ -20,13 +20,13 @@ use crate::util::elapsed_ms_u64;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use futures::future::join_all;
 use log::{debug, error, info, warn};
-use openbitfun_agent_runtime::permission::{
+use starmate_agent_runtime::permission::{
     plan_permission_intents, PendingPermissionReceiver, PermissionIntentPlan,
     PermissionRequestManager, PermissionWaitOutcome,
 };
-use openbitfun_agent_runtime::sdk::PermissionReplySource;
-use openbitfun_agent_stream::ToolArgumentRepairKind;
-use openbitfun_agent_tools::{
+use starmate_agent_runtime::sdk::PermissionReplySource;
+use starmate_agent_stream::ToolArgumentRepairKind;
+use starmate_agent_tools::{
     build_invalid_tool_call_error_message, build_normal_tool_json_repair_notice,
     build_permission_denied_tool_presentation, build_tool_execution_error_presentation,
     build_tool_execution_timeout_presentation,
@@ -40,20 +40,20 @@ use openbitfun_agent_tools::{
     USER_STEERING_INTERRUPTED_MESSAGE,
 };
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_core_types::PtcLanguage;
-use openbitfun_runtime_ports::{
+use starmate_core_types::PtcLanguage;
+use starmate_runtime_ports::{
     PermissionReply, PermissionRequest, PermissionRequestSource, PermissionRequestSourceKind,
     PermissionResourceCaseSensitivity, RoundInjectionToolPreemption,
 };
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PortError, PortErrorKind, PtcExecutionRequest, PtcNestedToolCall, PtcRuntime, PtcToolBinding,
     PtcToolCallHandler, PtcToolSpecRequest,
 };
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_services_integrations::ptc_runtime::NodePtcRuntime;
+use starmate_services_integrations::ptc_runtime::NodePtcRuntime;
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_services_integrations::python_ptc_runtime::PythonPtcRuntime;
+use starmate_services_integrations::python_ptc_runtime::PythonPtcRuntime;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 use std::time::{Instant, SystemTime};
@@ -617,12 +617,12 @@ enum PermissionPlanDraft {
 }
 
 pub fn permission_project_id_for_workspace_identity(
-    identity: &openbitfun_services_core::workspace_identity::WorkspaceSessionIdentity,
+    identity: &starmate_services_core::workspace_identity::WorkspaceSessionIdentity,
     is_remote: bool,
 ) -> OpenBitFunResult<String> {
     if !is_remote {
         return Ok(
-            openbitfun_services_core::workspace_identity::local_workspace_stable_storage_id(
+            starmate_services_core::workspace_identity::local_workspace_stable_storage_id(
                 identity.logical_workspace_path(),
             ),
         );
@@ -635,7 +635,7 @@ pub fn permission_project_id_for_workspace_identity(
             )
         })?;
         let key =
-            openbitfun_services_core::workspace_identity::unresolved_remote_session_storage_key(
+            starmate_services_core::workspace_identity::unresolved_remote_session_storage_key(
                 connection_id,
                 identity.logical_workspace_path(),
             );
@@ -643,7 +643,7 @@ pub fn permission_project_id_for_workspace_identity(
     }
 
     Ok(
-        openbitfun_services_core::workspace_identity::remote_workspace_stable_id(
+        starmate_services_core::workspace_identity::remote_workspace_stable_id(
             &identity.identity_host(),
             identity.logical_workspace_path(),
         ),
@@ -777,7 +777,7 @@ impl PtcToolCallHandler for PtcPipelineToolCallHandler {
     async fn call(&self, request: PtcNestedToolCall) -> Result<serde_json::Value, PortError> {
         if matches!(
             request.tool_name.as_str(),
-            openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME
+            starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME
                 | GET_TOOL_SPEC_TOOL_NAME
                 | CALL_DEFERRED_TOOL_NAME
         ) {
@@ -1130,7 +1130,7 @@ impl ToolPipeline {
                     .reply(
                         &request.request_id,
                         PermissionReply::Once,
-                        openbitfun_runtime_ports::PermissionReplySource::AutoApprove,
+                        starmate_runtime_ports::PermissionReplySource::AutoApprove,
                     )
                     .await
                 {
@@ -1154,7 +1154,7 @@ impl ToolPipeline {
         &self,
         task: &ToolTask,
         updated_input: &serde_json::Value,
-    ) -> Option<openbitfun_agent_tools::ValidationResult> {
+    ) -> Option<starmate_agent_tools::ValidationResult> {
         if updated_input == &task.original_effective_arguments {
             return None;
         }
@@ -2347,7 +2347,7 @@ impl ToolPipeline {
                 registry.get_tool(&tool_name).or_else(|| {
                     #[cfg(feature = "ptc-runtime")]
                     {
-                        (tool_name == openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME).then(|| {
+                        (tool_name == starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME).then(|| {
                             Arc::new(crate::agentic::tools::implementations::PtcRunCodeTool::new())
                                 as Arc<dyn crate::agentic::tools::framework::Tool>
                         })
@@ -2889,7 +2889,7 @@ impl ToolPipeline {
 
         let execution_future = async {
             #[cfg(feature = "ptc-runtime")]
-            if tool.name() == openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME {
+            if tool.name() == starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME {
                 return self.execute_ptc_program(task, &tool_context).await;
             }
             tool.call(task.effective_arguments(), &tool_context).await
@@ -2978,7 +2978,7 @@ impl ToolPipeline {
             let mut names = Vec::new();
             for tool in registry.get_all_tools() {
                 let name = tool.name();
-                if name == openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME
+                if name == starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME
                     || allowed.as_ref().is_some_and(|allowed| {
                         !allowed.is_empty() && !allowed.iter().any(|allowed| allowed == name)
                     })
@@ -3192,7 +3192,7 @@ impl ToolPipeline {
 
                 // Send StreamChunk event
                 let _event_data = ToolEventData::StreamChunk {
-                    identity: openbitfun_events::ToolEventIdentity::resolved(
+                    identity: starmate_events::ToolEventIdentity::resolved(
                         task.tool_call.tool_id.clone(),
                         task.invocation.wire_tool_name.clone(),
                         task.effective_tool_name().to_string(),
@@ -3426,10 +3426,10 @@ mod tests {
     use crate::agentic::tools::ToolRuntimeRestrictions;
     use crate::agentic::WorkspaceBinding;
     use async_trait::async_trait;
-    use openbitfun_agent_tools::{
+    use starmate_agent_tools::{
         LoadedDeferredToolSpec, CALL_DEFERRED_TOOL_NAME, USER_REJECTED_TOOL_MESSAGE,
     };
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         ClockPort, PermissionAuditEvent, PermissionAuditRecord, PermissionAuditStorePort,
         PermissionConstraintLayer, PermissionEffect, PermissionGrant, PermissionGrantKey,
         PermissionGrantStorePort, PermissionReplyStorePort, PermissionRule, PortResult,
@@ -3679,7 +3679,7 @@ mod tests {
 
     #[cfg(unix)]
     struct HookActivatingTestTool {
-        skill: openbitfun_agent_runtime::skills::SkillData,
+        skill: starmate_agent_runtime::skills::SkillData,
     }
 
     #[cfg(unix)]
@@ -3721,8 +3721,8 @@ mod tests {
     }
 
     #[cfg(unix)]
-    fn test_skill_hooks(command: &str) -> openbitfun_agent_runtime::skills::SkillData {
-        use openbitfun_agent_runtime::skills::{SkillData, SkillLocation};
+    fn test_skill_hooks(command: &str) -> starmate_agent_runtime::skills::SkillData {
+        use starmate_agent_runtime::skills::{SkillData, SkillLocation};
         let mut skill = SkillData::from_markdown_for_source_slot(
             "/skills/test".into(),
             "---\nname: test\ndescription: Test skill\n---\nTest",
@@ -3732,7 +3732,7 @@ mod tests {
         )
         .unwrap();
         skill.key = "user::claude::test".into();
-        skill.hooks=Some(openbitfun_agent_runtime::skills::SkillHooks::from_yaml(&serde_yaml::to_value(json!({"PreToolUse":[{"matcher":"Capture","hooks":[{"type":"command","command":command}]}]})).unwrap()).unwrap());
+        skill.hooks=Some(starmate_agent_runtime::skills::SkillHooks::from_yaml(&serde_yaml::to_value(json!({"PreToolUse":[{"matcher":"Capture","hooks":[{"type":"command","command":command}]}]})).unwrap()).unwrap());
         skill
     }
 
@@ -3900,7 +3900,7 @@ mod tests {
             "permission_denied"
         );
         assert!(manager.pending_requests().is_empty());
-        let veto = openbitfun_agent_runtime::skills::SkillHooks::from_yaml(&serde_yaml::from_str("PermissionRequest: [{matcher: Capture, hooks: [{type: command, command: 'echo approval-veto >&2; exit 2'}]}]").unwrap()).unwrap();
+        let veto = starmate_agent_runtime::skills::SkillHooks::from_yaml(&serde_yaml::from_str("PermissionRequest: [{matcher: Capture, hooks: [{type: command, command: 'echo approval-veto >&2; exit 2'}]}]").unwrap()).unwrap();
         native_hooks::runtime_hook_registry()
             .register_session_skill(
                 &context.session_id,
@@ -4290,7 +4290,7 @@ mod tests {
             context_vars: HashMap::new(),
             subagent_parent_info: None,
             permission_delegation: None,
-            delegation_policy: openbitfun_runtime_ports::DelegationPolicy::top_level(),
+            delegation_policy: starmate_runtime_ports::DelegationPolicy::top_level(),
             deferred_tools: Vec::new(),
             loaded_deferred_tool_specs: Vec::new(),
             allowed_tools: Vec::new(),
@@ -4449,7 +4449,7 @@ mod tests {
         std::fs::create_dir_all(&workspace_root).expect("PTC test workspace should exist");
         let mut context = permission_test_context();
         context.workspace = Some(WorkspaceBinding::new(None, workspace_root));
-        context.allowed_tools = vec![openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME.to_string()];
+        context.allowed_tools = vec![starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME.to_string()];
         context.context_vars.insert(
             PTC_NESTED_ALLOWED_TOOLS_CONTEXT_KEY.to_string(),
             serde_json::to_string(&vec!["Read"]).expect("nested allowlist should serialize"),
@@ -4459,7 +4459,7 @@ mod tests {
             .execute_tools(
                 vec![ToolCall {
                     tool_id: "outer-ptc".to_string(),
-                    tool_name: openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME.to_string(),
+                    tool_name: starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME.to_string(),
                     arguments: json!({
                         "code": "return await tools.Read({ path: 'src/lib.rs' });"
                     }),
@@ -4475,7 +4475,7 @@ mod tests {
         assert_eq!(results[0].tool_id, "outer-ptc");
         assert_eq!(
             results[0].tool_name,
-            openbitfun_agent_tools::PTC_RUN_CODE_TOOL_NAME
+            starmate_agent_tools::PTC_RUN_CODE_TOOL_NAME
         );
         assert_eq!(results[0].result.result["content"], json!("ok"));
         assert_eq!(
@@ -4604,8 +4604,8 @@ mod tests {
         use crate::agentic::tools::implementations::{
             DesktopCardTool, PageDeployTool, PageManageTool, PagePublishTool,
         };
-        use openbitfun_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
-        use openbitfun_runtime_ports::PermissionMode;
+        use starmate_agent_runtime::permission::PERMISSION_MODE_CONTEXT_KEY;
+        use starmate_runtime_ports::PermissionMode;
 
         let tools: Vec<(Box<dyn Tool>, serde_json::Value)> = vec![
             (
@@ -4737,7 +4737,7 @@ mod tests {
 
     async fn wait_for_permission_request(
         manager: &PermissionRequestManager,
-    ) -> openbitfun_runtime_ports::PermissionRequest {
+    ) -> starmate_runtime_ports::PermissionRequest {
         for _ in 0..100 {
             if let Some(request) = manager.pending_requests().into_iter().next() {
                 return request;
@@ -4750,7 +4750,7 @@ mod tests {
     async fn wait_for_permission_request_count(
         manager: &PermissionRequestManager,
         expected: usize,
-    ) -> Vec<openbitfun_runtime_ports::PermissionRequest> {
+    ) -> Vec<starmate_runtime_ports::PermissionRequest> {
         for _ in 0..100 {
             let requests = manager.pending_requests();
             if requests.len() >= expected {
@@ -5440,7 +5440,7 @@ mod tests {
         .zip(requests.iter())
         {
             match event {
-                openbitfun_runtime_ports::PermissionRequestEvent::Asked { request } => {
+                starmate_runtime_ports::PermissionRequestEvent::Asked { request } => {
                     assert_eq!(request.request_id, expected_request.request_id);
                 }
                 other => panic!("expected asked event, got {other:?}"),
@@ -5459,7 +5459,7 @@ mod tests {
             .reply(
                 &rejected_request.request_id,
                 PermissionReply::Reject { feedback: None },
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("reject one tool");
@@ -5476,7 +5476,7 @@ mod tests {
             .reply(
                 &sibling_request.request_id,
                 PermissionReply::Once,
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("allow sibling tool");
@@ -5530,7 +5530,7 @@ mod tests {
                 PermissionReply::Reject {
                     feedback: Some("Use a read-only path".to_string()),
                 },
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("reject request with feedback");
@@ -5599,7 +5599,7 @@ mod tests {
             .reply(
                 &request.request_id,
                 PermissionReply::Once,
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("allow child request");
@@ -5630,7 +5630,7 @@ mod tests {
         context.session_id = "subagent-session".to_string();
         context.agent_type = "Explore".to_string();
         context.permission_delegation =
-            Some(openbitfun_runtime_ports::PermissionDelegationContext {
+            Some(starmate_runtime_ports::PermissionDelegationContext {
                 parent_session_id: "parent-session".to_string(),
                 parent_dialog_turn_id: None,
                 parent_tool_call_id: "parent-task-call".to_string(),
@@ -5661,7 +5661,7 @@ mod tests {
             .reply(
                 &request.request_id,
                 PermissionReply::Once,
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("allow child request");
@@ -5705,7 +5705,7 @@ mod tests {
             .reply(
                 &request.request_id,
                 PermissionReply::Once,
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("once reply");
@@ -5727,7 +5727,7 @@ mod tests {
             .reply(
                 &request.request_id,
                 PermissionReply::Always,
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("always reply");
@@ -5782,7 +5782,7 @@ mod tests {
             .reply(
                 &other_request.request_id,
                 PermissionReply::Reject { feedback: None },
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("reject other project request");
@@ -5830,7 +5830,7 @@ mod tests {
             .reply(
                 &remote_request.request_id,
                 PermissionReply::Reject { feedback: None },
-                openbitfun_runtime_ports::PermissionReplySource::User,
+                starmate_runtime_ports::PermissionReplySource::User,
             )
             .await
             .expect("reject remote project request");
@@ -5910,7 +5910,7 @@ mod tests {
             audit[1].event,
             PermissionAuditEvent::Replied {
                 reply: PermissionReply::Once,
-                source: openbitfun_runtime_ports::PermissionReplySource::AutoApprove,
+                source: starmate_runtime_ports::PermissionReplySource::AutoApprove,
             }
         ));
         assert!(matches!(
@@ -6219,7 +6219,7 @@ mod tests {
     fn classified_edit_failure_preserves_model_error_and_persisted_detail() {
         let error = OpenBitFunError::ClassifiedTool {
             message: "[guidance] new_string must be different from old_string".into(),
-            detail: openbitfun_core_types::errors::ToolErrorDetail {
+            detail: starmate_core_types::errors::ToolErrorDetail {
                 code: "edit_no_change".into(),
                 kind: "guidance".into(),
             },
@@ -6593,7 +6593,7 @@ mod tests {
         use crate::agentic::core::message::Message;
         use crate::agentic::tools::implementations::computer_use_presentation::complete_model_results;
         use crate::util::types::Message as AIMessage;
-        use openbitfun_agent_tools::ToolImageAttachment;
+        use starmate_agent_tools::ToolImageAttachment;
 
         // These deliberately have the brief summaries that previously hid the
         // entire app list and AX tree from the model. Check the final provider
@@ -6691,7 +6691,7 @@ mod tests {
         DynamicToolInfo {
             provider_id: "fixture".to_string(),
             provider_kind: Some("mcp".to_string()),
-            mcp: Some(openbitfun_agent_tools::DynamicMcpToolInfo {
+            mcp: Some(starmate_agent_tools::DynamicMcpToolInfo {
                 server_id: "fixture".to_string(),
                 server_name: "Fixture".to_string(),
                 tool_name: "lookup".to_string(),
@@ -6752,8 +6752,8 @@ mod tests {
         use crate::agentic::core::message::Message;
         use crate::service::mcp::protocol::MCPToolResult;
         use crate::util::types::Message as AIMessage;
-        use openbitfun_agent_tools::build_mcp_tool_bridge_result;
-        use openbitfun_services_integrations::mcp::adapter::render_mcp_tool_result_for_assistant;
+        use starmate_agent_tools::build_mcp_tool_bridge_result;
+        use starmate_services_integrations::mcp::adapter::render_mcp_tool_result_for_assistant;
 
         let mcp_info = mcp_result_provider_info();
         let effective_name = "mcp__fixture__lookup";

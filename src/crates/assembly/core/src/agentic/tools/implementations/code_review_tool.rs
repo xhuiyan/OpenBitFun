@@ -11,7 +11,7 @@ use crate::service::i18n::code_review_copy_for_language;
 use crate::util::errors::OpenBitFunResult;
 use async_trait::async_trait;
 use log::warn;
-use openbitfun_agent_runtime::deep_review::{
+use starmate_agent_runtime::deep_review::{
     review_diff_budget_exhausted, review_diff_limited, review_target_stale,
 };
 use serde_json::{json, Value};
@@ -773,7 +773,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 

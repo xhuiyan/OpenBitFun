@@ -25,8 +25,8 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use futures::{stream, StreamExt};
 use log::{debug, error, warn};
 #[cfg(feature = "external-sources")]
-use openbitfun_agent_runtime::skills::normalize_local_skill_dir_name;
-use openbitfun_agent_runtime::skills::{
+use starmate_agent_runtime::skills::normalize_local_skill_dir_name;
+use starmate_agent_runtime::skills::{
     annotate_shadowed_skills, build_mode_skill_infos, filter_candidates_for_mode,
     filter_implicitly_invocable_skills, filter_user_invocable_skills, is_skill_globally_enabled,
     normalize_skill_keys, resolve_default_hidden_builtin_for_explicit_invocation,
@@ -36,15 +36,15 @@ use openbitfun_agent_runtime::skills::{
     OPENBITFUN_USER_SKILL_SLOT, PROJECT_SKILL_KEY_PREFIX, PROJECT_SKILL_ROOTS,
     USER_CONFIG_SKILL_ROOTS, USER_HOME_SKILL_ROOTS, USER_SKILL_KEY_PREFIX,
 };
-use openbitfun_services_core::bounded_fs::is_symlink_or_reparse;
+use starmate_services_core::bounded_fs::is_symlink_or_reparse;
 #[cfg(feature = "external-sources")]
-use openbitfun_services_core::bounded_fs::{
+use starmate_services_core::bounded_fs::{
     collect_bounded_regular_files, BoundedDirectoryWalkLimits,
 };
 #[cfg(feature = "external-sources")]
-use openbitfun_services_core::bounded_fs::{read_bounded_text, BoundedTextRead};
+use starmate_services_core::bounded_fs::{read_bounded_text, BoundedTextRead};
 #[cfg(feature = "external-sources")]
-use openbitfun_services_core::workspace_text::read_workspace_relative_text_bounded;
+use starmate_services_core::workspace_text::read_workspace_relative_text_bounded;
 #[cfg(feature = "external-sources")]
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
@@ -680,7 +680,7 @@ impl SkillRegistry {
         location: SkillLocation,
         with_content: bool,
         source_slot: &str,
-    ) -> Result<SkillData, openbitfun_agent_runtime::skills::SkillParseError> {
+    ) -> Result<SkillData, starmate_agent_runtime::skills::SkillParseError> {
         SkillData::from_markdown_for_source_slot(path, content, location, with_content, source_slot)
     }
 
@@ -775,7 +775,7 @@ impl SkillRegistry {
         .await
         {
             Ok(file) => file.content,
-            Err(openbitfun_services_core::workspace_text::WorkspaceTextReadError::NotFound) => {
+            Err(starmate_services_core::workspace_text::WorkspaceTextReadError::NotFound) => {
                 return
             }
             Err(error) => {
@@ -885,14 +885,14 @@ impl SkillRegistry {
     }
 
     fn user_skill_root_path(
-        spec: &openbitfun_agent_runtime::skills::SkillRootSpec,
+        spec: &starmate_agent_runtime::skills::SkillRootSpec,
         home: &Path,
     ) -> PathBuf {
         Self::user_skill_root_path_with_environment(spec, home, |name| std::env::var(name).ok())
     }
 
     fn user_skill_root_path_with_environment(
-        spec: &openbitfun_agent_runtime::skills::SkillRootSpec,
+        spec: &starmate_agent_runtime::skills::SkillRootSpec,
         home: &Path,
         environment: impl Fn(&str) -> Option<String>,
     ) -> PathBuf {
@@ -1292,8 +1292,8 @@ impl SkillRegistry {
             .filter(|root| {
                 matches!(
                     root.scope,
-                    openbitfun_product_domains::external_sources::ExternalSourceScope::Project
-                        | openbitfun_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal
+                    starmate_product_domains::external_sources::ExternalSourceScope::Project
+                        | starmate_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal
                 )
             })
             .count();
@@ -1301,7 +1301,7 @@ impl SkillRegistry {
             .iter()
             .filter(|root| {
                 root.scope
-                    == openbitfun_product_domains::external_sources::ExternalSourceScope::UserGlobal
+                    == starmate_product_domains::external_sources::ExternalSourceScope::UserGlobal
             })
             .count();
         let mut project_root_index = 0usize;
@@ -1420,11 +1420,11 @@ impl SkillRegistry {
                     }
                 };
                 let location = match root.scope {
-                    openbitfun_product_domains::external_sources::ExternalSourceScope::UserGlobal => {
+                    starmate_product_domains::external_sources::ExternalSourceScope::UserGlobal => {
                         SkillLocation::User
                     }
-                    openbitfun_product_domains::external_sources::ExternalSourceScope::Project
-                    | openbitfun_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal => {
+                    starmate_product_domains::external_sources::ExternalSourceScope::Project
+                    | starmate_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal => {
                         SkillLocation::Project
                     }
                     _ => continue,
@@ -1482,11 +1482,11 @@ impl SkillRegistry {
                 ));
             }
             match root.scope {
-                openbitfun_product_domains::external_sources::ExternalSourceScope::UserGlobal => {
+                starmate_product_domains::external_sources::ExternalSourceScope::UserGlobal => {
                     user_root_index = user_root_index.saturating_add(1);
                 }
-                openbitfun_product_domains::external_sources::ExternalSourceScope::Project
-                | openbitfun_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal => {
+                starmate_product_domains::external_sources::ExternalSourceScope::Project
+                | starmate_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal => {
                     project_root_index = project_root_index.saturating_add(1);
                 }
                 _ => {}
@@ -1554,7 +1554,7 @@ impl SkillRegistry {
             .map(|root| LocalConfiguredSkillRootContribution {
                 path: root.path,
                 scope:
-                    openbitfun_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal,
+                    starmate_product_domains::external_sources::ExternalSourceScope::WorkspaceLocal,
                 precedence: root.precedence,
             })
             .collect::<Vec<_>>();
@@ -2199,8 +2199,8 @@ impl SkillRegistry {
 mod opencode_configured_skill_tests {
     use super::{SkillRegistry, SkillRootEntry};
     use crate::external_sources::LocalConfiguredSkillRootContribution;
-    use openbitfun_agent_runtime::skills::{resolve_visible_skills, SkillLocation};
-    use openbitfun_product_domains::external_sources::ExternalSourceScope;
+    use starmate_agent_runtime::skills::{resolve_visible_skills, SkillLocation};
+    use starmate_product_domains::external_sources::ExternalSourceScope;
     use std::fs;
     use std::path::{Path, PathBuf};
 
@@ -2773,7 +2773,7 @@ mod remote_scan_tests {
             start.elapsed(),
             local.len()
         );
-        let catalog = |candidates: Vec<openbitfun_agent_runtime::skills::SkillCandidate>| {
+        let catalog = |candidates: Vec<starmate_agent_runtime::skills::SkillCandidate>| {
             candidates
                 .into_iter()
                 .map(|candidate| {

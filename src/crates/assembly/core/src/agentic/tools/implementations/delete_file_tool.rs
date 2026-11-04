@@ -405,7 +405,7 @@ mod tests {
     #[tokio::test]
     async fn local_and_remote_delete_use_the_same_filesystem_contract() {
         use crate::agentic::{tools::framework::ToolUseContext, WorkspaceBinding};
-        use openbitfun_runtime_ports::ToolRuntimeHandles;
+        use starmate_runtime_ports::ToolRuntimeHandles;
         use serde_json::json;
         use std::os::unix::fs::symlink;
         use std::path::PathBuf;

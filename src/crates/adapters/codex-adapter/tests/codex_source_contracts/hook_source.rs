@@ -1,10 +1,10 @@
-use openbitfun_codex_adapter::{CodexHookProvider, CodexHookProviderOptions};
-use openbitfun_product_domains::external_hook_catalog::{
+use starmate_codex_adapter::{CodexHookProvider, CodexHookProviderOptions};
+use starmate_product_domains::external_hook_catalog::{
     ExternalHookHandlerKind, ExternalHookNativeActivation, ExternalHookProjectionStatus,
     ExternalHookSourceProvider,
 };
-use openbitfun_product_domains::external_hook_contributions::ExternalHookPoint;
-use openbitfun_product_domains::external_sources::{ExecutionDomainId, ExternalSourceContext};
+use starmate_product_domains::external_hook_contributions::ExternalHookPoint;
+use starmate_product_domains::external_sources::{ExecutionDomainId, ExternalSourceContext};
 use std::fs;
 use tempfile::tempdir;
 

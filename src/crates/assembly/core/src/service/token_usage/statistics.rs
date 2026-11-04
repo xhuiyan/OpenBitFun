@@ -7,7 +7,7 @@
 
 use super::types::TokenUsageRecord;
 use crate::service::config::types::AIModelConfig;
-use openbitfun_services_core::token_usage::{
+use starmate_services_core::token_usage::{
     UsageAttribution, UsageAttributionStatus, UsageDimensionAttribution, UsageStatisticsFilterKind,
 };
 use std::collections::HashMap;

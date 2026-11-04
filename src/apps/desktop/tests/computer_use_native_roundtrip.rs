@@ -42,7 +42,7 @@ fn main() {
                 .enable_all()
                 .build()
                 .unwrap()
-                .block_on(openbitfun_desktop_lib::run_native_computer_use_roundtrip_fixture());
+                .block_on(starmate_desktop_lib::run_native_computer_use_roundtrip_fixture());
         });
         let ok = result.is_ok();
         if self_test {

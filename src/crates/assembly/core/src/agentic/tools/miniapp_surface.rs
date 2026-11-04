@@ -13,7 +13,7 @@
 //! port only forwards a bounded, typed request and validates what comes back.
 
 use async_trait::async_trait;
-use openbitfun_product_domains::miniapp::web_surface::{
+use starmate_product_domains::miniapp::web_surface::{
     validate_bridge_payload_size, MiniAppWebAppSummary, MiniAppWebCapability, MiniAppWebErrorCode,
     MiniAppWebNode, MiniAppWebSurfaceInfo, MiniAppWebTargetRegistry, MINIAPP_WEB_MAX_APPS,
 };

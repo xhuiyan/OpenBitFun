@@ -1,5 +1,5 @@
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     RemoteExecPort, RemoteSendStdinRequest, TerminalPort, TerminalSendStdinRequest,
 };
 use std::sync::Arc;

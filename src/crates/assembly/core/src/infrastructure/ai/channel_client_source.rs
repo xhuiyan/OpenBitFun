@@ -3,8 +3,8 @@
 use super::{account_client_source::AccountClientSource, AIClient, AIClientFactory};
 use crate::service::config::types::AIModelConfig;
 use anyhow::{anyhow, Result};
-use openbitfun_config_contracts::model_runtime_binding_fingerprint;
-use openbitfun_services_core::routing_state::{
+use starmate_config_contracts::model_runtime_binding_fingerprint;
+use starmate_services_core::routing_state::{
     ResourceBinding, ResourceCooldown, RoutingStateStore,
 };
 use sha2::{Digest, Sha256};
@@ -15,7 +15,7 @@ pub(crate) struct PreparedChannel {
     pub model_id: String,
     pub client: Arc<AIClient>,
     pub account_source: Option<Arc<dyn AccountClientSource>>,
-    pub origin: Option<openbitfun_core_types::ModelAccountOrigin>,
+    pub origin: Option<starmate_core_types::ModelAccountOrigin>,
     pub credential_revision: Option<u64>,
 }
 
@@ -61,7 +61,7 @@ mod tests {
         };
         let primary = AIModelConfig {
             channel_routing: Some(
-                openbitfun_config_contracts::channel_routing::ModelChannelRouting {
+                starmate_config_contracts::channel_routing::ModelChannelRouting {
                     fallback_model_ids: vec!["relay".into()],
                     ..Default::default()
                 },
@@ -178,7 +178,7 @@ mod tests {
     }
     #[test]
     fn missing_requested_reasoning_cannot_silently_use_the_channel_default() {
-        let config = openbitfun_core_types::AIConfig::try_from(AIModelConfig {
+        let config = starmate_core_types::AIConfig::try_from(AIModelConfig {
             id: "backup".into(),
             provider: "openai".into(),
             enabled: true,
@@ -192,7 +192,7 @@ mod tests {
     }
     #[test]
     fn signed_history_cannot_follow_a_changed_endpoint_or_key() {
-        let config = openbitfun_core_types::AIConfig::try_from(AIModelConfig {
+        let config = starmate_core_types::AIConfig::try_from(AIModelConfig {
             id: "primary".into(),
             name: "Primary".into(),
             provider: "anthropic".into(),
@@ -204,9 +204,9 @@ mod tests {
         })
         .unwrap();
         let client = AIClient::new(config);
-        let mut message = openbitfun_core_types::Message::assistant("Completed".into());
+        let mut message = starmate_core_types::Message::assistant("Completed".into());
         message.thinking_signature = Some("signed-state".into());
-        message.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+        message.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
             protocol: "anthropic".into(),
             channel_origin: Some("primary".into()),
             channel_fingerprint: Some(client.channel_replay_fingerprint()),
@@ -289,14 +289,14 @@ mod tests {
     #[test]
     fn replay_projection_preserves_legacy_seat_provenance_but_drops_unknown_state() {
         let client = AIClient::new(
-            openbitfun_core_types::AIConfig::try_from(AIModelConfig::default()).unwrap(),
+            starmate_core_types::AIConfig::try_from(AIModelConfig::default()).unwrap(),
         );
-        let account = openbitfun_core_types::ModelAccountOrigin {
+        let account = starmate_core_types::ModelAccountOrigin {
             provider: "codex".into(),
             account_id: "account-a".into(),
             upstream_account_id: Some("seat-a".into()),
         };
-        let mut message = openbitfun_core_types::Message::assistant("Saved answer".into());
+        let mut message = starmate_core_types::Message::assistant("Saved answer".into());
         message.thinking_signature = Some("original-signature".into());
         message.reasoning_content = Some("Signed reasoning".into());
         let mut unknown = vec![message.clone()];
@@ -305,7 +305,7 @@ mod tests {
             1
         );
         assert!(unknown[0].reasoning_content.is_none());
-        message.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+        message.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
             protocol: "openai_responses".into(),
             channel_origin: None,
             channel_fingerprint: None,
@@ -324,7 +324,7 @@ mod tests {
             0
         );
         assert_eq!(serde_json::to_value(&projected[0]).unwrap(), before);
-        let changed = openbitfun_core_types::ModelAccountOrigin {
+        let changed = starmate_core_types::ModelAccountOrigin {
             upstream_account_id: Some("replacement-seat".into()),
             ..account
         };
@@ -434,12 +434,12 @@ impl ChannelClientSource {
         bounded.config.context_window = bounded.config.context_window.min(
             self.members[0]
                 .context_window
-                .unwrap_or(openbitfun_config_contracts::DEFAULT_MODEL_CONTEXT_WINDOW_TOKENS),
+                .unwrap_or(starmate_config_contracts::DEFAULT_MODEL_CONTEXT_WINDOW_TOKENS),
         );
         Ok(Arc::new(bounded))
     }
     pub(crate) fn validate_replay_binding(
-        messages: &[openbitfun_core_types::Message],
+        messages: &[starmate_core_types::Message],
         channel: &str,
         client: &AIClient,
         require_provenance: bool,
@@ -474,10 +474,10 @@ impl ChannelClientSource {
     /// selected models and fixed accounts. Keep compatible state per message so
     /// switching back can still reuse the originals in durable history.
     pub(crate) fn project_replay_for_target(
-        messages: &mut [openbitfun_core_types::Message],
+        messages: &mut [starmate_core_types::Message],
         channel: &str,
         client: &AIClient,
-        account: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        account: Option<&starmate_core_types::ModelAccountOrigin>,
     ) -> usize {
         let fingerprint = client.channel_replay_fingerprint();
         let mut stripped = 0;
@@ -516,7 +516,7 @@ impl ChannelClientSource {
     }
     /// Removes provider-signed reasoning from one message. Text, tool calls
     /// and tool results stay; any account or channel can then replay it.
-    fn make_portable(message: &mut openbitfun_core_types::Message) {
+    fn make_portable(message: &mut starmate_core_types::Message) {
         if !Self::has_nonportable_history(std::slice::from_ref(message)) {
             return;
         }
@@ -529,8 +529,8 @@ impl ChannelClientSource {
     /// A switched attempt cannot present another credential's signed state.
     /// The session keeps the originals; only this request copy is rewritten.
     pub(crate) fn portable_history(
-        messages: &[openbitfun_core_types::Message],
-    ) -> Vec<openbitfun_core_types::Message> {
+        messages: &[starmate_core_types::Message],
+    ) -> Vec<starmate_core_types::Message> {
         let mut messages = messages.to_vec();
         messages.iter_mut().for_each(Self::make_portable);
         messages
@@ -540,9 +540,9 @@ impl ChannelClientSource {
     /// the most recent producer's state (it pins this round), and degrade
     /// older or unproven state so routed history always has one origin.
     pub(crate) fn retain_latest_replay_origin(
-        messages: &[openbitfun_core_types::Message],
-    ) -> Vec<openbitfun_core_types::Message> {
-        let provenance = |message: &openbitfun_core_types::Message| {
+        messages: &[starmate_core_types::Message],
+    ) -> Vec<starmate_core_types::Message> {
+        let provenance = |message: &starmate_core_types::Message| {
             message.model_response_replay.as_ref().and_then(|replay| {
                 let channel = replay
                     .channel_origin
@@ -567,8 +567,8 @@ impl ChannelClientSource {
         messages
     }
 
-    pub(crate) fn has_nonportable_history(messages: &[openbitfun_core_types::Message]) -> bool {
-        messages.iter().any(|message| message.thinking_signature.is_some() || message.model_response_replay.as_ref().is_some_and(|replay| replay.items.iter().any(|item| matches!(item, openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning { .. }))))
+    pub(crate) fn has_nonportable_history(messages: &[starmate_core_types::Message]) -> bool {
+        messages.iter().any(|message| message.thinking_signature.is_some() || message.model_response_replay.as_ref().is_some_and(|replay| replay.items.iter().any(|item| matches!(item, starmate_core_types::ModelResponseReplayItem::OpaqueReasoning { .. }))))
     }
     pub(crate) async fn validate(&self) -> Result<()> {
         self.factory.validate_channel_snapshot(&self.members).await
@@ -612,7 +612,7 @@ impl ChannelClientSource {
     }
 
     pub(crate) fn replay_channel(
-        messages: &[openbitfun_core_types::Message],
+        messages: &[starmate_core_types::Message],
     ) -> Result<Option<String>> {
         let mut required = None;
         for message in messages {
@@ -625,7 +625,7 @@ impl ChannelClientSource {
                         replay.items.iter().any(|item| {
                 matches!(
                     item,
-                    openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning { .. }
+                    starmate_core_types::ModelResponseReplayItem::OpaqueReasoning { .. }
                 )
             })
                     })
@@ -661,7 +661,7 @@ impl ChannelClientSource {
         excluded: &[String],
         required: Option<&str>,
         lineage: Option<&str>,
-        required_account: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        required_account: Option<&starmate_core_types::ModelAccountOrigin>,
     ) -> Result<Option<PreparedChannel>> {
         self.factory
             .validate_channel_snapshot(&self.members)
@@ -784,7 +784,7 @@ impl ChannelClientSource {
         id: &str,
         model: &AIModelConfig,
         lineage: Option<&str>,
-        required_account: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        required_account: Option<&starmate_core_types::ModelAccountOrigin>,
         probe_cooled: bool,
     ) -> Result<PreparedChannel> {
         let mut prepared = self
@@ -804,7 +804,7 @@ impl ChannelClientSource {
         bounded.config.context_window = bounded.config.context_window.min(
             self.members[0]
                 .context_window
-                .unwrap_or(openbitfun_config_contracts::DEFAULT_MODEL_CONTEXT_WINDOW_TOKENS),
+                .unwrap_or(starmate_config_contracts::DEFAULT_MODEL_CONTEXT_WINDOW_TOKENS),
         );
         prepared.client = Arc::new(bounded);
         *self

@@ -5,7 +5,7 @@
 
 use super::{bot, ConnectionMethod, ConnectionResult, RemoteConnectService};
 use anyhow::{anyhow, Result};
-use openbitfun_product_domains::remote_control::RemoteControlRequest;
+use starmate_product_domains::remote_control::RemoteControlRequest;
 use serde_json::{json, Value};
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU64, Ordering};

@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
 use agent_client_protocol::{Builder, Error, HandleDispatchFrom};
-use openbitfun_agent_runtime::sdk::AgentSessionRestoreRequest;
-use openbitfun_app_server_protocol::session::{
+use starmate_agent_runtime::sdk::AgentSessionRestoreRequest;
+use starmate_app_server_protocol::session::{
     CancelLineageRequest, CancelLineageResponse, CompactSessionRequest, CompactSessionResponse,
     InspectLineageRequest, InspectLineageResponse, ReadTranscriptRequest, ReadTranscriptResponse,
     RedoSessionRequest, ReloadContextRequest, ReloadContextResponse, ResolveWorkspaceRequest,
@@ -185,7 +185,7 @@ pub(in crate::server) fn builder(
                         runtime
                             .runtime()
                             .read_session_transcript(
-                                openbitfun_runtime_ports::SessionTranscriptRequest {
+                                starmate_runtime_ports::SessionTranscriptRequest {
                                     session_id: session_id.clone(),
                                     turn_id: None,
                                 },
@@ -196,7 +196,7 @@ pub(in crate::server) fn builder(
                         runtime
                             .runtime()
                             .resolve_session_workspace_binding(
-                                openbitfun_runtime_ports::AgentSessionWorkspaceRequest {
+                                starmate_runtime_ports::AgentSessionWorkspaceRequest {
                                     session_id: session_id.clone(),
                                 },
                             )

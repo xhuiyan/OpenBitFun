@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-computer-use"
+name = "starmate-computer-use"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -14,9 +14,9 @@ cc = { workspace = true }
 pkg-config = { workspace = true }
 
 [dependencies]
-openbitfun-agent-tools = { path = "../../execution/tool-contracts", features = ["computer-use-contract", "element-token"] }
-openbitfun-core-types = { path = "../../contracts/core-types" }
-openbitfun-services-core = { path = "../services-core", features = ["process-runtime"] }
+starmate-agent-tools = { path = "../../execution/tool-contracts", features = ["computer-use-contract", "element-token"] }
+starmate-core-types = { path = "../../contracts/core-types" }
+starmate-services-core = { path = "../services-core", features = ["process-runtime"] }
 tool-runtime = { path = "../../execution/tool-execution" }
 async-trait = { workspace = true }
 serde = { workspace = true }

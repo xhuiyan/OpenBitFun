@@ -681,7 +681,7 @@ mod tests {
         Arc<AtomicUsize>,
         tokio::task::JoinHandle<()>,
     ) {
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let address = listener.local_addr().unwrap();
         let connections = Arc::new(AtomicUsize::new(0));

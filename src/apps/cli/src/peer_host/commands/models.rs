@@ -14,10 +14,10 @@ pub(crate) async fn list_ai_models_by_config(args: &Value) -> Result<Value, Stri
 }
 
 async fn create_transient_ai_client_for_config(
-    model_config: openbitfun_core::service::config::types::AIModelConfig,
-) -> Result<openbitfun_core::infrastructure::ai::AIClient, String> {
-    let global_config: openbitfun_core::service::config::GlobalConfig =
-        openbitfun_core::service::config::get_global_config_service()
+    model_config: starmate_core::service::config::types::AIModelConfig,
+) -> Result<starmate_core::infrastructure::ai::AIClient, String> {
+    let global_config: starmate_core::service::config::GlobalConfig =
+        starmate_core::service::config::get_global_config_service()
             .await
             .map_err(|e| e.to_string())?
             .get_config(None)
@@ -27,16 +27,16 @@ async fn create_transient_ai_client_for_config(
 }
 
 async fn build_transient_client(
-    model_config: openbitfun_core::service::config::types::AIModelConfig,
-    global_config: &openbitfun_core::service::config::GlobalConfig,
-) -> Result<openbitfun_core::infrastructure::ai::AIClient, String> {
+    model_config: starmate_core::service::config::types::AIModelConfig,
+    global_config: &starmate_core::service::config::GlobalConfig,
+) -> Result<starmate_core::infrastructure::ai::AIClient, String> {
     let auth = model_config.auth.clone();
-    let stream_options = openbitfun_core::infrastructure::ai::build_stream_options_for_model(
+    let stream_options = starmate_core::infrastructure::ai::build_stream_options_for_model(
         &global_config.ai,
         Some(&model_config),
     );
 
-    let mut ai_config: openbitfun_core::util::types::AIConfig = model_config
+    let mut ai_config: starmate_core::util::types::AIConfig = model_config
         .clone()
         .try_into()
         .map_err(|e| format!("Failed to convert configuration: {}", e))?;
@@ -48,12 +48,12 @@ async fn build_transient_client(
         None
     };
     let subscription_options =
-        openbitfun_core::infrastructure::subscription_auth::SubscriptionHttpOptions::new(
+        starmate_core::infrastructure::subscription_auth::SubscriptionHttpOptions::new(
             proxy_config.clone(),
             skip_ssl_verify,
         );
 
-    openbitfun_core::infrastructure::ai::client_factory::apply_subscription_auth_with_options(
+    starmate_core::infrastructure::ai::client_factory::apply_subscription_auth_with_options(
         &auth,
         &mut ai_config,
         &subscription_options,
@@ -62,16 +62,16 @@ async fn build_transient_client(
     .map_err(|e| format!("Failed to resolve subscription auth: {}", e))?;
 
     let client =
-        openbitfun_core::infrastructure::ai::client_factory::apply_subscription_request_profile(
+        starmate_core::infrastructure::ai::client_factory::apply_subscription_request_profile(
             &auth,
-            openbitfun_core::infrastructure::ai::AIClient::new_with_runtime_options(
+            starmate_core::infrastructure::ai::AIClient::new_with_runtime_options(
                 ai_config,
                 proxy_config,
                 stream_options,
             ),
         );
     Ok(
-        openbitfun_core::infrastructure::ai::client_factory::apply_model_default_reasoning(
+        starmate_core::infrastructure::ai::client_factory::apply_model_default_reasoning(
             client,
             &model_config,
         )
@@ -83,19 +83,19 @@ pub(crate) async fn get_ai_model_catalog() -> Result<Value, String> {
     // A controller receives configured models, defaults and the session
     // selection. The models.dev bodies stay on the host: they describe the
     // public models.dev catalog, and a controller reads its own snapshot.
-    serde_json::to_value(openbitfun_core::get_remote_model_catalog().await?)
+    serde_json::to_value(starmate_core::get_remote_model_catalog().await?)
         .map_err(|error| error.to_string())
 }
 
 pub(crate) async fn project_ai_model_reasoning_catalog(args: &Value) -> Result<Value, String> {
     let request = serde_json::from_value(crate::peer_host::args::request_value(args).clone())
         .map_err(|error| format!("Invalid reasoning catalog request: {error}"))?;
-    serde_json::to_value(openbitfun_core::project_ai_model_reasoning_catalog(request).await)
+    serde_json::to_value(starmate_core::project_ai_model_reasoning_catalog(request).await)
         .map_err(|error| error.to_string())
 }
 
 pub(crate) async fn get_model_configs() -> Result<Value, String> {
-    let models = openbitfun_core::service::config::get_global_config_service()
+    let models = starmate_core::service::config::get_global_config_service()
         .await
         .map_err(|error| error.to_string())?
         .get_ai_models()
@@ -105,22 +105,22 @@ pub(crate) async fn get_model_configs() -> Result<Value, String> {
 }
 
 pub(crate) async fn get_models_dev_catalog_status() -> Result<Value, String> {
-    serde_json::to_value(openbitfun_core::get_models_dev_catalog_status().await)
+    serde_json::to_value(starmate_core::get_models_dev_catalog_status().await)
         .map_err(|error| error.to_string())
 }
 
 pub(crate) async fn refresh_models_dev_catalog_now() -> Result<Value, String> {
-    serde_json::to_value(openbitfun_core::refresh_models_dev_catalog_now().await?)
+    serde_json::to_value(starmate_core::refresh_models_dev_catalog_now().await?)
         .map_err(|error| error.to_string())
 }
 
 pub(crate) async fn test_ai_config_connection(args: &Value) -> Result<Value, String> {
-    use openbitfun_core::service::config::types::{AIModelConfig, ModelCapability, ModelCategory};
+    use starmate_core::service::config::types::{AIModelConfig, ModelCapability, ModelCategory};
     let request = crate::peer_host::args::request_value(args);
     let config: AIModelConfig =
         serde_json::from_value(request.get("config").cloned().ok_or("Missing config")?)
             .map_err(|error| format!("Invalid model configuration: {error}"))?;
-    if let Some(result) = openbitfun_core::agentic::execution::round_model_routing::configuration::test_configured_router_connection(&config)
+    if let Some(result) = starmate_core::agentic::execution::round_model_routing::configuration::test_configured_router_connection(&config)
         .await.map_err(|error| error.to_string())?
     {
         return serde_json::to_value(result).map_err(|error| error.to_string());
@@ -154,7 +154,7 @@ pub(crate) async fn test_ai_config_connection(args: &Value) -> Result<Value, Str
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_core::service::config::{types::AIModelConfig, GlobalConfig};
+    use starmate_core::service::config::{types::AIModelConfig, GlobalConfig};
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     #[tokio::test]
@@ -164,7 +164,7 @@ mod tests {
             provider: "openai".into(),
             model_name: "unsaved-reasoning-model".into(),
             base_url: "http://127.0.0.1:1/v1".into(),
-            reasoning: Some(openbitfun_core_types::ReasoningConfig {
+            reasoning: Some(starmate_core_types::ReasoningConfig {
                 default_preset: Some("medium".into()),
                 ..Default::default()
             }),

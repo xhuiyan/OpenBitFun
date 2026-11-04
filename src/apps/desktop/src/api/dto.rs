@@ -1,9 +1,9 @@
 //! DTO Module
 
-use openbitfun_core::service::remote_ssh::{
+use starmate_core::service::remote_ssh::{
     normalize_remote_workspace_path, LOCAL_WORKSPACE_SSH_HOST,
 };
-use openbitfun_core::service::workspace::manager::WorkspaceKind;
+use starmate_core::service::workspace::manager::WorkspaceKind;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -96,7 +96,7 @@ pub struct WorkspaceInfoDto {
 
 impl WorkspaceInfoDto {
     pub fn from_workspace_info(
-        info: &openbitfun_core::service::workspace::manager::WorkspaceInfo,
+        info: &starmate_core::service::workspace::manager::WorkspaceInfo,
     ) -> Self {
         let connection_id = info
             .metadata
@@ -135,7 +135,7 @@ impl WorkspaceInfoDto {
             workspace_kind: WorkspaceKindDto::from_workspace_kind(&info.workspace_kind),
             assistant_id: info.assistant_id.clone(),
             default_name_number:
-                openbitfun_core::service::workspace::assistant_naming::default_name_number(info),
+                starmate_core::service::workspace::assistant_naming::default_name_number(info),
             languages: info.languages.clone(),
             opened_at: info.opened_at.to_rfc3339(),
             last_accessed: info.last_accessed.to_rfc3339(),
@@ -166,7 +166,7 @@ impl WorkspaceInfoDto {
 }
 
 fn workspace_display_name(
-    info: &openbitfun_core::service::workspace::manager::WorkspaceInfo,
+    info: &starmate_core::service::workspace::manager::WorkspaceInfo,
 ) -> String {
     let name = info.name.trim();
     let normalized = name.to_ascii_lowercase();
@@ -205,7 +205,7 @@ fn workspace_display_name(
 
 impl WorkspaceIdentityDto {
     pub fn from_workspace_identity(
-        identity: &openbitfun_core::service::workspace::manager::WorkspaceIdentity,
+        identity: &starmate_core::service::workspace::manager::WorkspaceIdentity,
     ) -> Self {
         Self {
             name: identity.name.clone(),
@@ -219,7 +219,7 @@ impl WorkspaceIdentityDto {
 
 impl WorkspaceWorktreeInfoDto {
     pub fn from_workspace_worktree_info(
-        info: &openbitfun_core::service::workspace::manager::WorkspaceWorktreeInfo,
+        info: &starmate_core::service::workspace::manager::WorkspaceWorktreeInfo,
     ) -> Self {
         Self {
             path: info.path.clone(),
@@ -232,7 +232,7 @@ impl WorkspaceWorktreeInfoDto {
 }
 
 impl RelatedPathDto {
-    pub fn from_related_path(path: &openbitfun_core::service::workspace::RelatedPath) -> Self {
+    pub fn from_related_path(path: &starmate_core::service::workspace::RelatedPath) -> Self {
         Self {
             path: path.path.clone(),
             description: path.description.clone(),
@@ -242,9 +242,9 @@ impl RelatedPathDto {
 
 impl WorkspaceTypeDto {
     pub fn from_workspace_type(
-        workspace_type: &openbitfun_core::service::workspace::manager::WorkspaceType,
+        workspace_type: &starmate_core::service::workspace::manager::WorkspaceType,
     ) -> Self {
-        use openbitfun_core::service::workspace::manager::WorkspaceType;
+        use starmate_core::service::workspace::manager::WorkspaceType;
         match workspace_type {
             WorkspaceType::RustProject
             | WorkspaceType::NodeProject
@@ -260,9 +260,9 @@ impl WorkspaceTypeDto {
 
 impl WorkspaceKindDto {
     pub fn from_workspace_kind(
-        workspace_kind: &openbitfun_core::service::workspace::manager::WorkspaceKind,
+        workspace_kind: &starmate_core::service::workspace::manager::WorkspaceKind,
     ) -> Self {
-        use openbitfun_core::service::workspace::manager::WorkspaceKind;
+        use starmate_core::service::workspace::manager::WorkspaceKind;
         match workspace_kind {
             WorkspaceKind::Normal => WorkspaceKindDto::Normal,
             WorkspaceKind::Assistant => WorkspaceKindDto::Assistant,
@@ -273,7 +273,7 @@ impl WorkspaceKindDto {
 
 impl ProjectStatisticsDto {
     pub fn from_workspace_statistics(
-        stats: &openbitfun_core::service::workspace::manager::WorkspaceStatistics,
+        stats: &starmate_core::service::workspace::manager::WorkspaceStatistics,
     ) -> Self {
         Self {
             total_files: stats.total_files,

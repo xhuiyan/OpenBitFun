@@ -6,7 +6,7 @@
 use crate::{client::AIClient, client::StreamResponse};
 use anyhow::Result;
 use futures::StreamExt;
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use serde_json::{json, Value};
 use std::collections::HashMap;
 

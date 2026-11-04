@@ -2,7 +2,7 @@
 
 use crate::types::Message;
 use anyhow::Result;
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use serde_json::{json, Value};
 
 /// Message payload overrides are merged after the message projection. Reject

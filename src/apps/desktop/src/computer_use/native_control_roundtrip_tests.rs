@@ -1,8 +1,8 @@
 //! Real Tool -> desktop host -> native capture/input regression, opt-in only.
 use super::DesktopComputerUseHost;
-use openbitfun_core::agentic::tools::computer_use_host::ComputerUseHost;
-use openbitfun_core::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
-use openbitfun_core::agentic::tools::implementations::ComputerUseTool;
+use starmate_core::agentic::tools::computer_use_host::ComputerUseHost;
+use starmate_core::agentic::tools::framework::{Tool, ToolResult, ToolUseContext};
+use starmate_core::agentic::tools::implementations::ComputerUseTool;
 use serde_json::{json, Value};
 use std::sync::Arc;
 use std::time::Duration;
@@ -14,7 +14,7 @@ const OWNER: &str = "native-control-roundtrip-fixture";
 async fn select_and_grant_fixture(host: &DesktopComputerUseHost, pid: i32, window: Option<u64>) {
     let pending = crate::computer_use::control_session::request_share(
         OWNER,
-        openbitfun_agent_tools::computer_use_control::ControlMode::Background,
+        starmate_agent_tools::computer_use_control::ControlMode::Background,
     )
     .unwrap();
     assert_eq!(pending.state, "awaiting_share");
@@ -34,13 +34,13 @@ async fn select_and_grant_fixture(host: &DesktopComputerUseHost, pid: i32, windo
         .share_selected_target(
             pending.generation,
             &target.selection_id,
-            openbitfun_agent_tools::computer_use_control::ControlMode::Background,
+            starmate_agent_tools::computer_use_control::ControlMode::Background,
         )
         .await
         .unwrap();
     assert_eq!(
         shared.mode,
-        openbitfun_agent_tools::computer_use_control::ControlMode::Observe
+        starmate_agent_tools::computer_use_control::ControlMode::Observe
     );
     assert!(crate::computer_use::control_session::acquire(OWNER, "app_click").is_err());
     use crate::computer_use::shared_preview::{self, SharedInputRequest, SharedPreviewRequest};
@@ -55,7 +55,7 @@ async fn select_and_grant_fixture(host: &DesktopComputerUseHost, pid: i32, windo
         && !frame.screenshot_id.is_empty()));
     let denied = shared_preview::input(SharedInputRequest {
         scope: preview_scope(),
-        input: openbitfun_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
+        input: starmate_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
             keys: vec!["escape".into()],
             focus_idx: None,
         },
@@ -191,7 +191,7 @@ fn assert_session(
         Some(target),
         "capture retargeted between actions"
     );
-    assert_eq!(openbitfun_computer_use::test_support::frontmost_pid(), foreground,
+    assert_eq!(starmate_computer_use::test_support::frontmost_pid(), foreground,
         "tool pipeline changed the foreground application; human switching also invalidates this assertion");
 }
 
@@ -206,7 +206,7 @@ async fn wait_for_observer(path: &str) -> Value {
                 && state["active"] == true
                 && state["key_window"] == true
                 && state["pid"].as_i64().map(|pid| pid as i32)
-                    == openbitfun_computer_use::test_support::frontmost_pid()
+                    == starmate_computer_use::test_support::frontmost_pid()
         }) {
             return state;
         }
@@ -251,7 +251,7 @@ pub(crate) async fn run() {
     if let Ok(observer_path) = std::env::var("OPENBITFUN_INPUT_OBSERVER_RESULT") {
         wait_for_observer(&observer_path).await;
     }
-    let foreground = openbitfun_computer_use::test_support::frontmost_pid();
+    let foreground = starmate_computer_use::test_support::frontmost_pid();
     assert_ne!(
         foreground,
         Some(pid),
@@ -510,7 +510,7 @@ pub(crate) async fn run() {
         "stop must revoke the active generation"
     );
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     eprintln!("PASS native tool pipeline: observation, semantic click, image click, Unicode input, Return, OCR verification and stop; binding/generation/foreground stayed stable");
@@ -590,7 +590,7 @@ async fn self_webview_roundtrip() {
     // Use the actual observed element geometry to address the screenshot. The
     // tool still validates the screenshot and dispatches the input itself.
     let (left, top, width, height) = tokio::task::spawn_blocking(move || {
-        openbitfun_computer_use::test_support::webkit_target_frame(pid as i32, idx)
+        starmate_computer_use::test_support::webkit_target_frame(pid as i32, idx)
     })
     .await
     .unwrap();
@@ -660,7 +660,7 @@ async fn self_webview_roundtrip() {
     )
     .await;
     let native_idx = observed_node_index(&typed, "Computer Use Self WebView Fixture");
-    openbitfun_computer_use::test_support::assert_revoked_writes(OWNER, pid as i32, native_idx)
+    starmate_computer_use::test_support::assert_revoked_writes(OWNER, pid as i32, native_idx)
         .await;
     call(&tool, &context, json!({"action":"stop_control"})).await;
     eprintln!("PASS same-process AppKit/WebKit observations, screenshot, exact image/node clicks, Unicode text, shortcuts and Stop with stale-input rejection through ComputerUse");
@@ -689,7 +689,7 @@ async fn run_covered_semantic() {
         .unwrap()
         .len();
     assert_eq!(initial_observer["target_ahead"], false);
-    let foreground = openbitfun_computer_use::test_support::frontmost_pid();
+    let foreground = starmate_computer_use::test_support::frontmost_pid();
     assert_ne!(foreground, Some(pid));
     assert_eq!(initial["active"], false);
     let host = Arc::new(DesktopComputerUseHost::new());
@@ -728,7 +728,7 @@ async fn run_covered_semantic() {
         let active = call(&tool, &context, json!({"action":"activate_app","app":app})).await;
         assert_eq!(active["activated"], true);
         assert_eq!(
-            openbitfun_computer_use::test_support::frontmost_pid(),
+            starmate_computer_use::test_support::frontmost_pid(),
             Some(pid)
         );
         let field = observed_node_index(&active, "fixture-text-field");
@@ -763,7 +763,7 @@ async fn run_covered_semantic() {
         // with live alternatives; foreground activate_app restores the exact
         // window before activating it and returns a fresh observation.
         let window_id = initial["window_id"].as_u64().unwrap();
-        openbitfun_computer_use::test_support::minimize_window(pid, window_id as u32).unwrap();
+        starmate_computer_use::test_support::minimize_window(pid, window_id as u32).unwrap();
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
         let unavailable = loop {
             match tool
@@ -812,7 +812,7 @@ async fn run_covered_semantic() {
             Some(format!("pid:{pid}/window:{window_id}"))
         );
         assert_eq!(
-            openbitfun_computer_use::test_support::frontmost_pid(),
+            starmate_computer_use::test_support::frontmost_pid(),
             Some(pid)
         );
         assert_eq!(read(&path)["foreign_actions"], 0);
@@ -839,7 +839,7 @@ async fn run_covered_semantic() {
     assert_eq!(opened["success"], true);
     assert_eq!(opened["process_id"], pid);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     let opened_by_path = call(
@@ -852,7 +852,7 @@ async fn run_covered_semantic() {
     assert_eq!(opened_by_path["process_id"], pid);
     assert_eq!(opened_by_path["launch_path"], "open_background");
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     let observation = call(
@@ -897,13 +897,13 @@ async fn run_covered_semantic() {
     eprintln!("PASS AX-only observations retain fresh actionable node identities and default observation restores pixels");
     eprintln!(
         "After initial observation frontmost={:?} observer={}",
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         read(&observer_path)
     );
     // Reading an all-window AX snapshot is allowed, but input cannot escape
     // the captured window via a same-pid node or its coordinate fallback.
     {
-        openbitfun_computer_use::test_support::assert_unbound_window_rejected(OWNER, pid);
+        starmate_computer_use::test_support::assert_unbound_window_rejected(OWNER, pid);
         assert_eq!(read(&path)["foreign_actions"], 0);
         eprintln!("PASS same-process unbound AX window cannot receive semantic input or a pointer fallback");
     }
@@ -979,7 +979,7 @@ async fn run_covered_semantic() {
         assert_eq!(content_events[1]["type"], 2);
         assert_eq!(target["foreign_actions"], 0);
         assert_eq!(
-            openbitfun_computer_use::test_support::frontmost_pid(),
+            starmate_computer_use::test_support::frontmost_pid(),
             foreground
         );
         let observer = read(&observer_path);
@@ -998,13 +998,13 @@ async fn run_covered_semantic() {
     eprintln!(
         "Before image button: observer={} frontmost={:?}",
         read(&observer_path),
-        openbitfun_computer_use::test_support::frontmost_pid()
+        starmate_computer_use::test_support::frontmost_pid()
     );
     let observation = call(&tool, &context, json!({"action":"app_click","app":{"pid":pid},"target":image_target(&observation,"button")})).await;
     tokio::time::sleep(std::time::Duration::from_millis(80)).await;
     let button_state = read(&path);
     let button_observer = read(&observer_path);
-    eprintln!("After image button: target={button_state} observer={button_observer} frontmost={:?} expected={foreground:?}", openbitfun_computer_use::test_support::frontmost_pid());
+    eprintln!("After image button: target={button_state} observer={button_observer} frontmost={:?} expected={foreground:?}", starmate_computer_use::test_support::frontmost_pid());
     assert_eq!(button_state["button_actions"], 2);
     assert_eq!(
         button_state["events"].as_array().unwrap().len(),
@@ -1017,7 +1017,7 @@ async fn run_covered_semantic() {
     assert_eq!(button_observer["key_window"], true);
     assert_eq!(button_observer["target_ahead"], false);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     eprintln!("PASS production ImageXy button activation exactly once without raw pointer events or raising the target");
@@ -1035,7 +1035,7 @@ async fn run_covered_semantic() {
     tokio::time::sleep(std::time::Duration::from_millis(80)).await;
     let state = read(&path);
     let observer = read(&observer_path);
-    eprintln!("TRACE production ImageXy semantic focus: target={state} observer={observer} frontmost={:?}", openbitfun_computer_use::test_support::frontmost_pid());
+    eprintln!("TRACE production ImageXy semantic focus: target={state} observer={observer} frontmost={:?}", starmate_computer_use::test_support::frontmost_pid());
     assert_eq!(state["field_text"], "native-control🙂中文");
     assert_eq!(
         state["events"].as_array().unwrap().len(),
@@ -1048,7 +1048,7 @@ async fn run_covered_semantic() {
     assert_eq!(observer["key_window"], true);
     assert_eq!(observer["target_ahead"], false);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     let result = call(&tool, &context, json!({"action":"app_scroll","app":{"pid":pid},"dx":0,"dy":42,"focus":image_target(&result,"canvas")})).await;
@@ -1070,7 +1070,7 @@ async fn run_covered_semantic() {
     assert_eq!(scroll_observer["key_window"], true);
     assert_eq!(scroll_observer["target_ahead"], false);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     eprintln!("PASS scroll anchor delivers canvas scrolling without a click or foreground change");
@@ -1113,13 +1113,13 @@ async fn run_covered_semantic() {
     let before_stop_observer = read(&observer_path);
     eprintln!(
         "TRACE after canvas batch: observer={before_stop_observer} foreground={:?}",
-        openbitfun_computer_use::test_support::frontmost_pid()
+        starmate_computer_use::test_support::frontmost_pid()
     );
     assert_eq!(before_stop_observer["active"], true);
     assert_eq!(before_stop_observer["key_window"], true);
     assert_eq!(before_stop_observer["target_ahead"], false);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     eprintln!(
@@ -1141,7 +1141,7 @@ async fn run_covered_semantic() {
     // Induce a real target-local deactivation without changing the global
     // foreground. The next ordinary Tool input must notice the stale local
     // focus and prepare it again, preserving the original first responder.
-    openbitfun_computer_use::test_support::deactivate_target(
+    starmate_computer_use::test_support::deactivate_target(
         pid,
         initial["window_id"].as_u64().unwrap() as u32,
     );
@@ -1157,7 +1157,7 @@ async fn run_covered_semantic() {
         "fixture must really lose local focus"
     );
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     let recovered = call(
@@ -1188,7 +1188,7 @@ async fn run_covered_semantic() {
     shared_preview::observe(scope()).await.unwrap();
     shared_preview::input(SharedInputRequest {
         scope: scope(),
-        input: openbitfun_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
+        input: starmate_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
             keys: vec!["escape".into()],
             focus_idx: None,
         },
@@ -1206,7 +1206,7 @@ async fn run_covered_semantic() {
     .unwrap();
     assert!(shared_preview::input(SharedInputRequest {
         scope: scope(),
-        input: openbitfun_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
+        input: starmate_core::agentic::tools::computer_use_host::AppInputAction::KeyChord {
             keys: vec!["escape".into()],
             focus_idx: None,
         },
@@ -1234,13 +1234,13 @@ async fn run_covered_semantic() {
     eprintln!(
         "TRACE after stop: observer={final_observer} target={} foreground={:?}",
         read(&path),
-        openbitfun_computer_use::test_support::frontmost_pid()
+        starmate_computer_use::test_support::frontmost_pid()
     );
     assert_eq!(final_observer["active"], true);
     assert_eq!(final_observer["key_window"], true);
     assert_eq!(final_observer["target_ahead"], false);
     assert_eq!(
-        openbitfun_computer_use::test_support::frontmost_pid(),
+        starmate_computer_use::test_support::frontmost_pid(),
         foreground
     );
     assert!(
@@ -1276,7 +1276,7 @@ async fn run_latency_case(case: &str) {
         serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
     };
     let observer = wait_for_observer(&observer_path).await;
-    let foreground = openbitfun_computer_use::test_support::frontmost_pid();
+    let foreground = starmate_computer_use::test_support::frontmost_pid();
     assert_ne!(foreground, Some(pid));
     assert_eq!(observer["target_ahead"], false);
     assert_eq!(read(&path)["field_text"], "");

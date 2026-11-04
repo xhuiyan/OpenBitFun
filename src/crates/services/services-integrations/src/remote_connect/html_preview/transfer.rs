@@ -5,7 +5,7 @@
 use super::HtmlPreviewSource;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
 use futures::{stream, stream::BoxStream, StreamExt};
-use openbitfun_product_domains::html_preview::{
+use starmate_product_domains::html_preview::{
     HtmlPreviewError, HtmlPreviewResource, HtmlPreviewResourceRequest, MAX_PREVIEW_BYTES,
     PREVIEW_CHUNK_BYTES,
 };

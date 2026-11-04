@@ -4,8 +4,8 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use futures::stream::{SplitSink, SplitStream};
 use futures::{SinkExt, StreamExt};
 use log::{debug, info, warn};
-use openbitfun_services_integrations::browser_control::CdpEndpointProvider;
-pub use openbitfun_services_integrations::browser_control::{CdpPageInfo, CdpVersionInfo};
+use starmate_services_integrations::browser_control::CdpEndpointProvider;
+pub use starmate_services_integrations::browser_control::{CdpPageInfo, CdpVersionInfo};
 use serde_json::{json, Value};
 use std::collections::{HashMap, HashSet};
 use std::sync::atomic::{AtomicBool, AtomicI64, Ordering};
@@ -1373,7 +1373,7 @@ mod tests {
             web_socket_url: format!("ws://127.0.0.1:{port}/devtools/browser"),
         };
         assert!(
-            openbitfun_services_integrations::browser_control::BrowserLauncher::is_inferred_guarded_endpoint(&endpoint)
+            starmate_services_integrations::browser_control::BrowserLauncher::is_inferred_guarded_endpoint(&endpoint)
         );
         let logical_port = port;
         let connection = CdpClient::connect_user_profile_browser(

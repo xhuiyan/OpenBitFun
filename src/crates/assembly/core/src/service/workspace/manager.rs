@@ -9,8 +9,8 @@ use super::worktree_topology::global_worktree_topology_service;
 use super::WorktreeTopologyFreshness;
 use crate::util::{errors::*, FrontMatterMarkdown};
 use log::{info, warn};
-pub use openbitfun_runtime_ports::RelatedPath;
-use openbitfun_services_core::workspace_identity::{
+pub use starmate_runtime_ports::RelatedPath;
+use starmate_services_core::workspace_identity::{
     canonical_ssh_connection_id, canonicalize_local_workspace_root,
     local_workspace_stable_storage_id, normalize_local_workspace_root_for_stable_id,
     normalize_remote_workspace_path, remote_workspace_stable_id_for_connection,
@@ -1699,7 +1699,7 @@ mod tests {
             remote_workspace_stable_id_for_connection, RemoteConnectionRebind, WorkspaceKind,
             WorkspaceManager, WorkspaceManagerConfig, WorkspaceOpenOptions,
         };
-        use openbitfun_services_core::workspace_identity::remote_workspace_stable_id;
+        use starmate_services_core::workspace_identity::remote_workspace_stable_id;
 
         let mut manager = WorkspaceManager::new(WorkspaceManagerConfig::default());
         let open = |connection_id: &str| WorkspaceOpenOptions {

@@ -1762,7 +1762,7 @@ async fn fetch_qr_code(base: &str, local_token_list: &[String]) -> Result<QrCode
 fn sync_buf_path(bot_account_id: &str) -> PathBuf {
     let base = super::super::product_home_dir().unwrap_or_else(|| {
         std::env::temp_dir()
-            .join(openbitfun_services_core::product_identity::hidden_data_directory())
+            .join(starmate_services_core::product_identity::hidden_data_directory())
     });
     base.join("weixin")
         .join(format!("{bot_account_id}_get_updates_buf.txt"))
@@ -1771,7 +1771,7 @@ fn sync_buf_path(bot_account_id: &str) -> PathBuf {
 fn context_tokens_path(bot_account_id: &str) -> PathBuf {
     let base = super::super::product_home_dir().unwrap_or_else(|| {
         std::env::temp_dir()
-            .join(openbitfun_services_core::product_identity::hidden_data_directory())
+            .join(starmate_services_core::product_identity::hidden_data_directory())
     });
     base.join("weixin")
         .join(format!("{bot_account_id}_context_tokens.json"))

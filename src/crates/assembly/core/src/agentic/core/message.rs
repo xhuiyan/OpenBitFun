@@ -2,9 +2,9 @@ use crate::agentic::image_analysis::ImageContextData;
 use crate::util::types::{Message as AIMessage, ToolCall as AIToolCall, ToolImageAttachment};
 use crate::util::TokenCounter;
 use log::warn;
-use openbitfun_agent_runtime::prompt_markup::is_system_reminder_only;
-use openbitfun_core_types::{ModelResponseReplay, ReasoningContentKind};
-pub use openbitfun_runtime_ports::{CompressionContract, CompressionContractItem};
+use starmate_agent_runtime::prompt_markup::is_system_reminder_only;
+use starmate_core_types::{ModelResponseReplay, ReasoningContentKind};
+pub use starmate_runtime_ports::{CompressionContract, CompressionContractItem};
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
 use std::time::SystemTime;
@@ -89,7 +89,7 @@ pub struct MessageMetadata {
     /// This is history-scoped: compaction drops it together with the outer
     /// RunCode message, requiring the model to load the definition again.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub ptc_loaded_deferred_tool_specs: Vec<openbitfun_agent_tools::LoadedDeferredToolSpec>,
+    pub ptc_loaded_deferred_tool_specs: Vec<starmate_agent_tools::LoadedDeferredToolSpec>,
     /// Execution facts survive headless turns and UI reconnection. Never sent to providers.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub model_execution: Option<ModelExecutionMetadata>,
@@ -100,7 +100,7 @@ pub struct ModelExecutionMetadata {
     pub model_config_id: String,
     pub effective_model_name: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub routing: Option<openbitfun_events::agentic::ModelRoutingDecision>,
+    pub routing: Option<starmate_events::agentic::ModelRoutingDecision>,
     /// Accepted-attempt timing of the model round that produced this message.
     /// Durable Turn rounds are rebuilt from the generation journal, so the
     /// Runtime keeps these facts here instead of relying on a client checkpoint
@@ -836,8 +836,8 @@ impl Display for MessageContent {
 mod tests {
     use super::{Message, ToolCall};
     use crate::util::types::Message as AIMessage;
-    use openbitfun_agent_stream::ToolArgumentRepairKind;
-    use openbitfun_core_types::{
+    use starmate_agent_stream::ToolArgumentRepairKind;
+    use starmate_core_types::{
         ModelResponseReplay, ModelResponseReplayItem, ReasoningContentKind,
     };
     use serde_json::json;
@@ -846,14 +846,14 @@ mod tests {
     fn ptc_specs_and_routed_execution_metadata_round_trip_together_with_legacy_defaults() {
         let mut message = Message::assistant("Synthetic reply".into());
         message.metadata.ptc_loaded_deferred_tool_specs =
-            vec![openbitfun_agent_tools::LoadedDeferredToolSpec {
+            vec![starmate_agent_tools::LoadedDeferredToolSpec {
                 tool_name: "Read".into(),
                 catalog_generation: 4,
             }];
         message.metadata.model_execution = Some(super::ModelExecutionMetadata {
             model_config_id: "economy".into(),
             effective_model_name: "economy-wire-model".into(),
-            routing: Some(openbitfun_events::agentic::ModelRoutingDecision {
+            routing: Some(starmate_events::agentic::ModelRoutingDecision {
                 route: "economy".into(),
                 latency_ms: 10,
                 fallback_reason: None,
@@ -999,7 +999,7 @@ mod tests {
 
     #[test]
     fn preserves_tool_argument_repair_provenance_from_stream_contract() {
-        let tool_call = ToolCall::from(openbitfun_agent_stream::ToolCall {
+        let tool_call = ToolCall::from(starmate_agent_stream::ToolCall {
             tool_id: "call_1".to_string(),
             tool_name: "Read".to_string(),
             arguments: json!({ "path": "src/main.rs" }),
@@ -1042,9 +1042,9 @@ pub struct ToolCall {
     /// Provenance for any argument repair accepted before tool validation.
     #[serde(
         default,
-        skip_serializing_if = "openbitfun_agent_stream::ToolArgumentRepairKind::is_none"
+        skip_serializing_if = "starmate_agent_stream::ToolArgumentRepairKind::is_none"
     )]
-    pub repair_kind: openbitfun_agent_stream::ToolArgumentRepairKind,
+    pub repair_kind: starmate_agent_stream::ToolArgumentRepairKind,
 }
 
 impl ToolCall {
@@ -1053,8 +1053,8 @@ impl ToolCall {
     }
 }
 
-impl From<openbitfun_agent_stream::ToolCall> for ToolCall {
-    fn from(tool_call: openbitfun_agent_stream::ToolCall) -> Self {
+impl From<starmate_agent_stream::ToolCall> for ToolCall {
+    fn from(tool_call: starmate_agent_stream::ToolCall) -> Self {
         Self {
             tool_id: tool_call.tool_id,
             tool_name: tool_call.tool_name,

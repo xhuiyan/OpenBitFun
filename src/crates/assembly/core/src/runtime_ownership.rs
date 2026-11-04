@@ -9,9 +9,9 @@ use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
 use log::{info, warn};
-use openbitfun_services_core::product_identity::product_id;
-pub use openbitfun_services_core::runtime_ownership::RuntimeDeployment;
-use openbitfun_services_core::runtime_ownership::{
+use starmate_services_core::product_identity::product_id;
+pub use starmate_services_core::runtime_ownership::RuntimeDeployment;
+use starmate_services_core::runtime_ownership::{
     RuntimeOwnershipError, RuntimeOwnershipKey, WorkspaceRuntimeOwnership,
 };
 

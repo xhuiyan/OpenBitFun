@@ -8,7 +8,7 @@ use support::{
 };
 
 fn run_cli(args: &[&str]) -> Output {
-    openbitfun_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
+    starmate_services_core::process_manager::create_command(env!("CARGO_BIN_EXE_openbitfun"))
         .args(args)
         .output()
         .expect("run openbitfun")
@@ -44,13 +44,13 @@ fn command_timeout_helper_returns_within_its_failure_budget() {
     #[cfg(windows)]
     let mut command = {
         let mut command =
-            openbitfun_services_core::process_manager::create_command("powershell.exe");
+            starmate_services_core::process_manager::create_command("powershell.exe");
         command.args(["-NoProfile", "-Command", "Start-Sleep -Seconds 30"]);
         command
     };
     #[cfg(not(windows))]
     let mut command = {
-        let mut command = openbitfun_services_core::process_manager::create_command("sh");
+        let mut command = starmate_services_core::process_manager::create_command("sh");
         command.args(["-c", "exec sleep 30"]);
         command
     };

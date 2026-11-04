@@ -1,6 +1,6 @@
 //! Read-only DeepSeek Harness v0 transcripts; no Cordis or CLI execution.
-use openbitfun_product_domains::session_import::*;
-use openbitfun_services_core::bounded_fs::{
+use starmate_product_domains::session_import::*;
+use starmate_services_core::bounded_fs::{
     collect_bounded_regular_files, is_symlink_or_reparse, BoundedDirectoryWalkLimits,
 };
 use serde_json::{json, Value};

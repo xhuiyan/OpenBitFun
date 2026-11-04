@@ -20,8 +20,8 @@ use crate::computer_use::displays::Screen;
 use async_trait::async_trait;
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 use log::debug;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     ActionRecord, AppInfo, AppSelector, AppShortcutsSnapshot, AppStateSnapshot, AppWaitPredicate,
     AppWindowInfo, ComputerScreenshot, ComputerUseDisplayInfo, ComputerUseHost,
     ComputerUseInteractionState, ComputerUseLastMutationKind, ComputerUsePermissionSnapshot,
@@ -32,7 +32,7 @@ use openbitfun_agent_tools::computer_use_host::{
     VisualMarkView, VisualMarkViewOpts,
 };
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::{
     ComputerUseForegroundApplication, ComputerUsePointerGlobal,
 };
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -76,7 +76,7 @@ const OSASCRIPT_TIMEOUT_MS: u64 = 10_000;
 fn run_osascript_bounded(script: &str, timeout_ms: u64) -> std::io::Result<std::process::Output> {
     use std::process::Stdio;
 
-    let mut child = openbitfun_services_core::process_manager::create_command("/usr/bin/osascript")
+    let mut child = starmate_services_core::process_manager::create_command("/usr/bin/osascript")
         .args(["-e", script])
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
@@ -128,7 +128,7 @@ mod visual_grid_tests {
     use super::*;
     use image::codecs::jpeg::JpegEncoder;
     use image::{DynamicImage, Rgb, RgbImage};
-    use openbitfun_agent_tools::computer_use_host::ComputerUseImageContentRect;
+    use starmate_agent_tools::computer_use_host::ComputerUseImageContentRect;
 
     #[test]
     fn detects_regular_grid_rect_from_synthetic_screenshot() {
@@ -206,7 +206,7 @@ mod macos_applescript_tests {
     /// reports the same syntax errors `osascript` would, so this checks that a
     /// template is valid AppleScript with no side effects.
     fn compiles(script: &str) -> Result<(), String> {
-        let out = openbitfun_services_core::process_manager::create_command("/usr/bin/osacompile")
+        let out = starmate_services_core::process_manager::create_command("/usr/bin/osacompile")
             .args(["-o", "/dev/null", "-e", script])
             .output()
             .map_err(|e| format!("spawn osacompile: {e}"))?;
@@ -376,7 +376,7 @@ impl Default for NativeComputerUseHost {
 impl NativeComputerUseHost {
     fn state_for_scope(
         &self,
-        scope: &openbitfun_agent_tools::computer_use_control::ObservationScope,
+        scope: &starmate_agent_tools::computer_use_control::ObservationScope,
     ) -> OpenBitFunResult<std::sync::MutexGuard<'_, ComputerUseSessionMutableState>> {
         crate::computer_use::control_session::validate_observation_scope(scope)
             .map_err(OpenBitFunError::tool)?;
@@ -456,11 +456,11 @@ impl NativeComputerUseHost {
     fn open_app_macos(
         name: String,
         background: bool,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::OpenAppResult> {
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
         use crate::computer_use::macos_bg_input::{
             pid_for_bundle_id_macos, running_app_identity_macos,
         };
-        use openbitfun_agent_tools::computer_use_host::OpenAppResult;
+        use starmate_agent_tools::computer_use_host::OpenAppResult;
 
         let failure = |err: String| OpenAppResult {
             app_name: name.clone(),
@@ -514,7 +514,7 @@ impl NativeComputerUseHost {
         crate::computer_use::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
         let opened = if background {
             let mut command =
-                openbitfun_services_core::process_manager::create_command("/usr/bin/open");
+                starmate_services_core::process_manager::create_command("/usr/bin/open");
             command.arg("-g");
             if std::path::Path::new(&name).is_absolute() {
                 // A caller-provided app path stays authoritative even before
@@ -572,7 +572,7 @@ Inspect its process and current application state before choosing another operat
                 crate::computer_use::control_session::input_allowed()
                     .map_err(OpenBitFunError::tool)?;
                 let mut command =
-                    openbitfun_services_core::process_manager::create_command("/usr/bin/open");
+                    starmate_services_core::process_manager::create_command("/usr/bin/open");
                 if background {
                     command.arg("-g");
                 }
@@ -890,7 +890,7 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn dispatch_app_input(
         &self,
         app: AppSelector,
-        action: openbitfun_agent_tools::computer_use_host::AppInputAction,
+        action: starmate_agent_tools::computer_use_host::AppInputAction,
     ) -> OpenBitFunResult<()> {
         self.dispatch_app_input_impl(app, action).await
     }
@@ -898,8 +898,8 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn settle_after_input(
         &self,
         app: AppSelector,
-        policy: openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::AppInputSettle> {
+        policy: starmate_agent_tools::computer_use_host::AppInputSettlePolicy,
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::AppInputSettle> {
         self.settle_after_input_impl(app, policy).await
     }
 
@@ -1029,7 +1029,7 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn zoom_observation(
         &self,
         app: AppSelector,
-        region: openbitfun_agent_tools::computer_use_host::ComputerUseZoomRegion,
+        region: starmate_agent_tools::computer_use_host::ComputerUseZoomRegion,
     ) -> OpenBitFunResult<ComputerScreenshot> {
         self.zoom_observation_impl(app, region).await
     }
@@ -1098,20 +1098,20 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn start_control(
         &self,
         owner: &str,
-        request: openbitfun_agent_tools::computer_use_host::ControlStartRequest,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::ControlSnapshot> {
+        request: starmate_agent_tools::computer_use_host::ControlStartRequest,
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         let snapshot = crate::computer_use::control_session::start(owner, request.mode)
             .map_err(OpenBitFunError::tool)?;
         let scope =
-            openbitfun_agent_tools::computer_use_control::ObservationScope::from_control(&snapshot);
+            starmate_agent_tools::computer_use_control::ObservationScope::from_control(&snapshot);
         drop(self.state_for_scope(&scope)?);
         // Background AT-SPI actions need no portal or window picker. The
         // compositor's consent is required only for a portal capture/seat session.
         #[cfg(target_os = "linux")]
-        if request.mode != openbitfun_agent_tools::computer_use_control::ControlMode::Background {
+        if request.mode != starmate_agent_tools::computer_use_control::ControlMode::Background {
             if let Err(error) = crate::computer_use::linux_control::start_session(
                 request.mode
-                    == openbitfun_agent_tools::computer_use_control::ControlMode::Foreground,
+                    == starmate_agent_tools::computer_use_control::ControlMode::Foreground,
             )
             .await
             {
@@ -1126,13 +1126,13 @@ impl ComputerUseHost for NativeComputerUseHost {
         Ok(crate::computer_use::control_session::snapshot())
     }
 
-    fn control_snapshot(&self) -> openbitfun_agent_tools::computer_use_host::ControlSnapshot {
+    fn control_snapshot(&self) -> starmate_agent_tools::computer_use_host::ControlSnapshot {
         crate::computer_use::control_session::snapshot()
     }
     async fn stop_control(
         &self,
         owner: &str,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::ControlSnapshot> {
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         crate::computer_use::control_session::stop(Some(owner), "agent_stopped")
             .map_err(OpenBitFunError::tool)
     }
@@ -1140,7 +1140,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         owner: &str,
         generation: u64,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::ControlSnapshot> {
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::ControlSnapshot> {
         crate::computer_use::control_session::stop_checked(
             Some(owner),
             Some(generation),
@@ -1153,10 +1153,10 @@ impl ComputerUseHost for NativeComputerUseHost {
         owner: &str,
         action: &str,
     ) -> OpenBitFunResult<
-        Option<Box<dyn openbitfun_agent_tools::computer_use_host::ComputerUseActionLease>>,
+        Option<Box<dyn starmate_agent_tools::computer_use_host::ComputerUseActionLease>>,
     > {
         let policy =
-            openbitfun_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
+            starmate_agent_tools::computer_use_control::ControlActionPolicy::for_action(action)
                 .ok_or_else(|| {
                 OpenBitFunError::tool(format!(
                     "[CONTROL_ACTION_INVALID] Unknown ComputerUse action: {action}"
@@ -1171,7 +1171,7 @@ impl ComputerUseHost for NativeComputerUseHost {
     }
 
     async fn permission_snapshot(&self) -> OpenBitFunResult<ComputerUsePermissionSnapshot> {
-        use openbitfun_agent_tools::computer_use_permissions::ComputerPermissionKind as Kind;
+        use starmate_agent_tools::computer_use_permissions::ComputerPermissionKind as Kind;
         let status = crate::computer_use::permissions::status().await;
         Ok(ComputerUsePermissionSnapshot {
             accessibility_granted: status.usable(Kind::Accessibility),
@@ -1275,15 +1275,15 @@ impl ComputerUseHost for NativeComputerUseHost {
 
     async fn read_screen_text(
         &self,
-    ) -> OpenBitFunResult<Vec<openbitfun_agent_tools::computer_use_host::OcrTextMatch>> {
+    ) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
         self.read_screen_text_impl().await
     }
 
     async fn ocr_find_text_matches(
         &self,
         text_query: &str,
-        region_native: Option<openbitfun_agent_tools::computer_use_host::OcrRegionNative>,
-    ) -> OpenBitFunResult<Vec<openbitfun_agent_tools::computer_use_host::OcrTextMatch>> {
+        region_native: Option<starmate_agent_tools::computer_use_host::OcrRegionNative>,
+    ) -> OpenBitFunResult<Vec<starmate_agent_tools::computer_use_host::OcrTextMatch>> {
         self.ocr_find_text_matches_impl(text_query, region_native)
             .await
     }
@@ -1292,7 +1292,7 @@ impl ComputerUseHost for NativeComputerUseHost {
         &self,
         gx: f64,
         gy: f64,
-    ) -> OpenBitFunResult<Option<openbitfun_agent_tools::computer_use_host::OcrAccessibilityHit>>
+    ) -> OpenBitFunResult<Option<starmate_agent_tools::computer_use_host::OcrAccessibilityHit>>
     {
         #[cfg(target_os = "macos")]
         {
@@ -1419,13 +1419,13 @@ impl ComputerUseHost for NativeComputerUseHost {
     async fn open_app(
         &self,
         app_name: &str,
-    ) -> OpenBitFunResult<openbitfun_agent_tools::computer_use_host::OpenAppResult> {
+    ) -> OpenBitFunResult<starmate_agent_tools::computer_use_host::OpenAppResult> {
         #[cfg(any(target_os = "macos", target_os = "windows"))]
-        use openbitfun_agent_tools::computer_use_host::OpenAppResult;
+        use starmate_agent_tools::computer_use_host::OpenAppResult;
         let name = app_name.to_string();
         crate::computer_use::control_session::input_allowed().map_err(OpenBitFunError::tool)?;
         let background = crate::computer_use::control_session::snapshot().mode
-            == openbitfun_agent_tools::computer_use_control::ControlMode::Background;
+            == starmate_agent_tools::computer_use_control::ControlMode::Background;
 
         #[cfg(target_os = "macos")]
         {

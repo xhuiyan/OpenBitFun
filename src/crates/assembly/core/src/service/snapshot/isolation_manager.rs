@@ -1,7 +1,7 @@
 use crate::service::snapshot::types::{SnapshotError, SnapshotResult};
 use crate::service::workspace_runtime::{WorkspaceRuntimeContext, WorkspaceRuntimeTarget};
 use log::info;
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
 use std::fs;
 use std::path::{Path, PathBuf};
 

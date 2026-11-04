@@ -15,15 +15,15 @@ use crate::agentic::agents::{
 };
 use crate::service::config::types::AgentSubagentOverrideState;
 use async_trait::async_trait;
-use openbitfun_agent_runtime::custom_agent::{
+use starmate_agent_runtime::custom_agent::{
     custom_agent_save_markdown_file, CustomAgentDefinition, CustomAgentDiscoveryRoots,
     CustomAgentKind, CustomAgentLevel,
 };
-use openbitfun_agent_runtime::sdk::{RuntimeAgentRegistry, RuntimeAgentRegistryQuery};
-use openbitfun_agent_runtime::session::SessionConfig;
-use openbitfun_agent_runtime::thread_goal_tools::THREAD_GOAL_TOOL_NAMES;
-use openbitfun_product_domains::external_sources::EcosystemId;
-use openbitfun_product_domains::external_subagents::ExternalSubagentMode;
+use starmate_agent_runtime::sdk::{RuntimeAgentRegistry, RuntimeAgentRegistryQuery};
+use starmate_agent_runtime::session::SessionConfig;
+use starmate_agent_runtime::thread_goal_tools::THREAD_GOAL_TOOL_NAMES;
+use starmate_product_domains::external_sources::EcosystemId;
+use starmate_product_domains::external_subagents::ExternalSubagentMode;
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -550,9 +550,9 @@ fn memory_phase2_hidden_agent_is_registered() {
 #[test]
 fn sdk_agent_registry_excludes_desktop_product_workflows() {
     let registry =
-        AgentRegistry::for_profile(openbitfun_product_capabilities::DeliveryProfile::Sdk);
-    let plan = openbitfun_product_capabilities::product_assembly_plan_for_profile(
-        openbitfun_product_capabilities::DeliveryProfile::Sdk,
+        AgentRegistry::for_profile(starmate_product_capabilities::DeliveryProfile::Sdk);
+    let plan = starmate_product_capabilities::product_assembly_plan_for_profile(
+        starmate_product_capabilities::DeliveryProfile::Sdk,
     );
 
     for product_agent in [
@@ -580,7 +580,7 @@ fn sdk_agent_registry_excludes_desktop_product_workflows() {
 #[test]
 fn product_full_agent_registry_preserves_the_complete_builtin_catalog() {
     let mut selected =
-        AgentRegistry::for_profile(openbitfun_product_capabilities::DeliveryProfile::ProductFull)
+        AgentRegistry::for_profile(starmate_product_capabilities::DeliveryProfile::ProductFull)
             .agent_ids(RuntimeAgentRegistryQuery::default());
     let mut compatibility = AgentRegistry::new().agent_ids(RuntimeAgentRegistryQuery::default());
     selected.sort();
@@ -1638,7 +1638,7 @@ async fn external_routes_are_workspace_scoped_fail_closed_and_generation_leased(
     assert_eq!(primary_binding.runtime_agent_key, runtime_v1);
     assert_eq!(
         primary_binding.route_owner,
-        openbitfun_core_types::SessionAgentRouteOwner::External
+        starmate_core_types::SessionAgentRouteOwner::External
     );
     drop(primary_binding);
     assert!(registry.is_external_subagent_route("Explore", Some(&workspace)));
@@ -1810,7 +1810,7 @@ fn persisted_external_owner_never_falls_back_to_a_same_name_local_mode() {
             "Standard",
             Some("id-restarted-external-owner"),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::External),
+            Some(starmate_core_types::SessionAgentRouteOwner::External),
         )
         .is_none());
     let local = registry
@@ -1818,12 +1818,12 @@ fn persisted_external_owner_never_falls_back_to_a_same_name_local_mode() {
             "Standard",
             Some("id-legacy-local-owner"),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::Local),
+            Some(starmate_core_types::SessionAgentRouteOwner::Local),
         )
         .expect("legacy local sessions keep their local route");
     assert_eq!(
         local.route_owner,
-        openbitfun_core_types::SessionAgentRouteOwner::Local
+        starmate_core_types::SessionAgentRouteOwner::Local
     );
 }
 
@@ -1944,7 +1944,7 @@ fn persisted_primary_route_owner_rejects_same_name_route_takeover() {
             logical_id,
             Some(&workspace),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::Local),
+            Some(starmate_core_types::SessionAgentRouteOwner::Local),
         )
         .is_none());
 
@@ -1960,7 +1960,7 @@ fn persisted_primary_route_owner_rejects_same_name_route_takeover() {
             logical_id,
             Some(&workspace),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::External),
+            Some(starmate_core_types::SessionAgentRouteOwner::External),
         )
         .is_none());
 }
@@ -2005,7 +2005,7 @@ fn validated_generation_replacement_restores_same_name_local_agent() {
         .expect("same-name local agent");
     assert_eq!(
         fresh_turn.route_owner,
-        openbitfun_core_types::SessionAgentRouteOwner::Local
+        starmate_core_types::SessionAgentRouteOwner::Local
     );
     assert_eq!(fresh_turn.runtime_agent_key, logical_id);
     assert_eq!(old_turn.runtime_agent_key, runtime_key);
@@ -2171,7 +2171,7 @@ fn persisted_route_key_rejects_same_name_external_provider_takeover() {
             logical_id,
             Some(&workspace),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::External),
+            Some(starmate_core_types::SessionAgentRouteOwner::External),
             Some("opencode:plugin-one:agentic"),
         )
         .expect("original route");
@@ -2193,7 +2193,7 @@ fn persisted_route_key_rejects_same_name_external_provider_takeover() {
             logical_id,
             Some(&workspace),
             true,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::External),
+            Some(starmate_core_types::SessionAgentRouteOwner::External),
             Some("opencode:plugin-one:agentic"),
         )
         .is_none());
@@ -2265,14 +2265,14 @@ fn hidden_control_agent_resolves_as_a_session_primary() {
     assert_eq!(binding.runtime_agent_key, "OpenBitFun");
     assert_eq!(
         binding.route_owner,
-        openbitfun_core_types::SessionAgentRouteOwner::Local
+        starmate_core_types::SessionAgentRouteOwner::Local
     );
     assert!(registry
         .resolve_primary_agent_for_turn(
             "OpenBitFun",
             None,
             false,
-            Some(openbitfun_core_types::SessionAgentRouteOwner::External)
+            Some(starmate_core_types::SessionAgentRouteOwner::External)
         )
         .is_none());
 }
@@ -2290,7 +2290,7 @@ fn builtin_review_agents_resolve_as_local_session_primaries() {
         assert_eq!(binding.runtime_agent_key, agent_type);
         assert_eq!(
             binding.route_owner,
-            openbitfun_core_types::SessionAgentRouteOwner::Local
+            starmate_core_types::SessionAgentRouteOwner::Local
         );
     }
 }
@@ -2320,7 +2320,7 @@ fn non_session_primary_subagents_and_unknown_ids_do_not_resolve() {
                     agent_type,
                     None,
                     false,
-                    Some(openbitfun_core_types::SessionAgentRouteOwner::External),
+                    Some(starmate_core_types::SessionAgentRouteOwner::External),
                 )
                 .is_none(),
             "{agent_type} must fail closed for an external owner"
@@ -2350,7 +2350,7 @@ fn subagent_conversation_resolves_local_children_without_promoting_them_to_modes
         assert_eq!(binding.runtime_agent_key, agent_type);
         assert_eq!(
             binding.route_owner,
-            openbitfun_core_types::SessionAgentRouteOwner::Local
+            starmate_core_types::SessionAgentRouteOwner::Local
         );
         assert!(registry
             .resolve_local_agent_for_subagent_turn(
@@ -2525,7 +2525,7 @@ fn local_route_resolves_review_agents_as_session_primaries() {
         assert_eq!(binding.runtime_agent_key, agent_type);
         assert_eq!(
             binding.route_owner,
-            openbitfun_core_types::SessionAgentRouteOwner::Local
+            starmate_core_types::SessionAgentRouteOwner::Local
         );
     }
 

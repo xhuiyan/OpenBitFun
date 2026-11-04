@@ -1,8 +1,8 @@
 //! Desktop GUI resource admission. Runtime remains the task/permission owner.
-use openbitfun_agent_tools::computer_use_control::{
+use starmate_agent_tools::computer_use_control::{
     ControlClick, ControlMode, ControlPointer, ControlSnapshot, ObservationScope,
 };
-use openbitfun_agent_tools::computer_use_host::ComputerUseActionLease;
+use starmate_agent_tools::computer_use_host::ComputerUseActionLease;
 use std::cell::Cell;
 use std::sync::{Mutex, OnceLock};
 
@@ -313,7 +313,7 @@ pub(crate) fn capture_allowed() -> Result<(), String> {
 }
 pub(crate) fn record_background_observation(
     scope: &ObservationScope,
-    evidence: openbitfun_agent_tools::computer_use_control::BackgroundObservation,
+    evidence: starmate_agent_tools::computer_use_control::BackgroundObservation,
 ) {
     if let Ok(mut r) = locked() {
         if active(&r) && ObservationScope::from_control(&r.admission.snapshot) == *scope {
@@ -367,7 +367,7 @@ pub(crate) fn target_admissible(target: &str) -> Result<(), String> {
         .sharing
         .as_ref()
         .is_some_and(|sharing| {
-            sharing.phase != openbitfun_agent_tools::computer_use_control::SharingPhase::Selecting
+            sharing.phase != starmate_agent_tools::computer_use_control::SharingPhase::Selecting
         })
     {
         r.admission.shared_target_allowed(target)?;

@@ -2,7 +2,7 @@
 use super::ConversationCoordinator;
 use crate::agentic::core::SessionConfig;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use tokio::sync::Mutex;
 

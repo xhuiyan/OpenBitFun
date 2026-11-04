@@ -22,13 +22,13 @@ use dashmap::mapref::entry::Entry;
 use dashmap::DashMap;
 use futures::io::{AsyncRead as FuturesAsyncRead, AsyncWrite as FuturesAsyncWrite};
 use log::{debug, info, warn};
-use openbitfun_agent_tools::ACP_TOOL_PREFIX;
-use openbitfun_core::agentic::tools::registry::get_global_tool_registry;
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
-use openbitfun_core::infrastructure::PathManager;
-use openbitfun_core::service::config::ConfigService;
-use openbitfun_core::service::remote_ssh::workspace_state::get_remote_workspace_manager;
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::ACP_TOOL_PREFIX;
+use starmate_core::agentic::tools::registry::get_global_tool_registry;
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::infrastructure::PathManager;
+use starmate_core::service::config::ConfigService;
+use starmate_core::service::remote_ssh::workspace_state::get_remote_workspace_manager;
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tokio::process::{Child, Command};
@@ -1656,7 +1656,7 @@ impl AcpClientService {
             .filter(|(_, config)| config.enabled && config.subagent.enabled)
             .map(|(id, config)| {
                 Arc::new(AcpAgentTool::new(id.clone(), config.clone(), self.clone()))
-                    as Arc<dyn openbitfun_core::agentic::tools::framework::Tool>
+                    as Arc<dyn starmate_core::agentic::tools::framework::Tool>
             })
             .collect::<Vec<_>>();
 
@@ -1755,7 +1755,7 @@ impl AcpClientService {
         }
 
         let program = resolve_configured_command(&config.command, &config.env);
-        let mut command = openbitfun_core::util::process_manager::create_tokio_command(&program);
+        let mut command = starmate_core::util::process_manager::create_tokio_command(&program);
         command
             .args(&config.args)
             .stdin(Stdio::piped())
@@ -2144,7 +2144,7 @@ async fn terminate_child_process_tree(client_id: &str, mut child: Child) {
     #[cfg(unix)]
     if let Some(pid) = pid {
         let process_group = format!("-{}", pid);
-        match openbitfun_core::util::process_manager::create_tokio_command("kill")
+        match starmate_core::util::process_manager::create_tokio_command("kill")
             .arg("-TERM")
             .arg(&process_group)
             .status()
@@ -2176,7 +2176,7 @@ async fn terminate_child_process_tree(client_id: &str, mut child: Child) {
             Err(_) => {}
         }
 
-        if let Err(error) = openbitfun_core::util::process_manager::create_tokio_command("kill")
+        if let Err(error) = starmate_core::util::process_manager::create_tokio_command("kill")
             .arg("-KILL")
             .arg(&process_group)
             .status()
@@ -2193,7 +2193,7 @@ async fn terminate_child_process_tree(client_id: &str, mut child: Child) {
 
     #[cfg(windows)]
     if let Some(pid) = pid {
-        match openbitfun_core::util::process_manager::create_tokio_command("taskkill")
+        match starmate_core::util::process_manager::create_tokio_command("taskkill")
             .arg("/PID")
             .arg(pid.to_string())
             .arg("/T")

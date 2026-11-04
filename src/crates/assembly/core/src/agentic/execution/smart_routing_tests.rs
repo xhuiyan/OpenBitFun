@@ -8,8 +8,8 @@ use crate::infrastructure::ai::account_client_source::{
 };
 use crate::infrastructure::ai::channel_client_source::PreparedChannel;
 use crate::infrastructure::ai::AIClient;
-use openbitfun_agent_runtime::account_routing::AccountPolicy;
-use openbitfun_core_types::{Message as AIMessage, ModelAccountOrigin};
+use starmate_agent_runtime::account_routing::AccountPolicy;
+use starmate_core_types::{Message as AIMessage, ModelAccountOrigin};
 use std::sync::{
     atomic::{AtomicUsize, Ordering},
     Arc,
@@ -275,7 +275,7 @@ async fn smart_slot_channel_switch_uses_its_own_route_and_preserves_durable_hist
     use crate::infrastructure::ai::client_factory::AIClientFactory;
     use crate::service::config::types::{model_runtime_binding_fingerprint, AIModelConfig};
     use crate::service::config::{ConfigManagerSettings, ConfigService};
-    use openbitfun_config_contracts::channel_routing::ModelChannelRouting;
+    use starmate_config_contracts::channel_routing::ModelChannelRouting;
 
     let server = RetryTestServer::new(vec![retry_test_success()]);
     let dir = tempfile::tempdir().unwrap();
@@ -351,7 +351,7 @@ async fn smart_slot_channel_switch_uses_its_own_route_and_preserves_durable_hist
     let mut prior = AIMessage::assistant("Confirmed earlier work".into());
     prior.thinking_signature = Some("private-primary-signature".into());
     prior.reasoning_content = Some("Private primary reasoning".into());
-    prior.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+    prior.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
         protocol: "openai".into(),
         channel_origin: Some("primary".into()),
         channel_fingerprint: Some(primary.ai_client.channel_replay_fingerprint()),

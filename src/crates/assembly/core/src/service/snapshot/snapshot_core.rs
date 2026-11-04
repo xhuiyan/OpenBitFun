@@ -6,7 +6,7 @@ use crate::service::snapshot::types::{
 };
 use crate::service::workspace_runtime::WorkspaceRuntimeContext;
 use log::{debug, info, warn};
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::ffi::OsString;

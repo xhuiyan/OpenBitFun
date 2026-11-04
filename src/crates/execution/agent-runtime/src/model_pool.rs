@@ -1,10 +1,10 @@
 //! Provider-neutral pool decisions. The host supplies time, persistence and IO.
 
-use openbitfun_core_types::errors::AiProviderError;
-use openbitfun_core_types::model_pool::{
+use starmate_core_types::errors::AiProviderError;
+use starmate_core_types::model_pool::{
     ModelPoolBinding, ModelPoolHealthStatus, ModelPoolMemberStatus, ModelPoolStrategy,
 };
-use openbitfun_core_types::ErrorCategory;
+use starmate_core_types::ErrorCategory;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 

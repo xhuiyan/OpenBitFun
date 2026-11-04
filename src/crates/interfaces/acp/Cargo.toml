@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-acp"
+name = "starmate-acp"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -8,46 +8,46 @@ description = "OpenBitFun Agent Client Protocol surface"
 [features]
 default = ["client", "server"]
 client = [
-    "openbitfun-agent-tools/acp-bridge",
+    "starmate-agent-tools/acp-bridge",
     "dep:futures",
     "dep:serde",
     "dep:dirs",
     "dep:semver",
     "dep:tar",
-    "dep:openbitfun-core",
-    "openbitfun-core/agent-runtime",
-    "openbitfun-core/ssh-remote",
+    "dep:starmate-core",
+    "starmate-core/agent-runtime",
+    "starmate-core/ssh-remote",
 ]
 server = [
-    "dep:openbitfun-agent-tools",
-    "dep:openbitfun-agent-runtime",
-    "openbitfun-agent-runtime/agent-runtime",
-    "dep:openbitfun-core-types",
-    "dep:openbitfun-core",
+    "dep:starmate-agent-tools",
+    "dep:starmate-agent-runtime",
+    "starmate-agent-runtime/agent-runtime",
+    "dep:starmate-core-types",
+    "dep:starmate-core",
     "dep:sha2",
-    "openbitfun-core/agent-runtime",
-    "openbitfun-core/document-read",
-    "openbitfun-core/subscription-auth",
-    "openbitfun-core/external-sources",
-    "openbitfun-core/tools-basic",
-    "openbitfun-core/tools-git",
-    "openbitfun-core/tools-mcp",
-    "openbitfun-core/tools-browser-web",
-    "openbitfun-core/tools-computer-use",
-    "openbitfun-core/tools-image-analysis",
-    "openbitfun-core/tools-image-generation",
-    "openbitfun-core/tools-agent-control",
+    "starmate-core/agent-runtime",
+    "starmate-core/document-read",
+    "starmate-core/subscription-auth",
+    "starmate-core/external-sources",
+    "starmate-core/tools-basic",
+    "starmate-core/tools-git",
+    "starmate-core/tools-mcp",
+    "starmate-core/tools-browser-web",
+    "starmate-core/tools-computer-use",
+    "starmate-core/tools-image-analysis",
+    "starmate-core/tools-image-generation",
+    "starmate-core/tools-agent-control",
 ]
 
 [lib]
-name = "openbitfun_acp"
+name = "starmate_acp"
 
 [dependencies]
-openbitfun-core = { path = "../../assembly/core", optional = true }
-openbitfun-agent-runtime = { path = "../../execution/agent-runtime", optional = true }
-openbitfun-agent-tools = { path = "../../execution/tool-contracts", optional = true }
-openbitfun-events = { path = "../../contracts/events" }
-openbitfun-core-types = { path = "../../contracts/core-types", optional = true }
+starmate-core = { path = "../../assembly/core", optional = true }
+starmate-agent-runtime = { path = "../../execution/agent-runtime", optional = true }
+starmate-agent-tools = { path = "../../execution/tool-contracts", optional = true }
+starmate-events = { path = "../../contracts/events" }
+starmate-core-types = { path = "../../contracts/core-types", optional = true }
 
 agent-client-protocol = { workspace = true }
 tokio = { workspace = true, features = ["fs", "io-std", "io-util", "macros", "process", "rt", "sync", "time"] }

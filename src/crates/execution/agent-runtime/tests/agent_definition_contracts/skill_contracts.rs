@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::path::PathBuf;
 
-use openbitfun_agent_runtime::skills::{
+use starmate_agent_runtime::skills::{
     annotate_shadowed_skills, build_mode_skill_infos, builtin_skill_group_key,
     filter_candidates_for_mode, filter_implicitly_invocable_skills, filter_user_invocable_skills,
     is_skill_globally_enabled, render_loaded_skill_for_assistant, resolve_builtin_default_enabled,
@@ -82,7 +82,7 @@ fn import_origin_round_trips_without_changing_native_ownership_or_legacy_payload
     assert!(legacy.get("importOrigin").is_none());
     let mut skill: SkillInfo = serde_json::from_value(legacy.clone()).unwrap();
     assert_eq!(serde_json::to_value(&skill).unwrap(), legacy);
-    skill.import_origin = Some(openbitfun_agent_runtime::skills::SkillImportOrigin {
+    skill.import_origin = Some(starmate_agent_runtime::skills::SkillImportOrigin {
         schema_version: 1,
         import_id: "import-1".into(),
         source_key: "user::home.claude::demo".into(),
@@ -258,7 +258,7 @@ fn claude_skill_rejects_unavailable_runtime_semantics() {
             error,
             SkillParseError::UnsupportedClaudeField(field.split_once(':').unwrap().0.into())
         );
-        let diagnostic = openbitfun_agent_runtime::skills::SkillScanDiagnostic::from_parse_error(
+        let diagnostic = starmate_agent_runtime::skills::SkillScanDiagnostic::from_parse_error(
             "/workspace/.claude/skills/unsafe/SKILL.md",
             "claude-code",
             &error,
@@ -795,7 +795,7 @@ fn skill_resolution_applies_builtin_and_user_override_rules() {
 
 #[test]
 fn user_mode_skill_overrides_share_key_normalization_rules() {
-    let overrides = openbitfun_agent_runtime::skills::normalize_user_mode_skill_overrides(
+    let overrides = starmate_agent_runtime::skills::normalize_user_mode_skill_overrides(
         vec![
             " user::openbitfun::pdf ".to_string(),
             String::new(),
@@ -1381,7 +1381,7 @@ fn explicit_invocation_reaches_default_hidden_agent_browser() {
 
 #[test]
 fn skill_scan_reports_tolerate_older_shapes_and_escape_diagnostics() {
-    use openbitfun_agent_runtime::skills::{SkillScanDiagnostic, SkillScanReport};
+    use starmate_agent_runtime::skills::{SkillScanDiagnostic, SkillScanReport};
     let legacy = serde_json::json!({"skills": ["pdf"]});
     let report: SkillScanReport<String> = serde_json::from_value(legacy.clone()).unwrap();
     assert!(report.diagnostics.is_empty());
@@ -1452,7 +1452,7 @@ fn workspace_skill_disable_blocks_all_modes_without_reclassifying_the_source() {
 
 #[test]
 fn claude_skill_hooks_validate_whole_declaration_without_execution() {
-    use openbitfun_agent_runtime::skills::SkillHooks;
+    use starmate_agent_runtime::skills::SkillHooks;
     let valid = r#"PreToolUse:
   - matcher: "Bash|Edit|Write"
     hooks:

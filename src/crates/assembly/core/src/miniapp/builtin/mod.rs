@@ -8,18 +8,18 @@
 use crate::miniapp::manager::MiniAppManager;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use chrono::Utc;
-use openbitfun_product_domains::miniapp::builtin::{
+use starmate_product_domains::miniapp::builtin::{
     seed_builtin_miniapps_with_host, BuiltinInstallMarker, BuiltinMiniAppSeedBundleRequest,
     BuiltinMiniAppSeedHost, BuiltinMiniAppSeedOutcome, BuiltinMiniAppSeedReport,
     BuiltinSeedArtifacts, BUILTIN_INSTALL_MARKER,
 };
-pub use openbitfun_product_domains::miniapp::builtin::{
+pub use starmate_product_domains::miniapp::builtin::{
     BuiltinMiniAppBundle as BuiltinApp, BUILTIN_APPS,
 };
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::ports::{
     MiniAppPortError, MiniAppPortErrorKind, MiniAppPortFuture,
 };
-use openbitfun_services_integrations::miniapp::builtin_io as miniapp_builtin_io;
+use starmate_services_integrations::miniapp::builtin_io as miniapp_builtin_io;
 use std::path::Path;
 use std::sync::Arc;
 
@@ -230,10 +230,10 @@ fn map_openbitfun_error_to_miniapp_port_error(error: OpenBitFunError) -> MiniApp
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::miniapp::builtin::{
+    use starmate_product_domains::miniapp::builtin::{
         builtin_content_hash, should_seed_builtin_app,
     };
-    use openbitfun_product_domains::miniapp::customization::{
+    use starmate_product_domains::miniapp::customization::{
         MiniAppCustomizationMetadata, MiniAppCustomizationOrigin, MiniAppCustomizationOriginKind,
     };
 

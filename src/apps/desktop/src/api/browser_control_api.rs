@@ -1,13 +1,13 @@
 //! Browser control API — Tauri commands for CDP-based browser control.
 
-use openbitfun_core::agentic::tools::browser_control::browser_launcher::{
+use starmate_core::agentic::tools::browser_control::browser_launcher::{
     BrowserKind, BrowserLauncher, CdpPortProbe, LaunchResult, DEFAULT_CDP_PORT,
 };
-use openbitfun_core::agentic::tools::browser_control::cdp_client::{
+use starmate_core::agentic::tools::browser_control::cdp_client::{
     CdpClient, UserProfileConnectError, USER_PROFILE_APPROVAL_TIMEOUT,
 };
-use openbitfun_core::agentic::tools::implementations::control_hub_tool::disconnect_external_browser;
-use openbitfun_core::service::config::{get_global_config_service, GlobalConfig};
+use starmate_core::agentic::tools::implementations::control_hub_tool::disconnect_external_browser;
+use starmate_core::service::config::{get_global_config_service, GlobalConfig};
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 use tokio::time::Instant;
@@ -662,7 +662,7 @@ mod tests {
             &BrowserKind::Chrome,
             1,
             LaunchResult::UserProfileReady {
-                endpoint: openbitfun_core::agentic::tools::browser_control::browser_launcher::BrowserDebugEndpoint {
+                endpoint: starmate_core::agentic::tools::browser_control::browser_launcher::BrowserDebugEndpoint {
                     port: 1,
                     web_socket_url: "ws://127.0.0.1:1/devtools/browser".into(),
                 },

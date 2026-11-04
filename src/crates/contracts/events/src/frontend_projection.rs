@@ -548,13 +548,13 @@ mod tests {
         DeepReviewQueueReason, DeepReviewQueueState, DeepReviewQueueStatus,
         ModelRoundAttemptDiagnostic,
     };
-    use openbitfun_core_types::{
+    use starmate_core_types::{
         ReasoningContentKind, SessionExecutionTarget, SessionExecutionTargetKind, WorktreeLifecycle,
     };
 
     #[test]
     fn turn_failure_projects_recovery_constraint_with_original_provider_facts() {
-        let mut detail = openbitfun_core_types::errors::AiProviderError::from_parts(
+        let mut detail = starmate_core_types::errors::AiProviderError::from_parts(
             "Quota exhausted; request_id=original-request".into(),
             Some("codex".into()),
             Some("insufficient_quota".into()),
@@ -566,7 +566,7 @@ mod tests {
             session_id: "session-1".into(),
             turn_id: "turn-1".into(),
             error: "Quota exhausted".into(),
-            error_category: Some(openbitfun_core_types::errors::ErrorCategory::ProviderQuota),
+            error_category: Some(starmate_core_types::errors::ErrorCategory::ProviderQuota),
             error_detail: Some(detail),
         })
         .unwrap();
@@ -669,7 +669,7 @@ mod tests {
 
     #[test]
     fn background_completion_round_trips_and_projects_additive_delivery_facts() {
-        use openbitfun_core_types::background_delivery::{
+        use starmate_core_types::background_delivery::{
             BackgroundDelivery, BackgroundReportDisposition, BackgroundReportPolicy,
         };
         let mut delivery = BackgroundDelivery::pending(
@@ -738,7 +738,7 @@ mod tests {
             agent_type: Some("Explore".to_string()),
             model_id: Some("fast".to_string()),
             focused_review_display_label: Some("Authentication boundary".to_string()),
-            continuation_policy: Some(openbitfun_core_types::SessionContinuationPolicy::FreshOnly),
+            continuation_policy: Some(starmate_core_types::SessionContinuationPolicy::FreshOnly),
         })
         .expect("projected");
 

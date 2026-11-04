@@ -162,8 +162,8 @@ jobs:
         run: |
           cargo build --locked --release \
             --target ${{ matrix.platform.target }} \
-            -p openbitfun-cli \
-            -p openbitfun-relay-server \
+            -p starmate-cli \
+            -p starmate-relay-server \
             --bins
 
       # A binary above this floor cannot start on older distributions, and the

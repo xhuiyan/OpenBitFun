@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use async_trait::async_trait;
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     acp_external_agent_tool_input_schema, build_acp_external_agent_tool_definition,
     build_acp_external_agent_tool_name, build_acp_external_agent_tool_result,
     render_acp_external_agent_rejected_message, render_acp_external_agent_result_for_assistant,
@@ -9,8 +9,8 @@ use openbitfun_agent_tools::{
     validate_acp_external_agent_tool_input, AcpExternalAgentToolDefinition,
     AcpExternalAgentToolDefinitionInput, ToolResult, ValidationResult,
 };
-use openbitfun_core::agentic::tools::framework::{Tool, ToolRenderOptions, ToolUseContext};
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::agentic::tools::framework::{Tool, ToolRenderOptions, ToolUseContext};
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use serde_json::Value;
 
 use super::config::AcpClientConfig;

@@ -24,7 +24,7 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::AIConfig;
 use anyhow::{anyhow, Result};
 use log::{debug, info, warn};
-use openbitfun_ai_adapters::resolve_required_model_selector;
+use starmate_ai_adapters::resolve_required_model_selector;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::sync::{Arc, OnceLock, RwLock};
@@ -42,7 +42,7 @@ pub struct AIClientFactory {
 
 struct CachedAIClient {
     configuration_fingerprint: String,
-    default_reasoning_preset: Option<openbitfun_core_types::ReasoningPresetDescriptor>,
+    default_reasoning_preset: Option<starmate_core_types::ReasoningPresetDescriptor>,
     client: Arc<AIClient>,
     /// Unix seconds when the resolved subscription credential expires.
     #[cfg(feature = "subscription-auth")]
@@ -67,7 +67,7 @@ impl std::fmt::Debug for ApprovedModelRequest {
     }
 }
 
-impl openbitfun_ai_adapters::client::ModelRequestAuthorization for ApprovedModelRequest {
+impl starmate_ai_adapters::client::ModelRequestAuthorization for ApprovedModelRequest {
     fn validate(
         &self,
     ) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<()>> + Send + '_>> {
@@ -81,9 +81,9 @@ impl openbitfun_ai_adapters::client::ModelRequestAuthorization for ApprovedModel
                 Ok(())
             }.await;
             validated.map_err(|error: anyhow::Error| {
-                let mut detail = openbitfun_core_types::errors::AiProviderError::classified(
+                let mut detail = starmate_core_types::errors::AiProviderError::classified(
                     format!("Local model authorization failed: {error}"),
-                    openbitfun_core_types::errors::ErrorCategory::InvalidRequest,
+                    starmate_core_types::errors::ErrorCategory::InvalidRequest,
                 );
                 detail.provider_code = Some("local_model_authorization_unavailable".into());
                 anyhow::Error::new(detail)
@@ -96,7 +96,7 @@ impl openbitfun_ai_adapters::client::ModelRequestAuthorization for ApprovedModel
 /// failed storage contract. An existing attempt may still use its own budget.
 #[derive(Debug)]
 pub(crate) struct AccountPoolUnavailable {
-    reasons: Vec<openbitfun_agent_runtime::account_routing::RejectedAccount>,
+    reasons: Vec<starmate_agent_runtime::account_routing::RejectedAccount>,
 }
 
 impl std::fmt::Display for AccountPoolUnavailable {
@@ -114,7 +114,7 @@ impl std::error::Error for AccountPoolUnavailable {}
 impl AccountPoolUnavailable {
     #[cfg_attr(not(feature = "subscription-auth"), allow(dead_code))]
     pub(crate) fn new(
-        reasons: Vec<openbitfun_agent_runtime::account_routing::RejectedAccount>,
+        reasons: Vec<starmate_agent_runtime::account_routing::RejectedAccount>,
     ) -> Self {
         Self { reasons }
     }
@@ -127,7 +127,7 @@ impl AccountPoolUnavailable {
             .iter()
             .filter(|rejected| {
                 rejected.reason
-                    == openbitfun_agent_runtime::account_routing::AccountRejection::Cooldown
+                    == starmate_agent_runtime::account_routing::AccountRejection::Cooldown
             })
             .filter_map(|rejected| rejected.recovery_at)
             .min()
@@ -227,7 +227,7 @@ async fn configured_model_in_service(
         }
         model
     };
-    if openbitfun_config_contracts::protected_account_models::is_guarded_account_model(&model) {
+    if starmate_config_contracts::protected_account_models::is_guarded_account_model(&model) {
         return Err(anyhow!("This subscription account binding requires an account-capable OpenBitFun; the original configuration was preserved"));
     }
     if !model.enabled {
@@ -306,7 +306,7 @@ impl AIClientFactory {
             return Ok((prepared, None));
         }
         let effective = self.config_service.get_effective_ai_config().await?;
-        let members = openbitfun_config_contracts::channel_routing::channel_members(
+        let members = starmate_config_contracts::channel_routing::channel_members(
             &model,
             &effective.models,
         )
@@ -319,7 +319,7 @@ impl AIClientFactory {
             members,
             reasoning_preset.map(str::to_string),
             temperature,
-            openbitfun_services_core::routing_state::RoutingStateStore::new(
+            starmate_services_core::routing_state::RoutingStateStore::new(
                 self.config_service
                     .user_data_dir()
                     .await
@@ -338,7 +338,7 @@ impl AIClientFactory {
         &self,
         model_id: &str,
         fingerprint: &str,
-        origin: &openbitfun_core_types::ModelAccountOrigin,
+        origin: &starmate_core_types::ModelAccountOrigin,
         rejected: &AIClient,
     ) -> Result<()> {
         if AdapterProvider::from_key(&origin.provider).is_none()
@@ -624,7 +624,7 @@ impl AIClientFactory {
         probe_cooled: bool,
     ) -> Result<Option<Arc<dyn super::account_client_source::AccountClientSource>>> {
         use super::account_client_source::FactoryAccountClientSource;
-        use openbitfun_agent_runtime::account_routing::AccountPolicy;
+        use starmate_agent_runtime::account_routing::AccountPolicy;
         let config = self.config_service.get_effective_ai_config().await?;
         let mut models = config.models.iter().filter(|model| model.id == model_id);
         let model = models
@@ -655,7 +655,7 @@ impl AIClientFactory {
             model.auth.clone(),
             reasoning_preset,
             template,
-            openbitfun_services_core::routing_state::RoutingStateStore::new(
+            starmate_services_core::routing_state::RoutingStateStore::new(
                 data_dir.join("subscription-routing"),
             ),
             crate::infrastructure::PathManager::native_path_digest(&data_dir),
@@ -741,7 +741,7 @@ impl AIClientFactory {
         reasoning_preset: Option<&str>,
         lineage: Option<&str>,
         temperature: Option<f64>,
-        required: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        required: Option<&starmate_core_types::ModelAccountOrigin>,
         probe_cooled: bool,
     ) -> Result<super::channel_client_source::PreparedChannel> {
         let global: crate::service::config::GlobalConfig =
@@ -1235,9 +1235,9 @@ pub(crate) async fn resolve_account_pool_auth_with_state(
     auth: &AuthConfig,
     model_id: &str,
     request_model: &str,
-    scope: Option<&openbitfun_agent_runtime::account_routing::RouteScope>,
-    affinity: Option<&openbitfun_agent_runtime::account_routing::AccountAffinity>,
-    cooldowns: &HashMap<String, openbitfun_services_core::routing_state::ResourceCooldown>,
+    scope: Option<&starmate_agent_runtime::account_routing::RouteScope>,
+    affinity: Option<&starmate_agent_runtime::account_routing::AccountAffinity>,
+    cooldowns: &HashMap<String, starmate_services_core::routing_state::ResourceCooldown>,
     probe_cooled: bool,
 ) -> Result<AuthConfig> {
     let AuthConfig::SubscriptionPool {
@@ -1267,7 +1267,7 @@ pub(crate) async fn resolve_account_pool_auth_with_state(
     }
     #[cfg(feature = "subscription-auth")]
     {
-        use openbitfun_agent_runtime::account_routing::{
+        use starmate_agent_runtime::account_routing::{
             select_account, AccountCandidate, AccountPolicy, AccountSelection, RouteScope,
             UnknownQuotaPolicy,
         };
@@ -1361,7 +1361,7 @@ pub(crate) async fn resolve_account_pool_auth_with_state(
                     .and_then(|soonest| {
                         unavailable.reasons.iter().find(|rejected| {
                             rejected.reason
-                                == openbitfun_agent_runtime::account_routing::AccountRejection::Cooldown
+                                == starmate_agent_runtime::account_routing::AccountRejection::Cooldown
                                 && rejected.recovery_at == Some(soonest)
                         })
                     });
@@ -1413,7 +1413,7 @@ pub async fn apply_subscription_auth(
 async fn apply_configured_auth(
     auth: &AuthConfig,
     ai_config: &mut AIConfig,
-    proxy_config: Option<openbitfun_core_types::ProxyConfig>,
+    proxy_config: Option<starmate_core_types::ProxyConfig>,
     skip_ssl_verify: bool,
 ) -> Result<Option<i64>> {
     let options = SubscriptionHttpOptions::new(proxy_config, skip_ssl_verify);
@@ -1424,7 +1424,7 @@ async fn apply_configured_auth(
 async fn apply_configured_auth(
     auth: &AuthConfig,
     ai_config: &mut AIConfig,
-    _proxy_config: Option<openbitfun_core_types::ProxyConfig>,
+    _proxy_config: Option<starmate_core_types::ProxyConfig>,
     _skip_ssl_verify: bool,
 ) -> Result<Option<i64>> {
     apply_subscription_auth(auth, ai_config).await
@@ -1537,7 +1537,7 @@ mod tests {
     };
     use crate::service::config::{ConfigManagerSettings, ConfigService};
     use crate::util::types::AIConfig;
-    use openbitfun_ai_adapters::{
+    use starmate_ai_adapters::{
         classify_model_selector, resolve_required_model_selector, ModelSelectorKind,
     };
 
@@ -1637,7 +1637,7 @@ mod tests {
         config
             .set_config(
                 "ai.proxy",
-                openbitfun_core_types::ProxyConfig {
+                starmate_core_types::ProxyConfig {
                     enabled: true,
                     url: proxy.url.clone(),
                     ..Default::default()
@@ -1791,7 +1791,7 @@ mod tests {
             .await
             .is_err());
         assert_eq!(proxy.requests.lock().unwrap().len(), preparations);
-        let pinned = openbitfun_core_types::ModelAccountOrigin {
+        let pinned = starmate_core_types::ModelAccountOrigin {
             provider: "codex".into(),
             account_id: "codex".into(),
             upstream_account_id: Some("primary-seat".into()),
@@ -1887,7 +1887,7 @@ mod tests {
         // Drain an already-owned OAuth operation through its existing account
         // lease before another test changes the process-wide store override.
         let options = SubscriptionHttpOptions::new(
-            Some(openbitfun_core_types::ProxyConfig {
+            Some(starmate_core_types::ProxyConfig {
                 enabled: true,
                 url: closed_proxy_url,
                 ..Default::default()
@@ -2047,7 +2047,7 @@ mod tests {
             let result = tokio::time::timeout(
                 std::time::Duration::from_secs(1),
                 client.send_message_stream_once(
-                    vec![openbitfun_core_types::Message::user("Continue".into())],
+                    vec![starmate_core_types::Message::user("Continue".into())],
                     None,
                     None,
                 ),
@@ -2056,11 +2056,11 @@ mod tests {
             .expect("live guard must reject without waiting for a provider response");
             let error = result.err().expect("a stale prepared client must not send");
             let detail = error
-                .downcast_ref::<openbitfun_core_types::errors::AiProviderError>()
+                .downcast_ref::<starmate_core_types::errors::AiProviderError>()
                 .unwrap();
             assert_eq!(
                 detail.category,
-                openbitfun_core_types::errors::ErrorCategory::InvalidRequest
+                starmate_core_types::errors::ErrorCategory::InvalidRequest
             );
             assert!(
                 detail.provider.is_none() && detail.http_status.is_none(),
@@ -2128,7 +2128,7 @@ mod tests {
 
     #[tokio::test]
     async fn unsupported_account_guard_rejects_primary_without_selecting_another_model() {
-        use openbitfun_config_contracts::protected_account_models::{
+        use starmate_config_contracts::protected_account_models::{
             protect_account_models, ACCOUNT_MODEL_GUARD_KEY,
         };
         let dir = tempfile::tempdir().unwrap();
@@ -2494,7 +2494,7 @@ mod tests {
             .unwrap()
             .to_string()
             .contains("matching subscription account identity"));
-        let foreign = openbitfun_core_types::ModelAccountOrigin {
+        let foreign = starmate_core_types::ModelAccountOrigin {
             upstream_account_id: Some("another-seat".into()),
             ..routed.origin.clone()
         };
@@ -2503,7 +2503,7 @@ mod tests {
             .account_client_source("subscription:pool", "changed-fingerprint", None, &template)
             .await
             .is_err());
-        let changed_reasoning: openbitfun_core_types::ReasoningPresetDescriptor =
+        let changed_reasoning: starmate_core_types::ReasoningPresetDescriptor =
             serde_json::from_value(serde_json::json!({
                 "id":"medium", "label":"Medium", "order":10,
                 "actions":[{"type":"effort","value":"medium"}], "source":"models_dev"
@@ -2761,7 +2761,7 @@ mod tests {
             .unwrap();
         assert_eq!(retry.origin, primary.origin);
         assert_eq!(retry.credential_revision, primary.credential_revision);
-        let foreign_seat = openbitfun_core_types::ModelAccountOrigin {
+        let foreign_seat = starmate_core_types::ModelAccountOrigin {
             upstream_account_id: Some("foreign-seat".into()),
             ..primary.origin.clone()
         };

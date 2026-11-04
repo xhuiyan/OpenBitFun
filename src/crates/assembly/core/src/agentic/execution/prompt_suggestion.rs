@@ -22,11 +22,11 @@ use crate::infrastructure::ai::AIClient;
 use crate::service::config::{subscribe_config_updates, ConfigUpdateEvent};
 use crate::util::types::{Message as AIMessage, ToolDefinition};
 use log::{debug, info, warn};
-use openbitfun_agent_runtime::prompt_suggestion::{
+use starmate_agent_runtime::prompt_suggestion::{
     prompt_suggestion_instruction, prompt_suggestion_text, PromptSuggestionRuntime,
 };
-use openbitfun_ai_adapters::ModelExchangeTraceConfig;
-use openbitfun_core_types::ModelRequestContext;
+use starmate_ai_adapters::ModelExchangeTraceConfig;
+use starmate_core_types::ModelRequestContext;
 use std::future::Future;
 use std::sync::Arc;
 use std::time::Duration;
@@ -704,7 +704,7 @@ mod tests {
     }
 
     fn test_client() -> Arc<AIClient> {
-        Arc::new(AIClient::new(openbitfun_core_types::AIConfig {
+        Arc::new(AIClient::new(starmate_core_types::AIConfig {
             name: "prompt-suggestion-test".to_string(),
             base_url: "http://127.0.0.1:9".to_string(),
             request_url: "http://127.0.0.1:9/v1/chat/completions".to_string(),

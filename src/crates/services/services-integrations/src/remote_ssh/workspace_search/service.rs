@@ -26,7 +26,7 @@ use crate::workspace_search::{
     WorkspaceSearchRepoStatus,
 };
 use async_trait::async_trait;
-use openbitfun_services_core::filesystem::{ContentMatchPreviewBuilder, FileSearchOutcome};
+use starmate_services_core::filesystem::{ContentMatchPreviewBuilder, FileSearchOutcome};
 use std::collections::HashMap;
 use std::ops::Deref;
 use std::path::{Component, Path, PathBuf};

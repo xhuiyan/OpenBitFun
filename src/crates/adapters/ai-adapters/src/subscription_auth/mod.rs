@@ -534,7 +534,7 @@ fn build_http_client_with_redirect_policy(
     provider: &str,
     redirect: reqwest::redirect::Policy,
 ) -> Result<reqwest::Client> {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
     let mut builder = reqwest::Client::builder()
         .tls_backend_rustls()
         .redirect(redirect)
@@ -2508,7 +2508,7 @@ mod tests {
         let loaded_path = parent.join("child-loaded");
         let resume_path = parent.join("child-resume");
         let outcome_path = parent.join("child-outcome");
-        let mut child = openbitfun_services_core::process_manager::create_command(
+        let mut child = starmate_services_core::process_manager::create_command(
             std::env::current_exe().unwrap(),
         )
         .arg("--exact")

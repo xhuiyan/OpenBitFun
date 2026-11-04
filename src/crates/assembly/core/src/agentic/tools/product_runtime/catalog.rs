@@ -7,13 +7,13 @@ use crate::agentic::tools::tool_context_runtime::ToolUseContext;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::ToolDefinition;
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     ptc_run_code_description_for_language, ptc_run_code_input_schema_for_language,
     render_ptc_sdk_with_options, render_ptc_tool_calling_guide_for_language, PtcToolContract,
     PTC_LANGUAGE_CONTEXT_KEY, PTC_RUN_CODE_TOOL_NAME, PTC_TOOL_PRESENTATION_CONTEXT_KEY,
     PTC_TOOL_PRESENTATION_MODE,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     resolve_contextual_tool_manifest, resolve_contextual_visible_tools, ContextualToolManifest,
     ContextualVisibleTools, DynamicToolInfo, GetToolSpecCatalogProvider,
     GetToolSpecDeferredToolSummary, GetToolSpecExecutionError, GetToolSpecRuntime,
@@ -21,7 +21,7 @@ use openbitfun_agent_tools::{
     CALL_DEFERRED_TOOL_NAME, GET_TOOL_SPEC_TOOL_NAME,
 };
 #[cfg(feature = "ptc-runtime")]
-use openbitfun_core_types::PtcLanguage;
+use starmate_core_types::PtcLanguage;
 use serde::Serialize;
 #[cfg(feature = "ptc-runtime")]
 use serde_json::json;
@@ -636,12 +636,12 @@ mod tests {
     use crate::agentic::tools::ToolRuntimeRestrictions;
     #[cfg(feature = "external-sources")]
     use crate::agentic::WorkspaceBinding;
-    use openbitfun_agent_tools::{
+    use starmate_agent_tools::{
         GetToolSpecCatalogProvider, ToolCatalogSnapshotProvider, CALL_DEFERRED_TOOL_NAME,
         GET_TOOL_SPEC_TOOL_NAME, PTC_RUN_CODE_TOOL_NAME,
     };
     #[cfg(feature = "ptc-runtime")]
-    use openbitfun_agent_tools::{PTC_LANGUAGE_CONTEXT_KEY, PTC_TOOL_PRESENTATION_CONTEXT_KEY};
+    use starmate_agent_tools::{PTC_LANGUAGE_CONTEXT_KEY, PTC_TOOL_PRESENTATION_CONTEXT_KEY};
     use serde_json::{json, Value};
     use std::collections::HashMap;
     #[cfg(feature = "external-sources")]
@@ -747,7 +747,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -887,7 +887,7 @@ mod tests {
             &tool_context(Some("Standard")),
         )
         .await;
-        let sdk = openbitfun_agent_tools::render_ptc_typescript_sdk(&contracts);
+        let sdk = starmate_agent_tools::render_ptc_typescript_sdk(&contracts);
 
         assert!(sdk.contains(
             "/** Deferred tool: load its definition with tools.getToolSpec(\"mcp__github__search_repos\") first"
@@ -1227,7 +1227,7 @@ mod tests {
             Arc::new(DeferredMcpCatalogTool) as Arc<dyn Tool>,
         ];
         let context = tool_context(Some("Standard"));
-        let manifest = openbitfun_agent_tools::resolve_contextual_tool_manifest(
+        let manifest = starmate_agent_tools::resolve_contextual_tool_manifest(
             &tool_snapshot,
             &["mcp__github__search_repos".to_string()],
             &AgentToolPolicyOverrides::default(),
@@ -1249,7 +1249,7 @@ mod tests {
             vec![GET_TOOL_SPEC_TOOL_NAME, "CallDeferredTool"]
         );
 
-        let detail = openbitfun_agent_tools::resolve_get_tool_spec_detail(
+        let detail = starmate_agent_tools::resolve_get_tool_spec_detail(
             &manifest.deferred_tools,
             "mcp__github__search_repos",
             &context,
@@ -1314,7 +1314,7 @@ mod tests {
                 &AgentToolPolicyOverrides::default(),
                 &context,
             );
-        let manifest = openbitfun_agent_tools::resolve_contextual_tool_manifest(
+        let manifest = starmate_agent_tools::resolve_contextual_tool_manifest(
             &tool_snapshot,
             &allowed_tools,
             &exposure_overrides,
@@ -1577,7 +1577,7 @@ mod tests {
             "WebSearch".to_string(),
         ];
 
-        let manifest = openbitfun_agent_tools::resolve_contextual_tool_manifest(
+        let manifest = starmate_agent_tools::resolve_contextual_tool_manifest(
             &tool_snapshot,
             &allowed_tools,
             &AgentToolPolicyOverrides::default(),

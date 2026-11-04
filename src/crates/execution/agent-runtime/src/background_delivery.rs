@@ -1,6 +1,6 @@
 //! Provider-neutral report resolution. IO and semantic compatibility belong to the execution host.
 
-use openbitfun_core_types::background_delivery::{
+use starmate_core_types::background_delivery::{
     BackgroundDelivery, BackgroundReport, BackgroundReportDisposition as Disposition,
     BackgroundReportPolicy as Policy,
 };

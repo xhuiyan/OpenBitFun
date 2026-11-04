@@ -13,8 +13,8 @@ use std::sync::Arc;
 use std::sync::OnceLock;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-use openbitfun_agent_runtime::permission::PermissionRequestManager;
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::permission::PermissionRequestManager;
+use starmate_agent_runtime::sdk::{
     AgentEventReceiver, AgentEventSource, AgentRuntime, AgentSessionForkAtTurnRequest,
     AgentSessionForkBeforeTurnRequest, AgentSessionForkPort, AgentSessionForkRequest,
     AgentSessionForkResult, AgentSessionLifecycleStatus, AgentSessionLineageCancellationRequest,
@@ -24,30 +24,30 @@ use openbitfun_agent_runtime::sdk::{
     AgentTurnSettlementPort, AgentTurnSettlementRequest, AgentTurnSettlementResult,
     AgentTurnSettlementStatus, SessionTranscript,
 };
-use openbitfun_core_types::{SESSION_PROVIDER_ACP, SESSION_PROVIDER_METADATA_KEY};
+use starmate_core_types::{SESSION_PROVIDER_ACP, SESSION_PROVIDER_METADATA_KEY};
 #[cfg(feature = "product-search")]
-use openbitfun_product_domains::product_search::{
+use starmate_product_domains::product_search::{
     SessionContentSearchRequest, SessionContentSearchResponse, SessionSearchDiagnostic,
     SessionSearchDiagnosticCode, SessionSearchSessionDocument, SessionSearchTurnDocument,
     MAX_SESSION_CONTENT_SEARCH_QUERY_CHARS,
 };
 #[cfg(feature = "product-search")]
-use openbitfun_runtime_ports::ProductSearchPort;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::ProductSearchPort;
+use starmate_runtime_ports::{
     AgentContextReloadPort, AgentContextReloadRequest, ClockPort, LocalWorkspaceSnapshotPort,
     LocalWorkspaceSnapshotSessionRequest, LocalWorkspaceSnapshotStats,
     LocalWorkspaceSnapshotTurnRequest, PortError, PortErrorKind, PortResult,
     RuntimeServiceCapability, RuntimeServicePort, SessionStoragePathRequest, SessionStorePort,
     SessionTranscriptRequest, SessionTurnWindowRequest, SessionViewRestoreTiming,
 };
-use openbitfun_runtime_services::RuntimeServices;
-use openbitfun_services_core::permission_store::ProjectPermissionSqliteStore;
-use openbitfun_services_core::session::{
+use starmate_runtime_services::RuntimeServices;
+use starmate_services_core::permission_store::ProjectPermissionSqliteStore;
+use starmate_services_core::session::{
     build_session_lineage_snapshot, normalized_session_relationship, SessionBranchBoundary,
     SessionRelationshipKind,
 };
 #[cfg(feature = "product-search")]
-use openbitfun_services_core::session_search::{SessionSearchIndexError, SessionSearchSqliteIndex};
+use starmate_services_core::session_search::{SessionSearchIndexError, SessionSearchSqliteIndex};
 
 use crate::agentic::coordination::{
     runtime_transcript_messages_from_turns, validate_required_lineage_turns_settled,
@@ -93,7 +93,7 @@ use crate::service::token_usage::TokenUsageService;
 use crate::service_agent_runtime::CoreServiceAgentRuntime;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 
-pub use openbitfun_product_capabilities::ProductRuntimeAssembly as CoreProductRuntimeAssembly;
+pub use starmate_product_capabilities::ProductRuntimeAssembly as CoreProductRuntimeAssembly;
 pub use runtime_services::{build_local_runtime_services, CoreRuntimeServicesProvider};
 
 fn projected_turn_save_would_overwrite_runtime_state(
@@ -345,9 +345,9 @@ pub fn core_permission_request_manager() -> Result<Arc<PermissionRequestManager>
     let store = Arc::new(ProjectPermissionSqliteStore::new(
         path_manager.user_data_dir().join("permissions"),
     ));
-    let audit_store: Arc<dyn openbitfun_runtime_ports::PermissionAuditStorePort> = store.clone();
-    let reply_store: Arc<dyn openbitfun_runtime_ports::PermissionReplyStorePort> = store.clone();
-    let grant_store: Arc<dyn openbitfun_runtime_ports::PermissionGrantStorePort> = store;
+    let audit_store: Arc<dyn starmate_runtime_ports::PermissionAuditStorePort> = store.clone();
+    let reply_store: Arc<dyn starmate_runtime_ports::PermissionReplyStorePort> = store.clone();
+    let grant_store: Arc<dyn starmate_runtime_ports::PermissionGrantStorePort> = store;
     let manager = Arc::new(
         PermissionRequestManager::new(audit_store, reply_store, Arc::new(SystemPermissionClock))
             .with_grant_store(grant_store),
@@ -388,7 +388,7 @@ pub struct CoreSessionMaintenancePermit {
 }
 
 fn validate_persisted_session_id(session_id: &str) -> OpenBitFunResult<()> {
-    openbitfun_core_types::validate_session_id(session_id).map_err(OpenBitFunError::Validation)
+    starmate_core_types::validate_session_id(session_id).map_err(OpenBitFunError::Validation)
 }
 
 fn validate_session_workspace_identity(
@@ -531,7 +531,7 @@ async fn load_visible_persisted_session_turns(
 }
 
 fn runtime_lineage_snapshot(
-    snapshot: openbitfun_services_core::session::SessionLineageSnapshot,
+    snapshot: starmate_services_core::session::SessionLineageSnapshot,
     remote_connection_id: Option<&str>,
     remote_ssh_host: Option<&str>,
 ) -> AgentSessionLineageSnapshot {
@@ -548,13 +548,13 @@ fn runtime_lineage_snapshot(
                     agent_type: metadata.agent_type,
                     created_at_ms: metadata.created_at,
                     status: match metadata.status {
-                        openbitfun_services_core::session::SessionStatus::Active => {
+                        starmate_services_core::session::SessionStatus::Active => {
                             AgentSessionLifecycleStatus::Active
                         }
-                        openbitfun_services_core::session::SessionStatus::Archived => {
+                        starmate_services_core::session::SessionStatus::Archived => {
                             AgentSessionLifecycleStatus::Archived
                         }
-                        openbitfun_services_core::session::SessionStatus::Completed => {
+                        starmate_services_core::session::SessionStatus::Completed => {
                             AgentSessionLifecycleStatus::Completed
                         }
                     },
@@ -823,7 +823,7 @@ impl CoreProductAgentRuntime {
         coordinator: Arc<ConversationCoordinator>,
         scheduler: Arc<DialogScheduler>,
         token_usage_service: Arc<TokenUsageService>,
-        event_journal: Arc<openbitfun_agent_runtime::sdk::SessionEventJournal>,
+        event_journal: Arc<starmate_agent_runtime::sdk::SessionEventJournal>,
     ) -> Result<AgentRuntime, String> {
         Self::build_session_surface(coordinator, scheduler, token_usage_service)
             .map(|runtime| runtime.with_session_event_journal(event_journal))
@@ -950,7 +950,7 @@ impl CoreAgentRuntimeCompatibility {
     pub async fn model_pool_statuses(
         &self,
         pool_id: &str,
-    ) -> OpenBitFunResult<Vec<openbitfun_core_types::model_pool::ModelPoolMemberStatus>> {
+    ) -> OpenBitFunResult<Vec<starmate_core_types::model_pool::ModelPoolMemberStatus>> {
         self.coordinator.model_pool_statuses(pool_id).await
     }
     pub async fn ensure_control_conversation(
@@ -990,7 +990,7 @@ impl CoreAgentRuntimeCompatibility {
     pub fn session_permission_mode(
         &self,
         session_id: &str,
-    ) -> Option<openbitfun_runtime_ports::PermissionMode> {
+    ) -> Option<starmate_runtime_ports::PermissionMode> {
         self.coordinator
             .get_session_manager()
             .session_permission_mode(session_id)
@@ -999,7 +999,7 @@ impl CoreAgentRuntimeCompatibility {
     pub async fn update_session_permission_mode(
         &self,
         session_id: &str,
-        mode: Option<openbitfun_runtime_ports::PermissionMode>,
+        mode: Option<starmate_runtime_ports::PermissionMode>,
     ) -> OpenBitFunResult<()> {
         self.coordinator
             .get_session_manager()
@@ -1011,7 +1011,7 @@ impl CoreAgentRuntimeCompatibility {
         &self,
         session_id: &str,
         turn_id: &str,
-    ) -> Option<openbitfun_runtime_ports::PermissionMode> {
+    ) -> Option<starmate_runtime_ports::PermissionMode> {
         self.coordinator
             .get_session_manager()
             .active_turn_permission_mode(session_id, turn_id)
@@ -1021,7 +1021,7 @@ impl CoreAgentRuntimeCompatibility {
         &self,
         session_id: &str,
         turn_id: &str,
-        mode: openbitfun_runtime_ports::PermissionMode,
+        mode: starmate_runtime_ports::PermissionMode,
     ) -> bool {
         self.coordinator
             .get_session_manager()
@@ -1314,7 +1314,7 @@ impl CoreAgentRuntimeCompatibility {
         workspace_path: &Path,
         cursor: Option<&str>,
         limit: usize,
-        query: Option<&openbitfun_services_core::session::page::SessionCatalogQuery>,
+        query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
         refresh_external_discovery: bool,
     ) -> OpenBitFunResult<SessionMetadataPage> {
         #[cfg(not(feature = "external-sources"))]
@@ -1378,12 +1378,12 @@ impl CoreAgentRuntimeCompatibility {
         cursor: Option<&str>,
         limit: usize,
         session_ids: Option<&[String]>,
-        query: Option<&openbitfun_services_core::session::page::SessionCatalogQuery>,
+        query: Option<&starmate_services_core::session::page::SessionCatalogQuery>,
         refresh_external_discovery: bool,
     ) -> OpenBitFunResult<SessionMetadataPage> {
         use futures::StreamExt;
-        use openbitfun_agent_runtime::session_state::SessionState;
-        use openbitfun_services_core::session::page::{
+        use starmate_agent_runtime::session_state::SessionState;
+        use starmate_services_core::session::page::{
             empty_session_metadata_page, SessionActivitySummary,
         };
 
@@ -1432,7 +1432,7 @@ impl CoreAgentRuntimeCompatibility {
             }
         }
         let manager = self.coordinator.get_session_manager();
-        let questions = openbitfun_agent_runtime::user_questions::get_user_input_manager()
+        let questions = starmate_agent_runtime::user_questions::get_user_input_manager()
             .pending_question_counts();
         let selected = futures::stream::iter(selected)
             .map(|metadata| {
@@ -1505,7 +1505,7 @@ impl CoreAgentRuntimeCompatibility {
                         _ => ("idle", None),
                     };
                     let unread_turn =
-                        openbitfun_services_core::session::unread_completion_target(&metadata);
+                        starmate_services_core::session::unread_completion_target(&metadata);
                     SessionActivitySummary {
                         pending_approvals: approvals
                             .get(&metadata.session_id)
@@ -2176,12 +2176,12 @@ impl AgentContextReloadPort for CoreAgentRuntimeCompatibility {
     async fn reload_session_context(
         &self,
         request: AgentContextReloadRequest,
-    ) -> openbitfun_runtime_ports::PortResult<()> {
+    ) -> starmate_runtime_ports::PortResult<()> {
         CoreAgentRuntimeCompatibility::reload_session_context(self, request)
             .await
             .map_err(|error| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::Backend,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::Backend,
                     error.to_string(),
                 )
             })
@@ -3099,15 +3099,15 @@ mod tests {
     use std::time::Duration;
 
     use crate::service::session::SessionTranscriptExportOptions;
-    use openbitfun_agent_runtime::sdk::{
+    use starmate_agent_runtime::sdk::{
         AgentEventSource, AgentRuntime, AgentTurnSettlementPort, AgentTurnSettlementRequest,
         AgentTurnSettlementResult, AgentTurnSettlementStatus,
     };
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         AgentContextReloadRequest, AgentContextReloadTarget, LocalWorkspaceSnapshotSessionRequest,
         LocalWorkspaceSnapshotTurnRequest,
     };
-    use openbitfun_runtime_services::RuntimeServices;
+    use starmate_runtime_services::RuntimeServices;
     use uuid::Uuid;
 
     #[allow(deprecated)]
@@ -3147,11 +3147,11 @@ mod tests {
         set_workspace_runtime_service_for_current_test, WorkspaceRuntimeService,
     };
     use crate::util::errors::OpenBitFunError;
-    use openbitfun_agent_runtime::sdk::{
+    use starmate_agent_runtime::sdk::{
         AgentSessionForkAtTurnRequest, AgentSessionForkBeforeTurnRequest, AgentSessionForkPort,
         AgentSessionForkRequest, AgentSessionUsagePort, AgentSessionUsageRequest, PortErrorKind,
     };
-    use openbitfun_events::AgenticEvent;
+    use starmate_events::AgenticEvent;
     use tokio::sync::RwLock as TokioRwLock;
 
     #[cfg(feature = "product-search")]
@@ -3159,7 +3159,7 @@ mod tests {
     fn product_search_index_errors_do_not_cross_the_runtime_boundary() {
         let private_backend_detail = "C:\\Users\\private\\product-search-v1.sqlite";
         let error = session_search_index_error(
-            openbitfun_services_core::session_search::SessionSearchIndexError::Backend(
+            starmate_services_core::session_search::SessionSearchIndexError::Backend(
                 private_backend_detail.to_string(),
             ),
         );
@@ -3173,7 +3173,7 @@ mod tests {
     #[test]
     fn product_search_query_length_is_bounded_before_storage_access() {
         let oversized = "x".repeat(
-            openbitfun_product_domains::product_search::MAX_SESSION_CONTENT_SEARCH_QUERY_CHARS + 1,
+            starmate_product_domains::product_search::MAX_SESSION_CONTENT_SEARCH_QUERY_CHARS + 1,
         );
 
         assert_eq!(

@@ -4,7 +4,7 @@
 use super::transport::WorkspaceReader;
 use super::types::{ServerInfo, WslDistributions, WslWorkspaceConfig};
 use anyhow::{anyhow, Context};
-use openbitfun_services_core::process_manager;
+use starmate_services_core::process_manager;
 use std::pin::Pin;
 use std::process::{Output, Stdio};
 use std::task::{Context as TaskContext, Poll};

@@ -1,21 +1,21 @@
 use super::common::{read_bounded_json, stage_domain_dir};
-use openbitfun_agent_runtime::custom_agent::{custom_agent_read_markdown_str, CustomAgentLevel};
-use openbitfun_agent_runtime::skills::{SkillData, SkillLocation, OPENBITFUN_SYSTEM_SKILL_DIR};
-use openbitfun_legacy_migration::{
+use starmate_agent_runtime::custom_agent::{custom_agent_read_markdown_str, CustomAgentLevel};
+use starmate_agent_runtime::skills::{SkillData, SkillLocation, OPENBITFUN_SYSTEM_SKILL_DIR};
+use starmate_legacy_migration::{
     atomic_write_bytes, atomic_write_json, DomainContext, DomainScan, LegacyDomainAdapter,
     LegacyMigrationError, LegacyMigrationResult, MigrationRoots,
 };
-use openbitfun_product_domains::legacy_migration::{
+use starmate_product_domains::legacy_migration::{
     ConflictResolution, FindingSeverity, MigrationConflict, MigrationDiagnostic, MigrationDomainId,
     MigrationDomainResult, MigrationDomainState, ScanFinding,
 };
-use openbitfun_product_domains::miniapp::builtin::{BUILTIN_APPS, BUILTIN_INSTALL_MARKER};
-use openbitfun_product_domains::miniapp::storage::{
+use starmate_product_domains::miniapp::builtin::{BUILTIN_APPS, BUILTIN_INSTALL_MARKER};
+use starmate_product_domains::miniapp::storage::{
     build_import_bundle_plan, COMPILED_HTML, ESM_DEPS_JSON, META_JSON, PACKAGE_JSON,
     REQUIRED_SOURCE_FILES, SOURCE_DIR, STORAGE_JSON,
 };
-use openbitfun_product_domains::miniapp::types::MiniAppMeta;
-use openbitfun_services_integrations::miniapp::storage::MiniAppStorage;
+use starmate_product_domains::miniapp::types::MiniAppMeta;
+use starmate_services_integrations::miniapp::storage::MiniAppStorage;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -1620,10 +1620,10 @@ fn io(path: &Path, error: std::io::Error) -> LegacyMigrationError {
 mod tests {
     use super::*;
     use crate::adapters_for_groups;
-    use openbitfun_legacy_migration::{
+    use starmate_legacy_migration::{
         probe_legacy_source, CancellationToken, MigrationEngine, NoCrashInjection, ProbeLimits,
     };
-    use openbitfun_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
+    use starmate_product_domains::legacy_migration::{MigrationGroupId, MigrationSelection};
     use std::collections::BTreeSet;
 
     #[test]

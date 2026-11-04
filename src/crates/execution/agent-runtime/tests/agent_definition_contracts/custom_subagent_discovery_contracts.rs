@@ -1,5 +1,5 @@
-use openbitfun_agent_runtime::custom_agent::CustomAgentKind;
-use openbitfun_agent_runtime::custom_subagent::{
+use starmate_agent_runtime::custom_agent::CustomAgentKind;
+use starmate_agent_runtime::custom_subagent::{
     custom_subagent_possible_dirs, custom_subagent_save_markdown_file,
     load_custom_subagent_definitions, CustomSubagentDefinition, CustomSubagentDiscoveryRoots,
     CustomSubagentKind,
@@ -31,7 +31,7 @@ fn build_definition(
 }
 
 #[test]
-fn custom_subagent_discovery_preserves_openbitfun_priority_and_ignores_foreign_agent_dirs() {
+fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_agent_dirs() {
     let workspace = TestTempDir::new("openbitfun-runtime-subagent-workspace");
     let openbitfun_user = TestTempDir::new("openbitfun-runtime-subagent-user");
     let home = TestTempDir::new("openbitfun-runtime-subagent-home");

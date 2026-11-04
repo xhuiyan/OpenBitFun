@@ -1,4 +1,4 @@
-use openbitfun_product_capabilities::{
+use starmate_product_capabilities::{
     product_assembly_plan_for_profile, DeliveryProfile, ProductCapabilityId,
 };
 

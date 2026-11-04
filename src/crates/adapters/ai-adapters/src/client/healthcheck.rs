@@ -5,7 +5,7 @@ use crate::types::{
 };
 use anyhow::{anyhow, Result};
 use log::debug;
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
 use std::time::Duration;
 
 pub(crate) fn image_test_response_matches_expected(response: &str) -> bool {
@@ -186,7 +186,7 @@ async fn send_connection_probe(client: &AIClient, max_attempts: usize) -> Result
                 if error
                     .downcast_ref::<AiProviderError>()
                     .is_some_and(|error| {
-                        !openbitfun_agent_stream::retry::should_retry(&error.category)
+                        !starmate_agent_stream::retry::should_retry(&error.category)
                     })
                 {
                     return Err(error);

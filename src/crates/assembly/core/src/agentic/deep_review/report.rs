@@ -15,14 +15,14 @@ use crate::agentic::deep_review_policy::{
 use crate::agentic::tools::framework::ToolUseContext;
 use crate::util::errors::OpenBitFunResult;
 use log::debug;
-use openbitfun_agent_runtime::deep_review::diagnostics as runtime_diagnostics;
-use openbitfun_agent_runtime::deep_review::report as runtime_report;
-pub(crate) use openbitfun_agent_runtime::deep_review::report::{
+use starmate_agent_runtime::deep_review::diagnostics as runtime_diagnostics;
+use starmate_agent_runtime::deep_review::report as runtime_report;
+pub(crate) use starmate_agent_runtime::deep_review::report::{
     apply_review_evidence_guardrail, apply_review_runtime_limitation, apply_review_runtime_stale,
     deep_review_cache_from_completed_reviewers, fill_deep_review_cache_update_signals,
     fill_deep_review_packet_metadata,
 };
-use openbitfun_services_core::session::set_deep_review_cache;
+use starmate_services_core::session::set_deep_review_cache;
 use serde_json::Value;
 
 pub(crate) fn is_deep_review_context(context: Option<&ToolUseContext>) -> bool {

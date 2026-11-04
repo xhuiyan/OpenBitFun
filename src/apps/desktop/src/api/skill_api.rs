@@ -1,7 +1,7 @@
 //! Skill Management API
 
 use log::info;
-use openbitfun_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
+use starmate_core::service::workspace::{WorkspaceInfo, WorkspaceKind};
 use regex::Regex;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
@@ -16,7 +16,7 @@ use tokio::task::JoinSet;
 use tokio::time::{timeout, Duration};
 
 use crate::api::app_state::AppState;
-use openbitfun_core::agentic::tools::implementations::skills::mode_overrides::{
+use starmate_core::agentic::tools::implementations::skills::mode_overrides::{
     clear_user_mode_skill_overrides, load_globally_disabled_project_skills,
     load_globally_disabled_user_skills, load_project_mode_skills_document_local,
     project_mode_skills_path_for_remote, save_project_mode_skills_document_local,
@@ -24,22 +24,22 @@ use openbitfun_core::agentic::tools::implementations::skills::mode_overrides::{
     set_global_user_skill_disabled, set_mode_skill_disabled_in_document, set_user_mode_skill_state,
     SkillPolicyWorkspace,
 };
-use openbitfun_core::agentic::tools::implementations::skills::registry::imports::{
+use starmate_core::agentic::tools::implementations::skills::registry::imports::{
     self as skill_imports, SkillImportPreview,
 };
-use openbitfun_core::agentic::tools::implementations::skills::{
+use starmate_core::agentic::tools::implementations::skills::{
     resolver::resolve_skill_default_enabled_for_mode, ModeSkillInfo, SkillData, SkillInfo,
     SkillLocation, SkillRegistry, SkillScanReport,
 };
-use openbitfun_core::agentic::workspace::RemoteWorkspaceFs;
-use openbitfun_core::infrastructure::get_path_manager_arc;
-use openbitfun_core::service::config::agent_profile_project_store::{
+use starmate_core::agentic::workspace::RemoteWorkspaceFs;
+use starmate_core::infrastructure::get_path_manager_arc;
+use starmate_core::service::config::agent_profile_project_store::{
     deserialize_project_agent_profiles_document, serialize_project_agent_profiles_document,
 };
-use openbitfun_core::service::config::types::{SkillMarketConfig, SkillMarketSource};
-use openbitfun_core::service::runtime::RuntimeManager;
-use openbitfun_core::util::process_manager;
-use openbitfun_services_integrations::skillhub::{self, SkillHubClient};
+use starmate_core::service::config::types::{SkillMarketConfig, SkillMarketSource};
+use starmate_core::service::runtime::RuntimeManager;
+use starmate_core::util::process_manager;
+use starmate_services_integrations::skillhub::{self, SkillHubClient};
 
 const SKILLS_SEARCH_API_BASE: &str = "https://skills.sh";
 const DEFAULT_MARKET_QUERY: &str = "skill";
@@ -408,7 +408,7 @@ async fn persist_user_mode_skill_selection(
         }
     }
 
-    openbitfun_core::service::config::mode_config_canonicalizer::persist_agent_profile_from_value(
+    starmate_core::service::config::mode_config_canonicalizer::persist_agent_profile_from_value(
         mode_id,
         serde_json::json!({
             "disabled_user_skills": normalize_skill_key_list(disabled_user_skills),
@@ -640,7 +640,7 @@ async fn resolve_skill_workspace(
     if id.is_none() && legacy_path.is_none() {
         return Ok(None);
     }
-    let service = openbitfun_core::service::workspace::get_global_workspace_service()
+    let service = starmate_core::service::workspace::get_global_workspace_service()
         .ok_or("Workspace service is unavailable")?;
     if let Some(id) = id {
         return service
@@ -741,7 +741,7 @@ pub async fn set_global_skill_disabled(
             .map_err(|error| error.to_string())?;
         }
     }
-    if let Err(error) = openbitfun_core::service::config::reload_global_config().await {
+    if let Err(error) = starmate_core::service::config::reload_global_config().await {
         log::warn!("Failed to reload configuration after Skill availability update: skill_key={}, error={}", skill_key, error);
     }
     skill_availability_settings(workspace.as_ref()).await
@@ -818,7 +818,7 @@ pub async fn set_mode_skill_disabled(
         set_user_mode_skill_state(&mode_id, &skill_key, !disabled, default_enabled)
             .await
             .map_err(|e| format!("Failed to update user skill override: {}", e))?;
-        if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+        if let Err(e) = starmate_core::service::config::reload_global_config().await {
             log::warn!(
                 "Failed to reload global config after user skill override change: mode_id={}, skill_key={}, error={}",
                 mode_id,
@@ -963,7 +963,7 @@ pub async fn replace_mode_skill_selection(
         .await?;
     }
 
-    if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+    if let Err(e) = starmate_core::service::config::reload_global_config().await {
         log::warn!(
             "Failed to reload global config after batch skill update: mode_id={}, error={}",
             request.mode_id,
@@ -998,7 +998,7 @@ pub async fn reset_mode_skill_selection(
         clear_project_mode_skill_selection_local(&request.mode_id, &workspace_root).await?;
     }
 
-    if let Err(e) = openbitfun_core::service::config::reload_global_config().await {
+    if let Err(e) = starmate_core::service::config::reload_global_config().await {
         log::warn!(
             "Failed to reload global config after resetting skill selection: mode_id={}, error={}",
             request.mode_id,
@@ -1519,7 +1519,7 @@ mod tests {
 
     #[tokio::test]
     async fn skill_provider_uses_record_kind_and_saved_connection_not_its_root() {
-        use openbitfun_core::service::workspace::WorkspaceInfoRuntimeExt;
+        use starmate_core::service::workspace::WorkspaceInfoRuntimeExt;
         let root = tempfile::tempdir().unwrap();
         let mut local = super::WorkspaceInfo::new_without_worktree(
             root.path().to_path_buf(),
@@ -1600,7 +1600,7 @@ mod tests {
         let report = super::SkillScanReport {
             skills: vec!["existing"],
             diagnostics: vec![
-                openbitfun_core::agentic::tools::implementations::skills::SkillScanDiagnostic {
+                starmate_core::agentic::tools::implementations::skills::SkillScanDiagnostic {
                     path: "/remote/denied".into(),
                     source_id: "codex".into(),
                     message: "permission denied".into(),

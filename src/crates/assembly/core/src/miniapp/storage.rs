@@ -2,13 +2,13 @@
 
 use crate::miniapp::types::{MiniApp, MiniAppMeta, MiniAppSource};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_product_domains::miniapp::customization::MiniAppCustomizationMetadata;
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::customization::MiniAppCustomizationMetadata;
+use starmate_product_domains::miniapp::ports::{
     MiniAppImportPort, MiniAppPortError, MiniAppPortErrorKind, MiniAppPortFuture,
     MiniAppStoragePort,
 };
-pub use openbitfun_product_domains::miniapp::storage::MiniAppImportBundleWriteRequest;
-use openbitfun_services_integrations::miniapp::storage::{
+pub use starmate_product_domains::miniapp::storage::MiniAppImportBundleWriteRequest;
+use starmate_services_integrations::miniapp::storage::{
     MiniAppStorage as ServiceMiniAppStorage, MiniAppStorageError, MiniAppStorageErrorKind,
 };
 use std::path::{Path, PathBuf};

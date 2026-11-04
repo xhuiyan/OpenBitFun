@@ -7,17 +7,17 @@
 //! Manual submission receives only an absolute controller-device path and
 //! delegates package validation and upload orchestration to the shared service.
 
-use openbitfun_product_domains::appearance_market::{
+use starmate_product_domains::appearance_market::{
     validate_appearance_market_slug, AppearanceAdminSubmissionDetail, AppearanceCursorPage,
     AppearanceMarketLicense, AppearanceMarketListingDetail, AppearanceMarketListingSummary,
     AppearanceMarketRelease, AppearanceMarketSubmission, AppearanceMarketSubmissionDraftRequest,
     AppearanceMarketSubmissionStatus, AppearanceReviewDecision, AppearanceReviewDecisionRequest,
     APPEARANCE_MARKET_MAX_PACKAGE_BYTES,
 };
-use openbitfun_product_domains::product_release::{
+use starmate_product_domains::product_release::{
     supports_market_minimum_version, OPENBITFUN_INITIAL_RELEASE_VERSION,
 };
-use openbitfun_services_integrations::appearance_market::{
+use starmate_services_integrations::appearance_market::{
     resolve_appearance_release_target, submit_appearance_package, suggest_appearance_slug,
     AppearanceMarketBrowseRequest, AppearanceMarketClient, AppearanceReleaseTarget,
 };

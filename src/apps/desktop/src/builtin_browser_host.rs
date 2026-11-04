@@ -5,11 +5,11 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
 
 use async_trait::async_trait;
-use openbitfun_core::agentic::tools::browser_control::builtin_browser::{
+use starmate_core::agentic::tools::browser_control::builtin_browser::{
     set_builtin_browser_host, BuiltInBrowserCommand, BuiltInBrowserHost, BuiltInBrowserOpenRequest,
     BuiltInBrowserTarget,
 };
-use openbitfun_core::infrastructure::events::{emit_global_event, BackendEvent};
+use starmate_core::infrastructure::events::{emit_global_event, BackendEvent};
 use serde_json::{json, Value};
 use tauri::{AppHandle, Manager};
 use tokio::sync::{Mutex, RwLock};
@@ -22,7 +22,7 @@ static NEXT_OPEN_REQUEST_ID: AtomicU64 = AtomicU64::new(1);
 struct DesktopBuiltInBrowserHost {
     app: AppHandle,
     open_lock: Mutex<()>,
-    drivers: RwLock<HashMap<String, Arc<openbitfun_webdriver::EmbeddedWebviewAutomation>>>,
+    drivers: RwLock<HashMap<String, Arc<starmate_webdriver::EmbeddedWebviewAutomation>>>,
 }
 
 impl DesktopBuiltInBrowserHost {
@@ -37,7 +37,7 @@ impl DesktopBuiltInBrowserHost {
     async fn driver(
         &self,
         target_id: &str,
-    ) -> Result<Arc<openbitfun_webdriver::EmbeddedWebviewAutomation>, String> {
+    ) -> Result<Arc<starmate_webdriver::EmbeddedWebviewAutomation>, String> {
         browser_api::validate_browser_label(target_id)?;
         if let Some(driver) = self.drivers.read().await.get(target_id).cloned() {
             return Ok(driver);
@@ -47,7 +47,7 @@ impl DesktopBuiltInBrowserHost {
             return Ok(driver);
         }
         let driver = Arc::new(
-            openbitfun_webdriver::EmbeddedWebviewAutomation::attach(self.app.clone(), target_id)
+            starmate_webdriver::EmbeddedWebviewAutomation::attach(self.app.clone(), target_id)
                 .await?,
         );
         drivers.insert(target_id.to_string(), driver.clone());

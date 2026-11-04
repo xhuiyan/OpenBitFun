@@ -1,4 +1,4 @@
-use openbitfun_core_types::{
+use starmate_core_types::{
     SessionUsageReport, UsageCoverageLevel, UsageToolCategory, SESSION_USAGE_REPORT_SCHEMA_VERSION,
 };
 
@@ -40,7 +40,7 @@ fn context_composition_keeps_legacy_reports_readable() {
     assert!(restored.system_prompt_preview.is_none());
     assert!(restored.context_preview.is_none());
     assert_eq!(serde_json::to_value(&restored).unwrap(), legacy);
-    restored.context = Some(openbitfun_core_types::UsageContextBreakdown {
+    restored.context = Some(starmate_core_types::UsageContextBreakdown {
         system_prompt: 100,
         conversation: 900,
         context_window: Some(128_000),
@@ -58,7 +58,7 @@ fn context_composition_keeps_legacy_reports_readable() {
 fn system_prompt_preview_round_trips_without_changing_default_report_privacy() {
     let mut report = SessionUsageReport::partial_unavailable("session-1", 42);
     assert!(!report.privacy.prompt_content_included);
-    report.system_prompt_preview = Some(openbitfun_core_types::UsageSystemPromptPreview {
+    report.system_prompt_preview = Some(starmate_core_types::UsageSystemPromptPreview {
         content: "# System\nExact cached instructions\n".into(),
         cached_at: 123,
     });
@@ -74,8 +74,8 @@ fn system_prompt_preview_round_trips_without_changing_default_report_privacy() {
 #[test]
 fn context_preview_round_trips_with_explicit_category_and_capture_time() {
     let mut report = SessionUsageReport::partial_unavailable("session-1", 42);
-    report.context_preview = Some(openbitfun_core_types::UsageContextPreview {
-        category: openbitfun_core_types::UsageContextCategory::ToolDefinitions,
+    report.context_preview = Some(starmate_core_types::UsageContextPreview {
+        category: starmate_core_types::UsageContextCategory::ToolDefinitions,
         content: "```json\n[]\n```".into(),
         captured_at: 123,
     });

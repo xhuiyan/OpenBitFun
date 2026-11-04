@@ -35,7 +35,7 @@ use crate::agentic::session::session_store_port::CoreSessionStorePort;
 use crate::agentic::session::SessionManager;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use log::{debug, info, warn};
-use openbitfun_runtime_ports::{ThreadGoal, MAX_THREAD_GOAL_AUTO_CONTINUATIONS};
+use starmate_runtime_ports::{ThreadGoal, MAX_THREAD_GOAL_AUTO_CONTINUATIONS};
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering as AtomicOrdering};
@@ -48,7 +48,7 @@ use tokio::sync::Notify;
 use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
-use openbitfun_agent_runtime::scheduler::{
+use starmate_agent_runtime::scheduler::{
     build_thread_goal_objective_updated_delivery_plan, build_thread_goal_resumed_delivery_plan,
     resolve_agent_session_reply_action, resolve_background_delivery_action,
     resolve_background_delivery_injection, resolve_dialog_start_route,
@@ -61,7 +61,7 @@ use openbitfun_agent_runtime::scheduler::{
     ThreadGoalDeliveryReminder, ThreadGoalDeliveryReminderKind, TurnOutcomeQueueAction,
     TurnOutcomeStatus,
 };
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     resolve_dialog_submit_queue_action, AgentBackgroundResultRequest, AgentDialogPrependedReminder,
     AgentDialogSteerRequest, AgentDialogTurnExecution, AgentDialogTurnPort, AgentDialogTurnRequest,
     AgentInputAttachment, AgentLifecycleDeliveryPort, AgentSessionLineageInspection,
@@ -71,7 +71,7 @@ use openbitfun_runtime_ports::{
     RoundInjection, RoundInjectionKind, SessionStoragePathRequest, SessionStorePort,
     SessionTranscriptRequest,
 };
-pub use openbitfun_runtime_ports::{
+pub use starmate_runtime_ports::{
     AgentSessionReplyRoute, DialogQueuePriority, DialogSteerOutcome, DialogSubmissionPolicy,
     DialogSubmitOutcome,
 };
@@ -316,7 +316,7 @@ impl DialogRoundInjectionSource for SchedulerRoundInjectionSource {
         &self,
         session_id: &str,
         turn_id: &str,
-    ) -> openbitfun_runtime_ports::RoundInjectionToolPreemption {
+    ) -> starmate_runtime_ports::RoundInjectionToolPreemption {
         self.buffer
             .pending_tool_preemption_for_turn(session_id, turn_id)
     }
@@ -1972,7 +1972,7 @@ impl DialogScheduler {
         wait_timeout: Duration,
         require_idle: bool,
     ) -> OpenBitFunResult<SessionMaintenancePermit> {
-        openbitfun_core_types::validate_session_id(session_id)
+        starmate_core_types::validate_session_id(session_id)
             .map_err(OpenBitFunError::Validation)?;
         let _queue_admission_guard = self.host_queue_locks.lock(session_id).await;
         let operation_guard = self.lock_session_operation(session_id).await;
@@ -2671,7 +2671,7 @@ impl DialogScheduler {
         self: Arc<Self>,
         session_id: String,
         active_turn: ActiveDialogTurn,
-        plan: openbitfun_runtime_ports::ThreadGoalContinuationPlan,
+        plan: starmate_runtime_ports::ThreadGoalContinuationPlan,
     ) {
         let prepended: Vec<Message> = plan
             .prepended_reminders
@@ -3163,7 +3163,7 @@ fn agent_dialog_turn_metadata(
     mut metadata: serde_json::Map<String, serde_json::Value>,
     output_schema: Option<serde_json::Value>,
 ) -> PortResult<Option<serde_json::Value>> {
-    metadata.remove(openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY);
+    metadata.remove(starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY);
     if let Some(output_schema) = output_schema {
         if !output_schema.is_object() {
             return Err(PortError::new(
@@ -3172,7 +3172,7 @@ fn agent_dialog_turn_metadata(
             ));
         }
         metadata.insert(
-            openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
+            starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
             output_schema,
         );
     }
@@ -3288,8 +3288,8 @@ impl DialogScheduler {
 impl AgentDialogTurnPort for DialogScheduler {
     async fn manage_dialog_queue(
         &self,
-        request: openbitfun_runtime_ports::DialogQueueRequest,
-    ) -> PortResult<openbitfun_runtime_ports::DialogQueueSnapshot> {
+        request: starmate_runtime_ports::DialogQueueRequest,
+    ) -> PortResult<starmate_runtime_ports::DialogQueueSnapshot> {
         self.manage_host_queue(request).await
     }
 
@@ -3319,8 +3319,8 @@ impl AgentDialogTurnPort for DialogScheduler {
 
     async fn recover_interrupted_turn(
         &self,
-        request: openbitfun_runtime_ports::AgentDialogTurnRecoveryRequest,
-    ) -> PortResult<openbitfun_runtime_ports::AgentDialogTurnRecoveryOutcome> {
+        request: starmate_runtime_ports::AgentDialogTurnRecoveryRequest,
+    ) -> PortResult<starmate_runtime_ports::AgentDialogTurnRecoveryOutcome> {
         let deadline = Instant::now() + Duration::from_secs(30);
         loop {
             let mut retired = Box::pin(self.active_turn_retired.notified());
@@ -3528,8 +3528,8 @@ impl AgentTurnCancellationPort for DialogScheduler {
 
     async fn interrupt_turn(
         &self,
-        request: openbitfun_runtime_ports::AgentTurnInterruptionRequest,
-    ) -> PortResult<openbitfun_runtime_ports::AgentTurnInterruptionResult> {
+        request: starmate_runtime_ports::AgentTurnInterruptionRequest,
+    ) -> PortResult<starmate_runtime_ports::AgentTurnInterruptionResult> {
         // Serialize the route check with submit/start registration. Without
         // this guard an AgentSession turn could be spawned just before its
         // reply route becomes visible in `active_turns` and then be recovered
@@ -3559,7 +3559,7 @@ impl AgentTurnCancellationPort for DialogScheduler {
                     error.to_string(),
                 )
             })?;
-        Ok(openbitfun_runtime_ports::AgentTurnInterruptionResult {
+        Ok(starmate_runtime_ports::AgentTurnInterruptionResult {
             session_id: request.session_id,
             turn_id: request.turn_id,
             requested: true,
@@ -3670,7 +3670,7 @@ mod tests {
     use crate::service::config::types::{
         model_runtime_binding_fingerprint, AIConfig, AIModelConfig,
     };
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         AgentDialogPrependedReminder, AgentInputAttachment, PortErrorKind, ThreadGoalStatus,
     };
     use tokio::sync::RwLock as TokioRwLock;
@@ -3689,7 +3689,7 @@ mod tests {
     fn output_schema_field_owns_reserved_metadata_key() {
         let mut metadata = serde_json::Map::new();
         metadata.insert(
-            openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
+            starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY.to_string(),
             serde_json::json!({ "type": "string" }),
         );
 
@@ -3704,7 +3704,7 @@ mod tests {
             merged
                 .and_then(|value| value.as_object().cloned())
                 .and_then(|metadata| metadata
-                    .get(openbitfun_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY)
+                    .get(starmate_runtime_ports::OUTPUT_SCHEMA_CONTEXT_KEY)
                     .cloned()),
             Some(schema)
         );
@@ -4645,7 +4645,7 @@ mod tests {
                 original_message: Some("/review".to_string()),
                 turn_id: Some("delegated-turn".to_string()),
                 execution:
-                    openbitfun_runtime_ports::AgentDialogTurnExecution::FreshExternalSubagent {
+                    starmate_runtime_ports::AgentDialogTurnExecution::FreshExternalSubagent {
                         ecosystem_id: "opencode".to_string(),
                         logical_id: "reviewer".to_string(),
                     },
@@ -4737,7 +4737,7 @@ mod tests {
                 original_message: Some("/review".to_string()),
                 turn_id: Some("delegated-turn".to_string()),
                 execution:
-                    openbitfun_runtime_ports::AgentDialogTurnExecution::FreshExternalSubagent {
+                    starmate_runtime_ports::AgentDialogTurnExecution::FreshExternalSubagent {
                         ecosystem_id: "opencode".to_string(),
                         logical_id: "reviewer".to_string(),
                     },

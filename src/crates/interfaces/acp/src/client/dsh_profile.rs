@@ -21,8 +21,8 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use openbitfun_core::service::remote_ssh::SSHConnectionManager;
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::service::remote_ssh::SSHConnectionManager;
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use serde::Deserialize;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 

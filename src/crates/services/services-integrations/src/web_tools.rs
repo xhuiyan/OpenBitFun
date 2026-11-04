@@ -12,7 +12,7 @@ pub use tavily::TavilySearchProvider;
 
 use async_trait::async_trait;
 use chrono::{DateTime, NaiveDate};
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     WebSearchError, WebSearchErrorKind, WebSearchProvider, WebSearchProviderId, WebSearchRequest,
     WebSearchResponse, WebSearchResult,
 };

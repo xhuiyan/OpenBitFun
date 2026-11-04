@@ -5,7 +5,7 @@
 //! existing product/tool import path and to inject OpenBitFun's managed profile
 //! directory.
 
-use openbitfun_services_integrations::browser_control::launcher as provider;
+use starmate_services_integrations::browser_control::launcher as provider;
 pub use provider::{
     BrowserDebugEndpoint, BrowserInfo, BrowserKind, BrowserLaunchOptions, CdpPortProbe,
     LaunchResult, DEFAULT_CDP_PORT,

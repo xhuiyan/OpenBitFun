@@ -22,8 +22,8 @@
 #![allow(dead_code)]
 
 use image::{Rgba, RgbaImage};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::InteractiveElement;
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::InteractiveElement;
 use std::io::Cursor;
 
 /// Render the SoM overlay onto `jpeg_bytes` and return a fresh JPEG.

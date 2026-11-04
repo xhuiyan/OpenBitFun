@@ -1,12 +1,12 @@
 use agent_client_protocol::{Builder, Error, HandleDispatchFrom};
-use openbitfun_app_server_protocol::app::{
+use starmate_app_server_protocol::app::{
     CapabilityAvailability, CapabilityDescriptor, HealthRequest, HealthResponse, HealthStatus,
     InitializeRequest, InitializeResponse, ServerInfo, TransportLimits,
 };
-use openbitfun_app_server_protocol::error::{AppServerErrorData, AppServerErrorKind};
-use openbitfun_app_server_protocol::event::{SyncEventsRequest, SyncEventsResponse};
-use openbitfun_app_server_protocol::{MIN_PROTOCOL_VERSION, PROTOCOL_VERSION};
-use openbitfun_product_domains::product_search::PRODUCT_SEARCH_CAPABILITY_ID;
+use starmate_app_server_protocol::error::{AppServerErrorData, AppServerErrorKind};
+use starmate_app_server_protocol::event::{SyncEventsRequest, SyncEventsResponse};
+use starmate_app_server_protocol::{MIN_PROTOCOL_VERSION, PROTOCOL_VERSION};
+use starmate_product_domains::product_search::PRODUCT_SEARCH_CAPABILITY_ID;
 
 use crate::management::EXTERNAL_SOURCES_CAPABILITY;
 use crate::role::{AppClient, AppServer};

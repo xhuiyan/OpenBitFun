@@ -2,7 +2,7 @@ use crate::client::AIClient;
 use crate::types::ProxyConfig;
 use anyhow::{anyhow, Result};
 use log::{debug, error, info, warn};
-use openbitfun_services_core::system_proxy::SystemProxy;
+use starmate_services_core::system_proxy::SystemProxy;
 use reqwest::{Client, ClientBuilder, NoProxy, Proxy};
 
 /// Router requests use the shared proxy policy with their own total timeout.
@@ -22,7 +22,7 @@ pub(crate) fn create_router_http_client_with_connection_mode(
     skip_ssl_verify: bool,
     direct: bool,
 ) -> Result<Client> {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
     let builder = Client::builder()
         .timeout(timeout)
         .redirect(reqwest::redirect::Policy::none())
@@ -39,7 +39,7 @@ pub(crate) fn create_http_client(
     proxy_config: Option<ProxyConfig>,
     skip_ssl_verify: bool,
 ) -> Client {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
     let mut builder = Client::builder()
         .tls_backend_rustls()
         .connect_timeout(std::time::Duration::from_secs(
@@ -109,7 +109,7 @@ fn apply_proxy_policy(builder: ClientBuilder, proxy_config: Option<ProxyConfig>)
         }
     }
 
-    match openbitfun_services_core::system_proxy::detect() {
+    match starmate_services_core::system_proxy::detect() {
         Some(system) => match system_proxy(&system) {
             Some(proxy) => {
                 info!("Using operating system proxy: {}", system.url);
@@ -163,7 +163,7 @@ fn normalize_proxy_url(url: &str) -> String {
 mod tests {
     use super::{build_proxy, normalize_proxy_url, system_proxy};
     use crate::types::ProxyConfig;
-    use openbitfun_services_core::system_proxy::SystemProxy;
+    use starmate_services_core::system_proxy::SystemProxy;
 
     async fn response_fixture(body: &'static str) -> (String, tokio::task::JoinHandle<()>) {
         let app = axum::Router::new().fallback(move || async move { body });
@@ -175,7 +175,7 @@ mod tests {
 
     #[tokio::test]
     async fn system_proxy_preserves_loopback_bypass_and_proxies_other_hosts() {
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let (direct_url, direct_server) = response_fixture("direct").await;
         let (proxy_url, proxy_server) = response_fixture("system proxy").await;
         let proxy = system_proxy(&SystemProxy {
@@ -271,7 +271,7 @@ mod tests {
     #[tokio::test]
     async fn router_proxy_policy_preserves_environment_explicit_and_disabled_routes() {
         use super::create_router_http_client;
-        use openbitfun_services_core::process_manager::create_tokio_command;
+        use starmate_services_core::process_manager::create_tokio_command;
         use std::time::Duration;
 
         const CHILD: &str = "OPENBITFUN_HTTP_PROXY_FIXTURE_CHILD";

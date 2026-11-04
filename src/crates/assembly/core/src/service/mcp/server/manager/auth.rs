@@ -10,7 +10,7 @@ use crate::service::mcp::auth::{
 };
 use crate::service::mcp::server::MCPServerType;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_integrations::mcp::auth::{
+use starmate_services_integrations::mcp::auth::{
     clear_stored_oauth_credentials, has_stored_oauth_credentials,
     prepare_remote_oauth_authorization,
 };

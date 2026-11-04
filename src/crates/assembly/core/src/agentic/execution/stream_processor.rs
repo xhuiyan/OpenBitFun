@@ -5,14 +5,14 @@ use crate::agentic::events::EventQueue;
 use crate::util::errors::OpenBitFunError;
 use crate::util::types::ai::GeminiUsage;
 use futures::stream::BoxStream;
-use openbitfun_core_types::ReasoningContentKind;
+use starmate_core_types::ReasoningContentKind;
 use serde_json::Value;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 
-pub use openbitfun_agent_stream::{
+pub use starmate_agent_stream::{
     HiddenTextBlock, HiddenTextTag, ModelResponseReplayCapture, StreamProcessOptions,
     StreamProcessorError, ToolCall as StreamToolCall,
 };
@@ -39,8 +39,8 @@ pub struct StreamResult {
     pub partial_recovery_reason: Option<String>,
 }
 
-impl From<openbitfun_agent_stream::StreamResult> for StreamResult {
-    fn from(result: openbitfun_agent_stream::StreamResult) -> Self {
+impl From<starmate_agent_stream::StreamResult> for StreamResult {
+    fn from(result: starmate_agent_stream::StreamResult) -> Self {
         Self {
             full_thinking: result.full_thinking,
             reasoning_content_kind: result.reasoning_content_kind,
@@ -70,8 +70,8 @@ pub struct StreamProcessError {
     pub response_model: Option<String>,
 }
 
-impl From<openbitfun_agent_stream::StreamProcessError> for StreamProcessError {
-    fn from(error: openbitfun_agent_stream::StreamProcessError) -> Self {
+impl From<starmate_agent_stream::StreamProcessError> for StreamProcessError {
+    fn from(error: starmate_agent_stream::StreamProcessError) -> Self {
         Self {
             error: error.error.into(),
             has_effective_output: error.has_effective_output,
@@ -83,24 +83,24 @@ impl From<openbitfun_agent_stream::StreamProcessError> for StreamProcessError {
 
 /// Core-facing stream processor wrapper.
 pub struct StreamProcessor {
-    inner: openbitfun_agent_stream::StreamProcessor,
+    inner: starmate_agent_stream::StreamProcessor,
 }
 
 impl StreamProcessor {
     pub fn new(event_queue: Arc<EventQueue>) -> Self {
         Self {
-            inner: openbitfun_agent_stream::StreamProcessor::new(event_queue),
+            inner: starmate_agent_stream::StreamProcessor::new(event_queue),
         }
     }
 
     pub fn derive_watchdog_timeout(stream_idle_timeout: Option<Duration>) -> Option<Duration> {
-        openbitfun_agent_stream::StreamProcessor::derive_watchdog_timeout(stream_idle_timeout)
+        starmate_agent_stream::StreamProcessor::derive_watchdog_timeout(stream_idle_timeout)
     }
 
     #[allow(clippy::too_many_arguments)]
     pub async fn process_stream(
         &self,
-        stream: BoxStream<'static, Result<openbitfun_ai_adapters::UnifiedResponse, anyhow::Error>>,
+        stream: BoxStream<'static, Result<starmate_ai_adapters::UnifiedResponse, anyhow::Error>>,
         watchdog_timeout: Option<Duration>,
         raw_sse_rx: Option<mpsc::UnboundedReceiver<String>>,
         session_id: String,
@@ -128,7 +128,7 @@ impl StreamProcessor {
     #[allow(clippy::too_many_arguments)]
     pub async fn process_stream_with_options(
         &self,
-        stream: BoxStream<'static, Result<openbitfun_ai_adapters::UnifiedResponse, anyhow::Error>>,
+        stream: BoxStream<'static, Result<starmate_ai_adapters::UnifiedResponse, anyhow::Error>>,
         watchdog_timeout: Option<Duration>,
         raw_sse_rx: Option<mpsc::UnboundedReceiver<String>>,
         session_id: String,

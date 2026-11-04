@@ -1,4 +1,4 @@
-use openbitfun_product_domains::canvas::{
+use starmate_product_domains::canvas::{
     parse_canvas_artifact_ref, validate_canvas_imports, validate_canvas_source_policy,
     CanvasArtifact, CanvasArtifactRef, CanvasDiagnostic, CanvasDiagnosticCategory,
     CanvasDiagnosticSeverity, CanvasId, CanvasImportPolicyDiagnosticKind, CanvasRevision,

@@ -12,8 +12,8 @@ use crate::service::config::types::{
     AgentProfileConfig, AgentProfileView, ParentSubagentOverrideConfig,
 };
 use crate::util::errors::*;
-use openbitfun_agent_runtime::skills::normalize_user_mode_skill_overrides;
-use openbitfun_runtime_ports::PermissionRule;
+use starmate_agent_runtime::skills::normalize_user_mode_skill_overrides;
+use starmate_runtime_ports::PermissionRule;
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
@@ -404,7 +404,7 @@ pub async fn get_agent_profile_configs() -> OpenBitFunResult<HashMap<String, Age
     let config_service = GlobalConfigManager::get_service().await?;
     let raw = config_service.get_config(Some("ai.agent_profiles")).await?;
     let mut migrated =
-        openbitfun_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
+        starmate_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(
             &raw,
         )
         .map_err(OpenBitFunError::config)?;
@@ -438,7 +438,7 @@ pub async fn get_agent_profile_views() -> OpenBitFunResult<HashMap<String, Agent
 }
 
 pub async fn get_agent_profile_view(agent_id: &str) -> OpenBitFunResult<AgentProfileView> {
-    let agent_id = openbitfun_core_types::agent_identity::canonical_agent_id(agent_id);
+    let agent_id = starmate_core_types::agent_identity::canonical_agent_id(agent_id);
     let views = get_agent_profile_views().await?;
     views
         .get(agent_id)
@@ -450,7 +450,7 @@ pub async fn persist_agent_profile_from_value(
     agent_id: &str,
     config: Value,
 ) -> OpenBitFunResult<()> {
-    let agent_id = openbitfun_core_types::agent_identity::canonical_agent_id(agent_id);
+    let agent_id = starmate_core_types::agent_identity::canonical_agent_id(agent_id);
     let config_service = GlobalConfigManager::get_service().await?;
     let agent_defaults = get_agent_defaults().await;
     let default_tools = agent_defaults
@@ -626,7 +626,7 @@ pub async fn canonicalize_agent_profile_configs(
         .update_config(
             "ai.agent_profiles",
             |raw_agent_profiles: &mut Map<String, Value>| {
-                let migrated = openbitfun_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(raw_agent_profiles)
+                let migrated = starmate_config_contracts::agent_identity_migration::canonicalize_agent_profile_keys(raw_agent_profiles)
                     .map_err(OpenBitFunError::config)?;
                 let mut rewritten_agent_profiles = Map::new();
                 let mut updated_profiles = Vec::new();
@@ -699,7 +699,7 @@ mod tests {
     };
     use crate::agentic::agents::get_agent_registry;
     use crate::service::config::types::AgentSubagentOverrideState;
-    use openbitfun_runtime_ports::{PermissionEffect, PermissionRule};
+    use starmate_runtime_ports::{PermissionEffect, PermissionRule};
     use serde_json::Value;
     use std::collections::HashSet;
 

@@ -4,12 +4,12 @@
 //! file interpretation remains in the corresponding adapter.
 
 use fs2::FileExt;
-use openbitfun_product_domains::plugin_source::{
+use starmate_product_domains::plugin_source::{
     PluginActivationAuthority, PluginPackageInput, PluginPackageManifest,
     PluginPackageSourceIdentity, PluginPackageTrustLevel, PluginSourceContractError,
     PluginTrustStore, PLUGIN_TRUST_STORE_SCHEMA_VERSION,
 };
-pub use openbitfun_product_domains::plugin_source::{
+pub use starmate_product_domains::plugin_source::{
     PluginPackageTrustLevel as ManagedPluginTrustLevel,
     PluginTrustDecision as ManagedPluginTrustDecision,
 };
@@ -3151,7 +3151,7 @@ mod tests {
         ProductPluginSourceStore, ScannedFileReadError, SecureManagedRoot,
         MAX_OPERATION_READ_BYTES, MAX_PACKAGE_FILE_BYTES, MAX_TRUST_STORE_BYTES,
     };
-    use openbitfun_product_domains::plugin_source::{
+    use starmate_product_domains::plugin_source::{
         PluginPackageTrustLevel, PluginSourceContractError, PluginTrustDecision,
     };
     use sha2::{Digest, Sha256};
@@ -4278,7 +4278,7 @@ mod tests {
             .await
             .expect("initialize trust store");
         let loaded_identity = loaded.identity.expect("persisted trust identity");
-        let replacement = openbitfun_product_domains::plugin_source::PluginTrustStore::new(
+        let replacement = starmate_product_domains::plugin_source::PluginTrustStore::new(
             loaded.store.epoch().saturating_add(1),
         );
 
@@ -4319,7 +4319,7 @@ mod tests {
                 })
             })
             .collect::<Vec<_>>();
-        let store: openbitfun_product_domains::plugin_source::PluginTrustStore =
+        let store: starmate_product_domains::plugin_source::PluginTrustStore =
             serde_json::from_value(serde_json::json!({
                 "schemaVersion": 2,
                 "epoch": 2,
@@ -5085,7 +5085,7 @@ mod tests {
         assert!(matches!(
             error,
             PluginSourceStoreError::Contract(
-                openbitfun_product_domains::plugin_source::PluginSourceContractError::InvalidTrustTransition
+                starmate_product_domains::plugin_source::PluginSourceContractError::InvalidTrustTransition
             )
         ));
         assert!(!trust_path.exists());

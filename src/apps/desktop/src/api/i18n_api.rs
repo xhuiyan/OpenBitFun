@@ -2,7 +2,7 @@
 
 use crate::api::app_state::AppState;
 use log::{error, info, warn};
-use openbitfun_core::service::i18n::{sync_global_i18n_service_locale, LocaleId, LocaleMetadata};
+use starmate_core::service::i18n::{sync_global_i18n_service_locale, LocaleId, LocaleMetadata};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use tauri::State;

@@ -1,20 +1,20 @@
 //! Product-owned persistence for imported command Hook snapshots.
 
-use openbitfun_agent_runtime::native_hooks::{
+use starmate_agent_runtime::native_hooks::{
     AgentHookScope, AgentHookSettings, AgentHookSettingsLayer, MAX_HOOKS_FILE_BYTES,
 };
-use openbitfun_product_domains::external_hook_catalog::{
+use starmate_product_domains::external_hook_catalog::{
     ExternalHookSource, ExternalHookSourceKind,
 };
-use openbitfun_product_domains::external_hook_import::{
+use starmate_product_domains::external_hook_import::{
     PreparedExternalHookAsset, MAX_EXTERNAL_HOOK_IMPORT_ASSETS,
     MAX_EXTERNAL_HOOK_IMPORT_ASSET_BYTES, MAX_EXTERNAL_HOOK_IMPORT_ASSET_DEPTH,
     MAX_EXTERNAL_HOOK_IMPORT_TOTAL_ASSET_BYTES,
 };
-use openbitfun_product_domains::external_sources::{
+use starmate_product_domains::external_sources::{
     EcosystemId, ExternalSourceHealth, ExternalSourceScope, SourceKey,
 };
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
@@ -1139,11 +1139,11 @@ fn io_error(error: impl std::fmt::Display) -> HookImportStoreError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::external_hook_catalog::{
+    use starmate_product_domains::external_hook_catalog::{
         ExternalHookSource, ExternalHookSourceKind,
     };
-    use openbitfun_product_domains::external_hook_import::PreparedExternalHookAsset;
-    use openbitfun_product_domains::external_sources::{
+    use starmate_product_domains::external_hook_import::PreparedExternalHookAsset;
+    use starmate_product_domains::external_sources::{
         EcosystemId, ExternalSourceHealth, ExternalSourceScope, SourceKey,
     };
     use tempfile::tempdir;

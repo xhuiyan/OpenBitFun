@@ -6,16 +6,16 @@ use super::workspace_sessions::{
     read_workspace_sessions_manifest, target_wins_session_ids, SessionImportAction,
     WorkspaceSessionsManifest,
 };
-use openbitfun_legacy_migration::{
+use starmate_legacy_migration::{
     atomic_write_bytes, atomic_write_json, snapshot_sqlite_read_only, validate_sqlite,
     DomainContext, DomainScan, LegacyDomainAdapter, LegacyMigrationError, LegacyMigrationResult,
     MigrationRoots,
 };
-use openbitfun_product_domains::legacy_migration::{
+use starmate_product_domains::legacy_migration::{
     ConflictResolution, FindingSeverity, MigrationConflict, MigrationDiagnostic, MigrationDomainId,
     MigrationDomainResult, MigrationDomainState, ScanFinding,
 };
-use openbitfun_services_core::coordination_persistence::{
+use starmate_services_core::coordination_persistence::{
     coordination_table_has_column, initialize_coordination_schema, COORDINATION_SCHEMA_VERSION,
 };
 use rusqlite::{params, Connection, OpenFlags, OptionalExtension, Transaction};
@@ -1413,16 +1413,16 @@ fn db_error(path: &Path, error: rusqlite::Error) -> LegacyMigrationError {
 mod tests {
     use super::*;
     use crate::adapters_for_groups;
-    use openbitfun_legacy_migration::{
+    use starmate_legacy_migration::{
         probe_legacy_source, CancellationToken, CrashInjector, CrashPoint, MigrationEngine,
         NoCrashInjection, ProbeLimits,
     };
-    use openbitfun_product_domains::legacy_migration::{
+    use starmate_product_domains::legacy_migration::{
         MigrationGroupId, MigrationRunStatus, MigrationSelection,
     };
-    use openbitfun_services_core::session::OfflineSessionImportStore;
-    use openbitfun_services_core::session_projection_format::validate_runtime_event_log;
-    use openbitfun_services_core::workspace_persistence::{
+    use starmate_services_core::session::OfflineSessionImportStore;
+    use starmate_services_core::session_projection_format::validate_runtime_event_log;
+    use starmate_services_core::workspace_persistence::{
         validate_workspace_persistence_data, WorkspacePersistenceData,
     };
     use std::io::Read;
@@ -2015,7 +2015,7 @@ mod tests {
             )
             .unwrap()
         );
-        let layout = openbitfun_legacy_migration::MigrationLayout::new(&roots, &plan.run_id);
+        let layout = starmate_legacy_migration::MigrationLayout::new(&roots, &plan.run_id);
         let context = DomainContext {
             roots: &roots,
             layout: &layout,

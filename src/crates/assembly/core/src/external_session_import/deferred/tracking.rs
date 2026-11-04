@@ -60,7 +60,7 @@ fn content_version(metadata: &SessionMetadata) -> Option<&str> {
 }
 
 fn snapshot_path(root: &Path, id: &str, version: &str) -> OpenBitFunResult<PathBuf> {
-    openbitfun_core_types::validate_session_id(id).map_err(OpenBitFunError::Validation)?;
+    starmate_core_types::validate_session_id(id).map_err(OpenBitFunError::Validation)?;
     if version.len() != 64 || !version.bytes().all(|byte| byte.is_ascii_hexdigit()) {
         return Err(index_error("Invalid external history version"));
     }
@@ -296,7 +296,7 @@ async fn cache_unavailable_legacy_history(
     }
     let last_active = bundle.metadata.last_active_at;
     let workspace_path = bundle.metadata.workspace_path.clone().unwrap_or_default();
-    openbitfun_services_core::session::refresh_session_metadata_from_turns(
+    starmate_services_core::session::refresh_session_metadata_from_turns(
         &mut bundle.metadata,
         &workspace_path,
         &bundle.turns,
@@ -342,7 +342,7 @@ pub(super) async fn refresh_reference(
     read: impl FnOnce(ImportSource, &str) -> Result<ExternalSessionDocument, String> + Send + 'static,
 ) -> OpenBitFunResult<Option<HistorySnapshot>> {
     let id = entry.metadata.session_id.clone();
-    openbitfun_core_types::validate_session_id(&id).map_err(OpenBitFunError::Validation)?;
+    starmate_core_types::validate_session_id(&id).map_err(OpenBitFunError::Validation)?;
     // The source lock is distinct from native Session writers. A snapshot is
     // published before its index pointer, so a crash leaves the old view valid.
     let _lock = JsonFileStore
@@ -364,7 +364,7 @@ pub(super) async fn refresh_reference(
         Ok(document) => document,
         Err(error) => {
             let unsupported = entry.ecosystem_id == "deepseek-harness"
-                && openbitfun_dsh_adapter::session::is_unsupported_error(&error);
+                && starmate_dsh_adapter::session::is_unsupported_error(&error);
             let source_status = if unsupported {
                 "unsupported"
             } else {
@@ -519,7 +519,7 @@ pub(super) async fn refresh_reference(
         .unwrap_or(Value::Null);
     custom["externalSourceIncomplete"] =
         json!(document.turns.last().is_some_and(|turn| turn.status
-            != openbitfun_product_domains::session_import::ExternalSessionStatus::Complete));
+            != starmate_product_domains::session_import::ExternalSessionStatus::Complete));
     custom["continuationMode"] = json!("fork_before_continue");
     if cached.is_none() {
         for turn in &mut bundle.turns {
@@ -530,7 +530,7 @@ pub(super) async fn refresh_reference(
         }
     }
     let last_active = bundle.metadata.last_active_at;
-    openbitfun_services_core::session::refresh_session_metadata_from_turns(
+    starmate_services_core::session::refresh_session_metadata_from_turns(
         &mut bundle.metadata,
         &workspace.root_path.to_string_lossy(),
         cached
@@ -641,7 +641,7 @@ mod tests {
     use super::*;
     use crate::agentic::persistence::SessionBranchRequest;
     use crate::external_session_import::auto_discovery::tests::{candidate, document};
-    use openbitfun_services_core::session::SessionBranchBoundary;
+    use starmate_services_core::session::SessionBranchBoundary;
 
     #[tokio::test]
     #[ignore = "Reads a real external session and verifies native discovery, history and continuation in temporary storage"]
@@ -701,7 +701,7 @@ mod tests {
         let viewed = snapshot(&root, id, false).await.unwrap().unwrap();
         assert_eq!(viewed.turns.len(), original.turns.len());
         for (source, viewed) in original.turns.iter().zip(&viewed.turns) {
-            use openbitfun_product_domains::session_import::ExternalSessionItem;
+            use starmate_product_domains::session_import::ExternalSessionItem;
             let source_tools: Vec<_> = source
                 .items
                 .iter()
@@ -893,7 +893,7 @@ mod tests {
         let mut changed = candidate("codex", "source-1", &workspace.root_path);
         changed.updated_at = Some(42_000);
         changed.status =
-            openbitfun_product_domains::session_import::ExternalSessionStatus::Interrupted;
+            starmate_product_domains::session_import::ExternalSessionStatus::Interrupted;
         register(&root, &workspace, &workspace, vec![changed])
             .await
             .unwrap();
@@ -1141,7 +1141,7 @@ mod tests {
     #[tokio::test]
     async fn history_catalog_and_paging_stay_on_the_viewed_version() {
         use crate::service::session::SessionTurnWindowResponse;
-        use openbitfun_runtime_ports::SessionTurnWindowRequest;
+        use starmate_runtime_ports::SessionTurnWindowRequest;
         let (_temp, workspace, root, manager) = fixture();
         let entry = create_source(&root, &workspace).await;
         let id = &entry.metadata.session_id;

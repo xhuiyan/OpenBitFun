@@ -1,5 +1,5 @@
 use chrono::Utc;
-use openbitfun_services_core::token_usage::{
+use starmate_services_core::token_usage::{
     ModelTokenStats, SessionTokenStats, TimeRange, TokenUsageQuery, TokenUsageRecord,
 };
 
@@ -25,7 +25,7 @@ fn token_usage_record_preserves_model_identity_and_cached_availability_default()
 
 #[test]
 fn context_composition_is_optional_and_survives_opaque_usage_details() {
-    use openbitfun_services_core::token_usage::types::{
+    use starmate_services_core::token_usage::types::{
         model_request_context, with_model_request_context, ModelRequestUsageContext,
     };
     let legacy = serde_json::json!({
@@ -36,7 +36,7 @@ fn context_composition_is_optional_and_survives_opaque_usage_details() {
     let mut restored: ModelRequestUsageContext = serde_json::from_value(legacy.clone()).unwrap();
     assert!(restored.context_composition.is_none());
     assert_eq!(serde_json::to_value(&restored).unwrap(), legacy);
-    restored.context_composition = Some(openbitfun_core_types::UsageContextBreakdown {
+    restored.context_composition = Some(starmate_core_types::UsageContextBreakdown {
         rules: 100,
         conversation: 200,
         ..Default::default()

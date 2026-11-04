@@ -23,8 +23,8 @@
 
 use super::ax_snapshot_digest::compute_digest;
 use crate::computer_use::ui_locate_common;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     AppInfo, AppStateSnapshot, AxNode, OcrAccessibilityHit, UiElementLocateQuery,
     UiElementLocateResult,
 };
@@ -1131,7 +1131,7 @@ enum SemanticAction {
 }
 struct ObservedWindow {
     hwnd: isize,
-    scope: openbitfun_agent_tools::computer_use_control::ObservationScope,
+    scope: starmate_agent_tools::computer_use_control::ObservationScope,
     pid: u32,
     nodes: Vec<UiaNode>,
     response: std::sync::Arc<super::provider_worker::Request>,
@@ -1897,7 +1897,7 @@ mod control_native_tests {
         let owner = "windows-native-uia-test";
         super::super::control_session::start(
             owner,
-            openbitfun_agent_tools::computer_use_control::ControlMode::Background,
+            starmate_agent_tools::computer_use_control::ControlMode::Background,
         )
         .unwrap();
         super::super::control_session::bind_target(format!(

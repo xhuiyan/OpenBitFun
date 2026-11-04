@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use log::warn;
-use openbitfun_core::util::errors::{OpenBitFunError, OpenBitFunResult};
+use starmate_core::util::errors::{OpenBitFunError, OpenBitFunResult};
 use tokio::sync::RwLock;
 
 use super::config::RemoteAcpClientRequirementSnapshot;

@@ -7,7 +7,7 @@ use crate::agentic::tools::page_publish_host::{
     PagePublishHostRequest,
 };
 use crate::service::remote_connect::account_runtime::AccountRuntime;
-use openbitfun_services_integrations::remote_connect::{
+use starmate_services_integrations::remote_connect::{
     delete_page_from_relay, delete_page_version_on_relay, deploy_page_version_on_relay,
     join_relay_url, list_page_versions_from_relay, list_pages_from_relay,
     publish_page_content_on_relay, unpublish_page_from_relay, update_page_content_on_relay,

@@ -3,7 +3,7 @@ use super::flashgrep::{
     RefreshPolicyConfig, RepoConfig, RepoSession, SearchRequest, FLASHGREP_LOG_TARGET,
 };
 use async_trait::async_trait;
-use openbitfun_services_core::filesystem::{ContentMatchPreviewBuilder, FileSearchOutcome};
+use starmate_services_core::filesystem::{ContentMatchPreviewBuilder, FileSearchOutcome};
 use std::collections::{HashMap, HashSet};
 use std::ffi::OsString;
 use std::path::{Component, Path, PathBuf};
@@ -732,7 +732,7 @@ impl WorkspaceSearchService {
             log::warn!(
                 target: FLASHGREP_LOG_TARGET,
                 "Failed to ensure workspace .gitignore ignores {} before search warmup: path={}, error={}",
-                openbitfun_services_core::product_identity::hidden_data_directory(),
+                starmate_services_core::product_identity::hidden_data_directory(),
                 repo_root.display(),
                 error
             );

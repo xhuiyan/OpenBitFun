@@ -12,8 +12,8 @@ use crate::service::workspace_runtime::{
 };
 use async_trait::async_trait;
 use log::{debug, info, warn};
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
-use openbitfun_services_core::workspace_identity::WorkspaceSessionIdentity;
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind};
+use starmate_services_core::workspace_identity::WorkspaceSessionIdentity;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
@@ -547,7 +547,7 @@ fn bound_snapshot_context(
         WorkspaceRuntimeTarget::LocalWorkspace { workspace_root } => {
             if identity.is_remote()
                 || identity.hostname
-                    != openbitfun_services_core::workspace_identity::LOCAL_WORKSPACE_SSH_HOST
+                    != starmate_services_core::workspace_identity::LOCAL_WORKSPACE_SSH_HOST
                 || canonical_snapshot_io_path(workspace_root)
                     != canonical_snapshot_io_path(Path::new(&identity.logical_workspace_path))
             {
@@ -947,7 +947,7 @@ impl Tool for WrappedTool {
         &self,
         input: &Value,
         context: &ToolUseContext,
-    ) -> crate::util::errors::OpenBitFunResult<Vec<openbitfun_agent_tools::PermissionIntent>> {
+    ) -> crate::util::errors::OpenBitFunResult<Vec<starmate_agent_tools::PermissionIntent>> {
         self.original_tool.permission_intents(input, context)
     }
 
@@ -1500,7 +1500,7 @@ mod tests {
             custom_data: HashMap::new(),
             computer_use_host: None,
             runtime_tool_restrictions: ToolRuntimeRestrictions::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -1782,8 +1782,8 @@ mod tests {
             PathBuf::from(&remote_root),
             connection_id.clone(),
             "test".into(),
-            openbitfun_services_core::workspace_identity::WorkspaceSessionIdentity {
-                workspace_kind: openbitfun_core_types::WorkspaceKind::Remote,
+            starmate_services_core::workspace_identity::WorkspaceSessionIdentity {
+                workspace_kind: starmate_core_types::WorkspaceKind::Remote,
                 hostname: "test-host".into(),
                 logical_workspace_path: remote_root.clone(),
                 remote_connection_id: Some(connection_id),

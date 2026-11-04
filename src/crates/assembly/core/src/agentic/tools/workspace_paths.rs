@@ -5,7 +5,7 @@
 //! incorrectly. Remote sessions must use POSIX path semantics for tool arguments.
 
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-pub use openbitfun_agent_tools::{
+pub use starmate_agent_tools::{
     build_openbitfun_current_session_uri, is_openbitfun_current_session_uri,
     is_openbitfun_runtime_uri, is_openbitfun_tool_uri, ParsedOpenBitFunCurrentSessionUri,
     ParsedOpenBitFunRuntimeUri, OPENBITFUN_CURRENT_SESSION_URI_PREFIX,
@@ -14,29 +14,29 @@ pub use openbitfun_agent_tools::{
 use std::path::Path;
 
 pub fn normalize_path(path: &str) -> String {
-    openbitfun_agent_tools::normalize_host_path(path)
+    starmate_agent_tools::normalize_host_path(path)
 }
 
 pub fn resolve_path_with_workspace(
     path: &str,
     workspace_root: Option<&Path>,
 ) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::resolve_host_path_with_workspace(path, workspace_root)
+    starmate_agent_tools::resolve_host_path_with_workspace(path, workspace_root)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
 pub fn resolve_path(path: &str) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::resolve_host_path(path)
+    starmate_agent_tools::resolve_host_path(path)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
 pub fn normalize_runtime_relative_path(path: &str) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::normalize_runtime_relative_path(path)
+    starmate_agent_tools::normalize_runtime_relative_path(path)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
 pub fn parse_openbitfun_runtime_uri(path: &str) -> OpenBitFunResult<ParsedOpenBitFunRuntimeUri> {
-    openbitfun_agent_tools::parse_openbitfun_runtime_uri(path)
+    starmate_agent_tools::parse_openbitfun_runtime_uri(path)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
@@ -44,13 +44,13 @@ pub fn build_openbitfun_runtime_uri(
     workspace_scope: &str,
     relative_path: &str,
 ) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::build_openbitfun_runtime_uri(workspace_scope, relative_path)
+    starmate_agent_tools::build_openbitfun_runtime_uri(workspace_scope, relative_path)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
 /// POSIX absolute: after normalizing backslashes, path starts with `/`.
 pub fn posix_style_path_is_absolute(path: &str) -> bool {
-    openbitfun_agent_tools::posix_style_path_is_absolute(path)
+    starmate_agent_tools::posix_style_path_is_absolute(path)
 }
 
 /// Resolve a path using POSIX rules (for remote SSH workspaces).
@@ -58,7 +58,7 @@ pub fn posix_resolve_path_with_workspace(
     path: &str,
     workspace_root: Option<&str>,
 ) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::posix_resolve_path_with_workspace(path, workspace_root)
+    starmate_agent_tools::posix_resolve_path_with_workspace(path, workspace_root)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 
@@ -68,7 +68,7 @@ pub fn resolve_workspace_tool_path(
     workspace_root: Option<&str>,
     workspace_is_remote: bool,
 ) -> OpenBitFunResult<String> {
-    openbitfun_agent_tools::resolve_workspace_tool_path(path, workspace_root, workspace_is_remote)
+    starmate_agent_tools::resolve_workspace_tool_path(path, workspace_root, workspace_is_remote)
         .map_err(|error| OpenBitFunError::tool(error.to_string()))
 }
 

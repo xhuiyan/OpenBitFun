@@ -91,7 +91,7 @@ pub struct AgentWorkspaceCatalogEntry {
     pub workspace_id: String,
     pub project_workspace_id: Option<String>,
     pub name: String,
-    pub kind: openbitfun_core_types::WorkspaceKind,
+    pub kind: starmate_core_types::WorkspaceKind,
     pub root_path: String,
     /// Last recorded workspace access, as Unix milliseconds.
     pub last_accessed_at_ms: i64,
@@ -276,7 +276,7 @@ pub struct AgentSessionModelSelection {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AgentSessionModelTargetSelection {
-    pub selection: openbitfun_core_types::model_pool::ModelSelection,
+    pub selection: starmate_core_types::model_pool::ModelSelection,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub reasoning_preset: Option<String>,
 }
@@ -488,7 +488,7 @@ pub struct AgentSessionUsageRequest {
     #[serde(default)]
     pub include_system_prompt_preview: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub context_preview_category: Option<openbitfun_core_types::UsageContextCategory>,
+    pub context_preview_category: Option<starmate_core_types::UsageContextCategory>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -527,7 +527,7 @@ pub struct AgentSessionWorkspaceRequest {
 #[serde(rename_all = "camelCase")]
 pub struct AgentSessionWorkspaceBinding {
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub workspace_kind: Option<openbitfun_core_types::WorkspaceKind>,
+    pub workspace_kind: Option<starmate_core_types::WorkspaceKind>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub project_workspace_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -1727,8 +1727,8 @@ pub trait AgentSessionModelPort: Send + Sync {
     async fn update_session_model_target(
         &self,
         _session_id: &str,
-        _selection: openbitfun_core_types::model_pool::ModelSelection,
-    ) -> PortResult<openbitfun_core_types::model_pool::SessionModelTarget> {
+        _selection: starmate_core_types::model_pool::ModelSelection,
+    ) -> PortResult<starmate_core_types::model_pool::SessionModelTarget> {
         Err(PortError::new(
             PortErrorKind::NotAvailable,
             "model_pool_selection_v1 is not supported by this provider",
@@ -1738,7 +1738,7 @@ pub trait AgentSessionModelPort: Send + Sync {
     async fn get_session_model_target(
         &self,
         _session_id: &str,
-    ) -> PortResult<openbitfun_core_types::model_pool::SessionModelTarget> {
+    ) -> PortResult<starmate_core_types::model_pool::SessionModelTarget> {
         Err(PortError::new(
             PortErrorKind::NotAvailable,
             "model_pool_selection_v1 is not supported by this provider",
@@ -1950,7 +1950,7 @@ pub trait AgentSessionUsagePort: Send + Sync {
     async fn generate_session_usage(
         &self,
         request: AgentSessionUsageRequest,
-    ) -> PortResult<openbitfun_core_types::SessionUsageReport>;
+    ) -> PortResult<starmate_core_types::SessionUsageReport>;
 }
 
 #[async_trait::async_trait]
@@ -2245,7 +2245,7 @@ mod tests {
             serde_json::from_value(current.clone()).unwrap();
         assert_eq!(
             binding.workspace_kind,
-            Some(openbitfun_core_types::WorkspaceKind::Normal)
+            Some(starmate_core_types::WorkspaceKind::Normal)
         );
         assert_eq!(serde_json::to_value(binding).unwrap(), current);
     }
@@ -3619,7 +3619,7 @@ mod tests {
         );
         request.include_system_prompt_preview = true;
         request.context_preview_category =
-            Some(openbitfun_core_types::UsageContextCategory::McpTools);
+            Some(starmate_core_types::UsageContextCategory::McpTools);
         let encoded = serde_json::to_value(&request).unwrap();
         assert_eq!(encoded["includeSystemPromptPreview"], true);
         assert_eq!(encoded["contextPreviewCategory"], "mcpTools");
@@ -3631,7 +3631,7 @@ mod tests {
             Some(serde_json::from_value(serde_json::json!("futureCategory")).unwrap());
         assert_eq!(
             request.context_preview_category,
-            Some(openbitfun_core_types::UsageContextCategory::Unknown)
+            Some(starmate_core_types::UsageContextCategory::Unknown)
         );
     }
 

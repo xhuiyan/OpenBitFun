@@ -9,7 +9,7 @@ use super::*;
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub(crate) enum RelayRoute {
-    #[serde(rename = "openbitfun_server")]
+    #[serde(rename = "starmate_server")]
     Official,
     Lan,
 }

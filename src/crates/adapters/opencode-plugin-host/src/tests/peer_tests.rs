@@ -5,7 +5,7 @@ use crate::{
     PluginInstanceOpenRequest, PluginPrepareRequest, StreamDescriptor, DEFAULT_MAX_FRAME_BYTES,
 };
 use async_trait::async_trait;
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     HookFunctionGeneration, HookFunctionRegistrationBatch, HookFunctionRegistrationSink,
     HookFunctionReverseAsk, HookFunctionReverseMetadata, HookFunctionReverseReply,
     HookFunctionReverseSink, HookFunctionStartRequest, HookFunctionToolContext,

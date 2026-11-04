@@ -9,7 +9,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use async_trait::async_trait;
-use openbitfun_core_types::agent_identity_wire::{
+use starmate_core_types::agent_identity_wire::{
     translate_agent_identity_command, translate_agent_identity_response, AgentIdentityDialect,
 };
 use serde_json::Value;

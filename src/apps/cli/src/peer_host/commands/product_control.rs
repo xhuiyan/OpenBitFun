@@ -4,8 +4,8 @@
 //! Shared setting reads and mutations execute in the same process-level
 //! handler used by OpenBitFunControl in the CLI Agent loop.
 
-use openbitfun_core::agentic::tools::openbitfun_control_config::global_shared_product_control_executor;
-use openbitfun_product_domains::product_control::{
+use starmate_core::agentic::tools::openbitfun_control_config::global_shared_product_control_executor;
+use starmate_product_domains::product_control::{
     discover, ProductControlAction, ProductControlDeliveryProfile, ProductControlRequest,
     ProductControlSource,
 };
@@ -22,13 +22,13 @@ pub(crate) async fn invoke(_state: &PeerHostState, args: &Value) -> Result<Value
 
     if request.capability_id.as_deref() == Some("feature.remote-connect") {
         if request.action == ProductControlAction::Execute {
-            openbitfun_product_domains::remote_control::RemoteControlRequest::from_operation(
+            starmate_product_domains::remote_control::RemoteControlRequest::from_operation(
                 request.operation_id.as_deref().unwrap_or_default(),
                 request.arguments.as_ref(),
             )?
             .ensure_direct_peer_safe()?;
         }
-        return openbitfun_core::agentic::tools::openbitfun_control_host::invoke_openbitfun_control(request).await;
+        return starmate_core::agentic::tools::openbitfun_control_host::invoke_openbitfun_control(request).await;
     }
 
     match request.action {

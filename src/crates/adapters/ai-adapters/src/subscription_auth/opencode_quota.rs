@@ -2,7 +2,7 @@
 //! share this authentication boundary. No keys or observations are persisted.
 use super::{quota, SubscriptionHttpOptions, SubscriptionProvider};
 use anyhow::{anyhow, Result};
-use openbitfun_core_types::subscription::{
+use starmate_core_types::subscription::{
     SubscriptionQuotaDisplay, SubscriptionQuotaMeter, SubscriptionQuotaSnapshot,
     SubscriptionQuotaState,
 };
@@ -184,7 +184,7 @@ mod tests {
     }
     #[tokio::test]
     async fn transport_uses_bearer_key_and_distinguishes_entitlement_from_auth_failure() {
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let app = axum::Router::new().route(
             "/usage",
             axum::routing::get(|headers: reqwest::header::HeaderMap| async move {

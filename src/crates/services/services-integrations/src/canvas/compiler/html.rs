@@ -1,4 +1,4 @@
-use openbitfun_product_domains::canvas::types::CanvasSource;
+use starmate_product_domains::canvas::types::CanvasSource;
 
 const CANVAS_RUNTIME_STYLE: &str = include_str!("runtime_style.css");
 const CANVAS_RUNTIME_BOOTSTRAP: &str = include_str!("runtime_bootstrap.js");

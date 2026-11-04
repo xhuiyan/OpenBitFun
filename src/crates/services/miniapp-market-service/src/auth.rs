@@ -153,7 +153,7 @@ pub(super) struct OAuthFlowRecord {
 
 impl AuthService {
     pub(crate) fn new(config: MarketConfig, db: Database) -> MarketResult<Self> {
-        openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+        starmate_services_core::tls_provider::ensure_ring_crypto_provider();
         let client = reqwest::Client::builder()
             .user_agent("OpenBitFun-MiniApp-Market/1")
             .redirect(reqwest::redirect::Policy::none())

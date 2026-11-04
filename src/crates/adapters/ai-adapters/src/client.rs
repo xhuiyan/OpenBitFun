@@ -25,13 +25,13 @@ use crate::types::*;
 use anyhow::Result;
 use format::ApiFormat;
 use log::warn;
-use openbitfun_core_types::errors::AiProviderError;
+use starmate_core_types::errors::AiProviderError;
 use reqwest::Client;
 use std::time::Duration;
 use std::{fmt, future::Future, pin::Pin, sync::Arc};
 use tokio::sync::mpsc;
 
-const SEND_MESSAGE_STREAM_ATTEMPTS: usize = openbitfun_agent_stream::retry::MAX_MODEL_ATTEMPTS;
+const SEND_MESSAGE_STREAM_ATTEMPTS: usize = starmate_agent_stream::retry::MAX_MODEL_ATTEMPTS;
 const TEST_CONNECTION_STREAM_ATTEMPTS: usize = 5;
 
 /// The host owns approved configuration and supplies this check. The adapter
@@ -220,7 +220,7 @@ impl AIClient {
     pub fn subscription_account_origin(
         &self,
         account_id: &str,
-    ) -> Option<openbitfun_core_types::ModelAccountOrigin> {
+    ) -> Option<starmate_core_types::ModelAccountOrigin> {
         let provider = self.subscription_provider_key()?;
         #[cfg(feature = "subscription-auth")]
         if provider != "codex" {
@@ -238,7 +238,7 @@ impl AIClient {
             }),
             _ => None,
         };
-        Some(openbitfun_core_types::ModelAccountOrigin {
+        Some(starmate_core_types::ModelAccountOrigin {
             provider: provider.into(),
             account_id: account_id.into(),
             upstream_account_id,
@@ -740,7 +740,7 @@ fn send_message_retry_delay_ms_with_provider(
     error_message: &str,
     provider_error: Option<&AiProviderError>,
 ) -> u64 {
-    openbitfun_agent_stream::retry::delay_ms(attempt_index, error_message, provider_error)
+    starmate_agent_stream::retry::delay_ms(attempt_index, error_message, provider_error)
 }
 
 async fn complete_aggregated_trace(
@@ -994,7 +994,7 @@ mod tests {
             label: id.to_string(),
             order: 0,
             actions,
-            source: openbitfun_core_types::ReasoningPresetSource::ModelConfig,
+            source: starmate_core_types::ReasoningPresetSource::ModelConfig,
             effective_effort: None,
             execution_provider: None,
             execution_model: None,
@@ -1012,7 +1012,7 @@ mod tests {
             label: id.to_string(),
             order: 0,
             actions,
-            source: openbitfun_core_types::ReasoningPresetSource::ModelsDev,
+            source: starmate_core_types::ReasoningPresetSource::ModelsDev,
             effective_effort: None,
             execution_provider: Some(execution_provider.to_string()),
             execution_model: Some(execution_model.to_string()),
@@ -1028,7 +1028,7 @@ mod tests {
             label: id.to_string(),
             order: 0,
             actions,
-            source: openbitfun_core_types::ReasoningPresetSource::AdapterFallback,
+            source: starmate_core_types::ReasoningPresetSource::AdapterFallback,
             effective_effort: None,
             execution_provider: Some(GENERIC_REASONING_PROVIDER_ID.to_string()),
             execution_model: Some("unlisted-model".to_string()),

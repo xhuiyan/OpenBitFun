@@ -2,7 +2,7 @@ use crate::service::bootstrap::ensure_workspace_gitignore_ignores_openbitfun;
 use crate::service::config::{get_global_config_service, types::WorkspaceConfig};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_services_integrations::workspace_search as owner;
+use starmate_services_integrations::workspace_search as owner;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, Mutex as StdMutex, Weak};
 

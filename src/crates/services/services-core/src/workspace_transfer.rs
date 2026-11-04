@@ -1,7 +1,7 @@
 //! Runtime-owned, bounded uploads. Relay transports only encrypted chunk envelopes.
 use crate::file_write_lock::write_guard;
 use anyhow::{anyhow, bail, Result};
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind, WorkspaceWriter};
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspacePathKind, WorkspaceWriter};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{collections::HashMap, sync::Arc};

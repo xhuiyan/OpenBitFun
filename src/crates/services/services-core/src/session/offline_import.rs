@@ -10,7 +10,7 @@ use super::{
     SESSION_STORAGE_SCHEMA_VERSION,
 };
 use crate::json_store::{JsonFileStore, JsonFileStoreError};
-use openbitfun_core_types::validate_session_id;
+use starmate_core_types::validate_session_id;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};

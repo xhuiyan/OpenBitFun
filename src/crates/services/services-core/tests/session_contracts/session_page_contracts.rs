@@ -1,5 +1,5 @@
-use openbitfun_core_types::SessionKind;
-use openbitfun_services_core::session::{
+use starmate_core_types::SessionKind;
+use starmate_services_core::session::{
     build_session_metadata_page, SessionMetadata, SessionRelationship, SessionRelationshipKind,
     SessionStatus,
 };

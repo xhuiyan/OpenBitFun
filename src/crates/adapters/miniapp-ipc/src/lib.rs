@@ -1,6 +1,6 @@
 //! Desktop shell transport. Private per-user local IPC, bounded frames, no TCP listener.
 pub mod launcher;
-pub use openbitfun_product_domains::miniapp::instances::MINIAPP_PRESENTATION_PROTOCOL;
+pub use starmate_product_domains::miniapp::instances::MINIAPP_PRESENTATION_PROTOCOL;
 
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::Value;

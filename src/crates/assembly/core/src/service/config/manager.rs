@@ -8,17 +8,17 @@ use super::types::*;
 use crate::infrastructure::{try_get_path_manager_arc, PathManager};
 use crate::util::errors::*;
 use log::{debug, info, warn};
-use openbitfun_config_contracts::protected_account_models::{
+use starmate_config_contracts::protected_account_models::{
     account_guard_sources, preserve_account_guard_sources, protect_account_models,
     restore_account_models,
 };
-use openbitfun_core_types::{
+use starmate_core_types::{
     installer_config_handoff::{
         InstallerConfigHandoff, InstallerModelHandoff, INSTALLER_CONFIG_HANDOFF_FILE_NAME,
     },
     product_identity,
 };
-use openbitfun_services_core::json_store::JsonFileStore;
+use starmate_services_core::json_store::JsonFileStore;
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -41,12 +41,12 @@ pub(crate) fn validate_openbitfun_product_identity(
     value: &str,
     context: &str,
 ) -> OpenBitFunResult<()> {
-    openbitfun_config_contracts::validate_openbitfun_product_identity(value, context)
+    starmate_config_contracts::validate_openbitfun_product_identity(value, context)
         .map_err(OpenBitFunError::validation)
 }
 
 pub(crate) fn validate_current_config_value(value: &Value, context: &str) -> OpenBitFunResult<()> {
-    openbitfun_config_contracts::validate_current_config_value(value, context)
+    starmate_config_contracts::validate_current_config_value(value, context)
         .map_err(OpenBitFunError::validation)
 }
 
@@ -283,7 +283,7 @@ impl ConfigManager {
         manager.load_or_create_config().await?;
         #[cfg(feature = "ai-adapter-runtime")]
         {
-            openbitfun_ai_adapters::diagnostics::set_include_sensitive_diagnostics(
+            starmate_ai_adapters::diagnostics::set_include_sensitive_diagnostics(
                 manager.config.app.logging.include_sensitive_diagnostics,
             );
         }
@@ -466,7 +466,7 @@ impl ConfigManager {
             .migrate_model_selections()
             .map_err(OpenBitFunError::validation)?;
         diagnostics.extend(
-            openbitfun_config_contracts::normalization::recover_persisted_config(&mut config),
+            starmate_config_contracts::normalization::recover_persisted_config(&mut config),
         );
         let validation_result = self
             .validate_recovered_config(&mut config, &mut diagnostics)
@@ -784,7 +784,7 @@ impl ConfigManager {
                 }
                 value
             };
-            let typed: openbitfun_config_contracts::model_pool::AgentModelSelections =
+            let typed: starmate_config_contracts::model_pool::AgentModelSelections =
                 serde_json::from_value(selections.take()).map_err(|e| {
                     OpenBitFunError::validation(format!("Invalid Agent model selections: {e}"))
                 })?;
@@ -882,11 +882,11 @@ impl ConfigManager {
         mut candidate: ConfigCandidate,
         path: Option<&str>,
     ) -> OpenBitFunResult<()> {
-        openbitfun_config_contracts::channel_routing::validate_channel_routes(
+        starmate_config_contracts::channel_routing::validate_channel_routes(
             &candidate.config.ai.models,
         )
         .map_err(OpenBitFunError::config)?;
-        openbitfun_config_contracts::account_pool::reconcile_account_pool_revisions(
+        starmate_config_contracts::account_pool::reconcile_account_pool_revisions(
             &self.config.ai.models,
             &mut candidate.config.ai.models,
             path.is_some(),
@@ -1195,7 +1195,7 @@ impl ConfigManager {
 
             #[cfg(feature = "ai-adapter-runtime")]
             {
-                openbitfun_ai_adapters::diagnostics::set_include_sensitive_diagnostics(new_include);
+                starmate_ai_adapters::diagnostics::set_include_sensitive_diagnostics(new_include);
             }
 
             use super::global::{ConfigUpdateEvent, GlobalConfigManager};
@@ -1227,7 +1227,7 @@ mod tests {
     };
     use crate::infrastructure::PathManager;
     use crate::service::config::types::GlobalConfig;
-    use openbitfun_core_types::installer_config_handoff::{
+    use starmate_core_types::installer_config_handoff::{
         InstallerConfigHandoff, InstallerModelHandoff, INSTALLER_CONFIG_HANDOFF_FILE_NAME,
     };
     use std::sync::Arc;
@@ -1357,7 +1357,7 @@ mod tests {
 
     #[tokio::test]
     async fn account_pool_edits_advance_on_disk_and_reject_stale_writes() {
-        use openbitfun_config_contracts::{
+        use starmate_config_contracts::{
             AIModelConfig, AuthConfig, ModelCapability, SubscriptionProvider,
         };
         let temp = tempfile::tempdir().unwrap();
@@ -1439,10 +1439,10 @@ mod tests {
 
     #[tokio::test]
     async fn account_guard_survives_restart_export_import_and_legacy_settings_writes() {
-        use openbitfun_config_contracts::protected_account_models::{
+        use starmate_config_contracts::protected_account_models::{
             ACCOUNT_MODEL_GUARD_KEY, ACCOUNT_MODEL_GUARD_URL,
         };
-        use openbitfun_config_contracts::{
+        use starmate_config_contracts::{
             AIModelConfig, AuthConfig, ModelCapability, SubscriptionProvider,
         };
         let temp = tempfile::tempdir().unwrap();
@@ -1955,11 +1955,11 @@ mod tests {
 
 fn validate_agent_model_selections(
     ai: &super::types::AIConfig,
-    selections: &openbitfun_config_contracts::model_pool::AgentModelSelections,
-    previous: Option<&openbitfun_config_contracts::model_pool::AgentModelSelections>,
+    selections: &starmate_config_contracts::model_pool::AgentModelSelections,
+    previous: Option<&starmate_config_contracts::model_pool::AgentModelSelections>,
 ) -> OpenBitFunResult<()> {
-    use openbitfun_config_contracts::model_pool::AgentModelSelection;
-    use openbitfun_core_types::model_pool::ModelSelection;
+    use starmate_config_contracts::model_pool::AgentModelSelection;
+    use starmate_core_types::model_pool::ModelSelection;
     let validate = |selection: &AgentModelSelection| -> OpenBitFunResult<()> {
         match selection {
             AgentModelSelection::Model { model_ref } => {

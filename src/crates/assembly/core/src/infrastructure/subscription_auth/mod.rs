@@ -2,4 +2,4 @@
 //!
 //! The provider-specific implementation lives in `openbitfun-ai-adapters`.
 
-pub use openbitfun_ai_adapters::subscription_auth::*;
+pub use starmate_ai_adapters::subscription_auth::*;

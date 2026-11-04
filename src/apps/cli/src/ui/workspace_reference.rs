@@ -1,4 +1,4 @@
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentWorkspaceReference, AgentWorkspaceReferenceKind, AgentWorkspaceReferenceSearchEntry,
     AgentWorkspaceReferenceSourceRange,
 };

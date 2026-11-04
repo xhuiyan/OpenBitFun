@@ -3,7 +3,7 @@ use crate::native_hooks::{
     dispatch_pre_tool_use, hook_settings_paths, ordered_layers, overview, overview_with_facts,
     take_pending_session_context, AgentHooksConfig, NativeHookSessionFacts,
 };
-use openbitfun_agent_runtime::native_hooks::{
+use starmate_agent_runtime::native_hooks::{
     AgentHookEvent, AgentHookScope, AgentHookSettingsLayer,
 };
 use serde_json::json;
@@ -399,12 +399,12 @@ fn command_hooks_inherit_the_merged_platform_path() {
     let path = environment
         .get("PATH")
         .expect("Linux command hooks must inherit a PATH");
-    let expected = openbitfun_services_core::process_manager::platform_path_env()
+    let expected = starmate_services_core::process_manager::platform_path_env()
         .expect("Linux always resolves a platform PATH");
     assert_eq!(path, &expected.to_string_lossy());
     // Every directory the app restores for its other children is reachable.
     let entries: Vec<PathBuf> = std::env::split_paths(path).collect();
-    for platform_entry in openbitfun_services_core::system::platform_path_entries() {
+    for platform_entry in starmate_services_core::system::platform_path_entries() {
         assert!(
             entries.contains(&platform_entry),
             "hook PATH is missing {}: {path}",

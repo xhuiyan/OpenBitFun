@@ -7,7 +7,7 @@
 
 #[cfg(feature = "remote-connect")]
 use log::{debug, info};
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentEventSource, AgentInteractionResponsePort, AgentModeCatalogEntry, AgentModeCatalogPort,
     AgentModeCatalogQuery, AgentRuntime, AgentRuntimeBuilder, AgentSessionCompactionPort,
     AgentSessionForkPort, AgentSessionLineagePort, AgentSessionModePort, AgentSessionModelPort,
@@ -15,20 +15,20 @@ use openbitfun_agent_runtime::sdk::{
     AgentSessionRevertPort, AgentSessionUsagePort, AgentTurnSettlementPort, RuntimeError,
 };
 #[cfg(feature = "remote-connect")]
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentSessionModelSelection, AgentSessionModelSelectionUpdateRequest,
     AgentSessionModelUpdateRequest,
 };
-use openbitfun_events::AgenticEvent;
+use starmate_events::AgenticEvent;
 #[cfg(feature = "remote-connect")]
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     AgentDialogSteerRequest, AgentInputAttachment, AgentSessionComposerUpdate,
     AgentSubmissionSource, AgentTurnCancellationRequest, DialogSteerOutcome,
     PermissionPolicyPreset, RemoteControlStatePort, RemoteControlStateRequest,
     RemoteControlStateSnapshot, RemoteSessionWorkspaceIdentity, RuntimeServiceCapability,
     RuntimeServicePort, ToolPermissionConfig,
 };
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     AgentDialogTurnPort, AgentDialogTurnRequest, AgentLifecycleDeliveryPort,
     AgentLocalCommandTurnPort, AgentSessionClosePort, AgentSessionCreateRequest,
     AgentSessionCreateResult, AgentSessionManagementPort, AgentSessionRevertRequest,
@@ -38,7 +38,7 @@ use openbitfun_runtime_ports::{
     AgentWorkspaceReferencePort, PortError, PortErrorKind, PortResult, SessionStorePort,
 };
 #[cfg(feature = "remote-connect")]
-use openbitfun_services_integrations::remote_connect::{
+use starmate_services_integrations::remote_connect::{
     agent_input_attachment_from_remote_image_context, build_remote_chat_messages,
     build_remote_model_catalog, file_projection::controller_file_read_scope,
     normalize_remote_model_selection as normalize_remote_model_selection_contract,
@@ -98,9 +98,9 @@ pub(crate) struct CoreWorkspaceCatalogPort;
 impl CoreWorkspaceCatalogPort {
     pub(crate) async fn list_from_service(
         service: &crate::service::workspace::WorkspaceService,
-    ) -> Vec<openbitfun_runtime_ports::AgentWorkspaceCatalogEntry> {
+    ) -> Vec<starmate_runtime_ports::AgentWorkspaceCatalogEntry> {
         use crate::service::workspace::WorkspaceKind;
-        use openbitfun_runtime_ports::{AgentWorkspaceCatalogEntry, AgentWorkspaceRemoteInfo};
+        use starmate_runtime_ports::{AgentWorkspaceCatalogEntry, AgentWorkspaceRemoteInfo};
         service
             .list_workspace_infos()
             .await
@@ -134,7 +134,7 @@ impl CoreWorkspaceCatalogPort {
                     })
                 });
                 let root_path = if record.workspace_kind == WorkspaceKind::Remote {
-                    openbitfun_services_core::workspace_identity::normalize_remote_workspace_path(
+                    starmate_services_core::workspace_identity::normalize_remote_workspace_path(
                         &record.root_path.to_string_lossy(),
                     )
                 } else {
@@ -156,16 +156,16 @@ impl CoreWorkspaceCatalogPort {
 }
 
 #[async_trait::async_trait]
-impl openbitfun_runtime_ports::AgentWorkspaceCatalogPort for CoreWorkspaceCatalogPort {
+impl starmate_runtime_ports::AgentWorkspaceCatalogPort for CoreWorkspaceCatalogPort {
     async fn list_workspaces(
         &self,
-    ) -> openbitfun_runtime_ports::PortResult<
-        Vec<openbitfun_runtime_ports::AgentWorkspaceCatalogEntry>,
+    ) -> starmate_runtime_ports::PortResult<
+        Vec<starmate_runtime_ports::AgentWorkspaceCatalogEntry>,
     > {
         let service =
             crate::service::workspace::get_global_workspace_service().ok_or_else(|| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::NotAvailable,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::NotAvailable,
                     "Workspace service is unavailable",
                 )
             })?;
@@ -273,7 +273,7 @@ async fn configured_plugin_execution_root(
 #[cfg(feature = "opencode-plugin-host")]
 fn configured_plugin_root_from_session_facts(
     workspace_path: Option<&str>,
-    execution_target: Option<&openbitfun_core_types::SessionExecutionTarget>,
+    execution_target: Option<&starmate_core_types::SessionExecutionTarget>,
     is_remote: bool,
 ) -> PortResult<Option<std::path::PathBuf>> {
     if is_remote {
@@ -410,12 +410,12 @@ struct ConfiguredPluginDialogTurnPort {
 impl AgentDialogTurnPort for ConfiguredPluginDialogTurnPort {
     async fn manage_dialog_queue(
         &self,
-        request: openbitfun_runtime_ports::DialogQueueRequest,
-    ) -> PortResult<openbitfun_runtime_ports::DialogQueueSnapshot> {
+        request: starmate_runtime_ports::DialogQueueRequest,
+    ) -> PortResult<starmate_runtime_ports::DialogQueueSnapshot> {
         if matches!(
             &request.action,
-            openbitfun_runtime_ports::DialogQueueAction::Submit { .. }
-                | openbitfun_runtime_ports::DialogQueueAction::Promote { .. }
+            starmate_runtime_ports::DialogQueueAction::Submit { .. }
+                | starmate_runtime_ports::DialogQueueAction::Promote { .. }
         ) {
             self.submission.ensure_session(&request.session_id).await;
         }
@@ -432,15 +432,15 @@ impl AgentDialogTurnPort for ConfiguredPluginDialogTurnPort {
 
     async fn steer_dialog_turn(
         &self,
-        request: openbitfun_runtime_ports::AgentDialogSteerRequest,
-    ) -> PortResult<openbitfun_runtime_ports::DialogSteerOutcome> {
+        request: starmate_runtime_ports::AgentDialogSteerRequest,
+    ) -> PortResult<starmate_runtime_ports::DialogSteerOutcome> {
         self.inner.steer_dialog_turn(request).await
     }
 
     async fn recover_interrupted_turn(
         &self,
-        request: openbitfun_runtime_ports::AgentDialogTurnRecoveryRequest,
-    ) -> PortResult<openbitfun_runtime_ports::AgentDialogTurnRecoveryOutcome> {
+        request: starmate_runtime_ports::AgentDialogTurnRecoveryRequest,
+    ) -> PortResult<starmate_runtime_ports::AgentDialogTurnRecoveryOutcome> {
         self.submission.ensure_session(&request.session_id).await;
         self.inner.recover_interrupted_turn(request).await
     }
@@ -483,25 +483,25 @@ fn remote_workspace_kind(
 
 #[cfg(feature = "remote-connect")]
 fn provider_catalog_source(
-    source: openbitfun_services_integrations::models_dev::ModelsDevSnapshotSource,
-) -> openbitfun_core_types::ProviderCatalogSource {
-    use openbitfun_services_integrations::models_dev::ModelsDevSnapshotSource;
+    source: starmate_services_integrations::models_dev::ModelsDevSnapshotSource,
+) -> starmate_core_types::ProviderCatalogSource {
+    use starmate_services_integrations::models_dev::ModelsDevSnapshotSource;
     match source {
-        ModelsDevSnapshotSource::Cache => openbitfun_core_types::ProviderCatalogSource::Cache,
-        ModelsDevSnapshotSource::Bundled => openbitfun_core_types::ProviderCatalogSource::Bundle,
-        ModelsDevSnapshotSource::Empty => openbitfun_core_types::ProviderCatalogSource::OpenBitFun,
+        ModelsDevSnapshotSource::Cache => starmate_core_types::ProviderCatalogSource::Cache,
+        ModelsDevSnapshotSource::Bundled => starmate_core_types::ProviderCatalogSource::Bundle,
+        ModelsDevSnapshotSource::Empty => starmate_core_types::ProviderCatalogSource::OpenBitFun,
     }
 }
 
 #[cfg(feature = "remote-connect")]
 fn reasoning_catalog_source(
-    source: openbitfun_services_integrations::models_dev::ModelsDevSnapshotSource,
-) -> openbitfun_core_types::ModelsDevCatalogSource {
-    use openbitfun_services_integrations::models_dev::ModelsDevSnapshotSource;
+    source: starmate_services_integrations::models_dev::ModelsDevSnapshotSource,
+) -> starmate_core_types::ModelsDevCatalogSource {
+    use starmate_services_integrations::models_dev::ModelsDevSnapshotSource;
     match source {
-        ModelsDevSnapshotSource::Cache => openbitfun_core_types::ModelsDevCatalogSource::Cache,
-        ModelsDevSnapshotSource::Bundled => openbitfun_core_types::ModelsDevCatalogSource::Bundle,
-        ModelsDevSnapshotSource::Empty => openbitfun_core_types::ModelsDevCatalogSource::Empty,
+        ModelsDevSnapshotSource::Cache => starmate_core_types::ModelsDevCatalogSource::Cache,
+        ModelsDevSnapshotSource::Bundled => starmate_core_types::ModelsDevCatalogSource::Bundle,
+        ModelsDevSnapshotSource::Empty => starmate_core_types::ModelsDevCatalogSource::Empty,
     }
 }
 
@@ -521,7 +521,7 @@ fn reasoning_catalog_source(
 fn remote_provider_catalog(
     models_dev: &crate::infrastructure::ai::reasoning_catalog::ModelsDevReasoningCatalogSnapshot,
     include_providers: bool,
-) -> openbitfun_core_types::ProviderCatalog {
+) -> starmate_core_types::ProviderCatalog {
     let source = provider_catalog_source(models_dev.source);
     if include_providers {
         return resolve_builtin_provider_catalog(
@@ -541,7 +541,7 @@ fn remote_provider_catalog(
 fn remote_models_dev_reasoning_catalog(
     models_dev: &crate::infrastructure::ai::reasoning_catalog::ModelsDevReasoningCatalogSnapshot,
     include_catalog: bool,
-) -> Option<openbitfun_core_types::ModelsDevReasoningCatalog> {
+) -> Option<starmate_core_types::ModelsDevReasoningCatalog> {
     if !include_catalog {
         return None;
     }
@@ -556,7 +556,7 @@ fn remote_models_dev_reasoning_catalog(
 #[cfg(feature = "remote-connect")]
 fn git_branch_for_workspace_path(path: &std::path::Path) -> Option<String> {
     let path_str = path.to_string_lossy();
-    openbitfun_services_integrations::git::execute_git_command_sync(
+    starmate_services_integrations::git::execute_git_command_sync(
         &path_str,
         &["rev-parse", "--abbrev-ref", "HEAD"],
     )
@@ -816,7 +816,7 @@ async fn load_remote_session_metadata_for_workspace(
             format!("Failed to list sessions for workspace: {error}")
         })?;
 
-    use openbitfun_services_core::session::SessionRelationshipKind;
+    use starmate_services_core::session::SessionRelationshipKind;
     let default_title = crate::service::i18n::generated_locale_contract::generated_shared_term(
         crate::service::config::app_language::get_app_language().await,
         "sessions.new",
@@ -829,7 +829,7 @@ async fn load_remote_session_metadata_for_workspace(
             // Legacy sessions keep their lineage in `custom_metadata`, so the
             // normalized view is the only source that sees every child session.
             let relationship =
-                openbitfun_services_core::session::normalized_session_relationship(&session);
+                starmate_services_core::session::normalized_session_relationship(&session);
             let relationship_kind = relationship
                 .as_ref()
                 .and_then(|relationship| relationship.kind.as_ref())
@@ -845,7 +845,7 @@ async fn load_remote_session_metadata_for_workspace(
                 });
             let parent_session_id =
                 relationship.and_then(|relationship| relationship.parent_session_id);
-            let name = if openbitfun_services_core::session::naming::is_default_title(&session) {
+            let name = if starmate_services_core::session::naming::is_default_title(&session) {
                 default_title.to_string()
             } else {
                 session.session_name.clone()
@@ -1092,7 +1092,7 @@ fn remote_chat_history_turn_from_core_turn(
 
     RemoteChatHistoryTurn {
         background_delivery:
-            openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(
+            starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(
                 turn.user_message.metadata.as_ref(),
                 &turn.turn_id,
             )
@@ -1230,13 +1230,13 @@ fn core_agent_runtime_builder(
     session_restore: Arc<dyn AgentSessionRestorePort>,
     local_command_turn: Arc<dyn AgentLocalCommandTurnPort>,
     user_shell_command: Arc<dyn AgentUserShellCommandPort>,
-    transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader>,
+    transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader>,
     thread_goal_management: Arc<dyn AgentThreadGoalManagementPort>,
     cancellation: Arc<dyn AgentTurnCancellationPort>,
     interaction_response: Arc<dyn AgentInteractionResponsePort>,
-    hook_registry: openbitfun_agent_runtime::native_hooks::RuntimeHookRegistry,
+    hook_registry: starmate_agent_runtime::native_hooks::RuntimeHookRegistry,
 ) -> Result<AgentRuntimeBuilder, String> {
-    let agent_registry: Arc<dyn openbitfun_agent_runtime::sdk::RuntimeAgentRegistry> =
+    let agent_registry: Arc<dyn starmate_agent_runtime::sdk::RuntimeAgentRegistry> =
         crate::agentic::agents::get_agent_registry();
     let mode_catalog: Arc<dyn AgentModeCatalogPort> = Arc::new(CoreAgentModeCatalogPort);
     Ok(AgentRuntimeBuilder::new()
@@ -1266,7 +1266,7 @@ impl AgentModeCatalogPort for CoreAgentModeCatalogPort {
     async fn list_modes(
         &self,
         query: AgentModeCatalogQuery,
-    ) -> openbitfun_runtime_ports::PortResult<Vec<AgentModeCatalogEntry>> {
+    ) -> starmate_runtime_ports::PortResult<Vec<AgentModeCatalogEntry>> {
         let record =
             crate::service::workspace::legacy_compat::upgrade_optional_workspace_reference(
                 query.workspace_id.as_deref(),
@@ -1274,8 +1274,8 @@ impl AgentModeCatalogPort for CoreAgentModeCatalogPort {
             )
             .await
             .map_err(|error| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::InvalidRequest,
                     error,
                 )
             })?;
@@ -1333,10 +1333,10 @@ impl ScheduledSessionManagementPort {
         &self,
         request: AgentSessionRevertRequest,
         undo: bool,
-    ) -> openbitfun_runtime_ports::PortResult<AgentSessionRevertResult> {
-        openbitfun_core_types::validate_session_id(&request.session_id).map_err(|message| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+    ) -> starmate_runtime_ports::PortResult<AgentSessionRevertResult> {
+        starmate_core_types::validate_session_id(&request.session_id).map_err(|message| {
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::InvalidRequest,
                 message,
             )
         })?;
@@ -1348,8 +1348,8 @@ impl ScheduledSessionManagementPort {
         )
         .await?;
         if workspace.is_remote() {
-            return Err(openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::NotAvailable,
+            return Err(starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::NotAvailable,
                 "Session undo and redo are unavailable for remote workspaces",
             ));
         }
@@ -1359,8 +1359,8 @@ impl ScheduledSessionManagementPort {
             .map_err(|error| {
                 if matches!(&error, crate::util::errors::OpenBitFunError::Validation(message) if message == "Session undo and redo are unavailable for remote workspaces")
                 {
-                    openbitfun_runtime_ports::PortError::new(
-                        openbitfun_runtime_ports::PortErrorKind::NotAvailable,
+                    starmate_runtime_ports::PortError::new(
+                        starmate_runtime_ports::PortErrorKind::NotAvailable,
                         error.to_string(),
                     )
                 } else {
@@ -1407,14 +1407,14 @@ impl ScheduledSessionManagementPort {
         }
         let transcript = self
             .coordinator
-            .read_session_transcript_locked(openbitfun_runtime_ports::SessionTranscriptRequest {
+            .read_session_transcript_locked(starmate_runtime_ports::SessionTranscriptRequest {
                 session_id: request.session_id.clone(),
                 turn_id: None,
             })
             .await
         .map_err(|error| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::OutcomeUnknown,
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::OutcomeUnknown,
                 format!(
                     "Session revert completed but the authoritative transcript could not be read: {error}"
                 ),
@@ -1441,24 +1441,24 @@ impl AgentSessionRevertPort for ScheduledSessionManagementPort {
     async fn undo_session(
         &self,
         request: AgentSessionRevertRequest,
-    ) -> openbitfun_runtime_ports::PortResult<AgentSessionRevertResult> {
+    ) -> starmate_runtime_ports::PortResult<AgentSessionRevertResult> {
         self.apply_session_revert(request, true).await
     }
 
     async fn redo_session(
         &self,
         request: AgentSessionRevertRequest,
-    ) -> openbitfun_runtime_ports::PortResult<AgentSessionRevertResult> {
+    ) -> starmate_runtime_ports::PortResult<AgentSessionRevertResult> {
         self.apply_session_revert(request, false).await
     }
 
     async fn rollback_session_to_turn(
         &self,
         request: AgentSessionRollbackToTurnRequest,
-    ) -> openbitfun_runtime_ports::PortResult<AgentSessionRollbackToTurnOutcome> {
-        openbitfun_core_types::validate_session_id(&request.session_id).map_err(|message| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+    ) -> starmate_runtime_ports::PortResult<AgentSessionRollbackToTurnOutcome> {
+        starmate_core_types::validate_session_id(&request.session_id).map_err(|message| {
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::InvalidRequest,
                 message,
             )
         })?;
@@ -1470,8 +1470,8 @@ impl AgentSessionRevertPort for ScheduledSessionManagementPort {
         )
         .await?;
         if workspace.is_remote() {
-            return Err(openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::NotAvailable,
+            return Err(starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::NotAvailable,
                 "Session rollback is unavailable for remote workspaces",
             ));
         }
@@ -1580,7 +1580,7 @@ impl AgentSessionRevertPort for ScheduledSessionManagementPort {
         }
         let (transcript, reload_reason) = match self
             .coordinator
-            .read_session_transcript_locked(openbitfun_runtime_ports::SessionTranscriptRequest {
+            .read_session_transcript_locked(starmate_runtime_ports::SessionTranscriptRequest {
                 session_id: request.session_id.clone(),
                 turn_id: None,
             })
@@ -1588,7 +1588,7 @@ impl AgentSessionRevertPort for ScheduledSessionManagementPort {
         {
             Ok(transcript) => (transcript, None),
             Err(error) => (
-                openbitfun_runtime_ports::SessionTranscript {
+                starmate_runtime_ports::SessionTranscript {
                     session_id: request.session_id.clone(),
                     messages: Vec::new(),
                 },
@@ -1625,7 +1625,7 @@ impl AgentDialogTurnPort for RejectBusyAgentDialogTurnPort {
     async fn submit_dialog_turn(
         &self,
         request: AgentDialogTurnRequest,
-    ) -> openbitfun_runtime_ports::PortResult<DialogSubmitOutcome> {
+    ) -> starmate_runtime_ports::PortResult<DialogSubmitOutcome> {
         self.0
             .submit_agent_dialog_turn_reject_if_busy(request)
             .await
@@ -1633,8 +1633,8 @@ impl AgentDialogTurnPort for RejectBusyAgentDialogTurnPort {
 
     async fn steer_dialog_turn(
         &self,
-        request: openbitfun_runtime_ports::AgentDialogSteerRequest,
-    ) -> openbitfun_runtime_ports::PortResult<openbitfun_runtime_ports::DialogSteerOutcome> {
+        request: starmate_runtime_ports::AgentDialogSteerRequest,
+    ) -> starmate_runtime_ports::PortResult<starmate_runtime_ports::DialogSteerOutcome> {
         AgentDialogTurnPort::steer_dialog_turn(self.0.as_ref(), request).await
     }
 }
@@ -1643,19 +1643,19 @@ impl AgentDialogTurnPort for RejectBusyAgentDialogTurnPort {
 impl AgentSessionManagementPort for ScheduledSessionManagementPort {
     async fn list_sessions(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionListRequest,
-    ) -> openbitfun_runtime_ports::PortResult<Vec<openbitfun_runtime_ports::AgentSessionSummary>>
+        request: starmate_runtime_ports::AgentSessionListRequest,
+    ) -> starmate_runtime_ports::PortResult<Vec<starmate_runtime_ports::AgentSessionSummary>>
     {
         AgentSessionManagementPort::list_sessions(self.coordinator.as_ref(), request).await
     }
 
     async fn delete_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionDeleteRequest,
-    ) -> openbitfun_runtime_ports::PortResult<()> {
-        openbitfun_core_types::validate_session_id(&request.session_id).map_err(|message| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+        request: starmate_runtime_ports::AgentSessionDeleteRequest,
+    ) -> starmate_runtime_ports::PortResult<()> {
+        starmate_core_types::validate_session_id(&request.session_id).map_err(|message| {
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::InvalidRequest,
                 message,
             )
         })?;
@@ -1669,8 +1669,8 @@ impl AgentSessionManagementPort for ScheduledSessionManagementPort {
             .await
             .map(|resolution| resolution.effective_storage_path)
             .map_err(|error| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::InvalidRequest,
                     error.to_string(),
                 )
             })?;
@@ -1678,8 +1678,8 @@ impl AgentSessionManagementPort for ScheduledSessionManagementPort {
             .get_session_manager()
             .validate_session_storage_path_binding(&request.session_id, &storage_path)
             .map_err(|error| {
-                openbitfun_runtime_ports::PortError::new(
-                    openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+                starmate_runtime_ports::PortError::new(
+                    starmate_runtime_ports::PortErrorKind::InvalidRequest,
                     error.to_string(),
                 )
             })?;
@@ -1694,56 +1694,56 @@ impl AgentSessionManagementPort for ScheduledSessionManagementPort {
             .map_err(|error| {
                 let kind = match error {
                     crate::util::errors::OpenBitFunError::Validation(_) => {
-                        openbitfun_runtime_ports::PortErrorKind::InvalidRequest
+                        starmate_runtime_ports::PortErrorKind::InvalidRequest
                     }
                     crate::util::errors::OpenBitFunError::NotFound(_) => {
-                        openbitfun_runtime_ports::PortErrorKind::NotFound
+                        starmate_runtime_ports::PortErrorKind::NotFound
                     }
                     crate::util::errors::OpenBitFunError::Timeout(_) => {
-                        openbitfun_runtime_ports::PortErrorKind::Timeout
+                        starmate_runtime_ports::PortErrorKind::Timeout
                     }
                     crate::util::errors::OpenBitFunError::Cancelled(_) => {
-                        openbitfun_runtime_ports::PortErrorKind::Cancelled
+                        starmate_runtime_ports::PortErrorKind::Cancelled
                     }
                     crate::util::errors::OpenBitFunError::SessionInUse { .. } => {
-                        openbitfun_runtime_ports::PortErrorKind::SessionInUse
+                        starmate_runtime_ports::PortErrorKind::SessionInUse
                     }
                     crate::util::errors::OpenBitFunError::OutcomeUnknown(_) => {
-                        openbitfun_runtime_ports::PortErrorKind::OutcomeUnknown
+                        starmate_runtime_ports::PortErrorKind::OutcomeUnknown
                     }
-                    _ => openbitfun_runtime_ports::PortErrorKind::Backend,
+                    _ => starmate_runtime_ports::PortErrorKind::Backend,
                 };
-                openbitfun_runtime_ports::PortError::new(kind, error.to_string())
+                starmate_runtime_ports::PortError::new(kind, error.to_string())
             })?;
         AgentSessionManagementPort::delete_session(self.coordinator.as_ref(), request).await
     }
 
     async fn rename_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionRenameRequest,
-    ) -> openbitfun_runtime_ports::PortResult<()> {
+        request: starmate_runtime_ports::AgentSessionRenameRequest,
+    ) -> starmate_runtime_ports::PortResult<()> {
         AgentSessionManagementPort::rename_session(self.coordinator.as_ref(), request).await
     }
 
     async fn archive_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionArchiveRequest,
-    ) -> openbitfun_runtime_ports::PortResult<()> {
+        request: starmate_runtime_ports::AgentSessionArchiveRequest,
+    ) -> starmate_runtime_ports::PortResult<()> {
         AgentSessionManagementPort::archive_session(self.coordinator.as_ref(), request).await
     }
 
     async fn set_session_archived(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionArchiveStateRequest,
-    ) -> openbitfun_runtime_ports::PortResult<()> {
+        request: starmate_runtime_ports::AgentSessionArchiveStateRequest,
+    ) -> starmate_runtime_ports::PortResult<()> {
         AgentSessionManagementPort::set_session_archived(self.coordinator.as_ref(), request).await
     }
 
     async fn resolve_session_workspace_binding(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionWorkspaceRequest,
-    ) -> openbitfun_runtime_ports::PortResult<
-        Option<openbitfun_runtime_ports::AgentSessionWorkspaceBinding>,
+        request: starmate_runtime_ports::AgentSessionWorkspaceRequest,
+    ) -> starmate_runtime_ports::PortResult<
+        Option<starmate_runtime_ports::AgentSessionWorkspaceBinding>,
     > {
         AgentSessionManagementPort::resolve_session_workspace_binding(
             self.coordinator.as_ref(),
@@ -1762,12 +1762,12 @@ enum SessionReleaseKind {
 impl ScheduledSessionManagementPort {
     async fn release_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionReleaseRequest,
+        request: starmate_runtime_ports::AgentSessionReleaseRequest,
         kind: SessionReleaseKind,
-    ) -> openbitfun_runtime_ports::PortResult<bool> {
-        openbitfun_core_types::validate_session_id(&request.session_id).map_err(|message| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::InvalidRequest,
+    ) -> starmate_runtime_ports::PortResult<bool> {
+        starmate_core_types::validate_session_id(&request.session_id).map_err(|message| {
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::InvalidRequest,
                 message,
             )
         })?;
@@ -1797,8 +1797,8 @@ impl ScheduledSessionManagementPort {
             .map_err(map_session_close_error)?;
         let cleanup_budget = close_deadline.saturating_duration_since(tokio::time::Instant::now());
         if cleanup_budget.is_zero() {
-            return Err(openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::Timeout,
+            return Err(starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::Timeout,
                 "Session close deadline was exhausted before resource release",
             ));
         }
@@ -1823,8 +1823,8 @@ impl ScheduledSessionManagementPort {
         })
         .await
         .map_err(|_| {
-            openbitfun_runtime_ports::PortError::new(
-                openbitfun_runtime_ports::PortErrorKind::Timeout,
+            starmate_runtime_ports::PortError::new(
+                starmate_runtime_ports::PortErrorKind::Timeout,
                 "Session resource release exceeded the Session close deadline",
             )
         })?
@@ -1836,16 +1836,16 @@ impl ScheduledSessionManagementPort {
 impl AgentSessionClosePort for ScheduledSessionManagementPort {
     async fn discard_transient_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionReleaseRequest,
-    ) -> openbitfun_runtime_ports::PortResult<bool> {
+        request: starmate_runtime_ports::AgentSessionReleaseRequest,
+    ) -> starmate_runtime_ports::PortResult<bool> {
         self.release_session(request, SessionReleaseKind::DiscardTransient)
             .await
     }
 
     async fn unload_persisted_session(
         &self,
-        request: openbitfun_runtime_ports::AgentSessionReleaseRequest,
-    ) -> openbitfun_runtime_ports::PortResult<bool> {
+        request: starmate_runtime_ports::AgentSessionReleaseRequest,
+    ) -> starmate_runtime_ports::PortResult<bool> {
         self.release_session(request, SessionReleaseKind::UnloadPersisted)
             .await
     }
@@ -1853,29 +1853,29 @@ impl AgentSessionClosePort for ScheduledSessionManagementPort {
 
 fn map_session_close_error(
     error: crate::util::errors::OpenBitFunError,
-) -> openbitfun_runtime_ports::PortError {
+) -> starmate_runtime_ports::PortError {
     let kind = match &error {
         crate::util::errors::OpenBitFunError::Validation(_) => {
-            openbitfun_runtime_ports::PortErrorKind::InvalidRequest
+            starmate_runtime_ports::PortErrorKind::InvalidRequest
         }
         crate::util::errors::OpenBitFunError::NotFound(_) => {
-            openbitfun_runtime_ports::PortErrorKind::NotFound
+            starmate_runtime_ports::PortErrorKind::NotFound
         }
         crate::util::errors::OpenBitFunError::Timeout(_) => {
-            openbitfun_runtime_ports::PortErrorKind::Timeout
+            starmate_runtime_ports::PortErrorKind::Timeout
         }
         crate::util::errors::OpenBitFunError::Cancelled(_) => {
-            openbitfun_runtime_ports::PortErrorKind::Cancelled
+            starmate_runtime_ports::PortErrorKind::Cancelled
         }
         crate::util::errors::OpenBitFunError::SessionInUse { .. } => {
-            openbitfun_runtime_ports::PortErrorKind::SessionInUse
+            starmate_runtime_ports::PortErrorKind::SessionInUse
         }
         crate::util::errors::OpenBitFunError::OutcomeUnknown(_) => {
-            openbitfun_runtime_ports::PortErrorKind::OutcomeUnknown
+            starmate_runtime_ports::PortErrorKind::OutcomeUnknown
         }
-        _ => openbitfun_runtime_ports::PortErrorKind::Backend,
+        _ => starmate_runtime_ports::PortErrorKind::Backend,
     };
-    openbitfun_runtime_ports::PortError::new(kind, error.to_string())
+    starmate_runtime_ports::PortError::new(kind, error.to_string())
 }
 
 fn scheduled_session_management_port(
@@ -1955,7 +1955,7 @@ impl CoreServiceAgentRuntime {
         path: &str,
         session_id: Option<&str>,
     ) -> Result<
-        openbitfun_services_integrations::remote_connect::file_projection::SessionFileTarget,
+        starmate_services_integrations::remote_connect::file_projection::SessionFileTarget,
         String,
     > {
         Self::remote_file_target_with_identity(path, session_id)
@@ -1969,7 +1969,7 @@ impl CoreServiceAgentRuntime {
         session_id: Option<&str>,
     ) -> Result<
         (
-            openbitfun_services_integrations::remote_connect::file_projection::SessionFileTarget,
+            starmate_services_integrations::remote_connect::file_projection::SessionFileTarget,
             String,
         ),
         String,
@@ -2017,7 +2017,7 @@ impl CoreServiceAgentRuntime {
         workspace_path: Option<&str>,
         remote_connection_id: Option<&str>,
     ) -> Result<
-        openbitfun_services_integrations::remote_connect::file_projection::SessionFileTarget,
+        starmate_services_integrations::remote_connect::file_projection::SessionFileTarget,
         String,
     > {
         Self::scoped_remote_file_target_with_identity(
@@ -2044,7 +2044,7 @@ impl CoreServiceAgentRuntime {
         remote_connection_id: Option<&str>,
     ) -> Result<
         (
-            openbitfun_services_integrations::remote_connect::file_projection::SessionFileTarget,
+            starmate_services_integrations::remote_connect::file_projection::SessionFileTarget,
             String,
         ),
         String,
@@ -2160,11 +2160,11 @@ impl CoreServiceAgentRuntime {
         session_id: Option<&str>,
         binding: WorkspaceBinding,
     ) -> Result<
-        openbitfun_services_integrations::remote_connect::file_projection::SessionFileTarget,
+        starmate_services_integrations::remote_connect::file_projection::SessionFileTarget,
         String,
     > {
         use crate::agentic::tools::framework::ToolUseContext;
-        use openbitfun_services_integrations::remote_connect::file_projection::{
+        use starmate_services_integrations::remote_connect::file_projection::{
             normalize_file_reference, SessionFileTarget,
         };
         let path = normalize_file_reference(path)?;
@@ -2253,7 +2253,7 @@ impl CoreServiceAgentRuntime {
     pub(crate) async fn load_relay_history_batch(
         session_id: &str,
         before: Option<usize>,
-    ) -> anyhow::Result<openbitfun_services_integrations::remote_connect::host_stream::HistoryBatch>
+    ) -> anyhow::Result<starmate_services_integrations::remote_connect::host_stream::HistoryBatch>
     {
         let directory = Self::resolve_session_storage_dir(session_id)
             .await
@@ -2264,14 +2264,14 @@ impl CoreServiceAgentRuntime {
             .load_relay_history_turn(&directory, session_id, before)
             .await?;
         let records = tokio::task::spawn_blocking(move || {
-            openbitfun_services_integrations::remote_connect::session_records::records_from_turns(
+            starmate_services_integrations::remote_connect::session_records::records_from_turns(
                 &turns,
                 &read_remote_chat_image_pixels,
             )
         })
         .await??;
         Ok(
-            openbitfun_services_integrations::remote_connect::host_stream::HistoryBatch {
+            starmate_services_integrations::remote_connect::host_stream::HistoryBatch {
                 records,
                 before,
             },
@@ -2281,7 +2281,7 @@ impl CoreServiceAgentRuntime {
     /// One source read/commit owner for both migration and live block updates.
     #[cfg(feature = "remote-connect")]
     pub(crate) async fn synchronize_relay_session(
-        hub: &openbitfun_services_integrations::remote_connect::host_stream::HostStreamHub,
+        hub: &starmate_services_integrations::remote_connect::host_stream::HostStreamHub,
         session_id: &str,
         turn_id: Option<&str>,
     ) -> Result<(), String> {
@@ -2296,7 +2296,7 @@ impl CoreServiceAgentRuntime {
             // Attachment paths are read and images re-encoded here, so the work
             // leaves the reactor rather than stalling the session's other events.
             tokio::task::spawn_blocking(move||{
-                openbitfun_services_integrations::remote_connect::session_records::records_from_turns(&turns,&read_remote_chat_image_pixels)
+                starmate_services_integrations::remote_connect::session_records::records_from_turns(&turns,&read_remote_chat_image_pixels)
             }).await?
         }).await.map_err(|error|error.to_string())
     }
@@ -2627,7 +2627,7 @@ impl CoreServiceAgentRuntime {
         let session_restore = configured_plugin_session_restore_port(coordinator.clone());
         let local_command_turn: Arc<dyn AgentLocalCommandTurnPort> = coordinator.clone();
         let user_shell_command: Arc<dyn AgentUserShellCommandPort> = coordinator.clone();
-        let transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader> =
+        let transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader> =
             coordinator.clone();
         let thread_goal_management: Arc<dyn AgentThreadGoalManagementPort> = coordinator.clone();
         let cancellation: Arc<dyn AgentTurnCancellationPort> = coordinator.clone();
@@ -2669,7 +2669,7 @@ impl CoreServiceAgentRuntime {
         let session_restore = configured_plugin_session_restore_port(coordinator.clone());
         let local_command_turn: Arc<dyn AgentLocalCommandTurnPort> = coordinator.clone();
         let user_shell_command: Arc<dyn AgentUserShellCommandPort> = coordinator.clone();
-        let transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader> =
+        let transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader> =
             coordinator.clone();
         let thread_goal_management: Arc<dyn AgentThreadGoalManagementPort> = coordinator.clone();
         let cancellation: Arc<dyn AgentTurnCancellationPort> = coordinator.clone();
@@ -2717,7 +2717,7 @@ impl CoreServiceAgentRuntime {
         let session_restore = configured_plugin_session_restore_port(coordinator.clone());
         let local_command_turn: Arc<dyn AgentLocalCommandTurnPort> = coordinator.clone();
         let user_shell_command: Arc<dyn AgentUserShellCommandPort> = coordinator.clone();
-        let transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader> =
+        let transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader> =
             coordinator.clone();
         let thread_goal_management: Arc<dyn AgentThreadGoalManagementPort> = coordinator.clone();
         let cancellation: Arc<dyn AgentTurnCancellationPort> = coordinator.clone();
@@ -2808,7 +2808,7 @@ impl CoreServiceAgentRuntime {
         let session_restore = configured_plugin_session_restore_port(coordinator.clone());
         let local_command_turn: Arc<dyn AgentLocalCommandTurnPort> = coordinator.clone();
         let user_shell_command: Arc<dyn AgentUserShellCommandPort> = coordinator.clone();
-        let transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader> =
+        let transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader> =
             coordinator.clone();
         let thread_goal_management: Arc<dyn AgentThreadGoalManagementPort> = coordinator.clone();
         let session_compaction: Arc<dyn AgentSessionCompactionPort> = coordinator.clone();
@@ -2849,7 +2849,7 @@ impl CoreServiceAgentRuntime {
         session_usage: Arc<dyn AgentSessionUsagePort>,
         turn_settlement: Arc<dyn AgentTurnSettlementPort>,
         session_lineage: Arc<dyn AgentSessionLineagePort>,
-        services: openbitfun_runtime_services::RuntimeServices,
+        services: starmate_runtime_services::RuntimeServices,
     ) -> Result<AgentRuntime, String> {
         let dialog_turn: Arc<dyn AgentDialogTurnPort> = scheduler.clone();
         Self::product_agent_runtime_with_dialog_turn(
@@ -2869,7 +2869,7 @@ impl CoreServiceAgentRuntime {
         coordinator: Arc<ConversationCoordinator>,
         scheduler: Arc<DialogScheduler>,
         event_source: AgentEventSource,
-        services: openbitfun_runtime_services::RuntimeServices,
+        services: starmate_runtime_services::RuntimeServices,
     ) -> Result<AgentRuntime, String> {
         let dialog_turn: Arc<dyn AgentDialogTurnPort> =
             Arc::new(RejectBusyAgentDialogTurnPort(scheduler.clone()));
@@ -2893,7 +2893,7 @@ impl CoreServiceAgentRuntime {
         session_fork: Arc<dyn AgentSessionForkPort>,
         session_usage: Arc<dyn AgentSessionUsagePort>,
         turn_settlement: Arc<dyn AgentTurnSettlementPort>,
-        services: openbitfun_runtime_services::RuntimeServices,
+        services: starmate_runtime_services::RuntimeServices,
     ) -> Result<AgentRuntime, String> {
         let dialog_turn: Arc<dyn AgentDialogTurnPort> = scheduler.clone();
         Self::product_agent_runtime_with_dialog_turn(
@@ -2918,7 +2918,7 @@ impl CoreServiceAgentRuntime {
         session_usage: Option<Arc<dyn AgentSessionUsagePort>>,
         turn_settlement: Option<Arc<dyn AgentTurnSettlementPort>>,
         session_lineage: Option<Arc<dyn AgentSessionLineagePort>>,
-        services: openbitfun_runtime_services::RuntimeServices,
+        services: starmate_runtime_services::RuntimeServices,
     ) -> Result<AgentRuntime, String> {
         let dialog_turn = configured_plugin_dialog_turn_port(coordinator.clone(), dialog_turn);
         let submission = configured_plugin_submission_port(coordinator.clone());
@@ -2932,7 +2932,7 @@ impl CoreServiceAgentRuntime {
         let session_restore = configured_plugin_session_restore_port(coordinator.clone());
         let local_command_turn: Arc<dyn AgentLocalCommandTurnPort> = coordinator.clone();
         let user_shell_command: Arc<dyn AgentUserShellCommandPort> = coordinator.clone();
-        let transcript_reader: Arc<dyn openbitfun_runtime_ports::SessionTranscriptReader> =
+        let transcript_reader: Arc<dyn starmate_runtime_ports::SessionTranscriptReader> =
             coordinator.clone();
         let thread_goal_management: Arc<dyn AgentThreadGoalManagementPort> = coordinator.clone();
         let session_compaction: Arc<dyn AgentSessionCompactionPort> = coordinator.clone();
@@ -3012,7 +3012,7 @@ impl crate::agentic::events::EventSubscriber for CoreRemoteSessionStateTrackerSu
     async fn on_event(
         &self,
         event: &crate::agentic::events::AgenticEvent,
-    ) -> openbitfun_agent_runtime::event_bus::EventSubscriberResult {
+    ) -> starmate_agent_runtime::event_bus::EventSubscriberResult {
         self.0.handle_agentic_event(event);
         Ok(())
     }
@@ -3083,8 +3083,8 @@ impl<'a> CoreRemoteDialogRuntimeHost<'a> {
 
     pub(crate) async fn manage_dialog_queue(
         &self,
-        request: openbitfun_runtime_ports::DialogQueueRequest,
-    ) -> Result<openbitfun_runtime_ports::DialogQueueSnapshot, String> {
+        request: starmate_runtime_ports::DialogQueueRequest,
+    ) -> Result<starmate_runtime_ports::DialogQueueSnapshot, String> {
         let binding = self.resolve_binding_workspace(&request.session_id).await;
         if !self.remote_session_exists(&request.session_id).await? {
             let binding = binding
@@ -3437,14 +3437,14 @@ impl RemoteWorkspaceFileRuntimeHost for CoreRemoteWorkspaceFileRuntimeHost {
     async fn store_session_attachment(
         &self,
         session_id: &str,
-        attachment: openbitfun_runtime_ports::RemoteSessionAttachment,
-    ) -> Result<openbitfun_runtime_ports::RemoteStoredAttachment, String> {
+        attachment: starmate_runtime_ports::RemoteSessionAttachment,
+    ) -> Result<starmate_runtime_ports::RemoteStoredAttachment, String> {
         let target = CoreServiceAgentRuntime::remote_file_target(".", Some(session_id)).await?;
         let session_id = session_id.to_owned();
         // Once admitted, storage finishes on the execution host even if its
         // controller disconnects. A retry with the same attachment id is safe.
         tokio::spawn(async move {
-            openbitfun_services_integrations::remote_connect::bot::inbound_files::store_session_attachment(
+            starmate_services_integrations::remote_connect::bot::inbound_files::store_session_attachment(
                 &target, &session_id, attachment,
             ).await.map_err(|error| error.to_string())
         }).await.map_err(|error| error.to_string())?
@@ -3462,7 +3462,7 @@ impl RemoteWorkspaceFileRuntimeHost for CoreRemoteWorkspaceFileRuntimeHost {
         path: &str,
         session_id: Option<&str>,
         max_bytes: u64,
-    ) -> Result<Option<openbitfun_runtime_ports::RemoteWorkspaceFileContent>, String> {
+    ) -> Result<Option<starmate_runtime_ports::RemoteWorkspaceFileContent>, String> {
         CoreServiceAgentRuntime::remote_file_target(path, session_id)
             .await?
             .read_with_scope(max_bytes, controller_file_read_scope(path)?)
@@ -3479,7 +3479,7 @@ impl RemoteWorkspaceFileRuntimeHost for CoreRemoteWorkspaceFileRuntimeHost {
         remote_connection_id: Option<&str>,
         offset: u64,
         limit: u64,
-    ) -> Result<Option<openbitfun_runtime_ports::RemoteWorkspaceFileChunk>, String> {
+    ) -> Result<Option<starmate_runtime_ports::RemoteWorkspaceFileChunk>, String> {
         CoreServiceAgentRuntime::scoped_remote_file_target(
             path,
             session_id,
@@ -3500,7 +3500,7 @@ impl RemoteWorkspaceFileRuntimeHost for CoreRemoteWorkspaceFileRuntimeHost {
         workspace_id: Option<&str>,
         workspace_path: Option<&str>,
         remote_connection_id: Option<&str>,
-    ) -> Result<Option<openbitfun_runtime_ports::RemoteWorkspaceFileInfo>, String> {
+    ) -> Result<Option<starmate_runtime_ports::RemoteWorkspaceFileInfo>, String> {
         CoreServiceAgentRuntime::scoped_remote_file_target(
             path,
             session_id,
@@ -3524,7 +3524,7 @@ impl RemoteWorkspaceRuntimeHost for CoreRemoteWorkspaceRuntimeHost {
     async fn workspace_icon(
         &self,
         workspace_id: &str,
-    ) -> Result<openbitfun_core_types::workspace_icon::WorkspaceIconSnapshot, String> {
+    ) -> Result<starmate_core_types::workspace_icon::WorkspaceIconSnapshot, String> {
         #[cfg(feature = "workspace-icons")]
         {
             let service = crate::service::workspace::get_global_workspace_service()
@@ -3962,11 +3962,11 @@ impl RemoteInteractionRuntimeHost for CoreRemoteInteractionRuntimeHost {
                 tool_id,
                 match updated_input {
                     Some(updated_input) => {
-                        openbitfun_agent_runtime::sdk::PermissionReply::OnceWithInput {
+                        starmate_agent_runtime::sdk::PermissionReply::OnceWithInput {
                             updated_input,
                         }
                     }
-                    None => openbitfun_agent_runtime::sdk::PermissionReply::Once,
+                    None => starmate_agent_runtime::sdk::PermissionReply::Once,
                 },
             )
             .await
@@ -3977,7 +3977,7 @@ impl RemoteInteractionRuntimeHost for CoreRemoteInteractionRuntimeHost {
         self.coordinator()?
             .reply_to_tool(
                 tool_id,
-                openbitfun_agent_runtime::sdk::PermissionReply::Reject {
+                starmate_agent_runtime::sdk::PermissionReply::Reject {
                     feedback: Some(reason),
                 },
             )
@@ -4117,8 +4117,8 @@ impl RemoteCancelRuntimeHost for CoreRemoteCancelRuntimeHost {
 mod tests {
     use std::collections::HashSet;
 
-    use openbitfun_runtime_ports::SessionTranscriptReader;
-    use openbitfun_services_integrations::remote_connect::no_host_image_pixels;
+    use starmate_runtime_ports::SessionTranscriptReader;
+    use starmate_services_integrations::remote_connect::no_host_image_pixels;
 
     use super::*;
     use crate::service::session::{
@@ -4203,8 +4203,8 @@ mod tests {
         assert!(
             matches!(
                 error,
-                openbitfun_agent_runtime::sdk::RuntimeError::Port(ref port)
-                    if port.kind == openbitfun_runtime_ports::PortErrorKind::InvalidRequest
+                starmate_agent_runtime::sdk::RuntimeError::Port(ref port)
+                    if port.kind == starmate_runtime_ports::PortErrorKind::InvalidRequest
             ),
             "expected revert provider validation, got {error}"
         );
@@ -4239,7 +4239,7 @@ mod tests {
 
     #[tokio::test]
     async fn controller_file_reads_support_absolute_and_relative_paths_outside_workspace() {
-        use openbitfun_services_integrations::remote_connect::file_projection::controller_file_read_scope;
+        use starmate_services_integrations::remote_connect::file_projection::controller_file_read_scope;
         let tmp = tempfile::tempdir().unwrap();
         let workspace = tmp.path().join("project");
         std::fs::create_dir(&workspace).unwrap();
@@ -4287,7 +4287,7 @@ mod tests {
         assert!(
             matches!(result, Err(error) if error.contains("output session workspace is unavailable"))
         );
-        let attachment = openbitfun_runtime_ports::RemoteSessionAttachment {
+        let attachment = starmate_runtime_ports::RemoteSessionAttachment {
             attachment_id: uuid::Uuid::new_v4().to_string(),
             name: "fixture.pem".into(),
             content_base64: "Zml4dHVyZQ==".into(),
@@ -4372,7 +4372,7 @@ mod tests {
             agent_route_key: None,
             workspace_path: Some(workspace.root_path.to_string_lossy().into_owned()),
             project_workspace_path: None,
-            execution_target: Some(openbitfun_core_types::SessionExecutionTarget::local(
+            execution_target: Some(starmate_core_types::SessionExecutionTarget::local(
                 "project-worktree",
             )),
             workspace_id: Some(workspace.id.clone()),
@@ -4448,7 +4448,7 @@ mod tests {
     #[cfg(feature = "opencode-plugin-host")]
     #[test]
     fn configured_plugins_recover_from_the_persisted_session_execution_root() {
-        let target = openbitfun_core_types::SessionExecutionTarget::local("restored-worktree");
+        let target = starmate_core_types::SessionExecutionTarget::local("restored-worktree");
 
         assert_eq!(
             configured_plugin_root_from_session_facts(Some("project"), Some(&target), false,)
@@ -4482,7 +4482,7 @@ mod tests {
 
         assert_eq!(
             error.kind,
-            openbitfun_runtime_ports::PortErrorKind::SessionInUse
+            starmate_runtime_ports::PortErrorKind::SessionInUse
         );
     }
 
@@ -5468,7 +5468,7 @@ mod history_workspace_identity_tests {
 mod remote_model_catalog_tests {
     use super::{remote_models_dev_reasoning_catalog, remote_provider_catalog};
     use crate::infrastructure::ai::reasoning_catalog::ModelsDevReasoningCatalogSnapshot;
-    use openbitfun_services_integrations::models_dev::ModelsDevSnapshotSource;
+    use starmate_services_integrations::models_dev::ModelsDevSnapshotSource;
 
     fn empty_snapshot() -> ModelsDevReasoningCatalogSnapshot {
         ModelsDevReasoningCatalogSnapshot {

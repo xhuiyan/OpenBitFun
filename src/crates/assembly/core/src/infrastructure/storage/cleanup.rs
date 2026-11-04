@@ -3,23 +3,23 @@
 use crate::infrastructure::PathManager;
 use crate::util::errors::*;
 
-pub use openbitfun_services_core::storage_cleanup::{
+pub use starmate_services_core::storage_cleanup::{
     CleanupCategory, CleanupPolicy, CleanupResult,
 };
 
 pub struct CleanupService {
-    inner: openbitfun_services_core::storage_cleanup::CleanupService,
+    inner: starmate_services_core::storage_cleanup::CleanupService,
 }
 
 impl CleanupService {
     pub fn new(path_manager: PathManager, policy: CleanupPolicy) -> Self {
-        let roots = openbitfun_services_core::storage_cleanup::CleanupRoots {
+        let roots = starmate_services_core::storage_cleanup::CleanupRoots {
             temp_dir: path_manager.temp_dir(),
             logs_dir: path_manager.logs_dir(),
             cache_dir: path_manager.cache_root(),
         };
         Self {
-            inner: openbitfun_services_core::storage_cleanup::CleanupService::new(roots, policy),
+            inner: starmate_services_core::storage_cleanup::CleanupService::new(roots, policy),
         }
     }
 

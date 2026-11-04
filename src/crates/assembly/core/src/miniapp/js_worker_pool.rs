@@ -5,15 +5,15 @@ use crate::miniapp::js_worker::{JsWorker, MiniAppWorkerEvent, MiniAppWorkerEvent
 use crate::miniapp::runtime_detect::DetectedRuntime;
 use crate::miniapp::types::{NodePermissions, NpmDep};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::ports::{
     MiniAppInstallDepsRequest, MiniAppPortError, MiniAppPortErrorKind, MiniAppPortFuture,
     MiniAppRuntimePort,
 };
-pub use openbitfun_product_domains::miniapp::worker::InstallResult;
-use openbitfun_services_integrations::miniapp::worker::{
+pub use starmate_product_domains::miniapp::worker::InstallResult;
+use starmate_services_integrations::miniapp::worker::{
     MiniAppWorkerEventSink, SharedMiniAppWorkerEventSink,
 };
-use openbitfun_services_integrations::miniapp::worker_pool::{
+use starmate_services_integrations::miniapp::worker_pool::{
     JsWorkerPool as ServiceJsWorkerPool, MiniAppWorkerPoolError, MiniAppWorkerPoolErrorKind,
 };
 use serde_json::Value;
@@ -268,7 +268,7 @@ impl MiniAppWorkerEventSink for CoreMiniAppWorkerEventSink {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::miniapp::runtime::RuntimeKind;
+    use starmate_product_domains::miniapp::runtime::RuntimeKind;
     use std::fs;
 
     struct TestTempDir {

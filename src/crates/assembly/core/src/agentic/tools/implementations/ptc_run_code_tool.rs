@@ -8,7 +8,7 @@
 use crate::agentic::tools::framework::{Tool, ToolResult, ToolUseContext, ValidationResult};
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use async_trait::async_trait;
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     ptc_run_code_description, ptc_run_code_input_schema, PTC_RUN_CODE_TOOL_NAME,
 };
 use serde_json::Value;

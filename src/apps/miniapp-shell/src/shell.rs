@@ -1,5 +1,5 @@
 use crate::string;
-use openbitfun_miniapp_ipc::{self as ipc, launcher};
+use starmate_miniapp_ipc::{self as ipc, launcher};
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::path::PathBuf;
@@ -67,7 +67,7 @@ async fn endpoint(record: &launcher::LaunchRecord) -> Result<ipc::Endpoint, Stri
 
 fn host_command(record: &launcher::LaunchRecord) -> std::process::Command {
     let mut command =
-        openbitfun_services_core::process_manager::create_command(&record.host_executable);
+        starmate_services_core::process_manager::create_command(&record.host_executable);
     command.env("OPENBITFUN_USER_ROOT", &record.user_root);
     match record.host_channel {
         ipc::HostChannel::Default => {

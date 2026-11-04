@@ -3,7 +3,7 @@
 
 use super::*;
 use crate::service::session::SessionTurnCatalog;
-use openbitfun_services_core::json_store::JsonFileRevision;
+use starmate_services_core::json_store::JsonFileRevision;
 use std::collections::VecDeque;
 use std::ops::Range;
 use std::sync::Weak;

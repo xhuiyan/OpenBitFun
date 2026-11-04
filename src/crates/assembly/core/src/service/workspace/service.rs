@@ -31,8 +31,8 @@ use crate::service::workspace_runtime::{
 };
 use crate::util::errors::*;
 use log::{info, warn};
-use openbitfun_core_types::product_identity::product_id;
-use openbitfun_services_core::workspace_identity::{
+use starmate_core_types::product_identity::product_id;
+use starmate_services_core::workspace_identity::{
     canonicalize_local_workspace_root, local_workspace_roots_equal,
     normalize_remote_workspace_path, remote_workspace_stable_id_for_connection,
 };
@@ -246,7 +246,7 @@ impl WorkspaceService {
         if let Err(e) = ensure_workspace_gitignore_ignores_openbitfun(&workspace.root_path).await {
             warn!(
                 "Failed to ensure workspace .gitignore ignores {}: workspace_path={} trigger={} error={}",
-                openbitfun_core_types::product_identity::hidden_data_directory(),
+                starmate_core_types::product_identity::hidden_data_directory(),
                 workspace.root_path.display(),
                 trigger,
                 e
@@ -273,7 +273,7 @@ impl WorkspaceService {
                 };
 
                 let identity_host =
-                    openbitfun_services_core::workspace_identity::ssh_workspace_identity_host(
+                    starmate_services_core::workspace_identity::ssh_workspace_identity_host(
                         ssh_host,
                         workspace.remote_ssh_connection_id(),
                         &workspace.root_path.to_string_lossy(),
@@ -1470,11 +1470,11 @@ impl WorkspaceService {
                 .and_then(|workspace| {
                     workspace
                         .metadata
-                        .get(openbitfun_core_types::workspace_icon::WORKSPACE_ICON_METADATA_KEY)
+                        .get(starmate_core_types::workspace_icon::WORKSPACE_ICON_METADATA_KEY)
                 })
             {
                 new_workspace.metadata.insert(
-                    openbitfun_core_types::workspace_icon::WORKSPACE_ICON_METADATA_KEY.into(),
+                    starmate_core_types::workspace_icon::WORKSPACE_ICON_METADATA_KEY.into(),
                     value.clone(),
                 );
             }
@@ -3588,7 +3588,7 @@ mod tests {
 
         assert_eq!(
             tracked.id,
-            openbitfun_services_core::workspace_identity::remote_workspace_stable_id(
+            starmate_services_core::workspace_identity::remote_workspace_stable_id(
                 "example-host",
                 "/srv/openbitfun/project"
             )

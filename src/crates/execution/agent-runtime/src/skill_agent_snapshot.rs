@@ -1,6 +1,6 @@
 use crate::prompt::ToolListingSections;
 use dashmap::DashMap;
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_get_tool_spec_catalog_description, render_get_tool_spec_deferred_tool_entry,
     GetToolSpecDeferredToolSummary,
 };

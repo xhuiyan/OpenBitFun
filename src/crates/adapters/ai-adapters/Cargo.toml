@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-ai-adapters"
+name = "starmate-ai-adapters"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,7 +7,7 @@ description = "Shared AI protocol adapters for OpenBitFun core and installer"
 autotests = false
 
 [lib]
-name = "openbitfun_ai_adapters"
+name = "starmate_ai_adapters"
 crate-type = ["rlib"]
 
 [[test]]
@@ -22,9 +22,9 @@ path = "tests/ai_stream_contracts.rs"
 anyhow = { workspace = true }
 async-trait = { workspace = true }
 base64 = { workspace = true, optional = true }
-openbitfun-agent-stream = { path = "../../execution/agent-stream" }
-openbitfun-core-types = { path = "../../contracts/core-types" }
-openbitfun-services-core = { path = "../../services/services-core", features = ["tls-provider", "system-proxy"] }
+starmate-agent-stream = { path = "../../execution/agent-stream" }
+starmate-core-types = { path = "../../contracts/core-types" }
+starmate-services-core = { path = "../../services/services-core", features = ["tls-provider", "system-proxy"] }
 chrono = { workspace = true }
 dirs = { workspace = true, optional = true }
 eventsource-stream = { workspace = true }
@@ -58,8 +58,8 @@ local-tokenizer = ["dep:tokenizers"]
 image-generation = ["dep:base64"]
 subscription-auth = [
     "dep:base64",
-    "openbitfun-services-core/credential-vault",
-    "openbitfun-services-core/process-runtime",
+    "starmate-services-core/credential-vault",
+    "starmate-services-core/process-runtime",
     "dep:dirs",
     "dep:fs2",
     "dep:keyring-core",
@@ -75,7 +75,7 @@ subscription-auth = [
 
 [dev-dependencies]
 axum = { workspace = true }
-openbitfun-events = { path = "../../contracts/events" }
+starmate-events = { path = "../../contracts/events" }
 tokio = { workspace = true, features = ["io-util", "net", "rt-multi-thread", "test-util"] }
 
 [lints]

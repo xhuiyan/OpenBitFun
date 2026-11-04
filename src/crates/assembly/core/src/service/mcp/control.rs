@@ -143,7 +143,7 @@ impl MCPService {
                 .edit_user_server(fingerprint, server_id, patch.as_ref())
                 .await
                 .map_err(|error| match error {
-                    openbitfun_services_integrations::mcp::config::MCPImportError::Store(_) => {
+                    starmate_services_integrations::mcp::config::MCPImportError::Store(_) => {
                         "MCP configuration could not be saved; inspect MCP settings".to_string()
                     }
                     _ => error.to_string(),

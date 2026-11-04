@@ -7,9 +7,9 @@ use crate::service::config::{
     types::{model_runtime_binding_fingerprint, AIConfig},
 };
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_runtime::model_pool::{Candidate, ModelPoolRouter, Reservation};
-use openbitfun_core_types::errors::AiProviderError;
-use openbitfun_core_types::model_pool::{
+use starmate_agent_runtime::model_pool::{Candidate, ModelPoolRouter, Reservation};
+use starmate_core_types::errors::AiProviderError;
+use starmate_core_types::model_pool::{
     ModelPoolBinding, ModelPoolContextBudget, ModelPoolMemberStatus,
 };
 use std::collections::BTreeSet;
@@ -47,7 +47,7 @@ impl PoolStatePersistence {
                 let service = get_global_config_service().await?;
                 let path = service.model_pool_store().await.runtime_state_path();
                 let saved: Option<ModelPoolRouter> =
-                    openbitfun_services_core::json_store::JsonFileStore
+                    starmate_services_core::json_store::JsonFileStore
                         .read_locked_optional(&path)
                         .await
                         .map_err(|error| {
@@ -76,7 +76,7 @@ impl PoolStatePersistence {
             .lock()
             .map_err(|_| OpenBitFunError::service("Model pool state lock poisoned"))?
             .clone();
-        let store = openbitfun_services_core::json_store::JsonFileStore;
+        let store = starmate_services_core::json_store::JsonFileStore;
         let _lease = store
             .acquire_cross_process_lock(path)
             .await
@@ -246,7 +246,7 @@ impl ModelPoolRuntime {
 
     fn unavailable_error(
         pool_id: &str,
-        error: openbitfun_agent_runtime::model_pool::SelectionError,
+        error: starmate_agent_runtime::model_pool::SelectionError,
         router: &ModelPoolRouter,
         candidates: &[Candidate],
         excluded: &BTreeSet<String>,
@@ -343,11 +343,11 @@ impl ModelPoolRuntime {
                 {
                     if !model.enabled {
                         status.status =
-                            openbitfun_core_types::model_pool::ModelPoolHealthStatus::Disabled;
+                            starmate_core_types::model_pool::ModelPoolHealthStatus::Disabled;
                     }
                 } else {
                     status.status =
-                        openbitfun_core_types::model_pool::ModelPoolHealthStatus::Missing;
+                        starmate_core_types::model_pool::ModelPoolHealthStatus::Missing;
                 }
                 status
             })
@@ -587,7 +587,7 @@ pub(super) fn test_attempt_excluding(
         .reserve(
             "session-1:0",
             "p",
-            openbitfun_core_types::model_pool::ModelPoolStrategy::Ordered,
+            starmate_core_types::model_pool::ModelPoolStrategy::Ordered,
             &candidates,
             &excluded,
             now_ms(),
@@ -898,7 +898,7 @@ mod tests {
             // depend on a successful request or current routing preference.
             assert_eq!(
                 router.member_status(&candidate, 0).status,
-                openbitfun_core_types::model_pool::ModelPoolHealthStatus::Unverified
+                starmate_core_types::model_pool::ModelPoolHealthStatus::Unverified
             );
             let member = ModelPoolRuntime::member_context_budget(&config, &candidate).unwrap();
             assert!(common.context_window <= member.context_window);

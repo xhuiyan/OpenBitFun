@@ -309,7 +309,7 @@ mod tests {
         upload.headers_mut().insert(
             header::CONTENT_TYPE,
             HeaderValue::from_static(
-                openbitfun_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
+                starmate_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
             ),
         );
         assert_eq!(
@@ -388,7 +388,7 @@ mod tests {
         upload.headers_mut().insert(
             header::CONTENT_TYPE,
             HeaderValue::from_static(
-                openbitfun_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
+                starmate_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
             ),
         );
         let response = app.clone().oneshot(upload).await.unwrap();
@@ -721,13 +721,13 @@ mod tests {
         oversized.headers_mut().insert(
             header::CONTENT_TYPE,
             HeaderValue::from_static(
-                openbitfun_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
+                starmate_product_domains::appearance_market::APPEARANCE_MARKET_PACKAGE_CONTENT_TYPE,
             ),
         );
         oversized.headers_mut().insert(
             header::CONTENT_LENGTH,
             HeaderValue::from_str(
-                &(openbitfun_product_domains::appearance_market::APPEARANCE_MARKET_MAX_PACKAGE_BYTES
+                &(starmate_product_domains::appearance_market::APPEARANCE_MARKET_MAX_PACKAGE_BYTES
                     + 1)
                 .to_string(),
             )

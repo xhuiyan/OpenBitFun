@@ -4,10 +4,10 @@ use agent_client_protocol::schema::{
     SetSessionModelRequest, SetSessionModelResponse,
 };
 use agent_client_protocol::{Error, Result};
-use openbitfun_agent_runtime::sdk::AgentSessionModelUpdateRequest;
-use openbitfun_core::agentic::agents::get_agent_registry;
-use openbitfun_core::service::config::types::AIConfig;
-use openbitfun_core::service::config::{GlobalConfig, GlobalConfigManager};
+use starmate_agent_runtime::sdk::AgentSessionModelUpdateRequest;
+use starmate_core::agentic::agents::get_agent_registry;
+use starmate_core::service::config::types::AIConfig;
+use starmate_core::service::config::{GlobalConfig, GlobalConfigManager};
 
 use super::OpenBitFunAcpRuntime;
 
@@ -224,7 +224,7 @@ fn available_model_select_options(ai_config: &AIConfig) -> Vec<SessionConfigSele
     options
 }
 
-fn model_display_name(model: &openbitfun_core::service::config::types::AIModelConfig) -> String {
+fn model_display_name(model: &starmate_core::service::config::types::AIModelConfig) -> String {
     if model.model_name.trim().is_empty() {
         format!("{} / {}", model.provider, model.name)
     } else {
@@ -246,7 +246,7 @@ async fn load_ai_config() -> Result<AIConfig> {
 #[cfg(test)]
 mod tests {
     use super::{current_model_id, normalize_session_model_id, PRIMARY_MODEL_ID};
-    use openbitfun_core::service::config::types::{AIConfig, AIModelConfig};
+    use starmate_core::service::config::types::{AIConfig, AIModelConfig};
 
     #[test]
     fn acp_session_model_mutation_uses_the_runtime_sdk() {

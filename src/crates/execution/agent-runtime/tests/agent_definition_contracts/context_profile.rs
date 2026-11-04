@@ -1,4 +1,4 @@
-use openbitfun_agent_runtime::context_profile::{
+use starmate_agent_runtime::context_profile::{
     ContextProfile, ContextProfilePolicy, ModelCapabilityProfile,
 };
 

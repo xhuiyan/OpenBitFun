@@ -1,6 +1,6 @@
 #![cfg(feature = "process-runtime")]
 
-use openbitfun_services_core::system::check_command;
+use starmate_services_core::system::check_command;
 
 #[test]
 fn system_check_command_preserves_missing_command_shape() {
@@ -12,10 +12,10 @@ fn system_check_command_preserves_missing_command_shape() {
 
 #[cfg(windows)]
 mod windows_process_cleanup {
-    use openbitfun_services_core::process_manager::{
+    use starmate_services_core::process_manager::{
         cleanup_all_processes, contain_current_process_tree, create_command,
     };
-    use openbitfun_services_core::process_tree::ProcessTreeChild;
+    use starmate_services_core::process_tree::ProcessTreeChild;
     use std::path::Path;
     use std::process::Stdio;
     use std::time::{Duration, Instant};
@@ -253,8 +253,8 @@ mod windows_process_cleanup {
 /// desktop cards, so it must carry the resolved entries to the child.
 #[cfg(target_os = "linux")]
 mod platform_path_environment {
-    use openbitfun_services_core::process_manager::create_tokio_command;
-    use openbitfun_services_core::system::platform_path_entries;
+    use starmate_services_core::process_manager::create_tokio_command;
+    use starmate_services_core::system::platform_path_entries;
     use std::path::PathBuf;
     use std::process::Stdio;
 

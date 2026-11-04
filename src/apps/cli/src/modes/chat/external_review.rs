@@ -1,5 +1,5 @@
 // Pure projections and review text derived from the external-source catalog.
-use openbitfun_product_domains::external_source_control::{
+use starmate_product_domains::external_source_control::{
     ExternalSourceDesiredState, ExternalSourceEffectiveStatus, ExternalSourceRecoveryActionV1,
 };
 
@@ -165,7 +165,7 @@ fn external_command_counts(snapshot: &ExternalSourceCatalogSnapshot) -> (usize, 
 fn external_integration_policy_lines(snapshot: &ExternalSourceCatalogSnapshot) -> Vec<String> {
     let policy = &snapshot.integration_policy;
     if policy.status
-        == openbitfun_product_domains::external_integration_policy::ExternalIntegrationPolicyStatus::IncompatibleSchema
+        == starmate_product_domains::external_integration_policy::ExternalIntegrationPolicyStatus::IncompatibleSchema
     {
         return vec![
             format!(
@@ -287,7 +287,7 @@ fn parse_external_control_action(arguments: &str) -> Result<ExternalControlUiAct
 }
 
 fn external_control_status_text(
-    control: &openbitfun_product_domains::external_source_control::ExternalSourceControlSnapshotV1,
+    control: &starmate_product_domains::external_source_control::ExternalSourceControlSnapshotV1,
 ) -> String {
     let mut lines = vec!["Extensions".to_string(), String::new()];
     if control.safe_mode {
@@ -378,7 +378,7 @@ struct ExternalControlMutationResult {
     action: ExternalControlUiAction,
     result: std::result::Result<
         (
-            openbitfun_product_domains::external_source_control::ExternalSourceControlSnapshotV1,
+            starmate_product_domains::external_source_control::ExternalSourceControlSnapshotV1,
             Option<ExternalSourceCatalogSnapshot>,
             Option<ExternalSourceConflictPreferences>,
         ),
@@ -1007,7 +1007,7 @@ enum ExternalIssueSurface {
 }
 
 fn is_external_agent_diagnostic(
-    diagnostic: &openbitfun_product_domains::external_sources::ExternalSourceDiagnostic,
+    diagnostic: &starmate_product_domains::external_sources::ExternalSourceDiagnostic,
 ) -> bool {
     matches!(diagnostic.asset_kind, ExternalSourceAssetKind::Subagent)
 }

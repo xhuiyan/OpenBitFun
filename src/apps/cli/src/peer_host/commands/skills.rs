@@ -7,12 +7,12 @@
 
 use std::time::Duration;
 
-use openbitfun_core::agentic::tools::implementations::skills::mode_overrides::{
+use starmate_core::agentic::tools::implementations::skills::mode_overrides::{
     load_globally_disabled_project_skills, load_globally_disabled_user_skills, SkillPolicyWorkspace,
 };
-use openbitfun_core::agentic::tools::implementations::skills::{SkillRegistry, SkillScanReport};
-use openbitfun_core::agentic::workspace::RemoteWorkspaceFs;
-use openbitfun_core::service::workspace::{
+use starmate_core::agentic::tools::implementations::skills::{SkillRegistry, SkillScanReport};
+use starmate_core::agentic::workspace::RemoteWorkspaceFs;
+use starmate_core::service::workspace::{
     get_global_workspace_service, WorkspaceInfo, WorkspaceKind,
 };
 use serde::Serialize;
@@ -61,7 +61,7 @@ async fn remote_workspace_fs(
     };
     let connection = connection.to_owned();
     let services =
-        openbitfun_core::service::remote_ssh::workspace_state::ensure_saved_connection_services()
+        starmate_core::service::remote_ssh::workspace_state::ensure_saved_connection_services()
             .await?;
     let file_service = services
         .get_file_service()

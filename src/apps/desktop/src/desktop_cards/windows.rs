@@ -1,6 +1,6 @@
 //! Native windows for desktop cards: one transparent, frameless window per card.
 
-use openbitfun_core::agentic::tools::desktop_card_host::{
+use starmate_core::agentic::tools::desktop_card_host::{
     clamp_size, DesktopCardPosition, DesktopCardRecord, DesktopCardSize, DESKTOP_CARD_MAX_HEIGHT,
     DESKTOP_CARD_MAX_WIDTH, DESKTOP_CARD_MIN_HEIGHT, DESKTOP_CARD_MIN_WIDTH,
 };

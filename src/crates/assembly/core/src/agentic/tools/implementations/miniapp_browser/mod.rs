@@ -19,7 +19,7 @@ use crate::agentic::tools::miniapp_surface::miniapp_web_host_available;
 use crate::util::errors::OpenBitFunResult;
 use actions::{action_from_input, dispatch, Action, ACTIONS};
 use async_trait::async_trait;
-use openbitfun_product_domains::miniapp::web_surface::{
+use starmate_product_domains::miniapp::web_surface::{
     MINIAPP_WEB_DEFAULT_CAPTURE_EDGE, MINIAPP_WEB_DEFAULT_WAIT_MS, MINIAPP_WEB_MAX_CAPTURE_EDGE,
     MINIAPP_WEB_MAX_DEPTH, MINIAPP_WEB_MAX_NODES, MINIAPP_WEB_MAX_WAIT_MS,
     MINIAPP_WEB_MAX_WATCH_MS,
@@ -264,7 +264,7 @@ This tool has no host-path access or arbitrary JavaScript `evaluate` action. Sou
         let Some(action) = action_from_input(input) else {
             return Ok(result::err_response(
                 "?",
-                openbitfun_product_domains::miniapp::web_surface::MiniAppWebErrorCode::InvalidParams,
+                starmate_product_domains::miniapp::web_surface::MiniAppWebErrorCode::InvalidParams,
                 "Missing or unsupported action.",
                 &[ACTIONS.join(", ").as_str()],
             ));
@@ -298,7 +298,7 @@ mod tests {
 
     #[test]
     fn output_schema_covers_live_state_and_typed_failures_without_product_full_registration() {
-        use openbitfun_product_domains::product_control::validate_operation_arguments;
+        use starmate_product_domains::product_control::validate_operation_arguments;
 
         let schema = MiniAppBrowserTool::new().output_schema();
         assert_eq!(schema["type"], "object");

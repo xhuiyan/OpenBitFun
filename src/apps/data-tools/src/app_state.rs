@@ -1,11 +1,11 @@
-use openbitfun_legacy_migration::{
+use starmate_legacy_migration::{
     atomic_write_json, blocking_writer_processes, export_failure_diagnostics, list_tasks,
     load_task, probe_legacy_source, save_task, CancellationToken, LegacyMigrationError,
     LegacyMigrationResult, MigrationEngine, MigrationLayout, MigrationRoots, NoCrashInjection,
     ProbeLimits, ResetDirectory, SavedMigrationTask, TargetResetResult, WriterProcess,
 };
-use openbitfun_legacy_migration_adapters::adapters_for_groups;
-use openbitfun_product_domains::legacy_migration::{
+use starmate_legacy_migration_adapters::adapters_for_groups;
+use starmate_product_domains::legacy_migration::{
     FindingSeverity, LegacySourceDescriptor, MigrationPhase, MigrationPlan, MigrationProgressEvent,
     MigrationRunReport, MigrationRunStatus, MigrationSelection, ScanFinding,
 };
@@ -170,7 +170,7 @@ pub(crate) struct DataToolsView {
     pub findings: Vec<ScanFinding>,
     pub plan: Option<MigrationPlan>,
     pub report: Option<MigrationRunReport>,
-    pub workspace_counts: Option<openbitfun_legacy_migration_adapters::WorkspaceReportCounts>,
+    pub workspace_counts: Option<starmate_legacy_migration_adapters::WorkspaceReportCounts>,
     pub progress: Option<MigrationProgressEvent>,
     pub blockers: Vec<WriterProcess>,
     pub status: MigrationRunStatus,
@@ -350,7 +350,7 @@ impl DataToolsCoordinator {
             return Err(CommandError::operation_in_progress());
         }
         let protected = reset_protected_directories(&session.settings_path)?;
-        let directories = openbitfun_legacy_migration::plan_target_reset(&session.roots, &protected)
+        let directories = starmate_legacy_migration::plan_target_reset(&session.roots, &protected)
             .map_err(|_| CommandError::new("unsafe_reset_locations", "Reset refused: a destination overlaps source data, a protected directory, or a linked path. Check the selected locations.", false))?;
         session.reset_preview = Some(ResetPreviewView {
             confirmation_id: uuid::Uuid::new_v4().to_string(),
@@ -412,7 +412,7 @@ impl DataToolsCoordinator {
     ) {
         let mut blockers = Vec::new();
         let result = (|| {
-            blockers = openbitfun_legacy_migration::blocking_writer_processes_for_product(
+            blockers = starmate_legacy_migration::blocking_writer_processes_for_product(
                 0,
                 &["openbitfun-data-tools", "openbitfun-data-migrator"],
             )
@@ -420,7 +420,7 @@ impl DataToolsCoordinator {
             if !blockers.is_empty() {
                 return Err(CommandError::new("reset_writers_running", "Close BitFun, StarMate, their CLI/background writers, and other Data Tools instances, then retry reset.", true));
             }
-            openbitfun_legacy_migration::reset_target_data(&roots, &preview.directories, &protected)
+            starmate_legacy_migration::reset_target_data(&roots, &preview.directories, &protected)
                 .map_err(|_| CommandError::new("reset_scope_changed", "Reset stopped because the directories failed revalidation. Review the paths again; some data may already have been removed.", true))
         })();
         self.finish_reset(roots, result, blockers);
@@ -915,7 +915,7 @@ fn migration_engine(
     selection: &MigrationSelection,
 ) -> LegacyMigrationResult<MigrationEngine> {
     crate::locations::validate(&roots)?;
-    openbitfun_legacy_migration_adapters::validate_target(&roots)?;
+    starmate_legacy_migration_adapters::validate_target(&roots)?;
     MigrationEngine::new(roots, adapters_for_groups(selection))
 }
 
@@ -966,7 +966,7 @@ fn snapshot(session: &DataToolsSession) -> DataToolsView {
     let plan = session.plan.as_ref().map(redact_plan_for_ui);
     let report = session.report.as_ref().map(redact_report_for_ui);
     let workspace_counts = session.report.as_ref().and_then(|report| {
-        openbitfun_legacy_migration_adapters::workspace_report_counts(&session.roots, report).ok()
+        starmate_legacy_migration_adapters::workspace_report_counts(&session.roots, report).ok()
     });
     DataToolsView {
         repair: session.repair.clone(),
@@ -1164,7 +1164,7 @@ mod tests {
         fs::write(roots.target_user_root.join("keep"), "target").unwrap();
         let preview = coordinator.preview_reset().unwrap().reset_preview.unwrap();
         let protected = reset_protected_directories(&settings).unwrap();
-        let result = openbitfun_legacy_migration::reset_target_data(
+        let result = starmate_legacy_migration::reset_target_data(
             &roots,
             &preview.directories,
             &protected,
@@ -1248,11 +1248,11 @@ mod tests {
     fn report_failure_errors_use_sanitized_domain_diagnostics() {
         let report = MigrationRunReport {
             diagnostics: vec![
-                openbitfun_product_domains::legacy_migration::MigrationDiagnostic {
+                starmate_product_domains::legacy_migration::MigrationDiagnostic {
                     code: "domain_io_permission_denied".to_string(),
                     severity: FindingSeverity::Blocking,
                     domain: Some(
-                        openbitfun_product_domains::legacy_migration::MigrationDomainId::WorkspaceSessions,
+                        starmate_product_domains::legacy_migration::MigrationDomainId::WorkspaceSessions,
                     ),
                     relative_path: Some("C:/Users/private/session-state.json".to_string()),
                     message: "A migration-owned file or directory denied access.".to_string(),

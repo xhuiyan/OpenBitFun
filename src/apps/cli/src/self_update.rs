@@ -677,7 +677,7 @@ fn platform_asset<'a>(
 }
 
 fn build_client() -> Result<Client> {
-    openbitfun_services_core::tls_provider::ensure_ring_crypto_provider();
+    starmate_services_core::tls_provider::ensure_ring_crypto_provider();
     Client::builder()
         .connect_timeout(Duration::from_secs(8))
         // Deliberately no `.timeout()`: a whole-request ceiling turns "slow" into
@@ -977,7 +977,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
 
     let update_prefix = format!(
         "{}-update.",
-        openbitfun_core_types::product_identity::hidden_data_directory()
+        starmate_core_types::product_identity::hidden_data_directory()
     );
     let stage = tempfile::Builder::new()
         .prefix(&update_prefix)

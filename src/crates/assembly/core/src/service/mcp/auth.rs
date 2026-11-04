@@ -9,11 +9,11 @@ use std::path::PathBuf;
 use crate::infrastructure::try_get_path_manager_arc;
 use crate::service::mcp::server::MCPServerConfig;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_services_integrations::mcp::auth::rmcp_compat::{
+use starmate_services_integrations::mcp::auth::rmcp_compat::{
     AuthError, AuthorizationManager, CredentialStore, StoredCredentials,
 };
 
-pub use openbitfun_services_integrations::mcp::auth::{
+pub use starmate_services_integrations::mcp::auth::{
     MCPRemoteOAuthSessionSnapshot, MCPRemoteOAuthStatus, PreparedMCPRemoteOAuthAuthorization,
 };
 
@@ -27,17 +27,17 @@ pub fn map_auth_error(error: impl ToString) -> OpenBitFunError {
 
 #[deprecated(
     since = "0.2.12",
-    note = "use openbitfun_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault with an injected data directory"
+    note = "use starmate_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault with an injected data directory"
 )]
 pub struct MCPRemoteOAuthCredentialVault {
-    inner: openbitfun_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault,
+    inner: starmate_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault,
 }
 
 #[allow(deprecated)]
 impl MCPRemoteOAuthCredentialVault {
     pub fn new() -> OpenBitFunResult<Self> {
         Ok(Self {
-            inner: openbitfun_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault::new(
+            inner: starmate_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault::new(
                 oauth_data_dir()?,
             ),
         })
@@ -63,7 +63,7 @@ impl MCPRemoteOAuthCredentialVault {
 #[derive(Clone)]
 #[deprecated(
     since = "0.2.12",
-    note = "use openbitfun_services_integrations::mcp::auth::MCPRemoteOAuthCredentialStore with an injected data directory"
+    note = "use starmate_services_integrations::mcp::auth::MCPRemoteOAuthCredentialStore with an injected data directory"
 )]
 pub struct MCPRemoteOAuthCredentialStore {
     server_id: String,
@@ -107,7 +107,7 @@ impl CredentialStore for MCPRemoteOAuthCredentialStore {
 }
 
 pub async fn has_stored_oauth_credentials(server_id: &str) -> OpenBitFunResult<bool> {
-    openbitfun_services_integrations::mcp::auth::has_stored_oauth_credentials(
+    starmate_services_integrations::mcp::auth::has_stored_oauth_credentials(
         oauth_data_dir()?,
         server_id,
     )
@@ -116,7 +116,7 @@ pub async fn has_stored_oauth_credentials(server_id: &str) -> OpenBitFunResult<b
 }
 
 pub async fn clear_stored_oauth_credentials(server_id: &str) -> OpenBitFunResult<()> {
-    openbitfun_services_integrations::mcp::auth::clear_stored_oauth_credentials(
+    starmate_services_integrations::mcp::auth::clear_stored_oauth_credentials(
         oauth_data_dir()?,
         server_id,
     )
@@ -128,7 +128,7 @@ pub async fn build_authorization_manager(
     server_id: &str,
     server_url: &str,
 ) -> OpenBitFunResult<(AuthorizationManager, bool)> {
-    openbitfun_services_integrations::mcp::auth::build_authorization_manager(
+    starmate_services_integrations::mcp::auth::build_authorization_manager(
         oauth_data_dir()?,
         server_id,
         server_url,
@@ -140,7 +140,7 @@ pub async fn build_authorization_manager(
 pub async fn prepare_remote_oauth_authorization(
     config: &MCPServerConfig,
 ) -> OpenBitFunResult<PreparedMCPRemoteOAuthAuthorization> {
-    openbitfun_services_integrations::mcp::auth::prepare_remote_oauth_authorization(
+    starmate_services_integrations::mcp::auth::prepare_remote_oauth_authorization(
         oauth_data_dir()?,
         config,
     )

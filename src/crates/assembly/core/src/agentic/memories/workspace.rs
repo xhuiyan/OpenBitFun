@@ -2,12 +2,12 @@ use crate::agentic::memories::db::MemoryRow;
 use crate::infrastructure::get_path_manager_arc;
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use chrono::{DateTime, Utc};
-pub use openbitfun_services_core::memory_store::{
+pub use starmate_services_core::memory_store::{
     AD_HOC_EXTENSION_NAME, AD_HOC_NOTES_DIR_NAME, MEMORY_EXTENSIONS_DIR_NAME, MEMORY_FILE_NAME,
     MEMORY_SUMMARY_FILE_NAME,
 };
-use openbitfun_services_core::session::MemoryWorkspaceGitError;
-pub use openbitfun_services_core::session::{
+use starmate_services_core::session::MemoryWorkspaceGitError;
+pub use starmate_services_core::session::{
     MemoryWorkspaceChange, MemoryWorkspaceChangeStatus, MemoryWorkspaceDiff,
 };
 use std::collections::HashSet;
@@ -228,7 +228,7 @@ pub async fn prepare_memory_workspace(root: &Path) -> OpenBitFunResult<()> {
     ensure_memory_workspace(root).await?;
     seed_ad_hoc_memory_extension(root).await?;
     remove_phase2_workspace_diff(root).await?;
-    openbitfun_services_core::session::ensure_memory_workspace_git_baseline(root)
+    starmate_services_core::session::ensure_memory_workspace_git_baseline(root)
         .await
         .map_err(map_memory_workspace_baseline_error)
 }
@@ -284,7 +284,7 @@ pub async fn seed_ad_hoc_memory_extension(root: &Path) -> OpenBitFunResult<()> {
 
 pub async fn memory_workspace_diff(root: &Path) -> OpenBitFunResult<MemoryWorkspaceDiff> {
     remove_phase2_workspace_diff(root).await?;
-    openbitfun_services_core::session::memory_workspace_diff(root)
+    starmate_services_core::session::memory_workspace_diff(root)
         .await
         .map_err(map_memory_workspace_diff_error)
 }
@@ -294,14 +294,14 @@ pub async fn write_workspace_diff(root: &Path, diff: &MemoryWorkspaceDiff) -> Op
     let path = phase2_workspace_diff_file(root);
     write_text_file_if_changed(
         &path,
-        &openbitfun_services_core::session::render_memory_workspace_diff_file(diff),
+        &starmate_services_core::session::render_memory_workspace_diff_file(diff),
     )
     .await
 }
 
 pub async fn reset_memory_workspace_baseline(root: &Path) -> OpenBitFunResult<()> {
     remove_phase2_workspace_diff(root).await?;
-    openbitfun_services_core::session::reset_memory_workspace_git_baseline(root)
+    starmate_services_core::session::reset_memory_workspace_git_baseline(root)
         .await
         .map_err(map_memory_workspace_baseline_error)
 }

@@ -2,8 +2,8 @@
 
 use crate::util::errors::OpenBitFunError;
 
-use openbitfun_services_integrations::mcp::server::MCPServerConfigValidationError;
-pub use openbitfun_services_integrations::mcp::server::{
+use starmate_services_integrations::mcp::server::MCPServerConfigValidationError;
+pub use starmate_services_integrations::mcp::server::{
     MCPImportOrigin, MCPServerConfig, MCPServerOAuthConfig, MCPServerTimeouts, MCPServerTransport,
     MCPServerXaaConfig,
 };

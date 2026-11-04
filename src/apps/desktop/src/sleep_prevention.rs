@@ -6,7 +6,7 @@
 
 use std::sync::{mpsc, Arc};
 
-use openbitfun_core::service::config::{
+use starmate_core::service::config::{
     subscribe_config_updates, ConfigService, ConfigUpdateEvent,
 };
 use serde::Deserialize;
@@ -334,7 +334,7 @@ mod tests {
     use super::{
         apply_then_persist, config_event_requires_sync, start_worker, SleepPreventionState,
     };
-    use openbitfun_core::service::config::ConfigUpdateEvent;
+    use starmate_core::service::config::ConfigUpdateEvent;
     use std::sync::{Arc, Mutex};
 
     #[tokio::test]

@@ -1,9 +1,9 @@
 //! Read-only, instance-scoped chat projection for the lightweight Shell.
 use super::*;
 use crate::runtime::{DesktopRuntimeContext, DesktopSessionScopeRequest};
-use openbitfun_core::agentic::coordination::ConversationCoordinator;
-use openbitfun_core::miniapp::MiniAppPermissions;
-use openbitfun_core::service::session::{DialogTurnData, TurnStatus};
+use starmate_core::agentic::coordination::ConversationCoordinator;
+use starmate_core::miniapp::MiniAppPermissions;
+use starmate_core::service::session::{DialogTurnData, TurnStatus};
 
 pub(super) fn chat_allowed(permissions: &MiniAppPermissions, strict: bool) -> bool {
     permissions.agent.as_ref().is_some_and(|p| p.enabled)
@@ -100,7 +100,7 @@ pub(super) async fn snapshot(
         .collect();
     let runtime = restored.runtime_event_snapshot.map(|snapshot| {
         let events: Vec<_> = snapshot.events.into_iter()
-            .filter_map(openbitfun_events::project_agentic_frontend_event)
+            .filter_map(starmate_events::project_agentic_frontend_event)
             .filter_map(|event| {
                 let name = event.event_name.strip_prefix("agentic://")?;
                 if !matches!(name, "dialog-turn-started" | "model-round-started" | "text-chunk"

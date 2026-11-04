@@ -5711,1230 +5711,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "openbitfun-acp"
-version = "1.0.8"
-dependencies = [
- "agent-client-protocol",
- "async-trait",
- "chrono",
- "dashmap",
- "dirs 6.0.0",
- "futures",
- "log",
- "openbitfun-agent-runtime",
- "openbitfun-agent-tools",
- "openbitfun-core",
- "openbitfun-core-types",
- "openbitfun-events",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tokio",
- "tokio-util",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-agent-content"
-version = "1.0.8"
-
-[[package]]
-name = "openbitfun-agent-runtime"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "dashmap",
- "hex",
- "libc",
- "log",
- "openbitfun-agent-stream",
- "openbitfun-agent-tools",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-runtime-ports",
- "openbitfun-runtime-services",
- "regex",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "thiserror 2.0.19",
- "tokio",
- "tokio-util",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-agent-runtime-ipc"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "dunce",
- "fs2",
- "openbitfun-events",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-transport",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "uuid",
- "windows 0.61.3",
-]
-
-[[package]]
-name = "openbitfun-agent-stream"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "futures",
- "jsonrepair-rs",
- "log",
- "openbitfun-agent-tools",
- "openbitfun-core-types",
- "openbitfun-events",
- "serde",
- "serde_json",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-agent-tools"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "indexmap 2.14.0",
- "openbitfun-core-types",
- "openbitfun-runtime-ports",
- "serde",
- "serde_json",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-agent-workflows"
-version = "1.0.8"
-dependencies = [
- "regex",
-]
-
-[[package]]
-name = "openbitfun-ai-adapters"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "chrono",
- "dirs 6.0.0",
- "eventsource-stream",
- "fs2",
- "futures",
- "hex",
- "keyring-core",
- "libc",
- "log",
- "openbitfun-agent-stream",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-services-core",
- "reqwest",
- "serde",
- "serde_json",
- "sha2",
- "tokenizers",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "urlencoding",
- "uuid",
- "windows-native-keyring-store",
- "zbus-secret-service-keyring-store",
-]
-
-[[package]]
-name = "openbitfun-app-server"
-version = "1.0.8"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "async-trait",
- "dunce",
- "log",
- "openbitfun-agent-runtime",
- "openbitfun-app-server-client",
- "openbitfun-app-server-protocol",
- "openbitfun-core",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
- "url",
-]
-
-[[package]]
-name = "openbitfun-app-server-client"
-version = "1.0.8"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "openbitfun-app-server-protocol",
- "serde_json",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-app-server-protocol"
-version = "1.0.8"
-dependencies = [
- "agent-client-protocol",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "serde",
- "serde_json",
- "ts-rs",
-]
-
-[[package]]
-name = "openbitfun-claude-code-adapter"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "dunce",
- "hex",
- "log",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "openbitfun-static-hook-support",
- "regex",
- "serde_json",
- "serde_yaml",
- "sha2",
- "tempfile",
- "url",
-]
-
-[[package]]
-name = "openbitfun-cli"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "arboard",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "clap",
- "crossterm",
- "dirs 6.0.0",
- "dunce",
- "flate2",
- "fs2",
- "futures-util",
- "hex",
- "image 0.25.10",
- "libc",
- "minisign-verify",
- "once_cell",
- "openbitfun-acp",
- "openbitfun-agent-runtime",
- "openbitfun-agent-runtime-ipc",
- "openbitfun-agent-tools",
- "openbitfun-app-server",
- "openbitfun-computer-use",
- "openbitfun-core",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-runtime-services",
- "openbitfun-services-core",
- "portable-pty 0.8.1",
- "portable-pty 0.9.0",
- "pulldown-cmark",
- "ratatui",
- "reqwest",
- "serde",
- "serde_json",
- "sha2",
- "shlex 1.3.0",
- "similar",
- "syntect",
- "tar",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "tokio-util",
- "toml 0.9.12+spec-1.1.0",
- "tracing",
- "tracing-subscriber",
- "unicode-width 0.2.0",
- "url",
- "uuid",
- "windows 0.61.3",
- "winsplit",
-]
-
-[[package]]
-name = "openbitfun-codex-adapter"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "dunce",
- "hex",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "openbitfun-static-hook-support",
- "rusqlite",
- "serde_json",
- "sha2",
- "tempfile",
- "toml 0.9.12+spec-1.1.0",
- "url",
-]
-
-[[package]]
-name = "openbitfun-computer-use"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "atspi",
- "base64 0.22.1",
- "block2 0.6.2",
- "cc",
- "chrono",
- "core-foundation 0.9.4",
- "core-graphics 0.23.2",
- "dirs 6.0.0",
- "dispatch",
- "enigo",
- "foreign-types 0.5.0",
- "futures",
- "image 0.25.10",
- "libc",
- "log",
- "objc2 0.6.4",
- "objc2-app-kit",
- "objc2-foundation",
- "objc2-vision",
- "openbitfun-agent-tools",
- "openbitfun-core-types",
- "openbitfun-services-core",
- "pkg-config",
- "screenshots",
- "serde",
- "serde_json",
- "sha1 0.10.7",
- "sha2",
- "tempfile",
- "tokio",
- "tool-runtime",
- "windows 0.61.3",
- "windows-core 0.61.2",
- "x11rb",
-]
-
-[[package]]
-name = "openbitfun-config-contracts"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "hex",
- "log",
- "openbitfun-core-types",
- "openbitfun-product-domains",
- "serde",
- "serde_json",
- "sha2",
- "ts-rs",
-]
-
-[[package]]
-name = "openbitfun-core"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "chrono",
- "chrono-tz",
- "cron",
- "dashmap",
- "dirs 6.0.0",
- "dunce",
- "filetime",
- "flate2",
- "fluent-bundle",
- "fs2",
- "futures",
- "hex",
- "image 0.25.10",
- "include_dir",
- "indexmap 2.14.0",
- "log",
- "md5",
- "notify",
- "openbitfun-agent-content",
- "openbitfun-agent-runtime",
- "openbitfun-agent-stream",
- "openbitfun-agent-tools",
- "openbitfun-agent-workflows",
- "openbitfun-ai-adapters",
- "openbitfun-claude-code-adapter",
- "openbitfun-codex-adapter",
- "openbitfun-config-contracts",
- "openbitfun-core-types",
- "openbitfun-cursor-adapter",
- "openbitfun-dsh-adapter",
- "openbitfun-events",
- "openbitfun-external-sources",
- "openbitfun-legacy-migration-adapters",
- "openbitfun-opencode-adapter",
- "openbitfun-opencode-plugin-host",
- "openbitfun-pi-adapter",
- "openbitfun-plugin-runtime-client",
- "openbitfun-product-capabilities",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-runtime-services",
- "openbitfun-services-core",
- "openbitfun-services-integrations",
- "openbitfun-tool-packs",
- "openbitfun-zcode-adapter",
- "regex",
- "reqwest",
- "rusqlite",
- "semver",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "similar",
- "tempfile",
- "terminal-core",
- "thiserror 2.0.19",
- "tokio",
- "tokio-tungstenite 0.29.0",
- "tokio-util",
- "tool-runtime",
- "ts-rs",
- "unic-langid",
- "urlencoding",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-core-types"
-version = "1.0.8"
-dependencies = [
- "serde",
- "serde_json",
- "ts-rs",
-]
-
-[[package]]
-name = "openbitfun-cursor-adapter"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "hex",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "rusqlite",
- "serde_json",
- "sha2",
- "tempfile",
- "url",
-]
-
-[[package]]
-name = "openbitfun-data-tools"
-version = "0.2.0"
-dependencies = [
- "openbitfun-core-types",
- "openbitfun-legacy-migration",
- "openbitfun-legacy-migration-adapters",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tempfile",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-desktop"
-version = "1.0.8"
-dependencies = [
- "alloc-no-stdlib",
- "alloc-stdlib",
- "anyhow",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "bitflags 2.11.1",
- "block2 0.6.2",
- "brotli-decompressor",
- "bzip2 0.5.2",
- "chrono",
- "core-foundation 0.9.4",
- "core-graphics 0.23.2",
- "dark-light",
- "dirs 6.0.0",
- "dispatch",
- "flate2",
- "futures",
- "gtk",
- "ignore",
- "image 0.25.10",
- "keepawake",
- "libc",
- "log",
- "mime_guess",
- "minisign-verify",
- "notify-rust",
- "objc2 0.6.4",
- "objc2-app-kit",
- "objc2-foundation",
- "openbitfun-acp",
- "openbitfun-agent-runtime",
- "openbitfun-agent-tools",
- "openbitfun-computer-use",
- "openbitfun-core",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-miniapp-ipc",
- "openbitfun-product-domains",
- "openbitfun-relay-service",
- "openbitfun-runtime-ports",
- "openbitfun-services-core",
- "openbitfun-services-integrations",
- "openbitfun-transport",
- "openbitfun-webdriver",
- "regex",
- "reqwest",
- "resvg",
- "screenshots",
- "semver",
- "serde",
- "serde_json",
- "sha1 0.10.7",
- "sha2",
- "similar",
- "tar",
- "tauri",
- "tauri-build",
- "tauri-plugin-autostart",
- "tauri-plugin-clipboard-manager",
- "tauri-plugin-dialog",
- "tauri-plugin-fs",
- "tauri-plugin-log",
- "tauri-plugin-notification",
- "tauri-plugin-opener",
- "tauri-plugin-single-instance",
- "tauri-plugin-updater",
- "tempfile",
- "thiserror 2.0.19",
- "time",
- "tokio",
- "tower-http",
- "urlencoding",
- "uuid",
- "webview2-com",
- "win32job",
- "windows 0.61.3",
- "windows-core 0.61.2",
- "windows-version",
- "wry",
- "xz2",
- "zip 4.6.1",
- "zstd",
-]
-
-[[package]]
-name = "openbitfun-dsh-adapter"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "dirs 6.0.0",
- "hex",
- "openbitfun-plugin-runtime-client",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-services-core",
- "openbitfun-static-hook-support",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "tempfile",
- "tokio",
- "url",
- "urlencoding",
- "zstd",
-]
-
-[[package]]
-name = "openbitfun-events"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "chrono",
- "log",
- "openbitfun-core-types",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-external-sources"
-version = "1.0.8"
-dependencies = [
- "futures",
- "log",
- "openbitfun-product-domains",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-legacy-migration"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "fs2",
- "hex",
- "libc",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "rusqlite",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "uuid",
- "windows 0.61.3",
-]
-
-[[package]]
-name = "openbitfun-legacy-migration-adapters"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "chrono",
- "dunce",
- "hex",
- "openbitfun-agent-runtime",
- "openbitfun-config-contracts",
- "openbitfun-core-types",
- "openbitfun-legacy-migration",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "openbitfun-services-integrations",
- "rusqlite",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "tokio",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-miniapp-ipc"
-version = "1.0.8"
-dependencies = [
- "openbitfun-product-domains",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-miniapp-market-server"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "openbitfun-miniapp-market-service",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "openbitfun-miniapp-market-service"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "base64 0.22.1",
- "chrono",
- "hex",
- "hmac",
- "image 0.25.10",
- "lettre",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "rand 0.8.7",
- "reqwest",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "similar",
- "sqlx",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "tower",
- "tower-http",
- "tracing",
- "url",
- "uuid",
- "zip 4.6.1",
-]
-
-[[package]]
-name = "openbitfun-miniapp-shell"
-version = "1.0.8"
-dependencies = [
- "image 0.25.10",
- "objc2 0.6.4",
- "objc2-app-kit",
- "objc2-foundation",
- "openbitfun-miniapp-ipc",
- "openbitfun-services-core",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-notification",
- "tauri-plugin-opener",
- "tokio",
- "uuid",
- "windows 0.61.3",
-]
-
-[[package]]
-name = "openbitfun-opencode-adapter"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "dirs 6.0.0",
- "dunce",
- "globset",
- "hex",
- "log",
- "openbitfun-plugin-runtime-client",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-services-core",
- "openbitfun-services-integrations",
- "openbitfun-static-hook-support",
- "oxc",
- "regex",
- "rusqlite",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "url",
- "urlencoding",
-]
-
-[[package]]
-name = "openbitfun-opencode-plugin-host"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "base64 0.22.1",
- "log",
- "openbitfun-runtime-ports",
- "openbitfun-services-core",
- "rand 0.8.7",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "url",
- "urlencoding",
-]
-
-[[package]]
-name = "openbitfun-page-function-runtime"
-version = "1.0.8"
-dependencies = [
- "rquickjs",
- "serde",
- "serde_json",
- "thiserror 2.0.19",
-]
-
-[[package]]
-name = "openbitfun-pi-adapter"
-version = "1.0.8"
-dependencies = [
- "chrono",
- "dirs 6.0.0",
- "hex",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "openbitfun-static-hook-support",
- "oxc",
- "serde_json",
- "sha2",
- "tempfile",
-]
-
-[[package]]
-name = "openbitfun-plugin-runtime-client"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "openbitfun-runtime-ports",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-product-capabilities"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "openbitfun-agent-runtime",
- "openbitfun-runtime-ports",
- "openbitfun-runtime-services",
- "openbitfun-tool-packs",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-product-domains"
-version = "1.0.8"
-dependencies = [
- "dirs 6.0.0",
- "hex",
- "hmac",
- "log",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tokio",
- "ts-rs",
- "url",
- "which",
-]
-
-[[package]]
-name = "openbitfun-relay-server"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "chrono",
- "clap",
- "openbitfun-relay-service",
- "rpassword",
- "serde_json",
- "tokio",
- "tower-http",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "openbitfun-relay-service"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "base64 0.22.1",
- "chrono",
- "dashmap",
- "futures-util",
- "libsqlite3-sys",
- "openbitfun-page-function-runtime",
- "rand 0.8.7",
- "reqwest",
- "rusqlite",
- "rustls",
- "serde",
- "serde_json",
- "sha2",
- "socketioxide",
- "sqlx",
- "tempfile",
- "tokio",
- "tokio-tungstenite 0.29.0",
- "tower",
- "tower-http",
- "tracing",
- "uuid",
- "webpki-roots 1.0.9",
-]
-
-[[package]]
-name = "openbitfun-runtime-ports"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "openbitfun-core-types",
- "openbitfun-product-domains",
- "serde",
- "serde_json",
- "tokio",
- "tokio-util",
- "ts-rs",
-]
-
-[[package]]
-name = "openbitfun-runtime-services"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "log",
- "openbitfun-events",
- "openbitfun-runtime-ports",
- "serde",
- "serde_json",
- "thiserror 2.0.19",
- "tokio",
-]
-
-[[package]]
-name = "openbitfun-sdk-host"
-version = "1.0.8"
-dependencies = [
- "async-trait",
- "futures-util",
- "openbitfun-agent-runtime",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-runtime-ports",
- "serde",
- "serde_json",
- "tokio",
- "tokio-util",
- "tracing",
- "ts-rs",
- "uuid",
-]
-
-[[package]]
-name = "openbitfun-sdk-host-app"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "futures-util",
- "openbitfun-agent-runtime",
- "openbitfun-core",
- "openbitfun-sdk-host",
- "openbitfun-services-core",
- "openbitfun-transport",
- "rustls",
- "serde_json",
- "tempfile",
- "tokio",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
-]
-
-[[package]]
-name = "openbitfun-server"
-version = "1.0.8"
-dependencies = [
- "agent-client-protocol",
- "anyhow",
- "axum",
- "base64 0.22.1",
- "chrono",
- "clap",
- "dirs 6.0.0",
- "futures",
- "futures-util",
- "log",
- "openbitfun-agent-runtime",
- "openbitfun-app-server",
- "openbitfun-core",
- "openbitfun-events",
- "serde",
- "serde_json",
- "tokio",
- "tower-http",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "openbitfun-services-core"
-version = "1.0.8"
-dependencies = [
- "aes-gcm",
- "anyhow",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "chrono-tz",
- "dunce",
- "filetime",
- "fs2",
- "git2",
- "globset",
- "ignore",
- "image 0.25.10",
- "libc",
- "log",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "rand 0.8.7",
- "regex",
- "rusqlite",
- "rustls",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "similar",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "uuid",
- "which",
- "win32job",
- "windows 0.61.3",
- "zip 4.6.1",
-]
-
-[[package]]
-name = "openbitfun-services-integrations"
-version = "1.0.8"
-dependencies = [
- "aes",
- "aes-gcm",
- "anyhow",
- "async-trait",
- "base64 0.22.1",
- "bzip2 0.5.2",
- "chrono",
- "dirs 6.0.0",
- "dunce",
- "fs2",
- "futures",
- "futures-util",
- "git2",
- "glob",
- "hex",
- "hkdf",
- "hostname",
- "image 0.25.10",
- "keyring-core",
- "libc",
- "local-ip-address",
- "log",
- "mac_address",
- "md5",
- "minisign-verify",
- "notify",
- "openbitfun-agent-runtime",
- "openbitfun-agent-tools",
- "openbitfun-agent-workflows",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-product-domains",
- "openbitfun-runtime-ports",
- "openbitfun-services-core",
- "oxc",
- "pulldown-cmark",
- "qrcode",
- "rand 0.8.7",
- "regex",
- "reqwest",
- "rmcp",
- "russh",
- "russh-keys",
- "russh-sftp",
- "rustls",
- "rustls-native-certs",
- "schannel",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "shellexpand",
- "sherpa-onnx",
- "sioc",
- "sse-stream",
- "tar",
- "tempfile",
- "terminal-core",
- "thiserror 2.0.19",
- "tokio",
- "tokio-tungstenite 0.29.0",
- "tokio-util",
- "ts-rs",
- "url",
- "urlencoding",
- "uuid",
- "which",
- "windows 0.61.3",
- "windows-native-keyring-store",
- "x25519-dalek",
- "zbus-secret-service-keyring-store",
- "zip 4.6.1",
-]
-
-[[package]]
-name = "openbitfun-skin-market-server"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "openbitfun-skin-market-service",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "openbitfun-skin-market-service"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "base64 0.22.1",
- "chrono",
- "hex",
- "hmac",
- "image 0.25.10",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "reqwest",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "sqlx",
- "tempfile",
- "tokio",
- "tokio-util",
- "tower",
- "tower-http",
- "tracing",
- "url",
- "uuid",
- "zip 4.6.1",
-]
-
-[[package]]
-name = "openbitfun-static-hook-support"
-version = "1.0.8"
-dependencies = [
- "hex",
- "openbitfun-product-domains",
- "openbitfun-services-core",
- "serde_json",
- "sha2",
- "tempfile",
- "toml 0.9.12+spec-1.1.0",
-]
-
-[[package]]
-name = "openbitfun-tool-packs"
-version = "1.0.8"
-
-[[package]]
-name = "openbitfun-transport"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "async-trait",
- "log",
- "openbitfun-events",
- "serde",
- "serde_json",
- "tauri",
- "thiserror 2.0.19",
-]
-
-[[package]]
-name = "openbitfun-webdriver"
-version = "1.0.8"
-dependencies = [
- "anyhow",
- "axum",
- "base64 0.22.1",
- "block2 0.6.2",
- "glib",
- "gtk",
- "image 0.25.10",
- "log",
- "objc2 0.6.4",
- "objc2-app-kit",
- "objc2-foundation",
- "objc2-web-kit",
- "serde",
- "serde_json",
- "tauri",
- "tempfile",
- "tokio",
- "uuid",
- "webkit2gtk",
- "webview2-com",
- "windows 0.61.3",
- "windows-core 0.61.2",
-]
-
-[[package]]
-name = "openbitfun-zcode-adapter"
-version = "1.0.8"
-dependencies = [
- "dirs 6.0.0",
- "openbitfun-opencode-adapter",
- "openbitfun-product-domains",
- "rusqlite",
- "serde_json",
- "tempfile",
-]
-
-[[package]]
 name = "openssl-probe"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10040,6 +8816,1230 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
 
 [[package]]
+name = "starmate-acp"
+version = "1.0.8"
+dependencies = [
+ "agent-client-protocol",
+ "async-trait",
+ "chrono",
+ "dashmap",
+ "dirs 6.0.0",
+ "futures",
+ "log",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-agent-runtime",
+ "starmate-agent-tools",
+ "starmate-core",
+ "starmate-core-types",
+ "starmate-events",
+ "tar",
+ "tokio",
+ "tokio-util",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-agent-content"
+version = "1.0.8"
+
+[[package]]
+name = "starmate-agent-runtime"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "dashmap",
+ "hex",
+ "libc",
+ "log",
+ "regex",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "starmate-agent-stream",
+ "starmate-agent-tools",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-runtime-ports",
+ "starmate-runtime-services",
+ "thiserror 2.0.19",
+ "tokio",
+ "tokio-util",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-agent-runtime-ipc"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "dunce",
+ "fs2",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-events",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-transport",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "uuid",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "starmate-agent-stream"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "futures",
+ "jsonrepair-rs",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-agent-tools",
+ "starmate-core-types",
+ "starmate-events",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-agent-tools"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "indexmap 2.14.0",
+ "serde",
+ "serde_json",
+ "starmate-core-types",
+ "starmate-runtime-ports",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-agent-workflows"
+version = "1.0.8"
+dependencies = [
+ "regex",
+]
+
+[[package]]
+name = "starmate-ai-adapters"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "dirs 6.0.0",
+ "eventsource-stream",
+ "fs2",
+ "futures",
+ "hex",
+ "keyring-core",
+ "libc",
+ "log",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-agent-stream",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-services-core",
+ "tokenizers",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+ "urlencoding",
+ "uuid",
+ "windows-native-keyring-store",
+ "zbus-secret-service-keyring-store",
+]
+
+[[package]]
+name = "starmate-app-server"
+version = "1.0.8"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "async-trait",
+ "dunce",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-agent-runtime",
+ "starmate-app-server-client",
+ "starmate-app-server-protocol",
+ "starmate-core",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "tokio",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "starmate-app-server-client"
+version = "1.0.8"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "serde_json",
+ "starmate-app-server-protocol",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-app-server-protocol"
+version = "1.0.8"
+dependencies = [
+ "agent-client-protocol",
+ "serde",
+ "serde_json",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "ts-rs",
+]
+
+[[package]]
+name = "starmate-claude-code-adapter"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "dunce",
+ "hex",
+ "log",
+ "regex",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "starmate-static-hook-support",
+ "tempfile",
+ "url",
+]
+
+[[package]]
+name = "starmate-cli"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "arboard",
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "clap",
+ "crossterm",
+ "dirs 6.0.0",
+ "dunce",
+ "flate2",
+ "fs2",
+ "futures-util",
+ "hex",
+ "image 0.25.10",
+ "libc",
+ "minisign-verify",
+ "once_cell",
+ "portable-pty 0.8.1",
+ "portable-pty 0.9.0",
+ "pulldown-cmark",
+ "ratatui",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sha2",
+ "shlex 1.3.0",
+ "similar",
+ "starmate-acp",
+ "starmate-agent-runtime",
+ "starmate-agent-runtime-ipc",
+ "starmate-agent-tools",
+ "starmate-app-server",
+ "starmate-computer-use",
+ "starmate-core",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-runtime-services",
+ "starmate-services-core",
+ "syntect",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "tokio-util",
+ "toml 0.9.12+spec-1.1.0",
+ "tracing",
+ "tracing-subscriber",
+ "unicode-width 0.2.0",
+ "url",
+ "uuid",
+ "windows 0.61.3",
+ "winsplit",
+]
+
+[[package]]
+name = "starmate-codex-adapter"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "dunce",
+ "hex",
+ "rusqlite",
+ "serde_json",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "starmate-static-hook-support",
+ "tempfile",
+ "toml 0.9.12+spec-1.1.0",
+ "url",
+]
+
+[[package]]
+name = "starmate-computer-use"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "atspi",
+ "base64 0.22.1",
+ "block2 0.6.2",
+ "cc",
+ "chrono",
+ "core-foundation 0.9.4",
+ "core-graphics 0.23.2",
+ "dirs 6.0.0",
+ "dispatch",
+ "enigo",
+ "foreign-types 0.5.0",
+ "futures",
+ "image 0.25.10",
+ "libc",
+ "log",
+ "objc2 0.6.4",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "objc2-vision",
+ "pkg-config",
+ "screenshots",
+ "serde",
+ "serde_json",
+ "sha1 0.10.7",
+ "sha2",
+ "starmate-agent-tools",
+ "starmate-core-types",
+ "starmate-services-core",
+ "tempfile",
+ "tokio",
+ "tool-runtime",
+ "windows 0.61.3",
+ "windows-core 0.61.2",
+ "x11rb",
+]
+
+[[package]]
+name = "starmate-config-contracts"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "hex",
+ "log",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-core-types",
+ "starmate-product-domains",
+ "ts-rs",
+]
+
+[[package]]
+name = "starmate-core"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "chrono-tz",
+ "cron",
+ "dashmap",
+ "dirs 6.0.0",
+ "dunce",
+ "filetime",
+ "flate2",
+ "fluent-bundle",
+ "fs2",
+ "futures",
+ "hex",
+ "image 0.25.10",
+ "include_dir",
+ "indexmap 2.14.0",
+ "log",
+ "md5",
+ "notify",
+ "regex",
+ "reqwest",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "similar",
+ "starmate-agent-content",
+ "starmate-agent-runtime",
+ "starmate-agent-stream",
+ "starmate-agent-tools",
+ "starmate-agent-workflows",
+ "starmate-ai-adapters",
+ "starmate-claude-code-adapter",
+ "starmate-codex-adapter",
+ "starmate-config-contracts",
+ "starmate-core-types",
+ "starmate-cursor-adapter",
+ "starmate-dsh-adapter",
+ "starmate-events",
+ "starmate-external-sources",
+ "starmate-legacy-migration-adapters",
+ "starmate-opencode-adapter",
+ "starmate-opencode-plugin-host",
+ "starmate-pi-adapter",
+ "starmate-plugin-runtime-client",
+ "starmate-product-capabilities",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-runtime-services",
+ "starmate-services-core",
+ "starmate-services-integrations",
+ "starmate-tool-packs",
+ "starmate-zcode-adapter",
+ "tempfile",
+ "terminal-core",
+ "thiserror 2.0.19",
+ "tokio",
+ "tokio-tungstenite 0.29.0",
+ "tokio-util",
+ "tool-runtime",
+ "ts-rs",
+ "unic-langid",
+ "urlencoding",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-core-types"
+version = "1.0.8"
+dependencies = [
+ "serde",
+ "serde_json",
+ "ts-rs",
+]
+
+[[package]]
+name = "starmate-cursor-adapter"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "hex",
+ "rusqlite",
+ "serde_json",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tempfile",
+ "url",
+]
+
+[[package]]
+name = "starmate-data-tools"
+version = "0.2.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "starmate-core-types",
+ "starmate-legacy-migration",
+ "starmate-legacy-migration-adapters",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tauri",
+ "tauri-build",
+ "tempfile",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-desktop"
+version = "1.0.8"
+dependencies = [
+ "alloc-no-stdlib",
+ "alloc-stdlib",
+ "anyhow",
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "bitflags 2.11.1",
+ "block2 0.6.2",
+ "brotli-decompressor",
+ "bzip2 0.5.2",
+ "chrono",
+ "core-foundation 0.9.4",
+ "core-graphics 0.23.2",
+ "dark-light",
+ "dirs 6.0.0",
+ "dispatch",
+ "flate2",
+ "futures",
+ "gtk",
+ "ignore",
+ "image 0.25.10",
+ "keepawake",
+ "libc",
+ "log",
+ "mime_guess",
+ "minisign-verify",
+ "notify-rust",
+ "objc2 0.6.4",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "regex",
+ "reqwest",
+ "resvg",
+ "screenshots",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha1 0.10.7",
+ "sha2",
+ "similar",
+ "starmate-acp",
+ "starmate-agent-runtime",
+ "starmate-agent-tools",
+ "starmate-computer-use",
+ "starmate-core",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-miniapp-ipc",
+ "starmate-product-domains",
+ "starmate-relay-service",
+ "starmate-runtime-ports",
+ "starmate-services-core",
+ "starmate-services-integrations",
+ "starmate-transport",
+ "starmate-webdriver",
+ "tar",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-autostart",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-dialog",
+ "tauri-plugin-fs",
+ "tauri-plugin-log",
+ "tauri-plugin-notification",
+ "tauri-plugin-opener",
+ "tauri-plugin-single-instance",
+ "tauri-plugin-updater",
+ "tempfile",
+ "thiserror 2.0.19",
+ "time",
+ "tokio",
+ "tower-http",
+ "urlencoding",
+ "uuid",
+ "webview2-com",
+ "win32job",
+ "windows 0.61.3",
+ "windows-core 0.61.2",
+ "windows-version",
+ "wry",
+ "xz2",
+ "zip 4.6.1",
+ "zstd",
+]
+
+[[package]]
+name = "starmate-dsh-adapter"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "dirs 6.0.0",
+ "hex",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "starmate-plugin-runtime-client",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-services-core",
+ "starmate-static-hook-support",
+ "tempfile",
+ "tokio",
+ "url",
+ "urlencoding",
+ "zstd",
+]
+
+[[package]]
+name = "starmate-events"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "chrono",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-core-types",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-external-sources"
+version = "1.0.8"
+dependencies = [
+ "futures",
+ "log",
+ "starmate-product-domains",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-legacy-migration"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "fs2",
+ "hex",
+ "libc",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tempfile",
+ "thiserror 2.0.19",
+ "uuid",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "starmate-legacy-migration-adapters"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "dunce",
+ "hex",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2",
+ "starmate-agent-runtime",
+ "starmate-config-contracts",
+ "starmate-core-types",
+ "starmate-legacy-migration",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "starmate-services-integrations",
+ "tempfile",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-miniapp-ipc"
+version = "1.0.8"
+dependencies = [
+ "serde",
+ "serde_json",
+ "starmate-product-domains",
+ "tempfile",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-miniapp-market-server"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "starmate-miniapp-market-service",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "starmate-miniapp-market-service"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "hex",
+ "hmac",
+ "image 0.25.10",
+ "lettre",
+ "rand 0.8.7",
+ "reqwest",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "similar",
+ "sqlx",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "tower",
+ "tower-http",
+ "tracing",
+ "url",
+ "uuid",
+ "zip 4.6.1",
+]
+
+[[package]]
+name = "starmate-miniapp-shell"
+version = "1.0.8"
+dependencies = [
+ "image 0.25.10",
+ "objc2 0.6.4",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "serde",
+ "serde_json",
+ "starmate-miniapp-ipc",
+ "starmate-services-core",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-notification",
+ "tauri-plugin-opener",
+ "tokio",
+ "uuid",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "starmate-opencode-adapter"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "dirs 6.0.0",
+ "dunce",
+ "globset",
+ "hex",
+ "log",
+ "oxc",
+ "regex",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "starmate-plugin-runtime-client",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-services-core",
+ "starmate-services-integrations",
+ "starmate-static-hook-support",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "url",
+ "urlencoding",
+]
+
+[[package]]
+name = "starmate-opencode-plugin-host"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "log",
+ "rand 0.8.7",
+ "serde",
+ "serde_json",
+ "starmate-runtime-ports",
+ "starmate-services-core",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "url",
+ "urlencoding",
+]
+
+[[package]]
+name = "starmate-page-function-runtime"
+version = "1.0.8"
+dependencies = [
+ "rquickjs",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "starmate-pi-adapter"
+version = "1.0.8"
+dependencies = [
+ "chrono",
+ "dirs 6.0.0",
+ "hex",
+ "oxc",
+ "serde_json",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "starmate-static-hook-support",
+ "tempfile",
+]
+
+[[package]]
+name = "starmate-plugin-runtime-client"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "starmate-runtime-ports",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-product-capabilities"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "starmate-agent-runtime",
+ "starmate-runtime-ports",
+ "starmate-runtime-services",
+ "starmate-tool-packs",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-product-domains"
+version = "1.0.8"
+dependencies = [
+ "dirs 6.0.0",
+ "hex",
+ "hmac",
+ "log",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tokio",
+ "ts-rs",
+ "url",
+ "which",
+]
+
+[[package]]
+name = "starmate-relay-server"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "chrono",
+ "clap",
+ "rpassword",
+ "serde_json",
+ "starmate-relay-service",
+ "tokio",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "starmate-relay-service"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "dashmap",
+ "futures-util",
+ "libsqlite3-sys",
+ "rand 0.8.7",
+ "reqwest",
+ "rusqlite",
+ "rustls",
+ "serde",
+ "serde_json",
+ "sha2",
+ "socketioxide",
+ "sqlx",
+ "starmate-page-function-runtime",
+ "tempfile",
+ "tokio",
+ "tokio-tungstenite 0.29.0",
+ "tower",
+ "tower-http",
+ "tracing",
+ "uuid",
+ "webpki-roots 1.0.9",
+]
+
+[[package]]
+name = "starmate-runtime-ports"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "serde",
+ "serde_json",
+ "starmate-core-types",
+ "starmate-product-domains",
+ "tokio",
+ "tokio-util",
+ "ts-rs",
+]
+
+[[package]]
+name = "starmate-runtime-services"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-events",
+ "starmate-runtime-ports",
+ "thiserror 2.0.19",
+ "tokio",
+]
+
+[[package]]
+name = "starmate-sdk-host"
+version = "1.0.8"
+dependencies = [
+ "async-trait",
+ "futures-util",
+ "serde",
+ "serde_json",
+ "starmate-agent-runtime",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-runtime-ports",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "ts-rs",
+ "uuid",
+]
+
+[[package]]
+name = "starmate-sdk-host-app"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "futures-util",
+ "rustls",
+ "serde_json",
+ "starmate-agent-runtime",
+ "starmate-core",
+ "starmate-sdk-host",
+ "starmate-services-core",
+ "starmate-transport",
+ "tempfile",
+ "tokio",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+]
+
+[[package]]
+name = "starmate-server"
+version = "1.0.8"
+dependencies = [
+ "agent-client-protocol",
+ "anyhow",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "clap",
+ "dirs 6.0.0",
+ "futures",
+ "futures-util",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-agent-runtime",
+ "starmate-app-server",
+ "starmate-core",
+ "starmate-events",
+ "tokio",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "starmate-services-core"
+version = "1.0.8"
+dependencies = [
+ "aes-gcm",
+ "anyhow",
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "chrono-tz",
+ "dunce",
+ "filetime",
+ "fs2",
+ "git2",
+ "globset",
+ "ignore",
+ "image 0.25.10",
+ "libc",
+ "log",
+ "rand 0.8.7",
+ "regex",
+ "rusqlite",
+ "rustls",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "similar",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "uuid",
+ "which",
+ "win32job",
+ "windows 0.61.3",
+ "zip 4.6.1",
+]
+
+[[package]]
+name = "starmate-services-integrations"
+version = "1.0.8"
+dependencies = [
+ "aes",
+ "aes-gcm",
+ "anyhow",
+ "async-trait",
+ "base64 0.22.1",
+ "bzip2 0.5.2",
+ "chrono",
+ "dirs 6.0.0",
+ "dunce",
+ "fs2",
+ "futures",
+ "futures-util",
+ "git2",
+ "glob",
+ "hex",
+ "hkdf",
+ "hostname",
+ "image 0.25.10",
+ "keyring-core",
+ "libc",
+ "local-ip-address",
+ "log",
+ "mac_address",
+ "md5",
+ "minisign-verify",
+ "notify",
+ "oxc",
+ "pulldown-cmark",
+ "qrcode",
+ "rand 0.8.7",
+ "regex",
+ "reqwest",
+ "rmcp",
+ "russh",
+ "russh-keys",
+ "russh-sftp",
+ "rustls",
+ "rustls-native-certs",
+ "schannel",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "shellexpand",
+ "sherpa-onnx",
+ "sioc",
+ "sse-stream",
+ "starmate-agent-runtime",
+ "starmate-agent-tools",
+ "starmate-agent-workflows",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-product-domains",
+ "starmate-runtime-ports",
+ "starmate-services-core",
+ "tar",
+ "tempfile",
+ "terminal-core",
+ "thiserror 2.0.19",
+ "tokio",
+ "tokio-tungstenite 0.29.0",
+ "tokio-util",
+ "ts-rs",
+ "url",
+ "urlencoding",
+ "uuid",
+ "which",
+ "windows 0.61.3",
+ "windows-native-keyring-store",
+ "x25519-dalek",
+ "zbus-secret-service-keyring-store",
+ "zip 4.6.1",
+]
+
+[[package]]
+name = "starmate-skin-market-server"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "starmate-skin-market-service",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "starmate-skin-market-service"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "base64 0.22.1",
+ "chrono",
+ "hex",
+ "hmac",
+ "image 0.25.10",
+ "reqwest",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "sqlx",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tempfile",
+ "tokio",
+ "tokio-util",
+ "tower",
+ "tower-http",
+ "tracing",
+ "url",
+ "uuid",
+ "zip 4.6.1",
+]
+
+[[package]]
+name = "starmate-static-hook-support"
+version = "1.0.8"
+dependencies = [
+ "hex",
+ "serde_json",
+ "sha2",
+ "starmate-product-domains",
+ "starmate-services-core",
+ "tempfile",
+ "toml 0.9.12+spec-1.1.0",
+]
+
+[[package]]
+name = "starmate-tool-packs"
+version = "1.0.8"
+
+[[package]]
+name = "starmate-transport"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "log",
+ "serde",
+ "serde_json",
+ "starmate-events",
+ "tauri",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "starmate-webdriver"
+version = "1.0.8"
+dependencies = [
+ "anyhow",
+ "axum",
+ "base64 0.22.1",
+ "block2 0.6.2",
+ "glib",
+ "gtk",
+ "image 0.25.10",
+ "log",
+ "objc2 0.6.4",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "objc2-web-kit",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tempfile",
+ "tokio",
+ "uuid",
+ "webkit2gtk",
+ "webview2-com",
+ "windows 0.61.3",
+ "windows-core 0.61.2",
+]
+
+[[package]]
+name = "starmate-zcode-adapter"
+version = "1.0.8"
+dependencies = [
+ "dirs 6.0.0",
+ "rusqlite",
+ "serde_json",
+ "starmate-opencode-adapter",
+ "starmate-product-domains",
+ "tempfile",
+]
+
+[[package]]
 name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10818,12 +10818,12 @@ dependencies = [
  "futures",
  "libc",
  "log",
- "openbitfun-runtime-ports",
  "portable-pty 0.8.1",
  "portable-pty 0.9.0",
  "rand 0.8.7",
  "serde",
  "serde_json",
+ "starmate-runtime-ports",
  "tempfile",
  "thiserror 2.0.19",
  "tokio",
@@ -11275,10 +11275,6 @@ dependencies = [
  "ignore",
  "legible",
  "log",
- "openbitfun-agent-tools",
- "openbitfun-core-types",
- "openbitfun-events",
- "openbitfun-runtime-ports",
  "pdf-inspector",
  "readability-js",
  "regex",
@@ -11286,6 +11282,10 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2",
+ "starmate-agent-tools",
+ "starmate-core-types",
+ "starmate-events",
+ "starmate-runtime-ports",
  "tokio",
  "tokio-util",
  "vte",

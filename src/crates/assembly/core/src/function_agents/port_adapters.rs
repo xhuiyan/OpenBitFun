@@ -4,15 +4,15 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use log::{debug, error, warn};
-use openbitfun_product_domains::function_agents::git_func_agent::{
+use starmate_product_domains::function_agents::git_func_agent::{
     parse_commit_ai_response, prepare_commit_ai_prompt, AICommitAnalysis, CommitMessageOptions,
     ProjectContext,
 };
-use openbitfun_product_domains::function_agents::ports::{
+use starmate_product_domains::function_agents::ports::{
     CommitAiAnalysisRequest, FunctionAgentAiPort, FunctionAgentFuture, FunctionAgentGitPort,
     GitCommitSnapshot,
 };
-use openbitfun_services_integrations::function_agents::FunctionAgentGitService;
+use starmate_services_integrations::function_agents::FunctionAgentGitService;
 
 use crate::function_agents::common::{AgentError, AgentResult};
 use crate::infrastructure::ai::{AIClient, AIClientFactory};
@@ -139,7 +139,7 @@ impl FunctionAgentAiPort for CoreFunctionAgentAiAdapter {
 
 #[cfg(test)]
 mod tests {
-    use openbitfun_product_domains::function_agents::ports::FunctionAgentGitPort;
+    use starmate_product_domains::function_agents::ports::FunctionAgentGitPort;
     use std::fs;
     use std::path::{Path, PathBuf};
     use std::sync::Arc;

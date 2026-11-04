@@ -5,8 +5,8 @@ use crate::service::snapshot::types::{
 };
 use crate::service::workspace_runtime::{WorkspaceRuntimeContext, WorkspaceRuntimeTarget};
 use log::{debug, error, info, warn};
-use openbitfun_runtime_ports::{WorkspaceFileSystem, WorkspaceMetadata, WorkspacePathKind};
-use openbitfun_services_core::workspace::LocalWorkspaceFs;
+use starmate_runtime_ports::{WorkspaceFileSystem, WorkspaceMetadata, WorkspacePathKind};
+use starmate_services_core::workspace::LocalWorkspaceFs;
 use std::collections::HashMap;
 use std::ffi::OsString;
 use std::fs;

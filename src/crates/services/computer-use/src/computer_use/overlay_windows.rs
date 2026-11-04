@@ -3,7 +3,7 @@
 //! so a single-window capture omits them while a physical pointer over them
 //! reaches them instead of the window beneath. Bounds use the same global
 //! basis as the bound frame: macOS points, Windows physical pixels.
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::{
     ComputerScreenshot, ComputerUseAuxiliaryWindow, ComputerUseImageContentRect,
     ComputerUseImageGlobalBounds,
 };

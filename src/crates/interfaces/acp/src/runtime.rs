@@ -13,9 +13,9 @@ use agent_client_protocol::{Client, ConnectionTo, Error, Result};
 use async_trait::async_trait;
 use dashmap::mapref::entry::Entry;
 use dashmap::DashMap;
-use openbitfun_agent_runtime::sdk::{AgentRuntime, PortErrorKind, RuntimeError};
-use openbitfun_core::product_runtime::CoreAgentRuntimeCompatibility;
-use openbitfun_core::util::errors::OpenBitFunError;
+use starmate_agent_runtime::sdk::{AgentRuntime, PortErrorKind, RuntimeError};
+use starmate_core::product_runtime::CoreAgentRuntimeCompatibility;
+use starmate_core::util::errors::OpenBitFunError;
 
 use crate::server::{AcpRuntime, AcpServer};
 
@@ -292,8 +292,8 @@ impl AcpRuntime for OpenBitFunAcpRuntime {
 mod tests {
     use agent_client_protocol::schema::ErrorCode;
     use dashmap::DashMap;
-    use openbitfun_agent_runtime::sdk::{PortError, PortErrorKind, RuntimeError};
-    use openbitfun_core::util::errors::OpenBitFunError;
+    use starmate_agent_runtime::sdk::{PortError, PortErrorKind, RuntimeError};
+    use starmate_core::util::errors::OpenBitFunError;
 
     use super::{AcpSessionTransition, OpenBitFunAcpRuntime};
 

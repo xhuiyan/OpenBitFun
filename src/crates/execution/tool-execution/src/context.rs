@@ -1,5 +1,5 @@
-use openbitfun_agent_tools::{ToolContextFacts, ToolRuntimeRestrictions, ToolWorkspaceKind};
-use openbitfun_runtime_ports::DelegationPolicy;
+use starmate_agent_tools::{ToolContextFacts, ToolRuntimeRestrictions, ToolWorkspaceKind};
+use starmate_runtime_ports::DelegationPolicy;
 use serde_json::Value;
 use std::collections::HashMap;
 
@@ -163,8 +163,8 @@ mod tests {
         project_tool_context_facts, PrimaryModelFacts, ToolRuntimeContextFactsInput,
         ToolRuntimeCustomDataInput,
     };
-    use openbitfun_agent_tools::{ToolRuntimeRestrictions, ToolWorkspaceKind};
-    use openbitfun_runtime_ports::{DelegationPolicy, DelegationScope};
+    use starmate_agent_tools::{ToolRuntimeRestrictions, ToolWorkspaceKind};
+    use starmate_runtime_ports::{DelegationPolicy, DelegationScope};
     use serde_json::json;
     use std::collections::{BTreeSet, HashMap};
 

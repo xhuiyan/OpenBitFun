@@ -38,14 +38,14 @@ use crate::util::errors::{OpenBitFunError, OpenBitFunResult};
 use crate::util::types::Message as AIMessage;
 use crate::util::types::ToolDefinition;
 use log::{debug, error, info, warn};
-use openbitfun_agent_runtime::turn_cancellation::DialogTurnCancellationTokenStore;
-use openbitfun_agent_tools::{parse_call_deferred_tool_input, CALL_DEFERRED_TOOL_NAME};
-use openbitfun_ai_adapters::{
+use starmate_agent_runtime::turn_cancellation::DialogTurnCancellationTokenStore;
+use starmate_agent_tools::{parse_call_deferred_tool_input, CALL_DEFERRED_TOOL_NAME};
+use starmate_ai_adapters::{
     ModelExchangeRequestTraceHandle, ModelExchangeResponseTrace, ModelExchangeTraceConfig,
 };
-use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
-use openbitfun_core_types::ModelResponseReplay;
-use openbitfun_runtime_ports::PermissionRule;
+use starmate_core_types::errors::{AiProviderError, ErrorCategory};
+use starmate_core_types::ModelResponseReplay;
+use starmate_runtime_ports::PermissionRule;
 use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -66,10 +66,10 @@ struct FailedModelAttempt<'a> {
     context: &'a RoundContext,
     source:
         Option<&'a Arc<dyn crate::infrastructure::ai::account_client_source::AccountClientSource>>,
-    origin: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+    origin: Option<&'a starmate_core_types::ModelAccountOrigin>,
     credential_revision: Option<u64>,
     client: &'a AIClient,
-    replay_origin: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+    replay_origin: Option<&'a starmate_core_types::ModelAccountOrigin>,
     category: &'a ErrorCategory,
     retry_after_ms: Option<u64>,
     fallback_delay_ms: u64,
@@ -103,7 +103,7 @@ pub(super) struct ModelRoundLifecycle {
     round_id: String,
     started_at: Instant,
     started_event_emitted: bool,
-    pub(super) routing: Option<openbitfun_events::agentic::ModelRoutingDecision>,
+    pub(super) routing: Option<starmate_events::agentic::ModelRoutingDecision>,
     attempts_started: u32,
     pub(super) safe_to_switch_model: bool,
     observed_effective_output: bool,
@@ -242,7 +242,7 @@ impl RoundExecutor {
         if !source.automatic() {
             return Ok(None);
         }
-        if !openbitfun_agent_runtime::channel_routing::may_switch_channel(
+        if !starmate_agent_runtime::channel_routing::may_switch_channel(
             category,
             remaining_attempts,
             effective_output,
@@ -251,7 +251,7 @@ impl RoundExecutor {
         ) {
             return Ok(None);
         }
-        let until = openbitfun_agent_runtime::account_routing::cooldown_deadline(
+        let until = starmate_agent_runtime::account_routing::cooldown_deadline(
             category,
             chrono::Utc::now().timestamp(),
             retry_after_ms,
@@ -270,10 +270,10 @@ impl RoundExecutor {
         }
     }
 
-    const MAX_STREAM_ATTEMPTS: usize = openbitfun_agent_stream::retry::MAX_MODEL_ATTEMPTS;
+    const MAX_STREAM_ATTEMPTS: usize = starmate_agent_stream::retry::MAX_MODEL_ATTEMPTS;
 
     fn should_retry_provider_error(category: &ErrorCategory) -> bool {
-        openbitfun_agent_stream::retry::should_retry(category)
+        starmate_agent_stream::retry::should_retry(category)
     }
 
     fn prefer_pool_alternative(
@@ -314,12 +314,12 @@ impl RoundExecutor {
         source: Option<
             &Arc<dyn crate::infrastructure::ai::account_client_source::AccountClientSource>,
         >,
-        current: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        current: Option<&starmate_core_types::ModelAccountOrigin>,
         credential_revision: Option<u64>,
         rejected: &crate::infrastructure::ai::AIClient,
         authentication_recovery_attempted: &mut std::collections::HashSet<String>,
         excluded: &mut Vec<String>,
-        replay_origin: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        replay_origin: Option<&starmate_core_types::ModelAccountOrigin>,
         category: &ErrorCategory,
         retry_after_ms: Option<u64>,
         fallback_delay_ms: u64,
@@ -329,14 +329,14 @@ impl RoundExecutor {
         cancel: &CancellationToken,
     ) -> OpenBitFunResult<Option<crate::infrastructure::ai::account_client_source::AccountClient>>
     {
-        use openbitfun_agent_runtime::account_routing::{admit_account_switch, SwitchBoundary};
+        use starmate_agent_runtime::account_routing::{admit_account_switch, SwitchBoundary};
         let (Some(source), Some(current)) = (source, current) else {
             return Ok(None);
         };
         if !cancel.is_cancelled() {
             if let (Some(revision), Some(until)) = (
                 credential_revision,
-                openbitfun_agent_runtime::account_routing::cooldown_deadline(
+                starmate_agent_runtime::account_routing::cooldown_deadline(
                     category,
                     chrono::Utc::now().timestamp(),
                     retry_after_ms,
@@ -425,7 +425,7 @@ impl RoundExecutor {
         channel_pinned: bool,
     ) -> OpenBitFunError {
         if channel_pinned
-            && openbitfun_agent_runtime::channel_routing::may_switch_channel(
+            && starmate_agent_runtime::channel_routing::may_switch_channel(
                 &error.error_category(),
                 1,
                 false,
@@ -558,7 +558,7 @@ impl RoundExecutor {
         turn_id: &str,
         lifecycle: &ModelRoundLifecycle,
         model_id: &str,
-        category: &openbitfun_core_types::ErrorCategory,
+        category: &starmate_core_types::ErrorCategory,
     ) {
         let attempt_number = lifecycle.attempts_started();
         self.emit_event(AgenticEvent::ModelRoundAttemptSuperseded {
@@ -585,7 +585,7 @@ impl RoundExecutor {
 
     fn model_response_replay(
         stream_result: &StreamResult,
-        origin: Option<&openbitfun_core_types::ModelAccountOrigin>,
+        origin: Option<&starmate_core_types::ModelAccountOrigin>,
         channel: &str,
         protocol: &str,
         fingerprint: String,
@@ -623,12 +623,12 @@ impl RoundExecutor {
 
     fn resolve_permission_policy(
         global: &crate::service::config::types::GlobalConfig,
-        mode: openbitfun_runtime_ports::PermissionMode,
+        mode: starmate_runtime_ports::PermissionMode,
         project_rules: &[PermissionRule],
         agent_profile: Option<&AgentProfileConfig>,
-        agent_definition_constraints: &openbitfun_runtime_ports::PermissionConstraintLayer,
-        parent_runtime_ceiling: Option<&openbitfun_runtime_ports::PermissionRuntimeCeiling>,
-    ) -> openbitfun_runtime_ports::ResolvedPermissionPolicy {
+        agent_definition_constraints: &starmate_runtime_ports::PermissionConstraintLayer,
+        parent_runtime_ceiling: Option<&starmate_runtime_ports::PermissionRuntimeCeiling>,
+    ) -> starmate_runtime_ports::ResolvedPermissionPolicy {
         resolve_effective_permission_policy(
             global,
             Some(mode),
@@ -648,7 +648,7 @@ impl RoundExecutor {
     fn resolve_permission_mode(
         global: &crate::service::config::types::GlobalConfig,
         context_vars: &std::collections::HashMap<String, String>,
-    ) -> openbitfun_runtime_ports::PermissionMode {
+    ) -> starmate_runtime_ports::PermissionMode {
         permission_mode_from_context(global, context_vars)
     }
 
@@ -770,7 +770,7 @@ impl RoundExecutor {
             || account_source.as_ref().is_some_and(|source| {
                 matches!(
                     source.policy(),
-                    openbitfun_agent_runtime::account_routing::AccountPolicy::Ordered(_)
+                    starmate_agent_runtime::account_routing::AccountPolicy::Ordered(_)
                 )
             });
         if routed {
@@ -870,7 +870,7 @@ impl RoundExecutor {
         let ordered = source.is_some_and(|source| {
             matches!(
                 source.policy(),
-                openbitfun_agent_runtime::account_routing::AccountPolicy::Ordered(_)
+                starmate_agent_runtime::account_routing::AccountPolicy::Ordered(_)
             )
         });
         if source.is_some() && ordered && replay_origin.is_err() {
@@ -1020,7 +1020,7 @@ impl RoundExecutor {
             crate::infrastructure::ai::channel_client_source::ChannelClientSource::validate_replay_binding(&ai_messages, &context.model_config_id, &ai_client, channels.is_some())
                 .map_err(|error| OpenBitFunError::AIClient(error.to_string()).with_channel_bound_replay())?;
             let mut usage_context =
-                openbitfun_services_core::token_usage::types::ModelRequestUsageContext {
+                starmate_services_core::token_usage::types::ModelRequestUsageContext {
                     context_composition: context.context_composition.clone(),
                     version: 1,
                     round_id: round_id.clone(),
@@ -1030,13 +1030,13 @@ impl RoundExecutor {
                     authentication: if account.is_some()
                         || ai_client.subscription_provider_key().is_some()
                     {
-                        openbitfun_services_core::token_usage::types::UsageAuthenticationKind::Subscription
+                        starmate_services_core::token_usage::types::UsageAuthenticationKind::Subscription
                     } else {
-                        openbitfun_services_core::token_usage::types::UsageAuthenticationKind::ApiKey
+                        starmate_services_core::token_usage::types::UsageAuthenticationKind::ApiKey
                     },
                     account,
                     channel: Some(
-                        openbitfun_services_core::token_usage::types::ModelRequestChannel {
+                        starmate_services_core::token_usage::types::ModelRequestChannel {
                             model_config_id: context.model_config_id.clone(),
                             name: ai_client.config.name.clone(),
                             protocol: ai_client.config.format.clone(),
@@ -1059,7 +1059,7 @@ impl RoundExecutor {
                     requested_model: ai_client.config.model.clone(),
                     response_model: None,
                     outcome:
-                        openbitfun_services_core::token_usage::types::ModelRequestOutcome::Completed,
+                        starmate_services_core::token_usage::types::ModelRequestOutcome::Completed,
                     usage_known: false,
                     retry_reason: retry_reason.take(),
                     routing_warnings: source
@@ -1096,7 +1096,7 @@ impl RoundExecutor {
             );
             let send_result = tokio::select! {
                 _ = cancel_token.cancelled() => {
-                    self.record_attempt_usage(&context, &usage_context, None, openbitfun_services_core::token_usage::types::ModelRequestOutcome::Cancelled, context_window, is_subagent).await;
+                    self.record_attempt_usage(&context, &usage_context, None, starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled, context_window, is_subagent).await;
                     return Err(OpenBitFunError::Cancelled("Execution cancelled".to_string()));
                 }
                 result = send_future => result,
@@ -1120,7 +1120,7 @@ impl RoundExecutor {
                         &context,
                         &usage_context,
                         None,
-                        openbitfun_services_core::token_usage::types::ModelRequestOutcome::Failed,
+                        starmate_services_core::token_usage::types::ModelRequestOutcome::Failed,
                         context_window,
                         is_subagent,
                     )
@@ -1261,7 +1261,7 @@ impl RoundExecutor {
                     &context,
                     &usage_context,
                     None,
-                    openbitfun_services_core::token_usage::types::ModelRequestOutcome::Cancelled,
+                    starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled,
                     context_window,
                     is_subagent,
                 )
@@ -1331,7 +1331,7 @@ impl RoundExecutor {
                             || result.tool_calls.iter().any(|call| call.is_valid()),
                     );
                     usage_context.response_model = result.response_model.clone();
-                    self.record_attempt_usage(&context, &usage_context, result.usage.as_ref(), if result.partial_recovery_reason.is_some() { openbitfun_services_core::token_usage::types::ModelRequestOutcome::Failed } else { openbitfun_services_core::token_usage::types::ModelRequestOutcome::Completed }, context_window, is_subagent).await;
+                    self.record_attempt_usage(&context, &usage_context, result.usage.as_ref(), if result.partial_recovery_reason.is_some() { starmate_services_core::token_usage::types::ModelRequestOutcome::Failed } else { starmate_services_core::token_usage::types::ModelRequestOutcome::Completed }, context_window, is_subagent).await;
                     let has_interrupted_invalid_tool_calls =
                         Self::has_interrupted_invalid_tool_calls(&result);
                     if let Some(partial_recovery_reason) = result.partial_recovery_reason.as_deref()
@@ -1593,7 +1593,7 @@ impl RoundExecutor {
                 Err(stream_err) => {
                     lifecycle.observe_output(stream_err.has_effective_output);
                     usage_context.response_model = stream_err.response_model.clone();
-                    self.record_attempt_usage(&context, &usage_context, stream_err.usage.as_ref(), if matches!(&stream_err.error, OpenBitFunError::Cancelled(_)) { openbitfun_services_core::token_usage::types::ModelRequestOutcome::Cancelled } else { openbitfun_services_core::token_usage::types::ModelRequestOutcome::Failed }, context_window, is_subagent).await;
+                    self.record_attempt_usage(&context, &usage_context, stream_err.usage.as_ref(), if matches!(&stream_err.error, OpenBitFunError::Cancelled(_)) { starmate_services_core::token_usage::types::ModelRequestOutcome::Cancelled } else { starmate_services_core::token_usage::types::ModelRequestOutcome::Failed }, context_window, is_subagent).await;
                     if matches!(&stream_err.error, OpenBitFunError::Cancelled(_)) {
                         Self::complete_model_exchange_trace(
                             trace_config.as_ref(),
@@ -2338,7 +2338,7 @@ impl RoundExecutor {
         usage: &crate::util::types::ai::GeminiUsage,
         context_window: Option<usize>,
         is_subagent: bool,
-        request: Option<&openbitfun_services_core::token_usage::types::ModelRequestUsageContext>,
+        request: Option<&starmate_services_core::token_usage::types::ModelRequestUsageContext>,
     ) {
         debug!(
             "Updating token stats from model response: input={}, output={}, total={}, is_subagent={}",
@@ -2363,7 +2363,7 @@ impl RoundExecutor {
             cached_tokens: usage.cached_content_token_count.map(|v| v as usize),
             token_details: match request {
                 Some(request) => {
-                    openbitfun_services_core::token_usage::types::with_model_request_context(
+                    starmate_services_core::token_usage::types::with_model_request_context(
                         token_details_from_usage(usage),
                         request,
                     )
@@ -2379,9 +2379,9 @@ impl RoundExecutor {
     async fn record_attempt_usage(
         &self,
         context: &RoundContext,
-        request: &openbitfun_services_core::token_usage::types::ModelRequestUsageContext,
+        request: &starmate_services_core::token_usage::types::ModelRequestUsageContext,
         usage: Option<&crate::util::types::ai::GeminiUsage>,
-        outcome: openbitfun_services_core::token_usage::types::ModelRequestOutcome,
+        outcome: starmate_services_core::token_usage::types::ModelRequestOutcome,
         context_window: Option<usize>,
         is_subagent: bool,
     ) {
@@ -2389,7 +2389,7 @@ impl RoundExecutor {
         request.outcome = outcome;
         request.usage_known = usage.is_some();
         if let Some(service) = &self.usage_service {
-            let details = openbitfun_services_core::token_usage::types::with_model_request_context(
+            let details = starmate_services_core::token_usage::types::with_model_request_context(
                 usage.and_then(token_details_from_usage),
                 &request,
             );
@@ -2447,7 +2447,7 @@ impl RoundExecutor {
                     attempt_id: None,
                     attempt_index: None,
                     tool_event: ToolEventData::Failed {
-                        identity: openbitfun_events::ToolEventIdentity::direct(
+                        identity: starmate_events::ToolEventIdentity::direct(
                             tool_call.tool_id.clone(),
                             tool_call.tool_name.clone(),
                         ),
@@ -2589,7 +2589,7 @@ impl RoundExecutor {
         error_message: &str,
         provider_error: Option<&AiProviderError>,
     ) -> u64 {
-        openbitfun_agent_stream::retry::delay_ms(attempt_index, error_message, provider_error)
+        starmate_agent_stream::retry::delay_ms(attempt_index, error_message, provider_error)
     }
 }
 
@@ -2634,12 +2634,12 @@ pub(super) mod tests {
     use crate::service::config::types::{AgentProfileConfig, GlobalConfig};
     use crate::util::errors::OpenBitFunError;
     use crate::util::types::ai::GeminiUsage;
-    use openbitfun_agent_runtime::permission::{
+    use starmate_agent_runtime::permission::{
         AUTO_APPROVE_ASK_CONTEXT_KEY, PERMISSION_MODE_CONTEXT_KEY,
     };
-    use openbitfun_agent_runtime::turn_cancellation::DialogTurnCancellationTokenStore;
-    use openbitfun_core_types::errors::{AiProviderError, ErrorCategory};
-    use openbitfun_runtime_ports::{
+    use starmate_agent_runtime::turn_cancellation::DialogTurnCancellationTokenStore;
+    use starmate_core_types::errors::{AiProviderError, ErrorCategory};
+    use starmate_runtime_ports::{
         DelegationPolicy, PermissionEffect, PermissionEvaluator, PermissionPolicyPreset,
         PermissionRule,
     };
@@ -2701,7 +2701,7 @@ pub(super) mod tests {
     fn deferred_tool_replay_uses_canonical_gateway_arguments() {
         let mut tool_calls = vec![ToolCall {
             tool_id: "call-1".to_string(),
-            tool_name: openbitfun_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
+            tool_name: starmate_agent_tools::CALL_DEFERRED_TOOL_NAME.to_string(),
             arguments: json!({
                 "tool_name": "CreatePlan",
                 "overview": "outside",
@@ -2979,7 +2979,7 @@ pub(super) mod tests {
             &self,
         ) -> Arc<crate::infrastructure::ai::AIClient> {
             Arc::new(crate::infrastructure::ai::AIClient::new(
-                openbitfun_core_types::AIConfig {
+                starmate_core_types::AIConfig {
                     name: "retry-test".to_string(),
                     base_url: self.url.clone(),
                     request_url: self.url.clone(),
@@ -3084,7 +3084,7 @@ pub(super) mod tests {
         use crate::service::config::types::{model_runtime_binding_fingerprint, AIModelConfig};
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_config_contracts::channel_routing::ModelChannelRouting;
+        use starmate_config_contracts::channel_routing::ModelChannelRouting;
         for (format, manual, blocked, previous_attempts) in [
             ("openai", false, false, 0),
             ("anthropic", false, false, 0),
@@ -3191,7 +3191,7 @@ pub(super) mod tests {
             context.channel_client_source = channels;
             context.prepared_model = Some(prepared);
             let mut previous =
-                super::AIMessage::assistant_with_tools(vec![openbitfun_core_types::ToolCall {
+                super::AIMessage::assistant_with_tools(vec![starmate_core_types::ToolCall {
                     id: "already-done".into(),
                     name: "write_file".into(),
                     arguments: json!({"path":"result.txt"}),
@@ -3199,7 +3199,7 @@ pub(super) mod tests {
                 }]);
             if blocked {
                 previous.thinking_signature = Some("original-signed-state".into());
-                previous.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+                previous.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
                     protocol: "openai".into(),
                     channel_origin: Some(a.id.clone()),
                     channel_fingerprint: Some(client.channel_replay_fingerprint()),
@@ -3277,7 +3277,7 @@ pub(super) mod tests {
                     "complete tool history must reach {format}: {body}"
                 );
                 assert_eq!(records.len(), if manual { 1 } else { 2 });
-                let completed=records.iter().find(|record|record.request_context().is_some_and(|request|request.outcome==openbitfun_services_core::token_usage::types::ModelRequestOutcome::Completed)).unwrap();
+                let completed=records.iter().find(|record|record.request_context().is_some_and(|request|request.outcome==starmate_services_core::token_usage::types::ModelRequestOutcome::Completed)).unwrap();
                 assert_eq!(completed.model_config_id, "backup-channel");
                 assert_eq!(
                     completed.request_context().unwrap().requested_model,
@@ -3317,8 +3317,8 @@ pub(super) mod tests {
         };
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_config_contracts::channel_routing::ModelChannelRouting;
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_config_contracts::channel_routing::ModelChannelRouting;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
 
         let _guard = SUBSCRIPTION_STORE_TEST_LOCK.lock().await;
         for stream_failure in [false, true] {
@@ -3464,7 +3464,7 @@ pub(super) mod tests {
             context.prepared_model = Some(prepared);
             context.model_request_context.prompt_cache_route_key = Some("mixed-lineage".into());
             let previous =
-                super::AIMessage::assistant_with_tools(vec![openbitfun_core_types::ToolCall {
+                super::AIMessage::assistant_with_tools(vec![starmate_core_types::ToolCall {
                     id: "already-written".into(),
                     name: "write_file".into(),
                     arguments: json!({"path":"result.txt"}),
@@ -3631,7 +3631,7 @@ pub(super) mod tests {
         fn take_routing_warnings(&self) -> Vec<String> {
             self.inner.take_routing_warnings()
         }
-        fn policy(&self) -> &openbitfun_agent_runtime::account_routing::AccountPolicy {
+        fn policy(&self) -> &starmate_agent_runtime::account_routing::AccountPolicy {
             self.inner.policy()
         }
         fn policy_revision(&self) -> Option<u64> {
@@ -3640,14 +3640,14 @@ pub(super) mod tests {
         fn resolve<'a>(
             &'a self,
             excluded: &'a [String],
-            required: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+            required: Option<&'a starmate_core_types::ModelAccountOrigin>,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             self.resolve_for_request(excluded, required, None)
         }
         fn resolve_for_request<'a>(
             &'a self,
             excluded: &'a [String],
-            required: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+            required: Option<&'a starmate_core_types::ModelAccountOrigin>,
             lineage: Option<&'a str>,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
@@ -3659,7 +3659,7 @@ pub(super) mod tests {
         }
         fn revalidate_for_retry<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
                 self.inner
@@ -3670,7 +3670,7 @@ pub(super) mod tests {
         }
         fn recover_authentication<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             rejected: &'a crate::infrastructure::ai::AIClient,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
@@ -3707,7 +3707,7 @@ pub(super) mod tests {
         }
         fn completed<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             revision: u64,
             lineage: Option<&'a str>,
         ) -> crate::infrastructure::ai::account_client_source::AccountRoutingEffect<'a> {
@@ -3715,7 +3715,7 @@ pub(super) mod tests {
         }
         fn failed<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             revision: u64,
             until: i64,
         ) -> crate::infrastructure::ai::account_client_source::AccountRoutingEffect<'a> {
@@ -3930,29 +3930,29 @@ pub(super) mod tests {
             tool.role = "tool".into();
             tool.tool_call_id = Some("completed-tool".into());
             let mut previous =
-                super::AIMessage::assistant_with_tools(vec![openbitfun_core_types::ToolCall {
+                super::AIMessage::assistant_with_tools(vec![starmate_core_types::ToolCall {
                     id: "completed-tool".into(),
                     name: "write_file".into(),
                     arguments: json!({"path":"result.txt"}),
                     raw_arguments: None,
                 }]);
             if opaque {
-                previous.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+                previous.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
                     protocol: "openai_responses".into(),
                     channel_origin: None,
                     channel_fingerprint: None,
-                    account_origin: Some(openbitfun_core_types::ModelAccountOrigin {
+                    account_origin: Some(starmate_core_types::ModelAccountOrigin {
                         provider: "codex".into(),
                         account_id: "codex".into(),
                         upstream_account_id: Some("primary-seat".into()),
                     }),
                     items: vec![
-                        openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning {
+                        starmate_core_types::ModelResponseReplayItem::OpaqueReasoning {
                             item_id: Some("historical-reasoning".into()),
                             summary: vec![],
                             opaque_state: "synthetic-encrypted-state".into(),
                         },
-                        openbitfun_core_types::ModelResponseReplayItem::FunctionCall {
+                        starmate_core_types::ModelResponseReplayItem::FunctionCall {
                             call_id: "completed-tool".into(),
                         },
                     ],
@@ -4017,7 +4017,7 @@ pub(super) mod tests {
             assert!(result.had_assistant_text);
             assert!(result.tool_result_messages.is_empty());
             assert_eq!(records.len(), 2);
-            let completed = records.iter().find(|record| record.request_context().unwrap().outcome == openbitfun_services_core::token_usage::types::ModelRequestOutcome::Completed).unwrap();
+            let completed = records.iter().find(|record| record.request_context().unwrap().outcome == starmate_services_core::token_usage::types::ModelRequestOutcome::Completed).unwrap();
             assert_eq!(
                 completed
                     .request_context()
@@ -4034,7 +4034,7 @@ pub(super) mod tests {
                 .iter()
                 .find(|record| {
                     record.request_context().unwrap().outcome
-                        == openbitfun_services_core::token_usage::types::ModelRequestOutcome::Failed
+                        == starmate_services_core::token_usage::types::ModelRequestOutcome::Failed
                 })
                 .unwrap();
             assert_eq!(
@@ -4202,7 +4202,7 @@ pub(super) mod tests {
         };
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
         use std::sync::atomic::{AtomicUsize, Ordering};
         let _guard = SUBSCRIPTION_STORE_TEST_LOCK.lock().await;
         for (in_stream, reject_rotated, fixed, partial) in [
@@ -4480,7 +4480,7 @@ pub(super) mod tests {
             .unwrap();
             let mut reports = Vec::new();
             for phase in ["seed", "resume", "replay"] {
-                let mut command = openbitfun_services_core::process_manager::create_tokio_command(
+                let mut command = starmate_services_core::process_manager::create_tokio_command(
                     std::env::current_exe().unwrap(),
                 );
                 command
@@ -4614,7 +4614,7 @@ pub(super) mod tests {
         };
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
         let manifest_path = std::path::PathBuf::from(
             std::env::var_os("OPENBITFUN_ACCOUNT_RESTART_FIXTURE")
                 .expect("only the restart parent may invoke this fixture"),
@@ -4840,14 +4840,14 @@ pub(super) mod tests {
         for (index, replay) in replays.into_iter().enumerate() {
             assert_eq!(
                 replay.account_origin.as_ref().unwrap(),
-                &openbitfun_core_types::ModelAccountOrigin {
+                &starmate_core_types::ModelAccountOrigin {
                     provider: "codex".into(),
                     account_id: backup_id.into(),
                     upstream_account_id: Some("restart-backup-seat".into()),
                 }
             );
             assert!(replay.items.iter().any(|item| matches!(item,
-                openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning { opaque_state, .. }
+                starmate_core_types::ModelResponseReplayItem::OpaqueReasoning { opaque_state, .. }
                     if opaque_state == &format!("synthetic-state-{index}"))));
         }
         if phase != "seed" {
@@ -5141,7 +5141,7 @@ pub(super) mod tests {
         };
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
         use std::sync::atomic::Ordering;
 
         let _guard = SUBSCRIPTION_STORE_TEST_LOCK.lock().await;
@@ -5443,7 +5443,7 @@ pub(super) mod tests {
         };
         use crate::service::config::{ConfigManagerSettings, ConfigService};
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_runtime_ports::PermissionMode;
+        use starmate_runtime_ports::PermissionMode;
         use std::sync::atomic::{AtomicUsize, Ordering};
         let _guard = SUBSCRIPTION_STORE_TEST_LOCK.lock().await;
         let dir = tempfile::tempdir().unwrap();
@@ -5597,7 +5597,7 @@ pub(super) mod tests {
             None,
         )));
         let tools = ["AcceptanceRead", "AcceptanceCommit"]
-            .map(|name| openbitfun_core_types::ToolDefinition {
+            .map(|name| starmate_core_types::ToolDefinition {
                 name: name.into(),
                 description: "Isolated fixture".into(),
                 parameters: json!({"type":"object","properties":{},"additionalProperties":false}),
@@ -5896,7 +5896,7 @@ pub(super) mod tests {
             records
                 .iter()
                 .filter(|record| record.request_context().unwrap().outcome
-                    == openbitfun_services_core::token_usage::types::ModelRequestOutcome::Failed)
+                    == starmate_services_core::token_usage::types::ModelRequestOutcome::Failed)
                 .count(),
             1
         );
@@ -5906,9 +5906,9 @@ pub(super) mod tests {
     }
 
     struct TestAccountSource {
-        policy: openbitfun_agent_runtime::account_routing::AccountPolicy,
+        policy: starmate_agent_runtime::account_routing::AccountPolicy,
         clients: Vec<(
-            openbitfun_core_types::ModelAccountOrigin,
+            starmate_core_types::ModelAccountOrigin,
             Arc<crate::infrastructure::ai::AIClient>,
         )>,
         accepted: std::sync::Mutex<Vec<String>>,
@@ -5936,22 +5936,22 @@ pub(super) mod tests {
         fn policy_revision(&self) -> Option<u64> {
             matches!(
                 self.policy,
-                openbitfun_agent_runtime::account_routing::AccountPolicy::Ordered(_)
+                starmate_agent_runtime::account_routing::AccountPolicy::Ordered(_)
             )
             .then_some(7)
         }
-        fn policy(&self) -> &openbitfun_agent_runtime::account_routing::AccountPolicy {
+        fn policy(&self) -> &starmate_agent_runtime::account_routing::AccountPolicy {
             &self.policy
         }
         fn resolve<'a>(
             &'a self,
             excluded: &'a [String],
-            required: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+            required: Option<&'a starmate_core_types::ModelAccountOrigin>,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
                 let members = match &self.policy {
-                    openbitfun_agent_runtime::account_routing::AccountPolicy::Fixed(id) => vec![id],
-                    openbitfun_agent_runtime::account_routing::AccountPolicy::Ordered(ids) => {
+                    starmate_agent_runtime::account_routing::AccountPolicy::Fixed(id) => vec![id],
+                    starmate_agent_runtime::account_routing::AccountPolicy::Ordered(ids) => {
                         ids.iter().collect()
                     }
                 };
@@ -5980,7 +5980,7 @@ pub(super) mod tests {
         }
         fn recover_authentication<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             _rejected: &'a crate::infrastructure::ai::AIClient,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
@@ -6008,7 +6008,7 @@ pub(super) mod tests {
                 ))
             })
         }
-        fn accepted(&self, origin: &openbitfun_core_types::ModelAccountOrigin) {
+        fn accepted(&self, origin: &starmate_core_types::ModelAccountOrigin) {
             self.accepted
                 .lock()
                 .unwrap()
@@ -6017,7 +6017,7 @@ pub(super) mod tests {
         fn resolve_for_request<'a>(
             &'a self,
             excluded: &'a [String],
-            required: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+            required: Option<&'a starmate_core_types::ModelAccountOrigin>,
             lineage: Option<&'a str>,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
@@ -6030,7 +6030,7 @@ pub(super) mod tests {
         }
         fn failed<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             revision: u64,
             until: i64,
         ) -> crate::infrastructure::ai::account_client_source::AccountRoutingEffect<'a> {
@@ -6045,7 +6045,7 @@ pub(super) mod tests {
         }
         fn completed<'a>(
             &'a self,
-            origin: &'a openbitfun_core_types::ModelAccountOrigin,
+            origin: &'a starmate_core_types::ModelAccountOrigin,
             revision: u64,
             lineage: Option<&'a str>,
         ) -> crate::infrastructure::ai::account_client_source::AccountRoutingEffect<'a> {
@@ -6065,13 +6065,13 @@ pub(super) mod tests {
         clients: Vec<Arc<crate::infrastructure::ai::AIClient>>,
         fixed: bool,
     ) -> Arc<TestAccountSource> {
-        use openbitfun_agent_runtime::account_routing::AccountPolicy;
+        use starmate_agent_runtime::account_routing::AccountPolicy;
         let clients: Vec<_> = clients
             .into_iter()
             .enumerate()
             .map(|(index, client)| {
                 (
-                    openbitfun_core_types::ModelAccountOrigin {
+                    starmate_core_types::ModelAccountOrigin {
                         provider: "codex".into(),
                         account_id: format!("account-{index}"),
                         upstream_account_id: Some(format!("seat-{index}")),
@@ -6469,7 +6469,7 @@ pub(super) mod tests {
         use crate::service::token_usage::{
             TimeRange, TokenUsageQuery, TokenUsageService, TokenUsageSubscriber,
         };
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
         for report_failed_usage in [false, true] {
             let dir = tempfile::tempdir().unwrap();
             let service = Arc::new(
@@ -6499,7 +6499,7 @@ pub(super) mod tests {
             let source = test_account_source(vec![primary.client(), backup.client()], false);
             let mut context = test_round_context();
             context.account_client_source = Some(source);
-            let composition = openbitfun_core_types::UsageContextBreakdown {
+            let composition = starmate_core_types::UsageContextBreakdown {
                 system_prompt: 3,
                 conversation: 7,
                 ..Default::default()
@@ -6639,7 +6639,7 @@ pub(super) mod tests {
     #[tokio::test]
     async fn account_attempt_ledger_does_not_block_cancellation_behind_a_host_file_lock() {
         use crate::service::token_usage::TokenUsageService;
-        use openbitfun_services_core::token_usage::types::{
+        use starmate_services_core::token_usage::types::{
             ModelRequestOutcome, ModelRequestUsageContext,
         };
         let dir = tempfile::tempdir().unwrap();
@@ -6651,7 +6651,7 @@ pub(super) mod tests {
         let path = service
             .base_dir()
             .join("records/model-attempts/2026-10-13.json");
-        let guard = openbitfun_services_core::json_store::JsonFileStore
+        let guard = starmate_services_core::json_store::JsonFileStore
             .acquire_cross_process_lock(&path)
             .await
             .unwrap();
@@ -6942,7 +6942,7 @@ pub(super) mod tests {
             original_client.config.format = "responses".into();
             original_client.config.model = "original-model".into();
             let mut previous =
-                super::AIMessage::assistant_with_tools(vec![openbitfun_core_types::ToolCall {
+                super::AIMessage::assistant_with_tools(vec![starmate_core_types::ToolCall {
                     id: "already-executed".into(),
                     name: "write_file".into(),
                     arguments: json!({"path":"result.txt", "content":"saved once"}),
@@ -6951,19 +6951,19 @@ pub(super) mod tests {
             previous.content = Some("Saved the requested file".into());
             previous.reasoning_content = Some("Original private reasoning".into());
             previous.thinking_signature = Some("original-signature".into());
-            previous.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+            previous.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
                 protocol: "openai_responses".into(),
                 channel_origin: Some(context.model_config_id.clone()),
                 channel_fingerprint: Some(original_client.channel_replay_fingerprint()),
                 account_origin: None,
                 items: vec![
-                    openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning {
+                    starmate_core_types::ModelResponseReplayItem::OpaqueReasoning {
                         item_id: Some("original-reasoning".into()),
                         summary: vec![],
                         opaque_state: "original-encrypted-state".into(),
                     },
-                    openbitfun_core_types::ModelResponseReplayItem::AssistantMessage,
-                    openbitfun_core_types::ModelResponseReplayItem::FunctionCall {
+                    starmate_core_types::ModelResponseReplayItem::AssistantMessage,
+                    starmate_core_types::ModelResponseReplayItem::FunctionCall {
                         call_id: "already-executed".into(),
                     },
                 ],
@@ -7063,13 +7063,13 @@ pub(super) mod tests {
             let mut context = test_round_context();
             context.account_client_source = Some(source.clone());
             let mut previous = super::AIMessage::assistant("Previous answer".into());
-            previous.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+            previous.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
                 protocol: "openai_responses".into(),
                 channel_origin: None,
                 channel_fingerprint: None,
                 account_origin: has_origin.then(|| source.clients[0].0.clone()),
                 items: vec![
-                    openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning {
+                    starmate_core_types::ModelResponseReplayItem::OpaqueReasoning {
                         item_id: None,
                         summary: vec![],
                         opaque_state: "opaque-test-state".into(),
@@ -7124,7 +7124,7 @@ pub(super) mod tests {
                 false,
             );
             let mut previous =
-                super::AIMessage::assistant_with_tools(vec![openbitfun_core_types::ToolCall {
+                super::AIMessage::assistant_with_tools(vec![starmate_core_types::ToolCall {
                     id: "already-executed".into(),
                     name: "write_file".into(),
                     arguments: json!({"path":"result.txt", "content":"saved once"}),
@@ -7133,7 +7133,7 @@ pub(super) mod tests {
             let mut replay_items = Vec::new();
             if opaque {
                 replay_items.push(
-                    openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning {
+                    starmate_core_types::ModelResponseReplayItem::OpaqueReasoning {
                         item_id: Some("reasoning-history".into()),
                         summary: vec![],
                         opaque_state: "account-a-encrypted-reasoning".into(),
@@ -7141,11 +7141,11 @@ pub(super) mod tests {
                 );
             }
             replay_items.push(
-                openbitfun_core_types::ModelResponseReplayItem::FunctionCall {
+                starmate_core_types::ModelResponseReplayItem::FunctionCall {
                     call_id: "already-executed".into(),
                 },
             );
-            previous.model_response_replay = Some(openbitfun_core_types::ModelResponseReplay {
+            previous.model_response_replay = Some(starmate_core_types::ModelResponseReplay {
                 protocol: "openai_responses".into(),
                 channel_origin: None,
                 channel_fingerprint: None,
@@ -7272,7 +7272,7 @@ pub(super) mod tests {
                 .unwrap();
         let replay = restored.metadata.model_response_replay.unwrap();
         assert_eq!(replay.account_origin.as_ref(), Some(&source.clients[1].0));
-        assert!(replay.items.iter().any(|item| matches!(item, openbitfun_core_types::ModelResponseReplayItem::OpaqueReasoning { opaque_state, .. } if opaque_state == "opaque-backup-state")));
+        assert!(replay.items.iter().any(|item| matches!(item, starmate_core_types::ModelResponseReplayItem::OpaqueReasoning { opaque_state, .. } if opaque_state == "opaque-backup-state")));
         let mut history = super::AIMessage::assistant("Backup answer".into());
         history.model_response_replay = Some(replay);
         assert_eq!(
@@ -7293,13 +7293,13 @@ pub(super) mod tests {
     impl crate::infrastructure::ai::account_client_source::AccountClientSource
         for CancellingAccountSource
     {
-        fn policy(&self) -> &openbitfun_agent_runtime::account_routing::AccountPolicy {
+        fn policy(&self) -> &starmate_agent_runtime::account_routing::AccountPolicy {
             &self.inner.policy
         }
         fn resolve<'a>(
             &'a self,
             excluded: &'a [String],
-            required: Option<&'a openbitfun_core_types::ModelAccountOrigin>,
+            required: Option<&'a starmate_core_types::ModelAccountOrigin>,
         ) -> crate::infrastructure::ai::account_client_source::AccountClientFuture<'a> {
             Box::pin(async move {
                 if !excluded.is_empty() {
@@ -7422,7 +7422,7 @@ pub(super) mod tests {
                 .await
                 .unwrap();
             let completed = records.iter().filter_map(|record| record.request_context()).find(|request| request.round_id == round_id
-                && request.outcome == openbitfun_services_core::token_usage::types::ModelRequestOutcome::Completed).expect("the producing attempt must be recorded before a tool can mutate");
+                && request.outcome == starmate_services_core::token_usage::types::ModelRequestOutcome::Completed).expect("the producing attempt must be recorded before a tool can mutate");
             assert_eq!(completed.account.unwrap().account_id, self.expected_account);
             let count = self.calls.fetch_add(1, std::sync::atomic::Ordering::SeqCst) + 1;
             let result = if self.mutates {
@@ -7676,7 +7676,7 @@ pub(super) mod tests {
     #[tokio::test]
     async fn cancellation_racing_stream_open_still_records_the_sent_attempt() {
         use crate::service::token_usage::{TimeRange, TokenUsageQuery, TokenUsageService};
-        use openbitfun_services_core::token_usage::types::ModelRequestOutcome;
+        use starmate_services_core::token_usage::types::ModelRequestOutcome;
         use std::sync::atomic::Ordering;
 
         // Cancel while the response headers are already buffered but the round
@@ -7890,7 +7890,7 @@ pub(super) mod tests {
 
         let resolved = RoundExecutor::resolve_permission_policy(
             &global,
-            openbitfun_runtime_ports::PermissionMode::Ask,
+            starmate_runtime_ports::PermissionMode::Ask,
             &project_rules,
             Some(&agent),
             &Default::default(),
@@ -7918,11 +7918,11 @@ pub(super) mod tests {
 
     #[test]
     fn permission_mode_context_overrides_persisted_default_mode() {
-        use openbitfun_runtime_ports::PermissionMode;
+        use starmate_runtime_ports::PermissionMode;
 
         let mut global = GlobalConfig::default();
         global.tool_permissions.policy.preset =
-            openbitfun_runtime_ports::PermissionPolicyPreset::Ask;
+            starmate_runtime_ports::PermissionPolicyPreset::Ask;
         global.tool_permissions.interaction.auto_approve_ask = true;
         let mut context_vars = std::collections::HashMap::new();
 
@@ -8153,7 +8153,7 @@ pub(super) mod tests {
     fn error_trace_response_from_stream_result_preserves_structured_context() {
         let stream_result = StreamResult {
             full_thinking: "reasoning".to_string(),
-            reasoning_content_kind: Some(openbitfun_core_types::ReasoningContentKind::Reasoning),
+            reasoning_content_kind: Some(starmate_core_types::ReasoningContentKind::Reasoning),
             reasoning_content_present: true,
             thinking_signature: Some("sig".to_string()),
             full_text: String::new(),
@@ -8366,7 +8366,7 @@ pub(super) mod tests {
 
     #[test]
     fn provider_retry_after_is_only_a_delay_hint() {
-        let permission_error = openbitfun_core_types::errors::AiProviderError::from_parts(
+        let permission_error = starmate_core_types::errors::AiProviderError::from_parts(
             "permission denied".to_string(),
             Some("openai".to_string()),
             None,
@@ -8382,7 +8382,7 @@ pub(super) mod tests {
             1_000
         );
 
-        let rate_limit_error = openbitfun_core_types::errors::AiProviderError::from_parts(
+        let rate_limit_error = starmate_core_types::errors::AiProviderError::from_parts(
             "too many requests".to_string(),
             Some("openai".to_string()),
             None,
@@ -8407,7 +8407,7 @@ pub(super) mod tests {
         let success = RetryTestServer::new(vec![retry_test_success()]);
         let executor = test_round_executor();
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("pool-state.json");
@@ -8435,7 +8435,7 @@ pub(super) mod tests {
         assert!(lifecycle.safe_to_switch_model);
         let provider = match failure {
             OpenBitFunError::AIProvider(error) => error,
-            error => openbitfun_core_types::errors::AiProviderError::classified(
+            error => starmate_core_types::errors::AiProviderError::classified(
                 error.to_string(),
                 error.error_category(),
             ),
@@ -8484,7 +8484,7 @@ pub(super) mod tests {
         let fallback = RetryTestServer::new(vec![retry_test_success()]);
         let executor = test_round_executor();
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("pool-state.json");
@@ -8592,7 +8592,7 @@ pub(super) mod tests {
         ] {
             let server = RetryTestServer::new(vec![(200, body.clone()), retry_test_success()]);
             let router = Arc::new(std::sync::Mutex::new(
-                openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+                starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
             ));
             let dir = tempfile::tempdir().unwrap();
             let attempt = crate::agentic::execution::model_pool::test_attempt(
@@ -8643,7 +8643,7 @@ pub(super) mod tests {
         );
         let fallback = RetryTestServer::new(vec![retry_test_success()]);
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         let dir = tempfile::tempdir().unwrap();
         let first = crate::agentic::execution::model_pool::test_attempt(
@@ -8697,7 +8697,7 @@ pub(super) mod tests {
         assert!(first.fail(&provider, 60_000).await);
         // Opaque output failures do not cool the member globally. The outer
         // traversal excludes it explicitly rather than relying on health.
-        let candidates = ["a", "b"].map(|id| openbitfun_agent_runtime::model_pool::Candidate {
+        let candidates = ["a", "b"].map(|id| starmate_agent_runtime::model_pool::Candidate {
             model_id: id.into(),
             fingerprint: id.into(),
             eligible: true,
@@ -8753,7 +8753,7 @@ pub(super) mod tests {
             Some(1),
         );
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         {
             let mut locked = router.lock().unwrap();
@@ -8761,8 +8761,8 @@ pub(super) mod tests {
                 .reserve(
                     "other",
                     "p",
-                    openbitfun_core_types::model_pool::ModelPoolStrategy::Ordered,
-                    &[openbitfun_agent_runtime::model_pool::Candidate {
+                    starmate_core_types::model_pool::ModelPoolStrategy::Ordered,
+                    &[starmate_agent_runtime::model_pool::Candidate {
                         model_id: "b".into(),
                         fingerprint: "b".into(),
                         eligible: true,
@@ -8826,7 +8826,7 @@ pub(super) mod tests {
             Some(1),
         );
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         let dir = tempfile::tempdir().unwrap();
         let attempt = crate::agentic::execution::model_pool::test_attempt(
@@ -8865,7 +8865,7 @@ pub(super) mod tests {
         let token = CancellationToken::new();
         executor.register_cancel_token("turn-1", token.clone());
         let router = Arc::new(std::sync::Mutex::new(
-            openbitfun_agent_runtime::model_pool::ModelPoolRouter::default(),
+            starmate_agent_runtime::model_pool::ModelPoolRouter::default(),
         ));
         let dir = tempfile::tempdir().unwrap();
         let attempt = crate::agentic::execution::model_pool::test_attempt(

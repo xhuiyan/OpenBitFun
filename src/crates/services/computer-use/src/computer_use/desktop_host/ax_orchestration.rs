@@ -21,13 +21,13 @@ use super::{require_macos_background_input, resolve_pid_macos};
 use super::{CachedInteractiveView, CachedVisualMarkView};
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 use log::warn;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 #[cfg(any(test, target_os = "macos", target_os = "windows"))]
-use openbitfun_agent_tools::computer_use_host::ComputerScreenshot;
-use openbitfun_agent_tools::computer_use_host::ComputerUseHost;
+use starmate_agent_tools::computer_use_host::ComputerScreenshot;
+use starmate_agent_tools::computer_use_host::ComputerUseHost;
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-use openbitfun_agent_tools::computer_use_host::VisualMark;
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::VisualMark;
+use starmate_agent_tools::computer_use_host::{
     AppClickParams, AppInputAction, AppSelector, AppStateSnapshot, AppWaitPredicate, ClickTarget,
     InteractiveActionResult, InteractiveClickParams, InteractiveScrollParams,
     InteractiveTypeTextParams, InteractiveView, InteractiveViewOpts, VisualActionResult,
@@ -390,7 +390,7 @@ impl NativeComputerUseHost {
         let _ = self
             .settle_after_input_impl(
                 app.clone(),
-                openbitfun_agent_tools::computer_use_host::AppInputSettlePolicy::default(),
+                starmate_agent_tools::computer_use_host::AppInputSettlePolicy::default(),
             )
             .await;
         self.get_app_state(app, 32, true).await.map_err(|error| {
@@ -1723,7 +1723,7 @@ mod app_wait_tests {
 /// noise.
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 fn compute_interactive_view_digest(
-    elements: &[openbitfun_agent_tools::computer_use_host::InteractiveElement],
+    elements: &[starmate_agent_tools::computer_use_host::InteractiveElement],
 ) -> String {
     use sha1::{Digest, Sha1};
     const BUCKET: f64 = 8.0;
@@ -1846,11 +1846,11 @@ fn build_regular_visual_marks(
 #[cfg(any(target_os = "macos", target_os = "windows"))]
 fn visual_marks_to_overlay_elements(
     marks: &[VisualMark],
-) -> Vec<openbitfun_agent_tools::computer_use_host::InteractiveElement> {
+) -> Vec<starmate_agent_tools::computer_use_host::InteractiveElement> {
     marks
         .iter()
         .map(
-            |mark| openbitfun_agent_tools::computer_use_host::InteractiveElement {
+            |mark| starmate_agent_tools::computer_use_host::InteractiveElement {
                 i: mark.i,
                 node_idx: mark.i,
                 role: "VisualMark".to_string(),

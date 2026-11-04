@@ -4,7 +4,7 @@ use super::types::{
     DialogTurnData, DialogTurnKind, SessionLastTurn, SessionMemoryMode, SessionMetadata,
     SessionRelationship, SessionRelationshipKind, StoredSessionIndexFile, TurnStatus,
 };
-use openbitfun_core_types::{SessionExecutionTarget, SessionKind};
+use starmate_core_types::{SessionExecutionTarget, SessionKind};
 use serde_json::Value;
 
 #[derive(Debug, Clone)]
@@ -343,9 +343,9 @@ fn refresh_latest_turn(metadata: &mut SessionMetadata, turn: &DialogTurnData) {
                 .is_none_or(|pending| next.recovery_pending == Some(pending))
     });
     let quiet = turn.status == TurnStatus::Completed
-        && openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(turn.user_message.metadata.as_ref(), &turn.turn_id)
+        && starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(turn.user_message.metadata.as_ref(), &turn.turn_id)
             .is_some_and(|delivery| delivery.execution_generation == turn.recovery_epoch.unwrap_or(0)
-                && delivery.disposition == openbitfun_core_types::background_delivery::BackgroundReportDisposition::Quiet && delivery.suppresses_report());
+                && delivery.disposition == starmate_core_types::background_delivery::BackgroundReportDisposition::Quiet && delivery.suppresses_report());
     let mut unread_target = previous_unread_target;
     if !same_outcome && !quiet {
         if let Some(outcome) = match turn.status {
@@ -364,7 +364,7 @@ fn refresh_latest_turn(metadata: &mut SessionMetadata, turn: &DialogTurnData) {
         .get_or_insert_with(|| serde_json::json!({}));
     if let Some(object) = custom.as_object_mut() {
         if let Some(delivery) =
-            openbitfun_core_types::background_delivery::BackgroundDelivery::from_metadata(
+            starmate_core_types::background_delivery::BackgroundDelivery::from_metadata(
                 turn.user_message.metadata.as_ref(),
                 &turn.turn_id,
             )
@@ -407,7 +407,7 @@ fn receipt_target(metadata: &SessionMetadata) -> Option<SessionLastTurn> {
 mod background_delivery_contracts {
     use super::super::types::UserMessageData;
     use super::*;
-    use openbitfun_core_types::background_delivery::{
+    use starmate_core_types::background_delivery::{
         BackgroundDelivery, BackgroundReportDisposition as Disposition,
         BackgroundReportPolicy as Policy, BACKGROUND_DELIVERY_METADATA_KEY,
     };
@@ -520,7 +520,7 @@ pub fn apply_session_unread_completion(current: &mut SessionMetadata, incoming: 
                 .custom_metadata
                 .as_ref()?
                 .get("lastBackgroundDelivery")?;
-            let delivery: openbitfun_core_types::background_delivery::BackgroundDelivery =
+            let delivery: starmate_core_types::background_delivery::BackgroundDelivery =
                 serde_json::from_value(value.clone()).ok()?;
             Some(
                 delivery.run_id == last.turn_id
@@ -706,7 +706,7 @@ fn fill_workspace_path_if_missing(metadata: &mut SessionMetadata, workspace_path
 mod tests {
     use super::*;
     use crate::session::{SessionRelationship, SessionRelationshipKind};
-    use openbitfun_core_types::{
+    use starmate_core_types::{
         SessionContinuationPolicy, SessionExecutionTarget, SessionExecutionTargetKind,
         WorktreeLifecycle,
     };

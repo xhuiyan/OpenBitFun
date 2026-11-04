@@ -1066,7 +1066,7 @@ function loadOwnerDefinitions() {
   if (cachedOwnerDefinitions) return cachedOwnerDefinitions;
   const result = spawnSync(
     'cargo',
-    ['run', '--quiet', '-p', 'openbitfun-product-domains', '--bin', PRODUCT_CONTROL_OWNER_EXPORT],
+    ['run', '--quiet', '-p', 'starmate-product-domains', '--bin', PRODUCT_CONTROL_OWNER_EXPORT],
     { cwd: REPO_ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, windowsHide: true },
   );
   if (result.status !== 0) {
@@ -1099,7 +1099,7 @@ export function loadRemoteSurfaceRegistry() {
   if (cachedRemoteSurfaceRegistry) return cachedRemoteSurfaceRegistry;
   const result = spawnSync(
     'cargo',
-    ['run', '--quiet', '-p', 'openbitfun-product-domains', '--bin', REMOTE_SURFACE_EXPORT],
+    ['run', '--quiet', '-p', 'starmate-product-domains', '--bin', REMOTE_SURFACE_EXPORT],
     { cwd: REPO_ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, windowsHide: true },
   );
   if (result.status !== 0) {

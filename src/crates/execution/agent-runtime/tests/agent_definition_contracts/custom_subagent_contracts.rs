@@ -1,8 +1,8 @@
-use openbitfun_agent_runtime::custom_agent::{
+use starmate_agent_runtime::custom_agent::{
     CustomAgentKind, DEFAULT_CUSTOM_SUBAGENT_MODEL, DEFAULT_CUSTOM_SUBAGENT_READONLY,
     DEFAULT_CUSTOM_SUBAGENT_REVIEW,
 };
-use openbitfun_agent_runtime::custom_subagent::{
+use starmate_agent_runtime::custom_subagent::{
     custom_subagent_model_or_default, custom_subagent_model_should_save,
     custom_subagent_read_markdown_file, custom_subagent_read_markdown_str,
     custom_subagent_readonly_or_default, custom_subagent_readonly_should_save,

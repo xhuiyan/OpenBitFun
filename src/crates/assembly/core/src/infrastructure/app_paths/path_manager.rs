@@ -4,8 +4,8 @@
 
 use crate::util::errors::*;
 use log::{debug, error, warn};
-use openbitfun_services_core::product_identity::{data_namespace, hidden_data_directory};
-use openbitfun_services_core::workspace_identity::{
+use starmate_services_core::product_identity::{data_namespace, hidden_data_directory};
+use starmate_services_core::workspace_identity::{
     local_workspace_runtime_key, remote_workspace_runtime_key, remote_workspace_runtime_root,
 };
 use serde::{Deserialize, Serialize};
@@ -647,7 +647,7 @@ impl PathManager {
     }
 
     pub(crate) fn build_project_runtime_slug(canonical: &str) -> String {
-        openbitfun_services_core::workspace_identity::build_project_runtime_slug(canonical)
+        starmate_services_core::workspace_identity::build_project_runtime_slug(canonical)
     }
 
     #[cfg(unix)]
@@ -824,7 +824,7 @@ pub fn try_get_path_manager_arc() -> OpenBitFunResult<Arc<PathManager>> {
 #[cfg(test)]
 mod tests {
     use super::{GlobalPathManagerState, PathManager, LEGACY_REMOTE_RUNTIME_DIRECTORIES};
-    use openbitfun_services_core::workspace_identity::{
+    use starmate_services_core::workspace_identity::{
         remote_workspace_runtime_key, remote_workspace_runtime_root,
     };
     use std::ffi::OsString;
@@ -1030,7 +1030,7 @@ mod tests {
         let pm = PathManager::with_user_root_for_tests(base.join("user"));
         let host = "Example.COM";
         let remote_root = "/root/repo";
-        let legacy = openbitfun_services_core::workspace_identity::remote_workspace_runtime_root(
+        let legacy = starmate_services_core::workspace_identity::remote_workspace_runtime_root(
             pm.remote_ssh_mirror_root_dir(),
             host,
             remote_root,
@@ -1071,13 +1071,13 @@ mod tests {
         let parent_root = "/home/project-A";
         let child_root = "/home/project-A/sub-project-B";
         let parent_legacy =
-            openbitfun_services_core::workspace_identity::remote_workspace_runtime_root(
+            starmate_services_core::workspace_identity::remote_workspace_runtime_root(
                 pm.remote_ssh_mirror_root_dir(),
                 host,
                 parent_root,
             );
         let child_legacy =
-            openbitfun_services_core::workspace_identity::remote_workspace_runtime_root(
+            starmate_services_core::workspace_identity::remote_workspace_runtime_root(
                 pm.remote_ssh_mirror_root_dir(),
                 host,
                 child_root,

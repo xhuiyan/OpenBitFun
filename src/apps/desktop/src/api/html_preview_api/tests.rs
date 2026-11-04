@@ -1,6 +1,6 @@
 use super::*;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
-use openbitfun_product_domains::html_preview::PREVIEW_CHUNK_BYTES;
+use starmate_product_domains::html_preview::PREVIEW_CHUNK_BYTES;
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     Mutex,
@@ -125,7 +125,7 @@ async fn site_fixture(
     HtmlPreviewCreateResponse,
     reqwest::Client,
 ) {
-    use openbitfun_services_integrations::remote_connect::{
+    use starmate_services_integrations::remote_connect::{
         file_projection::SessionFileTarget, html_preview::HtmlPreviewSource,
     };
     crate::ensure_rustls_crypto_provider();
@@ -141,7 +141,7 @@ async fn site_fixture(
     request.file_path = site.join(filename).to_string_lossy().into_owned();
     let reader = HtmlPreviewSource::new(
         SessionFileTarget {
-            fs: Arc::new(openbitfun_services_core::workspace::LocalWorkspaceFs),
+            fs: Arc::new(starmate_services_core::workspace::LocalWorkspaceFs),
             root: directory.path().to_string_lossy().into_owned(),
             path: request.file_path.clone(),
             remote: false,

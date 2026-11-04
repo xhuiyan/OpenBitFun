@@ -130,7 +130,7 @@ fn owns(path: &Path, record: &LaunchRecord) -> bool {
 #[cfg(any(target_os = "linux", test))]
 fn linux_entry_owned(text: &str, record: &LaunchRecord) -> bool {
     use super::launcher::{desktop_exec_arg, desktop_value};
-    let manifest = openbitfun_miniapp_ipc::launcher::launch_path(record);
+    let manifest = starmate_miniapp_ipc::launcher::launch_path(record);
     let candidates = [
         record.host_executable.clone(),
         record
@@ -179,7 +179,7 @@ fn windows_link_owned(path: &Path, record: &LaunchRecord) -> bool {
             Ok(String::from_utf16_lossy(&buffer[..end])
                 == format!(
                     "--miniapp-launch \"{}\"",
-                    openbitfun_miniapp_ipc::launcher::launch_path(record).display()
+                    starmate_miniapp_ipc::launcher::launch_path(record).display()
                 ))
         })();
         CoUninitialize();
@@ -210,7 +210,7 @@ mod tests {
     fn linux_ownership_accepts_legacy_and_shell_entries_but_not_other_apps() {
         let root = tempfile::tempdir().unwrap();
         let record = fixture(root.path());
-        let manifest = openbitfun_miniapp_ipc::launcher::launch_path(&record);
+        let manifest = starmate_miniapp_ipc::launcher::launch_path(&record);
         for binary in [
             record.host_executable.clone(),
             record

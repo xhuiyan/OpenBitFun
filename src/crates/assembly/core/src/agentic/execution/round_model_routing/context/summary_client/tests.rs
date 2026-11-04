@@ -1,6 +1,6 @@
 use super::*;
 use crate::util::types::Message as AIMessage;
-use openbitfun_core_types::ReasoningConfig;
+use starmate_core_types::ReasoningConfig;
 use serde_json::{json, Value};
 use std::time::{Duration, Instant};
 
@@ -9,7 +9,7 @@ fn projection() -> ReasoningCatalogProjection {
         "catalog": {"source": "auto"}
     }))
     .unwrap();
-    openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+    starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
         "openai",
         "qwen3.8-flash-next",
         "https://gateway.example.invalid/v1",
@@ -54,7 +54,7 @@ fn declared_patch_projection(effort: &str) -> ReasoningCatalogProjection {
         }]}]
     }))
     .unwrap();
-    openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+    starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
         "openai",
         "qwen3.8-flash-next",
         "https://gateway.example.invalid/v1",
@@ -190,7 +190,7 @@ fn models_without_reasoning_presets_keep_automatic_requests_unchanged() {
         "catalog": {"source": "disabled"}
     }))
     .unwrap();
-    let projection = openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+    let projection = starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
         "openai",
         "text-only",
         "http://127.0.0.1:1/v1",
@@ -379,7 +379,7 @@ async fn unknown_auto_and_disabled_omit_effort_but_explicit_policies_are_not_rew
             "catalog": {"source": "disabled"}
         }))
         .unwrap();
-        let disabled = openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+        let disabled = starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
             "openai",
             "qwen3.8-flash-next",
             &endpoint,
@@ -476,7 +476,7 @@ async fn user_declared_low_and_xhigh_patches_keep_their_exact_wire_values() {
 
 #[test]
 fn confirmed_catalog_and_model_specific_adapter_efforts_remain_automatic() {
-    let catalog = openbitfun_ai_adapters::models_dev::ModelsDevCatalog::parse_str(
+    let catalog = starmate_ai_adapters::models_dev::ModelsDevCatalog::parse_str(
         r#"{
         "deepseek": {"models": {"deepseek-v4-flash": {
             "id": "deepseek-v4-flash", "reasoning": true,
@@ -489,7 +489,7 @@ fn confirmed_catalog_and_model_specific_adapter_efforts_remain_automatic() {
         (Some(&catalog), ReasoningPresetSource::ModelsDev),
         (None, ReasoningPresetSource::AdapterFallback),
     ] {
-        let projection = openbitfun_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
+        let projection = starmate_ai_adapters::models_dev::project_reasoning_catalog_with_limit(
             "openai",
             "deepseek-v4-flash",
             "https://api.deepseek.com/v1",

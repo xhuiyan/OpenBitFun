@@ -1,5 +1,5 @@
 [package]
-name = "openbitfun-services-integrations"
+name = "starmate-services-integrations"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,7 +7,7 @@ description = "OpenBitFun integration service owner crate"
 autotests = false
 
 [lib]
-name = "openbitfun_services_integrations"
+name = "starmate_services_integrations"
 crate-type = ["rlib"]
 
 [dependencies]
@@ -18,19 +18,19 @@ serde_json = { workspace = true }
 log = { workspace = true }
 ts-rs = { workspace = true, optional = true }
 tempfile = { workspace = true, optional = true }
-openbitfun-agent-runtime = { path = "../../execution/agent-runtime", optional = true }
-openbitfun-agent-workflows = { path = "../../execution/agent-workflows", optional = true }
-openbitfun-agent-tools = { path = "../../execution/tool-contracts", optional = true }
-openbitfun-events = { path = "../../contracts/events" }
-openbitfun-core-types = { path = "../../contracts/core-types", optional = true }
-openbitfun-product-domains = { path = "../../contracts/product-domains", optional = true }
-openbitfun-runtime-ports = { path = "../../contracts/runtime-ports", optional = true }
+starmate-agent-runtime = { path = "../../execution/agent-runtime", optional = true }
+starmate-agent-workflows = { path = "../../execution/agent-workflows", optional = true }
+starmate-agent-tools = { path = "../../execution/tool-contracts", optional = true }
+starmate-events = { path = "../../contracts/events" }
+starmate-core-types = { path = "../../contracts/core-types", optional = true }
+starmate-product-domains = { path = "../../contracts/product-domains", optional = true }
+starmate-runtime-ports = { path = "../../contracts/runtime-ports", optional = true }
 aes-gcm = { workspace = true, optional = true }
 aes = { workspace = true, optional = true }
 anyhow = { workspace = true, optional = true }
 async-trait = { workspace = true, optional = true }
 base64 = { workspace = true, optional = true }
-openbitfun-services-core = { path = "../services-core", optional = true }
+starmate-services-core = { path = "../services-core", optional = true }
 bzip2 = { workspace = true, optional = true }
 chrono = { workspace = true, optional = true }
 dunce = { workspace = true, optional = true }
@@ -99,7 +99,7 @@ default = []
 # app-server's `ts` feature enables `product-full` which pulls `git`.
 ts = ["dep:ts-rs"]
 models-dev = [
-    "openbitfun-services-core/tls-provider",
+    "starmate-services-core/tls-provider",
     "reqwest",
     "reqwest/rustls-no-provider",
     "reqwest/system-proxy",
@@ -110,9 +110,9 @@ models-dev = [
     "tokio/time",
     "windows",
 ]
-browser-control = ["anyhow", "openbitfun-services-core/process-runtime", "openbitfun-services-core/tls-provider", "dirs", "reqwest", "reqwest/json", "reqwest/rustls-no-provider", "thiserror", "tokio/rt", "tokio/time"]
+browser-control = ["anyhow", "starmate-services-core/process-runtime", "starmate-services-core/tls-provider", "dirs", "reqwest", "reqwest/json", "reqwest/rustls-no-provider", "thiserror", "tokio/rt", "tokio/time"]
 canvas-runtime = [
-    "dep:openbitfun-product-domains",
+    "dep:starmate-product-domains",
     "oxc",
     "sha2",
     "tokio/fs",
@@ -122,14 +122,14 @@ canvas-runtime = [
 deep-research = [
     "anyhow",
     "async-trait",
-    "dep:openbitfun-agent-workflows",
-    "dep:openbitfun-core-types",
-    "openbitfun-runtime-ports/workspace-ports",
+    "dep:starmate-agent-workflows",
+    "dep:starmate-core-types",
+    "starmate-runtime-ports/workspace-ports",
 ]
 git = [
     "async-trait",
-    "openbitfun-runtime-ports/git-port",
-    "openbitfun-services-core/process-runtime",
+    "starmate-runtime-ports/git-port",
+    "starmate-services-core/process-runtime",
     "chrono",
     "git2",
     "thiserror",
@@ -141,8 +141,8 @@ git = [
 ]
 file-watch = ["notify", "tokio/rt", "tokio/sync"]
 function-agents = [
-    "openbitfun-product-domains/function-agents",
-    "dep:openbitfun-product-domains",
+    "starmate-product-domains/function-agents",
+    "dep:starmate-product-domains",
     "git",
 ]
 mcp = [
@@ -150,9 +150,9 @@ mcp = [
     "anyhow",
     "async-trait",
     "base64",
-    "openbitfun-agent-tools/mcp-bridge",
-    "openbitfun-services-core/process-runtime",
-    "openbitfun-services-core/tls-provider",
+    "starmate-agent-tools/mcp-bridge",
+    "starmate-services-core/process-runtime",
+    "starmate-services-core/tls-provider",
     "futures",
     "hex",
     "rand",
@@ -175,9 +175,9 @@ mcp = [
     "process-tree",
 ]
 miniapp-storage = [
-    "openbitfun-services-core/json-io",
-    "dep:openbitfun-product-domains",
-    "openbitfun-product-domains/miniapp",
+    "starmate-services-core/json-io",
+    "dep:starmate-product-domains",
+    "starmate-product-domains/miniapp",
     "tokio/fs",
     "tokio/time",
     "uuid",
@@ -185,10 +185,10 @@ miniapp-storage = [
 miniapp-runtime = [
     "miniapp-storage",
     "base64",
-    "openbitfun-product-domains/miniapp",
-    "openbitfun-services-core/process-runtime",
-    "openbitfun-services-core/tls-provider",
-    "dep:openbitfun-product-domains",
+    "starmate-product-domains/miniapp",
+    "starmate-services-core/process-runtime",
+    "starmate-services-core/tls-provider",
+    "dep:starmate-product-domains",
     "dirs",
     "reqwest",
     "reqwest/rustls-no-provider",
@@ -204,10 +204,10 @@ miniapp-runtime = [
     "which",
 ]
 account-identity = [
-    "dep:openbitfun-product-domains",
-    "openbitfun-services-core/tls-provider",
-    "openbitfun-services-core/credential-vault",
-    "openbitfun-services-core/product-identity",
+    "dep:starmate-product-domains",
+    "starmate-services-core/tls-provider",
+    "starmate-services-core/credential-vault",
+    "starmate-services-core/product-identity",
     "chrono", "dirs", "thiserror",
     "dep:keyring-core", "dep:windows-native-keyring-store", "dep:zbus-secret-service-keyring-store",
     "reqwest", "reqwest/json", "reqwest/rustls-no-provider",
@@ -215,10 +215,10 @@ account-identity = [
 ]
 miniapp-market = [
     "account-identity",
-    "openbitfun-services-core/tls-provider",
-    "openbitfun-product-domains/appearance-market",
-    "openbitfun-services-core/credential-vault",
-    "openbitfun-services-core/product-identity",
+    "starmate-services-core/tls-provider",
+    "starmate-product-domains/appearance-market",
+    "starmate-services-core/credential-vault",
+    "starmate-services-core/product-identity",
     "chrono",
     "dep:keyring-core",
     "dep:windows-native-keyring-store",
@@ -242,8 +242,8 @@ miniapp-market = [
     "zip",
 ]
 plugin-source = [
-    "openbitfun-product-domains/plugin-source",
-    "dep:openbitfun-product-domains",
+    "starmate-product-domains/plugin-source",
+    "dep:starmate-product-domains",
     "dunce",
     "fs2",
     "hex",
@@ -258,11 +258,11 @@ plugin-source = [
     "windows",
 ]
 hook-import = [
-    "dep:openbitfun-agent-runtime",
-    "openbitfun-agent-runtime/native-hook-settings",
-    "openbitfun-product-domains/external-sources",
-    "openbitfun-services-core/local-storage",
-    "dep:openbitfun-product-domains",
+    "dep:starmate-agent-runtime",
+    "starmate-agent-runtime/native-hook-settings",
+    "starmate-product-domains/external-sources",
+    "starmate-services-core/local-storage",
+    "dep:starmate-product-domains",
     "hex",
     "sha2",
     "thiserror",
@@ -274,7 +274,7 @@ remote-connect = [
     "dep:sioc",
     "dep:pulldown-cmark",
     "fs2",
-    "dep:openbitfun-product-domains",
+    "dep:starmate-product-domains",
     "thiserror",
     "dep:hkdf",
     "account-identity",
@@ -284,14 +284,14 @@ remote-connect = [
     "aes-gcm",
     "async-trait",
     "base64",
-    "dep:openbitfun-agent-tools",
-    "dep:openbitfun-core-types",
-    "openbitfun-services-core/local-storage",
-    "openbitfun-services-core/process-runtime",
-    "openbitfun-services-core/tls-provider",
-    "openbitfun-runtime-ports/agent-api",
-    "openbitfun-runtime-ports/remote-workspace-ports",
-    "openbitfun-runtime-ports/workspace-ports",
+    "dep:starmate-agent-tools",
+    "dep:starmate-core-types",
+    "starmate-services-core/local-storage",
+    "starmate-services-core/process-runtime",
+    "starmate-services-core/tls-provider",
+    "starmate-runtime-ports/agent-api",
+    "starmate-runtime-ports/remote-workspace-ports",
+    "starmate-runtime-ports/workspace-ports",
     "chrono",
     "dirs",
     "futures",
@@ -335,12 +335,12 @@ remote-connect = [
 remote-ssh = [
     "anyhow",
     "async-trait",
-    "openbitfun-services-core/filesystem",
-    "openbitfun-services-core/process-runtime",
-    "openbitfun-services-core/workspace-identity",
-    "openbitfun-runtime-ports/remote-exec-port",
-    "openbitfun-runtime-ports/remote-workspace-ports",
-    "openbitfun-runtime-ports/workspace-ports",
+    "starmate-services-core/filesystem",
+    "starmate-services-core/process-runtime",
+    "starmate-services-core/workspace-identity",
+    "starmate-runtime-ports/remote-exec-port",
+    "starmate-runtime-ports/remote-workspace-ports",
+    "starmate-runtime-ports/workspace-ports",
     "regex",
     "sha2",
     "terminal-core",
@@ -362,9 +362,9 @@ remote-ssh-concrete = [
     "anyhow",
     "async-trait",
     "base64",
-    "dep:openbitfun-core-types",
-    "openbitfun-services-core/tls-provider",
-    "dep:openbitfun-runtime-ports",
+    "dep:starmate-core-types",
+    "starmate-services-core/tls-provider",
+    "dep:starmate-runtime-ports",
     "chrono",
     "dirs",
     "minisign-verify",
@@ -389,15 +389,15 @@ remote-persistence = [
     "anyhow",
     "base64",
     "hostname",
-    "openbitfun-services-core/product-identity",
+    "starmate-services-core/product-identity",
     "rand",
     "sha2",
     "windows",
 ]
 review-platform = [
     "async-trait",
-    "openbitfun-services-core/process-runtime",
-    "openbitfun-services-core/tls-provider",
+    "starmate-services-core/process-runtime",
+    "starmate-services-core/tls-provider",
     "chrono",
     "futures",
     "reqwest",
@@ -416,10 +416,10 @@ review-platform = [
 speech = [
     "async-trait",
     "base64",
-    "openbitfun-services-core/tls-provider",
+    "starmate-services-core/tls-provider",
     "bzip2",
     "chrono",
-    "dep:openbitfun-core-types",
+    "dep:starmate-core-types",
     "futures-util",
     "reqwest",
     "reqwest/rustls-no-provider",
@@ -445,8 +445,8 @@ speech-realtime = [
 ]
 workspace-search = [
     "async-trait",
-    "openbitfun-services-core/filesystem",
-    "openbitfun-services-core/process-runtime",
+    "starmate-services-core/filesystem",
+    "starmate-services-core/process-runtime",
     "dunce",
     "thiserror",
     "tokio/io-util",
@@ -455,10 +455,10 @@ workspace-search = [
     "tokio/time",
     "which",
 ]
-process-tree = ["openbitfun-services-core/process-runtime"]
+process-tree = ["starmate-services-core/process-runtime"]
 script-tool-runtime = [
     "async-trait",
-    "openbitfun-runtime-ports/script-tool-runtime",
+    "starmate-runtime-ports/script-tool-runtime",
     "process-tree",
     "tokio/io-util",
     "tokio/process",
@@ -469,8 +469,8 @@ script-tool-runtime = [
 ]
 ptc-runtime = [
     "async-trait",
-    "dep:openbitfun-core-types",
-    "openbitfun-runtime-ports/ptc-runtime",
+    "dep:starmate-core-types",
+    "starmate-runtime-ports/ptc-runtime",
     "process-tree",
     "tokio/io-util",
     "tokio/process",
@@ -481,8 +481,8 @@ ptc-runtime = [
 ]
 web-tools = [
     "async-trait",
-    "openbitfun-runtime-ports/web-search-port",
-    "openbitfun-services-core/tls-provider",
+    "starmate-runtime-ports/web-search-port",
+    "starmate-services-core/tls-provider",
     "chrono",
     "futures-util",
     "reqwest",
@@ -510,7 +510,7 @@ product-full = [
     "web-tools",
     "workspace-search",
 ]
-skillhub = ["openbitfun-services-core/tls-provider", "reqwest", "reqwest/json", "reqwest/query", "reqwest/rustls-no-provider", "reqwest/stream", "zip", "tempfile", "tokio/fs", "tokio/io-util"]
+skillhub = ["starmate-services-core/tls-provider", "reqwest", "reqwest/json", "reqwest/query", "reqwest/rustls-no-provider", "reqwest/stream", "zip", "tempfile", "tokio/fs", "tokio/io-util"]
 ssh_config = ["dep:glob"]
 
 [dev-dependencies]

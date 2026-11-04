@@ -8,13 +8,13 @@
 use std::future::Future;
 use std::sync::{Arc, OnceLock};
 
-use openbitfun_core::agentic::coordination::{
+use starmate_core::agentic::coordination::{
     btw_turn_id, get_global_coordinator, ConversationCoordinator, DialogSubmissionPolicy,
     DialogTriggerSource,
 };
-use openbitfun_core::agentic::core::SessionState;
-use openbitfun_core::agentic::image_analysis::ImageContextData;
-use openbitfun_core::agentic::side_question::{
+use starmate_core::agentic::core::SessionState;
+use starmate_core::agentic::image_analysis::ImageContextData;
+use starmate_core::agentic::side_question::{
     BtwTurnWatch, SideQuestionRuntime, BTW_TURN_POLL_INTERVAL,
 };
 use serde::Deserialize;
@@ -37,9 +37,9 @@ struct BtwAskStreamRequest {
     #[serde(default)]
     image_contexts: Option<Vec<ImageContextData>>,
     #[serde(default)]
-    initial_model_selection: Option<openbitfun_runtime_ports::AgentSessionModelSelection>,
+    initial_model_selection: Option<starmate_runtime_ports::AgentSessionModelSelection>,
     #[serde(default)]
-    initial_model_target: Option<openbitfun_runtime_ports::AgentSessionModelTargetSelection>,
+    initial_model_target: Option<starmate_runtime_ports::AgentSessionModelTargetSelection>,
 }
 
 fn side_questions() -> &'static Arc<SideQuestionRuntime> {

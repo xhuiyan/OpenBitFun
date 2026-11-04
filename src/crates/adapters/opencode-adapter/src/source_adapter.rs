@@ -12,19 +12,19 @@ use crate::local_source_paths::{
     OpenCodeLocalConfigOptions,
 };
 use async_trait::async_trait;
-use openbitfun_plugin_runtime_client::PluginRuntimeAdapter;
-use openbitfun_product_domains::external_hook_contributions::{
+use starmate_plugin_runtime_client::PluginRuntimeAdapter;
+use starmate_product_domains::external_hook_contributions::{
     ExternalHookContributionDeclaration, ExternalHookPoint, ExternalHookRiskCapability,
 };
-use openbitfun_product_domains::external_sources::SourceKey;
-use openbitfun_product_domains::plugin_source::{PluginActivationAuthority, PluginPackageInput};
-use openbitfun_runtime_ports::{
+use starmate_product_domains::external_sources::SourceKey;
+use starmate_product_domains::plugin_source::{PluginActivationAuthority, PluginPackageInput};
+use starmate_runtime_ports::{
     PermissionPromptDenyState, PermissionPromptDescriptor, PermissionPromptEffectKind,
     PluginArtifactRef, PluginCapabilityRef, PluginDataClassification, PluginEffectCandidatePayload,
     PluginOwnerKind, PluginOwnerRef, PluginPermissionGate, PluginRiskLevel, PluginRollbackMode,
     PluginRollbackPolicy, PluginTargetRef,
 };
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     PluginAuditRef, PluginConfigValidationIssue, PluginConfigValidationState,
     PluginConfigValidationStatus, PluginDiagnostic, PluginDiagnosticDetail,
     PluginDiagnosticSeverity, PluginDispatchEnvelope, PluginEffectCandidate, PluginManifestRef,
@@ -1748,8 +1748,8 @@ fn load_opencode_config_snapshot_with_options(
         };
         let path = PathBuf::from(document.location());
         let content = match document.read_bounded(MAX_CONFIG_SNAPSHOT_FILE_BYTES) {
-            Ok(openbitfun_services_core::bounded_fs::BoundedTextRead::Content(content)) => content,
-            Ok(openbitfun_services_core::bounded_fs::BoundedTextRead::TooLarge) => {
+            Ok(starmate_services_core::bounded_fs::BoundedTextRead::Content(content)) => content,
+            Ok(starmate_services_core::bounded_fs::BoundedTextRead::TooLarge) => {
                 return Err(OpenCodeConfigSnapshotError::Invalid {
                     path,
                     message: format!(
@@ -1757,7 +1757,7 @@ fn load_opencode_config_snapshot_with_options(
                     ),
                 });
             }
-            Ok(openbitfun_services_core::bounded_fs::BoundedTextRead::InvalidUtf8) => {
+            Ok(starmate_services_core::bounded_fs::BoundedTextRead::InvalidUtf8) => {
                 return Err(OpenCodeConfigSnapshotError::Invalid {
                     path,
                     message: "configuration must be valid UTF-8".to_string(),
@@ -1773,7 +1773,7 @@ fn load_opencode_config_snapshot_with_options(
                 }
             })?;
         let value =
-            serde_json::from_str::<Value>(&openbitfun_services_core::jsonc::strip_jsonc(&content))
+            serde_json::from_str::<Value>(&starmate_services_core::jsonc::strip_jsonc(&content))
                 .map_err(|error| OpenCodeConfigSnapshotError::Invalid {
                     path: path.clone(),
                     message: error.to_string(),
@@ -2800,8 +2800,8 @@ fn audit_ref(envelope: &PluginDispatchEnvelope) -> PluginAuditRef {
 #[cfg(test)]
 mod opencode_projection_contracts {
     use super::*;
-    use openbitfun_plugin_runtime_client::DefaultPluginRuntimeClient;
-    use openbitfun_runtime_ports::{
+    use starmate_plugin_runtime_client::DefaultPluginRuntimeClient;
+    use starmate_runtime_ports::{
         PermissionPromptDenyState, PermissionPromptEffectKind, PluginPayloadRedaction,
         PluginPayloadRef, PluginRuntimeClient, PluginRuntimeEpochs,
     };

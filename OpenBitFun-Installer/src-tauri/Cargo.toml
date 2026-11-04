@@ -1,12 +1,12 @@
 [package]
-name = "openbitfun-installer"
+name = "starmate-installer"
 version = "1.0.8"
 authors = ["OpenBitFun Team"]
 edition = "2021"
 description = "OpenBitFun Custom Installer - Modern branded installation experience"
 
 [lib]
-name = "openbitfun_installer_lib"
+name = "starmate_installer_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [[bin]]
@@ -33,9 +33,9 @@ anyhow = "1.0"
 log = "0.4"
 dirs = "5.0"
 zip = { version = "9.0.3", default-features = false, features = ["deflate"] }
-openbitfun-core-types = { path = "../../src/crates/contracts/core-types" }
-openbitfun-ai-adapters = { path = "../../src/crates/adapters/ai-adapters" }
-openbitfun-services-core = { path = "../../src/crates/services/services-core", features = ["json-io"] }
+starmate-core-types = { path = "../../src/crates/contracts/core-types" }
+starmate-ai-adapters = { path = "../../src/crates/adapters/ai-adapters" }
+starmate-services-core = { path = "../../src/crates/services/services-core", features = ["json-io"] }
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.52"

@@ -220,7 +220,7 @@ Usage:
                 };
                 if !matches!(
                     validation,
-                    Ok(Some(openbitfun_runtime_ports::WorkspacePathKind::Directory))
+                    Ok(Some(starmate_runtime_ports::WorkspacePathKind::Directory))
                 ) {
                     return ValidationResult {
                         result: false,
@@ -331,7 +331,7 @@ Usage:
 mod tests {
     use super::*;
     use crate::agentic::WorkspaceBinding;
-    use openbitfun_runtime_ports::{
+    use starmate_runtime_ports::{
         ToolRuntimeHandles, WorkspaceCommandOptions, WorkspaceCommandResult, WorkspaceDirEntry,
         WorkspaceFileSystem, WorkspacePathKind, WorkspaceServices, WorkspaceShell,
     };

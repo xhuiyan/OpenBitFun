@@ -14,7 +14,7 @@ use crate::trace::ModelExchangeTraceConfig;
 use crate::types::{Message, RemoteModelInfo, ToolDefinition};
 use anyhow::{anyhow, Context, Result};
 use log::{debug, warn};
-use openbitfun_core_types::errors::AiProviderError;
+use starmate_core_types::errors::AiProviderError;
 use reqwest::RequestBuilder;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
@@ -90,7 +90,7 @@ impl LoadCodeAssistResponse {
             .join("; ");
         let mut error = AiProviderError::classified(
             format!("Antigravity account is not eligible: {reasons}"),
-            openbitfun_core_types::errors::ErrorCategory::Permission,
+            starmate_core_types::errors::ErrorCategory::Permission,
         );
         error.provider = Some("Antigravity".to_string());
         Some(error)
@@ -618,7 +618,7 @@ async fn discover_project_at(
                     }
                     AiProviderError::classified(
                         format!("Code Assist onboardUser completed without a project; sign in to {setup} to finish account setup"),
-                        openbitfun_core_types::errors::ErrorCategory::InvalidRequest,
+                        starmate_core_types::errors::ErrorCategory::InvalidRequest,
                     ).into()
                 });
         }
@@ -669,7 +669,7 @@ async fn discover_project(client: &AIClient) -> Result<String> {
             .map_err(|_| {
                 AiProviderError::classified(
                     "Code Assist project discovery timed out after 30s".to_string(),
-                    openbitfun_core_types::errors::ErrorCategory::Timeout,
+                    starmate_core_types::errors::ErrorCategory::Timeout,
                 )
             })??
     } else {
@@ -821,8 +821,8 @@ fn should_try_next_stream_endpoint(error: &anyhow::Error) -> bool {
             Some(404 | 500..=599) => true,
             None => matches!(
                 error.category,
-                openbitfun_core_types::errors::ErrorCategory::Network
-                    | openbitfun_core_types::errors::ErrorCategory::Timeout
+                starmate_core_types::errors::ErrorCategory::Network
+                    | starmate_core_types::errors::ErrorCategory::Timeout
             ),
             _ => false,
         },
@@ -1330,7 +1330,7 @@ mod tests {
             .unwrap_err();
         assert_eq!(
             error.downcast_ref::<AiProviderError>().unwrap().category,
-            openbitfun_core_types::errors::ErrorCategory::Permission
+            starmate_core_types::errors::ErrorCategory::Permission
         );
         assert!(error.to_string().contains("https://example.test/verify"));
         let empty = format!("{base}/empty");
@@ -1460,7 +1460,7 @@ mod tests {
         let detail = error.downcast_ref::<AiProviderError>().unwrap();
         assert_eq!(
             detail.category,
-            openbitfun_core_types::errors::ErrorCategory::Permission
+            starmate_core_types::errors::ErrorCategory::Permission
         );
         assert_eq!(detail.http_status, None);
         assert!(detail.message.contains("not available in your location"));
@@ -1470,7 +1470,7 @@ mod tests {
     #[tokio::test]
     async fn control_plane_revocation_is_not_retried_or_sent_to_fallback_hosts() {
         use crate::client::ModelRequestAuthorization;
-        use openbitfun_core_types::errors::ErrorCategory;
+        use starmate_core_types::errors::ErrorCategory;
         use std::sync::{
             atomic::{AtomicUsize, Ordering},
             Arc,

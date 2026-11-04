@@ -2,7 +2,7 @@ use log::{debug, error, warn};
 use notify::{
     Config, Error as NotifyError, Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher,
 };
-use openbitfun_events::EventEmitter;
+use starmate_events::EventEmitter;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::future::Future;

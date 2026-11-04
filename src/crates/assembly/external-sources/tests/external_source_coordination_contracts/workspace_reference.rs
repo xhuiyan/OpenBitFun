@@ -1,10 +1,10 @@
-use openbitfun_external_sources::ExternalWorkspaceReferenceCoordinator;
-use openbitfun_product_domains::external_sources::{
+use starmate_external_sources::ExternalWorkspaceReferenceCoordinator;
+use starmate_product_domains::external_sources::{
     EcosystemId, ExecutionDomainId, ExternalSourceContext, ExternalSourceHealth,
     ExternalSourceLifecycleState, ExternalSourceProviderError, ExternalSourceRecord,
     ExternalSourceScope, ExternalWatchRoot, SourceKey,
 };
-use openbitfun_product_domains::workspace_references::{
+use starmate_product_domains::workspace_references::{
     ExternalWorkspaceReferenceDefinition, ExternalWorkspaceReferenceProviderIdentity,
     ExternalWorkspaceReferenceProviderSnapshot, ExternalWorkspaceReferenceSourceProvider,
 };

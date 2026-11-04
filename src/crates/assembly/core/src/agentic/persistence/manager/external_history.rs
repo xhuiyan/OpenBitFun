@@ -1,7 +1,7 @@
 use super::*;
 use crate::agentic::persistence::session_branch::TransientSessionBranchSource;
 use crate::external_session_import::deferred::{self, tracking};
-use openbitfun_services_core::session::OfflineSessionBundle;
+use starmate_services_core::session::OfflineSessionBundle;
 
 pub(crate) fn external_history_catalog(bundle: &OfflineSessionBundle) -> SessionTurnCatalog {
     build_turn_catalog(

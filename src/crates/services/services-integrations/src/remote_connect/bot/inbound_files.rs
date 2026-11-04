@@ -2,8 +2,8 @@
 use crate::remote_connect::file_projection::SessionFileTarget;
 use anyhow::{bail, Context, Result};
 use base64::{engine::general_purpose::STANDARD as B64, Engine};
-use openbitfun_runtime_ports::WorkspacePathKind;
-use openbitfun_runtime_ports::{RemoteSessionAttachment, RemoteStoredAttachment};
+use starmate_runtime_ports::WorkspacePathKind;
+use starmate_runtime_ports::{RemoteSessionAttachment, RemoteStoredAttachment};
 use sha2::{Digest, Sha256};
 use tokio::io::AsyncWriteExt;
 
@@ -190,7 +190,7 @@ pub fn attachment_prompt(name: &str, path: &str, size: usize) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_runtime_ports::{WorkspaceDirEntry, WorkspaceFileSystem, WorkspaceWriter};
+    use starmate_runtime_ports::{WorkspaceDirEntry, WorkspaceFileSystem, WorkspaceWriter};
     use std::{
         path::PathBuf,
         sync::{Arc, Mutex},

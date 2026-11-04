@@ -19,14 +19,14 @@ use axum::{Json, Router};
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use base64::Engine;
 use chrono::Utc;
-use openbitfun_product_domains::miniapp::market::{
+use starmate_product_domains::miniapp::market::{
     compute_review_bundle_hash, validate_market_category, validate_market_slug, CursorPage,
     MarketLicense, MarketListingDetail, MarketListingSummary, MarketRelease, MarketSort,
     MarketSubmission, MarketSubmissionDraftRequest, MarketSubmissionStatus, MarketUserSummary,
     ReviewDecision, ReviewDecisionRequest, MARKET_CATEGORIES, MARKET_DEFAULT_PAGE_SIZE,
     MARKET_MAX_PAGE_SIZE, MARKET_MAX_SCREENSHOTS, MARKET_PACKAGE_CONTENT_TYPE,
 };
-use openbitfun_product_domains::miniapp::types::{
+use starmate_product_domains::miniapp::types::{
     MiniAppI18n, MiniAppPermissions, NodePermissions,
 };
 use serde::{Deserialize, Serialize};
@@ -2301,7 +2301,7 @@ mod tests {
         let mut first_locales = std::collections::HashMap::new();
         first_locales.insert(
             "zh-CN".to_string(),
-            openbitfun_product_domains::miniapp::types::MiniAppLocaleStrings {
+            starmate_product_domains::miniapp::types::MiniAppLocaleStrings {
                 name: Some("正则工具".to_string()),
                 description: Some("本地测试".to_string()),
                 tags: Some(vec!["开发".to_string()]),
@@ -2309,7 +2309,7 @@ mod tests {
         );
         first_locales.insert(
             "en-US".to_string(),
-            openbitfun_product_domains::miniapp::types::MiniAppLocaleStrings {
+            starmate_product_domains::miniapp::types::MiniAppLocaleStrings {
                 name: Some("Regex Tool".to_string()),
                 description: None,
                 tags: None,

@@ -19,8 +19,8 @@ use std::collections::HashMap;
 use std::ffi::c_void;
 use std::sync::Mutex;
 
-use openbitfun_agent_tools::computer_use_host::error::OpenBitFunResult;
-use openbitfun_agent_tools::computer_use_host::{AppInfo, AppWindowInfo};
+use starmate_agent_tools::computer_use_host::error::OpenBitFunResult;
+use starmate_agent_tools::computer_use_host::{AppInfo, AppWindowInfo};
 use windows::core::BOOL;
 use windows::Win32::Foundation::{HWND, LPARAM, TRUE};
 use windows::Win32::UI::WindowsAndMessaging::{
@@ -85,12 +85,12 @@ pub(super) fn list_running_apps(_include_hidden: bool) -> OpenBitFunResult<Vec<A
     Ok(apps)
 }
 
-pub(super) fn list_share_targets() -> Vec<openbitfun_agent_tools::computer_use_control::ShareTarget>
+pub(super) fn list_share_targets() -> Vec<starmate_agent_tools::computer_use_control::ShareTarget>
 {
     enumerate_windows(false)
         .into_iter()
         .map(
-            |window| openbitfun_agent_tools::computer_use_control::ShareTarget {
+            |window| starmate_agent_tools::computer_use_control::ShareTarget {
                 selection_id: String::new(),
                 unavailable_reason: None,
                 id: format!("pid:{}/window:{}", window.pid, window.hwnd),
@@ -112,7 +112,7 @@ pub(super) fn list_share_targets() -> Vec<openbitfun_agent_tools::computer_use_c
 /// off-screen so discovery can name them. Unlike the app list this preserves
 /// every window of a process and its exact native handle.
 pub(super) fn list_windows() -> Vec<AppWindowInfo> {
-    use openbitfun_agent_tools::computer_use_host::ComputerUseImageGlobalBounds;
+    use starmate_agent_tools::computer_use_host::ComputerUseImageGlobalBounds;
     // Many windows share a process; open each process once for its name.
     let mut executables = HashMap::<u32, String>::new();
     enumerate_windows(true)
@@ -181,7 +181,7 @@ pub(super) fn minimized_window_for_pid(pid: u32) -> Option<usize> {
 /// an application selector, its first minimized titled window). Window-only
 /// sharing must admit it. Returns whether a window was restored.
 pub(super) fn restore_window(pid: u32, window: Option<usize>) -> OpenBitFunResult<bool> {
-    use openbitfun_agent_tools::computer_use_host::error::OpenBitFunError;
+    use starmate_agent_tools::computer_use_host::error::OpenBitFunError;
     use windows::Win32::UI::WindowsAndMessaging::{IsWindow, ShowWindow, SW_RESTORE};
     crate::computer_use::control_session::foreground_allowed().map_err(OpenBitFunError::tool)?;
     let Some(handle) = window.or_else(|| minimized_window_for_pid(pid)) else {

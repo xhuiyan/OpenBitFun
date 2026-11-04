@@ -1,7 +1,7 @@
 //! Deterministic resource admission. No OS handles, threads, timers or IO.
 //! Native cleanup is performed by the desktop facade using the returned epoch.
 
-use openbitfun_agent_tools::computer_use_control::{
+use starmate_agent_tools::computer_use_control::{
     ControlActionPolicy, ControlMode, ControlSharing, ControlSnapshot, SharingPhase,
 };
 
@@ -499,7 +499,7 @@ impl<E: Copy + PartialEq> Admission<E> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_agent_tools::computer_use_control::ObservationScope;
+    use starmate_agent_tools::computer_use_control::ObservationScope;
     #[test]
     fn changing_mode_preserves_exact_target_but_revokes_old_observations() {
         let mut state = Admission::<u8>::default();

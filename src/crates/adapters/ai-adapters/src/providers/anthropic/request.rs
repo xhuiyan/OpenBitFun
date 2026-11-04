@@ -810,7 +810,7 @@ mod tests {
             actions: vec![ReasoningPresetAction::Effort {
                 value: "medium".to_string(),
             }],
-            source: openbitfun_core_types::ReasoningPresetSource::ModelConfig,
+            source: starmate_core_types::ReasoningPresetSource::ModelConfig,
             effective_effort: Some("medium".to_string()),
             execution_provider: None,
             execution_model: None,
@@ -1050,7 +1050,7 @@ mod tests {
             label: "Off".to_string(),
             order: 0,
             actions: Vec::new(),
-            source: openbitfun_core_types::ReasoningPresetSource::ModelConfig,
+            source: starmate_core_types::ReasoningPresetSource::ModelConfig,
             effective_effort: None,
             execution_provider: None,
             execution_model: None,

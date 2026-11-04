@@ -6,8 +6,8 @@ use crate::schema::{
     PermissionEventNotification, ResyncDirective, SessionEventNotification,
 };
 use agent_client_protocol::{ConnectionTo, Result};
-use openbitfun_agent_runtime::sdk::PermissionRequestEvent;
-use openbitfun_app_server_protocol::external_source::ExternalSourceEventNotification;
+use starmate_agent_runtime::sdk::PermissionRequestEvent;
+use starmate_app_server_protocol::external_source::ExternalSourceEventNotification;
 use std::sync::Arc;
 
 pub(super) async fn run(
@@ -19,7 +19,7 @@ pub(super) async fn run(
 ) -> Result<()> {
     let mut rx = runtime.event_source().subscribe();
     let mut permission_rx = runtime.runtime().subscribe_permission_requests().ok();
-    let mut config_rx = openbitfun_core::service::config::subscribe_config_updates();
+    let mut config_rx = starmate_core::service::config::subscribe_config_updates();
     let mut external_source_rx = management
         .as_ref()
         .map(|management| management.subscribe_external_source_updates());
@@ -47,7 +47,7 @@ pub(super) async fn run(
                     std::future::pending::<
                         Option<
                             Result<
-                                openbitfun_core::service::config::ConfigUpdateEvent,
+                                starmate_core::service::config::ConfigUpdateEvent,
                                 tokio::sync::broadcast::error::RecvError,
                             >,
                         >,
@@ -61,7 +61,7 @@ pub(super) async fn run(
                 Some(receiver) => Some(receiver.recv().await),
                 None => {
                     std::future::pending::<Option<Result<
-                        (String, openbitfun_product_domains::external_sources::ExternalSourcePublicSnapshot),
+                        (String, starmate_product_domains::external_sources::ExternalSourcePublicSnapshot),
                         tokio::sync::broadcast::error::RecvError,
                     >>>()
                     .await
@@ -138,7 +138,7 @@ pub(super) async fn run(
             },
             recv = external_source_recv => match recv {
                 Some(Ok((workspace_id, snapshot))) => {
-                    let workspace_path = match openbitfun_core::service::workspace::get_global_workspace_service() {
+                    let workspace_path = match starmate_core::service::workspace::get_global_workspace_service() {
                         Some(service) => service.require_workspace(&workspace_id).await.ok()
                             .map(|record| record.root_path.to_string_lossy().into_owned()).unwrap_or_default(),
                         None => String::new(),

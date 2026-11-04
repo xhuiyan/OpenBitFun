@@ -11,7 +11,7 @@
 #![allow(dead_code)]
 
 use image::{Rgba, RgbaImage};
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
 use std::io::Cursor;
 
 /// Half-length of each crosshair arm in pixels (arm spans ±`ARM_LEN`).

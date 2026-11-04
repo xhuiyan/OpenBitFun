@@ -2,7 +2,7 @@
 //!
 //! The provider-neutral owner lives in `openbitfun-agent-runtime`.
 
-pub use openbitfun_agent_runtime::skills::resolve_builtin_default_enabled;
+pub use starmate_agent_runtime::skills::resolve_builtin_default_enabled;
 
 #[cfg(test)]
 mod tests {

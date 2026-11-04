@@ -1,14 +1,14 @@
 //! JS worker pool: LRU pool, get_or_spawn, call, stop_all, install_deps.
 
 use crate::miniapp::worker::{JsWorker, SharedMiniAppWorkerEventSink};
-use openbitfun_product_domains::miniapp::ports::{
+use starmate_product_domains::miniapp::ports::{
     MiniAppInstallDepsRequest, MiniAppPortError, MiniAppPortErrorKind, MiniAppPortFuture,
     MiniAppRuntimePort,
 };
-use openbitfun_product_domains::miniapp::runtime::{detect_runtime, DetectedRuntime};
-use openbitfun_product_domains::miniapp::types::{NodePermissions, NpmDep};
-pub use openbitfun_product_domains::miniapp::worker::InstallResult;
-use openbitfun_product_domains::miniapp::worker::{
+use starmate_product_domains::miniapp::runtime::{detect_runtime, DetectedRuntime};
+use starmate_product_domains::miniapp::types::{NodePermissions, NpmDep};
+pub use starmate_product_domains::miniapp::worker::InstallResult;
+use starmate_product_domains::miniapp::worker::{
     plan_install_deps, select_lru_worker, worker_is_idle, worker_pool_at_capacity, InstallDepsPlan,
 };
 use serde_json::Value;
@@ -455,7 +455,7 @@ impl JsWorkerPool {
         };
 
         let output =
-            openbitfun_services_core::process_manager::create_tokio_command(command.program)
+            starmate_services_core::process_manager::create_tokio_command(command.program)
                 .args(command.args)
                 .current_dir(app_dir)
                 .output()
@@ -501,7 +501,7 @@ fn map_miniapp_runtime_port_error(error: MiniAppWorkerPoolError) -> MiniAppPortE
 #[cfg(test)]
 mod tests {
     use super::*;
-    use openbitfun_product_domains::miniapp::runtime::RuntimeKind;
+    use starmate_product_domains::miniapp::runtime::RuntimeKind;
     use std::fs;
     use std::path::{Path, PathBuf};
 

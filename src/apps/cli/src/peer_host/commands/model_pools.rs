@@ -16,7 +16,7 @@ pub(crate) async fn dispatch(
         "get_session_model_target" | "update_session_model_target"
     ) {
         let session_id = get_string(request, "sessionId")?;
-        openbitfun_core_types::validate_session_id(&session_id)?;
+        starmate_core_types::validate_session_id(&session_id)?;
         super::session::ensure_session_workspace_runtime_ownership(state, request).await?;
         if state
             .compatibility
@@ -63,7 +63,7 @@ pub(crate) async fn dispatch(
             .map_err(|error| error.to_string())?;
         return serde_json::to_value(statuses).map_err(|error| error.to_string());
     }
-    let service = openbitfun_core::service::config::get_global_config_service()
+    let service = starmate_core::service::config::get_global_config_service()
         .await
         .map_err(|error| error.to_string())?;
     let store = service.model_pool_store().await;

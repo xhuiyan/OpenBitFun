@@ -10,7 +10,7 @@ async fn first_remote_path<'a>(
     paths: impl Iterator<Item = &'a str>,
 ) -> Result<Option<String>, String> {
     for path in paths {
-        if openbitfun_core::service::workspace::remote_io_for_legacy_or_id(
+        if starmate_core::service::workspace::remote_io_for_legacy_or_id(
             workspace_id,
             controller_local,
             path.trim(),
@@ -312,7 +312,7 @@ mod linux_clipboard {
     use super::parse_uri_list;
 
     fn read_tool_output(program: &str, args: &[&str]) -> Result<Option<String>, String> {
-        let output = openbitfun_core::util::process_manager::create_command(program)
+        let output = starmate_core::util::process_manager::create_command(program)
             .args(args)
             .output()
             .map_err(|error| {
@@ -470,7 +470,7 @@ fn read_clipboard_image_with_tools() -> ClipboardImageRead {
     // `Ok(None)` = the tool ran and reported no such payload;
     // `Err` = the tool could not be run at all.
     let read_target = |program: &str, args: &[&str]| -> Result<Option<Vec<u8>>, String> {
-        let output = openbitfun_core::util::process_manager::create_command(program)
+        let output = starmate_core::util::process_manager::create_command(program)
             .args(args)
             .output()
             .map_err(|error| {
@@ -861,7 +861,7 @@ mod tests {
 #[cfg(test)]
 mod remote_guard_tests {
     use super::{paste_files, PasteFilesRequest};
-    use openbitfun_core::service::remote_ssh::workspace_state::init_remote_workspace_manager;
+    use starmate_core::service::remote_ssh::workspace_state::init_remote_workspace_manager;
 
     const REMOTE_ROOT: &str = "/remote-audit-paste";
     const CONNECTION_ID: &str = "remote-audit-paste-connection";

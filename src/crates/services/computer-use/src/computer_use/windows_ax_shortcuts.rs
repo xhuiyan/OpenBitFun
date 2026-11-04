@@ -17,8 +17,8 @@
 #![allow(dead_code)]
 
 use crate::computer_use::windows_ax_ui::build_updated_cache_with_retry;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     parse_windows_accelerator_display, AppMenuShortcut,
 };
 use windows::Win32::Foundation::HWND;

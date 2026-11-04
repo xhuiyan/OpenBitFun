@@ -315,7 +315,7 @@ async fn desired_file_content(
 #[cfg(test)]
 mod tests {
     use super::BUILTIN_SKILLS_DIR;
-    use openbitfun_agent_runtime::skills::{SkillData, SkillLocation};
+    use starmate_agent_runtime::skills::{SkillData, SkillLocation};
 
     fn embedded_skill_text(path: &str) -> &'static str {
         BUILTIN_SKILLS_DIR
@@ -327,7 +327,7 @@ mod tests {
 
     #[test]
     fn custom_agent_skill_embeds_parseable_templates() {
-        use openbitfun_agent_runtime::custom_agent::{
+        use starmate_agent_runtime::custom_agent::{
             custom_agent_read_markdown_str, default_custom_agent_tools,
             default_custom_agent_user_context_policy, CustomAgentKind, CustomAgentLevel,
             CUSTOM_AGENT_SCHEMA_VERSION,

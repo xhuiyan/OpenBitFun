@@ -1,7 +1,7 @@
 #[cfg(feature = "mcp-bridge")]
-use openbitfun_agent_tools::validate_mcp_tool_bridge_input;
+use starmate_agent_tools::validate_mcp_tool_bridge_input;
 #[cfg(feature = "acp-bridge")]
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     acp_external_agent_tool_input_schema, build_acp_external_agent_tool_definition,
     build_acp_external_agent_tool_name, build_acp_external_agent_tool_result,
     normalize_name_for_acp_tool_part, render_acp_external_agent_rejected_message,
@@ -9,7 +9,7 @@ use openbitfun_agent_tools::{
     render_acp_external_agent_use_message, validate_acp_external_agent_tool_input,
     AcpExternalAgentToolDefinitionInput, ACP_TOOL_PREFIX, ACP_TOOL_SUFFIX,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_get_tool_spec_assistant_detail, build_get_tool_spec_detail_result,
     build_get_tool_spec_duplicate_load_hint, build_get_tool_spec_duplicate_load_result,
     build_openbitfun_runtime_uri, build_prompt_visible_tool_manifest_definitions,
@@ -40,7 +40,7 @@ use openbitfun_agent_tools::{
     ToolPathOperation, ToolPathResolution, ToolRenderOptions, ToolResult, ToolRuntimeRestrictions,
     ToolWorkspaceKind, ValidationResult, CALL_DEFERRED_TOOL_NAME, GET_TOOL_SPEC_TOOL_NAME,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_invalid_tool_call_error_message, build_normal_tool_json_repair_notice,
     build_permission_denied_tool_presentation, build_tool_execution_error_presentation,
     build_user_rejected_tool_presentation, build_user_rejected_tool_presentation_with_instruction,
@@ -50,21 +50,21 @@ use openbitfun_agent_tools::{
     USER_STEERING_INTERRUPTED_MESSAGE,
 };
 #[cfg(feature = "mcp-bridge")]
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_mcp_tool_bridge_definition, build_mcp_tool_bridge_name, build_mcp_tool_bridge_result,
     mcp_tool_bridge_dynamic_tool_info, mcp_tool_bridge_short_description, normalize_name_for_mcp,
     render_mcp_tool_bridge_rejected_message, render_mcp_tool_bridge_result_message,
     render_mcp_tool_bridge_use_message, McpToolBridgeBehaviorHints, McpToolBridgeDefinitionInput,
     MCP_TOOL_DELIMITER, MCP_TOOL_PREFIX,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     build_persisted_tool_output_message, count_tool_result_lines, file_tool_guidance_message,
     generate_tool_result_preview, is_file_tool_guidance_message,
     sanitize_tool_result_file_component, select_tool_result_indices_for_persistence,
     tool_result_is_persisted_output, PersistedToolOutput, ToolResultPersistenceCandidate,
     FILE_TOOL_GUIDANCE_PREFIX, PERSISTED_OUTPUT_TAG, TOOL_RESULT_PREVIEW_CHARS,
 };
-use openbitfun_agent_tools::{
+use starmate_agent_tools::{
     materialize_static_tool_provider_groups, ContextualToolManifestItem, DynamicToolDescriptor,
     DynamicToolProvider, GetToolSpecCatalogProvider, PortResult, PortableToolContextProvider,
     StaticToolMaterializationError, StaticToolProvider, StaticToolProviderFactory,
@@ -200,7 +200,7 @@ fn call_deferred_tool_contract_rejects_non_object_arguments() {
 
 #[test]
 fn call_deferred_tool_input_serializes_canonical_wire_shape() {
-    let parsed = openbitfun_agent_tools::parse_call_deferred_tool_input(&json!({
+    let parsed = starmate_agent_tools::parse_call_deferred_tool_input(&json!({
         "tool_name": "CreatePlan",
         "overview": "outside",
         "args": {
@@ -709,7 +709,7 @@ fn write_tail_closure_notice_preserves_write_like_guidance() {
     assert!(is_write_like_tool_name("write_notebook"));
     assert!(!is_write_like_tool_name("Read"));
 
-    let notice = openbitfun_agent_tools::build_write_tail_closure_notice("Write");
+    let notice = starmate_agent_tools::build_write_tail_closure_notice("Write");
 
     assert!(notice.contains("latest Read result"));
     assert!(notice.contains("use Edit to add only the missing continuation"));
@@ -853,7 +853,7 @@ fn runtime_restrictions_surface_custom_deny_messages() {
 #[test]
 fn delegation_restrictions_cover_all_agent_spawn_surfaces() {
     let restrictions = tool_restrictions_for_delegation_policy(
-        openbitfun_runtime_ports::DelegationPolicy::top_level().spawn_child(),
+        starmate_runtime_ports::DelegationPolicy::top_level().spawn_child(),
     );
 
     for tool_name in ["Task", "AgentSpawn"] {
@@ -2070,7 +2070,7 @@ fn get_tool_spec_contract_builds_duplicate_load_result() {
 
 #[test]
 fn get_tool_spec_contract_builds_detail_result() {
-    let result = build_get_tool_spec_detail_result(&openbitfun_agent_tools::GetToolSpecDetail {
+    let result = build_get_tool_spec_detail_result(&starmate_agent_tools::GetToolSpecDetail {
         tool_name: "Git".to_string(),
         description: "Use <repo> & inspect changes.".to_string(),
         input_schema: json!({
@@ -2113,7 +2113,7 @@ fn get_tool_spec_contract_builds_detail_result() {
 #[test]
 fn get_tool_spec_contract_plans_duplicate_load_without_core_context() {
     let input = json!({ "tool_name": "WebFetch" });
-    let plan = openbitfun_agent_tools::resolve_get_tool_spec_execution_plan(
+    let plan = starmate_agent_tools::resolve_get_tool_spec_execution_plan(
         &input,
         &["WebFetch".to_string()],
     )
@@ -2144,7 +2144,7 @@ fn get_tool_spec_contract_plans_duplicate_load_without_core_context() {
 #[test]
 fn get_tool_spec_contract_plans_detail_load_without_resolving_product_detail() {
     let input = json!({ "tool_name": "Git" });
-    let plan = openbitfun_agent_tools::resolve_get_tool_spec_execution_plan(
+    let plan = starmate_agent_tools::resolve_get_tool_spec_execution_plan(
         &input,
         &["WebFetch".to_string()],
     )
@@ -2159,7 +2159,7 @@ fn get_tool_spec_contract_plans_detail_load_without_resolving_product_detail() {
 
 #[test]
 fn get_tool_spec_contract_rejects_missing_tool_name_in_execution_plan() {
-    let err = openbitfun_agent_tools::resolve_get_tool_spec_execution_plan(&json!({}), &[])
+    let err = starmate_agent_tools::resolve_get_tool_spec_execution_plan(&json!({}), &[])
         .expect_err("missing tool name should be rejected");
 
     assert_eq!(err, GetToolSpecExecutionError::MissingToolName);
@@ -2580,7 +2580,7 @@ impl ToolDecorator<Arc<RegistryMarkerTool>> for RegistryMarkerDecorator {
 
 struct RegistryMarkerSnapshotWrapper;
 
-impl openbitfun_agent_tools::SnapshotToolWrapper<RegistryMarkerTool>
+impl starmate_agent_tools::SnapshotToolWrapper<RegistryMarkerTool>
     for RegistryMarkerSnapshotWrapper
 {
     fn wrap_for_snapshot_tracking(&self, tool: Arc<RegistryMarkerTool>) -> Arc<RegistryMarkerTool> {
@@ -2633,7 +2633,7 @@ fn generic_tool_registry_applies_decorator_to_static_provider_tools() {
 #[test]
 fn generic_snapshot_tool_decorator_delegates_to_snapshot_wrapper_port() {
     let decorator: ToolDecoratorRef<RegistryMarkerTool> = Arc::new(
-        openbitfun_agent_tools::SnapshotToolDecorator::new(Arc::new(RegistryMarkerSnapshotWrapper)),
+        starmate_agent_tools::SnapshotToolDecorator::new(Arc::new(RegistryMarkerSnapshotWrapper)),
     );
     let providers = vec![StaticToolProviderGroup::new(
         "core-basic",
@@ -2780,7 +2780,7 @@ fn manifest_policy_tools_from_registry_snapshot_preserve_exposure_and_availabili
         .collect();
 
     let policy_tools =
-        openbitfun_agent_tools::build_tool_manifest_policy_tools(&tools, &available_tool_names);
+        starmate_agent_tools::build_tool_manifest_policy_tools(&tools, &available_tool_names);
 
     assert_eq!(
         policy_tools,

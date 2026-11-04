@@ -1,8 +1,8 @@
 //! Post-input repaint settling on the bound window stream. Waiting never sends
 //! input, activates a window or substitutes another capture source.
 use super::NativeComputerUseHost;
-use openbitfun_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
-use openbitfun_agent_tools::computer_use_host::{
+use starmate_agent_tools::computer_use_host::error::{OpenBitFunError, OpenBitFunResult};
+use starmate_agent_tools::computer_use_host::{
     AppInputSettle, AppInputSettlePolicy, AppSelector,
 };
 

@@ -5,17 +5,17 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use serde_json::{json, Value};
 
-use openbitfun_agent_runtime::sdk::{
+use starmate_agent_runtime::sdk::{
     AgentSessionModelSelection, AgentSessionModelSelectionUpdateRequest,
     AgentSessionRestoreRequest, AgentSessionRestoreResult, PortErrorKind, RuntimeError,
     SessionEventBackfill, SessionEventProjectionSnapshot, SessionInteractionSnapshot,
 };
-use openbitfun_core::agentic::core::Session;
-use openbitfun_core::agentic::get_agent_registry;
-use openbitfun_core::util::errors::OpenBitFunError;
-use openbitfun_events::{project_agentic_frontend_event, AgenticEvent};
-use openbitfun_product_domains::product_search::SessionContentSearchRequest;
-use openbitfun_runtime_ports::{
+use starmate_core::agentic::core::Session;
+use starmate_core::agentic::get_agent_registry;
+use starmate_core::util::errors::OpenBitFunError;
+use starmate_events::{project_agentic_frontend_event, AgenticEvent};
+use starmate_product_domains::product_search::SessionContentSearchRequest;
+use starmate_runtime_ports::{
     AgentSessionArchiveRequest, AgentSessionCreateRequest, AgentSessionDeleteRequest,
     AgentSessionModeUpdateRequest, AgentSessionRenameRequest, AgentThreadGoalGetRequest,
     SessionStoragePathRequest, SessionTurnWindowRequest,
@@ -40,7 +40,7 @@ async fn session_storage_request(
             .await
             .map_err(|error| error.to_string())?;
         let remote =
-            workspace.workspace_kind == openbitfun_core::service::workspace::WorkspaceKind::Remote;
+            workspace.workspace_kind == starmate_core::service::workspace::WorkspaceKind::Remote;
         return Ok(SessionStoragePathRequest {
             workspace_path: workspace.root_path.clone(),
             remote_connection_id: if remote {
@@ -154,7 +154,7 @@ pub(super) async fn ensure_session_workspace_runtime_ownership(
 ) -> Result<SessionStoragePathRequest, String> {
     let scope = session_storage_request(state, request).await?;
     if optional_string(request, "workspaceId").is_some() {
-        let coordinator = openbitfun_core::agentic::coordination::get_global_coordinator()
+        let coordinator = starmate_core::agentic::coordination::get_global_coordinator()
             .ok_or("Conversation coordinator is unavailable")?;
         if let Some(connection) = scope.remote_connection_id.as_deref() {
             coordinator
@@ -183,8 +183,8 @@ pub(super) async fn resolved_session_storage_path(
     request: &Value,
 ) -> Result<PathBuf, String> {
     if let Some(id) = optional_string(request, "workspaceId") {
-        use openbitfun_runtime_ports::SessionStorePort;
-        return openbitfun_core::agentic::session::CoreSessionStorePort::default()
+        use starmate_runtime_ports::SessionStorePort;
+        return starmate_core::agentic::session::CoreSessionStorePort::default()
             .resolve_workspace_storage(&id)
             .await
             .map(|resolution| resolution.effective_storage_path)
@@ -217,7 +217,7 @@ fn has_session_workspace_scope(request: &Value) -> bool {
 
 fn validated_session_id(request: &Value) -> Result<String, String> {
     let session_id = get_string(request, "sessionId")?;
-    openbitfun_agent_runtime::session_control::validate_session_id(&session_id)?;
+    starmate_agent_runtime::session_control::validate_session_id(&session_id)?;
     Ok(session_id)
 }
 
@@ -346,12 +346,12 @@ pub(crate) async fn list_persisted_sessions_page(
 
 fn session_catalog_query(
     request: &Value,
-) -> Result<Option<openbitfun_services_core::session::page::SessionCatalogQuery>, String> {
+) -> Result<Option<starmate_services_core::session::page::SessionCatalogQuery>, String> {
     let query = request
         .get("query")
         .filter(|value| !value.is_null())
         .map(|value| {
-            serde_json::from_value::<openbitfun_services_core::session::page::SessionCatalogQuery>(
+            serde_json::from_value::<starmate_services_core::session::page::SessionCatalogQuery>(
                 value.clone(),
             )
         })
@@ -381,7 +381,7 @@ pub(crate) async fn save_session_metadata(
     state: &PeerHostState,
     args: &Value,
 ) -> Result<Value, String> {
-    use openbitfun_core::service::session::{
+    use starmate_core::service::session::{
         apply_session_title_metadata, apply_session_unread_completion, SessionMetadata,
     };
     let request = request_value(args);
@@ -523,12 +523,12 @@ async fn read_session_turn_window(
         .await
         .map_err(|e| format!("Failed to load session Turn window: {e}"))?;
     if trajectory && optional_bool(request, "catalogOnly").unwrap_or(false) {
-        if let openbitfun_services_core::session::SessionTurnWindowResponse::NotFound { catalog }
-        | openbitfun_services_core::session::SessionTurnWindowResponse::Stale { catalog } =
+        if let starmate_services_core::session::SessionTurnWindowResponse::NotFound { catalog }
+        | starmate_services_core::session::SessionTurnWindowResponse::Stale { catalog } =
             response
         {
             return serde_json::to_value(
-                openbitfun_services_core::session::trajectory::SessionTrajectoryPage::Catalog {
+                starmate_services_core::session::trajectory::SessionTrajectoryPage::Catalog {
                     catalog,
                 },
             )
@@ -537,7 +537,7 @@ async fn read_session_turn_window(
         return Err("Unexpected trajectory catalog response".into());
     }
     if trajectory {
-        let page = openbitfun_services_core::session::trajectory::project_session_trajectory(
+        let page = starmate_services_core::session::trajectory::project_session_trajectory(
             response,
             request.get("query").and_then(Value::as_str).unwrap_or(""),
             request
@@ -852,7 +852,7 @@ pub(crate) async fn get_model_routing_status(
         None
     };
     let status =
-        openbitfun_core::agentic::execution::round_model_routing::configuration::session_status(
+        starmate_core::agentic::execution::round_model_routing::configuration::session_status(
             session.as_ref(),
             optional_bool(request, "probe").unwrap_or(false),
         )
@@ -967,13 +967,13 @@ pub(crate) async fn get_available_modes(
             .require_workspace(id)
             .await
             .map_err(|error| error.to_string())?;
-        if let Err(error) = openbitfun_core::plugin_host::ensure_configured_plugin_instance(
+        if let Err(error) = starmate_core::plugin_host::ensure_configured_plugin_instance(
             crate::PLUGIN_HOST_LAUNCH_POLICY,
             id,
         )
         .await
         {
-            openbitfun_core::plugin_host::report_configured_plugin_activation_failure(
+            starmate_core::plugin_host::report_configured_plugin_activation_failure(
                 "CLI Peer mode catalog",
                 workspace_id.as_deref(),
                 error,
@@ -981,7 +981,7 @@ pub(crate) async fn get_available_modes(
             .await;
         }
         if let Err(error) =
-            openbitfun_core::external_sources::ensure_external_source_workspace_snapshot(
+            starmate_core::external_sources::ensure_external_source_workspace_snapshot(
                 workspace_id.as_deref(),
             )
             .await
@@ -1028,7 +1028,7 @@ pub(crate) async fn get_session_stats(
     let request = request_value(args);
     let session_id = get_string(request, "sessionId")?;
     let workspace = resolve_snapshot_workspace(state, request).await?;
-    openbitfun_agent_runtime::session_control::validate_session_id(&session_id)
+    starmate_agent_runtime::session_control::validate_session_id(&session_id)
         .map_err(session_stats_validation_error)?;
     require_local_snapshot_workspace(&workspace)?;
 
@@ -1073,11 +1073,11 @@ pub(crate) async fn save_session_turn(
         .cloned()
         .ok_or_else(|| "Missing 'turn_data' field".to_string())?;
 
-    let turn: openbitfun_core::service::session::DialogTurnData =
+    let turn: starmate_core::service::session::DialogTurnData =
         serde_json::from_value(turn_data).map_err(|e| format!("Invalid turn_data: {e}"))?;
-    openbitfun_agent_runtime::session_control::validate_session_id(&turn.session_id)?;
+    starmate_agent_runtime::session_control::validate_session_id(&turn.session_id)?;
     if let Some(request_session_id) = optional_string(request, "sessionId") {
-        openbitfun_agent_runtime::session_control::validate_session_id(&request_session_id)?;
+        starmate_agent_runtime::session_control::validate_session_id(&request_session_id)?;
         if request_session_id != turn.session_id {
             return Err("turn_data session_id does not match request session_id".to_string());
         }
@@ -1107,15 +1107,15 @@ mod tests {
         overlay_live_session_state, peer_core_session_error, peer_runtime_session_error,
         restored_session_to_json, runtime_event_snapshot_to_json, session_stats_validation_error,
     };
-    use openbitfun_agent_runtime::sdk::{
+    use starmate_agent_runtime::sdk::{
         AgentSessionRestoreResult, AgentSessionSummary, PortError, PortErrorKind, RuntimeError,
         SessionEventProjectionSnapshot, SessionState,
     };
-    use openbitfun_core::agentic::core::{
+    use starmate_core::agentic::core::{
         ProcessingPhase, Session as CoreSession, SessionConfig, SessionState as CoreSessionState,
     };
-    use openbitfun_core::util::errors::OpenBitFunError;
-    use openbitfun_events::AgenticEvent;
+    use starmate_core::util::errors::OpenBitFunError;
+    use starmate_events::AgenticEvent;
 
     #[test]
     fn session_catalog_query_keeps_legacy_peers_and_workspace_identity_compatible() {

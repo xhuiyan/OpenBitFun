@@ -4,7 +4,7 @@
 
 use async_trait::async_trait;
 use log::{debug, warn};
-use openbitfun_agent_runtime::user_questions::{
+use starmate_agent_runtime::user_questions::{
     ask_user_question_available_in_context, build_answered_user_question_result,
     build_cancelled_user_question_result, build_timed_out_user_question_result,
     validate_ask_user_question_input, wait_for_user_question_response_until, AskUserQuestionInput,
@@ -68,7 +68,7 @@ impl AskUserQuestionTool {
                 }
             };
             let Some(relationship) =
-                openbitfun_services_core::session::normalized_session_relationship(&metadata)
+                starmate_services_core::session::normalized_session_relationship(&metadata)
             else {
                 break;
             };
@@ -423,7 +423,7 @@ mod tests {
     use super::AskUserQuestionTool;
     use crate::agentic::tools::framework::{Tool, ToolUseContext};
     use crate::agentic::tools::user_input_manager::get_user_input_manager;
-    use openbitfun_agent_runtime::user_questions::USER_INPUT_MODEL_ROUND_CONTEXT_KEY;
+    use starmate_agent_runtime::user_questions::USER_INPUT_MODEL_ROUND_CONTEXT_KEY;
     use std::collections::HashMap;
 
     fn context_with_custom_data(custom_data: HashMap<String, serde_json::Value>) -> ToolUseContext {
@@ -438,7 +438,7 @@ mod tests {
             custom_data,
             computer_use_host: None,
             runtime_tool_restrictions: Default::default(),
-            runtime_handles: openbitfun_runtime_ports::ToolRuntimeHandles::default(),
+            runtime_handles: starmate_runtime_ports::ToolRuntimeHandles::default(),
         }
     }
 
@@ -612,7 +612,7 @@ mod tests {
         let child = format!("child-{unique}");
         let parent = format!("parent-{unique}");
         let mut context = context_with_custom_data(HashMap::from([(
-            openbitfun_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY.to_string(),
+            starmate_agent_runtime::user_questions::USER_INPUT_PARENT_CONTEXT_KEY.to_string(),
             serde_json::json!({ "session_id": parent, "dialog_turn_id": "parent-turn" }),
         )]));
         context.session_id = Some(child.clone());

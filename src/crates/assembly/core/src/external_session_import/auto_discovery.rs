@@ -3,10 +3,10 @@
 
 use super::*;
 use crate::service::workspace::{WorkspaceInfo, WorkspaceKind};
-use openbitfun_product_domains::session_import::ExternalSessionCatalog;
+use starmate_product_domains::session_import::ExternalSessionCatalog;
 #[cfg(test)]
-use openbitfun_product_domains::session_import::ExternalSessionImportWarning;
-use openbitfun_services_core::session::SessionDiscoveryDiagnostic;
+use starmate_product_domains::session_import::ExternalSessionImportWarning;
+use starmate_services_core::session::SessionDiscoveryDiagnostic;
 
 #[derive(Default)]
 struct DiscoveryState {
@@ -559,7 +559,7 @@ pub(super) fn automatic_session_id(workspace: &str, ecosystem: &str, source: &st
 #[cfg(test)]
 pub(super) mod tests {
     use super::*;
-    use openbitfun_product_domains::session_import::{
+    use starmate_product_domains::session_import::{
         ExternalSessionItem, ExternalSessionStatus, ExternalSessionTurn,
     };
 
@@ -901,7 +901,7 @@ pub(super) mod tests {
         let merged = super::super::deferred::merge_metadata(&storage, native)
             .await
             .unwrap();
-        let page = openbitfun_services_core::session::build_session_metadata_page(merged, None, 5);
+        let page = starmate_services_core::session::build_session_metadata_page(merged, None, 5);
         assert_eq!(
             page.total_top_level_count, 58,
             "57 followed sources plus the existing independent import"

@@ -226,7 +226,7 @@ pub(crate) fn resolve_logs_root() -> PathBuf {
             std::env::temp_dir()
                 .join(format!(
                     "{}-cli",
-                    openbitfun_core_types::product_identity::data_namespace()
+                    starmate_core_types::product_identity::data_namespace()
                 ))
                 .join(CLI_LOGS_DIR_NAME)
         })
@@ -335,10 +335,10 @@ fn target_override_rank(target: &str) -> Option<u8> {
         return Some(level_rank(tracing::Level::WARN));
     }
 
-    if matches_target_rule(target, "openbitfun_core::agentic::events::queue")
-        || matches_target_rule(target, "openbitfun_core::agentic::events::router")
-        || matches_target_rule(target, "openbitfun_agent_runtime::event_queue")
-        || matches_target_rule(target, "openbitfun_agent_runtime::event_router")
+    if matches_target_rule(target, "starmate_core::agentic::events::queue")
+        || matches_target_rule(target, "starmate_core::agentic::events::router")
+        || matches_target_rule(target, "starmate_agent_runtime::event_queue")
+        || matches_target_rule(target, "starmate_agent_runtime::event_router")
     {
         return Some(level_rank(tracing::Level::DEBUG));
     }
@@ -591,14 +591,14 @@ mod tests {
     fn target_filter_rules_match_desktop_defaults() {
         assert_eq!(
             allowed_level_rank_for_target(
-                "openbitfun_core::agentic::events::queue",
+                "starmate_core::agentic::events::queue",
                 tracing::Level::TRACE,
             ),
             level_rank(tracing::Level::DEBUG)
         );
         assert_eq!(
             allowed_level_rank_for_target(
-                "openbitfun_agent_runtime::event_queue",
+                "starmate_agent_runtime::event_queue",
                 tracing::Level::TRACE,
             ),
             level_rank(tracing::Level::DEBUG)
@@ -621,7 +621,7 @@ mod tests {
         );
         assert_eq!(
             allowed_level_rank_for_target(
-                "openbitfun_core::agentic::events::queue",
+                "starmate_core::agentic::events::queue",
                 tracing::Level::ERROR,
             ),
             level_rank(tracing::Level::ERROR)

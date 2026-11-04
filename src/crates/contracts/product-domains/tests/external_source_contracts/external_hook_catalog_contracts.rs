@@ -1,17 +1,17 @@
-use openbitfun_product_domains::external_hook_catalog::{
+use starmate_product_domains::external_hook_catalog::{
     ExternalHookCatalogEntry, ExternalHookCatalogSnapshotV1, ExternalHookHandlerKind,
     ExternalHookMapping, ExternalHookMatcherSummary, ExternalHookNativeActivation,
     ExternalHookProjectionStatus, ExternalHookProviderIdentity, ExternalHookProviderSnapshot,
     ExternalHookSource, ExternalHookSourceKind,
 };
-use openbitfun_product_domains::external_hook_contributions::ExternalHookPoint;
-use openbitfun_product_domains::external_hook_import::{
+use starmate_product_domains::external_hook_contributions::ExternalHookPoint;
+use starmate_product_domains::external_hook_import::{
     ExternalHookImportDependencyV1, ExternalHookImportDispositionV1, ExternalHookImportHandlerV1,
     ExternalHookImportPlanV1, ExternalHookImportSkippedV1, PreparedExternalHookAsset,
     PreparedExternalHookHandler, PreparedExternalHookImport, EXTERNAL_HOOK_IMPORT_SCHEMA_V1,
     MANAGED_HOOK_ROOT_PLACEHOLDER,
 };
-use openbitfun_product_domains::external_sources::{
+use starmate_product_domains::external_sources::{
     EcosystemId, ExternalSourceAssetKind, ExternalSourceDiagnostic, ExternalSourceHealth,
     ExternalSourceScope, ProviderId, SourceKey,
 };

@@ -1,6 +1,6 @@
 #![cfg(feature = "git-port")]
 
-use openbitfun_runtime_ports::{
+use starmate_runtime_ports::{
     WorkspaceDiffContent, WorkspaceDiffFile, WorkspaceDiffFileStatus, WorkspaceDiffSnapshot,
 };
 

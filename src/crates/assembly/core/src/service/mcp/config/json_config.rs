@@ -1,5 +1,5 @@
 use log::{debug, error, info};
-use openbitfun_services_integrations::mcp::config::{validate_mcp_json_config, MCPImportError};
+use starmate_services_integrations::mcp::config::{validate_mcp_json_config, MCPImportError};
 use serde::Serialize;
 
 use crate::util::errors::{OpenBitFunError, OpenBitFunResult};

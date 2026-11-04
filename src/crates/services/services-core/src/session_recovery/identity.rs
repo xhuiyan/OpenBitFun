@@ -16,7 +16,7 @@ pub(super) fn registry(user_root: &Path) -> Result<(Records, String)> {
     let raw = json(&path)?;
     ensure!(
         raw["format_version"] == crate::workspace_persistence::WORKSPACE_PERSISTENCE_FORMAT_VERSION
-            && raw["product_id"] == openbitfun_core_types::product_identity::product_id(),
+            && raw["product_id"] == starmate_core_types::product_identity::product_id(),
         "Unsupported workspace registry format"
     );
     let records = raw["workspaces"]

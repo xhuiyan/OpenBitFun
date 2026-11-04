@@ -1,8 +1,8 @@
 use std::sync::Arc;
 use std::time::Duration;
 
-use openbitfun_services_integrations::mcp::auth::rmcp_compat::StoredCredentials;
-use openbitfun_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault;
+use starmate_services_integrations::mcp::auth::rmcp_compat::StoredCredentials;
+use starmate_services_integrations::mcp::auth::MCPRemoteOAuthCredentialVault;
 
 async fn persisted_test_manager() -> (
     tempfile::TempDir,

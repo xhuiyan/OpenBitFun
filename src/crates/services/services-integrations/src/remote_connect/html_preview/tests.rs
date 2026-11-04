@@ -1,5 +1,5 @@
 use super::*;
-use openbitfun_runtime_ports::{WorkspaceDirEntry, WorkspaceReader};
+use starmate_runtime_ports::{WorkspaceDirEntry, WorkspaceReader};
 use std::{
     collections::BTreeMap,
     sync::{

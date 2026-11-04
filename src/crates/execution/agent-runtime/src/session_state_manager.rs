@@ -7,7 +7,7 @@ use crate::event_queue::EventQueue;
 use crate::session_state::{session_state_label_for_state, ProcessingPhase, SessionState};
 use dashmap::DashMap;
 use log::debug;
-use openbitfun_events::{AgenticEvent, AgenticEventPriority as EventPriority};
+use starmate_events::{AgenticEvent, AgenticEventPriority as EventPriority};
 use std::sync::Arc;
 
 pub struct SessionStateManager {
@@ -118,7 +118,7 @@ mod tests {
     use super::SessionStateManager;
     use crate::event_queue::{EventQueue, EventQueueConfig};
     use crate::session_state::{ProcessingPhase, SessionState};
-    use openbitfun_events::{AgenticEvent, AgenticEventPriority as EventPriority};
+    use starmate_events::{AgenticEvent, AgenticEventPriority as EventPriority};
     use std::sync::Arc;
 
     fn test_manager() -> (Arc<EventQueue>, SessionStateManager) {

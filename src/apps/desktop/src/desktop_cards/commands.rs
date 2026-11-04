@@ -2,7 +2,7 @@
 
 use std::sync::Arc;
 
-use openbitfun_core::agentic::tools::desktop_card_host::DesktopCardRecord;
+use starmate_core::agentic::tools::desktop_card_host::DesktopCardRecord;
 use serde::Deserialize;
 use serde_json::Value;
 use tauri::State;
