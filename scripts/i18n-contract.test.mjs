@@ -728,7 +728,7 @@ auditIntegrationTest('web-ui uses shared terms for stable navigation and feature
       'common:scenes.settings',
       'common:tabs.settings',
       'common:remoteConnect.title',
-      'common:remoteConnect.tabOpenBitFunServer',
+      'common:remoteConnect.tabStarMateServer',
       'common:remoteConnect.tabLan',
       'flow-chat:layout.noPanels',
       'flow-chat:deepReviewActionBar.minimizedDeep',
@@ -748,7 +748,7 @@ auditIntegrationTest('web-ui uses shared terms for stable navigation and feature
     const legacyWebUiKeys = [
       'header.remoteConnect',
       'remoteConnect.title',
-      'remoteConnect.tabOpenBitFunServer',
+      'remoteConnect.tabStarMateServer',
       'remoteConnect.tabLan',
       'nav.sections.workspace',
       'nav.sessions.newCodeSessionShort',

@@ -123,7 +123,7 @@ Before distributing, run `bash scripts/ci/verify-macos-microphone.sh <signed-app
 and recording in the signed app on macOS. Ad-hoc fixture tests do not prove TCC behavior.
 
 ```bash
-cargo check -p openbitfun-desktop && cargo test -p openbitfun-desktop
+cargo check -p starmate-desktop && cargo test -p starmate-desktop
 ```
 
 Token-usage bootstrap must construct and register the host's service before
@@ -143,9 +143,9 @@ it does not turn off certificate verification. The native application fixture
 is `node tests/e2e/scripts/run-subscription-pool.mjs` (see its E2E guide).
 
 For desktop card stacking, native parenting rollback, and legacy record/request compatibility,
-run `cargo test --locked -p openbitfun-desktop --no-default-features --lib desktop_cards`.
+run `cargo test --locked -p starmate-desktop --no-default-features --lib desktop_cards`.
 On a graphical Windows session with Explorer running, also run
-`cargo test --locked -p openbitfun-desktop --no-default-features --lib live_explorer_attachment_round_trip -- --ignored`.
+`cargo test --locked -p starmate-desktop --no-default-features --lib live_explorer_attachment_round_trip -- --ignored`.
 The native fixtures use hidden disposable windows; they do not establish WebView rendering,
 Win+D behavior, Explorer restart recovery, mixed-DPI monitor dragging, or remote behavior.
 After rebuilding, manually verify those native interactions and switching between desktop pinning,
@@ -155,27 +155,27 @@ pin-failure notice; it must never stay "Shown" without a window. UI, hidden-card
 `pnpm --dir src/web-ui run test:run src/app/components/DesktopCard/DesktopCardWindow.test.tsx src/infrastructure/api/service-api/DesktopCardAPI.test.ts src/app/scenes/personal-overview/OverviewDesktopCardsSection.test.tsx src/app/scenes/settings/pages/application/DesktopCardsSettingsSection.test.tsx`.
 
 For session storage directory access, run
-`cargo test -p openbitfun-desktop --lib api::session_storage_directory::tests`
+`cargo test -p starmate-desktop --lib api::session_storage_directory::tests`
 for session storage directory resolution (these tests do not launch a file manager),
-and `cargo test -p openbitfun-desktop --lib remote_workspace_policy` after registration changes.
+and `cargo test -p starmate-desktop --lib remote_workspace_policy` after registration changes.
 
 For whole-session copy routing, run
-`cargo test --locked -p openbitfun-desktop --lib whole_session_copy_uses_the_latest_persisted_turn_fork`.
+`cargo test --locked -p starmate-desktop --lib whole_session_copy_uses_the_latest_persisted_turn_fork`.
 After command registration changes, also run the `remote_workspace_policy` filter.
 
 For optional workspace catalog query payload compatibility, run
-`cargo test --locked -p openbitfun-desktop --lib api::session_api::catalog_request_tests`.
+`cargo test --locked -p starmate-desktop --lib api::session_api::catalog_request_tests`.
 
 For MCP ProductControl provider wiring, run
-`cargo test --locked -p openbitfun-desktop --lib openbitfun_control_host::tests`.
+`cargo test --locked -p starmate-desktop --lib openbitfun_control_host::tests`.
 The shared MCP behavior fixtures are documented in the Core guide.
 
 For model selector request compatibility and configuration effect routing:
 
 ```bash
-cargo test --locked -p openbitfun-desktop --lib update_session_model_distinguishes_omitted_null_and_explicit_reasoning_presets
-cargo test --locked -p openbitfun-desktop --lib model_routing_status_preserves_legacy_requests_and_internal_session_opt_in
-cargo test --locked -p openbitfun-desktop --lib backend_effect_routing_is_owned_by_the_control_transaction
+cargo test --locked -p starmate-desktop --lib update_session_model_distinguishes_omitted_null_and_explicit_reasoning_presets
+cargo test --locked -p starmate-desktop --lib model_routing_status_preserves_legacy_requests_and_internal_session_opt_in
+cargo test --locked -p starmate-desktop --lib backend_effect_routing_is_owned_by_the_control_transaction
 ```
 
 Use the Core guide's session-model tests for cold persistence, no-op writes,
@@ -183,16 +183,16 @@ rollback, and ownership; the Desktop adapter must not restore history for a
 model selection alone.
 
 For MiniApp Agent session and context changes, run
-`cargo test --locked -p openbitfun-desktop --lib api::miniapp_agent_api::tests`.
+`cargo test --locked -p starmate-desktop --lib api::miniapp_agent_api::tests`.
 This covers legacy payloads, exact context paths, trust instructions, and snapshot cleanup.
 
 For tray unread synchronization, run
 `pnpm --dir src/web-ui run test:run src/flow_chat/services/trayUnreadService.test.ts src/flow_chat/services/sessionNavStatusService.test.ts`
-and `cargo test -p openbitfun-desktop --lib remote_workspace_policy` after command changes.
+and `cargo test -p starmate-desktop --lib remote_workspace_policy` after command changes.
 
 For independent official/LAN Relay routing and scoped teardown, run
-`cargo test --locked -p openbitfun-desktop --lib api::remote_connect_api`
-and `cargo test --locked -p openbitfun-desktop --lib api::peer_host_invoke::tests`.
+`cargo test --locked -p starmate-desktop --lib api::remote_connect_api`
+and `cargo test --locked -p starmate-desktop --lib api::peer_host_invoke::tests`.
 The dual-Relay test runs actual sockets and encrypted RPC in a child process with
 temporary product storage; it does not exercise physical LAN interfaces, SSH
 workspaces, or the production Relay. UI coverage lives in
@@ -200,48 +200,48 @@ workspaces, or the production Relay. UI coverage lives in
 `deviceInterconnectionOverview.test.ts` under the Web UI owner.
 
 For shared GitHub sign-in and token redaction, use
-`cargo test -p openbitfun-desktop --lib api::account_identity_api::tests`.
+`cargo test -p starmate-desktop --lib api::account_identity_api::tests`.
 For the matching cross-entry UI state, run
 `pnpm --dir src/web-ui run test:run src/infrastructure/account-identity/AccountIdentityService.test.ts src/features/market-account/AccountIdentityControls.test.tsx src/app/components/RemoteConnectDialog/ensureAccountSession.test.ts`.
 
 For Pages Agent startup registration and Desktop-owned account execution, run
-`cargo test --locked -p openbitfun-desktop --lib api::remote_connect_api::page_tool_tests`.
+`cargo test --locked -p starmate-desktop --lib api::remote_connect_api::page_tool_tests`.
 This child-process fixture invokes the actual registered tool against a loopback
 Relay and covers account-switch fencing; it does not launch the native UI or
 exercise a live remote device.
 
 For side-question request compatibility, initial model selection, and optional
 message metadata, use
-`cargo test -p openbitfun-desktop --no-default-features --lib api::btw_api::tests`.
+`cargo test -p starmate-desktop --no-default-features --lib api::btw_api::tests`.
 
 For snapshot workspace identity and remote rollback admission, use
-`cargo test --locked -p openbitfun-desktop --lib api::snapshot_service::tests` and
+`cargo test --locked -p starmate-desktop --lib api::snapshot_service::tests` and
 `pnpm --dir src/web-ui run test:run src/infrastructure/api/service-api/SnapshotAPI.test.ts`.
 
 For skill discovery response compatibility and timeouts, use
-`cargo test -p openbitfun-desktop --lib api::skill_api::tests`.
+`cargo test -p starmate-desktop --lib api::skill_api::tests`.
 For companion pet manifest versions and package metadata, use
-`cargo test -p openbitfun-desktop --lib api::commands::pet_package_tests`.
+`cargo test -p starmate-desktop --lib api::commands::pet_package_tests`.
 For content-search routing and remote fallback protection, use
-`cargo test --locked -p openbitfun-desktop --lib api::search_api::tests`.
+`cargo test --locked -p starmate-desktop --lib api::search_api::tests`.
 For controller-local peer download staging, atomic replacement, and failed transfer cleanup,
-run `cargo test -p openbitfun-desktop --lib api::local_file_download::tests`.
+run `cargo test -p starmate-desktop --lib api::local_file_download::tests`.
 After changing its registration, also run
-`cargo test -p openbitfun-desktop --lib remote_workspace_policy`.
+`cargo test -p starmate-desktop --lib remote_workspace_policy`.
 
 For Windows external-file drag previews, run
-`cargo test --locked -p openbitfun-desktop --lib file_drop_preview_api` and
+`cargo test --locked -p starmate-desktop --lib file_drop_preview_api` and
 `pnpm --dir src/web-ui run test:run src/infrastructure/files/useWindowsFileDropPreview.test.tsx src/app/scenes/session/FileDropPreviewCards.test.tsx`.
 After rebuilding Desktop, manually check Explorer drags with one image, more than
 four images, mixed file formats, Escape, leaving the pane, and a scene switch.
 Verify HTML text/tab/file-tree drags still work. The temporary OLE child only
 covers the active chat target during an external file drag; do not enable Wry's
 window-wide Windows handler as a replacement. After command registration changes,
-also run `cargo test -p openbitfun-desktop --lib remote_workspace_policy`.
+also run `cargo test -p starmate-desktop --lib remote_workspace_policy`.
 
 For macOS HTML versus native file drag routing, use the focused command in
 [`third_party/wry/OPENBITFUN-PATCH.md`](../../../third_party/wry/OPENBITFUN-PATCH.md)
-and `cargo build -p openbitfun-desktop`. The host keeps the native file receiver
+and `cargo build -p starmate-desktop`. The host keeps the native file receiver
 enabled for Finder paths; the Wry adapter delegates non-file gestures to WebKit.
 Frontend HMR and synthetic DOM drag tests cannot verify that native boundary.
 
@@ -254,7 +254,7 @@ failures without claiming that returning from the hook catches a panic.
 The layered receiver requires the compatibility declaration in
 `windows-app.manifest`; keep it wired through `build.rs` for dev and release.
 After changes to that contract, run
-`node --test scripts/desktop-tauri-build.test.mjs` and `cargo build -p openbitfun-desktop`.
+`node --test scripts/desktop-tauri-build.test.mjs` and `cargo build -p starmate-desktop`.
 The focused native test creates and destroys 50 real, hidden receiver windows.
 The Shell regression also uses a real `IDataObject` and drag-image helpers to
 verify 20 takeovers leave no `SysDragImage`, and that the next target can restore
@@ -267,13 +267,13 @@ using the Windows SDK `mt.exe`, then run the `file_drop_preview_api` filter on
 that copy. A Common Controls-only manifest cannot exercise layered children.
 
 For staged application-update cache and signature behavior, use
-`cargo test -p openbitfun-desktop --lib api::update_api::tests`.
+`cargo test -p starmate-desktop --lib api::update_api::tests`.
 For peer system-info response compatibility, run
-`cargo test -p openbitfun-desktop --lib system_info_home_contract`.
+`cargo test -p starmate-desktop --lib system_info_home_contract`.
 For window geometry recovery, legacy state compatibility, and snapshot persistence,
-run `cargo test -p openbitfun-desktop --lib window_state_support::tests`.
+run `cargo test -p starmate-desktop --lib window_state_support::tests`.
 For window resize layout scheduling, run
-`cargo check --locked -p openbitfun-desktop --no-default-features --lib` and
+`cargo check --locked -p starmate-desktop --no-default-features --lib` and
 `pnpm --dir src/web-ui exec vitest run src/app/layout/WindowResizeLayout.test.tsx src/infrastructure/runtime/windowResize.test.ts src/infrastructure/runtime/sceneBackdrop.test.ts src/app/workbench/WorkbenchLayout.test.tsx`.
 These checks cover bounded measurement batches, native completion, micro-adjustments,
 cancellation, older-host fallback and retained content. They do not establish native
@@ -299,13 +299,13 @@ in an isolated profile. It also checks main-view command extraction, remote
 child-view ACL rejection and DevTools. It does not exercise remote hosts or pet
 pointer events.
 For macOS close-to-hide fullscreen sequencing, run
-`cargo check --locked -p openbitfun-desktop` and
+`cargo check --locked -p starmate-desktop` and
 `node scripts/test-macos-window-close.mjs` on a graphical macOS session.
 The latter compiles the production close lifecycle in isolation and checks real
 AppKit fullscreen entry/exit, duplicate requests, cancellation and reopen; it
 does not launch the complete Desktop frontend or exercise remote scenarios.
 For Windows main-WebView minimize/restore size filtering, run
-`cargo test -p openbitfun-desktop --no-default-features --lib window_webview_geometry::tests`.
+`cargo test -p starmate-desktop --no-default-features --lib window_webview_geometry::tests`.
 The desktop host owns main-WebView resizing on Windows so minimized client bounds
 do not trigger page reflow; embedded browser WebViews keep their existing owners.
 After rebuilding, manually compare taskbar minimize/restore with tray hide/show
@@ -313,7 +313,7 @@ while a session is open, and check normal resize, maximize, and monitor DPI chan
 For the matching startup wiring contract, run
 `pnpm --dir src/web-ui run test:run src/app/startup/startupPerformanceContract.test.ts`.
 For native sidebar material and appearance bootstrap, run
-`cargo test -p openbitfun-desktop --no-default-features --lib appearance::startup_appearance_tests`
+`cargo test -p starmate-desktop --no-default-features --lib appearance::startup_appearance_tests`
 and `pnpm --dir src/web-ui run test:run src/infrastructure/appearance/adapters/ThemeTokenAppearanceAdapter.test.ts`.
 For Windows main-window material, native frame and eight-direction resizing, run
 `node scripts/test-windows-window-material.mjs` on Windows. It compiles the
@@ -327,7 +327,7 @@ Keep the native frame and shadow intact:
 expanding the client rectangle over the non-client frame removes the system's
 side, bottom and corner resize targets.
 For embedded browser preview encoding, target correlation and navigation outcomes, run
-`cargo test -p openbitfun-desktop --lib api::browser_api::tests`.
+`cargo test -p starmate-desktop --lib api::browser_api::tests`.
 For conversation-owned browser lifetime, build Desktop and Web UI, then run
 `node tests/e2e/scripts/run-browser-session-isolation.mjs`. Its isolated native
 fixture delays A's model response until B is selected, exercises background
@@ -336,14 +336,14 @@ visibility and retained document state across session switches. On macOS it also
 checks navigation failure delivery to tools/UI and recovery by manual navigation. It scripts only
 model HTTP, not browser or session behavior; it does not establish remote coverage.
 After browser command registration changes, also run
-`cargo test -p openbitfun-desktop --lib remote_workspace_policy`.
+`cargo test -p starmate-desktop --lib remote_workspace_policy`.
 After changing updater command registration, also run
-`cargo test -p openbitfun-desktop --lib remote_workspace_policy`.
+`cargo test -p starmate-desktop --lib remote_workspace_policy`.
 
 If the change affects startup, WebDriver, browser/computer-use, or packaged behavior, also run:
 
 ```bash
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 ```
 
 To exercise packaged UI customization in an isolated native window without a
@@ -351,7 +351,7 @@ development server, build Web UI assets, then use the focused Creation harness:
 
 ```bash
 pnpm run build:web
-cargo build -p openbitfun-desktop --features devtools
+cargo build -p starmate-desktop --features devtools
 node tests/e2e/scripts/run-creation-runtime.mjs
 node tests/e2e/scripts/run-creation-runtime.mjs --suspended-paint  # occluded WebKit startup and reload
 ```
@@ -365,7 +365,7 @@ release builds always use the packaged protocol.
 
 For alternate dev-server ports and preview startup URL changes, run
 `node --test scripts/dev-startup.test.mjs` and
-`cargo test -p openbitfun-desktop --no-default-features --lib appearance::development_frontend_tests`.
+`cargo test -p starmate-desktop --no-default-features --lib appearance::development_frontend_tests`.
 For launcher-only development storage mode changes, run
 `node --test scripts/dev-startup.test.mjs`; no native app launch is required.
 By default (or with `--shared-data`), both desktop development launchers leave
@@ -393,7 +393,7 @@ dispatcher. It requires local Accessibility and Screen Recording permission.
 To reuse the compiled harness, set `STARMATE_TEST_BINARY` to its absolute path.
 
 For the additive saved-model quota request and legacy account-request round trip:
-`cargo test --locked -p openbitfun-desktop --lib quota_request_compatibility_tests`.
+`cargo test --locked -p starmate-desktop --lib quota_request_compatibility_tests`.
 The host resolves the saved model, rejects non-API authentication and custom auth,
 and rechecks its authorization binding before publishing the result. Model-scoped
 requests require the separately advertised `subscription_model_quota_v1` capability;
@@ -404,7 +404,7 @@ entry URLs, document-route fallback, owner-error preservation, peer capability
 negotiation and encrypted loopback Relay transfer, run:
 
 ```bash
-cargo test --locked -p openbitfun-desktop --lib html_preview
+cargo test --locked -p starmate-desktop --lib html_preview
 ```
 
 For encrypted peer resource-load timings, run the same command with

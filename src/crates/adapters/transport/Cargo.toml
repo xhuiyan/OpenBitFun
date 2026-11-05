@@ -3,7 +3,7 @@ name = "starmate-transport"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun Transport Layer - Cross-platform communication adapters"
+description = "StarMate Transport Layer - Cross-platform communication adapters"
 
 [lib]
 name = "starmate_transport"

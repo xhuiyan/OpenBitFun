@@ -218,7 +218,7 @@ impl GlobalConfigManager {
 }
 
 /// Interval between checks of the persisted config file for edits made by
-/// another writer (a hand edit, or another OpenBitFun process on this host).
+/// another writer (a hand edit, or another StarMate process on this host).
 #[cfg(feature = "agent-runtime")]
 const CONFIG_FILE_RELOAD_POLL_INTERVAL: std::time::Duration = std::time::Duration::from_secs(2);
 

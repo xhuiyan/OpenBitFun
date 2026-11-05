@@ -77,7 +77,7 @@ impl Tool for CreateCanvasTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Create a session-scoped OpenBitFun Canvas artifact from a single TSX source file.
+        Ok(r#"Create a session-scoped StarMate Canvas artifact from a single TSX source file.
 
 Use this for rich visual artifacts, dashboards, explainers, interactive summaries, charts, diagrams, and compact apps that should render beside the conversation instead of being written into the user's repository.
 
@@ -92,7 +92,7 @@ Returns a stable `starmate-canvas://...` artifact reference for subsequent Canva
     }
 
     fn short_description(&self) -> String {
-        "Create a session-scoped OpenBitFun Canvas artifact.".to_string()
+        "Create a session-scoped StarMate Canvas artifact.".to_string()
     }
 
     fn input_schema(&self) -> Value {
@@ -196,7 +196,7 @@ impl Tool for ReadCanvasTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Read a OpenBitFun Canvas artifact from the current session.
+        Ok(r#"Read a StarMate Canvas artifact from the current session.
 
 Provide either `artifact_reference` returned by CreateCanvas/PatchCanvas/UpdateCanvas or `canvas_id` for the current session. By default this returns metadata, status, diagnostics, and source. Set `include_source` to false when only status metadata is needed."#
             .to_string())
@@ -279,14 +279,14 @@ impl Tool for UpdateCanvasTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Replace the TSX source for an existing OpenBitFun Canvas artifact.
+        Ok(r#"Replace the TSX source for an existing StarMate Canvas artifact.
 
 Provide either `artifact_reference` or `canvas_id`, plus one complete replacement `source` string. The Canvas remains session-scoped and keeps its stable artifact reference. The previous compiled payload is retained as last-known-good if the new source fails policy or compile validation."#
             .to_string())
     }
 
     fn short_description(&self) -> String {
-        "Update an existing OpenBitFun Canvas artifact.".to_string()
+        "Update an existing StarMate Canvas artifact.".to_string()
     }
 
     fn input_schema(&self) -> Value {
@@ -361,14 +361,14 @@ impl Tool for PatchCanvasTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Patch an existing OpenBitFun Canvas artifact by applying exact text replacements to the latest TSX source.
+        Ok(r#"Patch an existing StarMate Canvas artifact by applying exact text replacements to the latest TSX source.
 
 Use this for small, targeted edits such as changing a label, number, style prop, component prop, or a short JSX block. Provide either `artifact_reference` or `canvas_id`, plus one or more replacements. Each `old` text must match the current source exactly once; the tool fails without saving if a replacement is missing or ambiguous. For large rewrites, use UpdateCanvas with a complete replacement source."#
             .to_string())
     }
 
     fn short_description(&self) -> String {
-        "Patch an existing OpenBitFun Canvas artifact.".to_string()
+        "Patch an existing StarMate Canvas artifact.".to_string()
     }
 
     fn input_schema(&self) -> Value {

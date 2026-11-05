@@ -39,7 +39,7 @@ Let agents place draggable cards outside the main window for glanceable informat
 4. 在首页“小卡片”区或卡片菜单中隐藏或删除
    Hide or delete it from the Home Desktop cards section or the card menu
 
-入口 / Entry: OpenBitFun 设置
+入口 / Entry: StarMate 设置
 
 ## 智能体可替你做什么 / What an agent can do for you
 

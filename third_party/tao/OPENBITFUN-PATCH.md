@@ -31,7 +31,7 @@ returns nil for it; the zoom button remains in the list. The legacy filename-lis
 pasteboard format is retained at its three registration/read sites, with local
 deprecation annotations, so this cleanup does not change drag payload semantics.
 
-OpenBitFun keeps its original toolbar height and tab spacing. The desktop host
+StarMate keeps its original toolbar height and tab spacing. The desktop host
 derives the configured inset from the shared design height and native metrics;
 the framework owns applying that inset during its native window lifecycle.
 
@@ -63,7 +63,7 @@ empty `Box` replaces the `EventBox` titlebar and a per-window style provider
 zeroes its minimum height, padding, margin, border, shadow and background.
 A `HeaderBar` would keep one themed border row even at zero height, which a
 transparent window shows as a stripe above the webview; a plain box has no themed
-chrome of its own. OpenBitFun keeps rendering its own window controls and drag
+chrome of its own. StarMate keeps rendering its own window controls and drag
 regions in every case.
 
 Collapsing the strip removes the only square frame GTK still drew, so the shell

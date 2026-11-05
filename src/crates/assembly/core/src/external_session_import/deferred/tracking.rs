@@ -394,7 +394,7 @@ pub(super) async fn refresh_reference(
             }
             return Err(index_error(if unsupported {
                 format!(
-                    "The original {} history uses an unsupported format. Update OpenBitFun and retry. {error}",
+                    "The original {} history uses an unsupported format. Update StarMate and retry. {error}",
                     entry.ecosystem_id
                 )
             } else {

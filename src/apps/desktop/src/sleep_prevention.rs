@@ -119,7 +119,7 @@ fn set_inhibitor_enabled(
         if inhibitor.is_none() {
             let guard = keepawake::Builder::default()
                 .idle(true)
-                .reason("Prevent sleep is enabled in OpenBitFun")
+                .reason("Prevent sleep is enabled in StarMate")
                 .app_name("StarMate")
                 .app_reverse_domain("com.starmate.desktop")
                 .create()

@@ -1724,7 +1724,7 @@ export const requiredContentRules = [
   {
     path: 'src/crates/execution/agent-runtime/tests/agent_definition_contracts/custom_subagent_discovery_contracts.rs',
     reason:
-      'agent-runtime custom subagent discovery owner must keep behavior-equivalence contracts for OpenBitFun directory priority, foreign directory exclusion, and load errors',
+      'agent-runtime custom subagent discovery owner must keep behavior-equivalence contracts for StarMate directory priority, foreign directory exclusion, and load errors',
     patterns: [
       {
         regex:

@@ -1,4 +1,4 @@
-// Simple test client for OpenBitFun ACP server.
+// Simple test client for StarMate ACP server.
 // Run with: node scripts/test-acp.js
 
 import { spawn } from 'node:child_process';
@@ -18,7 +18,7 @@ const usePath = fs.existsSync(cliPath)
 const cwd = '/tmp/test-acp-node';
 fs.mkdirSync(cwd, { recursive: true });
 
-console.log('=== OpenBitFun ACP Server Test (Node.js) ===\n');
+console.log('=== StarMate ACP Server Test (Node.js) ===\n');
 
 const child = spawn(usePath, ['acp'], {
   stdio: ['pipe', 'pipe', 'inherit'],

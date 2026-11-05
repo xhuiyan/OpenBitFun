@@ -1,6 +1,6 @@
 # Detached task dispatch
 
-Detached dispatch lets one OpenBitFun process submit work to another OpenBitFun process
+Detached dispatch lets one StarMate process submit work to another StarMate process
 without making the submitting process part of the execution topology. The
 submitter can disconnect or exit after the target has durably acknowledged the
 job.
@@ -195,7 +195,7 @@ Git worktree delivery and is intentionally incompatible with targets that do
 not implement it; version 5 adds the target-owned reasoning catalog and
 per-turn preset selection (`reasoning_presets`). SSH submission can repair that mismatch
 through signed release installation; an account device must be upgraded as a
-OpenBitFun device.
+StarMate device.
 
 Public job verbs are:
 
@@ -262,9 +262,9 @@ older reader cannot turn the new account fields into its default OAuth login.
 
 `probe` is read-only and never installs software. Immediately before SSH
 provisioning, submission probes again and automatically installs or upgrades a
-compatible latest prebuilt `openbitfun` release when needed. Release resolution
+compatible latest prebuilt `starmate` release when needed. Release resolution
 stays bound to the expected OS and architecture. GitHub is the default byte
-source; when its measured transfer rate is below 512 KiB/s, OpenBitFun is tried
+source; when its measured transfer rate is below 512 KiB/s, StarMate is tried
 first and GitHub remains the fallback. The same policy applies whether the SSH
 target downloads directly or the controller has to push the archive. The
 controller verifies the
@@ -273,7 +273,7 @@ archive signature, pins the SHA-256 passed to the installer, waits with a
 bounded deadline, and probes the installed binary again before continuing.
 
 The signed prebuilt release is the only install path. The controller never
-compiles OpenBitFun on a target, and exposes no command to do so: when no published
+compiles StarMate on a target, and exposes no command to do so: when no published
 binary can run there — an unsupported platform, a libc floor, a missing `tar`,
 an unreachable release, or a release that predates a required capability — the
 probe reports why and the target cannot be selected.
@@ -317,7 +317,7 @@ controller must not cancel or hide a detached dispatch job.
 
 An account target must already have a compatible `openbitfun dispatch` runner. A
 CLI daemon already satisfies this. The Desktop account host delegates to an
-installed `openbitfun` binary (including a package-manager symlink); if none is
+installed `starmate` binary (including a package-manager symlink); if none is
 available, probe reports the missing runner and submission remains disabled
 rather than falling back to local execution. Device dispatch never performs
 SSH-style installation through the Relay.

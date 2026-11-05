@@ -144,7 +144,7 @@ describe('trajectory detail composition', () => {
     } finally { style.remove(); outsideCode.remove(); }
   });
   it('keeps long paths readable and expands nested results without losing zero or false values', async () => {
-    const path = '/Users/gcwing/WorkSpace/OpenBitFun-WorkSpace/OpenBitFun/docs/features/miniapp.md';
+    const path = '/Users/gcwing/WorkSpace/StarMate-WorkSpace/StarMate/docs/features/miniapp.md';
     (turn.modelRounds[0].items[0] as any).toolResult.result = { match_count: 0, matches: [path], path, truncated: false };
     await render();
     const result = container.querySelector('[data-trajectory-section="result"]')!;

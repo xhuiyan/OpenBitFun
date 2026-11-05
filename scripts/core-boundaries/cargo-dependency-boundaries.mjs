@@ -860,7 +860,7 @@ const RESOLVED_THIRD_PARTY_CAPABILITY_POLICIES = new Map([
     versionPrefix: '0.25.',
     ignoredVersionPrefixes: ['0.24.'],
     // macOS clipboard support currently adds TIFF through arboard. The other
-    // formats are the codecs selected by reviewed OpenBitFun owners.
+    // formats are the codecs selected by reviewed StarMate owners.
     allowedFeatures: new Set(['bmp', 'gif', 'jpeg', 'png', 'tiff', 'webp']),
   }],
 ]);

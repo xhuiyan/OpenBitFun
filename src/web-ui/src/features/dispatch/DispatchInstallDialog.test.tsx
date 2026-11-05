@@ -501,7 +501,7 @@ describe('DispatchInstallDialog target preparation', () => {
   it('never offers to compile on the target and explains why it cannot be prepared', async () => {
     // A target no published binary fits. Preparing it is not something this
     // controller can do, so the dialog says so instead of offering to build
-    // OpenBitFun on someone else's machine.
+    // StarMate on someone else's machine.
     mocks.probeTarget.mockResolvedValue({
       cliInstalled: false,
       os: 'linux',

@@ -1363,7 +1363,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     }),
     [activeSessionMode, currentMode, isAcpTargetSession, isAssistantWorkspace],
   );
-  const canSwitchModes = chatInputModePolicy.canSwitchModes && !isSubagentInputTarget && currentSession?.mode !== 'OpenBitFun';
+  const canSwitchModes = chatInputModePolicy.canSwitchModes && !isSubagentInputTarget && currentSession?.mode !== 'StarMate';
   const selectedHarnessProfile = resolveSelectedComposerExecutionLevel({
     currentMode,
   });
@@ -5815,7 +5815,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     const nativeEvt = e.nativeEvent as KeyboardEvent;
     // IME-owned keys must stay with the input method. In particular, Escape
     // closes the Chinese/Japanese/Korean candidate window and must not cancel
-    // the running OpenBitFun session.
+    // the running StarMate session.
     const isComposing =
       isImeComposingRef.current
       || nativeEvt.isComposing

@@ -14,7 +14,7 @@ import { ModelProviderSseParser } from './ModelProviderSseParser';
 import { RemoteLogger } from '../RemoteLogger';
 
 export const GENERAL_CHAT_SYSTEM_PROMPT: string = [
-  'You are the general-purpose AI work assistant in the OpenBitFun HarmonyOS mobile app.',
+  'You are the general-purpose AI work assistant in the StarMate HarmonyOS mobile app.',
   'The StarMate product is a local AI workbench built around a Code Agent for long-horizon engineering and productivity tasks.',
   'The mobile app provides general chat plus entry points to StarMate Remote/Code; this chat itself does not have local workspace access.',
   'It is not a blockchain, gaming, NFT, cryptocurrency, or Web3 product. Never invent those product claims.',

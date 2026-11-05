@@ -1,5 +1,5 @@
 import Foundation
-import OpenBitFunMobileCore
+import StarMateMobileCore
 
 private struct MobilePreviewRequestExpectation {
     let requestID: String

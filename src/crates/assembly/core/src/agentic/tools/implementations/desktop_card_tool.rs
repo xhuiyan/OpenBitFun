@@ -833,7 +833,7 @@ fn presets() -> Value {
                     "template": { "kind": "custom", "html": "<div class=\"openbitfun-card-stack\"><div class=\"openbitfun-card-value\" id=\"count\">-</div><div class=\"openbitfun-card-muted\">jobs waiting</div></div><script>openbitfunCard.onData(function (payload) { document.getElementById('count').textContent = payload.data && payload.data.waiting != null ? payload.data.waiting : '-'; });</script>" }
                 }
             },
-            "notes": format!("Runs in an isolated sandbox without access to OpenBitFun. openbitfunCard.onData(cb) receives {{data, card, error}}; openbitfunCard.openLink(url) opens an http(s) link. {CUSTOM_WIDGET_STYLE_GUIDANCE}")
+            "notes": format!("Runs in an isolated sandbox without access to StarMate. openbitfunCard.onData(cb) receives {{data, card, error}}; openbitfunCard.openLink(url) opens an http(s) link. {CUSTOM_WIDGET_STYLE_GUIDANCE}")
         }
     ])
 }
@@ -846,7 +846,7 @@ impl Tool for DesktopCardTool {
 
     async fn description(&self) -> StarMateResult<String> {
         Ok(format!(
-            r#"Show small persistent cards on the user's desktop, outside the OpenBitFun window (like OS widgets). Cards survive app restarts, keep their position, and can be dragged, hidden, or deleted by the user.
+            r#"Show small persistent cards on the user's desktop, outside the StarMate window (like OS widgets). Cards survive app restarts, keep their position, and can be dragged, hidden, or deleted by the user.
 
 Use a card whenever the user would otherwise have to come back and check on something: a reminder after some time, a scheduled job, a pull request's review/CI state, a deployment or long task's progress, weather, a stock price, a checklist of manual steps, the result of a scan or analysis (disk usage, cleanup candidates, test results, costs), or reference info needed again soon. Create one when the user asks, and also proactively when a task naturally produces something worth glancing at later. Prefer updating an existing card (list first) over creating near-duplicates, and delete cards that are no longer useful.
 

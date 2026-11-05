@@ -1,7 +1,7 @@
 //! `ProxyCommand` transport support.
 //!
 //! OpenSSH runs `ProxyCommand` as a local shell process and carries the SSH
-//! protocol over its stdin/stdout. This module does the same for OpenBitFun's
+//! protocol over its stdin/stdout. This module does the same for StarMate's
 //! russh client: the manager spawns the command here and hands the joined
 //! stdout/stdin to `establish_stream_session`, which keeps handshake timeouts,
 //! known-hosts checks, and authentication identical to the direct path.

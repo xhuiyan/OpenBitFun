@@ -14,7 +14,7 @@ import com.openbitfun.mobile.app.ui.chat.ComposerBar
 import com.openbitfun.mobile.app.ui.chat.MODEL_CONTROL_TEST_TAG
 import com.openbitfun.mobile.app.ui.chat.MODEL_SELECTOR_OPTION_TEST_TAG_PREFIX
 import com.openbitfun.mobile.app.ui.chat.MODEL_SELECTOR_TEST_TAG
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunTheme
+import com.openbitfun.mobile.app.ui.theme.StarMateTheme
 import com.openbitfun.mobile.core.feature.connection.ConnectionPhase
 import com.openbitfun.mobile.core.feature.session.ChatComposerCapabilities
 import com.openbitfun.mobile.core.feature.session.ModelOption
@@ -34,7 +34,7 @@ class ComposerModelSelectorTest {
         var sends = 0
         val suggestion = "  Run the tests  "
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 ComposerBar(draft = draft.value, images = emptyList(), busy = false,
                     streaming = streaming.value, phase = ConnectionPhase.CONNECTED,
                     model = null, capabilities = ChatComposerCapabilities.RemoteChat, placeholder = "Message",
@@ -68,7 +68,7 @@ class ComposerModelSelectorTest {
     @Test
     fun collapsedDraftHasNoSupplementalMicrophone() {
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 ComposerBar(draft = "A long draft that must keep its room in the collapsed input".repeat(4),
                     images = emptyList(), busy = false, streaming = false, phase = ConnectionPhase.CONNECTED,
                     model = null, capabilities = ChatComposerCapabilities.RemoteChat, placeholder = "Message",
@@ -93,7 +93,7 @@ class ComposerModelSelectorTest {
             ModelOption("account-fast", "Fast", "Account model", false, null, listOf(ModelRole.FAST), false),
         )
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 ComposerBar(
                     draft = "",
                     images = emptyList(),

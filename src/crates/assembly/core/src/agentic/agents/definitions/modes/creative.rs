@@ -52,7 +52,7 @@ impl Agent for CreativeHarness {
     }
 
     fn description(&self) -> &str {
-        "Creative Harness for videos, decks, prototypes, and web design with on-demand creative skills, building MiniApps, and customizing the OpenBitFun interface"
+        "Creative Harness for videos, decks, prototypes, and web design with on-demand creative skills, building MiniApps, and customizing the StarMate interface"
     }
 
     fn prompt_template_name(&self, _model_name: Option<&str>) -> &str {

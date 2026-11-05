@@ -15,12 +15,12 @@ struct SidebarToolsFooter: View {
                     .labelStyle(SidebarToolsLabelStyle())
                     .padding(.horizontal, 14)
                     .frame(minWidth: 104, minHeight: 48)
-                    .background(OpenBitFunTheme.sidebarRaised, in: Capsule())
-                    .overlay(Capsule().stroke(OpenBitFunTheme.sidebarLine, lineWidth: 0.5))
+                    .background(StarMateTheme.sidebarRaised, in: Capsule())
+                    .overlay(Capsule().stroke(StarMateTheme.sidebarLine, lineWidth: 0.5))
                     .contentShape(Capsule())
             }
             .buttonStyle(.plain)
-            .foregroundStyle(OpenBitFunTheme.sidebarInk)
+            .foregroundStyle(StarMateTheme.sidebarInk)
             .disabled(!toolsEnabled)
             .opacity(toolsEnabled ? 1 : 0.45)
             .accessibilityIdentifier("sidebar.deviceTools")
@@ -29,10 +29,10 @@ struct SidebarToolsFooter: View {
                 Image(systemName: "gearshape")
                     .font(.system(size: 20))
                     .frame(width: 48, height: 48)
-                    .background(OpenBitFunTheme.sidebarRaised, in: Circle())
+                    .background(StarMateTheme.sidebarRaised, in: Circle())
             }
             .buttonStyle(.plain)
-            .foregroundStyle(OpenBitFunTheme.sidebarInk)
+            .foregroundStyle(StarMateTheme.sidebarInk)
             .accessibilityLabel(settingsTitle)
         }
         .frame(minHeight: 56)

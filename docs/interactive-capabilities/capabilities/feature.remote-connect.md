@@ -43,7 +43,7 @@ Inspect sessions, answer permissions, and continue work from mobile, a bot, or a
 4. Bot 远控：在对应平台完成机器人配置与配对，检查监听状态
    For bot control, configure and pair the bot on its platform, then check listener status
 
-入口 / Entry: OpenBitFun 内的对应控制界面
+入口 / Entry: StarMate 内的对应控制界面
 
 ## 智能体可替你做什么 / What an agent can do for you
 

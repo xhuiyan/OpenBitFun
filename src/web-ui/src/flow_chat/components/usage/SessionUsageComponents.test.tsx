@@ -141,7 +141,7 @@ vi.mock('react-i18next', async (importOriginal) => ({
         'usage.help.legacyModel': 'Older sessions did not store per-round model names.',
         'usage.help.inferredModel': 'Inferred from the session model setting.',
         'usage.help.filesUnavailable': 'No file snapshot or file-edit tool record was found for this session.',
-        'usage.help.filesNoRecordedChanges': 'OpenBitFun did not detect file changes in this session. This is expected when the agent did not edit files.',
+        'usage.help.filesNoRecordedChanges': 'StarMate did not detect file changes in this session. This is expected when the agent did not edit files.',
         'usage.help.filesRemoteUnavailable': 'No remote snapshot summary was found for this session. File rows can still appear from recognized file-edit tool records.',
         'usage.help.filesNotTracked': 'No local snapshot or identifiable file-edit tool record was found for this session.',
         'usage.help.fileDiffUnavailable': 'Diff links require a snapshot-backed file row and a visible file path.',
@@ -1483,7 +1483,7 @@ describe('Session usage report UI components', () => {
 
   it('summarizes the latest context separately from cumulative provider usage for a remote workspace', () => {
     render(<SessionUsagePanel report={usageReport({
-      workspace: { kind: 'remote_ssh', pathLabel: '/home/dev/OpenBitFun' },
+      workspace: { kind: 'remote_ssh', pathLabel: '/home/dev/StarMate' },
       context: {
         systemPrompt: 1_000, toolDefinitions: 1_000, rules: 1_000, skills: 100,
         mcpTools: 100, subagentDefinitions: 100, summarizedConversation: 30_000,
@@ -1495,7 +1495,7 @@ describe('Session usage report UI components', () => {
     expect(Array.from(facts.querySelectorAll('dt')).map(node => node.textContent))
       .toEqual(['Project', 'Total usage', 'Context']);
     expect(Array.from(facts.querySelectorAll('dd')).map(node => node.textContent))
-      .toEqual(['OpenBitFun', '1.5K', '~133.3K / 256K']);
+      .toEqual(['StarMate', '1.5K', '~133.3K / 256K']);
   });
 
   it('keeps legacy context values unavailable and distinguishes a recorded empty context', () => {

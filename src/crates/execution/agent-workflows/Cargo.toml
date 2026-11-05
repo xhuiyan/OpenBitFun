@@ -3,7 +3,7 @@ name = "starmate-agent-workflows"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Named OpenBitFun agent workflow policies"
+description = "Named StarMate agent workflow policies"
 autotests = false
 
 [lib]

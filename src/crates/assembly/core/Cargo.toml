@@ -3,7 +3,7 @@ name = "starmate-core"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun Core Library - Platform-agnostic business logic"
+description = "StarMate Core Library - Platform-agnostic business logic"
 
 [lib]
 name = "starmate_core"

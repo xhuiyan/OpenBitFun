@@ -356,7 +356,7 @@ pub(crate) async fn begin_login_for_account(
         method: super::SubscriptionLoginMethod::Browser,
         authorization_url,
         user_code: None,
-        instructions: "Complete authorization in your browser, then return to OpenBitFun."
+        instructions: "Complete authorization in your browser, then return to StarMate."
             .to_string(),
         runner: Box::pin(runner),
     })

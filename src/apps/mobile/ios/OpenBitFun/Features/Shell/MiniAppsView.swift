@@ -23,7 +23,7 @@ struct MiniAppsButton: View {
                     .contentShape(RoundedRectangle(cornerRadius: 12))
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .accessibilityLabel(model.localized("小应用"))
                 .padding(.top, 4)
                 .padding(.bottom, 8)
@@ -85,16 +85,16 @@ private struct MiniAppsView: View {
                             Text(model.localized("全部应用"))
                                 .font(MobileDesignTypography.titleSmall.font.weight(.medium))
                                 .padding(.horizontal, 16).padding(.vertical, 10)
-                                .background(OpenBitFunTheme.soft, in: Capsule())
+                                .background(StarMateTheme.soft, in: Capsule())
                             Spacer()
                             Text(model.localized("离线可用"))
                                 .font(MobileDesignTypography.labelSmall.font)
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                         }
                         .padding(.top, 16).padding(.bottom, 20)
                         if let failure {
                             Text(failure).font(MobileDesignTypography.bodyMedium.font)
-                                .foregroundStyle(OpenBitFunTheme.muted).padding(.vertical, 16)
+                                .foregroundStyle(StarMateTheme.muted).padding(.vertical, 16)
                             Button(model.localized("重试")) { Task { await loadApps() } }
                             Spacer()
                         } else {
@@ -105,7 +105,7 @@ private struct MiniAppsView: View {
                                     ForEach(apps) { app in
                                         Button { selected = app } label: {
                                             VStack(alignment: .leading, spacing: 10) {
-                                                OpenBitFunTheme.soft
+                                                StarMateTheme.soft
                                                     .aspectRatio(1, contentMode: .fit)
                                                     .overlay {
                                                         GeometryReader { preview in
@@ -116,7 +116,7 @@ private struct MiniAppsView: View {
                                                     }
                                                     .clipShape(RoundedRectangle(cornerRadius: 24))
                                                     .overlay(RoundedRectangle(cornerRadius: 24)
-                                                        .stroke(OpenBitFunTheme.line, lineWidth: 0.5))
+                                                        .stroke(StarMateTheme.line, lineWidth: 0.5))
                                                     .accessibilityHidden(true)
                                                 Text(copy(for: app)?.name ?? app.id)
                                                     .font(MobileDesignTypography.titleSmall.font.weight(.medium))
@@ -139,8 +139,8 @@ private struct MiniAppsView: View {
                 }
             }
         }
-        .foregroundStyle(OpenBitFunTheme.ink)
-        .background(OpenBitFunTheme.page.ignoresSafeArea())
+        .foregroundStyle(StarMateTheme.ink)
+        .background(StarMateTheme.page.ignoresSafeArea())
         .task { await loadApps() }
     }
 

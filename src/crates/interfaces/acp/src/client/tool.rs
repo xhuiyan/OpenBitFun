@@ -125,7 +125,7 @@ impl Tool for AcpAgentTool {
         context: &ToolUseContext,
     ) -> StarMateResult<Vec<ToolResult>> {
         let openbitfun_session_id = context.session_id.clone().ok_or_else(|| {
-            StarMateError::tool("ACP tool requires an active OpenBitFun session".to_string())
+            StarMateError::tool("ACP tool requires an active StarMate session".to_string())
         })?;
         let prompt = input
             .get("prompt")

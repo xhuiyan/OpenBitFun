@@ -47,7 +47,7 @@ impl AccountRuntimeDispatchAccess {
 impl DispatchAccountAccess for AccountRuntimeDispatchAccess {
     async fn list_devices(&self) -> anyhow::Result<Vec<AccountDevice>> {
         if !self.account.is_logged_in().await {
-            bail!("This host is not signed in to an OpenBitFun account");
+            bail!("This host is not signed in to an StarMate account");
         }
         self.account.list_devices().await
     }
@@ -181,7 +181,7 @@ fn device_json(device: &AccountDevice, local_device_id: Option<&str>) -> Value {
 impl DispatchControlContext<'_> {
     fn account(&self) -> anyhow::Result<&dyn DispatchAccountAccess> {
         self.account
-            .ok_or_else(|| anyhow!("This host has no OpenBitFun account runtime"))
+            .ok_or_else(|| anyhow!("This host has no StarMate account runtime"))
     }
 
     fn ssh(&self) -> anyhow::Result<&SSHConnectionManager> {

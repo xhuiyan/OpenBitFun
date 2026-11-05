@@ -233,7 +233,7 @@
         }
       }
     },
-    "OpenBitFun iOS版": {
+    "StarMate iOS版": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -693,7 +693,7 @@
         }
       }
     },
-    "向 OpenBitFun 提问": {
+    "向 StarMate 提问": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2113,7 +2113,7 @@
         }
       }
     },
-    "这是 OpenBitFun 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和智能体的执行状态。": {
+    "这是 StarMate 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和智能体的执行状态。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2123,7 +2123,7 @@
         }
       }
     },
-    "这是 OpenBitFun 的远程会话预览。": {
+    "这是 StarMate 的远程会话预览。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2663,7 +2663,7 @@
         }
       }
     },
-    "在桌面端打开 OpenBitFun，然后进入远程连接。": {
+    "在桌面端打开 StarMate，然后进入远程连接。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2673,7 +2673,7 @@
         }
       }
     },
-    "此桌面要求使用 OpenBitFun 账号验证身份。": {
+    "此桌面要求使用 StarMate 账号验证身份。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2683,7 +2683,7 @@
         }
       }
     },
-    "OpenBitFun 用户名": {
+    "StarMate 用户名": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2693,7 +2693,7 @@
         }
       }
     },
-    "OpenBitFun 密码": {
+    "StarMate 密码": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2703,7 +2703,7 @@
         }
       }
     },
-    "OpenBitFun 账号": {
+    "StarMate 账号": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2753,7 +2753,7 @@
         }
       }
     },
-    "告诉 OpenBitFun 要做什么": {
+    "告诉 StarMate 要做什么": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3003,7 +3003,7 @@
         }
       }
     },
-    "问问 OpenBitFun": {
+    "问问 StarMate": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3073,7 +3073,7 @@
         }
       }
     },
-    "OpenBitFun": {
+    "StarMate": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3273,7 +3273,7 @@
         }
       }
     },
-    "连接桌面工作区后，OpenBitFun 才能读取项目文件、运行命令并修改代码。": {
+    "连接桌面工作区后，StarMate 才能读取项目文件、运行命令并修改代码。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3293,7 +3293,7 @@
         }
       }
     },
-    "OpenBitFun 已就绪": {
+    "StarMate 已就绪": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3303,7 +3303,7 @@
         }
       }
     },
-    "OpenBitFun 正在回复": {
+    "StarMate 正在回复": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3863,7 +3863,7 @@
         }
       }
     },
-    "OpenBitFun 远程": {
+    "StarMate 远程": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3883,7 +3883,7 @@
         }
       }
     },
-    "连接桌面端后，OpenBitFun 可以访问你的代码仓库、运行命令和修改文件。": {
+    "连接桌面端后，StarMate 可以访问你的代码仓库、运行命令和修改文件。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -4213,7 +4213,7 @@
         }
       }
     },
-    "OpenBitFun 用户": {
+    "StarMate 用户": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -4583,7 +4583,7 @@
         }
       }
     },
-    "连接桌面端后，OpenBitFun 可以访问代码仓库、运行命令和处理本地开发任务。": {
+    "连接桌面端后，StarMate 可以访问代码仓库、运行命令和处理本地开发任务。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5223,7 +5223,7 @@
         }
       }
     },
-    "告诉 OpenBitFun 要做什么...": {
+    "告诉 StarMate 要做什么...": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5613,7 +5613,7 @@
         }
       }
     },
-    "OpenBitFun 正在执行...": {
+    "StarMate 正在执行...": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5623,7 +5623,7 @@
         }
       }
     },
-    "OpenBitFun 正在处理...": {
+    "StarMate 正在处理...": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5633,7 +5633,7 @@
         }
       }
     },
-    "OpenBitFun 已更新会话": {
+    "StarMate 已更新会话": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6443,7 +6443,7 @@
         }
       }
     },
-    "请输入 OpenBitFun 用户名。": {
+    "请输入 StarMate 用户名。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6613,7 +6613,7 @@
         }
       }
     },
-    "把这块手表加入你的 OpenBitFun 账号？": {
+    "把这块手表加入你的 StarMate 账号？": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -6733,7 +6733,7 @@
         }
       }
     },
-    "%@ 已连接。你可以继续发送指令，桌面端会在 OpenBitFun 中执行。": {
+    "%@ 已连接。你可以继续发送指令，桌面端会在 StarMate 中执行。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -7121,7 +7121,7 @@
         }
       }
     },
-    "打开 OpenBitFun 授权": {
+    "打开 StarMate 授权": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -7131,7 +7131,7 @@
         }
       }
     },
-    "该设备已离线，或不属于当前 OpenBitFun 账户。": {
+    "该设备已离线，或不属于当前 StarMate 账户。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -7187,7 +7187,7 @@
         }
       }
     },
-    "打开 OpenBitFun 查看结果。": {
+    "打开 StarMate 查看结果。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -7227,7 +7227,7 @@
         }
       }
     },
-    "允许 OpenBitFun 在任务完成时发送通知。你可以稍后在系统设置中更改。": {
+    "允许 StarMate 在任务完成时发送通知。你可以稍后在系统设置中更改。": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -7569,7 +7569,7 @@
         }
       }
     },
-    "这是 OpenBitFun 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和 Agent 的执行状态。": {
+    "这是 StarMate 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和 Agent 的执行状态。": {
       "localizations": {
         "en": {
           "stringUnit": {

@@ -62,11 +62,11 @@ pub(crate) enum HookAction {
     /// Remove only StarMate's managed copy of one imported Hook source
     Remove {
         import_id: String,
-        /// Confirm removal of the OpenBitFun-managed copy
+        /// Confirm removal of the StarMate-managed copy
         #[arg(long, required = true)]
         confirm: bool,
     },
-    /// Reset a corrupt OpenBitFun-managed Hook index without changing source files
+    /// Reset a corrupt StarMate-managed Hook index without changing source files
     Reset {
         #[arg(value_enum)]
         scope: HookImportResetScope,

@@ -29,7 +29,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.openbitfun.mobile.app.R
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunEaseOut
+import com.openbitfun.mobile.app.ui.theme.StarMateEaseOut
 import com.openbitfun.mobile.app.ui.theme.MotionDrawerCloseMillis
 import com.openbitfun.mobile.app.ui.theme.MotionDrawerHideMillis
 import com.openbitfun.mobile.app.ui.theme.MotionDrawerOpenMillis
@@ -94,7 +94,7 @@ internal class ContentCardCoordinator(initialOpen: Boolean) {
 
 /** Compact app shell motion shared with `AppShell.ets`. */
 @Composable
-internal fun OpenBitFunCompactDrawer(
+internal fun StarMateCompactDrawer(
     open: Boolean,
     compact: Boolean,
     drawerWidth: Dp,
@@ -164,19 +164,19 @@ internal fun OpenBitFunCompactDrawer(
                 launch {
                     drawerProgress.animateTo(
                         targetValue = 1f,
-                        animationSpec = tween(MotionDrawerRevealMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerRevealMillis, easing = StarMateEaseOut),
                     )
                 }
                 launch {
                     scrimProgress.animateTo(
                         targetValue = 0.62f,
-                        animationSpec = tween(MotionDrawerScrimMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerScrimMillis, easing = StarMateEaseOut),
                     )
                 }
                 launch {
                     contentProgress.animateTo(
                         targetValue = 1f,
-                        animationSpec = tween(MotionDrawerOpenMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerOpenMillis, easing = StarMateEaseOut),
                     )
                 }
                 // Value guard, not a frame count: recede only once the content
@@ -193,14 +193,14 @@ internal fun OpenBitFunCompactDrawer(
                 launch {
                     drawerProgress.animateTo(
                         targetValue = 0f,
-                        animationSpec = tween(MotionDrawerHideMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerHideMillis, easing = StarMateEaseOut),
                     )
                     drawerRevealed = false
                 }
                 launch {
                     scrimProgress.animateTo(
                         targetValue = 0f,
-                        animationSpec = tween(MotionDrawerScrimMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerScrimMillis, easing = StarMateEaseOut),
                     )
                     scrimComposed = false
                 }
@@ -210,7 +210,7 @@ internal fun OpenBitFunCompactDrawer(
                     // them while the content is still moving.
                     contentProgress.animateTo(
                         targetValue = 0f,
-                        animationSpec = tween(MotionDrawerCloseMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionDrawerCloseMillis, easing = StarMateEaseOut),
                     )
                     contentCard.onContentSettled()
                 }

@@ -40,7 +40,7 @@ Read README.md for its user-facing contract.
 ## Focused verification
 
 ```bash
-cargo test -p openbitfun-data-tools -p openbitfun-legacy-migration-adapters -p openbitfun-legacy-migration --lib
+cargo test -p starmate-data-tools -p openbitfun-legacy-migration-adapters -p openbitfun-legacy-migration --lib
 cargo test -p openbitfun-services-core --no-default-features --features session-recovery --lib session_recovery
 cargo test -p openbitfun-legacy-migration --test migration_engine_contracts
 node --test scripts/data-tools-tauri-build.test.mjs

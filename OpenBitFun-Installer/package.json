@@ -3,7 +3,7 @@
   "version": "1.0.8",
   "private": true,
   "type": "module",
-  "description": "OpenBitFun Custom Installer - Modern branded installation experience",
+  "description": "StarMate Custom Installer - Modern branded installation experience",
   "scripts": {
     "prepare:design-system": "pnpm --dir ../design-system run build:packages",
     "predev": "pnpm run prepare:design-system",

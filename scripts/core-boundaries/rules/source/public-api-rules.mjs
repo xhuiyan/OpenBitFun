@@ -234,7 +234,7 @@ function opencodeAdapterEntry(symbol, consumer) {
     contractSlice: contractSlices.opencodeAdapterBoundary,
     wireImpact: false,
     rationale:
-      'P0-C needs one adapter factory that consumes fixed OpenBitFun-managed package content and returns the existing PluginRuntimeAdapter boundary',
+      'P0-C needs one adapter factory that consumes fixed StarMate-managed package content and returns the existing PluginRuntimeAdapter boundary',
     exit:
       'remove only if source discovery moves behind a reviewed product source registry with equivalent client tests',
   };
@@ -1209,7 +1209,7 @@ export const externalSourceCorePublicApiEntries = [
     externalSourceControlEntry(
       symbol,
       'starmate-core external source control composition facade',
-      'OpenBitFun CLI, Desktop, Server, Peer Host, and Web API adapters',
+      'StarMate CLI, Desktop, Server, Peer Host, and Web API adapters',
     ),
   ),
   ...[
@@ -1233,7 +1233,7 @@ export const externalSourceCorePublicApiEntries = [
     externalIntegrationPolicyEntry(
       symbol,
       'starmate-core external integration policy composition facade',
-      'OpenBitFun CLI, Desktop, Server, Peer Host, and Web API adapters',
+      'StarMate CLI, Desktop, Server, Peer Host, and Web API adapters',
       true,
     ),
   ),
@@ -1286,7 +1286,7 @@ export const externalSourceCorePublicApiEntries = [
     externalSourceEntry(
       symbol,
       'starmate-core external source composition facade',
-      'OpenBitFun CLI and desktop host APIs',
+      'StarMate CLI and desktop host APIs',
     ),
   ),
   externalReferenceEntry(
@@ -1346,7 +1346,7 @@ export const externalSourceCorePublicApiEntries = [
     externalToolEntry(
       symbol,
       'starmate-core external tool composition facade',
-      'OpenBitFun CLI and desktop host APIs',
+      'StarMate CLI and desktop host APIs',
     ),
   ),
   ...[
@@ -1369,7 +1369,7 @@ export const externalSourceCorePublicApiEntries = [
     externalSubagentEntry(
       symbol,
       'starmate-core external subagent composition facade',
-      'OpenBitFun CLI and desktop host APIs',
+      'StarMate CLI and desktop host APIs',
     ),
   ),
   ...[
@@ -1386,7 +1386,7 @@ export const externalSourceCorePublicApiEntries = [
     externalMcpEntry(
       symbol,
       'starmate-core external MCP composition facade',
-      'OpenBitFun CLI and desktop host APIs',
+      'StarMate CLI and desktop host APIs',
     ),
   ),
 ];
@@ -1441,8 +1441,8 @@ export const managedPluginSourcePublicApiEntries = [
   pluginSourceEntry(
     symbol,
     'starmate-core managed plugin source compatibility facade',
-    'OpenBitFun CLI plugins and doctor commands',
-    'services-integrations plugin_source tests, core boundary checks, and OpenBitFun CLI plugin command tests',
+    'StarMate CLI plugins and doctor commands',
+    'services-integrations plugin_source tests, core boundary checks, and StarMate CLI plugin command tests',
     false,
   ),
 );
@@ -1458,8 +1458,8 @@ export const managedPluginActivationPublicApiEntries = [
   pluginSourceEntry(
     symbol,
     'starmate-core managed plugin composition root',
-    'OpenBitFun CLI plugin activation commands',
-    'starmate-core plugin_runtime tests, OpenBitFun CLI plugin source tests, and core boundary checks',
+    'StarMate CLI plugin activation commands',
+    'starmate-core plugin_runtime tests, StarMate CLI plugin source tests, and core boundary checks',
     false,
   ),
 );

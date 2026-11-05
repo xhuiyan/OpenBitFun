@@ -43,7 +43,7 @@ const createSession = (overrides: Partial<Session> = {}): Session => ({
   maxContextTokens: 128128,
   mode: 'Standard',
   workspaceId: 'workspace-1',
-  workspacePath: 'D:/workspace/OpenBitFun',
+  workspacePath: 'D:/workspace/StarMate',
   isTransient: false,
   ...overrides,
 });
@@ -55,7 +55,7 @@ const usageReport = (overrides: Partial<SessionUsageReport> = {}): SessionUsageR
   generatedAt: 100,
   workspace: {
     kind: 'local',
-    pathLabel: 'D:/workspace/OpenBitFun',
+    pathLabel: 'D:/workspace/StarMate',
   },
   scope: {
     kind: 'entire_session',
@@ -181,7 +181,7 @@ describe('runUsageReportCommand', () => {
     const { buildSessionUsagePanelContent } = await import('./openSessionUsageReport');
     const legacy = JSON.parse(JSON.stringify({
       report: usageReport(), markdown: '# Legacy report', sessionId: 'session-1',
-      workspacePath: 'D:/workspace/OpenBitFun', initialTab: 'overview',
+      workspacePath: 'D:/workspace/StarMate', initialTab: 'overview',
     }));
     const content = buildSessionUsagePanelContent(legacy);
     expect(content.title).toBe('Context Usage Report');
@@ -345,7 +345,7 @@ describe('runUsageReportCommand', () => {
     const { runUsageReportCommand } = await import('./usageReportService');
     const pending = runUsageReportCommand({ session: createSession(), ...uiParams });
     const resourceId = useContentResourceStore.getState().open(panelContent()!, {
-      surfaceId: 'local', workspaceId: 'workspace-1', workspacePath: 'D:/workspace/OpenBitFun',
+      surfaceId: 'local', workspaceId: 'workspace-1', workspacePath: 'D:/workspace/StarMate',
     });
     closePanel();
     resolve(usageReport());

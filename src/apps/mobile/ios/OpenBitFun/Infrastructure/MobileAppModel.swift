@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import OpenBitFunMobileCore
+import StarMateMobileCore
 
 @MainActor
 final class MobileAppModel: ObservableObject {

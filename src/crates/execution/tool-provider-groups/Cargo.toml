@@ -3,7 +3,7 @@ name = "starmate-tool-packs"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun concrete tool-pack owner crate"
+description = "StarMate concrete tool-pack owner crate"
 
 [lib]
 name = "starmate_tool_packs"

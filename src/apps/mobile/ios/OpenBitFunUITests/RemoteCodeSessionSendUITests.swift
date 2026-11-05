@@ -15,7 +15,7 @@ final class RemoteCodeSessionSendUITests: XCTestCase {
         guard activeSession.waitForExistence(timeout: 20) else {
             recordDiagnostics(named: "NoActiveRemoteSession")
             XCTFail(
-                "No active Remote Code Session is visible. Keep the phone unlocked and navigate OpenBitFun to the intended existing remote code session; this test will not choose a session automatically."
+                "No active Remote Code Session is visible. Keep the phone unlocked and navigate StarMate to the intended existing remote code session; this test will not choose a session automatically."
             )
             return
         }
@@ -337,8 +337,8 @@ final class RemoteAccountWorkflowPerformanceUITests: XCTestCase {
         sidebar.tap()
 
         let accountActions = [
-            app.buttons["登录 OpenBitFun 账号"],
-            app.buttons["Sign in to OpenBitFun"],
+            app.buttons["登录 StarMate 账号"],
+            app.buttons["Sign in to StarMate"],
         ]
         if !waitUntil(timeout: 5, condition: {
             accountActions.contains(where: \.exists) || self.app.buttons.matching(

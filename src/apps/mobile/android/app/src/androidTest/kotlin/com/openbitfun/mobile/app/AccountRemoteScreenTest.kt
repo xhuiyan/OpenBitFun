@@ -17,7 +17,7 @@ import com.openbitfun.mobile.app.ui.remote.CONNECT_ACCOUNT_DEVICE_REFRESH_TEST_T
 import com.openbitfun.mobile.app.ui.remote.CONNECT_ACCOUNT_DEVICE_ROW_TEST_TAG_PREFIX
 import com.openbitfun.mobile.app.ui.remote.ConnectAccountDeviceScreen
 import com.openbitfun.mobile.app.ui.remote.AccountRemoteScreen
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunTheme
+import com.openbitfun.mobile.app.ui.theme.StarMateTheme
 import com.openbitfun.mobile.core.feature.account.AccountDeviceUi
 import com.openbitfun.mobile.core.feature.account.AccountUiState
 import com.openbitfun.mobile.core.feature.connection.ConnectionPhase
@@ -36,7 +36,7 @@ class AccountRemoteScreenTest {
     @Test
     fun aSelectedAccountDeviceBypassesThePairingForm() {
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 AccountRemoteScreen(
                     remoteState = RemoteSessionUiState.Idle,
                     workspaceState = RemoteWorkspaceUiState.Idle,
@@ -81,7 +81,7 @@ class AccountRemoteScreenTest {
         val intents = mutableListOf<RemoteSessionIntent>()
         var wentBack = false
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 val placement = SettingsPlacement(SettingsPlacementMode.BOTTOM, 0, 0, 0)
                 AccountRemoteScreen(
                     remoteState = state.value, workspaceState = RemoteWorkspaceUiState.Idle,
@@ -112,7 +112,7 @@ class AccountRemoteScreenTest {
         var refreshes = 0
         var selected = ""
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 ConnectAccountDeviceScreen(
                     state = AccountUiState.Ready(
                         userId = "user-1",
@@ -145,7 +145,7 @@ class AccountRemoteScreenTest {
     fun aSelectedOfflineAccountDeviceCanReconnect() {
         var selected = ""
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 ConnectAccountDeviceScreen(
                     state = AccountUiState.Ready(
                         userId = "user-1",

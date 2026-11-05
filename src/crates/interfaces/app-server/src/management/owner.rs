@@ -1776,7 +1776,7 @@ fn account_login_status_message(
 ) -> String {
     if result.routing_standby {
         format!(
-            "Logged in as user {} on {}. Another OpenBitFun host on this machine serves device routing; this one takes over when it exits.",
+            "Logged in as user {} on {}. Another StarMate host on this machine serves device routing; this one takes over when it exits.",
             result.user_id, result.relay_url
         )
     } else if result.routing_connected {
@@ -1836,7 +1836,7 @@ mod tests {
             files: vec![
                 starmate_core::native_hooks::NativeHookFileView {
                     scope: "user",
-                    path: PathBuf::from("C:/Users/private/AppData/Roaming/OpenBitFun/config/hooks.json"),
+                    path: PathBuf::from("C:/Users/private/AppData/Roaming/StarMate/config/hooks.json"),
                     exists: true,
                     loaded: true,
                 },
@@ -1849,7 +1849,7 @@ mod tests {
                 starmate_core::native_hooks::NativeHookFileView {
                     scope: "user",
                     path: PathBuf::from(
-                        "C:/Users/private/AppData/Roaming/OpenBitFun/runtime/hook-imports/bundles/import-one/version/hooks.json",
+                        "C:/Users/private/AppData/Roaming/StarMate/runtime/hook-imports/bundles/import-one/version/hooks.json",
                     ),
                     exists: true,
                     loaded: true,

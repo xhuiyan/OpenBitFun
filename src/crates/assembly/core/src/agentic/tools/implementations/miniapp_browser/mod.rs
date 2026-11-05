@@ -50,7 +50,7 @@ impl Tool for MiniAppBrowserTool {
 
     async fn description(&self) -> StarMateResult<String> {
         Ok(format!(
-            r#"Control a MiniApp at the source level and through its live interface. This is the preferred tool for OpenBitFun MiniApps, before ComputerUse. Read its source to understand business functions and action parameters, then observe live business state and invoke semantic actions on the current instance. MiniAppBrowser operates and verifies the user-visible instance.
+            r#"Control a MiniApp at the source level and through its live interface. This is the preferred tool for StarMate MiniApps, before ComputerUse. Read its source to understand business functions and action parameters, then observe live business state and invoke semantic actions on the current instance. MiniAppBrowser operates and verifies the user-visible instance.
 
 Source-aware workflow:
 1. Use `OpenBitFunControl` to `get` `feature.miniapps`, then follow its schema for `list-apps` and `inspect-app`. Inspection returns HTML, CSS, UI/worker JavaScript, dependencies, and version without a workspace checkout. Read the relevant implementation and derive the shortest reliable sequence for the task; source access does not require an edit.
@@ -88,7 +88,7 @@ This tool has no host-path access or arbitrary JavaScript `evaluate` action. Sou
     }
 
     fn short_description(&self) -> String {
-        "Preferred control for OpenBitFun MiniApps: open the live app, then use bridge or DOM/input before desktop automation."
+        "Preferred control for StarMate MiniApps: open the live app, then use bridge or DOM/input before desktop automation."
             .to_string()
     }
 

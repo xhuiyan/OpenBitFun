@@ -342,7 +342,7 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
       tone = 'green';
     }
 
-    // The daemon says `needs_index` both while OpenBitFun's auto-index policy is still evaluating the
+    // The daemon says `needs_index` both while StarMate's auto-index policy is still evaluating the
     // workspace and after it deliberately declined, so without the policy's own decision the UI
     // can only hedge. When the decision is known it replaces the hedged wording with the reason.
     const autoIndex = workspaceSearchIndex.indexStatus?.autoIndex ?? null;

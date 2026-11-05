@@ -79,7 +79,7 @@ impl PersistenceManager {
             .is_some_and(tracking::is_followed)
         {
             return Err(StarMateError::Validation(
-                "Following external source history through Relay is not supported. Open it on its owning host or use a native OpenBitFun branch.".into(),
+                "Following external source history through Relay is not supported. Open it on its owning host or use a native StarMate branch.".into(),
             ));
         }
         Ok(())
@@ -97,7 +97,7 @@ impl PersistenceManager {
             .is_some_and(tracking::is_followed)
         {
             return Err(StarMateError::Validation(
-                "This session follows an external source and is read-only. Fork the viewed history in OpenBitFun before continuing or editing it. This client must support session forks.".into(),
+                "This session follows an external source and is read-only. Fork the viewed history in StarMate before continuing or editing it. This client must support session forks.".into(),
             ));
         }
         Ok(())

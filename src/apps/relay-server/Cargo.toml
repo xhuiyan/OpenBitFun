@@ -3,7 +3,7 @@ name = "starmate-relay-server"
 version = "1.0.8" # x-release-please-version
 authors = ["StarMate Team"]
 edition = "2021"
-description = "OpenBitFun standalone Remote Connect relay server"
+description = "StarMate standalone Remote Connect relay server"
 
 [lib]
 name = "starmate_relay_server"

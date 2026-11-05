@@ -46,7 +46,7 @@ impl RemoteBotControl {
         self.service.read().await.as_ref()
             .ok_or_else(|| anyhow!("Remote Connect host is unavailable"))?
             .bot_account_scope().await
-            .ok_or_else(|| anyhow!("account_required: Sign in to OpenBitFun on the executing host before starting a bot"))
+            .ok_or_else(|| anyhow!("account_required: Sign in to StarMate on the executing host before starting a bot"))
     }
 
     pub async fn restore(&self, user_id: &str) -> Result<()> {

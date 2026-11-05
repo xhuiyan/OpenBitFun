@@ -757,7 +757,7 @@ export default function conversationPresentationUnitTest() {
       expect(RemoteI18n.t('sidebar.newChat')).assertEqual('聊天');
       expect(RemoteI18n.t('sidebar.connectDesktop')).assertEqual('连接电脑');
       expect(RemoteI18n.t('sidebar.scanToConnect')).assertEqual('sidebar.scanToConnect');
-      expect(RemoteI18n.t('sidebar.signInOpenBitFunAccount')).assertEqual('使用邮箱或 GitHub 登录');
+      expect(RemoteI18n.t('sidebar.signInStarMateAccount')).assertEqual('使用邮箱或 GitHub 登录');
       expect(RemoteI18n.t('connect.chooseConnectionTitle')).assertEqual('连接电脑');
       expect(RemoteI18n.t('sidebar.local')).assertEqual('sidebar.local');
       expect(RemoteI18n.t('sidebar.code')).assertEqual('sidebar.code');
@@ -928,7 +928,7 @@ export default function conversationPresentationUnitTest() {
       expect(named.allowRename).assertTrue();
       expect(named.showActions).assertTrue();
       const branded = ConversationHeaderPolicy.present(ChatSurface.Remote, '', '', 'feat/ui', false);
-      expect(branded.subtitle).assertEqual('OpenBitFun · feat/ui');
+      expect(branded.subtitle).assertEqual('StarMate · feat/ui');
     });
 
   });

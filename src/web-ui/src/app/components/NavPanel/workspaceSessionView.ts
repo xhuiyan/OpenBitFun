@@ -177,7 +177,7 @@ export function matchesWorkspaceSourceAgent(session: Session, source: WorkspaceS
 /**
  * Automatic discovery controls whether source-following views are shown in
  * workspace navigation. A forked/local continuation has no `externalHistory`
- * marker and remains a native OpenBitFun session even when its original
+ * marker and remains a native StarMate session even when its original
  * source is disabled.
  *
  * `undefined` means the host setting has not been resolved yet. Keep the

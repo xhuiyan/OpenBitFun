@@ -107,7 +107,7 @@ internal object GeneralChatCloudConfigPolicy {
      * The endpoint to post to, which is not always the one that was configured.
      *
      * The desktop stores Anthropic's host bare and appends the path itself; this
-     * client posts to whatever it is given, so the path has to be here. OpenBitFun's
+     * client posts to whatever it is given, so the path has to be here. StarMate's
      * own relay is left alone — it speaks the same protocol on its own route.
      */
     private fun normalizedApiUrl(model: JsonObject): String {

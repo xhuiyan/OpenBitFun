@@ -116,7 +116,7 @@ The handler now:
 - answers a pending drop with `drop_finish(false)` when the drag leaves first,
   instead of leaving the source wait for a reply that will never come.
 
-Verification: `cargo check -p openbitfun-desktop` covers the handler on Linux.
+Verification: `cargo check -p starmate-desktop` covers the handler on Linux.
 Manual desktop verification is a file dragged from the file manager onto the
 composer and onto the Files panel, plus a tab or context-pill drag to confirm
 internal drags still work.

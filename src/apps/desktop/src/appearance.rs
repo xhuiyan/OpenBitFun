@@ -205,7 +205,7 @@ impl AppearanceConfig {
             .map(|appearance| appearance.to_appearance_config(Some(resolved_id.clone())))
     }
 
-    /// Persisted OpenBitFun-era builtin appearance ids still resolve after the rebrand.
+    /// Persisted StarMate-era builtin appearance ids still resolve after the rebrand.
     fn normalize_appearance_id(appearance_id: &str) -> String {
         match appearance_id.strip_prefix("openbitfun-") {
             Some(suffix) => format!("starmate-{suffix}"),

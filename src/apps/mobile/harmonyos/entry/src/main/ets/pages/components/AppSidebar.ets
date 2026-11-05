@@ -303,7 +303,7 @@ export struct AppSidebar {
   private SignedOutFooter() {
     Column({ space: 8 }) {
       Button() {
-        Text(RemoteI18n.t('sidebar.signInOpenBitFunAccount'))
+        Text(RemoteI18n.t('sidebar.signInStarMateAccount'))
           .fontSize(MobileDesignTypography.bodyMedium.size)
           .fontWeight(FontWeight.Bold)
           .fontColor(CARD)

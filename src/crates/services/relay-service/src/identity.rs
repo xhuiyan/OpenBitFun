@@ -1,5 +1,5 @@
-//! Verification against the shared OpenBitFun GitHub identity authority.
-//! Relay receives an OpenBitFun access token, never a GitHub OAuth secret.
+//! Verification against the shared StarMate GitHub identity authority.
+//! Relay receives an StarMate access token, never a GitHub OAuth secret.
 
 use axum::http::StatusCode;
 use serde::Deserialize;

@@ -3,7 +3,7 @@ name = "starmate-webdriver"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Embedded WebDriver server for OpenBitFun desktop"
+description = "Embedded WebDriver server for StarMate desktop"
 
 [features]
 default = []

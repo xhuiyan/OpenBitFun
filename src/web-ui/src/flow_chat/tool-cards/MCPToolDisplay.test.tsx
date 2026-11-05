@@ -86,7 +86,7 @@ function toolItem(overrides: Partial<FlowToolItem> = {}): FlowToolItem {
     toolCall: {
       id: 'call-mcp-1',
       input: {
-        query: 'OpenBitFun',
+        query: 'StarMate',
         limit: 5,
         _early_detection: false,
       },
@@ -189,7 +189,7 @@ describe('MCPToolDisplay', () => {
       );
     });
 
-    expect(input?.textContent).toContain('"query": "OpenBitFun"');
+    expect(input?.textContent).toContain('"query": "StarMate"');
     expect(input?.textContent).toContain('"limit": 5');
     expect(input?.textContent).not.toContain('_early_detection');
     expect(container.querySelector('[data-openbitfun-component="mcp-tool-display"]')?.getAttribute('data-openbitfun-state')).toContain('expanded');
@@ -262,7 +262,7 @@ describe('MCPToolDisplay', () => {
       await Promise.resolve();
     });
     expect(copyTextToClipboard).toHaveBeenLastCalledWith(
-      '{\n  "query": "OpenBitFun",\n  "limit": 5\n}',
+      '{\n  "query": "StarMate",\n  "limit": 5\n}',
     );
 
     await act(async () => {
@@ -306,7 +306,7 @@ describe('MCPToolDisplay', () => {
       );
     });
 
-    expect(container.querySelector('.mcp-input-code')?.textContent).toContain('"query": "OpenBitFun"');
+    expect(container.querySelector('.mcp-input-code')?.textContent).toContain('"query": "StarMate"');
   });
 
   it('does not expose incomplete streaming parameters as expandable details', () => {

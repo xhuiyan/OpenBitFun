@@ -81,7 +81,7 @@ describe('ApiClient startup trace classification', () => {
     await client.invoke('restore_session_view', {
       request: {
         sessionId: 'history-1',
-        workspacePath: 'D:/workspace/OpenBitFun',
+        workspacePath: 'D:/workspace/StarMate',
       },
     });
 
@@ -110,7 +110,7 @@ describe('ApiClient startup trace classification', () => {
     const client = new ApiClient({ enableLogging: false, retries: 0 });
 
     const error = await client.invoke('get_external_source_control_snapshot', {
-      request: { workspacePath: 'D:/workspace/OpenBitFun' },
+      request: { workspacePath: 'D:/workspace/StarMate' },
     }).catch((caught: unknown) => caught as {
       code: string;
       details?: { originalError?: unknown };
@@ -354,7 +354,7 @@ describe('ApiClient startup trace classification', () => {
     await client.invoke('restore_session_view', {
       request: {
         sessionId: 'history-1',
-        workspacePath: 'D:/workspace/OpenBitFun',
+        workspacePath: 'D:/workspace/StarMate',
       },
     });
 
@@ -372,7 +372,7 @@ describe('ApiClient startup trace classification', () => {
     await client.invoke('load_session_turn_window', {
       request: {
         sessionId: 'history-1',
-        workspacePath: 'D:/workspace/OpenBitFun',
+        workspacePath: 'D:/workspace/StarMate',
         targetStorageTurnIndex: 4,
       },
     });
@@ -409,7 +409,7 @@ describe('ApiClient startup trace classification', () => {
     });
     const secondRequest = client.invoke('list_persisted_sessions_page', {
       request: {
-        workspacePath: 'D:/workspace/OpenBitFun',
+        workspacePath: 'D:/workspace/StarMate',
         limit: 5,
       },
     });
@@ -436,14 +436,14 @@ describe('ApiClient startup trace classification', () => {
     const client = new ApiClient({ enableLogging: false, retries: 0 });
 
     await client.invoke('explorer_get_children', {
-      request: { path: 'D:/workspace/OpenBitFun' },
+      request: { path: 'D:/workspace/StarMate' },
     });
     await client.invoke('start_file_watch', {
-      path: 'D:/workspace/OpenBitFun',
+      path: 'D:/workspace/StarMate',
       recursive: false,
     });
     await client.invoke('start_file_watch', {
-      path: 'D:/workspace/OpenBitFun',
+      path: 'D:/workspace/StarMate',
       recursive: true,
     });
 
@@ -461,6 +461,6 @@ describe('ApiClient startup trace classification', () => {
     }));
 
     const calls = traceMocks.recordApiCall.mock.calls.map(([call]) => call);
-    expect(JSON.stringify(calls)).not.toContain('D:/workspace/OpenBitFun');
+    expect(JSON.stringify(calls)).not.toContain('D:/workspace/StarMate');
   });
 });

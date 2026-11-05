@@ -1,10 +1,10 @@
-# OpenBitFun Web UI
+# StarMate Web UI
 
 [中文](./README.zh-CN.md) | English
 
 ## Overview
 
-This directory contains OpenBitFun’s **Web UI** (React + TypeScript). The same frontend codebase is reused by:
+This directory contains StarMate’s **Web UI** (React + TypeScript). The same frontend codebase is reused by:
 
 - **Desktop**: loaded via **Tauri**
 - **Server/Web**: built into static assets and served by the backend
@@ -22,7 +22,7 @@ folders. Reusing an existing workspace preserves its previous associations.
 Removing a folder from the draft never deletes it from disk.
 
 With no source folders, enter a name to create the empty project automatically in
-`~/OpenBitFun/Projects/<project-name>`. The home directory belongs to the target
+`~/StarMate/Projects/<project-name>`. The home directory belongs to the target
 host or environment, including a controlled peer, SSH host, container, or WSL
 distribution. Creating in another environment may ask for a connection, but never
 a save location. Hosts that do not provide their home directory report an error
@@ -108,7 +108,7 @@ is already open in a native window uses the existing transfer confirmation.
 
 ## Floating conversations
 
-The bottom-right window opens the persistent OpenBitFun control conversation in
+The bottom-right window opens the persistent StarMate control conversation in
 text mode. Drag a session tab into the window to continue that session there;
 use its return action or drag it back to the main tab bar to move it out.
 Agentic MiniApps add their associated conversations as tabs automatically.
@@ -299,7 +299,7 @@ you can also enter a provider-supported model ID manually.
 
 Antigravity queries its authenticated `fetchAvailableModels` endpoint; Codex
 uses its subscription catalog, including models unavailable through the public
-OpenAI API. For OpenCode, choose Go/Zen and a model; OpenBitFun selects the
+OpenAI API. For OpenCode, choose Go/Zen and a model; StarMate selects the
 matching Chat Completions, Responses, or Messages protocol from the account catalog.
 xAI and Hermes query their model endpoints. Hermes uses Chat Completions with
 Nous OAuth bearer authentication for all models, including `anthropic/*`, matching
@@ -322,7 +322,7 @@ device-code login can authorize the other providers from another browser.
 
 The Pull Requests panel recognizes HTTPS and SSH remotes on `gitee.com`. Public
 repositories can be read anonymously. Add a Gitee personal access token from the
-panel, or set `GITEE_TOKEN` on the OpenBitFun host, to access private repositories
+panel, or set `GITEE_TOKEN` on the StarMate host, to access private repositories
 and perform authorized write actions. A saved token takes precedence over the
 environment. Grant the Gitee `pull_requests` and `projects` scopes for PR work;
 Issue evidence additionally needs the corresponding `issues` scope. Repository
@@ -349,7 +349,7 @@ external details page. Native change requests, replies to a specific thread,
 thread resolution, draft reviews, and merging are not exposed as Gitee actions.
 
 For an SSH workspace, repository discovery runs through the remote workspace
-transport and Gitee API requests use the OpenBitFun host's network and credentials.
+transport and Gitee API requests use the StarMate host's network and credentials.
 Peer mode uses the target host; both sides must support the provider. A CLI peer
 does not expose the desktop PR panel. Headless Agent tools require credentials on
 the executing host and report missing access without requiring a local GUI login.
@@ -412,7 +412,7 @@ is explicitly unsupported and never reads controller-side history.
 Cursor reads CLI snapshots under `CURSOR_CONFIG_DIR/chats` (otherwise
 `XDG_CONFIG_HOME/cursor/chats` or `~/.cursor/chats`) and Desktop's local
 `Cursor/User/globalStorage/state.vscdb`. Set `STARMATE_CURSOR_USER_DATA_DIR` on
-the OpenBitFun host for a custom Desktop profile. CLI JSONL transcripts under
+the StarMate host for a custom Desktop profile. CLI JSONL transcripts under
 `CURSOR_DATA_DIR/projects` (default `~/.cursor/projects`) are a fallback and can
 lack tool results. Desktop can also omit saved file contents. These gaps are shown
 as source warnings; missing snapshot references fail explicitly. Workspace paths
@@ -433,7 +433,7 @@ not discovered. Unknown formats report a diagnostic. No external Agent runs duri
 Opening a source session caches its history and keeps following the original Agent.
 The source refreshes once each time it is opened. Staying on the page, typing,
 returning to the window or viewing a native branch does not refresh it.
-The first send creates an independent OpenBitFun branch from the version you have
+The first send creates an independent StarMate branch from the version you have
 viewed. The source keeps updating separately; later source messages are never merged
 into that branch. Edit or roll back source history after explicitly forking it.
 Startup and list operations do not copy transcript bodies. A missing source keeps
@@ -443,7 +443,7 @@ entries and copies. Old automatic imports keep their original row and ID. Openin
 validates their retained local history: untouched copies follow the source, while
 local continuations or edits remain independent. Manual imports remain independent.
 Permission choices in a source composer apply to the branch created on first send.
-Use **Remove from OpenBitFun** to hide a source without deleting its original history
+Use **Remove from StarMate** to hide a source without deleting its original history
 or any continuation branch. It stays removed across scans. In the source's ecosystem
 compatibility settings, **Removed source sessions → Add again** restores the same
 entry and its saved name. A branch whose source was removed also offers this action
@@ -457,7 +457,7 @@ Removed source management is also gated in Peer mode; use the source's owning ho
 Other clients without automatic source forking receive a read-only error on direct submission.
 Names use the original Agent's saved title. Codex reads its name index and local
 state database; Zcode uses the saved task title. Rediscovery corrects old prompt-preview
-names and refreshes source names while preserving names edited in OpenBitFun.
+names and refreshes source names while preserving names edited in StarMate.
 Source views are excluded from workspace full-text search with a diagnostic;
 native branches can be searched. New branches use the host's configured model.
 Zcode reads saved top-level tasks from `~/.zcode/cli/db/db.sqlite`, including committed
@@ -465,7 +465,7 @@ WAL data. Hidden inherited context and nested side/subagent tasks are excluded.
 Source data stays intact; attachment names are retained but attachment files are not copied.
 History discovery does not enable Zcode runtime, configuration, or plugin compatibility.
 
-Imported tool history reuses OpenBitFun's existing tool cards by matching names
+Imported tool history reuses StarMate's existing tool cards by matching names
 and equivalent operations. Programs, commands, file operations, searches and plans
 use their native cards; unmatched tools use the standard generic card. Existing
 imports receive this display when reopened. Original records remain unchanged,

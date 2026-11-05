@@ -3,7 +3,7 @@
 //! Compatibility facade and full product runtime assembly.
 //!
 //! New implementation code should live in owner crates under `src/crates/*`.
-//! This crate re-exports legacy paths and wires the full OpenBitFun product runtime.
+//! This crate re-exports legacy paths and wires the full StarMate product runtime.
 
 #[cfg(feature = "agent-runtime")]
 pub mod agentic; // Agent system, tool system, and product runtime orchestration
@@ -80,7 +80,7 @@ pub fn get_builtin_ai_provider_catalog() -> starmate_core_types::ProviderCatalog
     infrastructure::ai::provider_catalog::resolve_builtin_provider_catalog(
         None,
         "openbitfun-builtin".to_string(),
-        starmate_core_types::ProviderCatalogSource::OpenBitFun,
+        starmate_core_types::ProviderCatalogSource::StarMate,
     )
 }
 
@@ -166,4 +166,4 @@ pub use agentic::tools::registry::ToolRegistry;
 
 // Version information
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
-pub const CORE_NAME: &str = "OpenBitFun Core";
+pub const CORE_NAME: &str = "StarMate Core";

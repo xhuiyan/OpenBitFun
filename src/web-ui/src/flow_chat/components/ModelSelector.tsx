@@ -139,7 +139,7 @@ interface ModelSelectorProps {
   externalSelection?: ExternalModelSelection;
   /** Agent-profile model used only when the session has no explicit selection. */
   modeDefaultModelId?: string;
-  /** Whether a selection also changes OpenBitFun's shared built-in mode default. */
+  /** Whether a selection also changes StarMate's shared built-in mode default. */
   persistSharedModeDefault?: boolean;
   /** Whether lifecycle ownership currently prevents Session setting changes. */
   disabled?: boolean;

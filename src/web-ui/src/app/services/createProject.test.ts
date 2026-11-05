@@ -52,8 +52,8 @@ describe('project composition', () => {
   });
 
   it.each([
-    ['/home/user/', '/home/user/OpenBitFun/Projects/example'], ['/', '/OpenBitFun/Projects/example'],
-    ['C:\\Users\\Person\\', 'C:/Users/Person/OpenBitFun/Projects/example'],
+    ['/home/user/', '/home/user/StarMate/Projects/example'], ['/', '/StarMate/Projects/example'],
+    ['C:\\Users\\Person\\', 'C:/Users/Person/StarMate/Projects/example'],
   ])('creates an empty project in the fixed directory for home %s', async (homeDir, expectedPath) => {
     getSystemInfo.mockResolvedValue({ homeDir });
     openWorkspace.mockResolvedValue(record({ name: 'example', rootPath: expectedPath }));
@@ -74,12 +74,12 @@ describe('project composition', () => {
     const draft = { name: 'example', folders: [], remote };
     await expect(createProject(draft)).rejects.toThrow('unavailable');
     expect(createDirectory).not.toHaveBeenCalled();
-    const openRemote = vi.fn().mockResolvedValue(record({ name: 'example', rootPath: '/home/remote/OpenBitFun/Projects/example' }));
+    const openRemote = vi.fn().mockResolvedValue(record({ name: 'example', rootPath: '/home/remote/StarMate/Projects/example' }));
     await createProject(draft, openRemote);
     expect(getServerInfo).toHaveBeenCalledWith('ssh-1');
     expect(getSystemInfo).not.toHaveBeenCalled();
-    expect(createDirectory).toHaveBeenCalledWith('/home/remote/OpenBitFun/Projects/example', 'ssh-1');
-    expect(openRemote).toHaveBeenCalledWith({ path: '/home/remote/OpenBitFun/Projects/example', remote });
+    expect(createDirectory).toHaveBeenCalledWith('/home/remote/StarMate/Projects/example', 'ssh-1');
+    expect(openRemote).toHaveBeenCalledWith({ path: '/home/remote/StarMate/Projects/example', remote });
     expect(openWorkspace).not.toHaveBeenCalled();
   });
 
@@ -127,7 +127,7 @@ describe('project composition', () => {
     activateSurface(surfaceIdForDevice('peer'));
     getSystemInfo.mockResolvedValueOnce({ homeDir: '/home/peer' });
     await createProject({ name: 'example', folders: [] });
-    expect(createDirectory).toHaveBeenCalledWith('/home/peer/OpenBitFun/Projects/example');
+    expect(createDirectory).toHaveBeenCalledWith('/home/peer/StarMate/Projects/example');
     createDirectory.mockClear();
     getSystemInfo.mockImplementationOnce(async () => {
       activateSurface(surfaceIdForDevice('other-peer'));

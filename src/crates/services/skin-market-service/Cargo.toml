@@ -3,7 +3,7 @@ name = "starmate-skin-market-service"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun appearance marketplace service"
+description = "StarMate appearance marketplace service"
 
 [lib]
 name = "starmate_skin_market_service"

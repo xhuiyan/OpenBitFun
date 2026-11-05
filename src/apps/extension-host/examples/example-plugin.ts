@@ -33,7 +33,7 @@ const ExamplePlugin: Plugin = async (input) => {
         ...(config.agent ?? {}),
         Cowork: {
           mode: "primary",
-          description: "Demo agent for exercising the OpenBitFun OpenCode plugin bridge",
+          description: "Demo agent for exercising the StarMate OpenCode plugin bridge",
           prompt: "Use the openbitfun_demo_echo tool when the user asks you to echo text.",
           permission: {
             openbitfun_demo_echo: "allow",

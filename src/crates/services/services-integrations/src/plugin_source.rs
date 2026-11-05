@@ -1,6 +1,6 @@
-//! OpenBitFun-managed plugin package discovery and trust persistence.
+//! StarMate-managed plugin package discovery and trust persistence.
 //!
-//! This module reads only OpenBitFun-managed package roots. Ecosystem-specific
+//! This module reads only StarMate-managed package roots. Ecosystem-specific
 //! file interpretation remains in the corresponding adapter.
 
 use fs2::FileExt;
@@ -3541,7 +3541,7 @@ mod tests {
         let original = br#"{"schemaVersion":1,"epoch":7,"records":[]}"#;
         tokio::fs::write(&fixture.trust_path, original)
             .await
-            .expect("write pre-OpenBitFun trust store");
+            .expect("write pre-StarMate trust store");
 
         let snapshot = fixture.service().refresh(&fixture.workspace).await;
         let persisted = tokio::fs::read(&fixture.trust_path)
@@ -3551,7 +3551,7 @@ mod tests {
         assert_eq!(persisted, original);
         assert_eq!(snapshot.issues.len(), 1);
         assert_eq!(snapshot.issues[0].code, "trust_store_invalid");
-        assert!(snapshot.issues[0].message.contains("pre-OpenBitFun"));
+        assert!(snapshot.issues[0].message.contains("pre-StarMate"));
         assert!(snapshot.issues[0]
             .message
             .contains("explicit data migration tool"));

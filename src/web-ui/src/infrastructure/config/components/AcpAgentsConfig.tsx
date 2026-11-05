@@ -102,7 +102,7 @@ interface AcpClientPreset {
 // package (their CLI binary is launched directly).
 const NATIVE_ACP_PRESET_IDS = new Set(['opencode', 'dsh', 'omp']);
 
-// Presets OpenBitFun cannot install on the user's behalf — the agent must be
+// Presets StarMate cannot install on the user's behalf — the agent must be
 // installed manually (e.g. omp targets bun and ships via its own installer).
 // The UI hides the one-click "Install CLI" action for these.
 const SELF_MANAGED_INSTALL_PRESET_IDS = new Set(['omp']);
@@ -121,7 +121,7 @@ const PRESETS: AcpClientPreset[] = [
     command: 'opencode',
     args: ['acp'],
   },
-  // OpenBitFun ships the ACP bridge for DeepSeek Harness and installs it into the
+  // StarMate ships the ACP bridge for DeepSeek Harness and installs it into the
   // user's own dsh as a profile on first launch, so the only setup left is the
   // harness itself and the model the user picks inside it.
   {

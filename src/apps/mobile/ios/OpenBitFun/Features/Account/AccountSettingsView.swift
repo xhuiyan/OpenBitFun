@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 
 /// Account entry presented from welcome, sidebar and launch previews. Signing
@@ -55,7 +55,7 @@ struct AccountLoginView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: model.accountUser == nil && model.accountFailureStage != "DEVICE_LIST" ? nil : .infinity)
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .onAppear { model.accountLoginSurfaces += 1 }
         .onDisappear { model.accountLoginSurfaces = max(0, model.accountLoginSurfaces - 1) }
     }
@@ -68,13 +68,13 @@ struct AccountLoginView: View {
                 Text(model.localized("使用邮箱或 GitHub 登录"))
                     .font(.system(size: loginTitleSize, weight: .bold))
                     .padding(.vertical, MobileDesignTypography.displayMedium.lineSpacing / 2)
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                 Text(model.localized("使用邮箱或 GitHub 登录并连接自己的电脑。\n任务和模型配置保留在被控电脑上。"))
                     .font(.system(size: loginBodySize))
                     .padding(.vertical, MobileDesignTypography.bodyMedium.lineSpacing / 2)
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .lineSpacing(MobileDesignTypography.bodyMedium.lineSpacing)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
@@ -84,7 +84,7 @@ struct AccountLoginView: View {
                     Text(error)
                         .font(.system(size: loginErrorSize))
                         .padding(.vertical, MobileDesignTypography.bodySmall.lineSpacing / 2)
-                        .foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .foregroundStyle(StarMateTheme.statusDanger)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 4)
                         .padding(.top, 12)
@@ -96,7 +96,7 @@ struct AccountLoginView: View {
             .frame(minHeight: MobileDesignGeometry.loginSheetBodyMinHeight, alignment: .top)
 
             ConnectionSheetFooter(
-                label: model.localized(model.accountAuthorizationURL != nil ? "打开 OpenBitFun 授权"
+                label: model.localized(model.accountAuthorizationURL != nil ? "打开 StarMate 授权"
                     : model.accountBusy ? "正在登录" : "使用邮箱或 GitHub 登录"),
                 elevated: false, primary: true, enabled: canLogin, onAction: model.loginAccount
             )
@@ -110,7 +110,7 @@ struct AccountLoginView: View {
             Button { onClose() } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 19, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .frame(width: 44, height: 44)
             }
             .buttonStyle(.plain)
@@ -119,29 +119,29 @@ struct AccountLoginView: View {
             Spacer()
             Image(systemName: "desktopcomputer.trianglebadge.exclamationmark")
                 .font(.system(size: 48, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .frame(maxWidth: .infinity)
             Text(model.localized("无法加载设备列表"))
                 .font(.system(size: 26, weight: .bold))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 20)
             Text(model.coreErrorMessage ?? model.localized("登录已完成，但设备列表加载失败。请重试。"))
                 .font(.system(size: 15))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 10)
 
             Button { model.retryAccountFailure() } label: {
                 HStack(spacing: 8) {
-                    if model.accountBusy { ProgressView().tint(OpenBitFunTheme.contentOnAction) }
+                    if model.accountBusy { ProgressView().tint(StarMateTheme.contentOnAction) }
                     Text(model.localized(model.accountBusy ? "正在重试" : "重试加载设备"))
                 }
                 .font(.system(size: 17, weight: .bold))
-                .foregroundStyle(OpenBitFunTheme.contentOnAction)
+                .foregroundStyle(StarMateTheme.contentOnAction)
                 .frame(maxWidth: .infinity, minHeight: 56)
-                .background(OpenBitFunTheme.accent)
+                .background(StarMateTheme.accent)
                 .clipShape(RoundedRectangle(cornerRadius: 18))
             }
             .buttonStyle(.plain)
@@ -152,7 +152,7 @@ struct AccountLoginView: View {
                 model.logoutAccount()
             }
             .font(.system(size: 15, weight: .medium))
-            .foregroundStyle(OpenBitFunTheme.ink)
+            .foregroundStyle(StarMateTheme.ink)
             .frame(maxWidth: .infinity, minHeight: 48)
             .buttonStyle(.plain)
             .disabled(model.accountBusy)
@@ -190,15 +190,15 @@ struct AccountIdentityCard: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(model.localized(signedIn ? "当前账号" : "当前身份"))
                             .font(MobileDesignTypography.bodySmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                         Text(signedIn ? (model.accountUser ?? "") : model.localized("未登录"))
                             .font(MobileDesignTypography.bodyLarge.font.weight(.medium))
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                             .lineLimit(1)
                         if signedIn {
                             Text("\(model.localized("用户 ID")) \(accountIdentifier)")
                                 .font(MobileDesignTypography.bodySmall.font)
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
                         }
@@ -207,17 +207,17 @@ struct AccountIdentityCard: View {
                     if signedIn {
                         Text(model.localized("已登录"))
                             .font(MobileDesignTypography.bodySmall.font.weight(.medium))
-                            .foregroundStyle(OpenBitFunTheme.statusSuccess)
+                            .foregroundStyle(StarMateTheme.statusSuccess)
                     } else {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 14, weight: .medium))
-                            .foregroundStyle(OpenBitFunTheme.muted.opacity(0.72))
+                            .foregroundStyle(StarMateTheme.muted.opacity(0.72))
                     }
                 }
                 .padding(.horizontal, 18)
                 .padding(.vertical, 12)
                 .frame(maxWidth: .infinity, minHeight: 72)
-                .background(OpenBitFunTheme.card)
+                .background(StarMateTheme.card)
                 .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.settingsCardRadius))
                 .contentShape(Rectangle())
             }
@@ -254,7 +254,7 @@ struct AccountDevicesSection: View {
                                 .font(.system(size: 17, weight: .regular))
                         }
                     }
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .frame(width: 44, height: 44)
                     .contentShape(Circle())
                 }
@@ -286,7 +286,7 @@ struct AccountDevicesSection: View {
                 }
             }
             .padding(8)
-            .background(OpenBitFunTheme.card)
+            .background(StarMateTheme.card)
             .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.settingsCardRadius))
         }
         .padding(.bottom, 24)
@@ -299,7 +299,7 @@ struct AccountDevicesSection: View {
     private func emptyMessage(_ text: String) -> some View {
         Text(model.localized(text))
             .font(MobileDesignTypography.bodySmall.font)
-            .foregroundStyle(OpenBitFunTheme.muted)
+            .foregroundStyle(StarMateTheme.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(8)
     }
@@ -321,7 +321,7 @@ struct AccountLogoutButton: View {
                     .font(MobileDesignTypography.bodyLarge.font.weight(.medium))
                 Spacer(minLength: 0)
             }
-            .foregroundStyle(OpenBitFunTheme.statusDanger)
+            .foregroundStyle(StarMateTheme.statusDanger)
             .padding(.horizontal, 20)
             .frame(minHeight: 62)
             .contentShape(Rectangle())
@@ -329,7 +329,7 @@ struct AccountLogoutButton: View {
         .buttonStyle(.plain)
         .disabled(model.accountBusy)
         .overlay(alignment: .top) {
-            Divider().overlay(OpenBitFunTheme.line).padding(.horizontal, 8)
+            Divider().overlay(StarMateTheme.line).padding(.horizontal, 8)
         }
         .accessibilityIdentifier("settings.account.logout")
     }
@@ -341,7 +341,7 @@ struct AccountSectionTitle: View {
     var body: some View {
         Text(MobileLocalization.text(title))
             .font(MobileDesignTypography.bodySmall.font.weight(.medium))
-            .foregroundStyle(OpenBitFunTheme.muted)
+            .foregroundStyle(StarMateTheme.muted)
             .padding(.leading, 8)
             .padding(.bottom, 2)
     }
@@ -355,31 +355,31 @@ struct SettingsDeviceRow: View {
         HStack(spacing: 12) {
             Image(systemName: "desktopcomputer")
                 .font(.system(size: 20, weight: .regular))
-                .foregroundStyle(connected ? OpenBitFunTheme.ink : OpenBitFunTheme.muted)
+                .foregroundStyle(connected ? StarMateTheme.ink : StarMateTheme.muted)
                 .frame(width: 28, height: 28)
             VStack(alignment: .leading, spacing: 2) {
                 Text(device.name.isEmpty ? device.id : device.name)
                     .font(MobileDesignTypography.titleSmall.font.weight(.medium))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .lineLimit(1)
                 Text(deviceStatus)
                     .font(MobileDesignTypography.bodySmall.font)
-                    .foregroundStyle(device.online ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.muted)
+                    .foregroundStyle(device.online ? StarMateTheme.statusSuccess : StarMateTheme.muted)
             }
             Spacer(minLength: 8)
             if device.online && !connected {
                 Text(MobileLocalization.text("连接"))
                     .font(MobileDesignTypography.bodyMedium.font)
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
-                    .background(OpenBitFunTheme.soft)
+                    .background(StarMateTheme.soft)
                     .clipShape(Capsule())
             }
         }
         .padding(.horizontal, 10)
         .frame(minHeight: 62)
-        .background(connected ? OpenBitFunTheme.soft : OpenBitFunTheme.card)
+        .background(connected ? StarMateTheme.soft : StarMateTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.settingsCompactCardRadius))
         .opacity(device.online ? 1 : 0.48)
         .contentShape(Rectangle())
@@ -404,8 +404,8 @@ struct AccountAvatar: View {
             image.resizable().scaledToFill()
         } placeholder: {
             ZStack {
-                Circle().fill(OpenBitFunTheme.soft)
-                Image(systemName: "person.fill").foregroundStyle(OpenBitFunTheme.ink)
+                Circle().fill(StarMateTheme.soft)
+                Image(systemName: "person.fill").foregroundStyle(StarMateTheme.ink)
             }
         }.clipShape(Circle()).accessibilityHidden(true)
     }

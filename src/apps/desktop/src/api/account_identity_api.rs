@@ -1,4 +1,4 @@
-//! Controller-local adapter for the shared OpenBitFun GitHub identity.
+//! Controller-local adapter for the shared StarMate GitHub identity.
 use starmate_product_domains::account::{
     GitHubAuthPollRequest, GitHubAuthPollResponse, GitHubAuthStart,
 };

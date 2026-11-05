@@ -1,6 +1,6 @@
 # @starmate/design-tokens
 
-Framework-neutral token contract and system scales for OpenBitFun UI packages.
+Framework-neutral token contract and system scales for StarMate UI packages.
 
 This package intentionally contains no concrete brand palette. Install a theme package such as `@starmate/theme-openbitfun` alongside it.
 

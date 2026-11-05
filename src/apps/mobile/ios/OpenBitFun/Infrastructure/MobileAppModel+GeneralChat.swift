@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 import ImageIO
-import OpenBitFunMobileCore
+import StarMateMobileCore
 
 extension MobileAppModel {
     @discardableResult

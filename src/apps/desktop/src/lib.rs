@@ -1,6 +1,6 @@
 #![recursion_limit = "256"]
 #![allow(non_snake_case)]
-//! OpenBitFun Desktop - Tauri-based desktop application with TransportAdapter architecture
+//! StarMate Desktop - Tauri-based desktop application with TransportAdapter architecture
 //!
 //! The reqwest HTTP/2 and MCP transport type graph exceeds rustc's default
 //! trait-evaluation recursion budget when desktop tasks require `Send`.
@@ -169,7 +169,7 @@ fn show_fatal_startup_error(message: &str) {
 
 #[cfg(not(target_os = "windows"))]
 fn show_fatal_startup_error(message: &str) {
-    eprintln!("OpenBitFun startup error: {message}");
+    eprintln!("StarMate startup error: {message}");
 }
 const CRON_DESKTOP_START_FALLBACK_DELAY: Duration = Duration::from_secs(120);
 pub(crate) const MAIN_WINDOW_DEFAULT_WIDTH: f64 = 1200.0;
@@ -525,7 +525,7 @@ pub async fn run() {
     // reuse the same provider instead of each attempting their own install_default().
     ensure_rustls_crypto_provider();
 
-    eprintln!("=== OpenBitFun Desktop Starting ===");
+    eprintln!("=== StarMate Desktop Starting ===");
 
     if let Err(error) = starmate_core::agentic::system::select_agentic_system_profile(
         starmate_core::agentic::system::DeliveryProfile::Desktop,
@@ -765,7 +765,7 @@ pub async fn run() {
     #[cfg(any(target_os = "linux", target_os = "macos", target_os = "windows"))]
     {
         // The isolated embedded-WebDriver app must be able to run alongside a
-        // developer's normal OpenBitFun instance. Its storage root and automation
+        // developer's normal StarMate instance. Its storage root and automation
         // port are already test-scoped, so joining the product single-instance
         // group would make the E2E child exit before WebDriver can attach.
         if !logging::is_embedded_webdriver_mode()
@@ -774,7 +774,7 @@ pub async fn run() {
         {
             builder = builder.plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
                 log::info!(
-                    "Existing OpenBitFun Desktop instance received launch request: args_count={}, cwd={}",
+                    "Existing StarMate Desktop instance received launch request: args_count={}, cwd={}",
                     args.len(),
                     cwd
                 );
@@ -1223,7 +1223,7 @@ pub async fn run() {
             );
 
             // Reattach to a browser that is already running with remote
-            // debugging on, so a OpenBitFun restart does not drop the connection.
+            // debugging on, so a StarMate restart does not drop the connection.
             let step_started = Instant::now();
             api::browser_control_api::init_on_startup();
             startup_trace.record_elapsed_step(
@@ -1285,7 +1285,7 @@ pub async fn run() {
                 setup_duration_ms,
                 since_process_start_ms
             );
-            log::info!("OpenBitFun Desktop started successfully");
+            log::info!("StarMate Desktop started successfully");
             Ok(())
         })
         .on_window_event({
@@ -1912,7 +1912,7 @@ pub async fn run() {
             api::remote_connect_api::account_subscribe_session,
             api::remote_connect_api::account_unsubscribe_session,
             api::remote_connect_api::account_load_older_session,
-            // OpenBitFun Page API
+            // StarMate Page API
             api::pages_api::page_publish,
             api::pages_api::page_save_version,
             api::pages_api::page_list,

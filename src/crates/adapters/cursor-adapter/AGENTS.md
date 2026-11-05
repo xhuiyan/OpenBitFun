@@ -31,4 +31,4 @@ three Read calls (one missing file), one Write, and final `CURSOR_IMPORT_OK` /
 `CURSOR_RESUME_OK` markers. Ordinary user sessions are not this assertion fixture.
 Use Cursor's `CURSOR_CONFIG_DIR` and `CURSOR_DATA_DIR` for an isolated CLI home.
 `STARMATE_CURSOR_USER_DATA_DIR` selects a custom desktop user-data root for
-OpenBitFun discovery; it does not configure Cursor itself.
+StarMate discovery; it does not configure Cursor itself.

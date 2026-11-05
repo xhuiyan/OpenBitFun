@@ -119,7 +119,7 @@ try {
     Expand-Archive -LiteralPath $archive -DestinationPath $extractDir
     $primaryCandidates = @(Get-ChildItem -LiteralPath $extractDir -Recurse -Filter 'openbitfun.exe')
     if ($primaryCandidates.Count -ne 1) {
-        throw 'Expected exactly one OpenBitFun CLI entrypoint in the packaged archive'
+        throw 'Expected exactly one StarMate CLI entrypoint in the packaged archive'
     }
     foreach ($requiredFile in @(
         'README.md',

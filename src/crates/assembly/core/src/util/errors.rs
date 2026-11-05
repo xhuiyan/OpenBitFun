@@ -22,7 +22,7 @@ impl From<starmate_services_core::storage_error::StorageError> for StarMateError
     }
 }
 
-/// Unified error type for the OpenBitFun application
+/// Unified error type for the StarMate application
 #[derive(Debug, Error, Serialize)]
 pub enum StarMateError {
     #[error("Service error: {0}")]

@@ -1,5 +1,5 @@
 import Foundation
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import OSLog
 
 @MainActor
@@ -26,7 +26,7 @@ enum MobileLaunchConfiguration {
             selectedSessionID: first.id,
             messages: [
                 ChatMessage(id: UUID(), role: .user, text: "你好"),
-                ChatMessage(id: UUID(), role: .assistant, text: "这是 OpenBitFun 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和智能体的执行状态。")
+                ChatMessage(id: UUID(), role: .assistant, text: "这是 StarMate 的移动端会话界面。你可以从手机连接桌面端，查看工作区、会话和智能体的执行状态。")
             ],
             connectCore: !ProcessInfo.processInfo.arguments.contains("--composer-model-picker") && !ProcessInfo.processInfo.arguments.contains("--composer-draft-preview") && !streamingRegressionPreview && !promptSuggestionPreview && !ProcessInfo.processInfo.arguments.contains("--permission-mailbox-preview") && !ProcessInfo.processInfo.arguments.contains("--harness-preview") && designPreviewScenario() == nil
         )
@@ -123,7 +123,7 @@ enum MobileLaunchConfiguration {
             model.filePreview = MobileFilePreview(
                 id: "src/main.rs",
                 name: "main.rs",
-                content: "// Remote workspace preview\nfn main() {\n    println!(\"Hello from OpenBitFun\");\n}\n",
+                content: "// Remote workspace preview\nfn main() {\n    println!(\"Hello from StarMate\");\n}\n",
                 mimeType: "text/x-rust",
                 imageData: nil,
                 truncated: false,
@@ -173,7 +173,7 @@ enum MobileLaunchConfiguration {
                 ComposerModelOption(
                     id: "preview-codex",
                     primaryLabel: "GPT-5.6 Codex",
-                    secondaryLabel: "OpenBitFun 账号",
+                    secondaryLabel: "StarMate 账号",
                     source: "ACCOUNT",
                     selected: false,
                     roles: ["PRIMARY"]
@@ -308,15 +308,15 @@ private extension MobileAppModel {
             title: "你好",
             updatedLabel: "刚刚",
             agentType: "code",
-            workspacePath: "/workspace/OpenBitFun",
-            workspaceName: "OpenBitFun"
+            workspacePath: "/workspace/StarMate",
+            workspaceName: "StarMate"
         )
         remoteSessions = [session]
         let extraSessions = (1...5).map { index in
             ChatSession(
                 id: "preview-session-\(index)", title: "Review session \(index)", updatedLabel: "2026-01-01T00:00:00Z",
                 status: index == 1 ? "running" : "idle", agentType: "code",
-                workspacePath: "/workspace/OpenBitFun", workspaceName: "OpenBitFun", deviceKey: "preview-desktop"
+                workspacePath: "/workspace/StarMate", workspaceName: "StarMate", deviceKey: "preview-desktop"
             )
         }
         remoteSessions.append(contentsOf: extraSessions)
@@ -329,7 +329,7 @@ private extension MobileAppModel {
             status: "idle", agentType: "code", workspacePath: "/staging/project", workspaceName: "Staging", deviceKey: "preview-mac"
         )
         remoteSessions.append(contentsOf: [cachedSession, failedSession])
-        let previewWorkspace = MobileWorkspaceGroup(path: "/workspace/OpenBitFun", name: "OpenBitFun", selected: true, sessions: remoteSessions.filter { $0.deviceKey == "preview-desktop" }, deviceKey: "preview-desktop")
+        let previewWorkspace = MobileWorkspaceGroup(path: "/workspace/StarMate", name: "StarMate", selected: true, sessions: remoteSessions.filter { $0.deviceKey == "preview-desktop" }, deviceKey: "preview-desktop")
         let offlineWorkspace = MobileWorkspaceGroup(path: "/office/project", name: "Office project", selected: false, sessions: [cachedSession], deviceKey: "preview-offline")
         let failedWorkspace = MobileWorkspaceGroup(path: "/staging/project", name: "Staging", selected: false, sessions: [failedSession], deviceKey: "preview-mac")
         deviceDirectory = [
@@ -337,16 +337,16 @@ private extension MobileAppModel {
             MobileDeviceDirectoryEntry(id: "preview-mac", name: "Studio Mac", online: true, status: "FAILED", error: "REMOTE_UNAVAILABLE", workspaces: [failedWorkspace], sessions: [failedSession]),
             MobileDeviceDirectoryEntry(id: "preview-offline", name: "Office PC", online: false, status: "READY", error: nil, workspaces: [offlineWorkspace], sessions: [cachedSession])
         ]
-        workspaceCatalog = [(path: "/workspace/OpenBitFun", name: "OpenBitFun", selected: true, remoteConnectionId: nil, remoteSshHost: nil, workspaceId: nil)]
+        workspaceCatalog = [(path: "/workspace/StarMate", name: "StarMate", selected: true, remoteConnectionId: nil, remoteSshHost: nil, workspaceId: nil)]
         remoteAssistants = [
-            MobileAssistantOption(path: "/workspace/OpenBitFun/.openbitfun/assistants/review", name: "代码审查助手")
+            MobileAssistantOption(path: "/workspace/StarMate/.openbitfun/assistants/review", name: "代码审查助手")
         ]
         remoteHasMore = true
         rebuildRemoteWorkspaceGroups()
         selectedSessionID = session.id
         messages = [
             ChatMessage(id: UUID(), role: .user, text: "你好"),
-            ChatMessage(id: UUID(), role: .assistant, text: "这是 OpenBitFun 的远程会话预览。"),
+            ChatMessage(id: UUID(), role: .assistant, text: "这是 StarMate 的远程会话预览。"),
         ]
         timelineRows = messages.map(Self.simpleTimelineRow)
     }

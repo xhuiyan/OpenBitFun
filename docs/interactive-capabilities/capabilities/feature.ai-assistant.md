@@ -63,7 +63,7 @@ Work with AI in project context, create sessions, continue tasks, answer permiss
 3. 描述目标；星伴会在会话中持续记录进度
    Describe the goal; StarMate keeps progress in the session
 
-入口 / Entry: OpenBitFun 对应场景
+入口 / Entry: StarMate 对应场景
 
 ## 智能体可替你做什么 / What an agent can do for you
 

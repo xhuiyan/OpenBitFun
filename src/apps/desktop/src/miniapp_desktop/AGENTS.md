@@ -99,14 +99,14 @@ user a second copy of the state they are looking at.
 Focused checks (no browser/computer-use validation):
 
 For custom chrome, also run `pnpm --dir src/web-ui run test:run src/app/scenes/miniapps/MiniAppScene.chrome.test.tsx src/app/scenes/miniapps/components/MiniAppTitlebar.test.tsx src/app/scenes/miniapps/components/MiniAppShell.test.ts`
-and `cargo test --locked -p openbitfun-desktop --lib openbitfun_control_host::miniapps::tests`.
+and `cargo test --locked -p starmate-desktop --lib openbitfun_control_host::miniapps::tests`.
 
 
 ```bash
-cargo test --locked -p openbitfun-desktop --lib miniapp_desktop
-cargo test --locked -p openbitfun-desktop --lib miniapp_web_host
-cargo test --locked -p openbitfun-desktop --lib remote_workspace_policy
-cargo build -p openbitfun-desktop
+cargo test --locked -p starmate-desktop --lib miniapp_desktop
+cargo test --locked -p starmate-desktop --lib miniapp_web_host
+cargo test --locked -p starmate-desktop --lib remote_workspace_policy
+cargo build -p starmate-desktop
 pnpm --dir src/web-ui run test:run src/app/scenes/miniapps/miniAppPresentationStore.test.ts src/app/scenes/miniapps/miniAppLifecycle.test.ts src/app/scenes/miniapps/components/MiniAppRunner.test.tsx src/app/scenes/miniapps/hooks/useMiniAppBridge.test.tsx
 pnpm --dir src/web-ui run test:run src/infrastructure/api/service-api/MiniAppPresentationAPI.test.ts
 pnpm --dir src/web-ui run test:run src/app/scenes/miniapps/hooks/useMiniAppLaunch.test.tsx src/app/scenes/miniapps/components/MiniAppLibraryRow.test.tsx src/app/scenes/miniapps/components/MiniAppCard.presentation.test.ts

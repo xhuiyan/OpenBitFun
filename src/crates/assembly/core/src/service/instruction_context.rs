@@ -709,7 +709,7 @@ mod tests {
         std::fs::create_dir_all(xdg.join("opencode")).expect("OpenCode config directory");
         std::fs::create_dir_all(&codex).expect("Codex config directory");
         std::fs::create_dir_all(&claude).expect("Claude config directory");
-        std::fs::create_dir_all(&native).expect("OpenBitFun home directory");
+        std::fs::create_dir_all(&native).expect("StarMate home directory");
         std::fs::write(native.join("AGENTS.md"), "Local native must stay absent\n")
             .expect("native instructions");
         std::fs::create_dir_all(&workspace).expect("workspace directory");

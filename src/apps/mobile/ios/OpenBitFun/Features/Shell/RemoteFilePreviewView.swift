@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -72,7 +72,7 @@ struct RemoteFilePreviewSheet: View {
         case .type: return MobileDesignColors.codeType
         case .constant: return MobileDesignColors.codeConstant
         case .property: return MobileDesignColors.codeProperty
-        default: return OpenBitFunTheme.ink
+        default: return StarMateTheme.ink
         }
     }
 
@@ -114,7 +114,7 @@ struct RemoteFilePreviewSheet: View {
                 Button(action: closePreview) {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -122,12 +122,12 @@ struct RemoteFilePreviewSheet: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(preview.name)
                         .font(MobileDesignTypography.bodyLarge.font.weight(.medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                     if !preview.mimeType.isEmpty || preview.sizeBytes > 0 {
                         Text(metadataText)
                             .font(MobileDesignTypography.labelSmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                             .lineLimit(1)
                     }
                 }
@@ -137,7 +137,7 @@ struct RemoteFilePreviewSheet: View {
                 } label: {
                     Image(systemName: "arrow.clockwise")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -152,7 +152,7 @@ struct RemoteFilePreviewSheet: View {
                 } label: {
                     Image(systemName: "arrow.down.to.line")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -163,7 +163,7 @@ struct RemoteFilePreviewSheet: View {
             .frame(height: 68)
             .padding(.horizontal, 8)
 
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
 
             if let status = model.downloadStatus(for: preview.id), !status.isEmpty {
                 HStack(spacing: 8) {
@@ -173,10 +173,10 @@ struct RemoteFilePreviewSheet: View {
                         Image(systemName: "checkmark.circle")
                     } else if model.downloadPhase == .failed {
                         Image(systemName: "exclamationmark.triangle")
-                            .foregroundStyle(OpenBitFunTheme.statusDanger)
+                            .foregroundStyle(StarMateTheme.statusDanger)
                     }
                     Text(status).font(MobileDesignTypography.labelSmall.font)
-                        .foregroundStyle(model.downloadPhase == .failed ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.muted)
+                        .foregroundStyle(model.downloadPhase == .failed ? StarMateTheme.statusDanger : StarMateTheme.muted)
                         .lineLimit(2)
                     if model.downloadPhase == .failed {
                         Button(model.localized("重试")) { model.retryRemoteDownload() }
@@ -187,7 +187,7 @@ struct RemoteFilePreviewSheet: View {
                     Spacer(minLength: 0)
                 }
                 .padding(.horizontal, 18).padding(.vertical, 8)
-                .background(OpenBitFunTheme.soft)
+                .background(StarMateTheme.soft)
             }
 
             Group {
@@ -196,7 +196,7 @@ struct RemoteFilePreviewSheet: View {
                         ProgressView()
                         Text(model.localized("正在加载文件"))
                             .font(MobileDesignTypography.bodySmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if preview.unsupported {
@@ -209,7 +209,7 @@ struct RemoteFilePreviewSheet: View {
                             .font(MobileDesignTypography.bodySmall.font)
                             .multilineTextAlignment(.center)
                     }
-                    .foregroundStyle(OpenBitFunTheme.muted).padding(24)
+                    .foregroundStyle(StarMateTheme.muted).padding(24)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if let failure = preview.failure {
                     VStack(spacing: 10) {
@@ -228,7 +228,7 @@ struct RemoteFilePreviewSheet: View {
                             .accessibilityLabel(Text(model.localized("重试文件预览")))
                         }
                     }
-                    .foregroundStyle(OpenBitFunTheme.muted).padding(24)
+                    .foregroundStyle(StarMateTheme.muted).padding(24)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if let data = preview.imageData {
                     ScrollView([.horizontal, .vertical], showsIndicators: false) {
@@ -245,7 +245,7 @@ struct RemoteFilePreviewSheet: View {
                                         MarkdownMessageView(text: block.text, model: model)
                                             .id(block.startLine)
                                             .background(GeometryReader { geometry in
-                                                OpenBitFunTheme.transparent.preference(
+                                                StarMateTheme.transparent.preference(
                                                     key: FilePreviewVisibleLinePreferenceKey.self,
                                                     value: {
                                                         let frame = geometry.frame(in: .named("file-preview-scroll"))
@@ -274,9 +274,9 @@ struct RemoteFilePreviewSheet: View {
                                         Text(line)
                                             .font(.system(size: 13, design: .monospaced))
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                            .background(index + 1 >= Int(preview.lineStart) && index + 1 <= Int(max(preview.lineStart, preview.lineEnd)) && preview.lineStart > 0 ? MobileDesignColors.codeTargetBg : OpenBitFunTheme.transparent)
+                                            .background(index + 1 >= Int(preview.lineStart) && index + 1 <= Int(max(preview.lineStart, preview.lineEnd)) && preview.lineStart > 0 ? MobileDesignColors.codeTargetBg : StarMateTheme.transparent)
                                             .background(GeometryReader { geometry in
-                                                OpenBitFunTheme.transparent.preference(
+                                                StarMateTheme.transparent.preference(
                                                     key: FilePreviewVisibleLinePreferenceKey.self,
                                                     value: {
                                                         let frame = geometry.frame(in: .named("file-preview-scroll"))
@@ -317,13 +317,13 @@ struct RemoteFilePreviewSheet: View {
             if preview.truncated {
                 Text(model.localized("文件较大，当前仅显示部分内容"))
                     .font(MobileDesignTypography.labelSmall.font)
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
-                    .background(OpenBitFunTheme.soft)
+                    .background(StarMateTheme.soft)
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .onAppear { highlightCode() }
         .onChange(of: preview) { _ in highlightCode() }
         .modifier(RuntimeDownloadPresentation(model: model, enabled: model.runtimeDeviceTools?.visible != true))

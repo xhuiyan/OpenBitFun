@@ -152,7 +152,7 @@ fn prompt_environment_info_preserves_local_and_remote_guidance() {
         host_arch: "aarch64",
         remote_execution_active: true,
     });
-    assert!(remote.contains("- Local OpenBitFun client OS: linux (unix)"));
+    assert!(remote.contains("- Local StarMate client OS: linux (unix)"));
     assert!(remote.contains("applies to Computer use / UI automation"));
     assert!(remote.contains("Local client architecture: aarch64"));
 }
@@ -181,7 +181,7 @@ fn runtime_context_renderer_preserves_local_exec_and_computer_use_guidance() {
     assert!(reminder.contains("PowerShell (powershell)"));
     assert!(reminder.contains("prefer native PowerShell cmdlets"));
     assert!(reminder.contains("## Local Client"));
-    assert!(reminder.contains("- Local OpenBitFun client OS: windows (windows)"));
+    assert!(reminder.contains("- Local StarMate client OS: windows (windows)"));
     assert!(reminder.contains("meta`/`super`"));
 }
 
@@ -216,7 +216,7 @@ fn runtime_context_renderer_preserves_remote_workspace_split() {
     assert!(reminder.contains("ExecCommand uses the remote user's default POSIX shell"));
     assert!(!reminder.contains("## ExecControl"));
     assert!(
-        reminder.contains("Computer use and UI automation operate on the local OpenBitFun desktop")
+        reminder.contains("Computer use and UI automation operate on the local StarMate desktop")
     );
 }
 
@@ -314,15 +314,15 @@ fn workspace_and_user_context_renderers_preserve_section_shape() {
     assert!(remote.contains("**Remote SSH** — connection"));
 
     let managed_worktree = render_workspace_context(&WorkspaceContextFacts {
-        workspace_path: "/managed/OpenBitFun-wt-1".to_string(),
+        workspace_path: "/managed/StarMate-wt-1".to_string(),
         related_paths: Vec::new(),
         remote_execution: None,
         worktree: Some(WorktreeContextFacts {
-            project_workspace_path: "/projects/OpenBitFun".to_string(),
+            project_workspace_path: "/projects/StarMate".to_string(),
             execution_target: SessionExecutionTarget {
                 kind: SessionExecutionTargetKind::ManagedWorktree,
                 worktree_id: Some("wt-1".to_string()),
-                root_path: "/managed/OpenBitFun-wt-1".to_string(),
+                root_path: "/managed/StarMate-wt-1".to_string(),
                 base_ref: Some("HEAD".to_string()),
                 base_commit: Some("0123456789abcdef".to_string()),
                 branch: None,
@@ -332,7 +332,7 @@ fn workspace_and_user_context_renderers_preserve_section_shape() {
     });
     assert!(managed_worktree.contains("Managed Git worktree created for this session"));
     assert!(managed_worktree.contains("Owning project root"));
-    assert!(managed_worktree.contains("/projects/OpenBitFun"));
+    assert!(managed_worktree.contains("/projects/StarMate"));
     assert!(managed_worktree.contains("Worktree ID: wt-1"));
     assert!(managed_worktree.contains("Worktree checkout: detached HEAD"));
     assert!(managed_worktree.contains("Worktree base commit: 0123456789abcdef"));

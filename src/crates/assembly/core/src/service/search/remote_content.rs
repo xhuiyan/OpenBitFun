@@ -60,7 +60,7 @@ pub async fn search_remote_workspace_contents(
 pub async fn search_remote_workspace_contents(
     _search: RemoteContentSearch,
 ) -> Result<FileSearchOutcome, String> {
-    Err("remote content search is not compiled into this OpenBitFun host".to_string())
+    Err("remote content search is not compiled into this StarMate host".to_string())
 }
 
 #[cfg(all(feature = "ssh-remote", feature = "agent-runtime"))]

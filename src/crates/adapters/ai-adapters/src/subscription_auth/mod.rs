@@ -1,6 +1,6 @@
 //! In-app subscription authentication.
 //!
-//! Lets OpenBitFun sign in to another product's subscription (Codex/ChatGPT,
+//! Lets StarMate sign in to another product's subscription (Codex/ChatGPT,
 //! Antigravity/Google, OpenCode, xAI/SuperGrok, Hermes/Nous Portal) with an in-app OAuth flow,
 //! and use the resulting tokens to authenticate AI requests. Secret material
 //! is stored separately from the non-secret account metadata. macOS uses a
@@ -96,7 +96,7 @@ pub(crate) const OPENCODE_COMPAT_VERSION: &str = "1.18.29";
 
 pub const OPENCODE_GO_REQUIRES_API_KEY: &str = "OpenCode Console OAuth supports Zen only. Edit this model to use the OpenCode Go API-key preset. Existing configuration and credentials have been preserved.";
 
-/// One of the subscription providers OpenBitFun can sign in to.
+/// One of the subscription providers StarMate can sign in to.
 ///
 /// `Workbuddy` and `WorkbuddyAi` are retired: the vendor stopped allowing
 /// subscription-token access, so their sign-in, credential refresh, catalog and
@@ -267,7 +267,7 @@ pub fn runtime_model_override(
         return Some(provider.suggested().2);
     }
     match (provider, model) {
-        // OpenBitFun used this as its original Codex subscription default. It is
+        // StarMate used this as its original Codex subscription default. It is
         // no longer in OpenCode's current ChatGPT subscription model set.
         (SubscriptionProvider::Codex, "gpt-5-codex") => Some("gpt-5.5"),
         // The retired Grok proxy exposed an unversioned coding-model alias;
@@ -657,7 +657,7 @@ pub(crate) fn store_revision_conflict(
     current_revision: u64,
 ) -> anyhow::Error {
     anyhow!(
-        "{} credentials changed in another OpenBitFun process (current revision {current_revision}); retry the operation",
+        "{} credentials changed in another StarMate process (current revision {current_revision}); retry the operation",
         provider.display_label()
     )
 }
@@ -1977,7 +1977,7 @@ mod tests {
             assert_eq!(resolved.api_key, token);
             if provider == SubscriptionProvider::Codex {
                 assert_eq!(resolved.extra_headers["originator"], "openbitfun");
-                assert!(resolved.extra_headers["User-Agent"].starts_with("OpenBitFun/"));
+                assert!(resolved.extra_headers["User-Agent"].starts_with("StarMate/"));
                 assert_eq!(resolved.extra_headers["ChatGPT-Account-ID"], "test-account");
                 assert!(!resolved.extra_headers.contains_key("session-id"));
             }
@@ -2002,10 +2002,10 @@ mod tests {
         // Deserialized legacy user settings, including differently cased stale
         // auth headers. Assert the final request, not just the merged HashMap.
         for (format, url, headers, auth_header) in [
-            ("responses", "https://chatgpt.com/backend-api/codex/responses", vec![("originator", "openbitfun"), ("User-Agent", "OpenBitFun/test"), ("ChatGPT-Account-ID", "current-account")], "authorization"),
+            ("responses", "https://chatgpt.com/backend-api/codex/responses", vec![("originator", "openbitfun"), ("User-Agent", "StarMate/test"), ("ChatGPT-Account-ID", "current-account")], "authorization"),
             ("responses", "https://api.x.ai/v1/responses", vec![("User-Agent", "opencode/test")], "authorization"),
-            ("openai", "https://opencode.ai/zen/v1/chat/completions", vec![("x-org-id", "current-org"), ("User-Agent", "OpenBitFun/test")], "authorization"),
-            ("anthropic", "https://opencode.ai/zen/v1/messages", vec![("x-org-id", "current-org"), ("User-Agent", "OpenBitFun/test")], "x-api-key"),
+            ("openai", "https://opencode.ai/zen/v1/chat/completions", vec![("x-org-id", "current-org"), ("User-Agent", "StarMate/test")], "authorization"),
+            ("anthropic", "https://opencode.ai/zen/v1/messages", vec![("x-org-id", "current-org"), ("User-Agent", "StarMate/test")], "x-api-key"),
             ("openai", "https://inference-api.nousresearch.com/v1/chat/completions", vec![], "authorization"),
             ("anthropic", "https://inference-api.nousresearch.com/v1/messages", vec![], "authorization"),
             ("gemini-code-assist", "https://daily-cloudcode-pa.sandbox.googleapis.com/v1internal:streamGenerateContent?alt=sse", vec![("User-Agent", "antigravity/test"), ("X-Goog-Api-Client", "google-cloud-sdk vscode_cloudshelleditor/0.1"), ("Client-Metadata", "ANTIGRAVITY")], "authorization"),

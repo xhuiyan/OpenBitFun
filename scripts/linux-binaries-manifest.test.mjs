@@ -491,12 +491,12 @@ test('openbitfun sync uses the in-repo script and an overridable lock', () => {
   );
   assert.match(
     syncScript,
-    /\/root\/repos\/OpenBitFun\/scripts\/starmate-release-sync\.sh/,
-    'documented cron must invoke the OpenBitFun checkout, not a detached copy'
+    /\/root\/repos\/StarMate\/scripts\/starmate-release-sync\.sh/,
+    'documented cron must invoke the StarMate checkout, not a detached copy'
   );
   assert.doesNotMatch(
     syncScript,
-    /LOCK_FILE="\/root\/repos\/OpenBitFun-AutoUpdate\/sync\.lock"/,
+    /LOCK_FILE="\/root\/repos\/StarMate-AutoUpdate\/sync\.lock"/,
     'a hardcoded AutoUpdate lock forces every new host to recreate a server-only tree'
   );
   assert.match(

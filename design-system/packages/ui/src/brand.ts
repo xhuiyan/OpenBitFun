@@ -1,4 +1,4 @@
-/** Opt-in OpenBitFun identity and motion, separate from generic UI controls. */
+/** Opt-in StarMate identity and motion, separate from generic UI controls. */
 export { StarMateSolidMark, StarMateAppIcon, type StarMateArtworkProps } from "./brand/StarMateArtwork";
 export { StarMateMark, type StarMateMarkProps } from "./brand/StarMateMark";
 export { StarMateBrandMotion, type StarMateBrandMotionProps } from "./brand/StarMateBrandMotion";

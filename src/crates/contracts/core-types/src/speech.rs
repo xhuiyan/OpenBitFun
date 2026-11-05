@@ -241,7 +241,7 @@ pub struct SpeechRealtimeFunctionCall {
     pub call_id: String,
     pub name: String,
     /// Provider-generated JSON arguments. Consumers must validate the decoded
-    /// object again before starting any OpenBitFun task.
+    /// object again before starting any StarMate task.
     pub arguments: String,
 }
 

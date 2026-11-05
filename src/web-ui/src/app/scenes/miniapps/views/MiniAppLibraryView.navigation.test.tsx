@@ -50,7 +50,7 @@ const app: MiniAppMeta = {
 const listing: MarketListingDetail = {
   listingId: 'timer', slug: 'timer', name: 'Timer', description: 'Focus timer', icon: 'box',
   category: 'utilities', tags: [], owner: { githubId: 1, login: 'author', avatarUrl: '' },
-  latestRelease: 1, minOpenBitFunVersion: '1.0.0', permissions: {},
+  latestRelease: 1, minStarMateVersion: '1.0.0', permissions: {},
   screenshotUrls: ['https://example.com/timer.png'], ratingAverage: 4, ratingCount: 2,
   favoriteCount: 0, downloadCount: 1, publishedAt: 1, changelog: 'First release',
   license: { spdxExpression: 'MIT' }, releases: [],

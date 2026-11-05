@@ -1,5 +1,5 @@
 import { PAGE_BG } from './Theme';
-import { OpenBitFunAccountLoginPage } from './OpenBitFunAccountLoginPage';
+import { StarMateAccountLoginPage } from './StarMateAccountLoginPage';
 import { SHEET_TOP_RADIUS } from './SheetLayout';
 
 /**
@@ -17,7 +17,7 @@ export struct AccountLoginSheet {
 
   build() {
     Stack() {
-      OpenBitFunAccountLoginPage({
+      StarMateAccountLoginPage({
         cloudLogin: this.cloudLogin,
         cloudCancelLogin: this.cloudCancelLogin,
         onClose: this.onClose,

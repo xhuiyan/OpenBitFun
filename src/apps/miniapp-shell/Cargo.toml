@@ -14,7 +14,7 @@ starmate-miniapp-ipc = { path = "../../crates/adapters/miniapp-ipc" }
 starmate-services-core = { path = "../../crates/services/services-core", features = ["process-runtime"] }
 # The shell always serves its bundled HTML, even beside a development host.
 # Tauri's dev mode otherwise replaces each macOS bundle's Dock icon with the
-# compile-time OpenBitFun icon when the native event loop becomes ready.
+# compile-time StarMate icon when the native event loop becomes ready.
 tauri = { workspace = true, features = ["custom-protocol"] }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-opener = { workspace = true }

@@ -264,7 +264,7 @@ mod native {
                 label,
                 WebviewUrl::External("about:blank".parse()?),
             )
-            .title("OpenBitFun hidden window material fixture")
+            .title("StarMate hidden window material fixture")
             .inner_size(640.0, 480.0)
             .position(80.0, 80.0)
             .resizable(true)

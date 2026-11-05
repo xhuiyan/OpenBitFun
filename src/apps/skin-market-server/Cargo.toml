@@ -3,7 +3,7 @@ name = "starmate-skin-market-server"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun appearance marketplace HTTP server"
+description = "StarMate appearance marketplace HTTP server"
 
 [[bin]]
 name = "openbitfun-skin-market-server"

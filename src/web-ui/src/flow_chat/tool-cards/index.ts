@@ -141,7 +141,7 @@ export const STANDARD_TOOL_CARD_ADAPTERS = {
   'WriteStdin': WriteStdinToolCard,
   'ExecControl': ExecControlToolCard,
 
-  // OpenBitFun Page (session-only publish)
+  // StarMate Page (session-only publish)
   'PageManage': PageManageDisplay,
   'PageDeploy': PageDeployDisplay,
   'PagePublish': PagePublishDisplay,
@@ -191,7 +191,7 @@ export const PRODUCT_OWNED_TOOL_CARD_COMPONENTS = {
   'ComputerUse': ComputerUseToolCard,
   'OpenBitFunControl': OpenBitFunControlToolCard,
 
-  // OpenBitFun Canvas tools
+  // StarMate Canvas tools
   'CreateCanvas': CanvasToolCard,
   'ReadCanvas': CanvasToolCard,
   'UpdateCanvas': CanvasToolCard,

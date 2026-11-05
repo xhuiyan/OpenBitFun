@@ -700,7 +700,7 @@ pub(crate) async fn begin_login_for_account(
         method: super::SubscriptionLoginMethod::Device,
         authorization_url,
         user_code: Some(user_code),
-        instructions: "Open the verification link and enter the code, then return to OpenBitFun."
+        instructions: "Open the verification link and enter the code, then return to StarMate."
             .to_string(),
         runner: Box::pin(runner),
     })

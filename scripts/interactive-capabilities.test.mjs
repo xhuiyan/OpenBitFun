@@ -429,7 +429,7 @@ test('website, global search, and agent control consume generated semantic proje
   assert.doesNotMatch(searchProviders, /settingsSearchProvider/u);
   assert.match(controlBridge, /getInteractiveCapability/u);
   assert.match(controlBridge, /native ProductControl executor/u);
-  assert.doesNotMatch(controlBridge, /discoverOpenBitFunCapabilities|configureOption|currentOptionValue/u);
+  assert.doesNotMatch(controlBridge, /discoverStarMateCapabilities|configureOption|currentOptionValue/u);
   assert.doesNotMatch(controlTool, /include_(?:str|bytes)!/u);
   assert.match(controlTool, /two-step/u);
 });

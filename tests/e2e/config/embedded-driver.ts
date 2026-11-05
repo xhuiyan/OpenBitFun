@@ -75,7 +75,7 @@ function executableCandidates(buildType: E2eBuildType): string[] {
   if (process.platform === 'darwin') {
     return [
       path.join(root, 'target', buildType, binaryName),
-      path.join(root, 'target', buildType, 'OpenBitFun.app', 'Contents', 'MacOS', 'OpenBitFun'),
+      path.join(root, 'target', buildType, 'StarMate.app', 'Contents', 'MacOS', 'StarMate'),
     ];
   }
 
@@ -236,7 +236,7 @@ async function waitForEmbeddedDriverReady(timeoutMs: number = 30000): Promise<vo
 
 async function waitForWebviewDocumentReady(timeoutMs: number = 30000): Promise<void> {
   const startedAt = Date.now();
-  let lastError = 'OpenBitFun app shell is not ready';
+  let lastError = 'StarMate app shell is not ready';
 
   while (Date.now() - startedAt < timeoutMs) {
     let sessionId: string | null = null;
@@ -248,7 +248,7 @@ async function waitForWebviewDocumentReady(timeoutMs: number = 30000): Promise<v
         await deleteProbeSession(sessionId);
         return;
       }
-      lastError = 'OpenBitFun app shell is not ready';
+      lastError = 'StarMate app shell is not ready';
     } catch (error) {
       lastError = error instanceof Error ? error.message : String(error);
     } finally {
@@ -284,7 +284,7 @@ async function fetchSessionLogs(
   return payload.value ?? [];
 }
 
-function stopOpenBitFunApp(): void {
+function stopStarMateApp(): void {
   if (!openbitfunApp) {
     return;
   }
@@ -413,7 +413,7 @@ async function startDevServer(): Promise<void> {
   }
 }
 
-async function startOpenBitFunApp(): Promise<void> {
+async function startStarMateApp(): Promise<void> {
   const appPath = getApplicationPath();
 
   if (!fs.existsSync(appPath)) {
@@ -426,9 +426,9 @@ async function startOpenBitFunApp(): Promise<void> {
 
   await waitForDevServerIfNeeded(appPath);
 
-  stopOpenBitFunApp();
+  stopStarMateApp();
 
-  console.log(`Starting OpenBitFun with embedded WebDriver on port ${DRIVER_PORT}`);
+  console.log(`Starting StarMate with embedded WebDriver on port ${DRIVER_PORT}`);
   console.log(`Application: ${appPath}`);
 
   openbitfunApp = spawn(appPath, [], {
@@ -556,7 +556,7 @@ export function createEmbeddedConfig(specs: string[], label: string): Options.Te
     },
 
     beforeSession: async function beforeSession() {
-      await startOpenBitFunApp();
+      await startStarMateApp();
     },
 
     before: async function before() {
@@ -572,15 +572,15 @@ export function createEmbeddedConfig(specs: string[], label: string): Options.Te
     },
 
     afterSession: function afterSession() {
-      console.log('Stopping OpenBitFun app...');
-      stopOpenBitFunApp();
+      console.log('Stopping StarMate app...');
+      stopStarMateApp();
     },
 
     afterTest: sharedAfterTest(),
 
     onComplete: function onComplete() {
       console.log(`${label} E2E test run completed`);
-      stopOpenBitFunApp();
+      stopStarMateApp();
       stopDevServer();
     },
   };

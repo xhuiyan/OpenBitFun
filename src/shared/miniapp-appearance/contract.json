@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Public MiniApp appearance variables projected from canonical OpenBitFun design-system tokens.",
+  "description": "Public MiniApp appearance variables projected from canonical StarMate design-system tokens.",
   "variables": [
     { "name": "--openbitfun-bg", "kind": "theme", "source": "--openbitfun-color-surface-canvas" },
     { "name": "--openbitfun-bg-secondary", "kind": "theme", "source": "--openbitfun-color-surface-panel" },

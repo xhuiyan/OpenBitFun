@@ -3,7 +3,7 @@ name = "starmate-desktop"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun Desktop Application (Tauri)"
+description = "StarMate Desktop Application (Tauri)"
 
 [lib]
 name = "starmate_desktop_lib"

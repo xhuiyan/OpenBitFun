@@ -2604,7 +2604,7 @@ mod tests {
             .unwrap();
             assert_eq!(
                 snapshot.window_title.as_deref(),
-                Some("OpenBitFun Inactive Controls Fixture")
+                Some("StarMate Inactive Controls Fixture")
             );
             for name in ["button", "field"] {
                 let p = &initial["targets"][name];

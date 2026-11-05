@@ -30,7 +30,7 @@ const session = (overrides: Partial<Session>): Session => ({
 } as Session);
 
 describe('workspace session view model', () => {
-  it('filters on imported provenance independently of the OpenBitFun continuation mode', () => {
+  it('filters on imported provenance independently of the StarMate continuation mode', () => {
     const codex = session({ importedSource: 'codex', config: { agentType: 'primary' } });
     const zcode = session({ importedSource: 'zcode', config: { agentType: 'primary' } });
     const native = session({ config: { agentType: 'primary' } });

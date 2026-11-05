@@ -1,12 +1,12 @@
-# OpenBitFun Model Router 客户端
+# StarMate Model Router 客户端
 
 **当前发布状态：暂未开放智能模式。** main 保留客户端实现，但 GUI、会话更新接口和执行循环均关闭自动路由。
 已有模型配置、会话标记与摘要不会被删除；手动会话不调用 Router，也不准备 Router 摘要。
 下文的环境变量和启动脚本不能绕过发布闸门，当前不用于开启 main 的智能模式。
 Router 服务本身仍可独立部署和验证；以下客户端接入说明仅作为保留实现的技术参考。
 
-本目录包含固定的 Router 系统提示词和可移植的 OpenBitFun 启动脚本。启动脚本负责让
-OpenBitFun 连接已经运行的 OpenAI-compatible Router 服务，不会在客户端或评测机器上
+本目录包含固定的 Router 系统提示词和可移植的 StarMate 启动脚本。启动脚本负责让
+StarMate 连接已经运行的 OpenAI-compatible Router 服务，不会在客户端或评测机器上
 启动 vLLM。
 
 ## GUI 配置
@@ -44,14 +44,14 @@ GUI 内置提示词由 Core 随程序打包，不依赖本部署目录存在。
 
 ## 目录内容
 
-- `router_system_prompt.txt`：OpenBitFun 在每个参与路由的主 Agent round 开始前发送给 Router 的
+- `router_system_prompt.txt`：StarMate 在每个参与路由的主 Agent round 开始前发送给 Router 的
   固定系统提示词。
-- `run_starmate_with_router.sh`：配置 Router 客户端环境变量，然后完整启动 OpenBitFun；不传
+- `run_starmate_with_router.sh`：配置 Router 客户端环境变量，然后完整启动 StarMate；不传
   参数时进入原有交互模式，传入参数时则原样转发。
 
-## 编译 OpenBitFun
+## 编译 StarMate
 
-在 OpenBitFun 仓库根目录执行：
+在 StarMate 仓库根目录执行：
 
 ```bash
 cargo build --locked -p starmate-cli --bin openbitfun
@@ -69,35 +69,35 @@ export ROUTER_API_URL='https://<router-host>/v1'
 # ROUTER_API_KEY 由执行环境的凭证管理注入，不要写进仓库
 ```
 
-地址必须能从**实际执行 OpenBitFun turn 的主机**访问。`localhost` 指该执行主机；
+地址必须能从**实际执行 StarMate turn 的主机**访问。`localhost` 指该执行主机；
 远程工作区、Peer 或 Detached Dispatch 场景不能用控制端的本地地址代替。
 脚本接受以 `/v1` 结尾的服务地址或完整的 `/v1/chat/completions` 地址。
 仅在受控本机或私有网络调试时使用明文 HTTP。
 
-然后进入需要 OpenBitFun 操作的目标代码仓库，直接启动完整的交互式 OpenBitFun：
+然后进入需要 StarMate 操作的目标代码仓库，直接启动完整的交互式 StarMate：
 
 ```bash
-/path/to/OpenBitFun/deploy/model-router/run_starmate_with_router.sh
+/path/to/StarMate/deploy/model-router/run_starmate_with_router.sh
 ```
 
-脚本没有改变 OpenBitFun 的运行模式，只是在启动前注入 Router 配置。进入交互界面后可以
-像原版 OpenBitFun 一样连续对话，每个参与路由的主 Agent round 都会自动调用 Router。
+脚本没有改变 StarMate 的运行模式，只是在启动前注入 Router 配置。进入交互界面后可以
+像原版 StarMate 一样连续对话，每个参与路由的主 Agent round 都会自动调用 Router。
 子代理、模型池会话和外部固定模型绑定不因这些环境变量而加入 Router。
 
-需要执行单个非交互任务时，才传入 OpenBitFun CLI 的 `exec` 参数：
+需要执行单个非交互任务时，才传入 StarMate CLI 的 `exec` 参数：
 
 ```bash
-/path/to/OpenBitFun/deploy/model-router/run_starmate_with_router.sh \
+/path/to/StarMate/deploy/model-router/run_starmate_with_router.sh \
   exec '真实任务描述'
 ```
 
-下列参数均属于 OpenBitFun CLI，而不是 Router 参数，并且都由用户按需添加：
+下列参数均属于 StarMate CLI，而不是 Router 参数，并且都由用户按需添加：
 
-- `-v`：输出更详细的 OpenBitFun 执行日志，主要用于调试；批量评测时可以去掉。
-- `exec`：以非交互任务模式运行 OpenBitFun。
-- `--output-format json`：可选；仅当外部程序明确需要解析 OpenBitFun 的 JSON 输出时使用。
+- `-v`：输出更详细的 StarMate 执行日志，主要用于调试；批量评测时可以去掉。
+- `exec`：以非交互任务模式运行 StarMate。
+- `--output-format json`：可选；仅当外部程序明确需要解析 StarMate 的 JSON 输出时使用。
 
-Router 的单行 JSON 输出由 OpenBitFun 内部请求和 `router_system_prompt.txt` 控制，与上述
+Router 的单行 JSON 输出由 StarMate 内部请求和 `router_system_prompt.txt` 控制，与上述
 三个 CLI 参数无关。
 
 ## Router 服务兼容要求
@@ -144,7 +144,7 @@ vllm serve /srv/models/router-checkpoint \
   --generation-config vllm
 ```
 
-`--max-model-len` 包含输入与输出，需与 OpenBitFun 配置同步；`--generation-config vllm`
+`--max-model-len` 包含输入与输出，需与 StarMate 配置同步；`--generation-config vllm`
 避免 checkpoint 附带的生成配置覆盖服务默认值。使用 Hub 仓库时指定准确的 `--revision`
 和 `--tokenizer-revision`；若显式传入 `--chat-template`，必须使用与训练匹配的模板。
 不要换成通用模板来“修复”格式错误，`enable_thinking=false` 的实际效果也由模板决定。
@@ -159,7 +159,7 @@ vllm serve /srv/models/router-checkpoint \
 `--max-num-seqs` 控制推理调度，不等于 HTTP 等待队列有界。支持
 `--max-num-queued-reqs` 的 vLLM 版本可限制单个 API 服务进程的等待与活动请求总数，
 超额返回 503；旧版本应在代理层提供有界队列。这些都不是跨多个 API 进程或多个实例的
-全局配额，多台 OpenBitFun 主机共用服务时应在入口统一限制容量。服务端等待时间应能落在
+全局配额，多台 StarMate 主机共用服务时应在入口统一限制容量。服务端等待时间应能落在
 客户端的请求期限内；容量数字需要实测，不能从本机并发配置推断服务吞吐量。
 [vLLM 队列参数](https://docs.vllm.ai/en/latest/cli/serve/)
 
@@ -210,7 +210,7 @@ Fast 增量摘要：     开启；触发门槛上限 8192 个预算 tokens，预
 必须为正数且不大于生成上限。直接运行宿主时使用相应的 `STARMATE_ROUND_ROUTER_*` 变量。
 
 65536 是当前客户端默认值，不代表任意部署的真实窗口或训练长度。应按实际服务配置设置
-输入上限和上下文窗口；OpenBitFun 会扣除固定 system prompt、128 个输出 tokens、
+输入上限和上下文窗口；StarMate 会扣除固定 system prompt、128 个输出 tokens、
 256 个 chat-template 预留和额外的估算余量，再结合服务端反馈收紧动态 user prompt 预算。模板预留是本地估算，
 不是对任意模型模板的精确保证。通常输入远低于上限，不会为了上限进行补齐。
 

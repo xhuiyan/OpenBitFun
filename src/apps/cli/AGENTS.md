@@ -1,4 +1,4 @@
-# OpenBitFun CLI Agent Guide
+# StarMate CLI Agent Guide
 
 Scope: `src/apps/cli`.
 
@@ -13,7 +13,7 @@ read:
 ## Ownership
 
 Model-edit compatibility has a focused check:
-`cargo test --locked -p openbitfun-cli --bin openbitfun model_selection::tests`.
+`cargo test --locked -p starmate-cli --bin openbitfun model_selection::tests`.
 Older mutation DTOs preserve account/channel policy. Merge write-only credentials
 and unexpressed routing fields against the current model inside the existing
 config write lock, so a concurrent settings edit cannot be overwritten.
@@ -147,25 +147,25 @@ pnpm run cli:install
 Run the smallest checks matching the changed path:
 
 ```bash
-cargo check -p openbitfun-cli
-cargo test -p openbitfun-cli
-cargo test -p openbitfun-cli --bin openbitfun peer_host::
-cargo test -p openbitfun-cli --bin openbitfun system_info_home_contract
+cargo check -p starmate-cli
+cargo test -p starmate-cli
+cargo test -p starmate-cli --bin openbitfun peer_host::
+cargo test -p starmate-cli --bin openbitfun system_info_home_contract
 ```
 
 For streaming `exec` retry, context recovery, and final-event contracts:
 
 ```bash
-cargo test --locked -p openbitfun-cli --test cli_command_contracts exec_cli_contracts::stream_json_
+cargo test --locked -p starmate-cli --test cli_command_contracts exec_cli_contracts::stream_json_
 ```
 
 For scheduled-job bootstrap, persisted tasks, and unattended execution after a
 CLI restart (with a mock model and a real CLI process):
 
 ```bash
-cargo test --locked -p openbitfun-cli --bin openbitfun bootstrap_profile_tests::
-cargo test --locked -p openbitfun-cli --test terminal_process_contracts scheduled_jobs_
-cargo test --locked -p openbitfun-cli --test cli_command_contracts scheduled_jobs_
+cargo test --locked -p starmate-cli --bin openbitfun bootstrap_profile_tests::
+cargo test --locked -p starmate-cli --test terminal_process_contracts scheduled_jobs_
+cargo test --locked -p starmate-cli --test cli_command_contracts scheduled_jobs_
 ```
 
 Embedded Interactive/Execution bootstrap wires the existing Core Cron service,
@@ -176,7 +176,7 @@ last-controller idle shutdown cannot own all persisted jobs.
 For ACP stdio session restore, duplicate-load rejection, history replay and close:
 
 ```bash
-cargo test --locked -p openbitfun-cli --test acp_stdio_cli
+cargo test --locked -p starmate-cli --test acp_stdio_cli
 ```
 
 Back-to-back requests can reach the server during or after the first transition;
@@ -192,22 +192,22 @@ Use [`README.md`](README.md) for user-facing behavior and installation. Keep
 developer internals here or in architecture docs instead of expanding the user
 guide.
 
-For unattended question lifecycle changes, run `cargo test --locked -p openbitfun-cli --bin openbitfun shared_runtime::` and `cargo test --locked -p openbitfun-agent-runtime-ipc protocol_contract_tests::`.
+For unattended question lifecycle changes, run `cargo test --locked -p starmate-cli --bin openbitfun shared_runtime::` and `cargo test --locked -p openbitfun-agent-runtime-ipc protocol_contract_tests::`.
 
-For Pages account adapters, use the focused Core command in its guide and `cargo check -p openbitfun-cli`.
+For Pages account adapters, use the focused Core command in its guide and `cargo check -p starmate-cli`.
 
 For `/goal` prompt routing (including the pending-session guard):
 
 ```bash
-cargo test --locked -p openbitfun-cli --bin openbitfun goal_prompts_
-cargo test --locked -p openbitfun-cli --bin openbitfun -- modes::exec::tests:: dispatch::worker::tests::
+cargo test --locked -p starmate-cli --bin openbitfun goal_prompts_
+cargo test --locked -p starmate-cli --bin openbitfun -- modes::exec::tests:: dispatch::worker::tests::
 ```
 
 For daemon Remote Connect management, private IPC authentication/frame bounds,
 and daemon lifecycle regressions:
 
 ```bash
-cargo test --locked -p openbitfun-cli --bin openbitfun daemon::
+cargo test --locked -p starmate-cli --bin starmate daemon::
 ```
 
 Bot listeners belong to the daemon. Chat/Shared/dispatch processes call its
@@ -218,14 +218,14 @@ These loopback fixtures do not establish live Relay or provider connectivity.
 For the inline WeChat QR card, collapsed output, theme contrast and narrow terminals:
 
 ```bash
-cargo test --locked -p openbitfun-cli --bin openbitfun ui::tool_cards::tests::
+cargo test --locked -p starmate-cli --bin openbitfun ui::tool_cards::tests::
 ```
 
 For native Computer Use host wiring and headless/dispatch admission:
 
 ```bash
-cargo test --locked -p openbitfun-cli --bin openbitfun computer_use::
-cargo test --locked -p openbitfun-cli --test cli_command_contracts computer_use_
+cargo test --locked -p starmate-cli --bin openbitfun computer_use::
+cargo test --locked -p starmate-cli --test cli_command_contracts computer_use_
 ```
 
 Native provider and OS fixture checks belong to

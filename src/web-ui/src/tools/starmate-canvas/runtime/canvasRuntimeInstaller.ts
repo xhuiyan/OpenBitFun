@@ -16,10 +16,10 @@ type RuntimeWindow = Window & {
 };
 
 export function buildCanvasRuntimeInstallerScript(revision: string): string {
-  return `(${installOpenBitFunCanvasRuntime.toString()})(${JSON.stringify(revision)});`;
+  return `(${installStarMateCanvasRuntime.toString()})(${JSON.stringify(revision)});`;
 }
 
-function installOpenBitFunCanvasRuntime(initialRevision: string): void {
+function installStarMateCanvasRuntime(initialRevision: string): void {
   const runtimeWindow = window as unknown as RuntimeWindow;
   const React = runtimeWindow.React as RuntimeReact | undefined;
   const ReactDOM = runtimeWindow.ReactDOM as RuntimeReactDOM | undefined;

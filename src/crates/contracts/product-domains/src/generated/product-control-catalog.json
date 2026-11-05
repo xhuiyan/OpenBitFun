@@ -4,8 +4,8 @@
   "title": "StarMate Playbook",
   "origin": "https://playbook.starmate.xtdl.ltd",
   "source": "src/shared/interactive-capabilities/catalog.json",
-  "digest": "b5b61cee07ddbc49a3d9f11a9e6e6970d441973d682b2d66489b9e0140371c1e",
-  "ownerDigest": "bf020ed2873824dae7c60f1e029649f525b7ec35d33aa45a7d4e1fa79827ebad",
+  "digest": "ecf7d833273fb66a08fc3e2cee9c266b867e510806df47e75e804d6bf9fda548",
+  "ownerDigest": "c054617d0a709be523f200d7a787af6464d82b1a873c2077ab1e96bcfc7a2c8c",
   "searchAcceptance": [
     {
       "id": "native-image-generation",
@@ -12959,7 +12959,7 @@
             "type": "string"
           },
           "packagePath": {
-            "description": "Imported OpenBitFun pet-package directory.",
+            "description": "Imported StarMate pet-package directory.",
             "minLength": 1,
             "type": "string"
           }
@@ -18795,12 +18795,12 @@
             "type": "string"
           },
           "serverId": {
-            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
             "minLength": 1,
             "type": "string"
           },
           "workingDirectory": {
-            "description": "Optional directory on the OpenBitFun product host for a local process; never a remote workspace path.",
+            "description": "Optional directory on the StarMate product host for a local process; never a remote workspace path.",
             "minLength": 1,
             "type": "string"
           }
@@ -18861,7 +18861,7 @@
         "additionalProperties": false,
         "properties": {
           "serverId": {
-            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
             "minLength": 1,
             "type": "string"
           }
@@ -18920,7 +18920,7 @@
         "additionalProperties": false,
         "properties": {
           "serverId": {
-            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
             "minLength": 1,
             "type": "string"
           }
@@ -18979,7 +18979,7 @@
         "additionalProperties": false,
         "properties": {
           "serverId": {
-            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
             "minLength": 1,
             "type": "string"
           }
@@ -19043,7 +19043,7 @@
             "type": "string"
           },
           "serverId": {
-            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+            "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
             "minLength": 1,
             "type": "string"
           }
@@ -28066,7 +28066,7 @@
                 "type": "string"
               },
               "packagePath": {
-                "description": "Imported OpenBitFun pet-package directory.",
+                "description": "Imported StarMate pet-package directory.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -32155,12 +32155,12 @@
                 "type": "string"
               },
               "serverId": {
-                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
                 "minLength": 1,
                 "type": "string"
               },
               "workingDirectory": {
-                "description": "Optional directory on the OpenBitFun product host for a local process; never a remote workspace path.",
+                "description": "Optional directory on the StarMate product host for a local process; never a remote workspace path.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -32192,7 +32192,7 @@
             "additionalProperties": false,
             "properties": {
               "serverId": {
-                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -32219,7 +32219,7 @@
             "additionalProperties": false,
             "properties": {
               "serverId": {
-                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -32246,7 +32246,7 @@
             "additionalProperties": false,
             "properties": {
               "serverId": {
-                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -32278,7 +32278,7 @@
                 "type": "string"
               },
               "serverId": {
-                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host.",
+                "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host.",
                 "minLength": 1,
                 "type": "string"
               }

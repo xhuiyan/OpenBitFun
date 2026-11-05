@@ -13,7 +13,7 @@ import java.io.File
  * If that ever stops being true, the tests next to `PairingStore` fail first.
  */
 internal object LogcatCoreLog : CoreLog {
-    private const val TAG = "OpenBitFunCore"
+    private const val TAG = "StarMateCore"
     private const val FILE_NAME = "openbitfun-auth-diagnostics.log"
     private const val MAX_FILE_BYTES = 512 * 1024
     private var diagnosticsFiles: List<File> = emptyList()

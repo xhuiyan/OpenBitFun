@@ -222,7 +222,7 @@ function retryFixture() {
     'release',
     'bundle',
     'macos',
-    'OpenBitFun.app'
+    'StarMate.app'
   );
   const executableDir = join(appDir, 'Contents', 'MacOS');
   const executablePath = join(executableDir, 'starmate-desktop');
@@ -329,7 +329,7 @@ test('Desktop Tauri projection consumes only the resolved member identity', () =
   mkdirSync(fixture, { recursive: true });
   const baseConfig = join(fixture, 'tauri.conf.json');
   writeFileSync(baseConfig, JSON.stringify({
-    productName: 'OpenBitFun',
+    productName: 'StarMate',
     identifier: 'com.starmate.desktop',
     bundle: { resources: {} },
   }));

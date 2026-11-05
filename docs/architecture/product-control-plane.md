@@ -1,12 +1,12 @@
-# OpenBitFun 产品控制平面
+# StarMate 产品控制平面
 
-本文定义用户手动操作、Agent 自行控制、全局搜索和 OpenBitFun Playbook 之间的
+本文定义用户手动操作、Agent 自行控制、全局搜索和 StarMate Playbook 之间的
 一致性边界。它只描述稳定所有权与运行约束；具体页面文案和能力清单由生成的
 `ResolvedProductCapabilityGraph` 承载。
 
 ## 1. 不变量
 
-OpenBitFun 对一项用户可见功能或设置只允许一个业务 owner。该 owner 提供类型化
+StarMate 对一项用户可见功能或设置只允许一个业务 owner。该 owner 提供类型化
 Query/Command，持有校验、状态写入、运行时副作用、回读和错误语义。不同入口只做
 参数与展示适配：
 
@@ -101,8 +101,8 @@ Product Control Registry 是闭集路由，不是第二个业务 owner，也不�
 
 ## 6. 远程与版本兼容
 
-产品设置默认在持有 OpenBitFun 产品状态的 host 执行，不随 Remote Workspace 路径迁移。
-Peer Device Mode 将命令代理到 peer host；Remote Control 使用目标 OpenBitFun host；Detached
+产品设置默认在持有 StarMate 产品状态的 host 执行，不随 Remote Workspace 路径迁移。
+Peer Device Mode 将命令代理到 peer host；Remote Control 使用目标 StarMate host；Detached
 Dispatch 只允许目标 CLI profile 明确支持的 headless 命令。每种 delivery profile 在
 解析图中给出 availability，缺少能力时返回 typed unsupported。
 
@@ -129,7 +129,7 @@ Desktop provider 调用共享 MCPService；GUI JSON 保存也复用该服务的�
 状态，不回传命令参数、URL 或秘密值；新增凭据与 OAuth 同意继续使用受保护的用户流程。
 配置提交与连接结果分开返回，运行时失败不回滚或重放已经保存的用户决定。
 
-这些操作修改执行端的 OpenBitFun 产品配置，不修改 SSH 工作区配置。需要产品宿主
+这些操作修改执行端的 StarMate 产品配置，不修改 SSH 工作区配置。需要产品宿主
 目录的参数在远程工作区拒绝；纯结构化配置可由 Desktop 上的远程会话调用。Peer
 沿用目标端能力发现和 `product_control_native_v1` 检查；CLI 与 Detached Dispatch
 未安装该 provider，明确返回 unsupported，不调用控制端界面或文件系统代执行。

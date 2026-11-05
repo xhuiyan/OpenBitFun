@@ -97,9 +97,9 @@ describe('GitAPI repository probe cache', () => {
 
     invokeMock.mockResolvedValueOnce({
       state: 'trusted',
-      repositoryPath: 'D:/workspace/OpenBitFun',
+      repositoryPath: 'D:/workspace/StarMate',
       alreadyTrusted: false,
-      addedEntries: ['D:/workspace/OpenBitFun'],
+      addedEntries: ['D:/workspace/StarMate'],
       detail: null,
       manualCommand: null,
     });
@@ -137,7 +137,7 @@ describe('GitAPI repository probe cache', () => {
 
     invokeMock.mockResolvedValueOnce({
       state: 'trusted',
-      repositoryPath: 'D:/workspace/OpenBitFun',
+      repositoryPath: 'D:/workspace/StarMate',
       detail: null,
       manualCommand: null,
     });
@@ -153,9 +153,9 @@ describe('GitAPI repository probe cache', () => {
 
     invokeMock.mockResolvedValueOnce({
       state: 'trust_required',
-      repositoryPath: 'D:/workspace/OpenBitFun',
+      repositoryPath: 'D:/workspace/StarMate',
       detail: 'detected dubious ownership',
-      manualCommand: "git config --global --add safe.directory 'D:/workspace/OpenBitFun'",
+      manualCommand: "git config --global --add safe.directory 'D:/workspace/StarMate'",
     });
     await gitAPI.getRepositoryTrust(workspace);
 
@@ -169,11 +169,11 @@ describe('GitAPI repository probe cache', () => {
 
     invokeMock.mockResolvedValueOnce({
       state: 'trust_required',
-      repositoryPath: 'D:/workspace/OpenBitFun',
+      repositoryPath: 'D:/workspace/StarMate',
       alreadyTrusted: false,
       addedEntries: [],
       detail: 'detected dubious ownership',
-      manualCommand: 'git config --global --add safe.directory "D:/workspace/OpenBitFun"',
+      manualCommand: 'git config --global --add safe.directory "D:/workspace/StarMate"',
     });
     await gitAPI.trustRepository(workspace);
 

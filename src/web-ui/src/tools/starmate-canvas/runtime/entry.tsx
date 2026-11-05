@@ -1,7 +1,7 @@
 import '@starmate/design-tokens/tokens.css';
 import './styles/canvas-runtime.scss';
 import * as sdkAdapters from './sdk';
-import { installOpenBitFunCanvasRuntimeApp } from './CanvasRuntimeApp';
+import { installStarMateCanvasRuntimeApp } from './CanvasRuntimeApp';
 import {
   CANVAS_RUNTIME_VERSION,
   CANVAS_SDK_RUNTIME_EXPORTS,
@@ -28,4 +28,4 @@ window.StarMateCanvasContract = {
   sdkVersion: CANVAS_SDK_VERSION,
 };
 window.StarMateCanvasSDKAdapters = sdkAdapters;
-installOpenBitFunCanvasRuntimeApp();
+installStarMateCanvasRuntimeApp();

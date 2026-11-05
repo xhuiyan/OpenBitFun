@@ -33,7 +33,7 @@ pnpm --dir src/web-ui run test:run src/flow_chat/utils/importedToolPresentation.
 These tests cover projection, native rendering, history action isolation and old
 payload round trips. They do not establish visual fidelity or remote runtime behavior.
 
-## OpenBitFun controls
+## StarMate controls
 
 `OpenBitFunControlToolCard` composes the public Ambient and Prominent frameworks.
 Discovery (`list`, `search`, `get`) uses Ambient; `open`, `execute`, `configure`,

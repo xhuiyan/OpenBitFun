@@ -118,8 +118,8 @@ vi.mock('@starmate/ui', async importOriginal => ({
 const workspaceOption: TodoWorkspaceOption = {
   workspace: {
     id: 'workspace-1',
-    name: 'OpenBitFun',
-    rootPath: 'D:/workspace/OpenBitFun',
+    name: 'StarMate',
+    rootPath: 'D:/workspace/StarMate',
     workspaceType: WorkspaceType.SingleProject,
     workspaceKind: WorkspaceKind.Normal,
     languages: ['TypeScript'],
@@ -128,8 +128,8 @@ const workspaceOption: TodoWorkspaceOption = {
     tags: [],
   },
   value: 'workspace-1',
-  label: 'OpenBitFun',
-  description: 'D:/workspace/OpenBitFun',
+  label: 'StarMate',
+  description: 'D:/workspace/StarMate',
   remoteConnectionId: null,
   remoteSshHost: null,
 };

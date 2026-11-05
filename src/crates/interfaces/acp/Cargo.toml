@@ -3,7 +3,7 @@ name = "starmate-acp"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun Agent Client Protocol surface"
+description = "StarMate Agent Client Protocol surface"
 
 [features]
 default = ["client", "server"]

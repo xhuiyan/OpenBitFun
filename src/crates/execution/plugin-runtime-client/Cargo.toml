@@ -3,7 +3,7 @@ name = "starmate-plugin-runtime-client"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Default PluginRuntimeClient implementation for OpenBitFun extension execution"
+description = "Default PluginRuntimeClient implementation for StarMate extension execution"
 
 [lib]
 name = "starmate_plugin_runtime_client"

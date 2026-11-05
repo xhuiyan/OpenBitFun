@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 
 /// Account device picker. Native apps connect a desktop only through the
@@ -11,7 +11,7 @@ struct AccountDevicePickerSheet: View {
     var body: some View {
         accountDevicePage
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(OpenBitFunTheme.card)
+            .background(StarMateTheme.card)
             .onAppear {
                 if model.accountUser != nil { model.refreshRemoteDevices() }
             }
@@ -34,9 +34,9 @@ struct AccountDevicePickerSheet: View {
                 Button { dismiss() } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 20, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .frame(width: 48, height: 48)
-                        .background(OpenBitFunTheme.card)
+                        .background(StarMateTheme.card)
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -45,10 +45,10 @@ struct AccountDevicePickerSheet: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(model.localized("选择桌面设备"))
                         .font(MobileDesignTypography.headlineLarge.font)
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                     Text(model.localized("远程"))
                         .font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                 }
                 Spacer(minLength: 0)
             }
@@ -60,7 +60,7 @@ struct AccountDevicePickerSheet: View {
                 VStack(alignment: .leading, spacing: 18) {
                     Text(model.localized("选择一台在线桌面继续工作。"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .lineSpacing(MobileDesignTypography.bodyMedium.lineSpacing)
 
                     accountDeviceList
@@ -72,7 +72,7 @@ struct AccountDevicePickerSheet: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 
     private var accountDeviceList: some View {
@@ -80,12 +80,12 @@ struct AccountDevicePickerSheet: View {
             HStack {
                 Text(model.localized("账号设备"))
                     .font(MobileDesignTypography.bodyLarge.font.weight(.bold))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                 Spacer(minLength: 0)
                 Button(action: model.refreshRemoteDevices) {
                     Text(model.localized(model.accountRefreshing ? "正在加载" : "刷新"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(model.accountRefreshing ? OpenBitFunTheme.muted : OpenBitFunTheme.accent)
+                        .foregroundStyle(model.accountRefreshing ? StarMateTheme.muted : StarMateTheme.accent)
                         .frame(minWidth: 44, minHeight: 38, alignment: .trailing)
                 }
                 .buttonStyle(.plain)
@@ -102,7 +102,7 @@ struct AccountDevicePickerSheet: View {
                 } else if accountDesktopDevices.isEmpty {
                     Text(model.localized("暂无可连接的桌面设备"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 } else {
                     ScrollView(showsIndicators: false) {
@@ -119,9 +119,9 @@ struct AccountDevicePickerSheet: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .frame(height: 174)
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: 8))
-        .overlay(RoundedRectangle(cornerRadius: 8).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 8).stroke(StarMateTheme.line, lineWidth: 1))
     }
 
     private var accountDesktopDevices: [MobileAccountDevice] {
@@ -130,10 +130,10 @@ struct AccountDevicePickerSheet: View {
 
     private var accountDeviceSkeleton: some View {
         HStack(spacing: 12) {
-            RoundedRectangle(cornerRadius: 5).fill(OpenBitFunTheme.soft).frame(width: 26, height: 22)
+            RoundedRectangle(cornerRadius: 5).fill(StarMateTheme.soft).frame(width: 26, height: 22)
             VStack(alignment: .leading, spacing: 7) {
-                RoundedRectangle(cornerRadius: 4).fill(OpenBitFunTheme.soft).frame(width: 142, height: 12)
-                RoundedRectangle(cornerRadius: 4).fill(OpenBitFunTheme.soft).frame(width: 52, height: 9)
+                RoundedRectangle(cornerRadius: 4).fill(StarMateTheme.soft).frame(width: 142, height: 12)
+                RoundedRectangle(cornerRadius: 4).fill(StarMateTheme.soft).frame(width: 52, height: 9)
             }
             Spacer(minLength: 0)
         }
@@ -150,30 +150,30 @@ struct AccountDevicePickerSheet: View {
             HStack(spacing: 12) {
                 Image(systemName: "desktopcomputer")
                     .font(.system(size: 22, weight: .regular))
-                    .foregroundStyle(OpenBitFunTheme.muted.opacity(device.online ? 0.68 : 0.38))
+                    .foregroundStyle(StarMateTheme.muted.opacity(device.online ? 0.68 : 0.38))
                     .frame(width: 26, height: 24)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(device.name.isEmpty ? device.id : device.name)
                         .font(MobileDesignTypography.titleSmall.font)
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                     Text(accountDeviceStatus(device))
                         .font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(device.online ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.muted)
+                        .foregroundStyle(device.online ? StarMateTheme.statusSuccess : StarMateTheme.muted)
                 }
                 Spacer(minLength: 0)
                 if device.online && !(device.selected && model.connectionPhase == .connected) {
                     Text(model.localized(switchingDeviceID == device.id ? "正在连接" : "连接"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
-                        .background(OpenBitFunTheme.soft)
+                        .background(StarMateTheme.soft)
                         .clipShape(Capsule())
                 } else if device.online {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.muted.opacity(0.44))
+                        .foregroundStyle(StarMateTheme.muted.opacity(0.44))
                 }
             }
             .padding(.horizontal, 4)

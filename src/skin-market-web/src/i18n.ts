@@ -60,7 +60,7 @@ const messages = {
     detailBack: 'Back to Skin Market',
     detailDownload: 'Download appearance',
     compatibility: 'Compatibility',
-    minOpenBitFun: 'StarMate {version} or newer',
+    minStarMate: 'StarMate {version} or newer',
     requiredCapabilities: 'Required capabilities',
     noExtraCapabilities: 'No additional capabilities required',
     whatsNew: 'What changed',
@@ -82,12 +82,12 @@ const messages = {
     notFoundBody: 'The link may be outdated, or the release may no longer be public.',
     backToCatalog: 'Browse appearances',
     openbitfunHome: 'StarMate website',
-    getOpenBitFunTitle: 'New to StarMate?',
-    getOpenBitFunCatalogNote:
+    getStarMateTitle: 'New to StarMate?',
+    getStarMateCatalogNote:
       'Appearances apply inside the StarMate desktop client. Download it once, then install any appearance from this market.',
-    getOpenBitFunListingNote:
+    getStarMateListingNote:
       'This appearance applies inside the StarMate desktop client. Download it first, then import the package.',
-    getOpenBitFunAction: 'Download StarMate',
+    getStarMateAction: 'Download StarMate',
     refresh: 'Refresh',
     submissionsTitle: 'My submissions',
     submissionsIntro: 'Track appearance packages submitted from StarMate Agent and respond to review feedback.',
@@ -197,7 +197,7 @@ const messages = {
     detailBack: '返回 Skin 市场',
     detailDownload: '下载外观包',
     compatibility: '兼容性',
-    minOpenBitFun: '需要星伴 {version} 或更高版本',
+    minStarMate: '需要星伴 {version} 或更高版本',
     requiredCapabilities: '所需能力',
     noExtraCapabilities: '不需要额外能力',
     whatsNew: '更新说明',
@@ -219,12 +219,12 @@ const messages = {
     notFoundBody: '链接可能已经失效，或者该版本不再公开。',
     backToCatalog: '浏览外观',
     openbitfunHome: '星伴官网',
-    getOpenBitFunTitle: '没有星伴？',
-    getOpenBitFunCatalogNote:
+    getStarMateTitle: '没有星伴？',
+    getStarMateCatalogNote:
       '外观需要在星伴客户端里生效。下载客户端后，就能安装市场里的任意外观。',
-    getOpenBitFunListingNote:
+    getStarMateListingNote:
       '这个外观需要在星伴客户端里生效。先下载客户端，再导入外观包即可。',
-    getOpenBitFunAction: '下载星伴客户端',
+    getStarMateAction: '下载星伴客户端',
     refresh: '刷新',
     submissionsTitle: '我的投稿',
     submissionsIntro: '查看通过星伴智能体投稿的外观包，并跟进审核意见。',

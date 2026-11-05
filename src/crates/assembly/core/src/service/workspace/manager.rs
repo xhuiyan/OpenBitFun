@@ -357,7 +357,7 @@ impl WorkspaceInfoRuntimeExt for WorkspaceInfo {
                 .filter(|value| !value.is_empty())
                 .ok_or_else(|| {
                     StarMateError::config(
-                        "Remote workspace requires a non-empty sshHost in the current OpenBitFun format",
+                        "Remote workspace requires a non-empty sshHost in the current StarMate format",
                     )
                 })?;
             let connection_id = options
@@ -367,7 +367,7 @@ impl WorkspaceInfoRuntimeExt for WorkspaceInfo {
                 .filter(|value| !value.is_empty())
                 .ok_or_else(|| {
                     StarMateError::config(
-                        "Remote workspace requires a non-empty connectionId in the current OpenBitFun format",
+                        "Remote workspace requires a non-empty connectionId in the current StarMate format",
                     )
                 })?;
 

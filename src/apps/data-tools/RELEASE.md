@@ -19,7 +19,7 @@ assistant identities, including local remote-workspace mirrors. Scan and review
 before applying; verified full backups, durable resume and rollback are included.
 The GUI uses native Rust and does not require Python. Older migration tasks and
 the existing bundle identity remain compatible. The executable is now
-`openbitfun-data-tools`; build with `pnpm run data-tools:build`.
+`starmate-data-tools`; build with `pnpm run data-tools:build`.
 
 最新版本与使用指南：[中文](https://github.com/xhuiyan/OpenBitFun/blob/main/src/apps/data-tools/README.zh-CN.md) · Latest release and guide: [English](https://github.com/xhuiyan/OpenBitFun/blob/main/src/apps/data-tools/README.md)
 

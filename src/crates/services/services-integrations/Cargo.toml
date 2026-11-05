@@ -3,7 +3,7 @@ name = "starmate-services-integrations"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun integration service owner crate"
+description = "StarMate integration service owner crate"
 autotests = false
 
 [lib]

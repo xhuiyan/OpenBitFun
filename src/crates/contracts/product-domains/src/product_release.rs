@@ -1,8 +1,8 @@
-//! Stable OpenBitFun product-release facts shared across product domains.
+//! Stable StarMate product-release facts shared across product domains.
 
 use semver::Version;
 
-/// OpenBitFun begins as a new product at this release.
+/// StarMate begins as a new product at this release.
 pub const STARMATE_INITIAL_RELEASE_VERSION: Version = Version::new(1, 0, 0);
 
 /// Market packages use stable product compatibility versions. The inaugural

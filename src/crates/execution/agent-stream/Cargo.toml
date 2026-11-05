@@ -3,7 +3,7 @@ name = "starmate-agent-stream"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Lightweight agent stream processing for OpenBitFun"
+description = "Lightweight agent stream processing for StarMate"
 
 [lib]
 name = "starmate_agent_stream"

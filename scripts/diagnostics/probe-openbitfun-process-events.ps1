@@ -1,8 +1,8 @@
-# Event-based OpenBitFun process-tree probe for Windows.
+# Event-based StarMate process-tree probe for Windows.
 #
 # This probe subscribes to Win32 process start/stop events instead of polling a
 # fixed list of process names. It records every process event seen while it is
-# active, then attributes each process to the OpenBitFun root using a parent table
+# active, then attributes each process to the StarMate root using a parent table
 # that survives parent-process exit.
 #
 # Run from a separate PowerShell window. Run as Administrator when possible so
@@ -10,14 +10,14 @@
 #
 # Examples:
 #   .\probe-starmate-process-events.ps1 -DurationSec 60 -OutputPath .\starmate-process-events.log
-#   .\probe-starmate-process-events.ps1 -OpenBitFunPid 8352 -DurationSec 120
+#   .\probe-starmate-process-events.ps1 -StarMatePid 8352 -DurationSec 120
 
 [CmdletBinding()]
 param(
     [ValidateRange(1, 3600)]
     [int]$DurationSec = 60,
 
-    [int[]]$OpenBitFunPid = @(),
+    [int[]]$StarMatePid = @(),
 
     [string]$OutputPath
 )
@@ -25,7 +25,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Get-OpenBitFunProcessIds {
+function Get-StarMateProcessIds {
     @(
         Get-CimInstance Win32_Process |
             Where-Object { $_.Name -ieq 'starmate-desktop.exe' } |
@@ -72,14 +72,14 @@ function Format-LogValue {
     '"' + $text + '"'
 }
 
-$rootProcessIds = if (@($OpenBitFunPid).Count -gt 0) {
-    @($OpenBitFunPid | ForEach-Object { [int]$_ } | Select-Object -Unique)
+$rootProcessIds = if (@($StarMatePid).Count -gt 0) {
+    @($StarMatePid | ForEach-Object { [int]$_ } | Select-Object -Unique)
 } else {
-    @(Get-OpenBitFunProcessIds)
+    @(Get-StarMateProcessIds)
 }
 
 if (@($rootProcessIds).Count -eq 0) {
-    throw 'No starmate-desktop.exe process was found. Pass -OpenBitFunPid explicitly or start OpenBitFun first.'
+    throw 'No starmate-desktop.exe process was found. Pass -StarMatePid explicitly or start StarMate first.'
 }
 
 $probeProcessId = $PID
@@ -156,11 +156,11 @@ try {
 
             $lineage = [System.Collections.Generic.List[string]]::new()
             $currentPid = [int]$snapshot.ParentProcessId
-            $isOpenBitFunDescendant = $false
+            $isStarMateDescendant = $false
             $isComplete = $true
             for ($depth = 0; $depth -lt 32 -and $currentPid -gt 0; $depth++) {
                 if ($state.RootProcessIds -contains $currentPid) {
-                    $isOpenBitFunDescendant = $true
+                    $isStarMateDescendant = $true
                     break
                 }
                 if (-not $state.KnownProcesses.Contains($currentPid)) {
@@ -183,8 +183,8 @@ try {
                 ParentProcessId = $snapshot.ParentProcessId
                 ExecutablePath = $snapshot.ExecutablePath
                 CommandLine = $snapshot.CommandLine
-                IsOpenBitFunDescendant = $isOpenBitFunDescendant
-                AttributionStatus = if ($isOpenBitFunDescendant) {
+                IsStarMateDescendant = $isStarMateDescendant
+                AttributionStatus = if ($isStarMateDescendant) {
                     if ($state.RootProcessIds -contains $snapshot.ParentProcessId) { 'direct' } else { 'descendant' }
                 } elseif ($isComplete) { 'not_openbitfun' } else { 'unknown' }
                 LineageComplete = $isComplete
@@ -228,11 +228,11 @@ try {
 
             $lineage = [System.Collections.Generic.List[string]]::new()
             $currentPid = $parentProcessId
-            $isOpenBitFunDescendant = $false
+            $isStarMateDescendant = $false
             $isComplete = $true
             for ($depth = 0; $depth -lt 32 -and $currentPid -gt 0; $depth++) {
                 if ($state.RootProcessIds -contains $currentPid) {
-                    $isOpenBitFunDescendant = $true
+                    $isStarMateDescendant = $true
                     break
                 }
                 if (-not $state.KnownProcesses.Contains($currentPid)) {
@@ -255,8 +255,8 @@ try {
                 ParentProcessId = $parentProcessId
                 ExecutablePath = if ($known) { $known.ExecutablePath } else { $null }
                 CommandLine = if ($known) { $known.CommandLine } else { $null }
-                IsOpenBitFunDescendant = $isOpenBitFunDescendant
-                AttributionStatus = if ($isOpenBitFunDescendant) { 'descendant' } elseif ($isComplete) { 'not_openbitfun' } else { 'unknown' }
+                IsStarMateDescendant = $isStarMateDescendant
+                AttributionStatus = if ($isStarMateDescendant) { 'descendant' } elseif ($isComplete) { 'not_openbitfun' } else { 'unknown' }
                 LineageComplete = $isComplete
                 Lineage = $lineage.ToArray()
             })
@@ -311,7 +311,7 @@ $callbackErrorsArray = @($callbackErrors.ToArray() | Sort-Object ObservedAt)
 $probeFinishedAt = (Get-Date).ToString('o')
 
 $lines = [System.Collections.Generic.List[string]]::new()
-$lines.Add('OpenBitFun process event probe')
+$lines.Add('StarMate process event probe')
 $lines.Add("probe_started_at=$(Format-LogValue $probeStartedAt)")
 $lines.Add("probe_finished_at=$(Format-LogValue $probeFinishedAt)")
 $lines.Add("probe_pid=$probeProcessId")
@@ -353,7 +353,7 @@ if (@($recordsArray).Count -eq 0) {
             "pid=$($record.ProcessId) " +
             "ppid=$($record.ParentProcessId) " +
             "attribution=$($record.AttributionStatus) " +
-            "is_openbitfun=$($record.IsOpenBitFunDescendant) " +
+            "is_openbitfun=$($record.IsStarMateDescendant) " +
             "lineage_complete=$($record.LineageComplete) " +
             "path=$(Format-LogValue $record.ExecutablePath) " +
             "command_line=$(Format-LogValue $record.CommandLine) " +

@@ -5,9 +5,9 @@ This copy retains the upstream MIT / Apache-2.0 license choice.
 
 In Cargo.toml, `rustls-tls` enables
 `reqwest/rustls-no-provider` instead of `reqwest/rustls`.
-OpenBitFun selects ring through its existing TLS provider owner. Upstream's
+StarMate selects ring through its existing TLS provider owner. Upstream's
 Reqwest feature otherwise forces AWS-LC alongside ring, even when the Socket.IO
-client receives OpenBitFun's configured HTTP client. Remove this TLS patch when
+client receives StarMate's configured HTTP client. Remove this TLS patch when
 provider-neutral Rustls is available.
 
 Connection closure is also forwarded through both protocol layers. WebSocket

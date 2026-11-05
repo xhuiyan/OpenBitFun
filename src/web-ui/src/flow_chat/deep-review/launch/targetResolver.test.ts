@@ -133,8 +133,8 @@ describe('Deep Review target resolver', () => {
     mockGitGetDiff.mockResolvedValueOnce('+changed\n');
 
     const result = await resolveSlashCommandReviewTarget(
-      '/storage/Users/currentUser/files/git_code/OpenBitFun/tests/existing.ts',
-      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/OpenBitFun' },
+      '/storage/Users/currentUser/files/git_code/StarMate/tests/existing.ts',
+      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/StarMate' },
     );
 
     expect(result.target.files.map((file) => file.normalizedPath)).toEqual([
@@ -167,12 +167,12 @@ describe('Deep Review target resolver', () => {
     mockSystemCheckPathExists.mockResolvedValueOnce(false);
 
     const result = await resolveSlashCommandReviewTarget(
-      '/storage/Users/currentUser/files/git_code/OpenBitFun/tests/missing.ts',
-      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/OpenBitFun' },
+      '/storage/Users/currentUser/files/git_code/StarMate/tests/missing.ts',
+      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/StarMate' },
     );
 
     expect(mockSystemCheckPathExists).toHaveBeenCalledWith(
-      '/storage/Users/currentUser/files/git_code/OpenBitFun/tests/missing.ts',
+      '/storage/Users/currentUser/files/git_code/StarMate/tests/missing.ts',
     );
     expect(result.target.files.map((file) => file.normalizedPath)).toEqual([
       'tests/missing.ts',
@@ -185,12 +185,12 @@ describe('Deep Review target resolver', () => {
 
   it('keeps the existing unchanged-path limitation distinct from a missing path', async () => {
     const result = await resolveSlashCommandReviewTarget(
-      '/storage/Users/currentUser/files/git_code/OpenBitFun/tests/unchanged.ts',
-      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/OpenBitFun' },
+      '/storage/Users/currentUser/files/git_code/StarMate/tests/unchanged.ts',
+      { workspaceId: 'review-workspace', repositoryPath: '/storage/Users/currentUser/files/git_code/StarMate' },
     );
 
     expect(mockSystemCheckPathExists).toHaveBeenCalledWith(
-      '/storage/Users/currentUser/files/git_code/OpenBitFun/tests/unchanged.ts',
+      '/storage/Users/currentUser/files/git_code/StarMate/tests/unchanged.ts',
     );
     expect(result.target.files.map((file) => file.normalizedPath)).toEqual([
       'tests/unchanged.ts',

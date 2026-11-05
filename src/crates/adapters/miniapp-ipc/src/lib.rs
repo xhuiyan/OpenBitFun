@@ -109,7 +109,7 @@ pub fn endpoint_path(data_dir: &Path) -> PathBuf {
 pub async fn call(endpoint: &Endpoint, method: &str, params: Value) -> Result<Value, String> {
     if endpoint.protocol_version != MINIAPP_PRESENTATION_PROTOCOL {
         return Err(
-            "MiniApp launcher protocol is incompatible; recreate the system shortcut in OpenBitFun"
+            "MiniApp launcher protocol is incompatible; recreate the system shortcut in StarMate"
                 .into(),
         );
     }

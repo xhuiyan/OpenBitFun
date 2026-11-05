@@ -1,10 +1,10 @@
-# OpenBitFun Web UI
+# StarMate Web UI
 
 中文 | [English](./README.md)
 
 ## 概述
 
-本目录是 OpenBitFun 的 **Web UI**（React + TypeScript）。同一份前端代码会被复用在：
+本目录是 StarMate 的 **Web UI**（React + TypeScript）。同一份前端代码会被复用在：
 
 - **Desktop**：通过 **Tauri** 加载运行
 - **Server/Web**：构建为静态资源，由后端提供访问
@@ -19,7 +19,7 @@
 其余文件夹保存为关联目录。复用已有工作区时保留原有的关联目录。
 从表单移除文件夹不会删除磁盘内容。
 
-不添加源文件夹时，填写名称，空项目自动保存到 `~/OpenBitFun/Projects/<项目名称>`。
+不添加源文件夹时，填写名称，空项目自动保存到 `~/StarMate/Projects/<项目名称>`。
 用户目录由目标主机或环境提供，包括正在控制的对端设备、SSH 主机、容器或 WSL 发行版。
 需要时先选择连接，不再选择保存位置；旧主机未提供用户目录时明确报错，不会回退到控制端。
 
@@ -61,7 +61,7 @@ Docker 运行参数和可选 WSL 用户收进“高级设置”；直接连接�
 
 ## 浮动会话
 
-右下角窗口默认以文字模式打开持久保存的 OpenBitFun 控制会话。将主标签栏的会话
+右下角窗口默认以文字模式打开持久保存的 StarMate 控制会话。将主标签栏的会话
 拖入窗口即可继续交流；通过返回主窗口按钮或拖回主标签栏移出。带 Agent 的 MiniApp
 会自动加入对应会话标签。移动会话时保留草稿、附件、执行状态与阅读位置。
 
@@ -232,7 +232,7 @@ VITE_BUILD_TARGET=web pnpm --dir src/web-ui run build
 已保存的模型不会被删除，也可以手动填写服务商支持的模型 ID。
 
 反重力通过账号的 `fetchAvailableModels` 接口获取模型；Codex 使用订阅模型目录，
-保留公共 API 不提供的订阅专属模型。OpenCode 只需选择 Go/Zen 和模型，OpenBitFun
+保留公共 API 不提供的订阅专属模型。OpenCode 只需选择 Go/Zen 和模型，StarMate
 根据账号目录自动匹配 Chat Completions、Responses 或 Messages 协议。
 xAI、Hermes 查询各自的模型接口。Hermes 所有模型（包括 `anthropic/*`）使用
 Chat Completions 和 Nous OAuth Bearer 认证，与上游在原生 Messages 缓存问题解决前的
@@ -254,17 +254,17 @@ API Key 模型继续使用原有请求配置。
 
 Codex、Zcode、Claude Code、OpenCode、Pi、DeepSeek Harness 和 Cursor 分别提供会话自动发现开关，默认关闭。开启后，打开工作区会在服务主机后台为归属于该工作区的所有受支持会话建立轻量索引。
 
-Cursor 读取 CLI 的 `CURSOR_CONFIG_DIR/chats`（否则使用 `XDG_CONFIG_HOME/cursor/chats` 或 `~/.cursor/chats`）以及 Desktop 本地 `Cursor/User/globalStorage/state.vscdb`。自定义 Desktop 用户数据目录可在 OpenBitFun 主机设置 `STARMATE_CURSOR_USER_DATA_DIR`。`CURSOR_DATA_DIR/projects`（缺省 `~/.cursor/projects`）内的 JSONL 是回退来源，可能缺少工具结果；Desktop 也可能在保存时省略文件内容，页面会提示这些缺失。工作区路径只取明确的来源元数据，不从有损目录名反推。Read、Write、StrReplace、Shell 复用现有只读卡片，未匹配的工具保留完整数据并使用通用卡片。
+Cursor 读取 CLI 的 `CURSOR_CONFIG_DIR/chats`（否则使用 `XDG_CONFIG_HOME/cursor/chats` 或 `~/.cursor/chats`）以及 Desktop 本地 `Cursor/User/globalStorage/state.vscdb`。自定义 Desktop 用户数据目录可在 StarMate 主机设置 `STARMATE_CURSOR_USER_DATA_DIR`。`CURSOR_DATA_DIR/projects`（缺省 `~/.cursor/projects`）内的 JSONL 是回退来源，可能缺少工具结果；Desktop 也可能在保存时省略文件内容，页面会提示这些缺失。工作区路径只取明确的来源元数据，不从有损目录名反推。Read、Write、StrReplace、Shell 复用现有只读卡片，未匹配的工具保留完整数据并使用通用卡片。
 Claude Code 读取 `CLAUDE_CONFIG_DIR`（缺省 `~/.claude`），按父消息链保留当前分支与仍存在的压缩前历史，排除子代理会话；工具记录复用现有只读卡片。
 OpenCode 读取 `XDG_DATA_HOME/opencode/opencode.db`（缺省 `~/.local/share/opencode/opencode.db`），包含已提交的 WAL 和待执行的撤销边界。
 Pi 读取 `PI_CODING_AGENT_DIR`（缺省 `~/.pi/agent`）及明确配置的绝对会话目录，兼容 v1/v2/v3 日志并保留当前分支和已保存的上下文编辑。
 DeepSeek Harness 读取 `DSH_HOME/sessions`（缺省 `~/.dsh/sessions`）下的 v0 原始或 Zstandard 日志；自定义 Cordis 持久化根不在发现范围内。未知格式会提供诊断，发现和导入均不启动外部 Agent。
-启动时恢复的工作区也会在首次读取会话列表时发现。会话带来源标签；每次打开来源会话时刷新一次，停留、输入、恢复窗口可见及查看分支都不会自动刷新。首次发送从已显示的版本创建 OpenBitFun 原生分支，使用当前主机配置的模型和输入区选择的权限续聊。旧版自动导入复用原条目和 ID，打开时核对并保留已有本地续聊或编辑；未编辑的副本继续跟随来源，不额外显示第二条。来源后续消息不会自动并入分支；编辑或回退来源历史前须先显式分叉。
-工作区菜单的“会话来源”可筛选 OpenBitFun 或具体外部来源；筛选覆盖全部元数据分页，但工作区列表仍先显示前五个会话，通过原有展开按钮查看更多，切换来源后重新折叠。
-源会话菜单使用“从 OpenBitFun 移除”，保留原应用历史和已有续聊分支，重新扫描不会让条目再次出现。在对应来源的生态兼容设置中，通过“已移除的源会话 → 重新添加”恢复原条目、名称和缓存；分支中查看已移除的来源时也会提供此操作。重新添加不读取正文，打开来源时再刷新。源会话和续聊分支的删除、归档互不影响，来源新消息不会自动取消本地归档；归档会话通过原归档管理页恢复。删除失败保留会话和草稿。Peer 模式禁用来源重新添加，请在会话所属主机操作。
+启动时恢复的工作区也会在首次读取会话列表时发现。会话带来源标签；每次打开来源会话时刷新一次，停留、输入、恢复窗口可见及查看分支都不会自动刷新。首次发送从已显示的版本创建 StarMate 原生分支，使用当前主机配置的模型和输入区选择的权限续聊。旧版自动导入复用原条目和 ID，打开时核对并保留已有本地续聊或编辑；未编辑的副本继续跟随来源，不额外显示第二条。来源后续消息不会自动并入分支；编辑或回退来源历史前须先显式分叉。
+工作区菜单的“会话来源”可筛选 StarMate 或具体外部来源；筛选覆盖全部元数据分页，但工作区列表仍先显示前五个会话，通过原有展开按钮查看更多，切换来源后重新折叠。
+源会话菜单使用“从 StarMate 移除”，保留原应用历史和已有续聊分支，重新扫描不会让条目再次出现。在对应来源的生态兼容设置中，通过“已移除的源会话 → 重新添加”恢复原条目、名称和缓存；分支中查看已移除的来源时也会提供此操作。重新添加不读取正文，打开来源时再刷新。源会话和续聊分支的删除、归档互不影响，来源新消息不会自动取消本地归档；归档会话通过原归档管理页恢复。删除失败保留会话和草稿。Peer 模式禁用来源重新添加，请在会话所属主机操作。
 启动和列表操作不复制历史正文。来源不可读时保留最近缓存；没有缓存则明确报错并保留重试条目。改名、归档和删除状态在重新发现后保留；关闭开关不删除已有条目和副本。既有原生副本保持独立，来源另建跟随视图。来源视图暂不参与工作区正文搜索，响应提供说明；原生分支可参与搜索。
 Peer 的历史流尚不能固定来源版本，因此明确禁用来源视图的跟随与直接续聊；已有原生分支沿用原 Peer 路径。未提供自动分叉的其他客户端直接提交来源会话时会收到明确的只读错误。
-会话名称优先使用原 Agent 保存的标题：Codex 读取名称索引与本地状态数据库，Zcode 使用已保存的任务标题。重新发现会修正旧的首条消息摘要名称并更新来源名称，保留在 OpenBitFun 中手动改过的名称。
+会话名称优先使用原 Agent 保存的标题：Codex 读取名称索引与本地状态数据库，Zcode 使用已保存的任务标题。重新发现会修正旧的首条消息摘要名称并更新来源名称，保留在 StarMate 中手动改过的名称。
 Zcode 读取 `~/.zcode/cli/db/db.sqlite` 保存的主任务，包括已提交的 WAL 数据；隐藏的继承上下文、侧聊和子任务不作为额外会话导入。
 来源数据保持不变；附件保留名称引用，不复制附件文件。发现读取服务主机的本地历史，SSH 工作区暂不支持自动发现。旧主机缺少该能力时开关只读；Zcode 运行时、配置与插件兼容按各自真实状态显示。
 

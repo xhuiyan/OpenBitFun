@@ -41,7 +41,7 @@ fn session_store_directory() -> Result<PathBuf> {
     drop(override_path);
     super::product_home_dir()
         .map(|path| path.join("relay-v1.0.0"))
-        .ok_or_else(|| anyhow!("cannot determine OpenBitFun home directory"))
+        .ok_or_else(|| anyhow!("cannot determine StarMate home directory"))
 }
 
 /// Resolve the persistent session file path.

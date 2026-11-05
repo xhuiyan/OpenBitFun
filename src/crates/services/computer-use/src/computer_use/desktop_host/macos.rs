@@ -157,9 +157,9 @@ pub(super) fn require_ax_trust_for(retry_hint: &str) -> StarMateResult<()> {
             .map_err(StarMateError::tool);
     }
     Err(StarMateError::tool(format!(
-        "[PERMISSION_DENIED] macOS Accessibility permission not granted to OpenBitFun. \
+        "[PERMISSION_DENIED] macOS Accessibility permission not granted to StarMate. \
          Use Computer Use permissions to request access, or open System Settings → \
-         Privacy & Security → Accessibility → enable OpenBitFun. {}",
+         Privacy & Security → Accessibility → enable StarMate. {}",
         retry_hint
     )))
 }

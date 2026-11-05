@@ -14,7 +14,7 @@ struct StartupBrandReveal: View {
                 let p = min(1, max(0, timeline.date.timeIntervalSince(started) / (MobileDesignMotion.startupBrand / 1000)))
                 let scale = min(1, max(0.1, (geometry.size.width - 32) / 280))
                 ZStack {
-                    OpenBitFunTheme.page
+                    StarMateTheme.page
                     stage(progress: p)
                         .frame(width: 280, height: 240)
                         .scaleEffect(scale)
@@ -27,7 +27,7 @@ struct StartupBrandReveal: View {
         .contentShape(Rectangle())
         .onTapGesture { }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("OpenBitFun")
+        .accessibilityLabel("StarMate")
         .accessibilityIdentifier("startup.brand")
         .task {
             guard !reduceMotion else { onFinished(); return }
@@ -65,7 +65,7 @@ struct StartupBrandReveal: View {
                     glyphContext.rotate(by: .degrees((i % 2 == 0 ? -1 : 1) * bounce * 6))
                     let glyph = Text(String(letters[i]))
                         .font(.system(size: MobileDesignTypography.brandWordmark.size, weight: .medium, design: .rounded))
-                        .foregroundColor(OpenBitFunTheme.ink)
+                        .foregroundColor(StarMateTheme.ink)
                     glyphContext.draw(glyph, at: .zero)
                 }
                 let dot = dotPose(t: t, settle: settle)
@@ -133,7 +133,7 @@ struct ColdStartHomeTransition: View {
                 let y = centerY + (targetY - centerY) * travel - sin(travel * .pi) * (target == nil ? 0 : 9)
                 let size = 56 + ((target?.width ?? 56) - 56) * travel
                 ZStack {
-                    OpenBitFunTheme.page
+                    StarMateTheme.page
                     WelcomeBrandFlowView(sweep: true)
                         .frame(width: size, height: size)
                         .position(x: geometry.size.width / 2 + ((target?.midX ?? geometry.size.width / 2) - geometry.size.width / 2) * travel, y: y)
@@ -197,21 +197,21 @@ struct WelcomeBrandFlowView: View {
                         let progress = timeline.date.timeIntervalSince1970.truncatingRemainder(dividingBy: 5)/5
                         let shift = reduceMotion ? 0 : (min(1, progress/0.75)*2-1)*256
                         let stops: [Gradient.Stop] = [
-                            .init(color: OpenBitFunTheme.ink.opacity(0.16), location: 0),
-                            .init(color: OpenBitFunTheme.ink.opacity(0.25), location: 0.46),
-                            .init(color: OpenBitFunTheme.ink, location: 0.55),
-                            .init(color: OpenBitFunTheme.ink.opacity(0.25), location: 0.65),
-                            .init(color: OpenBitFunTheme.ink.opacity(0.16), location: 1)
+                            .init(color: StarMateTheme.ink.opacity(0.16), location: 0),
+                            .init(color: StarMateTheme.ink.opacity(0.25), location: 0.46),
+                            .init(color: StarMateTheme.ink, location: 0.55),
+                            .init(color: StarMateTheme.ink.opacity(0.25), location: 0.65),
+                            .init(color: StarMateTheme.ink.opacity(0.16), location: 1)
                         ]
                         context.stroke(contour.0, with: .linearGradient(Gradient(stops: stops),
                             startPoint: CGPoint(x: shift, y: shift), endPoint: CGPoint(x: shift+256, y: shift+256)), lineWidth: 1.45)
                         continue
                     }
-                    context.stroke(contour.0,with: .color(OpenBitFunTheme.ink.opacity(0.25)),lineWidth: 1)
+                    context.stroke(contour.0,with: .color(StarMateTheme.ink.opacity(0.25)),lineWidth: 1)
                     if !reduceMotion {
                         for (layer,length) in [0.34,0.26,0.18].enumerated() {
                             let total=contour.1
-                            context.stroke(contour.0,with: .color(OpenBitFunTheme.ink.opacity([0.12,0.14,0.36][layer])),
+                            context.stroke(contour.0,with: .color(StarMateTheme.ink.opacity([0.12,0.14,0.36][layer])),
                                 style: StrokeStyle(lineWidth: 1,dash: [total*length/2,total*(1-length),total*length/2,0],dashPhase: -total*(phase+Double(index)*0.03)))
                         }
                     }

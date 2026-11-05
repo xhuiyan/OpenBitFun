@@ -2260,16 +2260,16 @@ fn external_primary_route_follows_the_session_execution_worktree() {
 fn hidden_control_agent_resolves_as_a_session_primary() {
     let registry = AgentRegistry::new();
     let binding = registry
-        .resolve_primary_agent_for_turn("OpenBitFun", None, false, None)
+        .resolve_primary_agent_for_turn("StarMate", None, false, None)
         .expect("the persistent control conversation must be admitted");
-    assert_eq!(binding.runtime_agent_key, "OpenBitFun");
+    assert_eq!(binding.runtime_agent_key, "StarMate");
     assert_eq!(
         binding.route_owner,
         starmate_core_types::SessionAgentRouteOwner::Local
     );
     assert!(registry
         .resolve_primary_agent_for_turn(
-            "OpenBitFun",
+            "StarMate",
             None,
             false,
             Some(starmate_core_types::SessionAgentRouteOwner::External)

@@ -1,4 +1,4 @@
-//! Desktop cards: small persistent windows outside the main OpenBitFun window.
+//! Desktop cards: small persistent windows outside the main StarMate window.
 //!
 //! Core owns the DesktopCard tool contract. This host owns the card store,
 //! one native window per visible card, data-source refresh, countdown

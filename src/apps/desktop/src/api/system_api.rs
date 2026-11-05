@@ -74,7 +74,7 @@ async fn updater_endpoints_by_policy() -> Vec<tauri::Url> {
         fetch_updater_manifest(&client, STARMATE_UPDATER_ENDPOINT, &platform),
     );
     let Some(github_manifest) = github_manifest else {
-        log::info!("GitHub updater metadata is unavailable; trying the OpenBitFun mirror first");
+        log::info!("GitHub updater metadata is unavailable; trying the StarMate mirror first");
         return mirror_first_endpoints();
     };
     let github_speed = probe_endpoint_throughput(&client, &github_manifest.package_url).await;
@@ -1039,7 +1039,7 @@ fn should_use_configured_notification_app_id() -> bool {
     use std::path::MAIN_SEPARATOR;
 
     // Match the Tauri plugin's development behavior. A Cargo-built executable
-    // has no installed Windows shortcut that registers OpenBitFun's AppUserModelID.
+    // has no installed Windows shortcut that registers StarMate's AppUserModelID.
     let Ok(executable) = tauri::utils::platform::current_exe() else {
         return false;
     };

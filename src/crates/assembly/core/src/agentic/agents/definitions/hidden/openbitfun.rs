@@ -9,13 +9,13 @@ impl Agent for StarMateAgent {
         self
     }
     fn id(&self) -> &str {
-        "OpenBitFun"
+        "StarMate"
     }
     fn name(&self) -> &str {
-        "OpenBitFun"
+        "StarMate"
     }
     fn description(&self) -> &str {
-        "The persistent OpenBitFun product-control assistant"
+        "The persistent StarMate product-control assistant"
     }
     fn prompt_template_name(&self, _model_name: Option<&str>) -> &str {
         "openbitfun_agent"

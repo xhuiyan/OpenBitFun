@@ -42,7 +42,7 @@ const PLACEHOLDER_FILE_REFERENCES: &str = "{FILE_REFERENCES}";
 
 const COMPUTER_USE_GUIDANCE: &str = r#"# Choose the interaction surface
 
-For an OpenBitFun MiniApp, prefer `MiniAppBrowser`: load its spec with `GetToolSpec` if deferred, discover the app, and open its current instance. Use declared bridge state/actions when available; otherwise inspect its DOM and use its supported element/input controls. Missing semantic actions alone do not justify desktop automation. Use `ControlHub` for ordinary web pages, and `ComputerUse` for native desktop apps, browser chrome and OS dialogs. Use only tools available to this session. Consider authorized ComputerUse for a MiniApp only after establishing a specific MiniAppBrowser capability gap; explain that gap and preserve the user's target and interaction constraints. An unavailable remote surface must be reported without falling back to another device's desktop.
+For an StarMate MiniApp, prefer `MiniAppBrowser`: load its spec with `GetToolSpec` if deferred, discover the app, and open its current instance. Use declared bridge state/actions when available; otherwise inspect its DOM and use its supported element/input controls. Missing semantic actions alone do not justify desktop automation. Use `ControlHub` for ordinary web pages, and `ComputerUse` for native desktop apps, browser chrome and OS dialogs. Use only tools available to this session. Consider authorized ComputerUse for a MiniApp only after establishing a specific MiniAppBrowser capability gap; explain that gap and preserve the user's target and interaction constraints. An unavailable remote surface must be reported without falling back to another device's desktop.
 
 # Browser work
 
@@ -557,7 +557,7 @@ For instructions on locating and reading the transcripts, read: `{}`
     /// Supported placeholders:
     /// - `{PERSONA}` - Workspace persona files (BOOTSTRAP.md, SOUL.md, USER.md, IDENTITY.md)
     /// - `{LANGUAGE_PREFERENCE}` - User language preference (read from global config)
-    /// - `{MEMORY_ROOT}` - OpenBitFun memory workspace root, used by internal memory agents
+    /// - `{MEMORY_ROOT}` - StarMate memory workspace root, used by internal memory agents
     /// - `{READ_TERMINAL}` - Local user terminal transcript guidance
     /// - `{COMPUTER_USE_GUIDANCE}` - Shared native desktop interaction guidance
     /// - `{FILE_REFERENCES}` - Shared file and image reference guidance
@@ -812,7 +812,7 @@ mod tests {
             .expect("runtime context should build");
 
         assert!(runtime_context.contains("## Local Client"));
-        assert!(runtime_context.contains("Local OpenBitFun client OS:"));
+        assert!(runtime_context.contains("Local StarMate client OS:"));
         assert!(runtime_context.contains("Computer use / keyboard"));
         assert!(!runtime_context.contains("## Workspace Execution"));
         assert!(!runtime_context.contains("## ExecCommand Shell"));
@@ -871,7 +871,7 @@ mod tests {
             .build_prompt_from_template("{COMPUTER_USE_GUIDANCE}")
             .await
             .expect("assembled guidance");
-        assert!(prompt.contains("For an OpenBitFun MiniApp, prefer `MiniAppBrowser`"));
+        assert!(prompt.contains("For an StarMate MiniApp, prefer `MiniAppBrowser`"));
         assert!(prompt.contains("Missing semantic actions alone do not justify desktop automation"));
         assert!(prompt.contains("Use `ControlHub` for ordinary web pages"));
         assert!(prompt.contains("without falling back to another device's desktop"));
@@ -907,8 +907,8 @@ mod tests {
         assert!(runtime_context.contains("## Workspace Execution"));
         assert!(runtime_context.contains("## ExecCommand Shell"));
         assert!(runtime_context.contains("## Local Client"));
-        assert!(runtime_context.contains("Local OpenBitFun client OS:"));
-        assert!(runtime_context.contains("Computer use and UI automation operate on the local OpenBitFun desktop, even when workspace file and shell tools target a remote host."));
+        assert!(runtime_context.contains("Local StarMate client OS:"));
+        assert!(runtime_context.contains("Computer use and UI automation operate on the local StarMate desktop, even when workspace file and shell tools target a remote host."));
         assert!(runtime_context.contains("ExecCommand uses the remote user's default POSIX shell"));
         assert!(runtime_context.contains("This session operates on the remote SSH host only"));
     }
@@ -917,7 +917,7 @@ mod tests {
     async fn runtime_context_omits_local_client_os_for_remote_with_only_control_hub() {
         // Simulates a remote workspace where ComputerUse is disabled (filtered
         // out by is_available_in_context) but ControlHub remains available.
-        // The agent must NOT see "Local OpenBitFun client OS" because that signal
+        // The agent must NOT see "Local StarMate client OS" because that signal
         // causes it to mistake the client OS for the workspace execution OS.
         let context = PromptBuilderContext::new("/workspace/project", None, None)
             .with_runtime_context_needs(RuntimeContextNeeds::from_tool_names([
@@ -942,7 +942,7 @@ mod tests {
             .contains("Workspace file and shell tools operate on remote SSH connection"));
         assert!(runtime_context.contains("## ExecCommand Shell"));
         assert!(!runtime_context.contains("## Local Client"));
-        assert!(!runtime_context.contains("Local OpenBitFun client OS:"));
+        assert!(!runtime_context.contains("Local StarMate client OS:"));
     }
 
     #[tokio::test]
@@ -1135,7 +1135,7 @@ mod tests {
         let execution_target = SessionExecutionTarget {
             kind: SessionExecutionTargetKind::ManagedWorktree,
             worktree_id: Some("wt-1".to_string()),
-            root_path: "/managed/OpenBitFun-wt-1".to_string(),
+            root_path: "/managed/StarMate-wt-1".to_string(),
             base_ref: Some("HEAD".to_string()),
             base_commit: Some("0123456789abcdef".to_string()),
             branch: None,
@@ -1143,9 +1143,9 @@ mod tests {
         };
         let workspace = WorkspaceBinding::new(
             Some("workspace-1".to_string()),
-            PathBuf::from("/managed/OpenBitFun-wt-1"),
+            PathBuf::from("/managed/StarMate-wt-1"),
         )
-        .with_project_root_path(PathBuf::from("/projects/OpenBitFun"))
+        .with_project_root_path(PathBuf::from("/projects/StarMate"))
         .with_execution_target(Some(execution_target));
         let context = build_prompt_context_for_workspace(
             &workspace,
@@ -1164,7 +1164,7 @@ mod tests {
 
         assert!(workspace_context.contains("Managed Git worktree created for this session"));
         assert!(workspace_context.contains("Owning project root"));
-        assert!(workspace_context.contains("/projects/OpenBitFun"));
+        assert!(workspace_context.contains("/projects/StarMate"));
         assert!(workspace_context.contains("Worktree ID: wt-1"));
         assert!(workspace_context.contains("Worktree checkout: detached HEAD"));
         assert!(workspace_context.contains("Worktree base commit: 0123456789abcdef"));

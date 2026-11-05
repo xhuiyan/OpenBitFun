@@ -101,7 +101,7 @@ pub(crate) async fn claim_host(
                 )
                 .await
                 {
-                    eprintln!("An existing OpenBitFun host in the {channel:?} channel accepted this launch; exiting the secondary process");
+                    eprintln!("An existing StarMate host in the {channel:?} channel accepted this launch; exiting the secondary process");
                     return Ok(None);
                 }
             }

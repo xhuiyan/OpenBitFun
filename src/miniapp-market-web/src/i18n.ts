@@ -90,12 +90,12 @@ const messages = {
     authReturnToApp: 'Return to StarMate app',
     authSharedIdentity: 'Use the same StarMate account for the marketplaces and remote device control.',
     openbitfunHome: 'StarMate home',
-    getOpenBitFunTitle: 'New to StarMate?',
-    getOpenBitFunCatalogNote:
+    getStarMateTitle: 'New to StarMate?',
+    getStarMateCatalogNote:
       'MiniApps run inside the StarMate desktop client. Download it once, then install anything from this market.',
-    getOpenBitFunListingNote:
+    getStarMateListingNote:
       'This MiniApp runs inside the StarMate desktop client. Download it, then open the .bfminiapp package.',
-    getOpenBitFunAction: 'Download StarMate',
+    getStarMateAction: 'Download StarMate',
     navigationLabel: 'Marketplace navigation',
     language: 'Language',
     changeLanguage: 'Change language',
@@ -135,7 +135,7 @@ const messages = {
     tagsPlaceholder: 'git, focus, data',
     descriptionLabel: 'Description',
     releaseSection: 'Release',
-    minOpenBitFunVersionLabel: 'Minimum StarMate version',
+    minStarMateVersionLabel: 'Minimum StarMate version',
     publicRepositoryOptional: 'Public repository (optional)',
     licenseTypeLabel: 'License type',
     spdxExpression: 'SPDX expression',
@@ -151,7 +151,7 @@ const messages = {
     submitterLabel: 'Submitted by',
     submittedAtLabel: 'Submitted at',
     releaseLabel: 'Release',
-    minimumOpenBitFunLabel: 'Minimum StarMate',
+    minimumStarMateLabel: 'Minimum StarMate',
     notDeclared: 'Not declared',
     publicRepository: 'Public repository',
     submissionScreenshot: 'Submitted marketplace image',
@@ -266,12 +266,12 @@ const messages = {
     authReturnToApp: '返回星伴应用',
     authSharedIdentity: '市场与远程设备控制共用你的星伴账号。',
     openbitfunHome: '星伴官网',
-    getOpenBitFunTitle: '没有星伴？',
-    getOpenBitFunCatalogNote:
+    getStarMateTitle: '没有星伴？',
+    getStarMateCatalogNote:
       'MiniApp 需要在星伴客户端里运行。下载客户端后，就能安装市场里的任意 MiniApp。',
-    getOpenBitFunListingNote:
+    getStarMateListingNote:
       '这个 MiniApp 需要在星伴客户端里运行。下载客户端后，打开 .bfminiapp 安装包即可。',
-    getOpenBitFunAction: '下载星伴客户端',
+    getStarMateAction: '下载星伴客户端',
     navigationLabel: '市场导航',
     language: '语言',
     changeLanguage: '切换语言',
@@ -310,7 +310,7 @@ const messages = {
     tagsPlaceholder: '开发, 效率, 数据',
     descriptionLabel: '描述',
     releaseSection: '版本信息',
-    minOpenBitFunVersionLabel: '最低星伴版本',
+    minStarMateVersionLabel: '最低星伴版本',
     publicRepositoryOptional: '公开源码仓库（可选）',
     licenseTypeLabel: '许可证类型',
     spdxExpression: 'SPDX 表达式',
@@ -326,7 +326,7 @@ const messages = {
     submitterLabel: '提交人',
     submittedAtLabel: '提交时间',
     releaseLabel: '市场版本',
-    minimumOpenBitFunLabel: '最低星伴',
+    minimumStarMateLabel: '最低星伴',
     notDeclared: '未声明',
     publicRepository: '公开源码仓库',
     submissionScreenshot: '投稿展示图',
@@ -441,12 +441,12 @@ const messages = {
     authReturnToApp: '返回星伴應用程式',
     authSharedIdentity: '市場與遠端裝置控制共用你的星伴帳號。',
     openbitfunHome: '星伴官網',
-    getOpenBitFunTitle: '還沒有星伴？',
-    getOpenBitFunCatalogNote:
+    getStarMateTitle: '還沒有星伴？',
+    getStarMateCatalogNote:
       'MiniApp 需要在星伴客戶端裡執行。下載客戶端後，就能安裝市場裡的任意 MiniApp。',
-    getOpenBitFunListingNote:
+    getStarMateListingNote:
       '這個 MiniApp 需要在星伴客戶端裡執行。下載客戶端後，開啟 .bfminiapp 安裝包即可。',
-    getOpenBitFunAction: '下載星伴客戶端',
+    getStarMateAction: '下載星伴客戶端',
     navigationLabel: '市場導覽',
     language: '語言',
     changeLanguage: '切換語言',
@@ -485,7 +485,7 @@ const messages = {
     tagsPlaceholder: '開發, 效率, 資料',
     descriptionLabel: '描述',
     releaseSection: '版本資訊',
-    minOpenBitFunVersionLabel: '最低星伴版本',
+    minStarMateVersionLabel: '最低星伴版本',
     publicRepositoryOptional: '公開原始碼倉庫（可選）',
     licenseTypeLabel: '授權類型',
     spdxExpression: 'SPDX 表達式',
@@ -501,7 +501,7 @@ const messages = {
     submitterLabel: '投稿人',
     submittedAtLabel: '投稿時間',
     releaseLabel: '市場版本',
-    minimumOpenBitFunLabel: '最低星伴',
+    minimumStarMateLabel: '最低星伴',
     notDeclared: '未宣告',
     publicRepository: '公開原始碼倉庫',
     submissionScreenshot: '投稿展示圖',

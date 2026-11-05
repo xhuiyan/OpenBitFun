@@ -92,7 +92,7 @@ impl CronService {
 
         if !service.is_scheduling_owner() {
             warn!(
-                "Another OpenBitFun instance owns scheduled jobs; this instance runs as standby and only reads them: lease={}",
+                "Another StarMate instance owns scheduled jobs; this instance runs as standby and only reads them: lease={}",
                 service.scheduling_lease.path().display()
             );
         }
@@ -979,7 +979,7 @@ impl SchedulingLease {
             return Ok(());
         }
         Err(StarMateError::service(format!(
-            "Scheduled jobs are managed by the other running OpenBitFun instance (lease: {}); {} was refused here instead of overwriting its state",
+            "Scheduled jobs are managed by the other running StarMate instance (lease: {}); {} was refused here instead of overwriting its state",
             self.path.display(),
             operation
         )))

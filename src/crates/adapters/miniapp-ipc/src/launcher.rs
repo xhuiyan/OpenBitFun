@@ -43,7 +43,7 @@ pub fn read_record(path: &Path) -> Result<LaunchRecord, String> {
         || (record.protocol_version == 1 && !record.host_channel.is_default())
         || uuid::Uuid::parse_str(&record.launch_id).is_err()
     {
-        return Err("Unsupported MiniApp launcher; recreate it in OpenBitFun".into());
+        return Err("Unsupported MiniApp launcher; recreate it in StarMate".into());
     }
     Ok(record)
 }
@@ -88,7 +88,7 @@ mod tests {
             user_root: root.to_path_buf(),
             host_channel: Default::default(),
             product_home: None,
-            host_executable: root.join("OpenBitFun"),
+            host_executable: root.join("StarMate"),
             name: "Notes".into(),
             extra: Default::default(),
         }

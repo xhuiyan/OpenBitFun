@@ -1,4 +1,4 @@
-# OpenBitFun Android
+# StarMate Android
 
 Android application entrypoint over the Kotlin Multiplatform shared core.
 

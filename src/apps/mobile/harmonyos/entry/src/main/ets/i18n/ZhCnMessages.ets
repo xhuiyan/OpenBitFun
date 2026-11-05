@@ -228,7 +228,7 @@ export const ZH_CN_MESSAGES: [string, string][] = [
   ['sidebar.searchPlaceholder', '搜索对话'],
   ['sidebar.noSearchResult', '没有匹配的会话'],
   ['sidebar.signedOutNewChat', '新聊天'],
-  ['sidebar.signInOpenBitFunAccount', '使用邮箱或 GitHub 登录'],
+  ['sidebar.signInStarMateAccount', '使用邮箱或 GitHub 登录'],
   ['sidebar.collapse', '收起侧边栏'],
   ['sidebar.restore', '展开侧边栏'],
 

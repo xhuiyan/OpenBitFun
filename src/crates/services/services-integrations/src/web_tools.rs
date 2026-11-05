@@ -24,7 +24,7 @@ use std::collections::HashSet;
 use std::time::Duration;
 use thiserror::Error;
 
-const USER_AGENT_VALUE: &str = "OpenBitFun/1.0";
+const USER_AGENT_VALUE: &str = "StarMate/1.0";
 const WEB_FETCH_TIMEOUT_SECS: u64 = 30;
 const EXA_URL: &str = "https://mcp.exa.ai/mcp";
 const EXA_TIMEOUT_SECS: u64 = 60;
@@ -1015,10 +1015,10 @@ mod tests {
                 max_results: 5,
             })
             .await
-            .expect("OpenBitFun HTTP fixture search should succeed");
+            .expect("StarMate HTTP fixture search should succeed");
         let request = request_task
             .await
-            .expect("OpenBitFun HTTP fixture request task");
+            .expect("StarMate HTTP fixture request task");
         let request_lower = request.to_ascii_lowercase();
 
         assert!(request_lower.contains("accept: application/vnd.openbitfun.web-search.v1+json"));
@@ -1087,7 +1087,7 @@ mod tests {
             .expect_err("protocol error envelope should be mapped");
         request_task
             .await
-            .expect("OpenBitFun error fixture request task");
+            .expect("StarMate error fixture request task");
 
         assert_eq!(error.kind, WebSearchErrorKind::RateLimited);
         assert_eq!(error.message, "Slow down");

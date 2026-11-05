@@ -120,7 +120,7 @@ describe('useChatInputModeSync', () => {
     expect(container.textContent).toBe('Ultimate');
   });
 
-  it.each(['acp:codex', 'OpenBitFun', 'PlannerPlus'])('retains the saved %s binding outside the catalog', async mode => {
+  it.each(['acp:codex', 'StarMate', 'PlannerPlus'])('retains the saved %s binding outside the catalog', async mode => {
     store.state.sessions.set('saved', session('saved', mode));
     await render({ sessionId: 'saved', available: new Set() });
     expect(container.textContent).toBe(mode);

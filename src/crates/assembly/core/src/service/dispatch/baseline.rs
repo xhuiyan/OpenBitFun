@@ -25,7 +25,7 @@ use super::{
 /// Number of hex characters used to name a target's shared clone.
 const REPO_KEY_CHARS: usize = 16;
 /// Commit written when the user asked to carry uncommitted work along.
-const UNCOMMITTED_COMMIT_MESSAGE: &str = "OpenBitFun dispatch: uncommitted baseline changes";
+const UNCOMMITTED_COMMIT_MESSAGE: &str = "StarMate dispatch: uncommitted baseline changes";
 
 #[derive(Debug, Clone)]
 pub(super) struct PreparedBaseline {
@@ -390,7 +390,7 @@ async fn commit_uncommitted_changes(worktree_path: &str) -> Result<()> {
             "-c",
             "commit.gpgsign=false",
             "-c",
-            "user.name=OpenBitFun Dispatch",
+            "user.name=StarMate Dispatch",
             "-c",
             "user.email=dispatch@openbitfun.local",
             "commit",
@@ -604,8 +604,8 @@ mod tests {
 
     #[test]
     fn project_labels_come_from_the_workspace_basename() {
-        assert_eq!(project_label("/Users/me/code/OpenBitFun"), "OpenBitFun");
-        assert_eq!(project_label("/Users/me/code/OpenBitFun/"), "OpenBitFun");
+        assert_eq!(project_label("/Users/me/code/StarMate"), "StarMate");
+        assert_eq!(project_label("/Users/me/code/StarMate/"), "StarMate");
         // Nothing recognizable to use; the target falls back on its own side.
         assert_eq!(project_label("/"), "");
     }
@@ -646,7 +646,7 @@ mod tests {
         let store =
             OutboundDispatchStore::new_in_root_for_tests(temp.path().join("dispatch-outbound"));
         let baseline = PreparedBaseline {
-            project_label: "OpenBitFun".to_string(),
+            project_label: "StarMate".to_string(),
             delivery: DispatchWorkspaceDelivery {
                 source_workspace_path: repository.to_string_lossy().to_string(),
                 project_workspace_path: repository.to_string_lossy().to_string(),

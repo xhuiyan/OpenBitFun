@@ -1,7 +1,7 @@
 {
   "name": "dsh-openbitfun",
   "version": "0.1.0",
-  "description": "DeepSeek Harness plugin bundle exposing the OpenBitFun Agent SDK Host as dsh tools",
+  "description": "DeepSeek Harness plugin bundle exposing the StarMate Agent SDK Host as dsh tools",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

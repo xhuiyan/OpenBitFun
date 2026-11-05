@@ -2,7 +2,7 @@
 //!
 //! These DTOs deliberately describe the import boundary only. Ecosystem
 //! adapters own their source formats; Assembly owns conversion into the
-//! OpenBitFun Session storage model.
+//! StarMate Session storage model.
 
 use serde::{Deserialize, Serialize};
 
@@ -76,7 +76,7 @@ pub struct ExternalSessionCandidate {
     pub target_workspace_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub target_workspace_name: Option<String>,
-    /// Existing OpenBitFun session created from this source rollout, if any.
+    /// Existing StarMate session created from this source rollout, if any.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub imported_session_id: Option<String>,
 }

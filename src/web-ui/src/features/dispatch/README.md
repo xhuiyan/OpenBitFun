@@ -60,7 +60,7 @@ dispatch.
     inside the managed baseline. The user's checkout is never changed, and
     ignored runtime inputs are not sent to the target.
 11. SSH submission automatically installs or upgrades a compatible signed
-    prebuilt `openbitfun` release when the target runner is missing or incompatible.
+    prebuilt `starmate` release when the target runner is missing or incompatible.
     The resolved version, URL, and SHA-256 remain visible, integrity checks stay
     mandatory, installation has a bounded deadline, and submission probes the
     installed runner again before provisioning. Each `cli-install` audit
@@ -70,7 +70,7 @@ dispatch.
     and cached with the transcript, so the automatic action remains visible
     after replay or controller restart.
 12. The signed prebuilt release is the only way a target gets a runner. The
-    controller never compiles OpenBitFun on someone else's machine, so a target no
+    controller never compiles StarMate on someone else's machine, so a target no
     published binary fits is reported as unusable rather than offered a build.
 13. Account devices use encrypted request/response RPC and distinct
    `dispatch_target_*` commands. They never attach Peer Device Mode and an

@@ -119,7 +119,7 @@ impl Tool for PageManageTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Manage OpenBitFun Pages on the executing host's account relay. Requires OpenBitFun account login.
+        Ok(r#"Manage StarMate Pages on the executing host's account relay. Requires StarMate account login.
 
 Actions:
 - list: list published Pages by default, with name/title, slug, absolute url, visibility, updated_at (Unix seconds), generation and deployed_version_id. published_only=false also includes saved/unpublished Pages.
@@ -139,7 +139,7 @@ When the user requests an operation, call it directly. The permission system han
     }
 
     fn short_description(&self) -> String {
-        "List, publish, update, delete, and manage access to OpenBitFun Pages.".into()
+        "List, publish, update, delete, and manage access to StarMate Pages.".into()
     }
 
     fn input_schema(&self) -> Value {
@@ -279,7 +279,7 @@ When the user requests an operation, call it directly. The permission system han
         let request = parse_request(input, Some(context)).map_err(StarMateError::tool)?;
         if !page_account_available().await {
             return Err(StarMateError::tool(
-                "PageManage requires a logged-in OpenBitFun account",
+                "PageManage requires a logged-in StarMate account",
             ));
         }
         let result = invoke_page_manage(request)

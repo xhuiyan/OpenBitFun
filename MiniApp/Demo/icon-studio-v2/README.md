@@ -13,7 +13,7 @@ python3 MiniApp/Demo/icon-studio-v2/source/package.py
 ```
 
 - 独立版本：打开 `output/miniapps/icon-studio-v2.0.2.html`，无需启动服务。
-- Mini App：在 OpenBitFun 的「导入小应用」菜单中导入
+- Mini App：在 StarMate 的「导入小应用」菜单中导入
   `output/miniapps/icon-studio-v2.0.2.bfminiapp`，审阅权限后确认。
 - 也可「从文件夹导入」本目录（含 `meta.json` 的目录）。
 
@@ -90,6 +90,6 @@ pnpm run theme:color-audit:all
 
 An offline vector icon editor with raster silhouette tracing, editable compound paths and Bézier handles,
 pen/freehand/geometric drawing, undo/redo, half-pixel snapping and actual-size previews.
-Build the standalone HTML and `.bfminiapp` package with the commands above, then use OpenBitFun's importer.
+Build the standalone HTML and `.bfminiapp` package with the commands above, then use StarMate's importer.
 Export clean `currentColor` SVGs or round-trip the editable `.icon.json` project.
 Raster tracing preserves silhouettes and holes; centerline reconstruction and semantic icon recognition are not provided.

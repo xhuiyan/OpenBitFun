@@ -3,7 +3,7 @@ name = "starmate-installer"
 version = "1.0.8"
 authors = ["StarMate Team"]
 edition = "2021"
-description = "OpenBitFun Custom Installer - Modern branded installation experience"
+description = "StarMate Custom Installer - Modern branded installation experience"
 
 [lib]
 name = "starmate_installer_lib"

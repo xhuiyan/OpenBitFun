@@ -4,7 +4,7 @@ version.workspace = true
 authors.workspace = true
 edition.workspace = true
 publish = false
-description = "Private pre-integration IPC seam for a shared OpenBitFun Agent Runtime"
+description = "Private pre-integration IPC seam for a shared StarMate Agent Runtime"
 
 [lib]
 name = "starmate_agent_runtime_ipc"

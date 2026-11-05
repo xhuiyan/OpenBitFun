@@ -1,5 +1,5 @@
 [Unit]
-Description=Back up OpenBitFun Skin market data
+Description=Back up StarMate Skin market data
 After=docker.service
 
 [Service]

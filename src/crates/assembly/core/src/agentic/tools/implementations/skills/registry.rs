@@ -2323,7 +2323,7 @@ mod opencode_configured_skill_tests {
             level: SkillLocation::Project,
             slot: "openbitfun",
             source_id: "openbitfun",
-            source_label: "OpenBitFun",
+            source_label: "StarMate",
             priority: 0,
             is_builtin: false,
         })

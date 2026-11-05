@@ -327,7 +327,7 @@ test('a failed skill read is classified by whether the host answered', () => {
   assert.equal(Policy.probeFailure(false, ''),
     CommandPaletteProbeFailure.Unreachable, 'an empty transport error is still a transport error');
   assert.equal(Policy.probeFailure(true, "command 'get_mode_skill_configs' is unknown to this " +
-    'OpenBitFun desktop peer host version; upgrade the peer host or check the command name'),
+    'StarMate desktop peer host version; upgrade the peer host or check the command name'),
   CommandPaletteProbeFailure.VersionGap,
   "the host's own version-gap sentence is the one thing that licenses the badge");
   assert.equal(Policy.probeFailure(true, 'Command not found: get_mode_skill_configs'),

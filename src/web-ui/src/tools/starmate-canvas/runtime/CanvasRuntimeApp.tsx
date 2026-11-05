@@ -133,7 +133,7 @@ function reportRuntimeError(error: unknown): void {
   postRuntimeError(error);
 }
 
-export function installOpenBitFunCanvasRuntimeApp(): void {
+export function installStarMateCanvasRuntimeApp(): void {
   rootElement = document.getElementById('starmate-canvas-root');
   const target = runtimeWindow();
   const previousRuntime = target.StarMateCanvasRuntime || {};

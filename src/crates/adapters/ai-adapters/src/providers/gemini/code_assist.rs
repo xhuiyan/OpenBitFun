@@ -51,7 +51,7 @@ pub(crate) fn apply_headers(client: &AIClient, builder: RequestBuilder) -> Reque
         if has_custom_user_agent {
             builder
         } else {
-            builder.header("User-Agent", "OpenBitFun-CodeAssist/1.0")
+            builder.header("User-Agent", "StarMate-CodeAssist/1.0")
         }
     })
 }
@@ -172,7 +172,7 @@ fn strip_thinking_tier(model: &str) -> (&str, Option<&str>) {
 }
 
 /// Resolves current Antigravity wire ids and keeps old Gemini CLI preview ids
-/// working for model configurations persisted by earlier OpenBitFun releases.
+/// working for model configurations persisted by earlier StarMate releases.
 fn resolve_antigravity_model(
     configured_model: &str,
     request: &serde_json::Value,

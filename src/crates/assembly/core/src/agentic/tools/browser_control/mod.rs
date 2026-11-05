@@ -1,4 +1,4 @@
-//! Browser automation shared by external CDP browsers and OpenBitFun's built-in
+//! Browser automation shared by external CDP browsers and StarMate's built-in
 //! browser WebViews.
 //!
 //! [`BrowserActions`] owns the product-level action semantics (snapshot refs,

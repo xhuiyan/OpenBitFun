@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import PhotosUI
 import SwiftUI
 import UniformTypeIdentifiers
@@ -27,8 +27,8 @@ struct ComposerBar: View {
 
     private var placeholder: String {
         model.localized(model.surface == .remote
-            ? "向 OpenBitFun 提问"
-            : (model.localSessionSelected ? "输入消息" : "问问 OpenBitFun"))
+            ? "向 StarMate 提问"
+            : (model.localSessionSelected ? "输入消息" : "问问 StarMate"))
     }
 
     private var expanded: Bool {
@@ -66,7 +66,7 @@ struct ComposerBar: View {
                 } label: {
                     Text(suggestion)
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, minHeight: MobileDesignGeometry.controlTouchSize, alignment: .leading)
                         .padding(.horizontal, 12)
@@ -109,7 +109,7 @@ struct ComposerBar: View {
                     ? MobileDesignGeometry.composerExpandedRadius
                     : MobileDesignGeometry.composerCollapsedRadius
             )
-            .stroke(OpenBitFunTheme.line, lineWidth: 0.5)
+            .stroke(StarMateTheme.line, lineWidth: 0.5)
         )
         .clipShape(
             RoundedRectangle(
@@ -118,7 +118,7 @@ struct ComposerBar: View {
                     : MobileDesignGeometry.composerCollapsedRadius
             )
         )
-        .shadow(color: OpenBitFunTheme.shadowSubtle, radius: 10, y: 2)
+        .shadow(color: StarMateTheme.shadowSubtle, radius: 10, y: 2)
         .padding(.horizontal, MobileDesignGeometry.conversationOverlaySideInset)
         .padding(.top, 8)
         .padding(.bottom, 14)
@@ -166,9 +166,9 @@ struct ComposerBar: View {
                             RoundedRectangle(
                                 cornerRadius: MobileDesignGeometry.composerModelSelectorRadius
                             )
-                                .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                                .stroke(StarMateTheme.line, lineWidth: 1)
                         )
-                        .shadow(color: OpenBitFunTheme.line, radius: 20, y: 8)
+                        .shadow(color: StarMateTheme.line, radius: 20, y: 8)
                         .position(
                             x: min(
                                 max(
@@ -241,11 +241,11 @@ struct ComposerBar: View {
                     HStack(spacing: 3) {
                         Text(selectedModel.map(optionTitle) ?? model.localized("模型"))
                             .font(MobileDesignTypography.labelMedium.font)
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                             .lineLimit(1)
                         Image(systemName: "chevron.down")
                             .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                     }
                     .frame(minHeight: MobileDesignGeometry.composerActionSize)
                     .padding(.horizontal, 4)
@@ -276,11 +276,11 @@ struct ComposerBar: View {
                     "",
                     text: $model.draft,
                     prompt: Text(speech.isListening ? model.localized("正在聆听") : placeholder)
-                        .foregroundColor(speech.isListening ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.muted),
+                        .foregroundColor(speech.isListening ? StarMateTheme.statusSuccess : StarMateTheme.muted),
                     axis: .vertical
                 )
                 .font(MobileDesignTypography.bodyLarge.font)
-                .foregroundStyle(!expanded && !model.draft.isEmpty ? OpenBitFunTheme.transparent : OpenBitFunTheme.ink)
+                .foregroundStyle(!expanded && !model.draft.isEmpty ? StarMateTheme.transparent : StarMateTheme.ink)
                 .lineLimit(1...maxLines)
                 .focused($focused)
                 // Expand from the tap itself; keyboard/first-responder startup is
@@ -294,7 +294,7 @@ struct ComposerBar: View {
                 if !expanded && !model.draft.isEmpty {
                     Text(model.draft)
                         .font(MobileDesignTypography.bodyLarge.font)
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .allowsHitTesting(false)
@@ -304,10 +304,10 @@ struct ComposerBar: View {
         }
         .padding(.leading, speech.isListening ? 12 : 4)
         .padding(.trailing, 4)
-        .background(speech.isListening ? OpenBitFunTheme.soft : OpenBitFunTheme.transparent)
+        .background(speech.isListening ? StarMateTheme.soft : StarMateTheme.transparent)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(speech.isListening ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.transparent, lineWidth: 1)
+                .stroke(speech.isListening ? StarMateTheme.statusSuccess : StarMateTheme.transparent, lineWidth: 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
@@ -346,19 +346,19 @@ struct ComposerBar: View {
                         .font(.system(size: 17, weight: .bold))
                         .foregroundStyle(
                             action == .send
-                                ? OpenBitFunTheme.contentOnAction
-                                : OpenBitFunTheme.muted
+                                ? StarMateTheme.contentOnAction
+                                : StarMateTheme.muted
                         )
                         .frame(width: 32, height: 32)
                         .background(
                             action == .send
                                 ? MobileDesignColors.primaryAction
-                                : OpenBitFunTheme.soft
+                                : StarMateTheme.soft
                         )
                         .clipShape(Circle())
                 case .stopListening, .stopTurn:
                     RoundedRectangle(cornerRadius: 2.5)
-                        .fill(OpenBitFunTheme.contentOnAction)
+                        .fill(StarMateTheme.contentOnAction)
                         .frame(width: 10, height: 10)
                         .frame(width: 32, height: 32)
                         .background(MobileDesignColors.primaryAction)
@@ -370,8 +370,8 @@ struct ComposerBar: View {
                         height: 19,
                         color:
                             action == .voice
-                                ? OpenBitFunTheme.ink
-                                : OpenBitFunTheme.muted.opacity(0.38)
+                                ? StarMateTheme.ink
+                                : StarMateTheme.muted.opacity(0.38)
                     )
                 }
             }
@@ -379,7 +379,7 @@ struct ComposerBar: View {
                 width: MobileDesignGeometry.composerActionSize,
                 height: MobileDesignGeometry.composerActionSize
             )
-            .background(action == .voiceBlocked ? OpenBitFunTheme.soft : OpenBitFunTheme.transparent)
+            .background(action == .voiceBlocked ? StarMateTheme.soft : StarMateTheme.transparent)
             .clipShape(Circle())
         }
         .buttonStyle(.plain)
@@ -396,7 +396,7 @@ struct ComposerBar: View {
                 assetName: "ComposerMicGlyph",
                 width: 16,
                 height: 19,
-                color: OpenBitFunTheme.ink
+                color: StarMateTheme.ink
             )
                 .frame(
                     width: MobileDesignGeometry.composerActionSize,
@@ -425,11 +425,11 @@ struct ComposerBar: View {
                     ZStack(alignment: .topTrailing) {
                         AsyncDecodedImage(data: attachment.data, fill: true)
                         .frame(width: 64, height: 64)
-                        .background(OpenBitFunTheme.soft)
+                        .background(StarMateTheme.soft)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                                .stroke(StarMateTheme.line, lineWidth: 1)
                         )
 
                         Button { model.removeComposerImage(id: attachment.id) } label: {
@@ -437,9 +437,9 @@ struct ComposerBar: View {
                                 Color.clear
                                 Image(systemName: "xmark")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundStyle(OpenBitFunTheme.contentOnAction)
+                                    .foregroundStyle(StarMateTheme.contentOnAction)
                                     .frame(width: 20, height: 20)
-                                    .background(OpenBitFunTheme.mediaScrim)
+                                    .background(StarMateTheme.mediaScrim)
                                     .clipShape(Circle())
                                     .offset(x: 5, y: -5)
                             }
@@ -467,12 +467,12 @@ struct ComposerBar: View {
                 HStack(spacing: 0) {
                     Text(model.localized("选择模型"))
                         .font(MobileDesignTypography.labelMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                     Spacer(minLength: 0)
                     Button { modelSelectorOpen = false } label: {
                         Image(systemName: "xmark")
                             .font(.system(size: 15, weight: .regular))
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                             .frame(
                                 width: MobileDesignGeometry.selectionCloseSize,
                                 height: MobileDesignGeometry.selectionCloseSize
@@ -489,7 +489,7 @@ struct ComposerBar: View {
                     ForEach(selectorModels) { option in
                         if option.id == selectorModels.first(where: { $0.role == nil })?.id,
                            selectorModels.contains(where: { $0.role != nil }) {
-                            Divider().overlay(OpenBitFunTheme.line)
+                            Divider().overlay(StarMateTheme.line)
                         }
                         Button {
                             modelSelectorOpen = false
@@ -498,33 +498,33 @@ struct ComposerBar: View {
                             HStack(spacing: 10) {
                                 Image(systemName: option.selected ? "checkmark.circle" : "circle")
                                     .font(.system(size: 16))
-                                    .foregroundStyle(option.selected ? OpenBitFunTheme.ink : OpenBitFunTheme.transparent)
+                                    .foregroundStyle(option.selected ? StarMateTheme.ink : StarMateTheme.transparent)
                                     .frame(width: 20, height: 20)
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(optionTitle(option))
                                         .font(MobileDesignTypography.labelMedium.font)
-                                        .foregroundStyle(OpenBitFunTheme.ink)
+                                        .foregroundStyle(StarMateTheme.ink)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
                                     Text(optionSubtitle(option))
                                         .font(MobileDesignTypography.bodySmall.font)
-                                        .foregroundStyle(OpenBitFunTheme.muted)
+                                        .foregroundStyle(StarMateTheme.muted)
                                         .fixedSize(horizontal: false, vertical: true)
                                 }
                                 Spacer(minLength: 0)
                                 ForEach(option.roles, id: \.self) { role in
                                     Text(model.localized(role == "PRIMARY" ? "主力" : "快速"))
                                         .font(MobileDesignTypography.labelSmall.font)
-                                        .foregroundStyle(OpenBitFunTheme.muted)
+                                        .foregroundStyle(StarMateTheme.muted)
                                         .padding(.horizontal, 6).padding(.vertical, 1)
-                                        .background(OpenBitFunTheme.soft)
+                                        .background(StarMateTheme.soft)
                                         .clipShape(RoundedRectangle(cornerRadius: 4))
                                 }
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 8)
                             .frame(minHeight: MobileDesignGeometry.composerModelSelectorRowHeight)
-                            .background(option.selected ? OpenBitFunTheme.soft : OpenBitFunTheme.transparent)
+                            .background(option.selected ? StarMateTheme.soft : StarMateTheme.transparent)
                             .clipShape(
                                 RoundedRectangle(
                                     cornerRadius: MobileDesignGeometry.composerModelSelectorRowRadius
@@ -538,7 +538,7 @@ struct ComposerBar: View {
             }
         }
         .padding(10)
-        .background(asSheet ? OpenBitFunTheme.card : MobileDesignColors.floatingPanelBg)
+        .background(asSheet ? StarMateTheme.card : MobileDesignColors.floatingPanelBg)
     }
 
     private var selectedModel: ComposerModelOption? {
@@ -637,7 +637,7 @@ private struct ListeningWave: View {
         HStack(spacing: 2) {
             ForEach([8.0, 14.0, 10.0, 17.0], id: \.self) { height in
                 Capsule()
-                    .fill(OpenBitFunTheme.statusSuccess)
+                    .fill(StarMateTheme.statusSuccess)
                     .frame(width: 2, height: height)
             }
         }

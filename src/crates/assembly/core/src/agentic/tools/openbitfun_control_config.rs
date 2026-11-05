@@ -1,7 +1,7 @@
-//! Shared, config-backed OpenBitFun product control.
+//! Shared, config-backed StarMate product control.
 //!
 //! Product surfaces may provide extra adapters for presentation and native
-//! providers, but ordinary OpenBitFun settings are owned by the shared
+//! providers, but ordinary StarMate settings are owned by the shared
 //! [`ConfigService`]. Keeping their read/write behavior here lets Desktop,
 //! CLI, and other headless product hosts execute the same catalog handlers.
 
@@ -532,7 +532,7 @@ pub async fn apply_legacy_config_mutation_with_model_snapshot(
     })
 }
 
-/// Read an option implemented by the shared OpenBitFun configuration service.
+/// Read an option implemented by the shared StarMate configuration service.
 ///
 /// `Ok(None)` means the semantic catalog deliberately routed the option to a
 /// product-host provider instead of shared config.
@@ -584,7 +584,7 @@ pub async fn read_config_backed_option(
     Ok(Some(value))
 }
 
-/// Apply an option implemented by the shared OpenBitFun configuration service and
+/// Apply an option implemented by the shared StarMate configuration service and
 /// read the persisted effective value back through the same handler.
 ///
 /// `Ok(None)` means a product-host provider owns the option.

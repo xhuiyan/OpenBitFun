@@ -35,7 +35,7 @@ export function useChatInputModeSync({
     // A selected Session without a loaded binding is not a new-session composer.
     if (sessionId && !sessionMode) return;
 
-    const nextMode = sessionMode === 'OpenBitFun' ? 'OpenBitFun' : resolveAvailableChatInputMode({
+    const nextMode = sessionMode === 'StarMate' ? 'StarMate' : resolveAvailableChatInputMode({
       currentMode,
       isAssistantWorkspace,
       sessionMode,

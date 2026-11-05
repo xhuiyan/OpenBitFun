@@ -711,7 +711,7 @@ rollout_context:\n\
 - rollout_path: {rollout_path}\n\
 - rollout_cwd: {workspace_path}\n\
 {assistant_persona_rules}\n\
-rendered conversation (pre-rendered from OpenBitFun session transcript):\n\
+rendered conversation (pre-rendered from StarMate session transcript):\n\
 <conversation>\n\
 {transcript}\n\
 </conversation>\n\n\
@@ -1015,7 +1015,7 @@ mod tests {
     fn source_session() -> MemorySourceSession {
         MemorySourceSession {
             workspace_path: "E:/workspace".to_string(),
-            rollout_path: "E:/OpenBitFun/sessions/session_1".to_string(),
+            rollout_path: "E:/StarMate/sessions/session_1".to_string(),
             session_id: "session_1".to_string(),
             session_name: "Session 1".to_string(),
             agent_type: "coder".to_string(),

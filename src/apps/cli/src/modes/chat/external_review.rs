@@ -1366,7 +1366,7 @@ fn external_agent_review_text(snapshot: Option<&ExternalSourceCatalogSnapshot>) 
                 let kind = if candidate.external {
                     "external"
                 } else {
-                    "OpenBitFun/local"
+                    "StarMate/local"
                 };
                 lines.push(format!(
                     "     {}. {} ({}, {}) - /agent choose {} {}",
@@ -1449,7 +1449,7 @@ fn external_agent_review_text(snapshot: Option<&ExternalSourceCatalogSnapshot>) 
                 let kind = if candidate.external {
                     "external"
                 } else {
-                    "OpenBitFun/local"
+                    "StarMate/local"
                 };
                 let status = if conflict.selected_candidate_id.as_deref()
                     == Some(candidate.candidate_id.as_str())

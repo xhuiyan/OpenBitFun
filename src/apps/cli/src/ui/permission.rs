@@ -369,10 +369,10 @@ mod tests {
     #[test]
     fn permission_prompt_prefers_a_nonempty_project_path_for_display() {
         let mut with_path = request();
-        with_path.project_path = Some("  E:/Projects/OpenBitFun  ".to_string());
+        with_path.project_path = Some("  E:/Projects/StarMate  ".to_string());
         assert_eq!(
             permission_project_display_label(&with_path),
-            "E:/Projects/OpenBitFun"
+            "E:/Projects/StarMate"
         );
 
         let mut empty_path = request();

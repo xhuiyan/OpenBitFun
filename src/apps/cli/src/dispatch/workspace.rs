@@ -79,7 +79,7 @@ const MAX_BUNDLE_BYTES: u64 = 2 * 1024 * 1024 * 1024;
 /// Cap on the change list reported after a sync, so a huge refactor cannot push
 /// the response past the smallest host transport envelope.
 const MAX_REPORTED_CHANGES: usize = 2_000;
-const DEFAULT_SYNC_COMMIT_MESSAGE: &str = "OpenBitFun dispatch result";
+const DEFAULT_SYNC_COMMIT_MESSAGE: &str = "StarMate dispatch result";
 /// A freshly spawned child may not have published an inspectable process
 /// identity by the first poll. Keep that tiny start window from spawning a
 /// duplicate worker while still allowing a dead child to be recovered.
@@ -1075,7 +1075,7 @@ fn sync_in_store(
                 "-c",
                 "commit.gpgsign=false",
                 "-c",
-                "user.name=OpenBitFun Dispatch",
+                "user.name=StarMate Dispatch",
                 "-c",
                 "user.email=dispatch@openbitfun.local",
                 "commit",
@@ -1927,7 +1927,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: None,
                 base_commit: "0".repeat(40),
                 branch: "openbitfun/dispatch/job-1".to_string(),
@@ -1958,7 +1958,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: Some(source.to_string_lossy().to_string()),
                 base_commit: base_commit.clone(),
                 branch: "openbitfun/dispatch/job-1".to_string(),
@@ -2010,7 +2010,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: Some(missing.to_string_lossy().to_string()),
                 base_commit: "0".repeat(40),
                 branch: "openbitfun/dispatch/job-1".to_string(),
@@ -2054,7 +2054,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: Some(
                     temp.path()
                         .join("no-such-repository")
@@ -2116,7 +2116,7 @@ mod tests {
             job_id: "job-1".to_string(),
             repo_key: "abcdef0123456789".to_string(),
             remote_url: None,
-            project_label: Some("OpenBitFun".to_string()),
+            project_label: Some("StarMate".to_string()),
             base_commit: base_commit.clone(),
             branch: "main".to_string(),
         };
@@ -2212,7 +2212,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: None,
                 base_commit,
                 branch: "main".to_string(),
@@ -2627,7 +2627,7 @@ mod tests {
                 protocol_version: DISPATCH_PROTOCOL_VERSION,
                 job_id: "job-1".to_string(),
                 repo_key: "abcdef0123456789".to_string(),
-                project_label: Some("OpenBitFun".to_string()),
+                project_label: Some("StarMate".to_string()),
                 remote_url: None,
                 base_commit: "0".repeat(40),
                 branch: "openbitfun/dispatch/job-1".to_string(),
@@ -2674,7 +2674,7 @@ mod tests {
             job_id: "job-1".to_string(),
             repo_key: "abcdef0123456789".to_string(),
             remote_url: None,
-            project_label: Some("OpenBitFun".to_string()),
+            project_label: Some("StarMate".to_string()),
             base_commit: base_commit.to_string(),
             branch: "main".to_string(),
         };
@@ -2737,7 +2737,7 @@ mod tests {
             job_id: job_id.to_string(),
             repo_key: "abcdef0123456789".to_string(),
             remote_url: None,
-            project_label: Some("OpenBitFun".to_string()),
+            project_label: Some("StarMate".to_string()),
             base_commit: base_commit.clone(),
             branch: format!("openbitfun/dispatch/{job_id}"),
         };
@@ -2819,11 +2819,11 @@ mod tests {
         };
         assert_eq!(
             label(&worktree_directory_name(
-                Some("OpenBitFun"),
+                Some("StarMate"),
                 None,
                 "dispatch-3d82ff46-bbf9-44c3"
             )),
-            "OpenBitFun"
+            "StarMate"
         );
         // No label: the remote's own basename is the next most recognizable name.
         assert_eq!(
@@ -2849,8 +2849,8 @@ mod tests {
         );
         // An id with no characters to digest still yields a usable directory.
         assert_eq!(
-            worktree_directory_name(Some("OpenBitFun"), None, ""),
-            "OpenBitFun"
+            worktree_directory_name(Some("StarMate"), None, ""),
+            "StarMate"
         );
     }
 
@@ -2859,13 +2859,13 @@ mod tests {
     /// of a project onto one directory and made the second one fail to provision.
     #[test]
     fn every_job_of_one_project_gets_its_own_worktree_directory() {
-        let name = |job_id: &str| worktree_directory_name(Some("OpenBitFun"), None, job_id);
+        let name = |job_id: &str| worktree_directory_name(Some("StarMate"), None, job_id);
         let first = name("dispatch-3d82ff46-bbf9-44c3-9c0f-2a1b0c4d5e6f");
         let second = name("dispatch-ac8fe8a3-85c7-4091-9ba4-856db2d55c2b");
 
         assert_ne!(first, second);
-        assert!(first.starts_with("OpenBitFun-"), "{first} lost its label");
-        assert!(second.starts_with("OpenBitFun-"), "{second} lost its label");
+        assert!(first.starts_with("StarMate-"), "{first} lost its label");
+        assert!(second.starts_with("StarMate-"), "{second} lost its label");
         // Stable across calls: a retry must land on the directory it already has.
         assert_eq!(first, name("dispatch-3d82ff46-bbf9-44c3-9c0f-2a1b0c4d5e6f"));
         // Ids that differ only past the slice window still separate.
@@ -2877,7 +2877,7 @@ mod tests {
         let temp = tempfile::tempdir().expect("tempdir");
         let store = DispatchStore::open(temp.path().join("dispatch")).expect("store");
         let name = worktree_directory_name(
-            Some("OpenBitFun"),
+            Some("StarMate"),
             None,
             "dispatch-3d82ff46-bbf9-44c3-9c0f-2a1b0c4d5e6f",
         );

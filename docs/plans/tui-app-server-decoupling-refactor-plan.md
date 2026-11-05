@@ -108,10 +108,10 @@ Shared Runtime IPC v17 仍是当前显式 `--shared` 的 Runtime transport。它
 
 ```bash
 pnpm run fmt:rs
-cargo check -p openbitfun-cli
-cargo test -p openbitfun-cli --test cli_command_contracts
-cargo test -p openbitfun-cli
-cargo test -p openbitfun-cli --bin openbitfun dual_backend_behavior_tests
+cargo check -p starmate-cli
+cargo test -p starmate-cli --test cli_command_contracts
+cargo test -p starmate-cli
+cargo test -p starmate-cli --bin openbitfun dual_backend_behavior_tests
 pnpm run check:core-boundaries
 git diff --check
 ```

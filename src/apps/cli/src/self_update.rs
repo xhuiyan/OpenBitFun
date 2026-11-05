@@ -380,7 +380,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
                     source: if *source == "GitHub" {
                         ReleaseSource::GitHub
                     } else {
-                        ReleaseSource::OpenBitFun
+                        ReleaseSource::StarMate
                     },
                     url: asset.url.clone(),
                     sha256_url: asset.sha256_url.clone(),
@@ -403,7 +403,7 @@ async fn update_from_configured_sources(check_only: bool) -> Result<UpdateOutcom
     let ranked = order_sources(&client, candidates).await;
     if ranked
         .first()
-        .is_some_and(|(candidate, _)| candidate.source == ReleaseSource::OpenBitFun)
+        .is_some_and(|(candidate, _)| candidate.source == ReleaseSource::StarMate)
     {
         if let Some((_, github_speed)) = ranked
             .iter()
@@ -580,7 +580,7 @@ impl PartialDownload {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ReleaseSource {
     GitHub,
-    OpenBitFun,
+    StarMate,
 }
 
 #[derive(Debug, Clone)]
@@ -761,12 +761,12 @@ async fn order_sources_with_window(
     if github_speed >= HEALTHY_THROUGHPUT
         || !candidates
             .iter()
-            .any(|candidate| candidate.source == ReleaseSource::OpenBitFun)
+            .any(|candidate| candidate.source == ReleaseSource::StarMate)
     {
         candidates.swap(0, github_index);
     } else if let Some(mirror_index) = candidates
         .iter()
-        .position(|candidate| candidate.source == ReleaseSource::OpenBitFun)
+        .position(|candidate| candidate.source == ReleaseSource::StarMate)
     {
         candidates.swap(0, mirror_index);
     }
@@ -1381,7 +1381,7 @@ mod tests {
         let ordered = order_sources_with_window(
             &client,
             vec![
-                mirror.candidate(ReleaseSource::OpenBitFun, "a.tar.gz"),
+                mirror.candidate(ReleaseSource::StarMate, "a.tar.gz"),
                 github.candidate(ReleaseSource::GitHub, "a.tar.gz"),
             ],
             Duration::from_secs(1),
@@ -1405,13 +1405,13 @@ mod tests {
             &client,
             vec![
                 github.candidate(ReleaseSource::GitHub, "a.tar.gz"),
-                mirror.candidate(ReleaseSource::OpenBitFun, "a.tar.gz"),
+                mirror.candidate(ReleaseSource::StarMate, "a.tar.gz"),
             ],
             Duration::from_millis(400),
         )
         .await;
 
-        assert_eq!(ordered[0].0.source, ReleaseSource::OpenBitFun);
+        assert_eq!(ordered[0].0.source, ReleaseSource::StarMate);
         let github_speed = ordered
             .iter()
             .find(|(candidate, _)| candidate.source == ReleaseSource::GitHub)

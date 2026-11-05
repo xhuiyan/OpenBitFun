@@ -21,9 +21,9 @@ struct SettingsView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 0) {
-                OpenBitFunModalHeader(title: "设置", onClose: { if let onClose { onClose() } else { dismiss() } })
+                StarMateModalHeader(title: "设置", onClose: { if let onClose { onClose() } else { dismiss() } })
                     .padding(.horizontal, MobileDesignGeometry.sheetHorizontalPadding)
-                Divider().overlay(OpenBitFunTheme.line)
+                Divider().overlay(StarMateTheme.line)
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -67,9 +67,9 @@ struct SettingsView: View {
                                 SettingsValueRow(
                                     icon: nil,
                                     title: "产品",
-                                    value: "OpenBitFun iOS版"
+                                    value: "StarMate iOS版"
                                 )
-                                Divider().overlay(OpenBitFunTheme.line).padding(.horizontal, 26)
+                                Divider().overlay(StarMateTheme.line).padding(.horizontal, 26)
                                 SettingsValueRow(icon: nil, title: "版本", value: appVersion)
                             }
                         }
@@ -90,11 +90,11 @@ struct SettingsView: View {
             } else if loginOpen {
                 AccountLoginView(model: model, onClose: { loginOpen = false })
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    .background(OpenBitFunTheme.page)
+                    .background(StarMateTheme.page)
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .animation(.easeInOut(duration: 0.2), value: model.languagePickerOpen)
         .animation(.easeInOut(duration: 0.2), value: loginOpen)
         .onAppear {
@@ -118,7 +118,7 @@ struct SettingsView: View {
                 HStack(spacing: 14) {
                     Image(systemName: "desktopcomputer")
                         .font(.system(size: 20, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 28, height: 28)
                     VStack(alignment: .leading, spacing: 3) {
                         Text(
@@ -127,26 +127,26 @@ struct SettingsView: View {
                                 ?? model.localized("尚未连接桌面端")
                         )
                         .font(MobileDesignTypography.bodyLarge.font.weight(.medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                         Text(connectionDetail)
                             .font(MobileDesignTypography.bodySmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                     }
                     Spacer(minLength: 0)
                 }
                 .padding(.horizontal, 18)
                 .frame(minHeight: 68)
 
-                Divider().overlay(OpenBitFunTheme.line).padding(.horizontal, 18)
+                Divider().overlay(StarMateTheme.line).padding(.horizontal, 18)
 
                 HStack(spacing: 8) {
                     Text(model.localized(model.accountDeviceName == nil ? "扫码配对" : "账号设备"))
                         .font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background(OpenBitFunTheme.soft)
+                        .background(StarMateTheme.soft)
                         .clipShape(Capsule())
                     Spacer(minLength: 0)
                     // Same rule as Android and HarmonyOS: one action, leave a link
@@ -154,12 +154,12 @@ struct SettingsView: View {
                     if model.connectionPhase == .disconnected {
                         Button(model.localized("重新连接"), action: model.reconnectRemote)
                             .font(MobileDesignTypography.bodyMedium.font.weight(.medium))
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                             .buttonStyle(.plain)
                     } else {
                         Button(model.localized("断开"), action: model.disconnectRemote)
                             .font(MobileDesignTypography.bodyMedium.font.weight(.medium))
-                            .foregroundStyle(OpenBitFunTheme.statusDanger)
+                            .foregroundStyle(StarMateTheme.statusDanger)
                             .buttonStyle(.plain)
                     }
                 }
@@ -183,8 +183,8 @@ private struct LanguagePickerSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            OpenBitFunSelectionHeader(title: "选择语言", onClose: { model.languagePickerOpen = false })
-            Divider().overlay(OpenBitFunTheme.line)
+            StarMateSelectionHeader(title: "选择语言", onClose: { model.languagePickerOpen = false })
+            Divider().overlay(StarMateTheme.line)
 
             VStack(spacing: 0) {
                 ForEach(MobileLanguage.allCases) { language in
@@ -195,12 +195,12 @@ private struct LanguagePickerSheet: View {
                         HStack {
                             Text(language.nativeName)
                                 .font(.system(size: 16, weight: .medium))
-                                .foregroundStyle(OpenBitFunTheme.ink)
+                                .foregroundStyle(StarMateTheme.ink)
                             Spacer()
                             if model.appLanguage == language {
                                 Image(systemName: "checkmark")
                                     .font(.system(size: 18, weight: .medium))
-                                    .foregroundStyle(OpenBitFunTheme.ink)
+                                    .foregroundStyle(StarMateTheme.ink)
                             }
                         }
                         .padding(.horizontal, 16)
@@ -216,7 +216,7 @@ private struct LanguagePickerSheet: View {
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.selectionTopRadius))
     }
 }
@@ -240,7 +240,7 @@ private struct SettingsGroup<Content: View, Accessory: View>: View {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(MobileLocalization.text(title))
                     .font(MobileDesignTypography.bodySmall.font.weight(.medium))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                 Spacer(minLength: 0)
                 accessory()
             }
@@ -291,7 +291,7 @@ private struct RemotePermissionSection: View {
             if model.remoteConnected {
                 Button(model.localized("刷新")) { model.refreshRemotePermissionMode() }
                     .font(MobileDesignTypography.bodyMedium.font.weight(.medium))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .buttonStyle(.plain)
                     .disabled(model.busy)
             }
@@ -299,19 +299,19 @@ private struct RemotePermissionSection: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(model.localized(hint))
                     .font(MobileDesignTypography.bodySmall.font)
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 18).padding(.top, 16).padding(.bottom, 4)
                     .accessibilityIdentifier("settings.permission.hint")
                 permissionRow("ASK", title: "需要确认", detail: "高风险操作会等待你确认。")
-                Divider().overlay(OpenBitFunTheme.line).padding(.horizontal, 18)
+                Divider().overlay(StarMateTheme.line).padding(.horizontal, 18)
                 permissionRow("AUTO", title: "自动批准", detail: "原本需要确认的操作会自动通过。")
-                Divider().overlay(OpenBitFunTheme.line).padding(.horizontal, 18)
+                Divider().overlay(StarMateTheme.line).padding(.horizontal, 18)
                 permissionRow("FULL_ACCESS", title: "完全访问", detail: "允许所有工具操作，不再请求确认。")
 
                 if let failureText {
                     Text(model.localized(failureText))
-                        .font(.system(size: 12)).foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .font(.system(size: 12)).foregroundStyle(StarMateTheme.statusDanger)
                         .padding(.horizontal, 18).padding(.bottom, 10)
                         .accessibilityIdentifier("settings.permission.failure")
                 }
@@ -329,9 +329,9 @@ private struct RemotePermissionSection: View {
     private var fullAccessConfirmation: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(model.localized("确认开启完全访问？"))
-                .font(.system(size: 15, weight: .bold)).foregroundStyle(OpenBitFunTheme.statusDanger)
+                .font(.system(size: 15, weight: .bold)).foregroundStyle(StarMateTheme.statusDanger)
             Text(model.localized("开启后，桌面端工具可以直接执行命令和修改文件。"))
-                .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.ink).lineSpacing(4)
+                .font(.system(size: 13)).foregroundStyle(StarMateTheme.ink).lineSpacing(4)
             HStack(spacing: 10) {
                 confirmationButton("取消", destructive: false) { confirmingFullAccess = false }
                 confirmationButton("开启完全访问", destructive: true) {
@@ -341,7 +341,7 @@ private struct RemotePermissionSection: View {
             }
         }
         .padding(16)
-        .overlay(RoundedRectangle(cornerRadius: 18).stroke(OpenBitFunTheme.statusDanger, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(StarMateTheme.statusDanger, lineWidth: 1))
         .padding(.horizontal, 12).padding(.bottom, 14)
     }
 
@@ -357,15 +357,15 @@ private struct RemotePermissionSection: View {
                 ZStack {
                     if model.remoteConnected && !loading && model.remotePermissionMode == mode {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 20)).foregroundStyle(OpenBitFunTheme.ink)
+                            .font(.system(size: 20)).foregroundStyle(StarMateTheme.ink)
                     }
                 }
                 .frame(width: 22, height: 24)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(model.localized(title))
-                        .font(.system(size: 16, weight: .medium)).foregroundStyle(OpenBitFunTheme.ink)
+                        .font(.system(size: 16, weight: .medium)).foregroundStyle(StarMateTheme.ink)
                     Text(model.localized(detail))
-                        .font(.system(size: 12)).foregroundStyle(OpenBitFunTheme.muted)
+                        .font(.system(size: 12)).foregroundStyle(StarMateTheme.muted)
                         .lineLimit(2)
                 }
                 Spacer(minLength: 0)
@@ -388,9 +388,9 @@ private struct RemotePermissionSection: View {
         Button(action: action) {
             Text(model.localized(title))
                 .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(destructive ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
+                .foregroundStyle(destructive ? StarMateTheme.contentOnAction : StarMateTheme.ink)
                 .frame(maxWidth: .infinity, minHeight: 42)
-                .background(destructive ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.soft)
+                .background(destructive ? StarMateTheme.statusDanger : StarMateTheme.soft)
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)
@@ -401,7 +401,7 @@ struct SettingsCard<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        OpenBitFunModalCard(
+        StarMateModalCard(
             radius: MobileDesignGeometry.settingsCardRadius,
             bordered: false,
             content: content
@@ -421,27 +421,27 @@ private struct SettingsValueRow: View {
                 if icon == "textformat" {
                     Text("Aa")
                         .font(.system(size: 18, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 23, height: 23)
                 } else {
                     Image(systemName: icon)
                         .font(.system(size: 20, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 23, height: 23)
                 }
             }
             Text(MobileLocalization.text(title))
                 .font(.system(size: 16, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
             Spacer(minLength: 12)
             Text(MobileLocalization.text(value))
                 .font(.system(size: 15))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .lineLimit(1)
             if showsChevron {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.muted.opacity(0.72))
+                    .foregroundStyle(StarMateTheme.muted.opacity(0.72))
             }
         }
         .padding(.horizontal, 18)

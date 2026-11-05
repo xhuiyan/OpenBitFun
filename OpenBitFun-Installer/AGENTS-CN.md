@@ -26,7 +26,7 @@
 Language Select → Options → Progress → Model Setup → Theme Setup
 ```
 
-如果所选路径已有 OpenBitFun 安装，流程会在 `Progress` 后结束，保留已有的模型和主题配置。
+如果所选路径已有 StarMate 安装，流程会在 `Progress` 后结束，保留已有的模型和主题配置。
 
 ## 命令
 

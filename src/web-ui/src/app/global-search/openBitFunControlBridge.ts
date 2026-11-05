@@ -61,7 +61,7 @@ function errorMessage(error: unknown): string {
  * The Web UI owns presentation only. Discovery, validation, state reads and
  * mutations stay in the native ProductControl executor shared with the Agent.
  */
-export async function executeOpenBitFunPresentationRequest(
+export async function executeStarMatePresentationRequest(
   request: OpenBitFunControlRequest,
 ): Promise<unknown> {
   if (!request.capabilityId) throw new Error('capabilityId is required');
@@ -103,7 +103,7 @@ async function reportResponse(response: OpenBitFunControlResponse): Promise<void
 
 async function handleRequest(request: OpenBitFunControlRequest): Promise<void> {
   try {
-    const result = await executeOpenBitFunPresentationRequest(request);
+    const result = await executeStarMatePresentationRequest(request);
     await reportResponse({ requestId: request.requestId, success: true, result });
   } catch (error) {
     try {

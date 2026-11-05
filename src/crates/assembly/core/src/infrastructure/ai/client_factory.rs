@@ -228,7 +228,7 @@ async fn configured_model_in_service(
         model
     };
     if starmate_config_contracts::protected_account_models::is_guarded_account_model(&model) {
-        return Err(anyhow!("This subscription account binding requires an account-capable OpenBitFun; the original configuration was preserved"));
+        return Err(anyhow!("This subscription account binding requires an account-capable StarMate; the original configuration was preserved"));
     }
     if !model.enabled {
         return Err(anyhow!(
@@ -2174,7 +2174,7 @@ mod tests {
             .await
             .unwrap_err();
         assert!(
-            error.to_string().contains("account-capable OpenBitFun"),
+            error.to_string().contains("account-capable StarMate"),
             "{error}"
         );
     }

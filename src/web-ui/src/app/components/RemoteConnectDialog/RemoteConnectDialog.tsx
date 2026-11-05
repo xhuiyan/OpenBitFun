@@ -107,8 +107,8 @@ const NETWORK_TABS: { id: NetworkTab; labelKey: string; descriptionKey: string }
   },
   {
     id: 'openbitfun_server',
-    labelKey: 'remoteConnect.methodOpenBitFunRelay',
-    descriptionKey: 'remoteConnect.methodOpenBitFunRelayDescription',
+    labelKey: 'remoteConnect.methodStarMateRelay',
+    descriptionKey: 'remoteConnect.methodStarMateRelayDescription',
   },
 ];
 
@@ -337,7 +337,7 @@ export const RemoteConnectDialog: React.FC<RemoteConnectDialogProps> = ({
 
     // Relay and bot connections can coexist. Restore both selected subtabs
     // before choosing which group to show, otherwise the bot-first open path
-    // can leave a connected OpenBitFun Server relay rendering the default LAN UI.
+    // can leave a connected StarMate Server relay rendering the default LAN UI.
     const hasPendingInvitation = connectionOwnerRef.current === 'network' && connectionResultRef.current !== null;
     if (!deviceInvitation && restoreSelection && network.connected
       && (!hasPendingInvitation || network.invitationConnected)) {

@@ -3,7 +3,7 @@ name = "starmate-claude-code-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Claude Code static source adapter for OpenBitFun"
+description = "Claude Code static source adapter for StarMate"
 autotests = false
 
 [lib]

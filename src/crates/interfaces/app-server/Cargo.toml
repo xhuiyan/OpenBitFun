@@ -3,7 +3,7 @@ name = "starmate-app-server"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun generic JSON-RPC app-server surface over agent_client_protocol custom roles"
+description = "StarMate generic JSON-RPC app-server surface over agent_client_protocol custom roles"
 
 [lib]
 name = "starmate_app_server"

@@ -76,7 +76,7 @@ export function getEcosystemSourceLabel(sourceId?: string): string | undefined {
 }
 
 /** Discovery is broader than installation; native management only owns native copies. */
-export function isOpenBitFunManagedSkill(skill: SkillInfo): boolean {
+export function isStarMateManagedSkill(skill: SkillInfo): boolean {
   return skill.isBuiltin || getSkillSourceId(skill) === 'openbitfun';
 }
 

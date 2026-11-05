@@ -136,7 +136,7 @@ test('a failed read is republished as the same failure, not as a fresh verdict',
   // host that named the version gap must not come back as a timeout.
   for (const [thrown, expected, badge] of [
     [new refusals.HostInvokeRefusal('get_mode_skill_configs',
-      "command 'get_mode_skill_configs' is unknown to this OpenBitFun desktop peer host version; " +
+      "command 'get_mode_skill_configs' is unknown to this StarMate desktop peer host version; " +
       'upgrade the peer host or check the command name'),
       CommandPaletteProbeFailure.VersionGap, policy.CommandPalettePolicy.upgradeBadgeKey],
     [new refusals.HostInvokeRefusal('get_mode_skill_configs', 'workspace not found'),

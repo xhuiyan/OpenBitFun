@@ -1,4 +1,4 @@
-# OpenBitFun Creation UI API v1
+# StarMate Creation UI API v1
 
 This is the running installed client. No source repository, compiler, Node.js,
 package install, or client rebuild is required. Use OpenBitFunControl discovery

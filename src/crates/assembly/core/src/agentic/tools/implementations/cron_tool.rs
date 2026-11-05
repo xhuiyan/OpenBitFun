@@ -1223,7 +1223,7 @@ Patch schema for "update":
                     // here stops the agent from presenting a standby list as the
                     // state that will actually run.
                     result_for_assistant.push_str(
-                        "\n\nScheduling note: another running OpenBitFun instance owns scheduled job execution right now, so these jobs run there and edits or manual runs are refused in this instance.",
+                        "\n\nScheduling note: another running StarMate instance owns scheduled job execution right now, so these jobs run there and edits or manual runs are refused in this instance.",
                     );
                 }
 
@@ -1498,7 +1498,7 @@ mod tests {
                 &json!({
                     "action": "list",
                     "session_id": "worker_1",
-                    "workspace": "E:/Projects/OpenBitFun/OpenBitFun",
+                    "workspace": "E:/Projects/StarMate/StarMate",
                 }),
                 Some(&empty_context()),
             )

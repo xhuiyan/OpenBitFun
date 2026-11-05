@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 
 struct RemoteConnectedHomeView: View {
@@ -39,11 +39,11 @@ struct RemoteConnectedHomeView: View {
         switch presentation {
         case .chooseDevice:
             Text(model.localized("选择设备和工作区，继续你的对话。"))
-                .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.muted)
+                .font(.system(size: 13)).foregroundStyle(StarMateTheme.muted)
             homeButton("查看设备", action: browse)
         case .pairDevice:
             Text(model.localized("连接电脑后，继续你的对话。"))
-                .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.muted)
+                .font(.system(size: 13)).foregroundStyle(StarMateTheme.muted)
             homeButton("连接电脑", action: model.connectRemote)
         case .connecting, .loadingSessions:
             homeButton("查看设备", action: browse)
@@ -60,7 +60,7 @@ struct RemoteConnectedHomeView: View {
             Text(model.localized(title))
                 .font(.system(size: 15, weight: .medium))
                 .frame(maxWidth: .infinity, minHeight: 48)
-                .background(OpenBitFunTheme.soft, in: RoundedRectangle(cornerRadius: 12))
+                .background(StarMateTheme.soft, in: RoundedRectangle(cornerRadius: 12))
         }.buttonStyle(.plain).padding(.vertical, 16)
     }
 
@@ -82,8 +82,8 @@ struct RemoteConnectedHomeView: View {
                         Text(model.localized("最近会话"))
                         Spacer()
                         Button(model.localized("全部会话"), action: browse)
-                            .foregroundStyle(OpenBitFunTheme.ink)
-                    }.font(.system(size: 12)).foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.ink)
+                    }.font(.system(size: 12)).foregroundStyle(StarMateTheme.muted)
                 }
                 ForEach(recent) { session in
                     Button {
@@ -94,24 +94,24 @@ struct RemoteConnectedHomeView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(session.title).font(.system(size: 15)).lineLimit(2)
                                 Text(context(session)).font(.system(size: 11))
-                                    .foregroundStyle(OpenBitFunTheme.muted).lineLimit(1)
+                                    .foregroundStyle(StarMateTheme.muted).lineLimit(1)
                             }
                             Spacer(minLength: 0)
                         }.padding(.vertical, MobileDesignGeometry.recentHomeRowPadding)
                             .contentShape(Rectangle())
                     }.buttonStyle(.plain)
-                    Rectangle().fill(OpenBitFunTheme.line).frame(height: 0.5)
+                    Rectangle().fill(StarMateTheme.line).frame(height: 0.5)
                 }
                 if recent.isEmpty && presentation == .ready {
                     Text(model.localized("还没有可继续的对话"))
-                        .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.muted).padding(.vertical, 18)
+                        .font(.system(size: 13)).foregroundStyle(StarMateTheme.muted).padding(.vertical, 18)
                 }
 
             }
             .padding(.horizontal, MobileDesignGeometry.recentHomeGutter).padding(.bottom, 28)
             .frame(maxWidth: MobileDesignGeometry.recentHomeMaxWidth)
             .frame(maxWidth: .infinity, alignment: .center)
-        }.foregroundStyle(OpenBitFunTheme.ink).background(OpenBitFunTheme.page)
+        }.foregroundStyle(StarMateTheme.ink).background(StarMateTheme.page)
     }
 }
 
@@ -129,7 +129,7 @@ struct WelcomeHomeView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     HStack {
-                        HStack(spacing: 0) { ForEach(Array("OpenBitFun".enumerated()), id: \.offset) { _, c in welcomeGlyph(c, size: MobileDesignGeometry.welcomeHeaderWordSize) } }
+                        HStack(spacing: 0) { ForEach(Array("StarMate".enumerated()), id: \.offset) { _, c in welcomeGlyph(c, size: MobileDesignGeometry.welcomeHeaderWordSize) } }
                         Spacer()
                     }
                     .padding(.horizontal, MobileDesignGeometry.welcomeGutter)
@@ -174,8 +174,8 @@ struct WelcomeHomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .foregroundStyle(OpenBitFunTheme.ink)
-        .background(OpenBitFunTheme.page)
+        .foregroundStyle(StarMateTheme.ink)
+        .background(StarMateTheme.page)
         .onChange(of: scenePhase) { if $0 == .active { started = Date() } }
     }
 
@@ -198,9 +198,9 @@ struct WelcomeHomeView: View {
             .clipShape(Capsule())
         }.buttonStyle(.plain)
     }
-    private func duration(_ word: String) -> Double { 250+Double(word.count)*185+(word == "OpenBitFun" ? 600 : 0)+1800+650 }
+    private func duration(_ word: String) -> Double { 250+Double(word.count)*185+(word == "StarMate" ? 600 : 0)+1800+650 }
     private func phrase(at date: Date) -> (word: String,time: Double) {
-        if reduceMotion { return ("OpenBitFun",2700) }
+        if reduceMotion { return ("StarMate",2700) }
         var time = max(0,date.timeIntervalSince(started)*1000).truncatingRemainder(dividingBy: phrases.reduce(0) { $0+duration($1) })
         for word in phrases { if time < duration(word) { return (word,time) };time -= duration(word) }
         return (phrases[0],0)

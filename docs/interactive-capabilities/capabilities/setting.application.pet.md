@@ -37,7 +37,7 @@ Enable the desktop agent companion, manage the active character, and turn deskto
 3. 选择开关和角色
    Choose its state and character
 
-入口 / Entry: OpenBitFun 设置
+入口 / Entry: StarMate 设置
 
 ## 智能体可替你做什么 / What an agent can do for you
 

@@ -13,7 +13,7 @@
 //! it does not claim a remote, multi-user, or public Server Agent API.
 
 use anyhow::Result;
-/// OpenBitFun Server
+/// StarMate Server
 ///
 /// Web server with support for:
 /// - RESTful API
@@ -65,7 +65,7 @@ struct ServerArgs {
     workspace: Option<PathBuf>,
 
     /// Browser origin allowed to connect to this Server Host. Repeat to allow more than one.
-    /// When omitted, only OpenBitFun's local Web development origins are allowed.
+    /// When omitted, only StarMate's local Web development origins are allowed.
     #[arg(long = "allowed-origin", value_name = "ORIGIN")]
     allowed_origins: Vec<String>,
 }
@@ -174,7 +174,7 @@ async fn main() -> Result<()> {
     let path_manager = Arc::new(starmate_core::infrastructure::PathManager::new()?);
     let ssh_data_dir = dirs::data_local_dir()
         .ok_or_else(|| anyhow::anyhow!("Could not resolve the local data directory"))?
-        .join("OpenBitFun")
+        .join("StarMate")
         .join("ssh");
     let ssh_manager =
         Arc::new(starmate_core::service::remote_ssh::SSHConnectionManager::new(ssh_data_dir));

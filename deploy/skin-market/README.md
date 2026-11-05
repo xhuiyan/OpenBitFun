@@ -1,4 +1,4 @@
-# OpenBitFun Skin market self-hosted deployment
+# StarMate Skin market self-hosted deployment
 
 This directory deploys the Appearance package catalog exposed to users as the
 **Skin market** at `https://market.example.com/skin/`.

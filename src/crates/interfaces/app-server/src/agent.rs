@@ -1,4 +1,4 @@
-//! OpenBitFun agent runtime adapter for the generic app-server surface.
+//! StarMate agent runtime adapter for the generic app-server surface.
 //!
 //! This is the Phase 2 wiring point: [`StarMateAppRuntime`] holds an externally
 //! assembled [`AgentRuntime`] (built by product assembly from `AgenticSystem`,
@@ -14,7 +14,7 @@ use starmate_agent_runtime::sdk::{AgentEventSource, AgentRuntime, PortErrorKind,
 use starmate_core::service::git::GitError;
 use starmate_runtime_ports::{AgentContextReloadPort, ProductSearchPort};
 
-/// Host-injected OpenBitFun agent runtime exposed over the app-server surface.
+/// Host-injected StarMate agent runtime exposed over the app-server surface.
 ///
 /// Construct with [`StarMateAppRuntime::new`] from a product-assembled
 /// `AgentRuntime` and the runtime's [`AgentEventSource`] (so the server can

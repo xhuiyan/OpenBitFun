@@ -41,7 +41,7 @@ Both tools share `.session-storage-repair.lock`. After a hard kill, close all
 repair/product writers before manually removing that stale sentinel to resume.
 
 The product and executable are **StarMate Data Tools** and
-`openbitfun-data-tools`. New releases use `data-tools-v<version>` tags. The
+`starmate-data-tools`. New releases use `data-tools-v<version>` tags. The
 migration history remains readable. Tool settings use the new
 `com.openbitfun.data-tools` identity; previous tool locations and language
 preferences are not imported. Historical `data-migrator-v` tags remain
@@ -55,10 +55,10 @@ source or use a subsequent release to access it.
 
 | Platform | Download | Launch |
 | --- | --- | --- |
-| Windows x64 | `openbitfun-data-tools-v<version>-windows-x64.zip` | Extract, then double-click `openbitfun-data-tools.exe` |
-| macOS Apple Silicon | `openbitfun-data-tools-v<version>-macos-arm64.dmg` | Open the DMG and its Data Tools app |
-| macOS Intel | `openbitfun-data-tools-v<version>-macos-x64.dmg` | Open the DMG and its Data Tools app |
-| Linux x64 | `openbitfun-data-tools-v<version>-linux-x64.AppImage` | Make executable and launch in a desktop session |
+| Windows x64 | `starmate-data-tools-v<version>-windows-x64.zip` | Extract, then double-click `starmate-data-tools.exe` |
+| macOS Apple Silicon | `starmate-data-tools-v<version>-macos-arm64.dmg` | Open the DMG and its Data Tools app |
+| macOS Intel | `starmate-data-tools-v<version>-macos-x64.dmg` | Open the DMG and its Data Tools app |
+| Linux x64 | `starmate-data-tools-v<version>-linux-x64.AppImage` | Make executable and launch in a desktop session |
 
 Windows needs the Microsoft Edge WebView2 runtime. macOS uses the system WebView;
 Linux packages are built on Ubuntu 22.04. No login or network connection is
@@ -195,7 +195,7 @@ From the repository root with Rust, Node, pnpm and the platform's Tauri build pr
 pnpm install
 pnpm run data-tools:dev       # independent window; no Desktop or dev server
 pnpm run data-tools:build     # independent release bundle
-cargo build -p openbitfun-data-tools --bin openbitfun-data-tools
+cargo build -p starmate-data-tools --bin starmate-data-tools
 ```
 
 Direct Cargo builds embed the committed UI and design-system CSS. After changing

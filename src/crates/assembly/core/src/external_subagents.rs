@@ -1,7 +1,7 @@
 //! Product-level activation and routing for provider-neutral external subagents.
 //!
 //! Ecosystem parsing stays in adapters and discovery lifecycle stays in the
-//! external-sources coordinator. This module only resolves current OpenBitFun
+//! external-sources coordinator. This module only resolves current StarMate
 //! model/tool facts, applies persisted user decisions, and installs immutable
 //! generation entries in the existing agent registry.
 
@@ -397,9 +397,9 @@ fn local_candidate_fact(info: &AgentInfo, model: &str) -> LocalCandidateFact {
     let mut tools = info.default_tools.clone();
     tools.sort();
     let source = match info.source {
-        AgentSource::Builtin => "OpenBitFun built-in",
-        AgentSource::User => "OpenBitFun user",
-        AgentSource::Project => "OpenBitFun project",
+        AgentSource::Builtin => "StarMate built-in",
+        AgentSource::User => "StarMate user",
+        AgentSource::Project => "StarMate project",
         AgentSource::External => "External",
     };
     let path_identity = info.path.as_deref().unwrap_or_default();
@@ -630,7 +630,7 @@ fn resolve_model_request(
     let (automatic_model, automatic_method) = match &definition.requested_model {
         // An omitted external model means "use the caller's current model" in
         // both OpenCode and Claude Code. It must not be guessed from a
-        // same-name OpenBitFun subagent default: that couples an external profile
+        // same-name StarMate subagent default: that couples an external profile
         // to an unrelated local definition and changes behavior on collisions.
         ExternalSubagentModelRequest::Default => (
             if ai_config.is_some() {
@@ -2746,7 +2746,7 @@ mod tests {
                 logical_id: "reviewer".to_string(),
                 candidate_id: "local_subagent:reviewer".to_string(),
                 display_name: "Local reviewer".to_string(),
-                source_label: "OpenBitFun project".to_string(),
+                source_label: "StarMate project".to_string(),
                 behavior_version: "local-v1".to_string(),
             },
         );
@@ -2774,7 +2774,7 @@ mod tests {
         assert_eq!(preview.conflicts[0].candidates.len(), 2);
         assert!(
             !preview.conflicts[0].candidates[0].external,
-            "the OpenBitFun/local candidate must be shown before external candidates"
+            "the StarMate/local candidate must be shown before external candidates"
         );
         let external_id = preview.conflicts[0]
             .candidates
@@ -2910,7 +2910,7 @@ mod tests {
                 logical_id: "reviewer".to_string(),
                 candidate_id: "local_subagent:reviewer".to_string(),
                 display_name: "Local reviewer".to_string(),
-                source_label: "OpenBitFun project".to_string(),
+                source_label: "StarMate project".to_string(),
                 behavior_version: "local-v1".to_string(),
             },
         );

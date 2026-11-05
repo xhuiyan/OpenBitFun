@@ -1,4 +1,4 @@
-//! Shared GitHub identity used by every OpenBitFun product surface.
+//! Shared GitHub identity used by every StarMate product surface.
 mod credentials;
 mod flow;
 pub use credentials::{
@@ -160,7 +160,7 @@ impl AccountIdentityClient {
             ));
         }
         let client = crate::reqwest_client_builder()
-            .user_agent(format!("OpenBitFun/{}", env!("CARGO_PKG_VERSION")))
+            .user_agent(format!("StarMate/{}", env!("CARGO_PKG_VERSION")))
             .redirect(reqwest::redirect::Policy::none())
             .build()
             .map_err(|error| local_error("market_client_init_failed", error.to_string()))?;

@@ -1,6 +1,6 @@
 # @starmate/theme-openbitfun
 
-Replaceable OpenBitFun theme values for the framework-neutral `@starmate/ui` package.
+Replaceable StarMate theme values for the framework-neutral `@starmate/ui` package.
 
 ```ts
 import "@starmate/theme-openbitfun/default.css";

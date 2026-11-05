@@ -4,7 +4,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Window controls — matches the OpenBitFun main app style.
+ * Window controls — matches the StarMate main app style.
  * 32x32 transparent buttons with SVG icons, subtle hover bg.
  */
 export function WindowControls() {

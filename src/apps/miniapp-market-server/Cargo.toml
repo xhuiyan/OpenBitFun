@@ -3,7 +3,7 @@ name = "starmate-miniapp-market-server"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun MiniApp marketplace HTTP server"
+description = "StarMate MiniApp marketplace HTTP server"
 
 [[bin]]
 name = "openbitfun-miniapp-market-server"

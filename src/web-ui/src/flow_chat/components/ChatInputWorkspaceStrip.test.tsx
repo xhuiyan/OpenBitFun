@@ -193,35 +193,35 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           deferPassiveGitRefresh
         />
       );
     });
 
     expect(mocks.useGitState).toHaveBeenCalledWith(expect.objectContaining({
-      repositoryPath: { workspaceId: 'workspace-1', repositoryPath: 'D:/workspace/OpenBitFun' },
+      repositoryPath: { workspaceId: 'workspace-1', repositoryPath: 'D:/workspace/StarMate' },
       layers: ['basic'],
       isActive: false,
       refreshOnMount: false,
       refreshOnActive: false,
     }));
-    expect(container.textContent).toContain('OpenBitFun');
+    expect(container.textContent).toContain('StarMate');
   });
 
   it('keeps passive git refresh enabled for normal sessions', async () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
         />
       );
     });
 
     expect(mocks.useGitState).toHaveBeenCalledWith(expect.objectContaining({
-      repositoryPath: { workspaceId: 'workspace-1', repositoryPath: 'D:/workspace/OpenBitFun' },
+      repositoryPath: { workspaceId: 'workspace-1', repositoryPath: 'D:/workspace/StarMate' },
       isActive: true,
       refreshOnMount: true,
       refreshOnActive: false,
@@ -232,8 +232,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
         />
       );
     });
@@ -249,8 +249,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
         />
       );
     });
@@ -277,8 +277,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     const options = [
         {
           id: 'ws-1',
-          name: 'OpenBitFun',
-          rootPath: 'D:/workspace/OpenBitFun',
+          name: 'StarMate',
+          rootPath: 'D:/workspace/StarMate',
           workspaceKind: 'normal',
         },
         {
@@ -306,8 +306,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           workspaceControl={{ selectedId: 'ws-1', options, locked: false, onSelect }}
         />
       );
@@ -331,7 +331,7 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     ).toBe('true');
     expect(
       menu?.querySelector('[data-testid="chat-input-workspace-option-ws-1"]')?.textContent,
-    ).toContain('D:/workspace/OpenBitFun');
+    ).toContain('D:/workspace/StarMate');
     expect(
       menu?.querySelector('[data-testid="chat-input-workspace-option-ws-2"]')?.textContent,
     ).toContain('D:/workspace/Other');
@@ -391,8 +391,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           worktreeControl={{ enabled: false, locked: false, onChange: vi.fn() }}
           permissionControl={{ mode: 'auto', onChange: vi.fn() }}
           usageReport={{ visible: true, currentTokens: 480, maxTokens: 4000, onOpen: vi.fn() }}
@@ -1078,8 +1078,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           permissionControl={{ mode: 'acp' }}
         />
       );
@@ -1098,8 +1098,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           permissionControl={{ mode: 'acp' }}
           usageReport={{ visible: true, currentTokens: 1680, maxTokens: 4000, onOpen: vi.fn() }}
         />
@@ -1115,8 +1115,8 @@ describe('ChatInputWorkspaceStrip git refresh behavior', () => {
     await act(async () => {
       root.render(
         <ChatInputWorkspaceStrip workspaceId="workspace-1"
-          repositoryPath="D:/workspace/OpenBitFun"
-          workspaceLabel="OpenBitFun"
+          repositoryPath="D:/workspace/StarMate"
+          workspaceLabel="StarMate"
           permissionControl={{ mode: 'acp' }}
         />
       );

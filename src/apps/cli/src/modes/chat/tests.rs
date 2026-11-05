@@ -2450,7 +2450,7 @@ mod tests {
         assert!(
             summary.contains("Review agent (OpenCode, external) [selected, currently unavailable]")
         );
-        assert!(summary.contains("StarMate review (StarMate, OpenBitFun/local) [not selected]"));
+        assert!(summary.contains("StarMate review (StarMate, StarMate/local) [not selected]"));
         assert!(summary.contains("/agent choose 1 1"));
 
         snapshot.subagents[0].activation_state = ExternalSubagentActivationState::Active;

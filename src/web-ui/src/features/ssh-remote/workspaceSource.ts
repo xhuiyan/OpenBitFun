@@ -21,7 +21,7 @@ export function workspaceSourceFor(
   environment: WorkspaceEnvironment,
 ): WorkspaceSource {
   if (environment === 'container') return location === 'current' ? 'localDocker' : 'remoteDocker';
-  // Native WSL belongs to the executing OpenBitFun host, never an SSH host.
+  // Native WSL belongs to the executing StarMate host, never an SSH host.
   if (environment === 'wsl') {
     if (location !== 'current') throw new Error('Native WSL requires the current work host');
     return 'wsl';

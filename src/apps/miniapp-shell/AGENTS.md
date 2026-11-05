@@ -113,8 +113,8 @@ pnpm run prepare:miniapp-shell
 target/debug/starmate-miniapp-shell --miniapp-shell-info
 node --test scripts/prepare-miniapp-shell.test.mjs
 cargo test --locked -p openbitfun-miniapp-ipc
-cargo test --locked -p openbitfun-desktop --lib miniapp_desktop
-cargo build --locked -p openbitfun-desktop
+cargo test --locked -p starmate-desktop --lib miniapp_desktop
+cargo build --locked -p starmate-desktop
 ```
 
 Native artifact size and signature checks must use built files and temporary
@@ -125,5 +125,5 @@ After preparing a macOS shell, exercise the real temporary export and headless
 diagnostic with:
 
 ```bash
-STARMATE_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/starmate-miniapp-shell" cargo test --locked -p openbitfun-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
+STARMATE_MINIAPP_SHELL_TEST_BINARY="$PWD/target/miniapp-shell/starmate-miniapp-shell" cargo test --locked -p starmate-desktop --lib miniapp_desktop::launcher::tests::macos_real_shell_export_is_compact_and_runs_headless_diagnostics -- --ignored
 ```

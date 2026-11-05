@@ -226,7 +226,7 @@ impl LegacyDomainAdapter for CredentialsAdapter {
                 domain: Some(self.domain()),
                 relative_path: None,
                 message: format!("Credential metadata at {field} is not safely portable."),
-                action: Some("Enter the credential again in OpenBitFun.".to_string()),
+                action: Some("Enter the credential again in StarMate.".to_string()),
             })
             .collect::<Vec<_>>();
         Ok(MigrationDomainResult {
@@ -901,7 +901,7 @@ fn record_target_wins(path: &str, outcome: &mut MergeOutcome) {
         domain: MigrationDomainId::Settings,
         code: "target_setting_wins".to_string(),
         source_summary: format!("legacy setting {path}"),
-        target_summary: format!("existing OpenBitFun setting {path}"),
+        target_summary: format!("existing StarMate setting {path}"),
         resolution: ConflictResolution::TargetWins,
     });
 }

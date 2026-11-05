@@ -562,7 +562,7 @@ mod tests {
     #[test]
     fn missing_shell_never_resolves_to_the_full_host() {
         let root = tempfile::tempdir().unwrap();
-        let host = root.path().join("OpenBitFun");
+        let host = root.path().join("StarMate");
         std::fs::write(&host, "full host executable").unwrap();
         assert!(shell_executable(&host)
             .unwrap_err()

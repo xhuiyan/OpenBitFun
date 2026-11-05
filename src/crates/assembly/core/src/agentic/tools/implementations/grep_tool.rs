@@ -490,7 +490,7 @@ impl Tool for GrepTool {
     }
 
     async fn description(&self) -> StarMateResult<String> {
-        Ok(r#"Search file contents in the active workspace with OpenBitFun's built-in structured search.
+        Ok(r#"Search file contents in the active workspace with StarMate's built-in structured search.
 
 Usage:
 - Use Grep by default for codebase content search because it preserves workspace-aware permissions and consistent output.

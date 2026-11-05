@@ -2,7 +2,7 @@
 
 # UI Test IDs
 
-This document records stable `data-testid` values used by OpenBitFun UI automation.
+This document records stable `data-testid` values used by StarMate UI automation.
 Test IDs are grouped by product area and should be added only when an automated
 workflow needs a stable locator.
 
@@ -241,7 +241,7 @@ Avoid adding IDs to these surfaces unless there is a clear automated workflow.
 | Model list | `settings-model-list` | Container for configured model rows. |
 | Create first model config button | `settings-model-create-first-config-btn` | Starts the first model provider setup from the empty state. |
 | Custom model config button | `settings-model-custom-config-btn` | Starts custom provider configuration. Includes `data-provider-id="custom"`. |
-| Model provider option | `settings-model-provider-option` | Repeated provider row. Pair with `data-provider-id`, for example `openbitfun`. The resting list is truncated, so reach a provider outside it through the search field or the expand button below. |
+| Model provider option | `settings-model-provider-option` | Repeated provider row. Pair with `data-provider-id`, for example `starmate`. The resting list is truncated, so reach a provider outside it through the search field or the expand button below. |
 | Model provider search | `settings-model-provider-search` | Filters the preset provider list by provider name, id, or model name. |
 | Model provider expand button | `settings-model-provider-expand-btn` | Expands the truncated preset provider list to every provider, and collapses it again. |
 | Model provider name input | `settings-model-provider-name-input` | Provider/config display name field, such as a mock LLM provider name. |

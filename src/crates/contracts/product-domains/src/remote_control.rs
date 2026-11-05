@@ -1,4 +1,4 @@
-//! Closed management requests for the executing OpenBitFun host's Remote Connect.
+//! Closed management requests for the executing StarMate host's Remote Connect.
 //!
 //! This is independent of workspace file routing and contains no provider secrets.
 

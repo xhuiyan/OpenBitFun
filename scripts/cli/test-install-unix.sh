@@ -36,7 +36,7 @@ bash "${REPO_ROOT}/src/apps/cli/install.sh"
 [ -f "${STARMATE_CLI_BIN_DIR}/resources/ext-host/extension-host.js" ]
 
 for rc_file in "$HOME/.bashrc" "$HOME/.zshrc"; do
-  [ "$(grep -Fc '# >>> OpenBitFun CLI PATH (managed by src/apps/cli/install.sh) >>>' "$rc_file")" -eq 1 ]
+  [ "$(grep -Fc '# >>> StarMate CLI PATH (managed by src/apps/cli/install.sh) >>>' "$rc_file")" -eq 1 ]
 done
 
 PRIMARY_HASH="$(hash_file "${STARMATE_CLI_BIN_DIR}/openbitfun")"

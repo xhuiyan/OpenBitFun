@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -28,7 +28,7 @@ struct MobileShellView: View {
                 if sessionActionsOpen, let anchor {
                     let frame = proxy[anchor]
                     ZStack(alignment: .topLeading) {
-                        OpenBitFunTheme.transparent
+                        StarMateTheme.transparent
                             .contentShape(Rectangle())
                             .onTapGesture { sessionActionsOpen = false }
                         ConversationActionsPopover(
@@ -56,7 +56,7 @@ struct MobileShellView: View {
                     let frame = proxy[anchor]
                     let remote = model.surface == .remote
                     ZStack(alignment: .topLeading) {
-                        OpenBitFunTheme.transparent
+                        StarMateTheme.transparent
                             .contentShape(Rectangle())
                             .onTapGesture { sidebarActionSession = nil }
                         SessionActionSurface(
@@ -93,10 +93,10 @@ struct MobileShellView: View {
             if let message = model.toastMessage {
                 Text(message)
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.contentOnAction)
+                    .foregroundStyle(StarMateTheme.contentOnAction)
                     .padding(.horizontal, 16)
                     .frame(minHeight: 38)
-                    .background(OpenBitFunTheme.toastBackground)
+                    .background(StarMateTheme.toastBackground)
                     .clipShape(Capsule())
                     .padding(.bottom, 86)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -183,7 +183,7 @@ struct MobileShellView: View {
             // square-cornered grey block sat against a rounded card with a
             // white wedge between them.
             if !sidebarVisible {
-                OpenBitFunTheme.sidebarBg
+                StarMateTheme.sidebarBg
                     .ignoresSafeArea()
                     .opacity(model.drawerOpen ? 1 : 0)
                     .allowsHitTesting(false)
@@ -239,14 +239,14 @@ struct MobileShellView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .overlay {
                 if !sidebarVisible && model.drawerOpen {
-                    OpenBitFunTheme.page.opacity(0.62)
+                    StarMateTheme.page.opacity(0.62)
                         .transition(.opacity.animation(.easeOut(duration: 0.21)))
                         .onTapGesture { model.drawerOpen = false }
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: !sidebarVisible && model.drawerOpen ? 28 : 0))
             .shadow(
-                color: !sidebarVisible && model.drawerOpen ? OpenBitFunTheme.shellScrim : OpenBitFunTheme.transparent,
+                color: !sidebarVisible && model.drawerOpen ? StarMateTheme.shellScrim : StarMateTheme.transparent,
                 radius: !sidebarVisible && model.drawerOpen ? 34 : 0,
                 x: !sidebarVisible && model.drawerOpen ? -10 : 0
             )
@@ -330,7 +330,7 @@ struct MobileShellView: View {
                 )
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 
     private func conversationContent(
@@ -438,7 +438,7 @@ struct MobileShellView: View {
      */
     private var conversationTopEdgeFade: some View {
         LinearGradient(
-            colors: [OpenBitFunTheme.page, OpenBitFunTheme.page.opacity(0)],
+            colors: [StarMateTheme.page, StarMateTheme.page.opacity(0)],
             startPoint: .top,
             endPoint: .bottom
         )
@@ -459,7 +459,7 @@ struct MobileShellView: View {
     @ViewBuilder
     private func paneSeparator(width: CGFloat) -> some View {
         if width > 0 {
-            Rectangle().fill(OpenBitFunTheme.line).frame(width: width)
+            Rectangle().fill(StarMateTheme.line).frame(width: width)
         }
     }
 }

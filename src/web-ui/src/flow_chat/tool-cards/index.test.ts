@@ -26,7 +26,7 @@ import { GenerateImageToolCard } from './GenerateImageToolCard';
 const COMPATIBILITY_ONLY_TOOL_CARD_NAMES = new Set(Object.keys(compatibilityToolPresentationOwners));
 
 describe('tool card registry', () => {
-  it('keeps OpenBitFun controls visible through their dedicated product card', () => {
+  it('keeps StarMate controls visible through their dedicated product card', () => {
     expect(getToolCardComponent('OpenBitFunControl')).toBe(OpenBitFunControlToolCard);
     expect(usesDefaultToolCard('OpenBitFunControl')).toBe(false);
     expect(isCollapsibleTool('OpenBitFunControl')).toBe(false);

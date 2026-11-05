@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import Foundation
 import OSLog
 
@@ -49,7 +49,7 @@ final class MobileCoreAdapter {
     var onAccountState: ((AccountUiState, UInt64) -> Void)?
     var onRemoteTargetBound: ((String, UInt64, UInt64) -> Void)?
     var onRemoteState: ((RemoteSessionUiState, String, UInt64) -> Void)?
-    var onRemoteConnectionPhase: ((OpenBitFunMobileCore.ConnectionPhase, String, UInt64) -> Void)?
+    var onRemoteConnectionPhase: ((StarMateMobileCore.ConnectionPhase, String, UInt64) -> Void)?
     var onWorkspaceState: ((RemoteWorkspaceUiState, String, UInt64) -> Void)?
     var onDirectoryState: ((DeviceDirectoryUiState, UInt64) -> Void)?
     var onCreateOperation: ((CreateSessionOperationState, String) -> Void)?
@@ -59,7 +59,7 @@ final class MobileCoreAdapter {
         onAccountState: ((AccountUiState, UInt64) -> Void)? = nil,
         onRemoteTargetBound: ((String, UInt64, UInt64) -> Void)? = nil,
         onRemoteState: ((RemoteSessionUiState, String, UInt64) -> Void)? = nil,
-        onRemoteConnectionPhase: ((OpenBitFunMobileCore.ConnectionPhase, String, UInt64) -> Void)? = nil,
+        onRemoteConnectionPhase: ((StarMateMobileCore.ConnectionPhase, String, UInt64) -> Void)? = nil,
         onWorkspaceState: ((RemoteWorkspaceUiState, String, UInt64) -> Void)? = nil,
         onDirectoryState: ((DeviceDirectoryUiState, UInt64) -> Void)? = nil,
         onCreateOperation: ((CreateSessionOperationState, String) -> Void)? = nil,
@@ -79,7 +79,7 @@ final class MobileCoreAdapter {
             scope: scope,
             service: "com.openbitfun.mobile.account",
             deviceId: installID,
-            deviceName: "OpenBitFun iPhone",
+            deviceName: "StarMate iPhone",
             log: MobileCoreLog()
         )
         self.deviceDirectory = DeviceDirectoryStore.companion.create(scope: scope, accountStore: account)
@@ -662,7 +662,7 @@ final class MobileCoreAdapter {
             }
         })
 
-        let connectionFlow = SkieSwiftStateFlow<OpenBitFunMobileCore.ConnectionPhase>(sessionStore.connectionPhase)
+        let connectionFlow = SkieSwiftStateFlow<StarMateMobileCore.ConnectionPhase>(sessionStore.connectionPhase)
         onRemoteConnectionPhase?(connectionFlow.value, targetKey, boundEpoch)
         remoteObservations.append(Task { [weak self] in
             for await phase in connectionFlow {

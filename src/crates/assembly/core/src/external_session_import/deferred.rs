@@ -122,7 +122,7 @@ async fn read_index(root: &Path) -> StarMateResult<Arc<Index>> {
         .unwrap_or_default();
     if index.schema_version != 1 {
         return Err(index_error(
-            "This external history index requires a newer OpenBitFun host",
+            "This external history index requires a newer StarMate host",
         ));
     }
     // Read compatibility must not rewrite the user's index or frozen history.
@@ -152,7 +152,7 @@ async fn update_index<T>(
         .unwrap_or_default();
     if index.schema_version != 1 {
         return Err(index_error(
-            "This external history index requires a newer OpenBitFun host",
+            "This external history index requires a newer StarMate host",
         ));
     }
     let (result, changed) = update(&mut index);

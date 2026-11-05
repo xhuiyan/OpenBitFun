@@ -1,4 +1,4 @@
-//! Desktop adapter for the platform-agnostic OpenBitFun product-control port.
+//! Desktop adapter for the platform-agnostic StarMate product-control port.
 //!
 //! Discovery and contract lookup run in the product-domain owner. This adapter
 //! owns concrete Desktop state reads/mutations and delegates only presentation

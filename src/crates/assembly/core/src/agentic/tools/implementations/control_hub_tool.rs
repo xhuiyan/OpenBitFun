@@ -83,7 +83,7 @@ pub(crate) async fn release_browser_selection(owner: &str) {
     }
 }
 
-/// Disconnect the user-selected external browser from OpenBitFun without closing
+/// Disconnect the user-selected external browser from StarMate without closing
 /// any browser tabs or changing the browser-owned Remote debugging preference.
 /// Page sessions and the retained browser WebSocket share this cleanup so an
 /// in-flight or later tool action cannot continue through a stale binding.
@@ -162,7 +162,7 @@ impl ControlHubTool {
             "Respect the disconnected browser connection. Ask the user to reconnect in Settings if their login state is required; do not re-enable it or bypass the boundary through another automation route.",
         )
         .with_hint(
-            "Use target='builtin' for OpenBitFun's built-in browser when that surface is sufficient.",
+            "Use target='builtin' for StarMate's built-in browser when that surface is sufficient.",
         )
     }
 
@@ -227,7 +227,7 @@ impl ControlHubTool {
             ControlHubError::new(
                 ErrorCode::NotAvailable,
                 format!(
-                    "browser.{action} is a CDP protocol extension and is not available for OpenBitFun's built-in WebView target."
+                    "browser.{action} is a CDP protocol extension and is not available for StarMate's built-in WebView target."
                 ),
             )
             .with_hint(
@@ -263,8 +263,8 @@ impl ControlHubTool {
             ErrorCode::NotAvailable
         };
         ControlHubError::new(code, message).with_hints([
-            "Keep the OpenBitFun Desktop window open and inspect browser.list_pages before retrying navigation; CLI/headless runtimes do not provide a built-in browser surface.",
-            "If the user only asked to show OpenBitFun's browser without a URL, use OpenBitFunControl open on capability_id='feature.browser' instead of inventing a placeholder URL.",
+            "Keep the StarMate Desktop window open and inspect browser.list_pages before retrying navigation; CLI/headless runtimes do not provide a built-in browser surface.",
+            "If the user only asked to show StarMate's browser without a URL, use OpenBitFunControl open on capability_id='feature.browser' instead of inventing a placeholder URL.",
         ])
     }
 
@@ -433,7 +433,7 @@ impl ControlHubTool {
             )
             .with_hints([
                 "Pass an http(s) URL or domain, e.g. { \"url\": \"https://example.com\" }.",
-                "If the user only wants to show OpenBitFun's browser surface, call OpenBitFunControl open with capability_id='feature.browser' and omit item_id.",
+                "If the user only wants to show StarMate's browser surface, call OpenBitFunControl open with capability_id='feature.browser' and omit item_id.",
             ]));
         }
 
@@ -846,7 +846,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                         "unavailable",
                         Some("OpenBitFunControl"),
                         95,
-                        "The request is to show OpenBitFun's browser surface without a URL. Call OpenBitFunControl open with capability_id='feature.browser' and omit item_id; do not invent about:blank.",
+                        "The request is to show StarMate's browser surface without a URL. Call OpenBitFunControl open with capability_id='feature.browser' and omit item_id; do not invent about:blank.",
                     );
                 }
                 let desktop_kw = [
@@ -1762,7 +1762,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                         json!({
                             "success": true,
                             "target": "builtin",
-                            "browser": "OpenBitFun built-in browser",
+                            "browser": "StarMate built-in browser",
                             "browser_mode": "embedded_webview",
                             "session_id": target.id,
                             "page_url": target.url,
@@ -1773,7 +1773,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             "shared_action_contract": true,
                         }),
                         Some(format!(
-                            "Connected to OpenBitFun's built-in browser (session {}, page '{}')",
+                            "Connected to StarMate's built-in browser (session {}, page '{}')",
                             target.id, target.title
                         )),
                     )]);
@@ -2261,7 +2261,7 @@ Results: `{ok, domain, action, data? , error?: {code, message, hints}}`. Check o
                             "tab_new",
                             ControlHubError::new(
                                 ErrorCode::NotAvailable,
-                                "OpenBitFun's built-in browser requires an active Desktop product surface.",
+                                "StarMate's built-in browser requires an active Desktop product surface.",
                             ),
                         ));
                     }
@@ -3635,7 +3635,7 @@ impl Tool for ControlHubTool {
                 },
                 "action": {
                     "type": "string",
-                    "description": "The atomic action to perform within the domain. For a concrete browser URL, use navigate; it creates a page when needed. Add params.observe=snapshot or article to return page content in the same call. To show OpenBitFun's browser surface without a URL, use OpenBitFunControl open on feature.browser instead of inventing a URL. Browser params.target selects builtin or external; both use the same portable action contract."
+                    "description": "The atomic action to perform within the domain. For a concrete browser URL, use navigate; it creates a page when needed. Add params.observe=snapshot or article to return page content in the same call. To show StarMate's browser surface without a URL, use OpenBitFunControl open on feature.browser instead of inventing a URL. Browser params.target selects builtin or external; both use the same portable action contract."
                 },
                 "params": {
                     "type": "object",
@@ -4553,7 +4553,7 @@ mod control_hub_tests {
             .block_on(tool.dispatch(
                 "meta",
                 "route_hint",
-                &json!({ "intent": "切换 OpenBitFun 默认模型" }),
+                &json!({ "intent": "切换 StarMate 默认模型" }),
                 &ctx,
             ))
             .unwrap();

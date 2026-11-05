@@ -33,7 +33,7 @@ impl NativeComputerUseHost {
                 .map(|p| p.display().to_string())
                 .unwrap_or_else(|_| "(unknown path)".to_string());
             Err(StarMateError::tool(format!(
-                "macOS Accessibility is not enabled for this executable. System Settings > Privacy & Security > Accessibility: add and enable OpenBitFun. Development builds use the debug binary at: {}",
+                "macOS Accessibility is not enabled for this executable. System Settings > Privacy & Security > Accessibility: add and enable StarMate. Development builds use the debug binary at: {}",
                 exe
             )))
         }

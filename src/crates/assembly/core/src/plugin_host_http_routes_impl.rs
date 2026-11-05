@@ -124,7 +124,7 @@ async fn session_create(context: &PluginHostInstance, body: &[u8]) -> RouteResul
     let coordinator = coordinator()?;
     if input.parent_id.is_some() {
         return Err(Failure::bad_request(
-            "parentID session creation is not supported by the OpenBitFun session owner",
+            "parentID session creation is not supported by the StarMate session owner",
         ));
     }
     let session = coordinator
@@ -690,7 +690,7 @@ async fn pty_create(context: &PluginHostInstance, body: &[u8]) -> RouteResult {
     let input: PtyCreateBody = body_as(body)?;
     if input.args.as_ref().is_some_and(|args| !args.is_empty()) {
         return Err(Failure::bad_request(
-            "OpenBitFun terminal sessions do not support arbitrary PTY arguments",
+            "StarMate terminal sessions do not support arbitrary PTY arguments",
         ));
     }
     let cwd = input
@@ -725,7 +725,7 @@ fn parse_pty_shell(command: &str) -> Result<ShellType, Failure> {
     let shell = ShellType::from_executable(command.trim());
     if matches!(shell, ShellType::Custom(_)) {
         return Err(Failure::bad_request(
-            "PTY command must select a supported OpenBitFun shell",
+            "PTY command must select a supported StarMate shell",
         ));
     }
     Ok(shell)
@@ -787,7 +787,7 @@ async fn pty_update(context: &PluginHostInstance, pty_id: &str, body: &[u8]) -> 
     pty_get(context, pty_id).await?;
     if input.title.is_some() {
         return Err(Failure::bad_request(
-            "PTY title updates are not supported by the OpenBitFun terminal owner",
+            "PTY title updates are not supported by the StarMate terminal owner",
         ));
     }
     if let Some(size) = input.size {

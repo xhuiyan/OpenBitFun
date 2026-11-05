@@ -3,7 +3,7 @@ name = "starmate-relay-service"
 version = "1.0.8"
 authors = ["StarMate Team"]
 edition = "2021"
-description = "Reusable relay runtime for OpenBitFun Remote Connect"
+description = "Reusable relay runtime for StarMate Remote Connect"
 
 [lib]
 name = "starmate_relay_service"

@@ -50,13 +50,13 @@ Run the real native portal fixture in the desktop user's Ubuntu session (require
 `python3-gi`, GTK 3, GStreamer PipeWire/base/good plugins and portal services):
 
 ```bash
-cargo check --locked -p openbitfun-computer-use --tests
+cargo check --locked -p starmate-computer-use --tests
 node scripts/test-linux-computer-use-native.mjs -- --test-threads=1
 bash scripts/test-linux-computer-use-atspi.sh
 bash scripts/test-linux-computer-use-portal.sh
 ```
 
-Select only the dedicated **OpenBitFun Portal Fixture** window. The fixture checks
+Select only the dedicated **StarMate Portal Fixture** window. The fixture checks
 real PipeWire frames, observation-only input rejection and stop revocation. It
 does not prove foreground input delivery or remote behavior.
 For headless AT-SPI verification, use
@@ -175,8 +175,8 @@ target deactivation; it does not require the original window to remain open.
 ## Verification
 
 ```bash
-cargo test --locked -p openbitfun-computer-use --lib
-cargo test --locked -p openbitfun-computer-use --lib native_generated_stream_captures_and_stops -- --ignored
+cargo test --locked -p starmate-computer-use --lib
+cargo test --locked -p starmate-computer-use --lib native_generated_stream_captures_and_stops -- --ignored
 node scripts/test-windows-computer-use-native.mjs --check --target x86_64-pc-windows-msvc
 ```
 
@@ -194,7 +194,7 @@ algorithms or native-host mocks. Cargo dependencies must already be cached
 
 ```bash
 node scripts/test-computer-use-context.mjs
-cargo test -p openbitfun-computer-use --lib context_integrity_tests
+cargo test -p starmate-computer-use --lib context_integrity_tests
 ```
 
 Native black-box fixtures use only a dedicated test window / rendered image:
@@ -258,11 +258,11 @@ application windows or infer delivery from `ok: true`. Observe after errors
 before choosing another action; the probe never retries input automatically.
 
 ```bash
-cargo test -p openbitfun-desktop --features devtools --test computer_use_native_roundtrip --no-run --message-format=json
+cargo test -p starmate-desktop --features devtools --test computer_use_native_roundtrip --no-run --message-format=json
 # Use the executable path emitted above; EOF or the total deadline stops control.
 STARMATE_CUA_PROBE_PID=<pid> STARMATE_CUA_PROBE_OUTPUT_DIR=/tmp/cua-probe <executable>
 # stdin JSONL: {"id":"observe","input":{"action":"get_app_state","include_image":true}}
-cargo test -p openbitfun-desktop --features devtools --lib native_control_roundtrip::probe
+cargo test -p starmate-desktop --features devtools --lib native_control_roundtrip::probe
 # Independent read-only witness; no app launch, permission prompts or input.
 clang -fobjc-arc -fblocks -Wall -Wextra -Werror -framework AppKit -framework ApplicationServices scripts/fixtures/computer-use-background-witness.m -o /tmp/cua-witness
 /tmp/cua-witness --target-pid <pid> --target-window <window-id> --output /tmp/cua-witness.json
@@ -304,8 +304,8 @@ Observation invariants:
   when text rendering is disabled; focused controls survive budget selection.
 
 ```bash
-cargo test -p openbitfun-desktop --lib computer_use
-cargo build -p openbitfun-desktop
+cargo test -p starmate-desktop --lib computer_use
+cargo build -p starmate-desktop
 ```
 
 Windows-only paths (`windows_wgc_capture`, UIA) compile on CI (`windows-latest`).

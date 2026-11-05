@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "digest": "fnv1a64:ad57aa872484f2a8",
+  "digest": "fnv1a64:88fc073320869e53",
   "retiredCommandPrefixes": [
     {
       "prefix": "lsp_",
-      "reason": "the OpenBitFun LSP runtime has been retired"
+      "reason": "the StarMate LSP runtime has been retired"
     }
   ],
   "capabilities": {

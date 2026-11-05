@@ -3,7 +3,7 @@ name = "starmate-computer-use"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
-description = "Native Computer Use providers shared by OpenBitFun product hosts"
+description = "Native Computer Use providers shared by StarMate product hosts"
 
 [features]
 default = []

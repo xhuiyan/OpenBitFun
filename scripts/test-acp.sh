@@ -1,8 +1,8 @@
 #!/bin/bash
-# Test script for OpenBitFun ACP server
+# Test script for StarMate ACP server
 # This script demonstrates basic ACP protocol interaction
 
-echo "=== OpenBitFun ACP Server Test ==="
+echo "=== StarMate ACP Server Test ==="
 echo ""
 
 BINARY="${STARMATE_CLI:-target/debug/openbitfun}"

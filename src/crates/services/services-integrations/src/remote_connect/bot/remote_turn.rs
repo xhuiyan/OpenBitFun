@@ -14,7 +14,7 @@ impl RemoteBotTarget {
                     == Some(crate::remote_connect::REMOTE_CAPABILITY_SESSION_ATTACHMENTS_V1)
             })
         }) {
-            return Err("Execution host does not support session attachments; upgrade OpenBitFun on that device".into());
+            return Err("Execution host does not support session attachments; upgrade StarMate on that device".into());
         }
         Ok(())
     }

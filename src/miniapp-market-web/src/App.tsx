@@ -870,7 +870,7 @@ function DetailPage({
           <p className="prose">{app.changelog}</p>
         </div>
         <aside className="facts-panel">
-          <Fact label={t('requires')} value={`v${app.minOpenBitFunVersion}+`} />
+          <Fact label={t('requires')} value={`v${app.minStarMateVersion}+`} />
           <Fact
             label={t('downloadsLabel')}
             value={formatCompactNumber(app.downloadCount, locale)}
@@ -1026,7 +1026,7 @@ function SubmitPage({
                 .split(',')
                 .map((tag) => tag.trim())
                 .filter(Boolean),
-              minOpenBitFunVersion: String(form.get('minOpenBitFunVersion')),
+              minStarMateVersion: String(form.get('minStarMateVersion')),
               changelog: String(form.get('changelog')),
               license:
                 licenseKind === 'spdx'
@@ -1086,8 +1086,8 @@ function SubmitPage({
         <fieldset>
           <legend>{t('releaseSection')}</legend>
           <div className="form-grid">
-            <Field label={t('minOpenBitFunVersionLabel')}>
-              <Input className="market-input" name="minOpenBitFunVersion" required defaultValue="1.0.0" />
+            <Field label={t('minStarMateVersionLabel')}>
+              <Input className="market-input" name="minStarMateVersion" required defaultValue="1.0.0" />
             </Field>
             <Field label={t('publicRepositoryOptional')}>
               <Input className="market-input" name="repositoryUrl" type="url" placeholder="https://github.com/…" />
@@ -1367,8 +1367,8 @@ function AdminPage({
                 />
                 <Fact label={t('releaseLabel')} value={`v${selected.submission.releaseNumber}`} />
                 <Fact
-                  label={t('minimumOpenBitFunLabel')}
-                  value={selected.submission.minOpenBitFunVersion}
+                  label={t('minimumStarMateLabel')}
+                  value={selected.submission.minStarMateVersion}
                 />
                 <Fact
                   label={t('licenseLabel')}

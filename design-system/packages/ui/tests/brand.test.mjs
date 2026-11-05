@@ -22,15 +22,15 @@ test("brand marks are decorative by default and expose supplied accessible names
     const decorative = renderToStaticMarkup(createElement(brand[name], { active: false }));
     assert.match(decorative, /aria-hidden="true"/);
     assert.doesNotMatch(decorative, /role="img"/);
-    const named = renderToStaticMarkup(createElement(brand[name], { label: "OpenBitFun", active: false }));
+    const named = renderToStaticMarkup(createElement(brand[name], { label: "StarMate", active: false }));
     assert.match(named, /role="img"/);
-    assert.match(named, /aria-label="OpenBitFun"/);
+    assert.match(named, /aria-label="StarMate"/);
     assert.doesNotMatch(named, /aria-hidden="true"/);
   }
   for (const name of ["StarMateSolidMark", "StarMateAppIcon"]) {
     assert.match(renderToStaticMarkup(createElement(brand[name])), /alt=""/);
-    const named = renderToStaticMarkup(createElement(brand[name], { label: "OpenBitFun", size: 16 }));
-    assert.match(named, /alt="OpenBitFun"/);
+    const named = renderToStaticMarkup(createElement(brand[name], { label: "StarMate", size: 16 }));
+    assert.match(named, /alt="StarMate"/);
     assert.match(named, /width:16px/);
     assert.match(named, /src="data:image\/png;base64,/);
     if (name === "StarMateAppIcon") {

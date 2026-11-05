@@ -537,7 +537,7 @@ internal fun MobileScreen(onAccountRestored: (Boolean) -> Unit = {}) {
     LaunchedEffect(showMenu) {
         if (!showMenu) compactDrawerOpen = false
     }
-    OpenBitFunCompactDrawer(
+    StarMateCompactDrawer(
         open = showMenu && compactDrawerOpen,
         compact = showMenu,
         drawerWidth = compactDrawerWidth.dp,

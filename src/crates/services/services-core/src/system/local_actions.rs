@@ -635,7 +635,7 @@ fn clipboard_install_hints() -> Vec<String> {
                 match server.as_deref() {
                     Some("wayland") => vec![
                         "Wayland session detected - install wl-clipboard (e.g. `sudo apt install wl-clipboard` / `sudo dnf install wl-clipboard`)".to_string(),
-                        "Run OpenBitFun inside the intended Wayland session; X11 fallback would address a different clipboard".to_string(),
+                        "Run StarMate inside the intended Wayland session; X11 fallback would address a different clipboard".to_string(),
                     ],
                     Some("x11") => vec![
                         "X11 session detected - install xclip (`sudo apt install xclip`) or xsel (`sudo apt install xsel`)".to_string(),

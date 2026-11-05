@@ -11,7 +11,7 @@ import androidx.compose.ui.test.performClick
 import com.openbitfun.mobile.app.ui.settings.FULL_ACCESS_CONFIRM_TEST_TAG
 import com.openbitfun.mobile.app.ui.settings.PERMISSION_SECTION_TEST_TAG
 import com.openbitfun.mobile.app.ui.settings.PermissionSection
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunTheme
+import com.openbitfun.mobile.app.ui.theme.StarMateTheme
 import com.openbitfun.mobile.core.feature.session.RemoteSessionIntent
 import com.openbitfun.mobile.core.feature.session.RemoteSessionUiState
 import com.openbitfun.mobile.core.feature.session.SessionAgentFilter
@@ -100,7 +100,7 @@ class PermissionModeCardTest {
     fun withoutAReadySessionTheSectionStaysVisibleButDisabled() {
         val intents = mutableListOf<RemoteSessionIntent>()
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 PermissionSection(
                     state = null,
                     connected = false,
@@ -128,7 +128,7 @@ class PermissionModeCardTest {
         onIntent: (RemoteSessionIntent) -> Unit = {},
     ) {
         composeRule.setContent {
-            OpenBitFunTheme(dark = false) {
+            StarMateTheme(dark = false) {
                 PermissionSection(
                     state = readyState(permissionMode),
                     connected = connected,

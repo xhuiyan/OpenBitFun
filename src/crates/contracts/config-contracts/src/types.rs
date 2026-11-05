@@ -90,7 +90,7 @@ pub struct GlobalConfig {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub font: Option<FontPreferenceSnapshot>,
     /// Version of the persisted configuration schema. This is intentionally
-    /// independent from the OpenBitFun application version stored in `version`.
+    /// independent from the StarMate application version stored in `version`.
     pub schema_version: u32,
     /// Application build that most recently wrote this document. Informational
     /// only; compatibility is determined by `schema_version`.
@@ -647,7 +647,7 @@ pub struct AIExperienceConfig {
     /// User-defined quick actions (post-coding menu); persisted for the web UI.
     #[serde(default = "default_quick_actions")]
     pub quick_actions: Vec<AiExperienceQuickAction>,
-    /// Whether built-in commit workflows add OpenBitFun as a Git co-author.
+    /// Whether built-in commit workflows add StarMate as a Git co-author.
     #[serde(default = "default_true")]
     pub enable_git_commit_coauthor: bool,
     /// Whether a completed interactive turn offers a one-sentence next-input suggestion.
@@ -1370,7 +1370,7 @@ pub struct AIConfig {
     #[serde(default)]
     pub web_search: WebSearchConfig,
 
-    /// Reattach to an already-running browser when OpenBitFun starts. Off by
+    /// Reattach to an already-running browser when StarMate starts. Off by
     /// default: the browser forgets its approval when it restarts, so this can
     /// put an approval dialog in front of the user before they asked for the
     /// browser at all.
@@ -1405,7 +1405,7 @@ fn default_openbitfun_search_http_credential_id() -> String {
 
 /// Non-secret WebSearch settings that are safe to persist and synchronize.
 /// Unknown fields are retained so a newer provider configuration survives an
-/// older OpenBitFun build reading and writing the document.
+/// older StarMate build reading and writing the document.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default, rename_all = "camelCase")]
 pub struct WebSearchConfig {
@@ -1868,7 +1868,7 @@ pub struct AIModelConfig {
     /// Context window size (total token limit for input + output).
     pub context_window: Option<u32>,
     /// Optional advanced override for the request output limit. When absent,
-    /// OpenBitFun derives a tiered limit from the context window at runtime.
+    /// StarMate derives a tiered limit from the context window at runtime.
     pub max_tokens: Option<u32>,
     /// Optional image input ceiling across the complete request, including history
     /// and tool results. Missing preserves the existing provider behavior.
@@ -1919,7 +1919,7 @@ pub struct AIModelConfig {
     pub custom_request_body_mode: Option<String>,
 
     /// Authentication source for this model. Defaults to a static API key;
-    /// subscription credentials come from OpenBitFun's in-app OAuth store
+    /// subscription credentials come from StarMate's in-app OAuth store
     /// and are resolved at request time, never from third-party CLI files.
     #[serde(default)]
     pub auth: AuthConfig,
@@ -2027,7 +2027,7 @@ pub enum AuthConfig {
     /// Use the inline `api_key` string (default).
     #[default]
     ApiKey,
-    /// Use OpenBitFun in-app subscription OAuth for the named provider.
+    /// Use StarMate in-app subscription OAuth for the named provider.
     Subscription {
         provider: SubscriptionProvider,
         #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -4694,7 +4694,7 @@ pub fn validate_current_config_value(value: &Value, context: &str) -> Result<(),
 
 fn retired_config_field(context: &str, path: &str) -> String {
     config_validation_message(format!(
-        "{context} contains retired pre-OpenBitFun field '{path}'; use the explicit data migration tool instead"
+        "{context} contains retired pre-StarMate field '{path}'; use the explicit data migration tool instead"
     ))
 }
 

@@ -223,7 +223,7 @@ impl FrontendWorkbenchManager {
                 );
             } else {
                 // Never keep serving an unconfirmed candidate just because its
-                // prior revision was damaged outside OpenBitFun. The bundled copy
+                // prior revision was damaged outside StarMate. The bundled copy
                 // below becomes the recovery target.
                 state.active_revision = None;
                 state.previous_revision = None;
@@ -2411,7 +2411,7 @@ mod tests {
             response.status(),
             tauri::http::StatusCode::SERVICE_UNAVAILABLE
         );
-        assert!(String::from_utf8_lossy(response.body()).contains("OpenBitFun frontend recovery"));
+        assert!(String::from_utf8_lossy(response.body()).contains("StarMate frontend recovery"));
     }
 
     #[test]

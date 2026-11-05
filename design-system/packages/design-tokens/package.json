@@ -1,7 +1,7 @@
 {
   "name": "@starmate/design-tokens",
   "version": "0.1.0",
-  "description": "Framework-neutral design token contract and system scales for OpenBitFun UI packages",
+  "description": "Framework-neutral design token contract and system scales for StarMate UI packages",
   "license": "MIT",
   "type": "module",
   "files": [

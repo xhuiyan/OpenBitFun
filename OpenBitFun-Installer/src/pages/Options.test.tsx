@@ -14,7 +14,7 @@ vi.mock('@tauri-apps/plugin-dialog', () => ({ open: vi.fn() }));
 vi.mock('@tauri-apps/api/window', () => ({ getCurrentWindow: () => mocks }));
 
 const initial: InstallOptions = {
-  installPath: 'D:\\OpenBitFun', desktopShortcut: false, startMenu: true,
+  installPath: 'D:\\StarMate', desktopShortcut: false, startMenu: true,
   launchAfterInstall: false, appLanguage: 'en-US', themePreference: 'system', modelConfig: null,
 };
 let container: HTMLDivElement;
@@ -58,12 +58,12 @@ it('updates an install option once per label or native input click and keeps the
 
   const path = container.querySelector<HTMLInputElement>('[data-openbitfun-component="input"] input')!;
   await act(async () => {
-    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(path, 'D:\\Apps\\OpenBitFun');
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(path, 'D:\\Apps\\StarMate');
     path.dispatchEvent(new Event('input', { bubbles: true }));
   });
-  expect(path.value).toBe('D:\\Apps\\OpenBitFun');
+  expect(path.value).toBe('D:\\Apps\\StarMate');
   expect(clearError).toHaveBeenCalledTimes(1);
-  expect(refreshDiskSpace).toHaveBeenLastCalledWith('D:\\Apps\\OpenBitFun');
+  expect(refreshDiskSpace).toHaveBeenLastCalledWith('D:\\Apps\\StarMate');
 });
 
 it('keeps path and install/navigation actions disabled during installation', async () => {

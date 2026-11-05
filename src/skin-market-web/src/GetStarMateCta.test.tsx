@@ -14,15 +14,15 @@ describe('GetStarMateCta', () => {
 
       expect(markup).toContain(`href="${STARMATE_DOWNLOAD_URL}"`);
       expect(markup).toContain('rel="noreferrer"');
-      expect(markup).toContain('getOpenBitFunTitle');
-      expect(markup).toContain('getOpenBitFunAction');
+      expect(markup).toContain('getStarMateTitle');
+      expect(markup).toContain('getStarMateAction');
     },
   );
 
   it('explains the surface the visitor is actually looking at', () => {
     expect(renderToStaticMarkup(<GetStarMateCta placement="listing" t={t} />))
-      .toContain('getOpenBitFunListingNote');
+      .toContain('getStarMateListingNote');
     expect(renderToStaticMarkup(<GetStarMateCta placement="catalog" t={t} />))
-      .toContain('getOpenBitFunCatalogNote');
+      .toContain('getStarMateCatalogNote');
   });
 });

@@ -1,6 +1,6 @@
 # RTK command rewrite example
 
-This example connects [RTK](https://github.com/rtk-ai/rtk) to OpenBitFun's
+This example connects [RTK](https://github.com/rtk-ai/rtk) to StarMate's
 `PreToolUse` hook for `ExecCommand`. RTK can rewrite a command before it is
 sent to the terminal and can reject a command with exit code 2.
 
@@ -10,7 +10,7 @@ activate a hook in the development checkout.
 
 ## Windows local workspace
 
-1. Install `rtk` and make sure it is visible to the OpenBitFun process.
+1. Install `rtk` and make sure it is visible to the StarMate process.
 2. Copy `rtk-hook.ps1` to `%USERPROFILE%\.openbitfun\hooks\rtk-hook.ps1`.
 3. Merge `hooks.windows.user.json` into
    `%APPDATA%\openbitfun\config\hooks.json` (merge the `hooks` entries if the
@@ -32,7 +32,7 @@ Copy both project files into the target repository:
 
 Use `hooks.posix.project.json` as the contents of the project `hooks.json`, or
 merge its `PreToolUse` entry into an existing file. Enable
-`app.hooks.project_hooks_enabled` in OpenBitFun.
+`app.hooks.project_hooks_enabled` in StarMate.
 
 The command runs on the workspace host:
 

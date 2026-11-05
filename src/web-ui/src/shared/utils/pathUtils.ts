@@ -20,7 +20,7 @@ export function hasNonFileUriScheme(path: string): boolean {
   return /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(path) && !path.startsWith('file://');
 }
 
-export function isOpenBitFunRuntimeUri(path: string): boolean {
+export function isStarMateRuntimeUri(path: string): boolean {
   return typeof path === 'string' && path.startsWith('starmate://runtime/');
 }
 

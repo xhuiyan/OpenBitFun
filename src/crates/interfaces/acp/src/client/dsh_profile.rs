@@ -1,6 +1,6 @@
 //! Materialize the bundled DeepSeek Harness bridge into the user's dsh install.
 //!
-//! OpenBitFun ships a compiled ACP bridge, but it does not ship a harness: `dsh` is
+//! StarMate ships a compiled ACP bridge, but it does not ship a harness: `dsh` is
 //! a profile launcher, and a profile is just a directory under
 //! `$DSH_HOME/profiles/`. So instead of publishing the bridge to a registry, we
 //! copy the built profile next to the harness the user already installed and
@@ -8,7 +8,7 @@
 //! that profile resolves out of the user's own installation through the flat
 //! `profiles/node_modules` fallback the launcher maintains, so nothing here
 //! installs a second harness, and the user's model and credentials — which live
-//! in dsh, not in OpenBitFun — apply unchanged.
+//! in dsh, not in StarMate — apply unchanged.
 //!
 //! The copy is idempotent: the built profile carries a content digest, and a
 //! destination already stamped with the same digest is left alone.
@@ -101,11 +101,11 @@ pub(crate) async fn ensure_bundled_profile(profile: &str) -> StarMateResult<Path
     Ok(destination)
 }
 
-/// The built profile this OpenBitFun ships, and what it says about itself.
+/// The built profile this StarMate ships, and what it says about itself.
 fn bundled_build(profile: &str) -> StarMateResult<(PathBuf, BridgeStamp)> {
     let source = bundled_profile_source(profile).ok_or_else(|| {
         StarMateError::service(format!(
-            "The bundled DeepSeek Harness profile '{profile}' is missing from this OpenBitFun build. \
+            "The bundled DeepSeek Harness profile '{profile}' is missing from this StarMate build. \
              Build it with `npm run build && node scripts/build-profile.mjs` in packages/dsh-acp, \
              or point {SOURCE_DIR_ENV} at a built profile directory."
         ))
@@ -134,7 +134,7 @@ async fn require_supported_dsh(minimum: &str) -> StarMateResult<()> {
         return Ok(());
     }
     Err(StarMateError::service(format!(
-        "DeepSeek Harness {installed} is older than {minimum}, which this OpenBitFun build requires. \
+        "DeepSeek Harness {installed} is older than {minimum}, which this StarMate build requires. \
          Update it with `npm install -g @deepseek-ai/dsh`."
     )))
 }
@@ -174,7 +174,7 @@ fn version_is_supported(installed: &str, minimum: &str) -> bool {
     installed >= minimum
 }
 
-/// Locate the built profile that ships with this OpenBitFun.
+/// Locate the built profile that ships with this StarMate.
 fn bundled_profile_source(profile: &str) -> Option<PathBuf> {
     if let Some(configured) = std::env::var_os(SOURCE_DIR_ENV) {
         let configured = PathBuf::from(configured);
@@ -390,7 +390,7 @@ pub(crate) async fn ensure_bundled_profile_remote(
     if probe.launcher.is_empty() {
         return Err(StarMateError::service(format!(
             "DeepSeek Harness is not installed on the remote host: `{launcher}` is not on the login \
-             shell's PATH. Install it there with `npm install -g @deepseek-ai/dsh`; OpenBitFun ships \
+             shell's PATH. Install it there with `npm install -g @deepseek-ai/dsh`; StarMate ships \
              the bridge, not the harness."
         )));
     }
@@ -407,7 +407,7 @@ pub(crate) async fn ensure_bundled_profile_remote(
     if !version_is_supported(&probe.version, &stamp.min_dsh_version) {
         return Err(StarMateError::service(format!(
             "The remote host runs DeepSeek Harness {}, which is older than {}, the version this \
-             OpenBitFun build requires. Update it there with `npm install -g @deepseek-ai/dsh`.",
+             StarMate build requires. Update it there with `npm install -g @deepseek-ai/dsh`.",
             probe.version, stamp.min_dsh_version
         )));
     }

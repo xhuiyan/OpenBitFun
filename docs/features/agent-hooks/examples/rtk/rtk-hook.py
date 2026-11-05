@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rewrite OpenBitFun ExecCommand payloads with RTK."""
+"""Rewrite StarMate ExecCommand payloads with RTK."""
 
 from __future__ import annotations
 

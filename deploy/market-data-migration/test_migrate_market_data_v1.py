@@ -69,7 +69,7 @@ class MarketDataMigrationTest(unittest.TestCase):
             self.assertEqual(len(rows), 2)
             for (raw,) in rows:
                 value = json.loads(raw)
-                self.assertEqual(value["minOpenBitFunVersion"], "1.0.0")
+                self.assertEqual(value["minStarMateVersion"], "1.0.0")
                 for retired_field in migration.RETIRED_VERSION_FIELDS:
                     self.assertNotIn(retired_field, value)
 
@@ -195,7 +195,7 @@ class MarketDataMigrationTest(unittest.TestCase):
 
             draft_json, new_sha, new_size, manifest_json = submission
             migrated_manifest = json.loads(manifest_json)
-            self.assertEqual(json.loads(draft_json)["minOpenBitFunVersion"], "1.0.0")
+            self.assertEqual(json.loads(draft_json)["minStarMateVersion"], "1.0.0")
             self.assertEqual(migrated_manifest["schema"], "starmate.appearance")
             self.assertNotEqual(new_sha, retired_sha)
 

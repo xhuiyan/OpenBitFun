@@ -56,7 +56,7 @@ announces that mode change and selects it through `start_control`; native input
 never silently escalates or retries. A generated agent plan cannot override the
 original user's constraints, Stop, cancellation or OS permission denial.
 
-The operating system owns privacy/sharing indicators. OpenBitFun neither imitates
+The operating system owns privacy/sharing indicators. StarMate neither imitates
 macOS's Sharing menu on other systems nor suppresses native capture borders.
 Product feedback adds target, mode, action, preview and Stop without claiming to
 replace system consent or system Stop Sharing.
@@ -165,9 +165,9 @@ replacement for the existing Windows, Linux or product runtime providers.
 
 The five requested areas are adapted from `computer-use-rust` into the existing
 product owners. The reference repository is development evidence, never a
-runtime, build, test or filesystem dependency of OpenBitFun.
+runtime, build, test or filesystem dependency of StarMate.
 
-| Area | Reference source | OpenBitFun owner and adaptation |
+| Area | Reference source | StarMate owner and adaptation |
 |---|---|---|
 | Permission query/request | `src/native/permissions.rs`, native permission probes | `computer_use_permissions` contracts, Desktop `permissions.rs`, `ComputerUsePermissions.tsx`; four separate read-only probes and explicit request receipts; Windows capability/UIPI facts and Linux AT-SPI/session consent replace macOS-specific assumptions |
 | App sharing and control grants | `src/sharing.rs`, `src/grants.rs`, sharing controls in `src/gui.rs` | Admission state machine plus Desktop `sharing.rs`, `shared_preview.rs`, `process_identity.rs`, `grants.rs`, `share_grants.rs`; user-selected native window, observe first, separate revocable grant, executable-bound remembered preference, manual preview gestures |
@@ -177,7 +177,7 @@ runtime, build, test or filesystem dependency of OpenBitFun.
 
 ### Permissions and user sharing
 
-Opening the OpenBitFun settings page, checking status or reading AX never requests OS permission.
+Opening the StarMate settings page, checking status or reading AX never requests OS permission.
 The user selects each request explicitly. Receipts distinguish a request API
 invocation from the current grant and from observing a visible OS dialog. Input
 Monitoring is optional. Windows does not invent a macOS-style grant; protected
@@ -208,7 +208,7 @@ false`, and `app: null` is unfiltered.
 
 App input actions compare the on-screen window inventory before and after the
 input and report windows that appeared in any process as `opened_windows`,
-excluding the bound window, its popups and OpenBitFun's own windows. The report
+excluding the bound window, its popups and StarMate's own windows. The report
 never rebinds the session; the Agent observes the window it chooses.
 Hosts advertising `window-target-v1` accept `app: {pid, window_id}` to select an
 exact native window. Both IDs must be positive, and native capture validates the
@@ -942,7 +942,7 @@ The inspected paths establish these implementation facts:
   and conditional foreground restoration: `0x100748c64` calls
   `activateWithOptions:` on the saved foreground application. Its tap callbacks
   include event suppression/redirection. Static inspection does not establish
-  that every Codex route avoids foreground changes. OpenBitFun retains its
+  that every Codex route avoids foreground changes. StarMate retains its
   stricter background contract and does not adopt those branches.
 
 The REA JavaScript parent Evidence ID is
@@ -983,7 +983,7 @@ helper-process target resolution, first-click policy, scrolling, dragging,
 menus/sheets and cancellation. The reference uses desktop-independent window
 capture on an inspected ScreenCaptureKit path; it also has other capture routes.
 Its input target resolver can follow out-of-process AX targets, whereas
-OpenBitFun keeps input within the authorized captured PID/window and that
+StarMate keeps input within the authorized captured PID/window and that
 window's same-process popups (see Popup and menu windows). Copying that
 resolver would require an explicit authority design. Reference menu/window
 observers and drag APIs do not establish equivalent coverage of system popups,
@@ -993,23 +993,23 @@ For text, `+[SAIVirtualKeyPress keyPressesForString:]` at `0x10024c2e4` searches
 the current keyboard layout with `UCKeyTranslate`. At `0x10024c428`, an unmatched
 UTF-16 unit is logged and skipped; this method has no Unicode-only fallback.
 The later event converter's optional Unicode field does not remove that
-limitation. OpenBitFun retains direct Unicode scalar delivery and a private
+limitation. StarMate retains direct Unicode scalar delivery and a private
 keyboard source. Fixed US-keyboard shortcut mapping and the local 8 ms text
 pacing policy are not claims of reference parity or non-US layout coverage.
 
 Real-application trials used disposable local documents and isolated browser /
-editor profiles. OpenBitFun actions went through the production
+editor profiles. StarMate actions went through the production
 `ComputerUseTool` and real main-thread run loop using the devtools JSONL probe.
 Reference actions used the installed Codex public native app API; the two
 backends never sent input concurrently to the same application. Results were
 checked in the returned AX tree and, for editors, the saved file, rather than
 inferred from successful action receipts.
 
-| Application / UI family | OpenBitFun observed result | Codex observed result |
+| Application / UI family | StarMate observed result | Codex observed result |
 |---|---|---|
-| TextEdit 1.20 / AppKit | Image-coordinate focus, select-all, full `OpenBitFun background 文本🙂`, and save | Click, select-all and save worked; `typeText` retained only `Codex background ` in this trial |
+| TextEdit 1.20 / AppKit | Image-coordinate focus, select-all, full `StarMate background 文本🙂`, and save | Click, select-all and save worked; `typeText` retained only `Codex background ` in this trial |
 | Microsoft Edge 155.0.4283.60 / Chromium | One additional button activation, full Unicode input, and anchored scroll | One button activation and anchored scroll; `typeText` retained only ASCII |
-| VS Code 1.117.0 / Electron | Image-coordinate editor focus, full Unicode, Command+Shift+Left replacement and save produced exactly `OpenBitFun shortcut 文本🙂` | Editor click, select-all and save worked; the saved text contained only ASCII |
+| VS Code 1.117.0 / Electron | Image-coordinate editor focus, full Unicode, Command+Shift+Left replacement and save produced exactly `StarMate shortcut 文本🙂` | Editor click, select-all and save worked; the saved text contained only ASCII |
 | Calculator 11.0 / native controls | Background clear plus directed key sequence `17 + 25` produced `42` | Background clear plus the equivalent key sequence produced `42` |
 
 These are individual compatibility observations on this host/version, not a
@@ -1022,7 +1022,7 @@ An independent passive witness sampled frontmost PID, physical cursor, AX
 focused-window identity and relative stacking at a requested 10 ms interval,
 with activation notifications and sampling-gap records. It requested no OS
 permissions, created no window and posted no input. No trial recorded the
-target application becoming the human foreground. During the OpenBitFun Edge
+target application becoming the human foreground. During the StarMate Edge
 and Calculator intervals, foreground PID and cursor were unchanged and the
 target stayed below the foreground window; available AX focus samples retained
 the same window ID. Some AX reads timed out or became stale and remain unknown.
@@ -1076,7 +1076,7 @@ also describes executing ordered actions before returning an observation; this
 is a public integration pattern, not proof of the desktop application's API wire.
 The [programmatic-tool guide](https://developers.openai.com/api/docs/guides/tools-programmatic-tool-calling)
 calls for measuring correctness, evidence, model turns and latency together.
-OpenBitFun applies the interaction policy through its existing typed program and
+StarMate applies the interaction policy through its existing typed program and
 host port, retaining its authorization, partial receipts and cancellation rules.
 
 Local macOS acceptance used the production Tool → host → native input/observation
@@ -1123,7 +1123,7 @@ ComputerUse tool tests, two browser connection-hint tests, 163 Desktop Computer
 Use tests, 33 control/permission contract tests, eight prompt-catalog tests,
 64 isolated production-source context tests and 27 frontend settings/control
 tests. Nine Desktop native tests and one isolated browser test are ignored in
-those unit commands. `cargo build -p openbitfun-desktop`, `check:web`, the Web
+those unit commands. `cargo build -p starmate-desktop`, `check:web`, the Web
 production build, changed-page ESLint, generated capabilities, repository hygiene
 and core boundaries passed. These suite counts overlap.
 

@@ -51,7 +51,7 @@ Open webpages and local services inside StarMate, where an agent can inspect the
 3. 智能体先读取页面，再用元素引用执行操作
    The agent inspects the page, then acts through element refs
 
-入口 / Entry: OpenBitFun 功能入口
+入口 / Entry: StarMate 功能入口
 
 ## 智能体可替你做什么 / What an agent can do for you
 

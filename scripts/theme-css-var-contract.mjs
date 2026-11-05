@@ -172,7 +172,7 @@ export const COLOR_DOMAIN_RULES = [
   },
   {
     key: 'openbitfunCanvas',
-    label: 'OpenBitFun Canvas',
+    label: 'StarMate Canvas',
     pathParts: ['tools/starmate-canvas'],
   },
   {
@@ -270,7 +270,7 @@ export const COLOR_DOMAIN_CONTRACTS = [
   {
     key: 'openbitfunCanvas',
     owner: 'src/web-ui/src/tools/starmate-canvas',
-    reason: 'OpenBitFun Canvas renders generated TSX inside a dedicated iframe runtime with an SDK palette that must stay isolated from app chrome tokens.',
+    reason: 'StarMate Canvas renders generated TSX inside a dedicated iframe runtime with an SDK palette that must stay isolated from app chrome tokens.',
     mergePolicy: 'Keep Canvas iframe and SDK colors in the Canvas Appearance contract; promote only reusable host chrome roles to shared app tokens.',
   },
   {
@@ -340,7 +340,7 @@ export const DYNAMIC_VAR_FAMILY_CONTRACTS = [
   {
     prefix: '--starmate-canvas-',
     owner: 'src/web-ui/src/tools/starmate-canvas/runtime/canvasRuntimeInstaller.ts; src/web-ui/src/tools/starmate-canvas/runtime/styles/canvas-runtime.scss',
-    reason: 'OpenBitFun Canvas iframe runtime receives host Appearance values through a scoped CSS variable family that must stay isolated from app root tokens.',
+    reason: 'StarMate Canvas iframe runtime receives host Appearance values through a scoped CSS variable family that must stay isolated from app root tokens.',
   },
   {
     prefix: '--starmate-font-size-',

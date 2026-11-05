@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 import WebKit
 import UniformTypeIdentifiers
@@ -32,9 +32,9 @@ struct RemoteCreateSessionView: View {
                         Button(action: onBack) {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 19, weight: .medium))
-                                .foregroundStyle(OpenBitFunTheme.ink)
+                                .foregroundStyle(StarMateTheme.ink)
                                 .frame(width: 44, height: 44)
-                                .background(OpenBitFunTheme.card)
+                                .background(StarMateTheme.card)
                                 .clipShape(Circle())
                         }
                         .buttonStyle(.plain)
@@ -72,7 +72,7 @@ struct RemoteCreateSessionView: View {
                 .frame(minHeight: geometry.size.height)
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .overlayPreferenceValue(RemoteCreateSelectionAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if horizontalSizeClass == .regular,
@@ -80,7 +80,7 @@ struct RemoteCreateSessionView: View {
                    let anchor = anchors[kind] {
                     let frame = proxy[anchor]
                     ZStack(alignment: .topLeading) {
-                        OpenBitFunTheme.transparent
+                        StarMateTheme.transparent
                             .contentShape(Rectangle())
                             .onTapGesture { pickerKind = nil }
                         selectionContent(kind: kind, includeHeader: false)
@@ -165,15 +165,15 @@ struct RemoteCreateSessionView: View {
             HStack(spacing: 13) {
                 Image(systemName: icon)
                     .font(.system(size: 20, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(width: 26, height: 26)
                 Text(label)
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .lineLimit(1)
                 Image(systemName: pickerKind == kind ? "chevron.up" : "chevron.down")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                 Spacer(minLength: 0)
             }
             .frame(height: 48)
@@ -197,8 +197,8 @@ struct RemoteCreateSessionView: View {
             TextField(
                 "",
                 text: $instruction,
-                prompt: Text(model.localized(speech.isListening ? "正在聆听" : "告诉 OpenBitFun 要做什么"))
-                    .foregroundColor(speech.isListening ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.muted),
+                prompt: Text(model.localized(speech.isListening ? "正在聆听" : "告诉 StarMate 要做什么"))
+                    .foregroundColor(speech.isListening ? StarMateTheme.statusSuccess : StarMateTheme.muted),
                 axis: .vertical
             )
             .font(MobileDesignTypography.bodyLarge.font)
@@ -226,11 +226,11 @@ struct RemoteCreateSessionView: View {
                         HStack(spacing: 4) {
                             Text(selectedModel.roleLabelKey.map(model.localized) ?? selectedModel.primaryLabel)
                                 .font(.system(size: 13, weight: .medium))
-                                .foregroundStyle(OpenBitFunTheme.ink)
+                                .foregroundStyle(StarMateTheme.ink)
                                 .lineLimit(1)
                             Image(systemName: pickerKind == .model ? "chevron.up" : "chevron.down")
                                 .font(.system(size: 10, weight: .semibold))
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                         }
                         .frame(height: 34)
                     }
@@ -248,18 +248,18 @@ struct RemoteCreateSessionView: View {
                     Group {
                         if model.remoteCreateSubmitting {
                             ProgressView()
-                                .tint(OpenBitFunTheme.contentOnAction)
+                                .tint(StarMateTheme.contentOnAction)
                         } else {
                             Image(systemName: speech.isListening ? "stop.fill" : (instruction.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "mic.fill" : "arrow.up"))
                             .font(.system(size: 17, weight: .semibold))
-                            .foregroundStyle(canSubmit ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
+                            .foregroundStyle(canSubmit ? StarMateTheme.contentOnAction : StarMateTheme.ink)
                         }
                     }
                     .frame(
                         width: MobileDesignGeometry.composerActionSize,
                         height: MobileDesignGeometry.composerActionSize
                     )
-                    .background(canSubmit ? OpenBitFunTheme.accent : OpenBitFunTheme.soft)
+                    .background(canSubmit ? StarMateTheme.accent : StarMateTheme.soft)
                     .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -273,9 +273,9 @@ struct RemoteCreateSessionView: View {
         .padding(.top, 4)
         .padding(.bottom, 2)
         .frame(minHeight: MobileDesignGeometry.composerExpandedHeight)
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.composerExpandedRadius))
-        .shadow(color: OpenBitFunTheme.shadowSubtle, radius: 10, y: 2)
+        .shadow(color: StarMateTheme.shadowSubtle, radius: 10, y: 2)
         .padding(.horizontal, MobileDesignGeometry.contentGutter)
         .padding(.top, 8)
         .padding(.bottom, 14)
@@ -289,22 +289,22 @@ struct RemoteCreateSessionView: View {
     private func createStatus(message: String, retryTitle: String, action: @escaping () -> Void) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: "exclamationmark.triangle")
-                .foregroundStyle(OpenBitFunTheme.statusDanger)
+                .foregroundStyle(StarMateTheme.statusDanger)
             Text(message)
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 4)
             Button(retryTitle, action: action)
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(OpenBitFunTheme.accent)
+                .foregroundStyle(StarMateTheme.accent)
                 .disabled(model.remoteCreateSubmitting || model.accountBusy)
                 .accessibilityLabel(retryTitle)
                 .accessibilityHint(model.localized("选择"))
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 10)
-        .background(OpenBitFunTheme.soft)
+        .background(StarMateTheme.soft)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(model.localized("状态")): \(message)")
     }
@@ -364,7 +364,7 @@ struct RemoteCreateSessionView: View {
     private func selectionContent(kind: RemoteCreateSelectionKind, includeHeader: Bool) -> some View {
         VStack(spacing: 0) {
             if includeHeader {
-                OpenBitFunSelectionHeader(title: model.localized(kind.titleKey), onClose: { pickerKind = nil })
+                StarMateSelectionHeader(title: model.localized(kind.titleKey), onClose: { pickerKind = nil })
             }
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -426,7 +426,7 @@ struct RemoteCreateSessionView: View {
                                     }
                                 }
                                 if model.savedRuntimeConnectionsFailed {
-                                    Text(model.localized("无法加载已保存连接，请刷新重试。")).foregroundStyle(OpenBitFunTheme.muted)
+                                    Text(model.localized("无法加载已保存连接，请刷新重试。")).foregroundStyle(StarMateTheme.muted)
                                 }
                                 Button(model.localized("Browse folders")) {
                                     directoryConnectionId = savedConnectionId.isEmpty ? nil : savedConnectionId
@@ -457,7 +457,7 @@ struct RemoteCreateSessionView: View {
                         if model.modelOptions.isEmpty {
                             Text(model.localized("暂无可用模型"))
                                 .font(.system(size: 13))
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(18)
                                 .accessibilityElement()
@@ -481,7 +481,7 @@ struct RemoteCreateSessionView: View {
                 }
             }
         }
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .fullScreenCover(isPresented: $directoryVisible) {
             NavigationStack {
                 VStack {
@@ -520,21 +520,21 @@ struct RemoteCreateSessionView: View {
             HStack(spacing: 12) {
                 Image(systemName: selected ? "checkmark.circle" : "circle")
                     .font(.system(size: 19))
-                    .foregroundStyle(selected ? OpenBitFunTheme.ink : OpenBitFunTheme.transparent)
+                    .foregroundStyle(selected ? StarMateTheme.ink : StarMateTheme.transparent)
                     .frame(width: 20)
                 Image(systemName: icon)
                     .font(.system(size: 19, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(width: 24)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                     if !subtitle.isEmpty {
                         Text(subtitle)
                             .font(.system(size: 11))
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                             .lineLimit(1)
                     }
                 }
@@ -560,7 +560,7 @@ struct RemoteCreateSessionView: View {
             }
             Text(title)
                 .font(.system(size: 14))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
             Spacer(minLength: 0)
         }
         .padding(.horizontal, 18)
@@ -579,7 +579,7 @@ struct RemoteCreateSessionView: View {
                     .font(.system(size: 14, weight: .medium))
                 Spacer(minLength: 0)
             }
-            .foregroundStyle(OpenBitFunTheme.accent)
+            .foregroundStyle(StarMateTheme.accent)
             .padding(.horizontal, 18)
             .frame(minHeight: 52)
         }
@@ -655,13 +655,13 @@ struct HarnessProfileLabel: View {
         HStack(spacing: 12) {
             HStack(spacing: 2) {
                 ForEach(0..<density, id: \.self) { index in
-                    RoundedRectangle(cornerRadius: 2).fill(OpenBitFunTheme.ink)
+                    RoundedRectangle(cornerRadius: 2).fill(StarMateTheme.ink)
                         .frame(width: 4, height: CGFloat(8 + index * 5))
                 }
             }.frame(width: 22, height: 22)
             Text(model.localized(profile == .minimal ? "极简" : (profile == .ultimate ? "极致" : "标准")))
                 .font(MobileDesignTypography.titleSmall.font)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
         }
     }
 }
@@ -722,12 +722,12 @@ private struct NativeRuntimeTerminalView: UIViewRepresentable {
                 UIColor(color).resolvedColor(with: traits).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
                 return String(format: "#%02X%02X%02X", Int((red * 255).rounded()), Int((green * 255).rounded()), Int((blue * 255).rounded()))
             }
-            let theme = ["background": css(OpenBitFunTheme.page), "foreground": css(OpenBitFunTheme.ink), "cursor": css(OpenBitFunTheme.ink)]
+            let theme = ["background": css(StarMateTheme.page), "foreground": css(StarMateTheme.ink), "cursor": css(StarMateTheme.ink)]
             guard let data = try? JSONSerialization.data(withJSONObject: theme, options: .sortedKeys),
                   let json = String(data: data, encoding: .utf8), json != appliedTheme else { return }
             view.isOpaque = false
-            view.backgroundColor = UIColor(OpenBitFunTheme.page).resolvedColor(with: traits)
-            view.evaluateJavaScript("window.OpenBitFunTerminal.setTheme(\(json))")
+            view.backgroundColor = UIColor(StarMateTheme.page).resolvedColor(with: traits)
+            view.evaluateJavaScript("window.StarMateTerminal.setTheme(\(json))")
             appliedTheme = json
         }
         func render(force: Bool) {
@@ -738,7 +738,7 @@ private struct NativeRuntimeTerminalView: UIViewRepresentable {
             let reset = force || epoch != id || state.reset || state.revision != revision + 1
             let frame: [String: Any] = ["epoch": id, "revision": state.revision, "reset": reset, "data": reset ? state.output : state.chunk]
             guard let data = try? JSONSerialization.data(withJSONObject: frame), let json = String(data: data, encoding: .utf8) else { return }
-            view?.evaluateJavaScript("window.OpenBitFunTerminal.accept(\(json))")
+            view?.evaluateJavaScript("window.StarMateTerminal.accept(\(json))")
             epoch = id; revision = state.revision
         }
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -772,7 +772,7 @@ private struct NativeRuntimeTerminalView: UIViewRepresentable {
             return "none"
         }
         #endif
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { webView.evaluateJavaScript("window.OpenBitFunTerminal.connect()") }
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { webView.evaluateJavaScript("window.StarMateTerminal.connect()") }
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             decisionHandler(navigationAction.request.url?.isFileURL == true ? .allow : .cancel)
         }
@@ -860,15 +860,15 @@ private final class NumberedCodeEditorView: UIView, UITextViewDelegate {
             view.font = codeFont
             view.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
             view.textContainer.lineFragmentPadding = 0
-            view.backgroundColor = UIColor(OpenBitFunTheme.card)
-            view.textColor = UIColor(OpenBitFunTheme.ink)
+            view.backgroundColor = UIColor(StarMateTheme.card)
+            view.textColor = UIColor(StarMateTheme.ink)
             view.typingAttributes = [.font: codeFont, .paragraphStyle: paragraph]
             view.isScrollEnabled = true
             view.contentInsetAdjustmentBehavior = .never
             addSubview(view)
         }
         gutter.isEditable = false; gutter.isSelectable = false; gutter.isUserInteractionEnabled = false
-        gutter.textColor = UIColor(OpenBitFunTheme.muted)
+        gutter.textColor = UIColor(StarMateTheme.muted)
         gutter.showsVerticalScrollIndicator = false; gutter.showsHorizontalScrollIndicator = false
         editor.textContainer.widthTracksTextView = false
         editor.textContainer.heightTracksTextView = false
@@ -891,8 +891,8 @@ private final class NumberedCodeEditorView: UIView, UITextViewDelegate {
     }
     func setContent(_ content: String) {
         let paragraph = NSMutableParagraphStyle(); paragraph.minimumLineHeight = 21; paragraph.maximumLineHeight = 21
-        editor.attributedText = NSAttributedString(string: content, attributes: [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(OpenBitFunTheme.ink)])
-        editor.typingAttributes = [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(OpenBitFunTheme.ink)]
+        editor.attributedText = NSAttributedString(string: content, attributes: [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(StarMateTheme.ink)])
+        editor.typingAttributes = [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(StarMateTheme.ink)]
         updateLines()
     }
     func updateLines() {
@@ -900,7 +900,7 @@ private final class NumberedCodeEditorView: UIView, UITextViewDelegate {
         if count != lineCount {
             lineCount = count
             let paragraph = NSMutableParagraphStyle(); paragraph.minimumLineHeight = 21; paragraph.maximumLineHeight = 21
-            gutter.attributedText = NSAttributedString(string: (1...max(count, 1)).map(String.init).joined(separator: "\n"), attributes: [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(OpenBitFunTheme.muted)])
+            gutter.attributedText = NSAttributedString(string: (1...max(count, 1)).map(String.init).joined(separator: "\n"), attributes: [.font: codeFont, .paragraphStyle: paragraph, .foregroundColor: UIColor(StarMateTheme.muted)])
         }
         updateContainerWidth(); setNeedsLayout()
     }
@@ -921,10 +921,10 @@ struct NativeDeviceToolsView: View {
                 Text(title)
                     .fontWeight(selected ? .semibold : .regular)
                     .frame(maxWidth: .infinity, minHeight: 44)
-                Rectangle().fill(OpenBitFunTheme.ink)
+                Rectangle().fill(StarMateTheme.ink)
                     .frame(height: 2).opacity(selected ? 1 : 0)
             }
-            .foregroundStyle(selected ? OpenBitFunTheme.ink : OpenBitFunTheme.muted)
+            .foregroundStyle(selected ? StarMateTheme.ink : StarMateTheme.muted)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -964,7 +964,7 @@ struct NativeDeviceToolsView: View {
                             VStack(spacing: 20) {
                                 Image(systemName: "terminal")
                                     .font(.system(size: 36))
-                                    .foregroundStyle(OpenBitFunTheme.muted)
+                                    .foregroundStyle(StarMateTheme.muted)
                                 Button(model.localized("打开终端")) { model.startDeviceToolsTerminal() }
                                     .accessibilityIdentifier("device.tools.openTerminal")
                                     .buttonStyle(.bordered)
@@ -981,7 +981,7 @@ struct NativeDeviceToolsView: View {
             }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .navigationBarTitleDisplayMode(.inline)
-                .tint(OpenBitFunTheme.ink)
+                .tint(StarMateTheme.ink)
                 .navigationTitle(model.localized("Device tools"))
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { Button(model.localized("返回"), action: onBack) }
@@ -1031,7 +1031,7 @@ private struct NativeRuntimeFileBrowser: View {
         VStack(spacing: 0) {
             if let files = model.runtimeFiles {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(files.directory).font(.caption).foregroundStyle(OpenBitFunTheme.muted).lineLimit(2)
+                    Text(files.directory).font(.caption).foregroundStyle(StarMateTheme.muted).lineLimit(2)
                     HStack {
                         Button { model.browseRuntimeFiles((files.directory as NSString).deletingLastPathComponent.isEmpty ? "/" : (files.directory as NSString).deletingLastPathComponent) } label: { Image(systemName: "arrow.up").frame(width: 44, height: 44) }.accessibilityLabel(model.localized("Parent folder")).disabled(files.directory == "/")
                         Button { model.browseRuntimeFiles(files.directory) } label: { Image(systemName: "arrow.clockwise").frame(width: 44, height: 44) }.accessibilityLabel(model.localized("刷新"))
@@ -1061,7 +1061,7 @@ private struct NativeRuntimeFileBrowser: View {
                                     if entry.directory { model.browseRuntimeFiles(entry.path) } else { model.readRuntimeFile(entry.path) }
                                 } label: {
                                     HStack(spacing: 12) {
-                                        Image(systemName: entry.directory ? "folder" : "doc").foregroundStyle(OpenBitFunTheme.muted).frame(width: 22)
+                                        Image(systemName: entry.directory ? "folder" : "doc").foregroundStyle(StarMateTheme.muted).frame(width: 22)
                                         Text(entry.name).lineLimit(2).multilineTextAlignment(.leading)
                                         Spacer(minLength: 0)
                                     }.frame(minHeight: 52).contentShape(Rectangle())
@@ -1094,16 +1094,16 @@ private struct NativeRuntimeFileBrowser: View {
                 }.disabled(busy)
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        if value == .delete { Text(target).font(.callout).foregroundStyle(OpenBitFunTheme.muted) }
+                        if value == .delete { Text(target).font(.callout).foregroundStyle(StarMateTheme.muted) }
                         else { TextField(model.localized("File name"), text: $name).textFieldStyle(.roundedBorder).autocorrectionDisabled().textInputAutocapitalization(.never).disabled(busy).accessibilityIdentifier("file.action.name") }
                         if model.runtimeFiles?.failed == true { Text(model.runtimeFiles?.errorDetail ?? model.localized("文件操作失败，请重试。")).font(.caption) }
                         if busy { ProgressView() }
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
             }.padding(24)
-                .presentationDetents([.height(240)]).background(OpenBitFunTheme.page)
+                .presentationDetents([.height(240)]).background(StarMateTheme.page)
                 .presentationDragIndicator(.visible).interactiveDismissDisabled(busy)
-                .tint(OpenBitFunTheme.ink)
+                .tint(StarMateTheme.ink)
                 .fileImporter(isPresented: $uploadPicker, allowedContentTypes: [.data], allowsMultipleSelection: false) { result in
                     guard model.remoteExpectedDeviceKey == deviceKey else { return }
                     if case .success(let urls) = result, let url = urls.first {

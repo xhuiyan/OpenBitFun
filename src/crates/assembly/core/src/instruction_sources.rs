@@ -412,7 +412,7 @@ pub(crate) mod test_support {
             let openbitfun_home = if values.iter().any(|(name, _)| *name == "STARMATE_HOME") {
                 None
             } else {
-                let home = tempfile::tempdir().expect("isolated OpenBitFun home");
+                let home = tempfile::tempdir().expect("isolated StarMate home");
                 previous.push(("STARMATE_HOME", std::env::var_os("STARMATE_HOME")));
                 std::env::set_var("STARMATE_HOME", home.path());
                 Some(home)

@@ -610,7 +610,7 @@ pub fn desktop_card_host_available() -> bool {
 
 pub async fn invoke_desktop_card_host(request: DesktopCardHostRequest) -> Result<Value, String> {
     let Some(handler) = DESKTOP_CARD_HANDLER.get() else {
-        return Err("Desktop cards are available only in the OpenBitFun desktop app".to_string());
+        return Err("Desktop cards are available only in the StarMate desktop app".to_string());
     };
     handler(request).await
 }

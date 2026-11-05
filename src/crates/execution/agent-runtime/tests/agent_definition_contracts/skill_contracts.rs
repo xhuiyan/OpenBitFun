@@ -23,7 +23,7 @@ fn builtin_skill(dir_name: &str) -> SkillInfo {
         level: SkillLocation::User,
         source_slot: "openbitfun-system".to_string(),
         source_id: "openbitfun".to_string(),
-        source_label: "OpenBitFun".to_string(),
+        source_label: "StarMate".to_string(),
         installation_source: None,
         import_origin: None,
         entry_file: None,
@@ -47,7 +47,7 @@ fn custom_user_skill(dir_name: &str) -> SkillInfo {
         level: SkillLocation::User,
         source_slot: "openbitfun".to_string(),
         source_id: "openbitfun".to_string(),
-        source_label: "OpenBitFun".to_string(),
+        source_label: "StarMate".to_string(),
         installation_source: None,
         import_origin: None,
         entry_file: None,
@@ -433,7 +433,7 @@ fn project_skill(dir_name: &str) -> SkillInfo {
         level: SkillLocation::Project,
         source_slot: "openbitfun".to_string(),
         source_id: "openbitfun".to_string(),
-        source_label: "OpenBitFun".to_string(),
+        source_label: "StarMate".to_string(),
         installation_source: None,
         import_origin: None,
         entry_file: None,
@@ -676,14 +676,14 @@ fn skill_discovery_root_facts_are_runtime_owned() {
 fn skill_source_identity_is_serialized_without_changing_slot_identity() {
     let mut info = project_skill("pdf");
     info.source_id = "openbitfun".to_string();
-    info.source_label = "OpenBitFun".to_string();
+    info.source_label = "StarMate".to_string();
     info.allow_user_invocation = false;
     info.argument_hint = Some("[file]".to_string());
 
     let value = serde_json::to_value(info).expect("skill info should serialize");
     assert_eq!(value["sourceSlot"], "openbitfun");
     assert_eq!(value["sourceId"], "openbitfun");
-    assert_eq!(value["sourceLabel"], "OpenBitFun");
+    assert_eq!(value["sourceLabel"], "StarMate");
     assert_eq!(value["allowUserInvocation"], false);
     assert_eq!(value["argumentHint"], "[file]");
 }
@@ -1065,7 +1065,7 @@ Use the presentation workflow.
         data,
         "openbitfun-system",
         "openbitfun",
-        "OpenBitFun",
+        "StarMate",
         "user",
         10,
         true,

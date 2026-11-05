@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import OpenBitFunMobileCore
+import StarMateMobileCore
 
 extension MobileAppModel {
     private func invalidateTerminalAccountAuthority() {

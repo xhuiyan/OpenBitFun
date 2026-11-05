@@ -365,7 +365,7 @@ test('browser, launcher-preview, and email slots ship the 512 px export', () => 
   }
 });
 
-test('verification email reuses the current mark and the OpenBitFun reference palette', () => {
+test('verification email reuses the current mark and the StarMate reference palette', () => {
   const emailMark = readFileSync('src/miniapp-market-web/public/assets/starmate-email-app-icon.png');
   assert.deepEqual(emailMark, readFileSync('src/web-ui/public/brand/starmate-app-icon.png'));
   assert.deepEqual(emailMark, readFileSync('src/crates/services/miniapp-market-service/src/email/app-icon.png'));

@@ -79,7 +79,7 @@ impl Mailer {
             .parse::<u16>()
             .map_err(|_| MarketError::internal("Invalid SMTP_PORT"))?;
         let from = Mailbox::new(
-            Some(get("SMTP_FROM_NAME").unwrap_or_else(|| "OpenBitFun".into())),
+            Some(get("SMTP_FROM_NAME").unwrap_or_else(|| "StarMate".into())),
             username
                 .parse()
                 .map_err(|_| MarketError::internal("Invalid SMTP_USERNAME"))?,
@@ -1084,7 +1084,7 @@ mod tests {
     #[test]
     fn verification_email_has_html_and_plain_text_without_attachments() {
         let message = verification_message(
-            "OpenBitFun <hello@example.com>".parse().unwrap(),
+            "StarMate <hello@example.com>".parse().unwrap(),
             "alice@example.com",
             "123456",
             "en-US",
@@ -1114,7 +1114,7 @@ mod tests {
                 .unwrap()
         };
         let plain = String::from_utf8(decode_part("text/plain;")).unwrap();
-        assert!(plain.contains("Your OpenBitFun verification code is: 123456"));
+        assert!(plain.contains("Your StarMate verification code is: 123456"));
         assert!(plain.is_ascii());
         let html = String::from_utf8(decode_part("text/html;")).unwrap();
         assert!(html.contains("src=\"cid:starmate-app-icon\""));
@@ -1154,7 +1154,7 @@ mod tests {
                 expected
             );
             let message = verification_message(
-                "OpenBitFun <hello@example.com>".parse().unwrap(),
+                "StarMate <hello@example.com>".parse().unwrap(),
                 "a@example.com",
                 "654321",
                 locale,
@@ -1187,7 +1187,7 @@ mod tests {
             }
         }
         let unknown = verification_message(
-            "OpenBitFun <hello@example.com>".parse().unwrap(),
+            "StarMate <hello@example.com>".parse().unwrap(),
             "a@example.com",
             "654321",
             "unknown",
@@ -1195,7 +1195,7 @@ mod tests {
         .unwrap();
         assert!(String::from_utf8(unknown.formatted())
             .unwrap()
-            .contains("Subject: OpenBitFun sign-in code"));
+            .contains("Subject: StarMate sign-in code"));
     }
 
     #[test]

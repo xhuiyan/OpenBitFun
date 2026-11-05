@@ -349,7 +349,7 @@ async fn begin_browser_login(
         method: super::SubscriptionLoginMethod::Browser,
         authorization_url,
         user_code: None,
-        instructions: "Complete authorization in your browser, then return to OpenBitFun."
+        instructions: "Complete authorization in your browser, then return to StarMate."
             .to_string(),
         runner: Box::pin(runner),
     })
@@ -1174,6 +1174,6 @@ mod tests {
             build_authorize_url(&Pkce::generate(), "state", &redirect_uri(CALLBACK_PORT))
                 .contains("originator=openbitfun")
         );
-        assert!(user_agent().starts_with("OpenBitFun/"));
+        assert!(user_agent().starts_with("StarMate/"));
     }
 }

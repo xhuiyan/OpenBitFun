@@ -7,7 +7,7 @@ import { configAPI } from '@/infrastructure/api';
 import { globalEventBus } from '@/infrastructure/event-bus';
 import { getActiveSurfaceScope, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';
 import type { SkillInfo, SkillLevel, SkillValidationResult, SkillScanDiagnostic } from '@/infrastructure/config/types';
-import { canDeleteSkill, isOpenBitFunManagedSkill, getSkillOriginSourceId, getSkillSourceLabel } from '@/infrastructure/config/skillSourcePresentation';
+import { canDeleteSkill, isStarMateManagedSkill, getSkillOriginSourceId, getSkillSourceLabel } from '@/infrastructure/config/skillSourcePresentation';
 import { useWorkspaceManagerSync } from '@/infrastructure/hooks/useWorkspaceManagerSync';
 import { isRemoteWorkspace as workspaceIsRemote, type WorkspaceInfo } from '@/shared/types';
 import { useNotification } from '@/shared/notification-system';
@@ -383,7 +383,7 @@ export function useInstalledSkills({
 
   const canToggleSkill = useCallback((skill: SkillInfo) => (
     !skillSettingsReadOnly
-      && (directManagementSupported || (skill.level === 'user' && isOpenBitFunManagedSkill(skill)))
+      && (directManagementSupported || (skill.level === 'user' && isStarMateManagedSkill(skill)))
   ), [directManagementSupported, skillSettingsReadOnly]);
 
   const handleGlobalSkillToggle = useCallback(async (skill: SkillInfo, enabled: boolean) => {

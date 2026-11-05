@@ -1,4 +1,4 @@
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 
 private func normalizedDeviceKey(_ key: String?) -> String? {
@@ -80,7 +80,7 @@ struct SidebarView: View {
                 .layoutPriority(-1)
                 .clipped()
                 .accessibilityIdentifier("sidebar.workspaces")
-                footer.background(OpenBitFunTheme.sidebarBg)
+                footer.background(StarMateTheme.sidebarBg)
             }
             .padding(.horizontal, 20)
             .padding(.top, 0)
@@ -90,7 +90,7 @@ struct SidebarView: View {
                 height: proxy.size.height,
                 alignment: .topLeading
             )
-            .background(OpenBitFunTheme.sidebarBg)
+            .background(StarMateTheme.sidebarBg)
         }
         .sheet(item: $compactActionSession) { session in
             let detentHeight: CGFloat = model.surface == .local ? 330 : 230
@@ -147,7 +147,7 @@ struct SidebarView: View {
                         ? 46 * 3 + 16
                         : MobileDesignGeometry.compactPopoverActionHeight + 16
                     ZStack(alignment: .topLeading) {
-                        OpenBitFunTheme.transparent
+                        StarMateTheme.transparent
                             .contentShape(Rectangle())
                             .onTapGesture { workspaceCreatePath = nil }
                         workspaceCreateMenu(workspace)
@@ -185,18 +185,18 @@ struct SidebarView: View {
 
     private var authenticatedHeader: some View {
         HStack(spacing: 6) {
-            Text(verbatim: "OpenBitFun")
+            Text(verbatim: "StarMate")
                 .font(.system(size: 20, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                .foregroundStyle(StarMateTheme.sidebarInk)
             Spacer(minLength: 0)
             if let onCollapse {
                 Button(action: onCollapse) {
                     Image(systemName: "sidebar.left")
                         .font(.system(size: 17, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                         .frame(width: 38, height: 38)
-                        .background(OpenBitFunTheme.sidebarRaised)
-                        .overlay(Circle().stroke(OpenBitFunTheme.sidebarLine, lineWidth: 1))
+                        .background(StarMateTheme.sidebarRaised)
+                        .overlay(Circle().stroke(StarMateTheme.sidebarLine, lineWidth: 1))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -210,8 +210,8 @@ struct SidebarView: View {
                     .font(.system(size: 18, weight: .regular))
                     .frame(width: 22, height: 22)
                     .frame(width: 44, height: 44)
-                    .background(OpenBitFunTheme.sidebarRaised)
-                    .overlay(Circle().stroke(OpenBitFunTheme.sidebarLine, lineWidth: 0.5))
+                    .background(StarMateTheme.sidebarRaised)
+                    .overlay(Circle().stroke(StarMateTheme.sidebarLine, lineWidth: 0.5))
                     .clipShape(Circle())
                     .shadow(color: MobileDesignColors.shadowFaint, radius: 9, y: 3)
             }
@@ -230,7 +230,7 @@ struct SidebarView: View {
                     Text(model.localized("连接桌面端"))
                         .font(.system(size: 15, weight: .medium))
                 }
-                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                .foregroundStyle(StarMateTheme.sidebarInk)
                 .frame(height: 42)
             }
             .buttonStyle(.plain)
@@ -239,10 +239,10 @@ struct SidebarView: View {
                 Button(action: onCollapse) {
                     Image(systemName: "sidebar.left")
                         .font(.system(size: 17, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                         .frame(width: 38, height: 38)
-                        .background(OpenBitFunTheme.sidebarRaised)
-                        .overlay(Circle().stroke(OpenBitFunTheme.sidebarLine, lineWidth: 1))
+                        .background(StarMateTheme.sidebarRaised)
+                        .overlay(Circle().stroke(StarMateTheme.sidebarLine, lineWidth: 1))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -255,10 +255,10 @@ struct SidebarView: View {
     private var searchField: some View {
         TextField(model.localized("搜索对话"), text: $search)
             .font(.system(size: 14))
-            .foregroundStyle(OpenBitFunTheme.sidebarInk)
+            .foregroundStyle(StarMateTheme.sidebarInk)
             .padding(.horizontal, 14)
             .frame(height: 42)
-            .background(OpenBitFunTheme.sidebarHover)
+            .background(StarMateTheme.sidebarHover)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.top, 12)
             .onChange(of: search) { value in
@@ -278,7 +278,7 @@ struct SidebarView: View {
             HStack {
                 Text(model.localized("设备"))
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                    .foregroundStyle(StarMateTheme.sidebarMuted)
                 Spacer()
                 if model.accountUser != nil {
                     Button { model.refreshRemoteDevices() } label: {
@@ -287,7 +287,7 @@ struct SidebarView: View {
                         } else {
                             Image(systemName: "arrow.clockwise")
                                 .font(.system(size: 14, weight: .medium))
-                                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                                .foregroundStyle(StarMateTheme.sidebarMuted)
                         }
                     }
                     .buttonStyle(.plain)
@@ -302,7 +302,7 @@ struct SidebarView: View {
                 Button { model.refreshRemoteDevices() } label: {
                     Text(error)
                         .font(.system(size: 12))
-                        .foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .foregroundStyle(StarMateTheme.statusDanger)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
                 }
@@ -314,7 +314,7 @@ struct SidebarView: View {
             if directoryEntries.isEmpty {
                 Text(model.localized("尚未连接桌面设备"))
                     .font(.system(size: 13))
-                    .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                    .foregroundStyle(StarMateTheme.sidebarMuted)
                     .padding(.horizontal, 10)
                     .frame(height: 42, alignment: .leading)
             }
@@ -328,7 +328,7 @@ struct SidebarView: View {
                 HStack {
                     Text(model.localized("工作区"))
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                     Spacer(minLength: 0)
                     Button {
                         workspacePickerDevice = selectedDirectoryEntry
@@ -336,7 +336,7 @@ struct SidebarView: View {
                     } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 18, weight: .regular))
-                            .foregroundStyle(selectedDirectoryEntry.online ? OpenBitFunTheme.sidebarInk : OpenBitFunTheme.sidebarSubtle)
+                            .foregroundStyle(selectedDirectoryEntry.online ? StarMateTheme.sidebarInk : StarMateTheme.sidebarSubtle)
                             .frame(width: 34, height: 34)
                     }
                     .buttonStyle(.plain)
@@ -360,7 +360,7 @@ struct SidebarView: View {
             enabled: device.online || (current && model.connectionPhase == .disconnected),
             loading: device.status == "LOADING",
             statusColor: current ? activeConnectionColor :
-                (device.online ? OpenBitFunTheme.statusSuccess : OpenBitFunTheme.sidebarMuted),
+                (device.online ? StarMateTheme.statusSuccess : StarMateTheme.sidebarMuted),
             statusLabel: current ? activeConnectionLabel :
                 (device.online ? model.localized("在线") : model.localized("离线")),
             accessibilityID: "sidebar.device.\(device.id)",
@@ -382,9 +382,9 @@ struct SidebarView: View {
 
     private var activeConnectionColor: Color {
         switch model.connectionPhase {
-        case .connected: return OpenBitFunTheme.statusSuccess
-        case .reconnecting: return OpenBitFunTheme.sidebarMuted
-        case .disconnected: return OpenBitFunTheme.statusDanger
+        case .connected: return StarMateTheme.statusSuccess
+        case .reconnecting: return StarMateTheme.sidebarMuted
+        case .disconnected: return StarMateTheme.statusDanger
         }
     }
 
@@ -405,21 +405,21 @@ struct SidebarView: View {
         if device.catalogSource == "RECENT" {
             Text(model.localized("旧版设备：显示最近访问的工作区"))
                 .font(.system(size: 12))
-                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                .foregroundStyle(StarMateTheme.sidebarMuted)
                 .padding(.horizontal, 10)
         }
         if device.status == "LOADING" && device.workspaces.isEmpty && device.sessions.isEmpty {
-            HStack(spacing: 8) { ProgressView().controlSize(.small); Text(model.localized("正在加载工作区")).font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.sidebarMuted) }
+            HStack(spacing: 8) { ProgressView().controlSize(.small); Text(model.localized("正在加载工作区")).font(.system(size: 13)).foregroundStyle(StarMateTheme.sidebarMuted) }
                 .padding(.horizontal, 18).frame(height: 42)
         } else if device.status == "FAILED" {
             Button { model.retryDeviceDirectory(device) } label: {
-                Text(model.localized("工作区加载失败，点按重试")).font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.statusDanger)
+                Text(model.localized("工作区加载失败，点按重试")).font(.system(size: 13)).foregroundStyle(StarMateTheme.statusDanger)
                     .frame(maxWidth: .infinity, minHeight: 42, alignment: .leading).padding(.leading, 18)
             }.buttonStyle(.plain)
         } else if device.status == "READY" && device.online && device.workspaces.isEmpty && device.sessions.isEmpty {
             Text(model.localized("这台电脑还没有工作区"))
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                .foregroundStyle(StarMateTheme.sidebarMuted)
                 .padding(.horizontal, 18)
                 .frame(maxWidth: .infinity, minHeight: 42, alignment: .leading)
                 .accessibilityIdentifier("sidebar.emptyWorkspaces")
@@ -487,7 +487,7 @@ struct SidebarView: View {
                     "还有 %lld 个工作区",
                     Int64(device.workspaces.count - visibleWorkspaceCount)
                 ))
-                    .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.sidebarMuted).padding(.leading, 42).frame(height: 36, alignment: .leading)
+                    .font(.system(size: 13)).foregroundStyle(StarMateTheme.sidebarMuted).padding(.leading, 42).frame(height: 36, alignment: .leading)
             }.buttonStyle(.plain)
         }
     }
@@ -499,7 +499,7 @@ struct SidebarView: View {
                     ProgressView().controlSize(.small)
                     Text(model.localized("正在加载工作区"))
                         .font(.system(size: 13))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                 }
                 .padding(.horizontal, 10)
                 .frame(height: 42)
@@ -507,7 +507,7 @@ struct SidebarView: View {
                 Button { model.retryRemoteWorkspaces() } label: {
                     Text(model.localized("工作区加载失败，点按重试"))
                         .font(.system(size: 13))
-                        .foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .foregroundStyle(StarMateTheme.statusDanger)
                         .frame(maxWidth: .infinity, minHeight: 42, alignment: .leading)
                         .padding(.horizontal, 10)
                 }
@@ -520,7 +520,7 @@ struct SidebarView: View {
         if model.remoteHasMore {
             Button { model.loadMoreRemoteSessions() } label: {
                 Text(model.localized(model.busy ? "正在加载" : "加载更多会话"))
-                    .font(.system(size: 13)).foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                    .font(.system(size: 13)).foregroundStyle(StarMateTheme.sidebarMuted)
                     .frame(maxWidth: .infinity, minHeight: 42)
             }
             .buttonStyle(.plain).disabled(model.busy)
@@ -536,7 +536,7 @@ struct SidebarView: View {
         if visibleSessions.isEmpty && !model.workspaceLoading {
             Text(model.localized(hasActiveRemoteViewFilter ? "没有匹配的会话" : "暂无远程会话"))
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                .foregroundStyle(StarMateTheme.sidebarMuted)
                 .padding(.horizontal, 10)
                 .frame(height: 42, alignment: .leading)
         } else {
@@ -618,7 +618,7 @@ struct SidebarView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(model.localized(bucket.title))
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                    .foregroundStyle(StarMateTheme.sidebarMuted)
                     .padding(.top, 12)
                     .padding(.bottom, 4)
                 ForEach(bucket.sessions) { session in
@@ -648,13 +648,13 @@ struct SidebarView: View {
                     HStack(spacing: 8) {
                         Text(model.localized("连接桌面端"))
                             .font(.system(size: 14, weight: .medium))
-                            .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                            .foregroundStyle(StarMateTheme.sidebarMuted)
                         Text(verbatim: "\(sessions.count)")
                             .font(.system(size: 12))
-                            .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                            .foregroundStyle(StarMateTheme.sidebarMuted)
                         Image(systemName: remoteChatsCollapsed ? "chevron.right" : "chevron.down")
                             .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                            .foregroundStyle(StarMateTheme.sidebarMuted)
                     }
                 }
                 .buttonStyle(.plain)
@@ -662,7 +662,7 @@ struct SidebarView: View {
                 Button { model.createRemoteAssistantSession() } label: {
                     Image(systemName: "folder.badge.gearshape")
                         .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                         .frame(width: 40, height: 40)
                 }
                 .buttonStyle(.plain)
@@ -780,10 +780,10 @@ struct SidebarView: View {
                     .frame(width: 22, height: 18)
                 Text(name)
                     .font(.system(size: 15))
-                    .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                    .foregroundStyle(StarMateTheme.sidebarInk)
                     .lineLimit(1)
                 Spacer(minLength: 0)
-                Circle().fill(OpenBitFunTheme.statusSuccess).frame(width: 7, height: 7)
+                Circle().fill(StarMateTheme.statusSuccess).frame(width: 7, height: 7)
                 Image(systemName: "chevron.down")
                     .font(.system(size: 12, weight: .regular))
                     .frame(width: 14, height: 14)
@@ -828,7 +828,7 @@ struct SidebarView: View {
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 17, weight: .regular))
-                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                .foregroundStyle(StarMateTheme.sidebarInk)
                 .frame(width: 30, height: 40)
         })
     }
@@ -853,7 +853,7 @@ struct SidebarView: View {
         Button(action: action) {
             Text(verbatim: title)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                .foregroundStyle(StarMateTheme.sidebarInk)
                 .frame(maxWidth: .infinity, minHeight: MobileDesignGeometry.compactPopoverActionHeight, alignment: .leading)
                 .padding(.horizontal, 18)
                 .contentShape(Rectangle())
@@ -905,12 +905,12 @@ private struct SidebarRecentRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(session.title)
                         .font(.system(size: 13, weight: selected ? .bold : .regular))
-                        .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                        .foregroundStyle(StarMateTheme.sidebarInk)
                         .lineLimit(1)
                     if let metadata, !metadata.isEmpty {
                         Text(metadata)
                             .font(MobileDesignTypography.labelSmall.font)
-                            .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                            .foregroundStyle(StarMateTheme.sidebarMuted)
                             .lineLimit(1)
                     }
                 }
@@ -924,9 +924,9 @@ private struct SidebarRecentRow: View {
                 onActions()
             } label: {
                 HStack(spacing: 3) {
-                    Circle().fill(OpenBitFunTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
-                    Circle().fill(OpenBitFunTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
-                    Circle().fill(OpenBitFunTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
+                    Circle().fill(StarMateTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
+                    Circle().fill(StarMateTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
+                    Circle().fill(StarMateTheme.sidebarMuted).frame(width: 3.5, height: 3.5)
                 }
                 .frame(width: 34, height: 40)
                 .opacity(0.62)
@@ -942,7 +942,7 @@ private struct SidebarRecentRow: View {
         .padding(.leading, 12)
         .padding(.trailing, 4)
         .frame(minHeight: metadata == nil ? 44 : 56)
-        .background(selected ? OpenBitFunTheme.sidebarSelection : OpenBitFunTheme.transparent)
+        .background(selected ? StarMateTheme.sidebarSelection : StarMateTheme.transparent)
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
@@ -995,7 +995,7 @@ private struct SidebarWorkspaceRow: View {
                             .frame(width: 24, height: 20)
                         Text(workspace.name)
                             .font(.system(size: 15, weight: workspace.selected ? .medium : .regular))
-                            .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                            .foregroundStyle(StarMateTheme.sidebarInk)
                             .lineLimit(1)
                     }
                     .contentShape(Rectangle())
@@ -1011,7 +1011,7 @@ private struct SidebarWorkspaceRow: View {
                         Button(action: onToggleCreate) {
                             Image(systemName: "plus")
                                 .font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                                .foregroundStyle(StarMateTheme.sidebarInk)
                                 .frame(width: 30, height: 40)
                         }
                     }
@@ -1036,7 +1036,7 @@ private struct SidebarWorkspaceRow: View {
                         ProgressView().controlSize(.small)
                         Text(MobileLocalization.text("正在加载"))
                             .font(.system(size: 13))
-                            .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                            .foregroundStyle(StarMateTheme.sidebarMuted)
                     }
                     .padding(.leading, 42)
                     .frame(height: 40, alignment: .leading)
@@ -1044,10 +1044,10 @@ private struct SidebarWorkspaceRow: View {
                     Button(action: { onRetryDirectoryLoad?() }) {
                         HStack(spacing: 8) {
                             Text(MobileLocalization.text("这台电脑暂时无法读取"))
-                                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                                .foregroundStyle(StarMateTheme.sidebarMuted)
                             Spacer(minLength: 0)
                             Text(MobileLocalization.text("重试"))
-                                .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                                .foregroundStyle(StarMateTheme.sidebarInk)
                         }
                         .font(.system(size: 13))
                         .padding(.leading, 42)
@@ -1058,7 +1058,7 @@ private struct SidebarWorkspaceRow: View {
                 } else if workspace.sessions.isEmpty && directoryLoadStatus == "READY" {
                     Text(MobileLocalization.text("此工作区暂无会话"))
                         .font(.system(size: 13))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                         .padding(.leading, 42)
                         .frame(height: 38, alignment: .leading)
                 }
@@ -1068,11 +1068,11 @@ private struct SidebarWorkspaceRow: View {
                             HStack(spacing: 10) {
                             Image(systemName: "doc")
                                 .font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                                .foregroundStyle(StarMateTheme.sidebarMuted)
                                 .frame(width: 19, height: 19)
                                 .overlay(alignment: .bottomLeading) {
                                     if ["running", "active", "in_progress"].contains(session.status.lowercased()) {
-                                        Circle().fill(OpenBitFunTheme.statusSuccess).frame(width: 7, height: 7)
+                                        Circle().fill(StarMateTheme.statusSuccess).frame(width: 7, height: 7)
                                     }
                                 }
                             VStack(alignment: .leading, spacing: 2) {
@@ -1081,12 +1081,12 @@ private struct SidebarWorkspaceRow: View {
                                         size: 13,
                                         weight: isSelected(session) ? .bold : .regular
                                     ))
-                                    .foregroundStyle(OpenBitFunTheme.sidebarInk)
+                                    .foregroundStyle(StarMateTheme.sidebarInk)
                                     .lineLimit(1)
                                 if let detail = metadata(session), !detail.isEmpty {
                                     Text(detail)
                                         .font(MobileDesignTypography.labelSmall.font)
-                                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                                        .foregroundStyle(StarMateTheme.sidebarMuted)
                                         .lineLimit(1)
                                 }
                             }
@@ -1099,7 +1099,7 @@ private struct SidebarWorkspaceRow: View {
                         .accessibilityAddTraits(isSelected(session) ? .isSelected : [])
                         Button { onActions(session) } label: {
                             Image(systemName: "ellipsis")
-                                .font(.system(size: 13, weight: .medium)).foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                                .font(.system(size: 13, weight: .medium)).foregroundStyle(StarMateTheme.sidebarMuted)
                                 .frame(width: 36, height: 40)
                         }
                         .buttonStyle(.plain)
@@ -1113,7 +1113,7 @@ private struct SidebarWorkspaceRow: View {
                     .padding(.leading, 44)
                     .padding(.trailing, 4)
                     .frame(minHeight: metadata(session) == nil ? 44 : 56)
-                    .background(isSelected(session) ? OpenBitFunTheme.sidebarSelection : OpenBitFunTheme.transparent)
+                    .background(isSelected(session) ? StarMateTheme.sidebarSelection : StarMateTheme.transparent)
                     .clipShape(RoundedRectangle(cornerRadius: 9))
                 }
                 if workspace.sessions.count > visibleSessionCount {
@@ -1128,7 +1128,7 @@ private struct SidebarWorkspaceRow: View {
                             )
                         )
                         .font(.system(size: 13))
-                        .foregroundStyle(OpenBitFunTheme.sidebarMuted)
+                        .foregroundStyle(StarMateTheme.sidebarMuted)
                         .padding(.leading, 42)
                         .frame(height: 36, alignment: .leading)
                     }
@@ -1153,20 +1153,20 @@ private struct SidebarWorkspacePickerSheet: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(MobileLocalization.text("选择工作区"))
                         .font(MobileDesignTypography.headlineMedium.font.weight(.bold))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                     Text(device.name)
                         .font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .lineLimit(1)
                 }
                 Spacer(minLength: 8)
                 Button(action: onClose) {
                     Image(systemName: "xmark")
                         .font(.system(size: 17, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 40, height: 40)
-                        .background(OpenBitFunTheme.soft)
+                        .background(StarMateTheme.soft)
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -1174,24 +1174,24 @@ private struct SidebarWorkspacePickerSheet: View {
             }
             .frame(height: 66)
 
-            Divider().overlay(OpenBitFunTheme.line)
+            Divider().overlay(StarMateTheme.line)
 
             if device.status == "LOADING" && workspaces.isEmpty {
                 VStack(spacing: 12) {
                     ProgressView().controlSize(.regular)
                     Text(MobileLocalization.text("正在加载"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if workspaces.isEmpty {
                 VStack(spacing: 8) {
                     Image(systemName: "folder")
                         .font(.system(size: 30, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                     Text(MobileLocalization.text("这台电脑还没有工作区"))
                         .font(MobileDesignTypography.bodyMedium.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -1203,30 +1203,30 @@ private struct SidebarWorkspacePickerSheet: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: "folder")
                                         .font(.system(size: 20, weight: .regular))
-                                        .foregroundStyle(OpenBitFunTheme.ink)
+                                        .foregroundStyle(StarMateTheme.ink)
                                         .frame(width: 34, height: 34)
-                                        .background(OpenBitFunTheme.card)
+                                        .background(StarMateTheme.card)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                     VStack(alignment: .leading, spacing: 3) {
                                         Text(workspace.name)
                                             .font(MobileDesignTypography.bodyLarge.font.weight(workspace.selected ? .medium : .regular))
-                                            .foregroundStyle(OpenBitFunTheme.ink)
+                                            .foregroundStyle(StarMateTheme.ink)
                                             .lineLimit(1)
                                         Text(workspace.path)
                                             .font(MobileDesignTypography.labelSmall.font)
-                                            .foregroundStyle(OpenBitFunTheme.muted)
+                                            .foregroundStyle(StarMateTheme.muted)
                                             .lineLimit(1)
                                     }
                                     Spacer(minLength: 8)
                                     Image(systemName: workspace.selected ? "checkmark" : "chevron.right")
                                         .font(.system(size: workspace.selected ? 17 : 15, weight: .regular))
-                                        .foregroundStyle(workspace.selected ? OpenBitFunTheme.ink : OpenBitFunTheme.muted)
+                                        .foregroundStyle(workspace.selected ? StarMateTheme.ink : StarMateTheme.muted)
                                         .frame(width: 40, height: 40)
                                 }
                                 .padding(.leading, 10)
                                 .padding(.trailing, 8)
                                 .frame(height: 68)
-                                .background(workspace.selected ? OpenBitFunTheme.soft : OpenBitFunTheme.page)
+                                .background(workspace.selected ? StarMateTheme.soft : StarMateTheme.page)
                                 .clipShape(RoundedRectangle(cornerRadius: 14))
                                 .contentShape(Rectangle())
                             }
@@ -1240,7 +1240,7 @@ private struct SidebarWorkspacePickerSheet: View {
         }
         .padding(.horizontal, 18)
         .padding(.top, 10)
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 }
 

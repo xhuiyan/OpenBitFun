@@ -81,7 +81,7 @@ debug = 0
 incremental = false
 `);
   await writeFile(join(directory, 'tauri.conf.json'), JSON.stringify({
-    productName: 'OpenBitFun Window Material Fixture',
+    productName: 'StarMate Window Material Fixture',
     version: '0.0.0',
     identifier: 'test.openbitfun.window-material',
     build: { frontendDist: 'assets' },

@@ -507,7 +507,7 @@ pub(super) async fn begin_login_for_account(
         )
         .await
     };
-    Ok(StartedLogin {method:super::SubscriptionLoginMethod::Device,authorization_url:url.into(),user_code:None,instructions:"Sign in to your GLM Coding Plan account in the browser, then return to OpenBitFun. The selected project's ZCode API key will be reused or created automatically.".into(),runner:Box::pin(runner)})
+    Ok(StartedLogin {method:super::SubscriptionLoginMethod::Device,authorization_url:url.into(),user_code:None,instructions:"Sign in to your GLM Coding Plan account in the browser, then return to StarMate. The selected project's ZCode API key will be reused or created automatically.".into(),runner:Box::pin(runner)})
 }
 
 pub(super) async fn resolve(

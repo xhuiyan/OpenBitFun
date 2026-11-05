@@ -1,4 +1,4 @@
-//! OpenBitFun MiniApp marketplace service.
+//! StarMate MiniApp marketplace service.
 
 mod artifacts;
 mod auth;

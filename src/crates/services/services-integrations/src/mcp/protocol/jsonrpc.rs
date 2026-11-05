@@ -30,8 +30,8 @@ pub fn create_initialize_request(
         client_info: MCPServerInfo {
             name: client_name.into(),
             version: client_version.into(),
-            description: Some("OpenBitFun MCP Client".to_string()),
-            vendor: Some("OpenBitFun".to_string()),
+            description: Some("StarMate MCP Client".to_string()),
+            vendor: Some("StarMate".to_string()),
         },
     };
 

@@ -77,7 +77,7 @@ int main(int argc, const char **argv) {
                                                  styleMask:NSWindowStyleMaskTitled
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
-        mainWindow.title = @"OpenBitFun Popup Fixture";
+        mainWindow.title = @"StarMate Popup Fixture";
         mainWindow.releasedWhenClosed = NO;
         RecordingView *mainView = [[RecordingView alloc] initWithFrame:NSMakeRect(0, 0, 480, 360)];
         mainView.fill = [NSColor colorWithSRGBRed:0.10 green:0.20 blue:0.80 alpha:1];

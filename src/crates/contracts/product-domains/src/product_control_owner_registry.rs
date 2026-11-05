@@ -1,4 +1,4 @@
-//! Typed owner facts for user-facing OpenBitFun product controls.
+//! Typed owner facts for user-facing StarMate product controls.
 //!
 //! This registry is deliberately separate from the explanatory capability
 //! overlay. Config paths, command handlers, value schemas, risk, and argument
@@ -182,7 +182,7 @@ fn mcp_input(action: &str) -> Value {
     let mut properties = serde_json::Map::new();
     let mut required = vec!["serverId"];
     properties.insert("serverId".into(), json!({ "type": "string", "minLength": 1,
-        "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing OpenBitFun product host, not the workspace host." }));
+        "description": "Exact user server ID from list-servers, or a new ID when adding a server. These settings belong to the executing StarMate product host, not the workspace host." }));
     if matches!(action, "configure" | "delete") {
         required.push("expectedFingerprint");
         properties.insert("expectedFingerprint".into(), json!({ "type": "string", "minLength": 1,
@@ -213,7 +213,7 @@ fn mcp_input(action: &str) -> Value {
             "properties": fields,
             "description": "Patch non-secret fields of one server; omitted fields and existing credentials are preserved. New stdio servers require command; HTTP/SSE servers require url. Use null to remove an obsolete string field when switching transport. Credentials, environment and headers are entered through the protected MCP settings flow, never by reading existing secrets or putting secrets in command/args/url. Saving reconciles runtime state; autoStart defaults to true. Inspect the returned status instead of assuming connection succeeded." }));
         properties.insert("workingDirectory".into(), json!({ "type": "string", "minLength": 1,
-            "description": "Optional directory on the OpenBitFun product host for a local process; never a remote workspace path." }));
+            "description": "Optional directory on the StarMate product host for a local process; never a remote workspace path." }));
     }
     json!({ "type": "object", "additionalProperties": false, "properties": properties, "required": required })
 }
@@ -608,7 +608,7 @@ pub fn owner_definitions() -> Vec<ProductControlOwnerDefinition> {
                 "additionalProperties": false,
                 "properties": {
                     "id": { "type": "string", "minLength": 1, "description": "Imported pet ID." },
-                    "packagePath": { "type": "string", "minLength": 1, "description": "Imported OpenBitFun pet-package directory." }
+                    "packagePath": { "type": "string", "minLength": 1, "description": "Imported StarMate pet-package directory." }
                 },
                 "anyOf": [{ "required": ["id"] }, { "required": ["packagePath"] }]
             }),

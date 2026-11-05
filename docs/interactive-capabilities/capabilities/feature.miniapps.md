@@ -53,7 +53,7 @@ Install, create, and run lightweight apps inside StarMate, combining UI, data, a
 3. 打开应用并按页面提示使用
    Launch the app and follow its interface
 
-入口 / Entry: OpenBitFun 功能入口
+入口 / Entry: StarMate 功能入口
 
 ## 智能体可替你做什么 / What an agent can do for you
 

@@ -136,7 +136,7 @@ impl OpenCodeSessionReader {
             ),
         ] {
             if required.iter().any(|field| !found.contains(*field)) {
-                return Err("Unsupported OpenCode-compatible session database schema; update OpenBitFun to read this format".into());
+                return Err("Unsupported OpenCode-compatible session database schema; update StarMate to read this format".into());
             }
         }
         Ok(Some((
@@ -434,7 +434,7 @@ impl OpenCodeSessionReader {
                                     Some("completed") => (state.get("output").cloned(), Some(true)),
                                     Some("error") => (state.get("error").cloned(), Some(false)),
                                     Some("pending" | "running") => { unfinished_tool = true; (None, None) }
-                                    _ => return Err("Unsupported OpenCode-compatible tool state; update OpenBitFun to read this format".into()),
+                                    _ => return Err("Unsupported OpenCode-compatible tool state; update StarMate to read this format".into()),
                                 };
                                 turn.items.push(ExternalSessionItem::Tool {
                                     id: part.data["callID"].as_str().unwrap_or(&part.id).to_owned(),
@@ -468,7 +468,7 @@ impl OpenCodeSessionReader {
                 Some("system") => {}
                 _ => {
                     return Err(
-                        "Unsupported OpenCode-compatible message role; update OpenBitFun to read this format"
+                        "Unsupported OpenCode-compatible message role; update StarMate to read this format"
                             .into(),
                     )
                 }

@@ -1,6 +1,6 @@
 import Foundation
 import OSLog
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import SwiftUI
 import UIKit
 
@@ -53,7 +53,7 @@ struct ChatTimelineView: View {
                                 Text(model.localized("正在同步"))
                                     .font(MobileDesignTypography.labelSmall.font)
                             }
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                             .frame(maxWidth: .infinity, minHeight: 38)
                             .accessibilityIdentifier("timeline.syncing")
                         }
@@ -66,7 +66,7 @@ struct ChatTimelineView: View {
                                     Text(model.localized(model.remoteHistoryLoading ? "正在加载" : (model.remoteHistoryFailed ? "Could not load earlier messages. Tap to retry." : "加载更早消息")))
                                         .font(MobileDesignTypography.labelSmall.font)
                                 }
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                                 .frame(maxWidth: .infinity, minHeight: 38)
                             }
                             .buttonStyle(.plain)
@@ -83,7 +83,7 @@ struct ChatTimelineView: View {
                     if model.timelineRows.isEmpty && model.isSending {
                         TypingIndicator().frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    OpenBitFunTheme.transparent.frame(height: 1).id("timeline-bottom")
+                    StarMateTheme.transparent.frame(height: 1).id("timeline-bottom")
                 }
                 .padding(.horizontal, MobileDesignGeometry.contentGutter)
                 // No top padding of its own: the top overlay's inset already ends
@@ -125,12 +125,12 @@ struct ChatTimelineView: View {
                     } label: {
                         Image(systemName: "chevron.down")
                             .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                             .frame(width: 36, height: 36)
-                            .background(OpenBitFunTheme.card)
+                            .background(StarMateTheme.card)
                             .clipShape(Circle())
-                            .overlay(Circle().stroke(OpenBitFunTheme.line, lineWidth: 1))
-                            .shadow(color: OpenBitFunTheme.shadowMedium, radius: 8, y: 3)
+                            .overlay(Circle().stroke(StarMateTheme.line, lineWidth: 1))
+                            .shadow(color: StarMateTheme.shadowMedium, radius: 8, y: 3)
                     }
                     .buttonStyle(.plain)
                     .padding(18)
@@ -139,7 +139,7 @@ struct ChatTimelineView: View {
                     .accessibilityLabel(Text(model.localized("滚动到底部")))
                 }
             }
-            .background(OpenBitFunTheme.page)
+            .background(StarMateTheme.page)
         }
     }
 
@@ -212,7 +212,7 @@ struct ChatTimelineView: View {
             .background(TimelineRowProbe(controller: scrollController, rowID: row.id))
             .background {
                 GeometryReader { geometry in
-                    OpenBitFunTheme.transparent.preference(
+                    StarMateTheme.transparent.preference(
                         key: TimelineRowFramesKey.self,
                         value: [row.id: geometry.frame(in: .named("chat-timeline"))])
                 }
@@ -240,7 +240,7 @@ struct ConversationLoadingState: View {
             .padding(.top, 28)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(MobileLocalization.text("正在加载")))
         .accessibilityIdentifier("conversation.loading")
@@ -255,7 +255,7 @@ struct ConversationLoadingState: View {
             }
             .padding(14)
             .frame(width: width, height: height, alignment: .leading)
-            .background(OpenBitFunTheme.soft)
+            .background(StarMateTheme.soft)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             Spacer(minLength: 0)
         }
@@ -266,7 +266,7 @@ struct ConversationLoadingState: View {
         HStack(spacing: 0) {
             Spacer(minLength: 0)
             RoundedRectangle(cornerRadius: 10)
-                .fill(OpenBitFunTheme.soft)
+                .fill(StarMateTheme.soft)
                 .frame(width: width, height: height)
         }
         .frame(maxWidth: .infinity)
@@ -275,7 +275,7 @@ struct ConversationLoadingState: View {
     private func skeletonLine(fraction: CGFloat) -> some View {
         GeometryReader { proxy in
             RoundedRectangle(cornerRadius: 5)
-                .fill(OpenBitFunTheme.line)
+                .fill(StarMateTheme.line)
                 .frame(width: proxy.size.width * fraction, height: 10)
         }
         .frame(height: 10)
@@ -316,7 +316,7 @@ private struct ConversationRowView: View, Equatable {
                     if !row.text.isEmpty {
                         Text(row.text)
                             .font(MobileDesignTypography.bodyLarge.font)
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                             .lineSpacing(MobileDesignTypography.bodyLarge.lineSpacing)
                             .padding(.vertical, MobileDesignTypography.bodyLarge.lineSpacing / 2)
                             .textSelection(.enabled)
@@ -324,7 +324,7 @@ private struct ConversationRowView: View, Equatable {
                 }
                 .padding(.horizontal, MobileDesignGeometry.messageBubbleHorizontalPadding)
                 .padding(.vertical, MobileDesignGeometry.messageBubbleVerticalPadding)
-                .background(OpenBitFunTheme.soft)
+                .background(StarMateTheme.soft)
                 .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.messageBubbleRadius))
             }
             messageTimestamp
@@ -332,7 +332,7 @@ private struct ConversationRowView: View, Equatable {
                 Button { model.retryMessage(row.text, images: row.images) } label: {
                     Label(model.localized("重新发送"), systemImage: "arrow.clockwise")
                         .font(MobileDesignTypography.labelSmall.font)
-                        .foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .foregroundStyle(StarMateTheme.statusDanger)
                 }
                 .buttonStyle(.plain)
             }
@@ -361,7 +361,7 @@ private struct ConversationRowView: View, Equatable {
                 Button { model.retryMessage(row.text, images: row.images) } label: {
                     Label(model.localized("重试"), systemImage: "arrow.clockwise")
                         .font(MobileDesignTypography.labelSmall.font)
-                        .foregroundStyle(OpenBitFunTheme.statusDanger)
+                        .foregroundStyle(StarMateTheme.statusDanger)
                 }
                 .buttonStyle(.plain)
             }
@@ -375,7 +375,7 @@ private struct ConversationRowView: View, Equatable {
         if let timestamp = row.timestamp {
             Text(MobileLocalization.messageTime(timestamp, language: model.appLanguage))
                 .font(MobileDesignTypography.labelSmall.font)
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .accessibilityIdentifier("chat.messageTimestamp")
         }
     }
@@ -384,10 +384,10 @@ private struct ConversationRowView: View, Equatable {
         VStack(alignment: .leading, spacing: 6) {
             Text(model.localized("本次回复失败"))
                 .font(MobileDesignTypography.labelSmall.font.weight(.medium))
-                .foregroundStyle(OpenBitFunTheme.statusDanger)
+                .foregroundStyle(StarMateTheme.statusDanger)
             Text(error)
                 .font(MobileDesignTypography.bodySmall.font)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .lineSpacing(MobileDesignTypography.bodySmall.lineSpacing)
                 .textSelection(.enabled)
             if row.showRetry {
@@ -399,7 +399,7 @@ private struct ConversationRowView: View, Equatable {
         }
         .padding(.leading, 12)
         .overlay(alignment: .leading) {
-            Rectangle().fill(OpenBitFunTheme.statusDanger).frame(width: 2)
+            Rectangle().fill(StarMateTheme.statusDanger).frame(width: 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -443,7 +443,7 @@ private struct EmptyConversationRow: View {
             Text(MobileLocalization.text("从这里开始新的对话"))
                 .font(MobileDesignTypography.bodyLarge.font)
         }
-        .foregroundStyle(OpenBitFunTheme.muted)
+        .foregroundStyle(StarMateTheme.muted)
         .frame(maxWidth: .infinity, minHeight: 180)
     }
 }
@@ -523,7 +523,7 @@ private struct SubagentBlock: View {
                             .font(MobileDesignTypography.labelSmall.font)
                     }
                 }
-                .foregroundStyle(failed ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.muted)
+                .foregroundStyle(failed ? StarMateTheme.statusDanger : StarMateTheme.muted)
                 .frame(minHeight: 32)
                     .contentShape(Rectangle())
             }
@@ -551,14 +551,14 @@ private struct SubagentBlock: View {
             }
         }
         .padding(.leading, 12)
-        .overlay(alignment: .leading) { Rectangle().fill(OpenBitFunTheme.line).frame(width: 2) }
+        .overlay(alignment: .leading) { Rectangle().fill(StarMateTheme.line).frame(width: 2) }
     }
 
     private func outputPreview(_ raw: String, key: String) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(model.localized("子任务输出"))
                 .font(MobileDesignTypography.labelSmall.font)
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
             Text(MobileSubagentPresentation.preview(raw))
                 .font(MobileDesignTypography.bodySmall.font)
                 .lineSpacing(MobileDesignTypography.bodySmall.lineSpacing)
@@ -606,7 +606,7 @@ private struct ThinkingBlock: View {
                     Image(systemName: expanded ? "chevron.up" : "chevron.down")
                         .font(MobileDesignTypography.labelSmall.font)
                 }
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .frame(minHeight: 32)
                     .contentShape(Rectangle())
             }
@@ -615,7 +615,7 @@ private struct ThinkingBlock: View {
             if expanded {
                 Text(text)
                     .font(MobileDesignTypography.bodyLarge.font)
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .lineSpacing(MobileDesignTypography.bodyLarge.lineSpacing)
                     .textSelection(.enabled)
             }
@@ -638,7 +638,7 @@ private struct TypingIndicator: View {
             let phase = Int(context.date.timeIntervalSinceReferenceDate / 0.35) % 3
             HStack(spacing: 5) {
                 ForEach(0..<3) { index in
-                    Circle().fill(OpenBitFunTheme.muted).frame(width: 5, height: 5)
+                    Circle().fill(StarMateTheme.muted).frame(width: 5, height: 5)
                         .opacity(index == phase ? 1 : 0.32)
                 }
             }
@@ -773,12 +773,12 @@ private struct MarkdownBlockView: View {
         case "heading":
             Text(inlineString(block.inlines))
                 .font(headingFont)
-                .foregroundStyle(OpenBitFunTheme.ink).textSelection(.enabled)
+                .foregroundStyle(StarMateTheme.ink).textSelection(.enabled)
         case "quote":
             Text(inlineString(block.inlines))
-                .font(MobileDesignTypography.bodyLarge.font).foregroundStyle(OpenBitFunTheme.muted)
+                .font(MobileDesignTypography.bodyLarge.font).foregroundStyle(StarMateTheme.muted)
                 .lineSpacing(MobileDesignTypography.bodyLarge.lineSpacing).padding(.leading, 12)
-                .overlay(alignment: .leading) { Rectangle().fill(OpenBitFunTheme.line).frame(width: 2) }
+                .overlay(alignment: .leading) { Rectangle().fill(StarMateTheme.line).frame(width: 2) }
                 .textSelection(.enabled)
         case "list":
             let markerWidth = listMarkerWidth
@@ -788,21 +788,21 @@ private struct MarkdownBlockView: View {
                         if let checked = taskListState(item.text) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                                    .stroke(StarMateTheme.line, lineWidth: 1)
                                 if checked {
                                     Image(systemName: "checkmark")
                                         .font(.system(size: 9, weight: .bold))
-                                        .foregroundStyle(OpenBitFunTheme.muted)
+                                        .foregroundStyle(StarMateTheme.muted)
                                 }
                             }
                             .frame(width: 16, height: 16)
                             .padding(.horizontal, 2)
                         } else {
-                            Text(item.marker).foregroundStyle(OpenBitFunTheme.muted)
+                            Text(item.marker).foregroundStyle(StarMateTheme.muted)
                                 .fixedSize(horizontal: true, vertical: false)
                                 .frame(width: markerWidth, alignment: .trailing)
                         }
-                        Text(listItemInlineString(item)).foregroundStyle(OpenBitFunTheme.ink)
+                        Text(listItemInlineString(item)).foregroundStyle(StarMateTheme.ink)
                             .lineSpacing(MobileDesignTypography.bodyLarge.lineSpacing)
                             .textSelection(.enabled)
                     }
@@ -811,10 +811,10 @@ private struct MarkdownBlockView: View {
             }
         case "code": CodeBlock(language: block.language, code: block.text)
         case "table": MarkdownTableView(source: block.text)
-        case "divider": Rectangle().fill(OpenBitFunTheme.line).frame(height: 1).padding(.vertical, 3)
+        case "divider": Rectangle().fill(StarMateTheme.line).frame(height: 1).padding(.vertical, 3)
         default:
             Text(inlineString(block.inlines))
-                .font(MobileDesignTypography.bodyLarge.font).foregroundStyle(OpenBitFunTheme.ink)
+                .font(MobileDesignTypography.bodyLarge.font).foregroundStyle(StarMateTheme.ink)
                 .lineSpacing(MobileDesignTypography.bodyLarge.lineSpacing).textSelection(.enabled)
         }
     }
@@ -872,9 +872,9 @@ private struct MarkdownTableView: View {
                 tableGrid(flexibleColumns: false)
             }
         }
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(StarMateTheme.line, lineWidth: 1))
     }
 
     private func tableGrid(flexibleColumns: Bool) -> some View {
@@ -887,7 +887,7 @@ private struct MarkdownTableView: View {
                             fallback: cell.text
                         ))
                         .font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .multilineTextAlignment(cell.textAlignment)
                         .textSelection(.enabled)
                         .frame(
@@ -899,18 +899,18 @@ private struct MarkdownTableView: View {
                         .padding(.horizontal, 12)
                         .padding(.vertical, 10)
                         .background(rowIndex == 0 || rowIndex.isMultiple(of: 2)
-                            ? OpenBitFunTheme.soft
-                            : OpenBitFunTheme.card)
+                            ? StarMateTheme.soft
+                            : StarMateTheme.card)
                         .overlay(alignment: .trailing) {
                             if columnIndex < row.cells.count - 1 {
-                                Rectangle().fill(OpenBitFunTheme.line).frame(width: 1)
+                                Rectangle().fill(StarMateTheme.line).frame(width: 1)
                             }
                         }
                     }
                 }
                 .overlay(alignment: .bottom) {
                     if rowIndex < table.rows.count - 1 {
-                        Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+                        Rectangle().fill(StarMateTheme.line).frame(height: 1)
                     }
                 }
             }
@@ -1010,7 +1010,7 @@ private func markdownInlineString(
         case "emphasis": part.inlinePresentationIntent = .emphasized
         case "code":
             part.inlinePresentationIntent = .code
-            part.backgroundColor = OpenBitFunTheme.soft
+            part.backgroundColor = StarMateTheme.soft
         case "link":
             part.foregroundColor = MobileDesignColors.fileLink
             part.underlineStyle = .single
@@ -1030,23 +1030,23 @@ private struct CodeBlock: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(language.isEmpty ? MobileLocalization.text("代码") : language)
-                    .font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                    .font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                 Spacer()
                 Button { UIPasteboard.general.string = code } label: {
                     Label(MobileLocalization.text("复制"), systemImage: "doc.on.doc")
-                        .font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                        .font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                 }
                 .buttonStyle(.plain)
             }
             .padding(.horizontal, 12).frame(height: 34)
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
             ScrollView(.horizontal, showsIndicators: false) {
                 Text(code).font(.system(size: 12.5, design: .monospaced))
-                    .foregroundStyle(OpenBitFunTheme.ink).padding(12).textSelection(.enabled)
+                    .foregroundStyle(StarMateTheme.ink).padding(12).textSelection(.enabled)
             }
         }
-        .background(OpenBitFunTheme.soft).clipShape(RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .background(StarMateTheme.soft).clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(StarMateTheme.line, lineWidth: 1))
     }
 }
 
@@ -1064,12 +1064,12 @@ private struct FileReferenceCard: View {
                         .clipShape(RoundedRectangle(cornerRadius: 9))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(reference.label).font(MobileDesignTypography.labelMedium.font)
-                            .foregroundStyle(OpenBitFunTheme.ink).lineLimit(1)
+                            .foregroundStyle(StarMateTheme.ink).lineLimit(1)
                         Text(reference.remotePath).font(MobileDesignTypography.labelSmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted).lineLimit(1)
+                            .foregroundStyle(StarMateTheme.muted).lineLimit(1)
                         if let status = model.downloadStatus(for: reference.remotePath) {
                             Text(status).font(MobileDesignTypography.labelSmall.font)
-                                .foregroundStyle(model.downloadPhase == .failed ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.muted)
+                                .foregroundStyle(model.downloadPhase == .failed ? StarMateTheme.statusDanger : StarMateTheme.muted)
                                 .lineLimit(1)
                         }
                     }
@@ -1090,14 +1090,14 @@ private struct FileReferenceCard: View {
                     }
                 }
                 .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.muted).frame(width: 40, height: 40)
+                .foregroundStyle(StarMateTheme.muted).frame(width: 40, height: 40)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(model.localizedFormat("下载 %@", reference.label))
         }
         .padding(.leading, 10).padding(.trailing, 4).padding(.vertical, 7)
-        .background(OpenBitFunTheme.card).clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .background(StarMateTheme.card).clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(StarMateTheme.line, lineWidth: 1))
     }
 }
 
@@ -1126,11 +1126,11 @@ private struct FullScreenTimelineImage: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            OpenBitFunTheme.mediaBackground.ignoresSafeArea()
+            StarMateTheme.mediaBackground.ignoresSafeArea()
             AsyncDecodedImage(dataURL: image.dataURL).ignoresSafeArea()
             Button { dismiss() } label: {
-                Image(systemName: "xmark").font(.system(size: 15, weight: .semibold)).foregroundStyle(OpenBitFunTheme.contentOnAction)
-                    .frame(width: 44, height: 44).background(OpenBitFunTheme.mediaControlBackground).clipShape(Circle())
+                Image(systemName: "xmark").font(.system(size: 15, weight: .semibold)).foregroundStyle(StarMateTheme.contentOnAction)
+                    .frame(width: 44, height: 44).background(StarMateTheme.mediaControlBackground).clipShape(Circle())
             }
             .buttonStyle(.plain).padding(20)
         }
@@ -1152,7 +1152,7 @@ struct AsyncDecodedImage: View {
             } else if loading {
                 ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                Image(systemName: "photo").foregroundStyle(OpenBitFunTheme.muted)
+                Image(systemName: "photo").foregroundStyle(StarMateTheme.muted)
             }
         }
         .task(id: Source(data: data, url: dataURL)) {
@@ -1205,7 +1205,7 @@ private struct ToolStatusList: View {
                             if !model.remoteHostCapabilities.contains("plan_build_v1") { Text(model.localized("此电脑暂不支持执行计划")) }
                             else if model.isSending || model.busy { Text(model.localized("请等待当前操作完成")) }
                         }.padding(14).frame(maxWidth: .infinity, alignment: .leading)
-                            .background(OpenBitFunTheme.soft).clipShape(RoundedRectangle(cornerRadius: 14))
+                            .background(StarMateTheme.soft).clipShape(RoundedRectangle(cornerRadius: 14))
                     } else { ToolStatusRow(tool: tool, model: model, expandedToolID: $expandedToolID) }
                 case let .collapsed(_, tools): CollapsedToolsRow(tools: tools, model: model, expanded: $summariesExpanded, expandedToolID: $expandedToolID)
                 }
@@ -1240,7 +1240,7 @@ private struct ToolSummaryButton: View {
         Button { withAnimation(.easeOut(duration: 0.18)) { expanded.toggle() } } label: {
             HStack(spacing: 8) {
                 Image(systemName: "doc.on.doc").font(.system(size: 12, weight: .medium))
-                    .frame(width: 20, height: 20).background(OpenBitFunTheme.soft)
+                    .frame(width: 20, height: 20).background(StarMateTheme.soft)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                 Text(model.localizedFormat("已完成 %lld 项操作", Int64(tools.count)))
                     .font(MobileDesignTypography.bodySmall.font)
@@ -1248,7 +1248,7 @@ private struct ToolSummaryButton: View {
                 Image(systemName: expanded ? "chevron.up" : "chevron.down")
                     .font(.system(size: 10, weight: .semibold))
             }
-            .foregroundStyle(OpenBitFunTheme.muted).frame(minHeight: 32)
+            .foregroundStyle(StarMateTheme.muted).frame(minHeight: 32)
                     .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -1308,46 +1308,46 @@ private struct TodoToolCard: View {
             Button { withAnimation(.easeOut(duration: 0.18)) { expandedToolID = expanded ? nil : tool.id } } label: {
                 HStack(spacing: 9) {
                     Image(systemName: "checklist").font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(OpenBitFunTheme.statusSuccess).frame(width: 22, height: 22)
-                        .background(OpenBitFunTheme.statusSuccess.opacity(0.12), in: RoundedRectangle(cornerRadius: 6))
+                        .foregroundStyle(StarMateTheme.statusSuccess).frame(width: 22, height: 22)
+                        .background(StarMateTheme.statusSuccess.opacity(0.12), in: RoundedRectangle(cornerRadius: 6))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(model.localized("更新待办")).font(MobileDesignTypography.bodySmall.font.weight(.semibold))
                         Text(summary).font(MobileDesignTypography.labelSmall.font)
-                            .foregroundStyle(OpenBitFunTheme.muted).lineLimit(1)
+                            .foregroundStyle(StarMateTheme.muted).lineLimit(1)
                     }
                     Spacer(minLength: 4)
-                    if !items.isEmpty { Text("\(done)/\(items.count)").font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted) }
-                    Image(systemName: expanded ? "chevron.down" : "chevron.right").font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                    if !items.isEmpty { Text("\(done)/\(items.count)").font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted) }
+                    Image(systemName: expanded ? "chevron.down" : "chevron.right").font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                 }.frame(minHeight: 32).contentShape(Rectangle())
             }.buttonStyle(.plain).accessibilityIdentifier("tool.toggle.\(tool.id)")
             if expanded && !items.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
-                            Capsule().fill(OpenBitFunTheme.line)
-                            Capsule().fill(OpenBitFunTheme.muted).frame(width: geometry.size.width * CGFloat(done) / CGFloat(max(items.count, 1)))
+                            Capsule().fill(StarMateTheme.line)
+                            Capsule().fill(StarMateTheme.muted).frame(width: geometry.size.width * CGFloat(done) / CGFloat(max(items.count, 1)))
                         }
                     }.frame(height: 2)
 
                     ForEach(items) { item in
                         HStack(alignment: .top, spacing: 8) {
                             Text(item.status.lowercased() == "completed" ? "✓" : item.status.lowercased() == "cancelled" ? "×" : item.status.lowercased() == "in_progress" ? "•" : "○")
-                                .foregroundStyle(OpenBitFunTheme.muted)
+                                .foregroundStyle(StarMateTheme.muted)
                             Text(item.content).font(MobileDesignTypography.bodySmall.font)
-                                .foregroundStyle(item.status.lowercased() == "in_progress" ? OpenBitFunTheme.ink : OpenBitFunTheme.muted)
+                                .foregroundStyle(item.status.lowercased() == "in_progress" ? StarMateTheme.ink : StarMateTheme.muted)
                         }
                     }
                 }.padding(.leading, 31)
             }
             if expanded && items.isEmpty && !tool.output.isEmpty {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(model.localized("输出")).font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
-                    Text(tool.output).font(.system(size: 12.5, design: .monospaced)).foregroundStyle(OpenBitFunTheme.muted).lineLimit(5)
+                    Text(model.localized("输出")).font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
+                    Text(tool.output).font(.system(size: 12.5, design: .monospaced)).foregroundStyle(StarMateTheme.muted).lineLimit(5)
                 }
             }
         }
-        .padding(10).background(OpenBitFunTheme.soft, in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .padding(10).background(StarMateTheme.soft, in: RoundedRectangle(cornerRadius: 14))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(StarMateTheme.line, lineWidth: 1))
     }
 }
 
@@ -1398,7 +1398,7 @@ private struct ToolStatusRow: View {
                         .foregroundStyle(statusColor).frame(width: 20, height: 20)
                         .background(statusColor.opacity(0.09)).clipShape(RoundedRectangle(cornerRadius: 6))
                     Text(statusLabel).font(MobileDesignTypography.bodySmall.font)
-                        .foregroundStyle(OpenBitFunTheme.ink).lineLimit(1)
+                        .foregroundStyle(StarMateTheme.ink).lineLimit(1)
                     Spacer(minLength: 4)
                     if tool.phase == "RUNNING" { ProgressView().controlSize(.mini) }
                     else { Text(statusMark).font(MobileDesignTypography.labelSmall.font).foregroundStyle(statusColor) }
@@ -1435,13 +1435,13 @@ private struct ToolStatusRow: View {
                             if !editingApproval && approvalInput.isEmpty { approvalInput = tool.input.isEmpty ? "{}" : tool.input }
                             editingApproval.toggle()
                         }
-                        .font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                        .font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                         .frame(minHeight: 32)
                     }
                     if editingApproval {
                         TextEditor(text: $approvalInput).font(.system(size: MobileDesignTypography.labelSmall.size, design: .monospaced))
                             .frame(height: 96).scrollContentBackground(.hidden)
-                            .padding(8).background(OpenBitFunTheme.card, in: RoundedRectangle(cornerRadius: 8))
+                            .padding(8).background(StarMateTheme.card, in: RoundedRectangle(cornerRadius: 8))
                     }
                 }
                 HStack(spacing: MobileDesignGeometry.approvalCardGap) {
@@ -1459,16 +1459,16 @@ private struct ToolStatusRow: View {
             if transcriptActions.contains("CANCEL") {
                 Button { model.cancelTool(tool.id) } label: {
                     Text(model.localized("停止执行"))
-                        .font(MobileDesignTypography.labelMedium.font).foregroundStyle(OpenBitFunTheme.statusDanger)
-                        .frame(maxWidth: .infinity, minHeight: 40).background(OpenBitFunTheme.card).clipShape(Capsule())
-                        .overlay(Capsule().stroke(OpenBitFunTheme.statusDanger.opacity(0.5), lineWidth: 1))
+                        .font(MobileDesignTypography.labelMedium.font).foregroundStyle(StarMateTheme.statusDanger)
+                        .frame(maxWidth: .infinity, minHeight: 40).background(StarMateTheme.card).clipShape(Capsule())
+                        .overlay(Capsule().stroke(StarMateTheme.statusDanger.opacity(0.5), lineWidth: 1))
                 }
                 .buttonStyle(.plain)
             }
         }
-        .padding(emphasized ? 10 : 0).background(emphasized ? OpenBitFunTheme.soft : OpenBitFunTheme.transparent)
+        .padding(emphasized ? 10 : 0).background(emphasized ? StarMateTheme.soft : StarMateTheme.transparent)
         .clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay { if emphasized { RoundedRectangle(cornerRadius: 14).stroke(OpenBitFunTheme.line, lineWidth: 1) } }
+        .overlay { if emphasized { RoundedRectangle(cornerRadius: 14).stroke(StarMateTheme.line, lineWidth: 1) } }
         }
     }
 
@@ -1480,8 +1480,8 @@ private struct ToolStatusRow: View {
         Button(action: action) {
             Text(title).font(MobileDesignTypography.labelMedium.font).padding(.horizontal, 16)
                 .frame(height: MobileDesignGeometry.approvalActionHeight)
-                .foregroundStyle(primary ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
-                .background(primary ? MobileDesignColors.primaryAction : OpenBitFunTheme.card,
+                .foregroundStyle(primary ? StarMateTheme.contentOnAction : StarMateTheme.ink)
+                .background(primary ? MobileDesignColors.primaryAction : StarMateTheme.card,
                     in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalActionRadius))
         }.buttonStyle(.plain)
     }
@@ -1489,16 +1489,16 @@ private struct ToolStatusRow: View {
     private var legacyAnswerPanel: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(tool.question ?? model.localized("请输入回复")).font(MobileDesignTypography.bodySmall.font)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
             TextField(model.localized("回复"), text: $answer, axis: .vertical)
                 .font(MobileDesignTypography.bodyLarge.font).lineLimit(2...5).padding(10)
-                .background(OpenBitFunTheme.card).clipShape(RoundedRectangle(cornerRadius: 11))
-                .overlay(RoundedRectangle(cornerRadius: 11).stroke(OpenBitFunTheme.line, lineWidth: 1))
+                .background(StarMateTheme.card).clipShape(RoundedRectangle(cornerRadius: 11))
+                .overlay(RoundedRectangle(cornerRadius: 11).stroke(StarMateTheme.line, lineWidth: 1))
             Button { model.answerTool(tool.id, answer: answer) } label: {
                 Text(model.localized("发送回复"))
-                    .font(MobileDesignTypography.labelMedium.font).foregroundStyle(OpenBitFunTheme.contentOnAction)
+                    .font(MobileDesignTypography.labelMedium.font).foregroundStyle(StarMateTheme.contentOnAction)
                     .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(answer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || model.busy ? OpenBitFunTheme.muted : OpenBitFunTheme.accent)
+                    .background(answer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || model.busy ? StarMateTheme.muted : StarMateTheme.accent)
                     .clipShape(Capsule())
             }
             .buttonStyle(.plain).disabled(answer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || model.busy)
@@ -1510,19 +1510,19 @@ private struct ToolStatusRow: View {
             ForEach(tool.questions) { question in
                 VStack(alignment: .leading, spacing: 7) {
                     if !question.header.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Text(question.header).font(MobileDesignTypography.labelMedium.font).foregroundStyle(OpenBitFunTheme.muted)
+                        Text(question.header).font(MobileDesignTypography.labelMedium.font).foregroundStyle(StarMateTheme.muted)
                     }
-                    Text(question.question).font(MobileDesignTypography.bodySmall.font).foregroundStyle(OpenBitFunTheme.ink)
+                    Text(question.question).font(MobileDesignTypography.bodySmall.font).foregroundStyle(StarMateTheme.ink)
                     ForEach(options(for: question)) { option in
                         let selected = selectedOptions[question.index, default: []].contains(option.label)
                         Button { toggle(option.label, for: question) } label: {
                             HStack(alignment: .top, spacing: 9) {
                                 Image(systemName: selected ? (question.multiSelect ? "checkmark.square.fill" : "largecircle.fill.circle") : (question.multiSelect ? "square" : "circle"))
-                                    .foregroundStyle(selected ? OpenBitFunTheme.accent : OpenBitFunTheme.muted)
+                                    .foregroundStyle(selected ? StarMateTheme.accent : StarMateTheme.muted)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text(option.label).font(MobileDesignTypography.bodySmall.font).foregroundStyle(OpenBitFunTheme.ink)
+                                    Text(option.label).font(MobileDesignTypography.bodySmall.font).foregroundStyle(StarMateTheme.ink)
                                     if let description = option.description, !description.isEmpty {
-                                        Text(description).font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                                        Text(description).font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                                     }
                                 }
                                 Spacer(minLength: 0)
@@ -1539,20 +1539,20 @@ private struct ToolStatusRow: View {
                             ))
                             .font(MobileDesignTypography.bodySmall.font).padding(9)
                             .disabled(model.busy)
-                            .background(OpenBitFunTheme.card).clipShape(RoundedRectangle(cornerRadius: 9))
-                            .overlay(RoundedRectangle(cornerRadius: 9).stroke(OpenBitFunTheme.line, lineWidth: 1))
+                            .background(StarMateTheme.card).clipShape(RoundedRectangle(cornerRadius: 9))
+                            .overlay(RoundedRectangle(cornerRadius: 9).stroke(StarMateTheme.line, lineWidth: 1))
                         }
                     }
                 }
             }
             Button { submitStructuredAnswers() } label: {
                 HStack {
-                    if model.busy { ProgressView().controlSize(.small).tint(OpenBitFunTheme.contentOnAction) }
+                    if model.busy { ProgressView().controlSize(.small).tint(StarMateTheme.contentOnAction) }
                     Text(model.localized("发送回复"))
                 }
-                .font(MobileDesignTypography.labelMedium.font).foregroundStyle(OpenBitFunTheme.contentOnAction)
+                .font(MobileDesignTypography.labelMedium.font).foregroundStyle(StarMateTheme.contentOnAction)
                 .frame(maxWidth: .infinity, minHeight: 40)
-                .background(structuredAnswersValid && !model.busy ? OpenBitFunTheme.accent : OpenBitFunTheme.muted)
+                .background(structuredAnswersValid && !model.busy ? StarMateTheme.accent : StarMateTheme.muted)
                 .clipShape(Capsule())
             }
             .buttonStyle(.plain).accessibilityIdentifier("question.submit.\(tool.id)").disabled(!structuredAnswersValid || model.busy)
@@ -1612,8 +1612,8 @@ private struct ToolStatusRow: View {
     @ViewBuilder
     private func detailText(_ title: String, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 3) {
-            Text(title).font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
-            Text(value).font(.system(size: 12.5, design: .monospaced)).foregroundStyle(OpenBitFunTheme.ink)
+            Text(title).font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
+            Text(value).font(.system(size: 12.5, design: .monospaced)).foregroundStyle(StarMateTheme.ink)
                 .lineLimit(5).textSelection(.enabled)
         }
     }
@@ -1621,9 +1621,9 @@ private struct ToolStatusRow: View {
     private func toolAction(_ label: String, primary: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(label).font(MobileDesignTypography.labelMedium.font)
-                .foregroundStyle(primary ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
-                .frame(maxWidth: .infinity, minHeight: 40).background(primary ? OpenBitFunTheme.accent : OpenBitFunTheme.card)
-                .clipShape(Capsule()).overlay { if !primary { Capsule().stroke(OpenBitFunTheme.line, lineWidth: 1) } }
+                .foregroundStyle(primary ? StarMateTheme.contentOnAction : StarMateTheme.ink)
+                .frame(maxWidth: .infinity, minHeight: 40).background(primary ? StarMateTheme.accent : StarMateTheme.card)
+                .clipShape(Capsule()).overlay { if !primary { Capsule().stroke(StarMateTheme.line, lineWidth: 1) } }
         }
         .buttonStyle(.plain)
     }
@@ -1676,7 +1676,7 @@ private struct ToolStatusRow: View {
     }
 
     private var statusColor: Color {
-        switch tool.phase { case "COMPLETED": OpenBitFunTheme.statusSuccess; default: OpenBitFunTheme.muted }
+        switch tool.phase { case "COMPLETED": StarMateTheme.statusSuccess; default: StarMateTheme.muted }
     }
 
     private var statusMark: String {
@@ -1708,7 +1708,7 @@ struct PermissionMailboxPanel: View {
                     if mailbox.failed {
                         HStack {
                             Text(model.localized("Permission request could not be completed. Retry to refresh pending requests."))
-                                .foregroundStyle(OpenBitFunTheme.statusDanger)
+                                .foregroundStyle(StarMateTheme.statusDanger)
                             Button(model.localized("重试")) { model.refreshPermissionMailbox() }.disabled(mailbox.busy)
                         }.font(MobileDesignTypography.bodySmall.font)
                     }
@@ -1759,48 +1759,48 @@ private struct PermissionMailboxRow: View {
             HStack(spacing: 8) {
                 Image("ApprovalShield").resizable().frame(width: 16, height: 16)
                 Text(request.source.isEmpty ? request.action : request.source)
-                    .font(MobileDesignTypography.bodySmall.font).foregroundStyle(OpenBitFunTheme.ink)
+                    .font(MobileDesignTypography.bodySmall.font).foregroundStyle(StarMateTheme.ink)
                 Spacer(minLength: 8)
                 Button(model.localized(editing ? "收起参数" : "编辑参数")) { editing.toggle() }
-                    .font(MobileDesignTypography.labelSmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                    .font(MobileDesignTypography.labelSmall.font).foregroundStyle(StarMateTheme.muted)
                     .frame(minHeight: 32).disabled(busy)
             }
             if !request.source.isEmpty && request.source.lowercased() != request.action.lowercased() {
-                Text(request.action).font(MobileDesignTypography.bodySmall.font).foregroundStyle(OpenBitFunTheme.muted)
+                Text(request.action).font(MobileDesignTypography.bodySmall.font).foregroundStyle(StarMateTheme.muted)
             }
             if !request.resources.isEmpty {
                 Text(request.resources.joined(separator: "\n"))
                     .font(.system(size: MobileDesignTypography.labelSmall.size, design: .monospaced))
-                    .foregroundStyle(OpenBitFunTheme.ink).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(10).background(OpenBitFunTheme.soft, in: RoundedRectangle(cornerRadius: 8))
+                    .foregroundStyle(StarMateTheme.ink).frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(10).background(StarMateTheme.soft, in: RoundedRectangle(cornerRadius: 8))
                     .textSelection(.enabled)
             }
             if editing {
                 TextEditor(text: $input).font(.system(size: MobileDesignTypography.labelSmall.size, design: .monospaced))
                     .frame(height: 96).disabled(busy).scrollContentBackground(.hidden)
-                    .padding(8).background(OpenBitFunTheme.soft, in: RoundedRectangle(cornerRadius: 8))
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(valid ? OpenBitFunTheme.line : OpenBitFunTheme.statusDanger, lineWidth: 1))
+                    .padding(8).background(StarMateTheme.soft, in: RoundedRectangle(cornerRadius: 8))
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(valid ? StarMateTheme.line : StarMateTheme.statusDanger, lineWidth: 1))
             }
             HStack(spacing: MobileDesignGeometry.approvalCardGap) {
                 Spacer(minLength: 0)
                 Button { model.respondPermission(request.requestId, approve: false, updatedInput: nil) } label: {
                     Text(model.localized("拒绝")).padding(.horizontal, 16)
                         .frame(height: MobileDesignGeometry.approvalActionHeight)
-                        .foregroundStyle(OpenBitFunTheme.ink)
-                        .background(OpenBitFunTheme.soft, in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalActionRadius))
+                        .foregroundStyle(StarMateTheme.ink)
+                        .background(StarMateTheme.soft, in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalActionRadius))
                 }.disabled(busy)
                 .accessibilityIdentifier("permission.reject.\(request.requestId)")
                 Button { model.respondPermission(request.requestId, approve: true, updatedInput: editing ? input : nil) } label: {
                     Text(model.localized("批准")).padding(.horizontal, 16)
                         .frame(height: MobileDesignGeometry.approvalActionHeight)
-                        .foregroundStyle(OpenBitFunTheme.contentOnAction)
+                        .foregroundStyle(StarMateTheme.contentOnAction)
                         .background(MobileDesignColors.primaryAction, in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalActionRadius))
                 }.disabled(busy || !valid).opacity(busy || !valid ? 0.5 : 1)
                 .accessibilityIdentifier("permission.approve.\(request.requestId)")
             }.font(MobileDesignTypography.labelMedium.font)
         }
         .buttonStyle(.plain).padding(MobileDesignGeometry.approvalCardPadding)
-        .background(OpenBitFunTheme.card, in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalCardRadius))
-        .overlay(RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalCardRadius).stroke(OpenBitFunTheme.line, lineWidth: 1))
+        .background(StarMateTheme.card, in: RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalCardRadius))
+        .overlay(RoundedRectangle(cornerRadius: MobileDesignGeometry.approvalCardRadius).stroke(StarMateTheme.line, lineWidth: 1))
     }
 }

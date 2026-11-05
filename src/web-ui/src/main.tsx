@@ -221,7 +221,7 @@ async function initializeBeforeRender(): Promise<void> {
     });
   });
 
-  log.info('Initializing OpenBitFun');
+  log.info('Initializing StarMate');
 
   await traceStartupStep('before_render_step', 'appearance_initialize', async () => {
     await measureAsyncAndLog(log, 'Startup step completed', async () => {
@@ -315,7 +315,7 @@ async function initializeAfterRender(): Promise<void> {
     }
   });
 
-  log.info('OpenBitFun core systems initialized successfully');
+  log.info('StarMate core systems initialized successfully');
   logElapsed(log, 'Startup phase completed', phaseStartedAt, {
     data: { phase: 'initializeAfterRender' },
   });
@@ -346,7 +346,7 @@ async function startApplication(): Promise<void> {
   try {
     await initializeBeforeRender();
   } catch (error) {
-    log.error('Failed to initialize OpenBitFun (pre-render)', error);
+    log.error('Failed to initialize StarMate (pre-render)', error);
   }
 
   startupTrace.markPhase('startup_step_start', { step: 'load_i18n_provider', mode: 'static' });

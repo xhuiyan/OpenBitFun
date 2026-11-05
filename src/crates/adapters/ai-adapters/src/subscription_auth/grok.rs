@@ -367,7 +367,7 @@ pub(crate) async fn begin_login_for_account(
         method: super::SubscriptionLoginMethod::Device,
         authorization_url,
         user_code: Some(user_code),
-        instructions: "Open the verification link, confirm the code, then return to OpenBitFun."
+        instructions: "Open the verification link, confirm the code, then return to StarMate."
             .to_string(),
         runner: Box::pin(runner),
     })
@@ -595,7 +595,7 @@ pub(crate) async fn recover_rejected_account(
 #[cfg(test)]
 mod tests {
     #[tokio::test]
-    #[ignore = "Reads the selected OpenBitFun Grok account's catalog from official xAI services; no inference requests"]
+    #[ignore = "Reads the selected StarMate Grok account's catalog from official xAI services; no inference requests"]
     async fn live_grok_model_catalog() {
         let slot = std::env::var("STARMATE_LIVE_GROK_ACCOUNT")
             .expect("select an exact in-app account slot");

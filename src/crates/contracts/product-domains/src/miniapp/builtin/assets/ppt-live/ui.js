@@ -48,7 +48,7 @@ import {
 import { downloadBase64File, downloadHtmlDeck, fileSafe } from './src/export-html.js';
 import { exportFormatIcon, exportFormatTone } from './src/export-format-icons.js';
 import {
-  installOpenBitFunBackendAdapter,
+  installStarMateBackendAdapter,
   PPT_DESIGN_SKILL_KEY,
 } from './src/openbitfun-backend-adapter.js';
 import {
@@ -78,7 +78,7 @@ let historyItems = [];
 let lastHistoryWriteAt = 0;
 const $ = (id) => document.getElementById(id);
 const runtime = () => window.app || {};
-installOpenBitFunBackendAdapter(runtime());
+installStarMateBackendAdapter(runtime());
 const STORAGE_TIMEOUT_MS = 2500;
 const memoryStorage = new Map();
 
@@ -3708,7 +3708,7 @@ function bindExportModal() {
 }
 
 /* ============================================
-   HOST APPEARANCE — follow OpenBitFun light/dark mode
+   HOST APPEARANCE — follow StarMate light/dark mode
    ============================================ */
 function resolveAppearanceMode(mode) {
   if (mode === 'dark' || mode === 'light') return mode;

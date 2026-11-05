@@ -19,7 +19,7 @@ pub(crate) fn is_generic_reasoning_preset(preset: &ReasoningPresetDescriptor) ->
 #[cfg(feature = "subscription-auth")]
 pub(crate) fn product_user_agent() -> String {
     format!(
-        "OpenBitFun/{} ({}; {})",
+        "StarMate/{} ({}; {})",
         env!("CARGO_PKG_VERSION"),
         std::env::consts::OS,
         std::env::consts::ARCH

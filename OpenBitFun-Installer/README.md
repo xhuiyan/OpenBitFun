@@ -1,6 +1,6 @@
-# OpenBitFun Installer
+# StarMate Installer
 
-A fully custom, branded installer for OpenBitFun — built with **Tauri 2 + React** for maximum UI flexibility.
+A fully custom, branded installer for StarMate — built with **Tauri 2 + React** for maximum UI flexibility.
 
 ## Why a Custom Installer?
 
@@ -48,12 +48,12 @@ Use this as the release entrypoint. `pnpm run tauri:build` does not prepare vali
 pnpm run installer:build:only
 ```
 
-`installer:build:only` requires an existing `target/release/openbitfun-desktop.exe`
+`installer:build:only` requires an existing `target/release/starmate-desktop.exe`
 and its adjacent runtime directories. It never falls back to `release-fast` or
 `debug`. For an explicit Cargo target, pass the exact executable:
 
 ```powershell
-$env:STARMATE_INSTALLER_APP_EXE = "target/x86_64-pc-windows-msvc/release/openbitfun-desktop.exe"
+$env:STARMATE_INSTALLER_APP_EXE = "target/x86_64-pc-windows-msvc/release/starmate-desktop.exe"
 pnpm run installer:build:only
 ```
 
@@ -114,7 +114,7 @@ Language Select → Options → Progress → Model Setup → Theme Setup
     language      options    install      model config    launch/close
 ```
 
-When the selected installation path already contains the current OpenBitFun
+When the selected installation path already contains the current StarMate
 installation, the update flow ends after Progress. The existing model and theme
 configuration are preserved, and the installer launches the updated application
 when launch-after-install is enabled.
@@ -223,13 +223,13 @@ pnpm run installer:build:only:fast
 Default release output:
 
 ```text
-src-tauri/target/release/openbitfun-installer.exe
+src-tauri/target/release/starmate-installer.exe
 ```
 
 Fast build output:
 
 ```text
-src-tauri/target/release-fast/openbitfun-installer.exe
+src-tauri/target/release-fast/starmate-installer.exe
 ```
 
 ## Customization guide
@@ -275,8 +275,8 @@ reduced-motion preference.
 
 ### Adding Installer Payload
 
-Place the built OpenBitFun application files in `src-tauri/payload/` before building the installer. The build script handles this automatically.
-During `cargo build`, the payload directory is packed into an embedded zip inside `openbitfun-installer.exe`.
+Place the built StarMate application files in `src-tauri/payload/` before building the installer. The build script handles this automatically.
+During `cargo build`, the payload directory is packed into an embedded zip inside `starmate-installer.exe`.
 
 ## Integration with CI/CD
 
@@ -304,5 +304,5 @@ Add to your GitHub Actions workflow:
   uses: actions/upload-artifact@v6
   with:
     name: OpenBitFun-Installer-Exe
-    path: OpenBitFun-Installer/src-tauri/target/release/openbitfun-installer.exe
+    path: OpenBitFun-Installer/src-tauri/target/release/starmate-installer.exe
 ```

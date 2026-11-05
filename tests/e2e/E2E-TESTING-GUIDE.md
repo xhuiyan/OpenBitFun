@@ -1,8 +1,8 @@
 [中文](E2E-TESTING-GUIDE.zh-CN.md) | **English**
 
-# OpenBitFun E2E Testing Guide
+# StarMate E2E Testing Guide
 
-Complete guide for E2E testing in OpenBitFun project using WebDriverIO + OpenBitFun embedded WebDriver.
+Complete guide for E2E testing in StarMate project using WebDriverIO + StarMate embedded WebDriver.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Complete guide for E2E testing in OpenBitFun project using WebDriverIO + OpenBit
 
 ## Testing Philosophy
 
-OpenBitFun E2E tests focus on **user journeys** and **critical paths** to ensure the desktop application works correctly from the user's perspective. We use a layered testing approach to balance coverage and execution speed.
+StarMate E2E tests focus on **user journeys** and **critical paths** to ensure the desktop application works correctly from the user's perspective. We use a layered testing approach to balance coverage and execution speed.
 
 ### Key Principles
 
@@ -28,7 +28,7 @@ OpenBitFun E2E tests focus on **user journeys** and **critical paths** to ensure
 
 ## Test Levels
 
-OpenBitFun uses a 3-tier test classification system:
+StarMate uses a 3-tier test classification system:
 
 ### L0 - Smoke Tests (Critical Path)
 
@@ -122,15 +122,15 @@ pnpm install
 
 # Build the application (from project root)
 cd ../..
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 ```
 
 ### 2. Verify Installation
 
 Check that the app binary exists:
 
-**Windows**: `target/debug/openbitfun-desktop.exe`
-**Linux/macOS**: `target/debug/openbitfun-desktop`
+**Windows**: `target/debug/starmate-desktop.exe`
+**Linux/macOS**: `target/debug/starmate-desktop`
 
 ### 3. Run Tests
 
@@ -157,12 +157,12 @@ The default test framework runs in debug/dev mode. Performance runs can use
 while still enabling the embedded WebDriver through the `devtools` feature.
 
 #### Debug Mode (Default)
-- **Application Path**: `target/debug/openbitfun-desktop.exe`
+- **Application Path**: `target/debug/starmate-desktop.exe`
 - **Characteristics**: Includes debug symbols, requires dev server (port 1422)
 - **Use Case**: Local development, rapid iteration
 
 #### Release-Fast Performance Mode
-- **Application Path**: `target/release-fast/openbitfun-desktop.exe`
+- **Application Path**: `target/release-fast/starmate-desktop.exe`
 - **Characteristics**: Production web bundle, release-like Rust profile, embedded WebDriver enabled by `--features devtools`
 - **Use Case**: Startup and historical-session performance measurements
 
@@ -172,19 +172,19 @@ When running tests, check the first few lines of output:
 
 ```bash
 # Debug Mode Output
-application: <PROJECT_ROOT>\target\debug\openbitfun-desktop.exe
+application: <PROJECT_ROOT>\target\debug\starmate-desktop.exe
 Debug build detected, checking dev server...
 ```
 
-**Core Principle**: Functional E2E still defaults to `target/debug/openbitfun-desktop.exe`.
+**Core Principle**: Functional E2E still defaults to `target/debug/starmate-desktop.exe`.
 Performance E2E should explicitly set `STARMATE_E2E_APP_MODE=release-fast` after
 building `pnpm run desktop:build:release-fast`.
 
-Do not manually start `target/release-fast/openbitfun-desktop.exe` for performance
+Do not manually start `target/release-fast/starmate-desktop.exe` for performance
 validation. A direct launch uses the normal user profile unless isolated storage
 environment variables are provided. The E2E launcher sets `STARMATE_USER_ROOT`,
 `STARMATE_HOME`, and `STARMATE_E2E_STORAGE_GUARD=1` automatically so performance
-runs cannot silently write into the real OpenBitFun profile.
+runs cannot silently write into the real StarMate profile.
 
 ### 5. Startup and Long-Session Performance E2E
 
@@ -236,7 +236,7 @@ fixtures are not mistaken for valid data; use
 For debug-only comparison, build the debug binary and run:
 
 ```bash
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 cross-env E2E_TEST_WORKSPACE=<workspace-path> STARMATE_E2E_PERF_SESSION_ID=perf-long-session-000 pnpm run e2e:test:perf:debug
 ```
 
@@ -449,7 +449,7 @@ await waitForStreamingComplete('[data-testid="model-response"]', 2000, 30000);
 3. **Don't test internal implementation** - Focus on user-visible behavior
 4. **Don't ignore flaky tests** - Fix or mark as skipped with reason
 5. **Don't use complex selectors** - Prefer data-testid
-6. **Don't test third-party code** - Only test OpenBitFun functionality
+6. **Don't test third-party code** - Only test StarMate functionality
 7. **Don't mix test levels** - Keep L0/L1/L2 separate
 
 ### Conditional Tests
@@ -479,9 +479,9 @@ it('should test feature when workspace is open', async function () {
 **Solution**:
 ```bash
 # Build the debug desktop app
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 
-# Run tests in debug mode so the embedded driver starts inside OpenBitFun
+# Run tests in debug mode so the embedded driver starts inside StarMate
 STARMATE_E2E_APP_MODE=debug pnpm --dir tests/e2e run test:l0:protocol
 
 # Verify the app process is allowed to bind 127.0.0.1:4445
@@ -489,18 +489,18 @@ STARMATE_E2E_APP_MODE=debug pnpm --dir tests/e2e run test:l0:protocol
 
 #### 2. App not built
 
-**Symptom**: `Application not found at target/debug/openbitfun-desktop.exe`
+**Symptom**: `Application not found at target/debug/starmate-desktop.exe`
 
 **Solution**:
 ```bash
 # Build the app (from project root)
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 
 # Verify binary exists
 # Windows
-dir target\debug\openbitfun-desktop.exe
+dir target\debug\starmate-desktop.exe
 # Linux/macOS
-ls -la target/debug/openbitfun-desktop
+ls -la target/debug/starmate-desktop
 ```
 
 #### 3. Test timeouts
@@ -642,7 +642,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Build app
-        run: cargo build -p openbitfun-desktop
+        run: cargo build -p starmate-desktop
       - name: Install test dependencies
         run: cd tests/e2e && pnpm install
       - name: Run L0 tests
@@ -666,7 +666,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Build app
-        run: cargo build -p openbitfun-desktop
+        run: cargo build -p starmate-desktop
       - name: Install test dependencies
         run: cd tests/e2e && pnpm install
       - name: Run L1 tests
@@ -705,7 +705,7 @@ jobs:
 - [WebDriverIO Documentation](https://webdriver.io/)
 - [Tauri Testing Guide](https://tauri.app/v1/guides/testing/)
 - [Page Object Model Pattern](https://webdriver.io/docs/pageobjects/)
-- [OpenBitFun Project Structure](../../AGENTS.md)
+- [StarMate Project Structure](../../AGENTS.md)
 
 ## Contributing
 

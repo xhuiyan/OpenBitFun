@@ -351,7 +351,7 @@ impl WorktreeService {
     }
 
     /// Lists local Git projects known to the workspace service together with
-    /// worktrees beneath the configured OpenBitFun worktree root. Invalid and
+    /// worktrees beneath the configured StarMate worktree root. Invalid and
     /// non-Git workspace records are ignored so one stale project cannot hide
     /// the rest of the catalog.
     pub async fn list_projects(
@@ -2163,17 +2163,17 @@ mod tests {
 
     #[test]
     fn managed_directory_name_includes_project_name_and_short_worktree_id() {
-        let project = Path::new("projects").join("OpenBitFun");
+        let project = Path::new("projects").join("StarMate");
 
         assert_eq!(
             managed_worktree_directory_name(&project, "48e8b457e87649aebf801b408698f46c"),
-            "OpenBitFun-48e8b457"
+            "StarMate-48e8b457"
         );
     }
 
     #[test]
     fn managed_directory_names_are_distinct_for_different_worktrees() {
-        let project = Path::new("projects").join("OpenBitFun");
+        let project = Path::new("projects").join("StarMate");
 
         assert_ne!(
             managed_worktree_directory_name(&project, "48e8b457e87649aebf801b408698f46c"),
@@ -2185,7 +2185,7 @@ mod tests {
     async fn managed_target_path_uses_readable_leaf_and_rejects_collisions() {
         let root = tempfile::tempdir().expect("temp root");
         let worktree_root = root.path().join("managed-worktrees");
-        let project = root.path().join("projects").join("OpenBitFun");
+        let project = root.path().join("projects").join("StarMate");
         let settings = WorktreeSettings {
             root_path: worktree_root.to_string_lossy().to_string(),
             ..WorktreeSettings::default()
@@ -2197,7 +2197,7 @@ mod tests {
             .expect("managed target path");
         assert_eq!(
             target.file_name().and_then(|name| name.to_str()),
-            Some("OpenBitFun-48e8b457")
+            Some("StarMate-48e8b457")
         );
         assert_eq!(
             target
@@ -2226,7 +2226,7 @@ mod tests {
         let target = managed_target_path(
             &settings,
             "repository-id",
-            &root.path().join("projects/OpenBitFun"),
+            &root.path().join("projects/StarMate"),
             "48e8b457e87649aebf801b408698f46c",
         )
         .await

@@ -1,7 +1,7 @@
 {
   "name": "@starmate/theme-openbitfun",
   "version": "0.1.0",
-  "description": "Replaceable OpenBitFun light, dark, and high-contrast theme package",
+  "description": "Replaceable StarMate light, dark, and high-contrast theme package",
   "license": "MIT",
   "type": "module",
   "files": [

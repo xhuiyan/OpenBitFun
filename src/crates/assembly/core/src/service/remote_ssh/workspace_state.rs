@@ -425,7 +425,7 @@ pub fn remote_workspace_support() -> RemoteWorkspaceSupport {
 /// [`remote_workspace_support`] here.
 pub fn remote_workspace_not_compiled_message(path: &str) -> String {
     format!(
-        "Remote workspaces are not compiled into this OpenBitFun host (feature `remote-workspace`); refusing to read the local filesystem for a remote path: {path}"
+        "Remote workspaces are not compiled into this StarMate host (feature `remote-workspace`); refusing to read the local filesystem for a remote path: {path}"
     )
 }
 
@@ -714,7 +714,7 @@ pub async fn ensure_saved_connection_services() -> Result<Arc<RemoteWorkspaceSta
             } else {
                 dirs::data_local_dir()
                     .ok_or("Application data directory is unavailable")?
-                    .join("OpenBitFun")
+                    .join("StarMate")
                     .join("ssh")
             };
             let ssh = SSHConnectionManager::new(data_dir);

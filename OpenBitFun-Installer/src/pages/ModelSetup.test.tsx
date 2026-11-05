@@ -12,7 +12,7 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string, options?: { defaultValue?: string }) => options?.defaultValue || key }),
 }));
 const initial: InstallOptions = {
-  installPath: 'D:\\OpenBitFun', desktopShortcut: false, startMenu: true,
+  installPath: 'D:\\StarMate', desktopShortcut: false, startMenu: true,
   launchAfterInstall: false, appLanguage: 'en-US', themePreference: 'system', modelConfig: null,
 };
 let container: HTMLDivElement;

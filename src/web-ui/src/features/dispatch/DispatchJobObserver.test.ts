@@ -1212,7 +1212,7 @@ describe('DispatchJobObserver', () => {
     await vi.advanceTimersByTimeAsync(0);
     expect(context.flowChatStore.addExternalSession).not.toHaveBeenCalled();
 
-    context.currentWorkspacePath = '/projects/OpenBitFun';
+    context.currentWorkspacePath = '/projects/StarMate';
     await vi.advanceTimersByTimeAsync(DISPATCH_JOB_POLL_INTERVAL_MS);
     expect(context.flowChatStore.addExternalSession).not.toHaveBeenCalled();
     expect(dispatchJobStore.getState().jobs['job-restored']).toBeUndefined();
@@ -1230,7 +1230,7 @@ describe('DispatchJobObserver', () => {
         workspacePath: '/target/repo',
         displayName: 'build-host',
       },
-      sourceWorkspacePath: '/projects/OpenBitFun',
+      sourceWorkspacePath: '/projects/StarMate',
       sourceWorkspaceId: 'workspace-1',
       workspacePath: '/target/repo',
       promptPreview: 'Dispatch test',
@@ -1274,9 +1274,9 @@ describe('DispatchJobObserver', () => {
       'session-restored',
       'Dispatch test',
       'Standard',
-      '/projects/OpenBitFun',
+      '/projects/StarMate',
       expect.objectContaining({
-        projectWorkspacePath: '/projects/OpenBitFun',
+        projectWorkspacePath: '/projects/StarMate',
         workspaceId: 'workspace-1',
       }),
     );

@@ -1363,7 +1363,7 @@ Usage:
                         return ValidationResult {
                             result: false,
                             message: Some(
-                                "Tool context is required to resolve OpenBitFun URIs".to_string(),
+                                "Tool context is required to resolve StarMate URIs".to_string(),
                             ),
                             error_code: Some(400),
                             meta: None,
@@ -1954,7 +1954,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2527,7 +2527,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2597,7 +2597,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2658,7 +2658,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2777,7 +2777,7 @@ mod tests {
             &nested,
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2891,7 +2891,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",
@@ -2909,7 +2909,7 @@ mod tests {
             directory.path(),
             &[
                 "-c",
-                "user.name=OpenBitFun Tests",
+                "user.name=StarMate Tests",
                 "-c",
                 "user.email=tests@starmate.xtdl.ltd",
                 "commit",

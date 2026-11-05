@@ -64,7 +64,7 @@ export function workspaceSessionCatalogSources(
 
 /**
  * When every known external source is disabled, the navigation projection is
- * the native OpenBitFun view. Keep that source on the host query so it can
+ * the native StarMate view. Keep that source on the host query so it can
  * page native rows directly instead of traversing imported records just to
  * discard them in the client.
  *

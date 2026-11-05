@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Builds the standalone, non-updating OpenBitFun Data Tools bundle. */
+/** Builds the standalone, non-updating StarMate Data Tools bundle. */
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -62,7 +62,7 @@ async function main() {
   await generateDataToolsTheme();
   const forwardArgs = tauriArguments(process.argv.slice(2));
   if (forwardArgs.some((arg) => arg.startsWith('--product-config'))) {
-    throw new Error('The standalone Data Tools bundle has its own identity and supports OpenBitFun data only.');
+    throw new Error('The standalone Data Tools bundle has its own identity and supports StarMate data only.');
   }
   const generated = prepareDataToolsTauriConfig(
     join(APP_DIR, 'tauri.conf.json'),

@@ -145,8 +145,8 @@ impl ConversationCoordinator {
             } else if create_new || session_id == CONTROL_SESSION_ID {
                 self.create_session_with_id(
                     Some(session_id.clone()),
-                    "OpenBitFun".to_string(),
-                    "OpenBitFun".to_string(),
+                    "StarMate".to_string(),
+                    "StarMate".to_string(),
                     SessionConfig {
                         tool_presentation_mode: Default::default(),
                         workspace_id: Some(workspace_record.id.clone()),

@@ -175,7 +175,7 @@ impl WorkspaceService {
                     Err(StarMateError::service(format!(
                         "Workspace path does not exist locally and is not a known remote SSH \
                          workspace: {path_str}. Open it once from the desktop SSH remote UI so \
-                         OpenBitFun can remember the connection, then try again."
+                         StarMate can remember the connection, then try again."
                     )))
                 } else {
                     Err(error)
@@ -245,7 +245,7 @@ impl crate::agentic::coordination::ConversationCoordinator {
             .await?;
         if known_remote.is_none() && !path.exists() {
             return Err(StarMateError::service(format!(
-                "Workspace path does not exist locally and is not a known remote SSH workspace: {}. Open it once from the desktop SSH remote UI so OpenBitFun can remember the connection, then try again.",
+                "Workspace path does not exist locally and is not a known remote SSH workspace: {}. Open it once from the desktop SSH remote UI so StarMate can remember the connection, then try again.",
                 path.display()
             )));
         }

@@ -4,7 +4,7 @@
 //! Account-authenticated Relay connections over official or LAN URLs, plus IM bots.
 //!
 //! Bot connections (Telegram / Feishu / Weixin) run independently of relay connections
-//! (LAN / OpenBitFun Server). Calling `stop()` only
+//! (LAN / StarMate Server). Calling `stop()` only
 //! tears down the relay side; bots keep running.  Use `stop_bot()` or
 //! `stop_all()` to shut everything down.
 
@@ -1016,7 +1016,7 @@ impl RemoteConnectService {
     ///
     /// `notifier` delivers host stream hints to subscribed controllers; the host
     /// adapter owns pairwise encryption and the routing lease, so it supplies it.
-    /// `priority` decides which host serves this device when several OpenBitFun
+    /// `priority` decides which host serves this device when several StarMate
     /// hosts on the machine share its identity.
     pub async fn start_device_connection(
         &self,

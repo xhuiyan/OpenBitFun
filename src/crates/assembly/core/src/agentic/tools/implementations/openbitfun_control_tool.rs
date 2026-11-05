@@ -1,4 +1,4 @@
-//! OpenBitFunControl — discover and control user-facing OpenBitFun features and settings.
+//! OpenBitFunControl — discover and control user-facing StarMate features and settings.
 
 use crate::agentic::agents::get_agent_registry;
 use crate::agentic::tools::framework::{
@@ -83,7 +83,7 @@ impl OpenBitFunControlTool {
                         "status": "unavailable",
                         "contractAvailable": true,
                         "readBack": false,
-                        "reason": format!("Shared OpenBitFun configuration is unavailable: {error}"),
+                        "reason": format!("Shared StarMate configuration is unavailable: {error}"),
                     }),
                 );
                 Ok(result)
@@ -274,7 +274,7 @@ impl OpenBitFunControlTool {
             .and_then(|availability| availability.reason.as_deref())
             .unwrap_or("This action requires a product-host or presentation adapter");
         format!(
-            "unsupported[profile=headless]: {} {} is unavailable on this OpenBitFun surface: {reason}",
+            "unsupported[profile=headless]: {} {} is unavailable on this StarMate surface: {reason}",
             request.action.as_str(),
             definition_id.as_deref().unwrap_or("product-control action")
         )
@@ -310,13 +310,13 @@ impl Tool for OpenBitFunControlTool {
 
     async fn description(&self) -> StarMateResult<String> {
         Ok(
-            "Control OpenBitFun features and settings, including MCP servers, Remote Connect bots/Mobile Web, and same-account devices with Detached Dispatch to other hosts. Prefer this tool over ComputerUse. Use the two-step flow: `list` or `search`, then `get` the matching capability and follow its schema and availability to `configure`, `execute`, or `open`. Open a root with capability_id only. destination.actionId is presentation metadata, never an item_id or operation_id. The catalog loads on demand; never guess IDs or values."
+            "Control StarMate features and settings, including MCP servers, Remote Connect bots/Mobile Web, and same-account devices with Detached Dispatch to other hosts. Prefer this tool over ComputerUse. Use the two-step flow: `list` or `search`, then `get` the matching capability and follow its schema and availability to `configure`, `execute`, or `open`. Open a root with capability_id only. destination.actionId is presentation metadata, never an item_id or operation_id. The catalog loads on demand; never guess IDs or values."
                 .to_string(),
         )
     }
 
     fn short_description(&self) -> String {
-        "Discover and control OpenBitFun features and settings, including MCP servers.".to_string()
+        "Discover and control StarMate features and settings, including MCP servers.".to_string()
     }
 
     fn input_schema(&self) -> Value {
@@ -569,14 +569,14 @@ impl Tool for OpenBitFunControlTool {
                     ));
                 }
             } else if product_capability(capability_id).is_err() {
-                return invalid("capability_id does not identify a known OpenBitFun capability.");
+                return invalid("capability_id does not identify a known StarMate capability.");
             }
         }
         if action == "execute" {
             let capability_id = Self::capability_id(input).unwrap_or_default();
             let operation_id = Self::operation_id(input).unwrap_or_default();
             let Ok(capability) = product_capability(capability_id) else {
-                return invalid("capability_id does not identify a known OpenBitFun capability.");
+                return invalid("capability_id does not identify a known StarMate capability.");
             };
             let Some(operation) = capability
                 .operations
@@ -595,7 +595,7 @@ impl Tool for OpenBitFunControlTool {
                     .map(|control| control.tool.as_str())
                     .unwrap_or("none");
                 return invalid(&format!(
-                    "operation_id is not exposed by this OpenBitFun capability. Valid operation_id values: [{valid_operations}]. The delegated Agent tool is {delegated_tool}. destination.actionId is presentation metadata and cannot be executed as an operation."
+                    "operation_id is not exposed by this StarMate capability. Valid operation_id values: [{valid_operations}]. The delegated Agent tool is {delegated_tool}. destination.actionId is presentation metadata and cannot be executed as an operation."
                 ));
             };
             if let Err(error) =
@@ -608,14 +608,14 @@ impl Tool for OpenBitFunControlTool {
             let capability_id = Self::capability_id(input).unwrap_or_default();
             let option_id = Self::option_id(input).unwrap_or_default();
             let Ok(capability) = product_capability(capability_id) else {
-                return invalid("capability_id does not identify a known OpenBitFun capability.");
+                return invalid("capability_id does not identify a known StarMate capability.");
             };
             let Some(option) = capability
                 .options
                 .iter()
                 .find(|option| option.id == option_id)
             else {
-                return invalid("option_id is not exposed by this OpenBitFun setting.");
+                return invalid("option_id is not exposed by this StarMate setting.");
             };
             if let Some(value) = configure_value.as_ref() {
                 if let Err(error) = validate_option_value(&option.value_schema, value) {
@@ -660,7 +660,7 @@ impl Tool for OpenBitFunControlTool {
             || (action == "execute" && !Self::operation_is_readonly(input));
         if mutating_control && Self::agent_is_readonly(context) {
             return Err(StarMateError::tool(
-                "This read-only agent may discover OpenBitFun features and settings but cannot control them"
+                "This read-only agent may discover StarMate features and settings but cannot control them"
                     .to_string(),
             ));
         }
@@ -924,7 +924,7 @@ mod tests {
         assert!(remote
             .message
             .unwrap()
-            .contains("local OpenBitFun product-host path"));
+            .contains("local StarMate product-host path"));
     }
 
     #[tokio::test]

@@ -10,7 +10,7 @@ const MAX_PROJECT_SLUG_LEN = 120;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function defaultOpenBitFunHome() {
+function defaultStarMateHome() {
   if (process.env.STARMATE_E2E_HOME) {
     return process.env.STARMATE_E2E_HOME;
   }
@@ -20,7 +20,7 @@ function defaultOpenBitFunHome() {
   return path.resolve(__dirname, '..', '.openbitfun', 'runtime', 'home');
 }
 
-function defaultOpenBitFunUserRoot() {
+function defaultStarMateUserRoot() {
   if (process.env.STARMATE_E2E_USER_ROOT) {
     return process.env.STARMATE_E2E_USER_ROOT;
   }
@@ -33,8 +33,8 @@ function defaultOpenBitFunUserRoot() {
 function parseArgs(argv) {
   const options = {
     workspace: undefined,
-    openbitfunHome: defaultOpenBitFunHome(),
-    openbitfunUserRoot: defaultOpenBitFunUserRoot(),
+    openbitfunHome: defaultStarMateHome(),
+    openbitfunUserRoot: defaultStarMateUserRoot(),
     sessionPrefix: 'perf-long-session',
     scenario: 'mixed-visible',
     sessionCount: 80,
@@ -148,7 +148,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Generate OpenBitFun long-session performance fixtures.
+  console.log(`Generate StarMate long-session performance fixtures.
 
 Usage:
   node tests/e2e/scripts/generate-long-session-fixture.mjs --workspace <path> [options]
@@ -166,8 +166,8 @@ Options:
   --last-active-step-ms <n> lastActiveAt decrement per session index. Default: 1000
   --session-prefix <text>   Session id prefix. Default: perf-long-session
   --scenario <name>         Fixture shape: mixed-visible, dense-visible, explore-only, or user-only-latest. Default: mixed-visible
-  --openbitfun-home <path>      OpenBitFun home root. Default: STARMATE_E2E_HOME or isolated tests/e2e/.openbitfun/runtime/home; STARMATE_HOME is used only with STARMATE_E2E_USE_REAL_PROFILE=1
-  --openbitfun-user-root <path> OpenBitFun user config root for seeding active workspace. Default: STARMATE_E2E_USER_ROOT or isolated tests/e2e/.openbitfun/runtime/user-root; skipped for real profile unless provided
+  --openbitfun-home <path>      StarMate home root. Default: STARMATE_E2E_HOME or isolated tests/e2e/.openbitfun/runtime/home; STARMATE_HOME is used only with STARMATE_E2E_USE_REAL_PROFILE=1
+  --openbitfun-user-root <path> StarMate user config root for seeding active workspace. Default: STARMATE_E2E_USER_ROOT or isolated tests/e2e/.openbitfun/runtime/user-root; skipped for real profile unless provided
   --cleanup                 Remove generated sessions for the prefix.
 `);
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# sync-release.sh — Mirror OpenBitFun release assets from GitHub to a download mirror.
+# sync-release.sh — Mirror StarMate release assets from GitHub to a download mirror.
 #
 # Flow:
 #   1. Fetch the selected channel's latest-v1.json from GitHub
@@ -15,9 +15,9 @@
 # each manual_installers entry (Windows installer, macOS .dmg) for the
 # corresponding updater package.
 #
-# Cron (every 10 minutes). Run the in-repo script from the OpenBitFun checkout so a
+# Cron (every 10 minutes). Run the in-repo script from the StarMate checkout so a
 # new host only needs this repository, not a detached AutoUpdate copy:
-#   */10 * * * * /root/repos/OpenBitFun/scripts/starmate-release-sync.sh \
+#   */10 * * * * /root/repos/StarMate/scripts/starmate-release-sync.sh \
 #       >> /var/log/starmate-release-sync.log 2>&1
 # Host-specific paths and mirror configuration belong to your deployment.
 #
@@ -30,7 +30,7 @@
 #   while true; do
 #     nc -l -p 8787 -q 1 >/dev/null \
 #       && STARMATE_RELEASE_CHANNEL=stable \
-#            /root/repos/OpenBitFun/scripts/starmate-release-sync.sh \
+#            /root/repos/StarMate/scripts/starmate-release-sync.sh \
 #            >> /var/log/starmate-release-sync.log 2>&1
 #   done
 #
@@ -64,7 +64,7 @@ GITHUB_LINUX_BINARIES_URL="${GITHUB_RELEASE_ROOT}/linux-binaries-v1.json"
 GITHUB_RELAY_IMAGE_URL="${GITHUB_RELEASE_ROOT}/relay-image.json"
 STARMATE_BASE_URL="https://starmate.xtdl.ltd/release${CHANNEL_PATH}"
 # The mirror deliberately lives outside the website checkout. It used to be
-# OpenBitFun-Website/dist/release, but `npm run build` empties dist/, so every
+# StarMate-Website/dist/release, but `npm run build` empties dist/, so every
 # website deploy silently deleted the mirrored installers and manifests —
 # breaking downloads and the updater fallback until someone noticed. nginx
 # serves this directory through a `location ^~ /release/` alias instead.
@@ -512,7 +512,7 @@ main() {
     exit 0
   fi
 
-  log "=== OpenBitFun ${RELEASE_CHANNEL} release sync started ==="
+  log "=== StarMate ${RELEASE_CHANNEL} release sync started ==="
 
   mkdir -p "$WEBSITE_RELEASE_DIR"
 

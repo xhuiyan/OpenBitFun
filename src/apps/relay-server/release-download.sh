@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OpenBitFun Relay Server — pull and start the published multi-platform image.
+# StarMate Relay Server — pull and start the published multi-platform image.
 #
 # Shared by:
 #   - src/apps/relay-server/deploy.sh

@@ -42,7 +42,7 @@ vi.mock('@tauri-apps/plugin-dialog', () => ({ open: mocks.open }));
 
 const record = (submissionId: string): MarketSubmission => ({
   submissionId, listingId: 'notes', slug: 'notes', releaseNumber: 1, name: submissionId,
-  description: 'Notes', icon: 'box', category: 'utilities', tags: [], minOpenBitFunVersion: '1.0.5',
+  description: 'Notes', icon: 'box', category: 'utilities', tags: [], minStarMateVersion: '1.0.5',
   changelog: '', license: { spdxExpression: 'MIT' }, permissions: {}, status: 'submitted',
   screenshotUrls: [], createdAt: 1, updatedAt: 1,
 });

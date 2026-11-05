@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline repair of session identities and storage damaged by OpenBitFun migrations."""
+"""Offline repair of session identities and storage damaged by StarMate migrations."""
 
 import argparse
 import base64
@@ -810,13 +810,13 @@ def check_sessions(plan, resume=False):
 
 def check_closed(confirmed):
     if not confirmed:
-        raise ValueError("Close all OpenBitFun Desktop/CLI hosts, then pass --confirm-closed")
+        raise ValueError("Close all StarMate Desktop/CLI hosts, then pass --confirm-closed")
     if os.name == "nt":
         result = subprocess.run(["tasklist", "/FO", "CSV", "/NH"], capture_output=True,
                                 creationflags=subprocess.CREATE_NO_WINDOW, check=True)
         for row in csv.reader(result.stdout.decode(errors="replace").splitlines()):
             if row and re.fullmatch(r"(?:openbitfun|bitfun)(?:[-_].*)?\.exe", row[0], re.I):
-                raise ValueError("OpenBitFun process is still running: {}".format(row[0]))
+                raise ValueError("StarMate process is still running: {}".format(row[0]))
 
 
 class RepairLock:
@@ -1070,14 +1070,14 @@ def main():
     PROGRESS.start()
     try:
         if args.rollback:
-            report_progress("Rollback: checking that OpenBitFun hosts are stopped", force=True)
+            report_progress("Rollback: checking that StarMate hosts are stopped", force=True)
             check_closed(args.confirm_closed)
             rollback(args.rollback.absolute())
             print("Rollback completed; backup retained.")
         elif args.apply:
             if not args.plan or not args.backup_dir:
                 parser.error("--apply requires --plan and --backup-dir")
-            report_progress("Repair: checking that OpenBitFun hosts are stopped", force=True)
+            report_progress("Repair: checking that StarMate hosts are stopped", force=True)
             check_closed(args.confirm_closed)
             plan = read_json(args.plan)
             apply_plan(plan, args.backup_dir.absolute())

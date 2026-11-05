@@ -90,7 +90,7 @@ async fn fetch_http(
         .keys()
         .any(|name| name.eq_ignore_ascii_case("user-agent"));
     if !has_user_agent {
-        request = request.header("User-Agent", "OpenBitFun-DesktopCard");
+        request = request.header("User-Agent", "StarMate-DesktopCard");
     }
     for (name, value) in headers {
         request = request.header(name.as_str(), value.as_str());

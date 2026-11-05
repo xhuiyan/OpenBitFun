@@ -77,13 +77,13 @@ pnpm run prepare:dsh-profile   # 可选：本地 DeepSeek Harness 会话
 ## 验证
 
 ```bash
-cargo check -p openbitfun-desktop && cargo test -p openbitfun-desktop
+cargo check -p starmate-desktop && cargo test -p starmate-desktop
 ```
 
 窗口布局恢复、旧状态兼容和快照保存使用：
 
 ```bash
-cargo test -p openbitfun-desktop --lib window_state_support::tests
+cargo test -p starmate-desktop --lib window_state_support::tests
 pnpm --dir src/web-ui run test:run src/app/startup/startupPerformanceContract.test.ts
 ```
 
@@ -95,5 +95,5 @@ macOS 浏览器空 URL 和原生导航失败使用
 如果改动影响启动、WebDriver、browser/computer-use 或打包行为，还需要运行：
 
 ```bash
-cargo build -p openbitfun-desktop
+cargo build -p starmate-desktop
 ```

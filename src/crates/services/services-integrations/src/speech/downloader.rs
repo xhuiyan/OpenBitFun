@@ -169,7 +169,7 @@ where
 {
     let response_request = client
         .get(source_url)
-        .header(reqwest::header::USER_AGENT, "OpenBitFun")
+        .header(reqwest::header::USER_AGENT, "StarMate")
         .send();
     let response = tokio::select! {
         _ = cancel.cancelled() => {

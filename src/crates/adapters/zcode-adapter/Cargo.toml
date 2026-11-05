@@ -3,7 +3,7 @@ name = "starmate-zcode-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Read-only Zcode session adapter for OpenBitFun"
+description = "Read-only Zcode session adapter for StarMate"
 autotests = false
 
 [lib]

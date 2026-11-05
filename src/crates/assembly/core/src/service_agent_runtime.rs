@@ -489,7 +489,7 @@ fn provider_catalog_source(
     match source {
         ModelsDevSnapshotSource::Cache => starmate_core_types::ProviderCatalogSource::Cache,
         ModelsDevSnapshotSource::Bundled => starmate_core_types::ProviderCatalogSource::Bundle,
-        ModelsDevSnapshotSource::Empty => starmate_core_types::ProviderCatalogSource::OpenBitFun,
+        ModelsDevSnapshotSource::Empty => starmate_core_types::ProviderCatalogSource::StarMate,
     }
 }
 

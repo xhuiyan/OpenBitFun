@@ -597,9 +597,9 @@ export default function deviceDirectoryUnitTest() {
       viewModel.activateLive('desk-b', [], [sessionOn('desk-b', 'fresh', 'Fresh')]);
       expect(state.find('desk-b')?.status).assertEqual('loading');
 
-      viewModel.completeLiveCatalog('desk-b', [workspace('/mac/OpenBitFun', 'OpenBitFun')]);
+      viewModel.completeLiveCatalog('desk-b', [workspace('/mac/StarMate', 'StarMate')]);
       expect(state.find('desk-b')?.status).assertEqual('ready');
-      expect(state.find('desk-b')?.workspaces[0].path).assertEqual('/mac/OpenBitFun');
+      expect(state.find('desk-b')?.workspaces[0].path).assertEqual('/mac/StarMate');
     });
 
     it('releases the abandoned loading owner during rapid target switches', 0, () => {

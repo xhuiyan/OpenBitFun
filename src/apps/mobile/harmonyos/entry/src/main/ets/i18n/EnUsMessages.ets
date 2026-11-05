@@ -228,7 +228,7 @@ export const EN_US_MESSAGES: [string, string][] = [
   ['sidebar.searchPlaceholder', 'Search chats'],
   ['sidebar.noSearchResult', 'No matching sessions'],
   ['sidebar.signedOutNewChat', 'New chat'],
-  ['sidebar.signInOpenBitFunAccount', 'Sign in with email or GitHub'],
+  ['sidebar.signInStarMateAccount', 'Sign in with email or GitHub'],
   ['sidebar.collapse', 'Collapse sidebar'],
   ['sidebar.restore', 'Expand sidebar'],
 

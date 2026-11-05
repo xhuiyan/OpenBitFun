@@ -1,4 +1,4 @@
-//! OpenBitFun Page: versioned publish + Page Functions serve.
+//! StarMate Page: versioned publish + Page Functions serve.
 //!
 //! Flow: upload draft → freeze version → deploy production pointer.
 //! Preview: `/p/{user}/{slug}/@v/{version}/...`
@@ -1317,7 +1317,7 @@ fn page_login_form_response(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>需要登录 · OpenBitFun Page</title>
+  <title>需要登录 · StarMate Page</title>
   <style>{}</style>
 </head>
 <body>
@@ -1332,7 +1332,7 @@ fn page_login_form_response(
       <p data-page-login-error class="error" role="alert" hidden></p>
       <button data-page-login-submit class="submit" type="submit">使用邮箱或 GitHub 登录 · Sign in with email or GitHub</button>
     </form>
-    <p class="note">使用 OpenBitFun 统一账号登录。</p>
+    <p class="note">使用 StarMate 统一账号登录。</p>
     <noscript><p class="error">登录需要启用 JavaScript。 JavaScript is required to sign in.</p></noscript>
   </main>
   <script src="{client_script}" defer></script>

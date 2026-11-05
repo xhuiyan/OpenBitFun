@@ -45,7 +45,7 @@ Dispatch durable work to another StarMate host; the controller may disconnect wh
 3. 提交任务后在任务状态中跟踪
    Submit the work and follow its job status
 
-入口 / Entry: OpenBitFun 内的对应控制界面
+入口 / Entry: StarMate 内的对应控制界面
 
 ## 智能体可替你做什么 / What an agent can do for you
 

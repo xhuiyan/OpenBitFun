@@ -230,7 +230,7 @@ pub(crate) fn identity_file_path() -> Result<PathBuf> {
     }
 
     let home = super::product_home_dir()
-        .ok_or_else(|| anyhow!("cannot determine OpenBitFun home directory"))?;
+        .ok_or_else(|| anyhow!("cannot determine StarMate home directory"))?;
     Ok(home.join("device_identity.json"))
 }
 

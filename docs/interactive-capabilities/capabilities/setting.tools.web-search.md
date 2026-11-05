@@ -35,13 +35,13 @@ Choose the search provider used by the WebSearch tool at runtime and configure c
 3. 选择搜索服务，完成所需配置并保存
    Choose a provider, complete its required configuration, and save
 
-入口 / Entry: OpenBitFun 设置
+入口 / Entry: StarMate 设置
 
 ## 智能体可替你做什么 / What an agent can do for you
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| 打开对应界面 / Open the UI | 进入 OpenBitFun 中对应的功能界面。 | Open the matching feature in OpenBitFun. |
+| 打开对应界面 / Open the UI | 进入 StarMate 中对应的功能界面。 | Open the matching feature in StarMate. |
 
 ## 可配置选项 / Configurable options
 

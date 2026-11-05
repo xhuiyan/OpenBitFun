@@ -1,4 +1,4 @@
-//! Built-in skills shipped with OpenBitFun.
+//! Built-in skills shipped with StarMate.
 //!
 //! These skills are embedded into the `openbitfun-core` binary and installed into a
 //! managed `.system` directory under the user skills root on demand.
@@ -500,8 +500,8 @@ mod tests {
         let skill = embedded_skill_text("commit-push-pr/SKILL.md");
         assert!(skill.contains("name: commit-push-pr"));
         assert!(skill
-            .contains("Co-authored-by: OpenBitFun <318544290+bitfun-ai@users.noreply.github.com>"));
-        assert!(skill.contains("Generated with [OpenBitFun](https://github.com/bitfun-ai)"));
+            .contains("Co-authored-by: StarMate <318544290+bitfun-ai@users.noreply.github.com>"));
+        assert!(skill.contains("Generated with [StarMate](https://github.com/bitfun-ai)"));
     }
 
     #[test]

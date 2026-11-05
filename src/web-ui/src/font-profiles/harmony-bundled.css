@@ -1,6 +1,6 @@
 /* Official variable faces cover the design system's 400/500/600/700 weights. */
 @font-face {
-  font-family: "OpenBitFun HarmonyOS Sans";
+  font-family: "StarMate HarmonyOS Sans";
   src: url("../assets/fonts/harmonyos-sans/base/HarmonyOS_Sans.ttf") format("truetype");
   font-style: normal;
   font-weight: 400 700;
@@ -8,7 +8,7 @@
 }
 
 @font-face {
-  font-family: "OpenBitFun HarmonyOS Sans SC";
+  font-family: "StarMate HarmonyOS Sans SC";
   src: url("../assets/fonts/harmonyos-sans/sc/HarmonyOS_Sans_SC.ttf") format("truetype");
   font-style: normal;
   font-weight: 400 700;
@@ -78,14 +78,14 @@
 @layer openbitfun.tokens.system {
   /* This profile loads before package CSS; outrank its zero-specificity defaults. */
   [data-starmate-design-system-root] {
-    --openbitfun-font-family-sans: "OpenBitFun HarmonyOS Sans", system-ui, "Segoe UI", Arial, sans-serif;
-    --openbitfun-font-family-control: "OpenBitFun HarmonyOS Sans", system-ui, "Segoe UI", Arial, sans-serif;
+    --openbitfun-font-family-sans: "StarMate HarmonyOS Sans", system-ui, "Segoe UI", Arial, sans-serif;
+    --openbitfun-font-family-control: "StarMate HarmonyOS Sans", system-ui, "Segoe UI", Arial, sans-serif;
     /* The design system owns the code stack and its localized body fallback. */
   }
 
   :where([data-starmate-design-system-root]):lang(zh-CN) {
-    --openbitfun-font-family-sans: "OpenBitFun HarmonyOS Sans SC", "OpenBitFun HarmonyOS Sans", system-ui, "Microsoft YaHei UI", sans-serif;
-    --openbitfun-font-family-control: "OpenBitFun HarmonyOS Sans SC", "OpenBitFun HarmonyOS Sans", system-ui, "Microsoft YaHei UI", sans-serif;
+    --openbitfun-font-family-sans: "StarMate HarmonyOS Sans SC", "StarMate HarmonyOS Sans", system-ui, "Microsoft YaHei UI", sans-serif;
+    --openbitfun-font-family-control: "StarMate HarmonyOS Sans SC", "StarMate HarmonyOS Sans", system-ui, "Microsoft YaHei UI", sans-serif;
   }
 
   /* Traditional Chinese deliberately follows the platform's localized face. */

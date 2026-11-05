@@ -379,7 +379,7 @@ export default function remoteControllersUnitTest() {
 
   describe('FileTargetResolver', () => {
     it('resolves remote file references and line ranges', 0, () => {
-      const context = new FilePreviewTargetContext('session-1', '/workspace/OpenBitFun', 4);
+      const context = new FilePreviewTargetContext('session-1', '/workspace/StarMate', 4);
       const computer = FileTargetResolver.resolve('computer://src/main.rs#L42-L58', '', context);
       const relative = FileTargetResolver.resolve('README.md:12-18', 'Readme', context);
       const windows = FileTargetResolver.resolve('C:\\workspace\\main.cpp#L9', '', context);
@@ -398,7 +398,7 @@ export default function remoteControllersUnitTest() {
     });
 
     it('normalizes schemes, encoded paths, extensionless files and trailing punctuation', 0, () => {
-      const context = new FilePreviewTargetContext('session-1', '/workspace/OpenBitFun', 4);
+      const context = new FilePreviewTargetContext('session-1', '/workspace/StarMate', 4);
       const fileUrl = FileTargetResolver.resolve('file:///workspace/Makefile', '', context);
       const encoded = FileTargetResolver.resolve('computer://docs/My%20File.md),', '', context);
       const dockerfile = FileTargetResolver.resolve('/workspace/Dockerfile', '', context);
@@ -415,7 +415,7 @@ export default function remoteControllersUnitTest() {
     });
 
     it('classifies web, anchor and unsupported references without file targets', 0, () => {
-      const context = new FilePreviewTargetContext('session-1', '/workspace/OpenBitFun', 1);
+      const context = new FilePreviewTargetContext('session-1', '/workspace/StarMate', 1);
       expect(FileTargetResolver.resolve('https://example.com', '', context).kind)
         .assertEqual(FileReferenceKind.HttpUrl);
       expect(FileTargetResolver.resolve('http://example.com', '', context).kind)
@@ -490,7 +490,7 @@ export default function remoteControllersUnitTest() {
       const state = new FilePreviewState();
       const controller = new RemoteFilePreviewController(client, state, () => true, () => 3);
       const target = new FilePreviewTarget(
-        'computer://src/main.rs', 'src/main.rs', 'main.rs', 'session-1', '/workspace/OpenBitFun', 3
+        'computer://src/main.rs', 'src/main.rs', 'main.rs', 'session-1', '/workspace/StarMate', 3
       );
 
       await controller.open(target);
@@ -889,12 +889,12 @@ export default function remoteControllersUnitTest() {
         fileSaver
       );
 
-      await controller.download('/workspace/OpenBitFun/README.md', 'session-1', false, true);
+      await controller.download('/workspace/StarMate/README.md', 'session-1', false, true);
 
       expect(client.infoRequests.length).assertEqual(0);
-      expect(client.readRequests[0]).assertEqual('/workspace/OpenBitFun/README.md|session-1');
+      expect(client.readRequests[0]).assertEqual('/workspace/StarMate/README.md|session-1');
       expect(fileSaver.savedNames[0]).assertEqual('README.md');
-      expect(status.downloadedFilePath).assertEqual('/workspace/OpenBitFun/README.md');
+      expect(status.downloadedFilePath).assertEqual('/workspace/StarMate/README.md');
       expect(status.fileDownloadStatus.indexOf('README.md') >= 0).assertTrue();
       expect(statusText).assertEqual(status.fileDownloadStatus);
       expect(busyEvents[0]).assertTrue();
@@ -904,7 +904,7 @@ export default function remoteControllersUnitTest() {
 
       scheduler.tick(1);
       expect(status.downloadingFilePath).assertEqual('');
-      expect(status.downloadedFilePath).assertEqual('/workspace/OpenBitFun/README.md');
+      expect(status.downloadedFilePath).assertEqual('/workspace/StarMate/README.md');
     });
 
     it('skips unavailable downloads before touching the client', 0, async () => {
@@ -928,9 +928,9 @@ export default function remoteControllersUnitTest() {
       );
 
       await controller.download('', 'session-1', false, true);
-      await controller.download('/workspace/OpenBitFun/README.md', '', false, true);
-      await controller.download('/workspace/OpenBitFun/README.md', 'session-1', true, true);
-      await controller.download('/workspace/OpenBitFun/README.md', 'session-1', false, false);
+      await controller.download('/workspace/StarMate/README.md', '', false, true);
+      await controller.download('/workspace/StarMate/README.md', 'session-1', true, true);
+      await controller.download('/workspace/StarMate/README.md', 'session-1', false, false);
 
       expect(client.infoRequests.length).assertEqual(0);
       expect(client.readRequests.length).assertEqual(0);
@@ -2366,11 +2366,11 @@ export default function remoteControllersUnitTest() {
         sessions,
         query,
         sortMode: 'project',
-        workspaceName: 'OpenBitFun',
+        workspaceName: 'StarMate',
         workspacePath: '/workspace/openbitfun',
         workspaceKind: 'normal',
         recentWorkspaces: [
-          { path: '/workspace/openbitfun', name: 'OpenBitFun', lastOpened: '', workspaceKind: 'normal' },
+          { path: '/workspace/openbitfun', name: 'StarMate', lastOpened: '', workspaceKind: 'normal' },
           { path: '/workspace/notes', name: 'Notes', lastOpened: '', workspaceKind: 'assistant' }
         ],
         workspaceFilter: '',
@@ -2392,7 +2392,7 @@ export default function remoteControllersUnitTest() {
 
     it('does not invent a workspace group from a name without a path', 0, () => {
       const named = inputs([]);
-      named.workspaceName = 'OpenBitFun';
+      named.workspaceName = 'StarMate';
       named.workspacePath = '';
       named.recentWorkspaces = [];
       const projection = SessionListProjector.project(named);
@@ -2406,11 +2406,11 @@ export default function remoteControllersUnitTest() {
       disconnected.workspaceName = '未连接';
       disconnected.workspacePath = '';
       disconnected.recentWorkspaces = [
-        { path: '/workspace/openbitfun', name: 'OpenBitFun', lastOpened: '', workspaceKind: 'normal' }
+        { path: '/workspace/openbitfun', name: 'StarMate', lastOpened: '', workspaceKind: 'normal' }
       ];
       const projection = SessionListProjector.project(disconnected);
       expect(projection.projects.map((item: RecentWorkspaceEntry) => item.name).join(','))
-        .assertEqual('OpenBitFun');
+        .assertEqual('StarMate');
     });
 
     it('splits chats from project sessions in one pass', 0, () => {
@@ -2435,7 +2435,7 @@ export default function remoteControllersUnitTest() {
       ]);
       identified.workspaceId = 'ws-main';
       identified.recentWorkspaces = [
-        { workspaceId: 'ws-main', path: '/workspace/openbitfun', name: 'OpenBitFun', lastOpened: '', workspaceKind: 'normal' },
+        { workspaceId: 'ws-main', path: '/workspace/openbitfun', name: 'StarMate', lastOpened: '', workspaceKind: 'normal' },
         { workspaceId: 'ws-notes', path: '/workspace/notes', name: 'Notes', lastOpened: '', workspaceKind: 'assistant' }
       ];
       identified.sessions[2].workspaceIdentity = { workspaceId: 'ws-main', path: '/moved' };

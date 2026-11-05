@@ -766,7 +766,7 @@ main {
   box-shadow: var(--starmate-shadow-menu);
 }
 
-/* 16:9 matches the MiniApp market card inside the OpenBitFun desktop client, so a
+/* 16:9 matches the MiniApp market card inside the StarMate desktop client, so a
    publisher's screenshot is cropped identically in both surfaces. */
 .card-visual {
   aspect-ratio: 16 / 9;
@@ -1319,7 +1319,7 @@ main {
 }
 
 /* Matches .card-visual and the desktop client, so the same screenshot is
-   framed identically in the grid, on the detail page and inside OpenBitFun. */
+   framed identically in the grid, on the detail page and inside StarMate. */
 .detail-gallery {
   min-width: 0;
   aspect-ratio: 16 / 9;

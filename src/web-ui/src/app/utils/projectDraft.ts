@@ -24,7 +24,7 @@ export class ProjectDirectoryUnavailableError extends Error {
   }
 }
 
-export const DEFAULT_PROJECT_SUBDIRECTORY = 'OpenBitFun/Projects';
+export const DEFAULT_PROJECT_SUBDIRECTORY = 'StarMate/Projects';
 
 /** Keep user projects outside the product's internal runtime storage. */
 export function defaultProjectDirectory(home: string | null | undefined, remote = false): string {

@@ -106,7 +106,7 @@ pub enum ConnectionState {
     Connecting,
     Connected,
     Reconnecting,
-    /// Another OpenBitFun host on this machine serves the same device on this
+    /// Another StarMate host on this machine serves the same device on this
     /// Relay. The client connects by itself once that host releases routing.
     Standby,
 }
@@ -401,7 +401,7 @@ impl RelayClient {
             match lease.may_connect() {
                 Ok(true) => {
                     if standing_by {
-                        log::info!("Relay routing released by another OpenBitFun host; connecting");
+                        log::info!("Relay routing released by another StarMate host; connecting");
                     }
                     return RoutingTurn::Proceed;
                 }
@@ -419,7 +419,7 @@ impl RelayClient {
                 if started.elapsed() >= PRIMARY_ROUTING_WAIT {
                     if let Some(ready) = ready.take() {
                         let _ = ready.send(Err(anyhow!(
-                            "Another OpenBitFun Desktop on this machine already serves this device on the Relay"
+                            "Another StarMate Desktop on this machine already serves this device on the Relay"
                         )));
                     }
                     return RoutingTurn::Exit;
@@ -427,7 +427,7 @@ impl RelayClient {
             } else if !standing_by {
                 standing_by = true;
                 log::info!(
-                    "Another OpenBitFun host on this machine serves this device on the Relay; standing by until it exits"
+                    "Another StarMate host on this machine serves this device on the Relay; standing by until it exits"
                 );
                 {
                     let mut state = owner.lock().unwrap();

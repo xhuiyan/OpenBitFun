@@ -1,6 +1,6 @@
 //! MCP tool adapter
 //!
-//! Wraps MCP tools as implementations of OpenBitFun's `Tool` trait.
+//! Wraps MCP tools as implementations of StarMate's `Tool` trait.
 
 use crate::agentic::tools::framework::{
     DynamicToolInfo, PermissionIntent, Tool, ToolExposure, ToolRenderOptions, ToolResult,
@@ -86,7 +86,7 @@ impl MCPToolContextPolicy {
     }
 }
 
-/// MCP tool wrapper that adapts an MCP tool to OpenBitFun's `Tool`.
+/// MCP tool wrapper that adapts an MCP tool to StarMate's `Tool`.
 struct MCPToolWrapper {
     server_id: String,
     external_workspace_scope: Option<String>,

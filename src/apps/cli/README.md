@@ -1,8 +1,8 @@
-# OpenBitFun CLI
+# StarMate CLI
 
-OpenBitFun CLI provides an interactive terminal UI, non-interactive Agent runs,
+StarMate CLI provides an interactive terminal UI, non-interactive Agent runs,
 session management, and machine-owned background tasks. The executable and
-command name is `openbitfun`.
+command name is `starmate`.
 
 ## Install
 
@@ -12,12 +12,12 @@ From the repository root:
 pnpm run cli:install
 ```
 
-The installer builds and installs the `openbitfun` entrypoint for the current
+The installer builds and installs the `starmate` entrypoint for the current
 platform. The default install directory is `~/.local/bin` on macOS/Linux and
-`%LOCALAPPDATA%\OpenBitFun\bin` on Windows. Open a new terminal after installation
+`%LOCALAPPDATA%\StarMate\bin` on Windows. Open a new terminal after installation
 so the updated `PATH` is visible.
 
-Official release archives contain the same `openbitfun` executable.
+Official release archives contain the same `starmate` executable.
 
 Prerequisites for a source install are a Rust toolchain and this repository.
 See the repository [contribution guide](../../../CONTRIBUTING.md) for development
@@ -197,7 +197,7 @@ to chat mode. Shell and chat keep separate input histories.
 
 Press Enter to run the command in the session workspace. Shell mode is
 non-interactive: it does not allocate a PTY and does not accept image or
-structured `@` attachments. A leading `/` is shell text, not an OpenBitFun slash
+structured `@` attachments. A leading `/` is shell text, not an StarMate slash
 command. The command uses the shared Agent Runtime, normal `ExecCommand` tool,
 workspace binding, cancellation, audit, and static permission rules. Because
 the command was explicitly typed by the user, an interactive `ask` is approved
@@ -261,11 +261,11 @@ produce a non-zero result instead of reporting partial success.
 openbitfun agents --help
 openbitfun models --help
 openbitfun mcp --help
-openbitfun plugins --help
+starmate plugins --help
 openbitfun hooks --help
-openbitfun config --help
+starmate config --help
 openbitfun acp --help
-openbitfun server --help
+starmate server --help
 ```
 
 `openbitfun mcp import` is an explicit preview/apply snapshot. It does not copy
@@ -275,7 +275,7 @@ new native entries remain disabled until reviewed.
 ### Persistent tasks
 
 `openbitfun dispatch` is the machine-readable target-side interface used by other
-OpenBitFun surfaces. Jobs remain owned by this machine after the submitting client
+StarMate surfaces. Jobs remain owned by this machine after the submitting client
 disconnects. Controllers should call `dispatch probe` and honor the returned
 protocol version before submitting or inspecting jobs. See the
 [detached task architecture](../../../docs/architecture/detached-task-dispatch.md)
@@ -304,7 +304,7 @@ provide required task choices in the prompt instead of waiting for a question.
 
 ### App server
 
-`openbitfun server` starts the OpenBitFun App Server surface over stdio. stdout carries
+`starmate server` starts the StarMate App Server surface over stdio. stdout carries
 JSON-RPC traffic only, so an App Server client (for example an editor
 integration) can connect by spawning this command; logs go to stderr. The
 server scope is the current directory, matching the CLI's cwd-only session
@@ -365,13 +365,13 @@ After signing in with `/login`, a server can keep its account device route
 online without an interactive TUI:
 
 ```bash
-openbitfun daemon install
-openbitfun daemon status
+starmate daemon install
+starmate daemon status
 ```
 
 Linux uses a systemd user service and macOS uses a LaunchAgent. Windows does not
-currently install an auto-start service; use `openbitfun daemon run` under a
-supervisor instead. Run `openbitfun daemon --help` for lifecycle commands and
+currently install an auto-start service; use `starmate daemon run` under a
+supervisor instead. Run `starmate daemon --help` for lifecycle commands and
 platform diagnostics.
 
 ### Bots and Mobile Web from Claw
@@ -401,7 +401,7 @@ versa. A listener reported as running may still be retrying its provider;
 check a real inbound message and reply to verify connectivity.
 
 Mobile Web uses the configured account Relay and returns a device URL. Sign in
-with the same OpenBitFun account on the phone. Stopping Mobile Web also stops
+with the same StarMate account on the phone. Stopping Mobile Web also stops
 Peer Device routing on this daemon until an explicit start or daemon restart;
 bot channels remain active. CLI does not host an embedded LAN Relay. All
 management targets the executing host, including Peer and detached jobs. Direct
@@ -429,7 +429,7 @@ Use `doctor` for product/runtime assembly diagnostics and `health` for required
 capability registration. They do not claim that external Network, Git, or MCP
 services are currently reachable.
 
-Account sign-in opens the shared OpenBitFun page, where you can choose GitHub or
+Account sign-in opens the shared StarMate page, where you can choose GitHub or
 an email verification code. Email sign-in creates an independent account without
 a password; it does not link to a GitHub account. Use the same method and account
 on every device you want to connect. A terminal without a browser can display the

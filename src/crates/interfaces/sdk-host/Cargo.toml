@@ -3,7 +3,7 @@ name = "starmate-sdk-host"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Versioned local SDK Host adapter for the OpenBitFun Agent Runtime"
+description = "Versioned local SDK Host adapter for the StarMate Agent Runtime"
 
 [lib]
 name = "starmate_sdk_host"

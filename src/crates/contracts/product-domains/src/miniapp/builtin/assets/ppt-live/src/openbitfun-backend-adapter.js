@@ -1,7 +1,7 @@
-// OpenBitFun backend adapter for PPT Live.
+// StarMate backend adapter for PPT Live.
 //
 // The MiniApp agent bridge (`app.agent.*`) is the only generation path. A
-// single cowork agent turn loads OpenBitFun's pinned built-in `ppt-design` skill
+// single cowork agent turn loads StarMate's pinned built-in `ppt-design` skill
 // and produces the entire deck through its project.json + slides/ file protocol.
 
 import {
@@ -86,7 +86,7 @@ function installAgentBackend(app) {
   };
 }
 
-export function installOpenBitFunBackendAdapter(app = window.app) {
+export function installStarMateBackendAdapter(app = window.app) {
   if (!app || app.backend?.call) return;
   if (app.agent?.run) installAgentBackend(app);
 }

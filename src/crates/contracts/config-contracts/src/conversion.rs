@@ -75,7 +75,7 @@ impl TryFrom<AIModelConfig> for AIConfig {
 
     fn try_from(other: AIModelConfig) -> Result<Self, Self::Error> {
         if crate::protected_account_models::is_guarded_account_model(&other) {
-            return Err("This subscription account binding requires an account-capable OpenBitFun; the original configuration was preserved".into());
+            return Err("This subscription account binding requires an account-capable StarMate; the original configuration was preserved".into());
         }
         if !other.supports_text_generation() {
             return Err(format!(

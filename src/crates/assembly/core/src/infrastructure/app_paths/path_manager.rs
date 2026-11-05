@@ -167,7 +167,7 @@ impl PathManager {
         }
     }
 
-    /// True if `path` is this machine's OpenBitFun **assistant** workspace directory.
+    /// True if `path` is this machine's StarMate **assistant** workspace directory.
     ///
     /// Used so remote-workspace registry (especially roots like `/`) does not
     /// mis-classify client paths such as `/Users/.../.openbitfun/personal_assistant/workspace-*`
@@ -180,7 +180,7 @@ impl PathManager {
         p.starts_with(self.assistant_workspace_base_dir(None))
     }
 
-    /// Get the root directory for user-scoped OpenBitFun storage.
+    /// Get the root directory for user-scoped StarMate storage.
     pub fn user_root_dir(&self) -> &Path {
         &self.user_root
     }
@@ -223,7 +223,7 @@ impl PathManager {
         base.join(data_namespace()).join("skills")
     }
 
-    /// Get OpenBitFun-managed built-in skills directory under the user skills root.
+    /// Get StarMate-managed built-in skills directory under the user skills root.
     pub fn builtin_skills_dir(&self) -> PathBuf {
         self.user_skills_dir().join(".system")
     }
@@ -235,7 +235,7 @@ impl PathManager {
 
     /// Get managed runtimes root directory: ~/.config/starmate/runtimes/
     ///
-    /// OpenBitFun-managed runtime components (e.g. node/python/office) are stored here.
+    /// StarMate-managed runtime components (e.g. node/python/office) are stored here.
     pub fn managed_runtimes_dir(&self) -> PathBuf {
         self.user_root.join("runtimes")
     }
@@ -927,7 +927,7 @@ mod tests {
     #[test]
     fn project_runtime_root_uses_compact_hex_key() {
         let pm = PathManager::default();
-        let runtime_root = pm.project_runtime_root(Path::new(r"E:\Projects\OpenBitFun\Source"));
+        let runtime_root = pm.project_runtime_root(Path::new(r"E:\Projects\StarMate\Source"));
         let slug = runtime_root
             .file_name()
             .and_then(|value| value.to_str())

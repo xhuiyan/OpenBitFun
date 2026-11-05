@@ -120,7 +120,7 @@ pub(crate) fn builtin_provider_catalog_identity(
 }
 
 /// A models.dev snapshot that contributes provider bindings makes the catalog
-/// mixed even when the caller passed the OpenBitFun-only source.
+/// mixed even when the caller passed the StarMate-only source.
 fn promoted_catalog_source(
     overlay: &ProviderOverlayDocument,
     models_dev: Option<&ModelsDevCatalog>,
@@ -134,7 +134,7 @@ fn promoted_catalog_source(
                 .any(|provider_id| catalog.provider_facts(provider_id).is_some())
         })
     });
-    if has_bound_catalog_data && source == ProviderCatalogSource::OpenBitFun {
+    if has_bound_catalog_data && source == ProviderCatalogSource::StarMate {
         ProviderCatalogSource::Mixed
     } else {
         source
@@ -540,7 +540,7 @@ fn curated_model_fallback(
         display_name: None,
         description: None,
         recommended,
-        source: ProviderCatalogModelSource::OpenBitFun,
+        source: ProviderCatalogModelSource::StarMate,
         catalog_provider_ids: provider.catalog_provider_ids.clone(),
         endpoint_ids: provider
             .endpoints
@@ -765,7 +765,7 @@ mod tests {
         let unavailable = resolve_builtin_provider_catalog(
             None,
             "none".to_string(),
-            ProviderCatalogSource::OpenBitFun,
+            ProviderCatalogSource::StarMate,
         );
         let qwen = unavailable
             .providers
@@ -778,9 +778,9 @@ mod tests {
                 .map(|model| (model.id.as_str(), model.source))
                 .collect::<Vec<_>>(),
             [
-                ("qwen3.7-plus", ProviderCatalogModelSource::OpenBitFun),
-                ("qwen3.7-max", ProviderCatalogModelSource::OpenBitFun),
-                ("qwen3.6-flash", ProviderCatalogModelSource::OpenBitFun),
+                ("qwen3.7-plus", ProviderCatalogModelSource::StarMate),
+                ("qwen3.7-max", ProviderCatalogModelSource::StarMate),
+                ("qwen3.6-flash", ProviderCatalogModelSource::StarMate),
             ]
         );
 
@@ -802,7 +802,7 @@ mod tests {
         assert!(qwen
             .models
             .iter()
-            .all(|model| model.source == ProviderCatalogModelSource::OpenBitFun));
+            .all(|model| model.source == ProviderCatalogModelSource::StarMate));
     }
 
     #[test]
@@ -830,7 +830,7 @@ mod tests {
             .models
             .iter()
             .any(|model| model.id == "qwen-early-access"
-                && model.source == ProviderCatalogModelSource::OpenBitFun
+                && model.source == ProviderCatalogModelSource::StarMate
                 && !model.recommended));
         assert!(!resolved
             .models

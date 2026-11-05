@@ -204,9 +204,9 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
   const assets = [
     ['StarMate_1.2.3_amd64.AppImage', 'appimage'],
     ['StarMate_1.2.3_amd64.deb', 'deb'],
-    ['OpenBitFun-1.2.3-1.x86_64.rpm', 'rpm'],
+    ['StarMate-1.2.3-1.x86_64.rpm', 'rpm'],
     ['StarMate_1.2.3_arm64.deb', 'deb-arm64'],
-    ['OpenBitFun-1.2.3-1.aarch64.rpm', 'rpm-arm64'],
+    ['StarMate-1.2.3-1.aarch64.rpm', 'rpm-arm64'],
   ];
   for (const [name, body] of assets) {
     fs.writeFileSync(path.join(temp, name), body);
@@ -254,9 +254,9 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
   const renamedToRawSignature = {
     'linux-x86_64': 'sig StarMate_1.2.3_amd64.AppImage',
     'linux-x86_64-deb': 'sig StarMate_1.2.3_amd64.deb',
-    'linux-x86_64-rpm': 'sig OpenBitFun-1.2.3-1.x86_64.rpm',
+    'linux-x86_64-rpm': 'sig StarMate-1.2.3-1.x86_64.rpm',
     'linux-aarch64-deb': 'sig StarMate_1.2.3_arm64.deb',
-    'linux-aarch64-rpm': 'sig OpenBitFun-1.2.3-1.aarch64.rpm',
+    'linux-aarch64-rpm': 'sig StarMate-1.2.3-1.aarch64.rpm',
   };
   for (const [key, signature] of Object.entries(renamedToRawSignature)) {
     assert.equal(manifest.platforms[key].signature, signature);
@@ -293,8 +293,8 @@ test('stages GitHub release assets in a flat directory', () => {
 
 test('rejects duplicate GitHub release asset names before upload', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-release-duplicates-'));
-  const first = path.join(temp, 'macos-x64', 'OpenBitFun.app.tar.gz.sig');
-  const second = path.join(temp, 'macos-arm64', 'OpenBitFun.app.tar.gz.sig');
+  const first = path.join(temp, 'macos-x64', 'StarMate.app.tar.gz.sig');
+  const second = path.join(temp, 'macos-arm64', 'StarMate.app.tar.gz.sig');
   const out = path.join(temp, 'staged');
   fs.mkdirSync(path.dirname(first), { recursive: true });
   fs.mkdirSync(path.dirname(second), { recursive: true });
@@ -308,7 +308,7 @@ test('rejects duplicate GitHub release asset names before upload', () => {
   ]);
 
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /Duplicate release asset name OpenBitFun\.app\.tar\.gz\.sig/);
+  assert.match(result.stderr, /Duplicate release asset name StarMate\.app\.tar\.gz\.sig/);
   assert.match(result.stderr, /macos-x64/);
   assert.match(result.stderr, /macos-arm64/);
 });
@@ -331,7 +331,7 @@ test(`${version} Linux CLI and Relay manifests keep signed assets on the version
   const out = path.join(temp, 'linux-binaries-v1.json');
   const result = run('scripts/generate-linux-binaries-manifest.mjs', [
     '--assets-dir', temp, '--version', version, '--tag', tag,
-    '--repo', 'test-owner/OpenBitFun', '--out', out,
+    '--repo', 'test-owner/StarMate', '--out', out,
   ]);
   assert.equal(result.status, 0, result.stderr);
   const manifest = JSON.parse(fs.readFileSync(out, 'utf8'));
@@ -340,7 +340,7 @@ test(`${version} Linux CLI and Relay manifests keep signed assets on the version
   assert.deepEqual(Object.keys(manifest.platforms).sort(), ['linux-aarch64', 'linux-x86_64']);
   for (const platform of Object.values(manifest.platforms)) {
     for (const artifact of [platform.cli, platform.relay]) {
-      assert.equal(artifact.url, `https://github.com/test-owner/OpenBitFun/releases/download/${tag}/${artifact.filename}`);
+      assert.equal(artifact.url, `https://github.com/test-owner/StarMate/releases/download/${tag}/${artifact.filename}`);
       assert.equal(artifact.sha256Url, `${artifact.url}.sha256`);
       assert.equal(artifact.sigUrl, `${artifact.url}.sig`);
       assert.equal(artifact.sha256SigUrl, `${artifact.url}.sha256.sig`);
@@ -353,7 +353,7 @@ test(`${version} Linux CLI and Relay manifests keep signed assets on the version
   fs.unlinkSync(assets.find((file) => file.endsWith('.tar.gz')));
   const missing = run('scripts/generate-linux-binaries-manifest.mjs', [
     '--assets-dir', temp, '--version', version, '--tag', tag,
-    '--repo', 'test-owner/OpenBitFun', '--out', out,
+    '--repo', 'test-owner/StarMate', '--out', out,
   ]);
   assert.notEqual(missing.status, 0);
   assert.match(missing.stderr, /Required Linux release asset was not found/);

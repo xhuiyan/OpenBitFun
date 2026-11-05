@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://starmate.xtdl.ltd/schemas/product-definition-v1.json",
-  "title": "OpenBitFun product definition",
+  "title": "StarMate product definition",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "productId", "dataNamespace", "localeRoot", "members"],

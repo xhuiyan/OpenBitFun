@@ -477,7 +477,7 @@ async fn finish(
 mod tests {
     use super::*;
     #[tokio::test]
-    #[ignore = "Reads billing for an explicitly selected OpenBitFun Grok OAuth account; no inference or third-party credentials"]
+    #[ignore = "Reads billing for an explicitly selected StarMate Grok OAuth account; no inference or third-party credentials"]
     async fn live_grok_quota_diagnostic() {
         let slot = std::env::var("STARMATE_LIVE_GROK_ACCOUNT")
             .expect("select an exact in-app account slot");

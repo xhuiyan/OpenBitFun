@@ -778,7 +778,7 @@ pub(crate) fn builtin_theme_ids() -> Vec<String> {
     ids
 }
 
-/// Persisted OpenBitFun-era theme ids still resolve after the rebrand.
+/// Persisted StarMate-era theme ids still resolve after the rebrand.
 pub(crate) fn normalize_theme_id(id: &str) -> String {
     match id.strip_prefix("openbitfun-") {
         Some(suffix) => format!("starmate-{suffix}"),

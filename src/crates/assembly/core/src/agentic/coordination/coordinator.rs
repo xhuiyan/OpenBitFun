@@ -1616,7 +1616,7 @@ impl ConversationCoordinator {
         #[cfg(not(feature = "remote-workspace"))]
         {
             Err(StarMateError::NotImplemented(format!(
-                "Remote workspace services are unavailable for connection {connection_id}: remote workspaces are not compiled into this OpenBitFun host (feature `remote-workspace`); no local fallback was attempted"
+                "Remote workspace services are unavailable for connection {connection_id}: remote workspaces are not compiled into this StarMate host (feature `remote-workspace`); no local fallback was attempted"
             )))
         }
 
@@ -18452,10 +18452,10 @@ pub(crate) mod tests {
             session_storage_workspace_locator(
                 Some(r"D:\worktrees\session-1"),
                 Some("D:/worktrees/session-1"),
-                Some("D:/projects/OpenBitFun"),
+                Some("D:/projects/StarMate"),
             )
             .as_deref(),
-            Some("D:/projects/OpenBitFun")
+            Some("D:/projects/StarMate")
         );
     }
 
@@ -18465,7 +18465,7 @@ pub(crate) mod tests {
             session_storage_workspace_locator(
                 None,
                 Some("/worktrees/session-1"),
-                Some("/projects/OpenBitFun"),
+                Some("/projects/StarMate"),
             )
             .as_deref(),
             None
@@ -18478,7 +18478,7 @@ pub(crate) mod tests {
             session_storage_workspace_locator(
                 Some("/projects/other"),
                 Some("/worktrees/session-1"),
-                Some("/projects/OpenBitFun"),
+                Some("/projects/StarMate"),
             )
             .as_deref(),
             Some("/projects/other")
@@ -24431,7 +24431,7 @@ pub(crate) mod tests {
         // build the expected IO projections from the same canonical root.
         let canonical_root =
             dunce::canonicalize(temp_root.path()).expect("temp root should canonicalize");
-        let project_path = canonical_root.join("OpenBitFun");
+        let project_path = canonical_root.join("StarMate");
         let worktree_path = canonical_root.join("managed-worktree");
         std::fs::create_dir_all(&project_path).expect("project dir should exist");
         std::fs::create_dir_all(&worktree_path).expect("worktree dir should exist");

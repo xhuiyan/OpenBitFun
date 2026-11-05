@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum OpenBitFunTheme {
+enum StarMateTheme {
     // Generated from the HarmonyOS baseline through the mobile design contract.
     static let page = MobileDesignColors.pageBg
     static let transparent = MobileDesignColors.transparent
@@ -52,12 +52,12 @@ struct CircleControl: View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: glyphSize, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .frame(width: size, height: size)
-                .background(OpenBitFunTheme.card)
-                .overlay(Circle().stroke(OpenBitFunTheme.line, lineWidth: 1))
+                .background(StarMateTheme.card)
+                .overlay(Circle().stroke(StarMateTheme.line, lineWidth: 1))
                 .clipShape(Circle())
-                .shadow(color: OpenBitFunTheme.shadowMedium, radius: 8, y: 3)
+                .shadow(color: StarMateTheme.shadowMedium, radius: 8, y: 3)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(systemName)
@@ -68,7 +68,7 @@ struct ReferenceGlyph: View {
     let assetName: String
     let width: CGFloat
     let height: CGFloat
-    var color: Color = OpenBitFunTheme.ink
+    var color: Color = StarMateTheme.ink
 
     var body: some View {
         Image(assetName)

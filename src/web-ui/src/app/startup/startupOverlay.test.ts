@@ -89,7 +89,7 @@ describe('startupOverlay', () => {
     document.body.innerHTML = `
       <div id="root"><section>
         <span data-startup-logo-target aria-hidden="true"></span>
-        <span data-startup-reveal>OpenBitFun</span>
+        <span data-startup-reveal>StarMate</span>
       </section></div>
       <div id="openbitfun-startup-overlay"><div class="splash-screen">
         <div class="splash-screen__logo-wrap"><span class="openbitfun-preload__logo"></span></div>

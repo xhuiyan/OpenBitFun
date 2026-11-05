@@ -3,7 +3,7 @@ name = "starmate-agent-tools"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun agent tool contracts"
+description = "StarMate agent tool contracts"
 
 [lib]
 name = "starmate_agent_tools"

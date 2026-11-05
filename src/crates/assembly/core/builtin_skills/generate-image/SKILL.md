@@ -1,6 +1,6 @@
 ---
 name: generate-image
-description: Generate photos, illustrations, posters, and project assets through OpenBitFun's configured default image model. Shape prompts, inspect results, and make targeted refinements using generate_image. Not for image analysis, prompt-only discussions, or edits that must preserve an existing image.
+description: Generate photos, illustrations, posters, and project assets through StarMate's configured default image model. Shape prompts, inspect results, and make targeted refinements using generate_image. Not for image analysis, prompt-only discussions, or edits that must preserve an existing image.
 ---
 
 # Generate Image

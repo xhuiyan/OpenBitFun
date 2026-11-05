@@ -64,7 +64,7 @@ async function loadCurrentClientVersion(): Promise<string | undefined> {
   try {
     return await systemAPI.getAppVersion();
   } catch (error) {
-    log.warn('Failed to load current OpenBitFun version for MiniApp submission defaults', error);
+    log.warn('Failed to load current StarMate version for MiniApp submission defaults', error);
     return undefined;
   }
 }
@@ -128,7 +128,7 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
     try {
       const [installed, currentClientVersion] = await Promise.all([
         miniAppAPI.listMiniApps(),
-        draft.minOpenBitFunVersion ? Promise.resolve(undefined) : loadCurrentClientVersion(),
+        draft.minStarMateVersion ? Promise.resolve(undefined) : loadCurrentClientVersion(),
       ]);
       if (revision !== accountRevision.current) return;
       setApps(installed);
@@ -555,10 +555,10 @@ const MiniAppSubmissionsView: React.FC<MiniAppSubmissionsViewProps> = ({ tabs, r
                         <Field label={t('market.submissions.minVersion')} controlWidth="fill" required>
                           <Input
                             size="sm"
-                            value={draft.minOpenBitFunVersion}
+                            value={draft.minStarMateVersion}
                             disabled={busy}
                             onChange={(event) =>
-                              setDraft({ ...draft, minOpenBitFunVersion: event.target.value })
+                              setDraft({ ...draft, minStarMateVersion: event.target.value })
                             }
                           />
                         </Field>

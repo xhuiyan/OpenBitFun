@@ -242,7 +242,7 @@ impl Tool for LoadedExternalTool {
         .map_err(StarMateError::tool)?
         {
             return Err(StarMateError::tool(format!(
-                "external tool '{}' was disabled in another OpenBitFun process; refresh external tools before retrying",
+                "external tool '{}' was disabled in another StarMate process; refresh external tools before retrying",
                 self.name()
             )));
         }
@@ -725,7 +725,7 @@ impl Tool for ExternalToolMux {
             .map_err(StarMateError::tool)?
             {
                 return Err(StarMateError::tool(format!(
-                    "tool conflict choice for '{}' changed in another OpenBitFun process; refresh before retrying",
+                    "tool conflict choice for '{}' changed in another StarMate process; refresh before retrying",
                     self.name
                 )));
             }

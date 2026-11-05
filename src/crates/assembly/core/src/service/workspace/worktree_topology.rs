@@ -274,7 +274,7 @@ mod tests {
         git(directory.path(), &["init"]);
         git(
             directory.path(),
-            &["config", "user.name", "OpenBitFun Tests"],
+            &["config", "user.name", "StarMate Tests"],
         );
         git(
             directory.path(),

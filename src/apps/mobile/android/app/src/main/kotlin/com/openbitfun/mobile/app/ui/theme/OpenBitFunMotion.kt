@@ -27,5 +27,5 @@ internal const val MotionDrawerCloseMillis: Int = 250
 internal const val MotionDrawerRevealMillis: Int = 300
 internal const val MotionDrawerHideMillis: Int = MotionStructureMillis
 
-internal val OpenBitFunEaseOut = CubicBezierEasing(0f, 0f, 0.58f, 1f)
-internal val OpenBitFunEaseInOut = CubicBezierEasing(0.42f, 0f, 0.58f, 1f)
+internal val StarMateEaseOut = CubicBezierEasing(0f, 0f, 0.58f, 1f)
+internal val StarMateEaseInOut = CubicBezierEasing(0.42f, 0f, 0.58f, 1f)

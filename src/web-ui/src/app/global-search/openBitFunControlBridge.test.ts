@@ -8,7 +8,7 @@ import { activateSurface } from '@/infrastructure/peer-device/deviceSurface';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   applyOpenBitFunControlEffect,
-  executeOpenBitFunPresentationRequest,
+  executeStarMatePresentationRequest,
   initializeOpenBitFunControlBridge,
   type OpenBitFunControlAppliedEvent,
 } from './openBitFunControlBridge';
@@ -51,7 +51,7 @@ describe('OpenBitFunControl presentation bridge', () => {
   });
 
   it('opens the exact documented item selected by the native executor', async () => {
-    await executeOpenBitFunPresentationRequest({
+    await executeStarMatePresentationRequest({
       requestId: 'open-shortcuts',
       action: 'open',
       capabilityId: 'setting.application.shortcuts',
@@ -98,7 +98,7 @@ describe('OpenBitFunControl presentation bridge', () => {
   });
 
   it('executes only a generated product-action binding', async () => {
-    await executeOpenBitFunPresentationRequest({
+    await executeStarMatePresentationRequest({
       requestId: 'new-session',
       action: 'execute',
       capabilityId: 'feature.ai-assistant',
@@ -108,12 +108,12 @@ describe('OpenBitFunControl presentation bridge', () => {
   });
 
   it('rejects discovery and mutation attempts at the presentation boundary', async () => {
-    await expect(executeOpenBitFunPresentationRequest({
+    await expect(executeStarMatePresentationRequest({
       requestId: 'get',
       action: 'get',
       capabilityId: 'feature.browser',
     })).rejects.toThrow('native ProductControl executor');
-    await expect(executeOpenBitFunPresentationRequest({
+    await expect(executeStarMatePresentationRequest({
       requestId: 'configure',
       action: 'configure',
       capabilityId: 'setting.application.appearance',

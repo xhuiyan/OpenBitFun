@@ -8,7 +8,7 @@
 //! desktop, or it is not responding, fail explicitly.
 //!
 //! Remaining risk: a cross-process parent/child relationship attaches the
-//! input queues of OpenBitFun's UI thread and Explorer's desktop thread, so a
+//! input queues of StarMate's UI thread and Explorer's desktop thread, so a
 //! long stall on our UI thread can also stall desktop input while a card is
 //! pinned. Cards set `WS_EX_NOPARENTNOTIFY` so destroying a card never sends
 //! `WM_PARENTNOTIFY` into Explorer, and a hung desktop is refused up front.
@@ -34,7 +34,7 @@ use windows::Win32::UI::WindowsAndMessaging::{
     SWP_NOACTIVATE, SWP_NOMOVE, SWP_NOSIZE, WS_CHILD, WS_EX_NOPARENTNOTIFY, WS_POPUP,
 };
 
-const ORIGINAL_STYLE: windows::core::PCWSTR = w!("OpenBitFun.DesktopCard.OriginalStyle");
+const ORIGINAL_STYLE: windows::core::PCWSTR = w!("StarMate.DesktopCard.OriginalStyle");
 /// Subclass id for the `TaskbarCreated` hook on the main window.
 const SHELL_RESTART_SUBCLASS_ID: usize = 0x0B17_C4D0;
 
@@ -170,7 +170,7 @@ fn reparent(hwnd: HWND, parent: Option<HWND>, style: i32, position: POINT) -> Re
 
 fn attach_to(hwnd: HWND, parent: HWND) -> Result<(), String> {
     // Cross-process SetParent with mismatched DPI contexts can forcibly reset
-    // the child process's DPI awareness, affecting EVERY OpenBitFun window.
+    // the child process's DPI awareness, affecting EVERY StarMate window.
     // Refuse rather than silently breaking scaling or saved geometry.
     if !unsafe {
         AreDpiAwarenessContextsEqual(

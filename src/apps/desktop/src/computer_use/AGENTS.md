@@ -7,7 +7,7 @@ the devtools-only full Core Tool integration fixtures. Keep Tauri projection in
 the app; do not reintroduce a separate native implementation here.
 
 ```bash
-cargo check --locked -p openbitfun-desktop --tests
+cargo check --locked -p starmate-desktop --tests
 node scripts/test-macos-control-roundtrip.mjs
 node scripts/test-macos-computer-use-self.mjs
 ```

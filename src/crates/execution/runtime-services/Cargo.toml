@@ -3,7 +3,7 @@ name = "starmate-runtime-services"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Typed runtime service assembly for OpenBitFun runtimes"
+description = "Typed runtime service assembly for StarMate runtimes"
 
 [lib]
 name = "starmate_runtime_services"

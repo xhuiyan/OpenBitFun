@@ -1,5 +1,5 @@
 import Foundation
-import OpenBitFunMobileCore
+import StarMateMobileCore
 import OSLog
 
 private let mobilePerformanceLog = Logger(
@@ -1239,7 +1239,7 @@ extension MobileAppModel {
     }
 
     func apply(
-        remoteConnectionPhase phase: OpenBitFunMobileCore.ConnectionPhase,
+        remoteConnectionPhase phase: StarMateMobileCore.ConnectionPhase,
         targetKey: String,
         epoch: UInt64
     ) {

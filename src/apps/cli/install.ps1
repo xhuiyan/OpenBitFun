@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$BinDir = (Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'OpenBitFun\bin'),
+    [string]$BinDir = (Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'StarMate\bin'),
     [switch]$SkipPathUpdate
 )
 

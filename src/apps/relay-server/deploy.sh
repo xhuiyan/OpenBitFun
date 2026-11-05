@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OpenBitFun Relay Server — one-click deploy script.
+# StarMate Relay Server — one-click deploy script.
 # Usage:  bash deploy.sh [--build-from-source] [--cn-mirror|--global-mirror]
 #
 # Run this script on the target server itself after SSH login.
@@ -33,7 +33,7 @@ MIRROR_ARGS=()
 
 usage() {
   cat <<'EOF'
-OpenBitFun Relay Server deploy script
+StarMate Relay Server deploy script
 
 Usage:
   bash deploy.sh [options]
@@ -87,7 +87,7 @@ done
 
 HOST_ARCH="$(host_arch_label)"
 
-echo "=== OpenBitFun Relay Server Deploy ==="
+echo "=== StarMate Relay Server Deploy ==="
 echo "Target: current machine ($(uname -s) / ${HOST_ARCH}, uname=$(uname -m))"
 echo "Note: run this script on the target server after SSH login."
 
@@ -139,7 +139,7 @@ export RELAY_GIT_COMMIT
 # Persist compose build-args for CN builds (and subsequent restarts).
 touch .env
 chmod 600 .env 2>/dev/null || true
-# Refresh OpenBitFun-managed mirror keys without wiping unrelated .env entries.
+# Refresh StarMate-managed mirror keys without wiping unrelated .env entries.
 if [ -f .env ]; then
   tmp_env="$(mktemp)"
   grep -Ev '^(STARMATE_USE_CN_MIRROR|STARMATE_APT_MIRROR|STARMATE_CARGO_SPARSE_URL|RELAY_GIT_COMMIT)=' .env >"$tmp_env" || true
@@ -216,7 +216,7 @@ echo "Relay server running on port ${RELAY_PORT} (host arch: ${HOST_ARCH})"
 echo ""
 check_relay_accounts_or_remind
 echo ""
-echo "Point OpenBitFun Desktop / CLI Auth Server URL to:"
+echo "Point StarMate Desktop / CLI Auth Server URL to:"
 echo "  Direct:   http://<YOUR_SERVER_IP>:${RELAY_PORT}"
 echo "  Proxy:    https://<YOUR_DOMAIN>/relay  (recommended, matches official server)"
 echo "See README.md for reverse proxy setup, sync, and Peer Device Mode."

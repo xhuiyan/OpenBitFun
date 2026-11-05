@@ -338,7 +338,7 @@ enum Commands {
         action: Option<McpAction>,
     },
 
-    /// Inspect and review OpenBitFun-managed plugin packages
+    /// Inspect and review StarMate-managed plugin packages
     ///
     /// Package layout: <package-root>/<package-id>/openbitfun.plugin.json
     Plugins {

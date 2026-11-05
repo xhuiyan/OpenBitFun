@@ -2,7 +2,7 @@
 export const mobileTokens = {
   "version": 1,
   "identity": {
-    "name": "OpenBitFun Mobile",
+    "name": "StarMate Mobile",
     "signature": "Paper-and-ink conversation chrome with a single blue information accent"
   },
   "colors": {
@@ -1344,7 +1344,7 @@ export const mobilePreviewScenarios = {
       ],
       "composer": {
         "draft": "",
-        "placeholder": "向 OpenBitFun 提问",
+        "placeholder": "向 StarMate 提问",
         "phase": "connected",
         "streaming": false
       }
@@ -1416,7 +1416,7 @@ export const mobilePreviewScenarios = {
       },
       "header": {
         "title": "检查移动端长标题、正文与控制目标的可读性",
-        "subtitle": "远程开发工作站 · OpenBitFun / feature/mobile-reading"
+        "subtitle": "远程开发工作站 · StarMate / feature/mobile-reading"
       },
       "messages": [
         {
@@ -1430,7 +1430,7 @@ export const mobilePreviewScenarios = {
       ],
       "composer": {
         "draft": "请检查输入框是否能保留多行中文草稿。\n模型选择后内容应继续保留。\n附件与文本应各自成行。",
-        "placeholder": "向 OpenBitFun 提问",
+        "placeholder": "向 StarMate 提问",
         "phase": "connected",
         "streaming": false
       }
@@ -1446,7 +1446,7 @@ export const mobilePreviewScenarios = {
       },
       "header": {
         "title": "检查移动端长标题、正文与控制目标的可读性",
-        "subtitle": "远程开发工作站 · OpenBitFun / feature/mobile-reading"
+        "subtitle": "远程开发工作站 · StarMate / feature/mobile-reading"
       },
       "messages": [
         {
@@ -1460,7 +1460,7 @@ export const mobilePreviewScenarios = {
       ],
       "composer": {
         "draft": "请保留当前会话与控制目标。",
-        "placeholder": "向 OpenBitFun 提问",
+        "placeholder": "向 StarMate 提问",
         "phase": "connected",
         "streaming": false
       }
@@ -1476,7 +1476,7 @@ export const mobilePreviewScenarios = {
       },
       "header": {
         "title": "检查移动端长标题、正文与控制目标的可读性",
-        "subtitle": "远程开发工作站 · OpenBitFun / feature/mobile-reading"
+        "subtitle": "远程开发工作站 · StarMate / feature/mobile-reading"
       },
       "messages": [
         {
@@ -1490,7 +1490,7 @@ export const mobilePreviewScenarios = {
       ],
       "composer": {
         "draft": "",
-        "placeholder": "向 OpenBitFun 提问",
+        "placeholder": "向 StarMate 提问",
         "phase": "connected",
         "streaming": false
       }

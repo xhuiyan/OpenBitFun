@@ -24,12 +24,12 @@ export function GetStarMateCta({
         <DownloadSimple size={18} aria-hidden="true" />
       </span>
       <span className="get-openbitfun-copy">
-        <strong>{t('getOpenBitFunTitle')}</strong>
+        <strong>{t('getStarMateTitle')}</strong>
         <span>
-          {t(placement === 'listing' ? 'getOpenBitFunListingNote' : 'getOpenBitFunCatalogNote')}
+          {t(placement === 'listing' ? 'getStarMateListingNote' : 'getStarMateCatalogNote')}
         </span>
         <span className="get-openbitfun-action">
-          {t('getOpenBitFunAction')}
+          {t('getStarMateAction')}
           <ArrowRight size={18} aria-hidden="true" />
         </span>
       </span>

@@ -197,10 +197,10 @@ describe('PeerTerminalReplay', () => {
   });
 
   it('surfaces a stream a host cannot open instead of staying silent', async () => {
-    mocks.subscribeSession.mockRejectedValueOnce(new Error('older OpenBitFun version'));
+    mocks.subscribeSession.mockRejectedValueOnce(new Error('older StarMate version'));
     replay.start();
     await flush();
-    expect(events).toEqual([{ type: 'Error', payload: { session_id: 't1', message: 'older OpenBitFun version' } }]);
+    expect(events).toEqual([{ type: 'Error', payload: { session_id: 't1', message: 'older StarMate version' } }]);
   });
 
   it('stays attached through a sync error after catching up', async () => {
@@ -275,12 +275,12 @@ describe('PeerTerminalReplay', () => {
     });
 
     it('shows a stream failure to the view that arrives later', async () => {
-      mocks.subscribeSession.mockRejectedValueOnce(new Error('older OpenBitFun version'));
+      mocks.subscribeSession.mockRejectedValueOnce(new Error('older StarMate version'));
       tracked.start();
       await flush();
       expect(events).toEqual([]);
       tracked.follow(0);
-      expect(events).toEqual([{ type: 'Error', payload: { session_id: 't1', message: 'older OpenBitFun version' } }]);
+      expect(events).toEqual([{ type: 'Error', payload: { session_id: 't1', message: 'older StarMate version' } }]);
     });
   });
 });

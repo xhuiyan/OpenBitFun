@@ -1,4 +1,4 @@
-//! Native WebView adapter for OpenBitFun's shared browser-action contract.
+//! Native WebView adapter for StarMate's shared browser-action contract.
 //!
 //! This module translates browser-engine primitives only. Snapshot refs,
 //! selector resolution, click guards, waits, and every other product action

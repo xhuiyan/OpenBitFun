@@ -3,7 +3,7 @@ name = "starmate-server"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun Server - Web-based AI Code Assistant"
+description = "StarMate Server - Web-based AI Code Assistant"
 
 [[bin]]
 name = "openbitfun-server"

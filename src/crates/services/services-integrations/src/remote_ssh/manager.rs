@@ -9698,7 +9698,7 @@ Host *
                 .unwrap(),
             "cancelled Docker command must not continue inside the container"
         );
-        let original = b"OpenBitFun container workspace\0binary";
+        let original = b"StarMate container workspace\0binary";
         manager
             .container_write_file(
                 connection_id,

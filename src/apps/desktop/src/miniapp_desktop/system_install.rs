@@ -6,11 +6,11 @@ use std::path::{Path, PathBuf};
 pub(super) fn applications_directory() -> Result<PathBuf, String> {
     #[cfg(target_os = "macos")]
     return dirs::home_dir()
-        .map(|root| root.join("Applications/OpenBitFun Apps"))
+        .map(|root| root.join("Applications/StarMate Apps"))
         .ok_or_else(|| "Home directory unavailable".into());
     #[cfg(target_os = "windows")]
     return dirs::data_dir()
-        .map(|root| root.join("Microsoft/Windows/Start Menu/Programs/OpenBitFun Apps"))
+        .map(|root| root.join("Microsoft/Windows/Start Menu/Programs/StarMate Apps"))
         .ok_or_else(|| "Application directory unavailable".into());
     #[cfg(target_os = "linux")]
     return dirs::data_dir()
@@ -200,7 +200,7 @@ mod tests {
             user_root: root.to_path_buf(),
             host_channel: Default::default(),
             product_home: None,
-            host_executable: root.join("OpenBitFun"),
+            host_executable: root.join("StarMate"),
             name: "Notes".into(),
             extra: Default::default(),
         }

@@ -28,7 +28,7 @@ const gitApiMock = vi.hoisted(() => ({
 
 const workspaceMocks = vi.hoisted(() => ({
   hasWorkspace: true,
-  currentWorkspace: { id: 'workspace-1', name: 'OpenBitFun', rootPath: 'D:/workspace/OpenBitFun', workspaceKind: 'normal' },
+  currentWorkspace: { id: 'workspace-1', name: 'StarMate', rootPath: 'D:/workspace/StarMate', workspaceKind: 'normal' },
   openedWorkspaces: new Map<string, WorkspaceInfo>(),
   selectDraftWorkspace: vi.fn(),
   createChatDraft: vi.fn(),
@@ -328,7 +328,7 @@ describe('WelcomePanel empty session presentation', () => {
       root.render(<WelcomePanel sessionMode="Standard" />);
     });
 
-    expect(container.querySelector('[data-openbitfun-product-part="heading"]')?.textContent).toBe('在 OpenBitFun，开工。');
+    expect(container.querySelector('[data-openbitfun-product-part="heading"]')?.textContent).toBe('在 StarMate，开工。');
     expect(container.querySelector('[data-openbitfun-product-part="narrative"]')).toBeNull();
     expect(container.querySelector('[data-openbitfun-product-part="divider"]')).toBeNull();
     expect(container.querySelector('.welcome-panel__details')).toBeNull();
@@ -349,7 +349,7 @@ describe('WelcomePanel empty session presentation', () => {
     await act(async () => root.render(<DraftWorkspaceSurfaces />));
     const welcomeTrigger = () => container.querySelector<HTMLButtonElement>('[data-openbitfun-product-part="workspaceAction"]')!;
     const stripTrigger = () => container.querySelector<HTMLButtonElement>('[data-testid="chat-input-workspace-trigger"]')!;
-    expect(welcomeTrigger().textContent).toBe('OpenBitFun');
+    expect(welcomeTrigger().textContent).toBe('StarMate');
     expect(welcomeTrigger().querySelector('[data-openbitfun-part="trailing-icon"]')).toBeNull();
     await act(async () => {
       container.querySelector('[data-openbitfun-product-part="heading"]')!
@@ -374,7 +374,7 @@ describe('WelcomePanel empty session presentation', () => {
     ]);
     await act(async () => stripTrigger().click());
     await act(async () => document.querySelector<HTMLButtonElement>('[data-testid="chat-input-workspace-option-workspace-1"]')!.click());
-    expect(welcomeTrigger().textContent).toContain('OpenBitFun');
+    expect(welcomeTrigger().textContent).toContain('StarMate');
     expect(workspaceMocks.selectDraftWorkspace.mock.calls).toEqual([
       ['draft-session', 'workspace-2'], ['draft-session', 'workspace-1'],
     ]);
@@ -389,7 +389,7 @@ describe('WelcomePanel empty session presentation', () => {
     await act(async () => root.render(<WelcomePanel session={session} />));
 
     expect(container.querySelector('[data-openbitfun-product-part="narrative"]')).toBeNull();
-    expect(container.textContent).not.toContain('OpenBitFun');
+    expect(container.textContent).not.toContain('StarMate');
     expect(workspaceMocks.gitScopes).toEqual([]);
   });
 
@@ -407,10 +407,10 @@ describe('WelcomePanel empty session presentation', () => {
     await act(async () => trigger.click());
     const menu = document.querySelector('[data-openbitfun-product-part="workspaceMenu"]')!;
     const option = [...menu.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]')]
-      .find(item => item.textContent?.includes('OpenBitFun'))!;
+      .find(item => item.textContent?.includes('StarMate'))!;
     await act(async () => option.click());
     expect(workspaceMocks.createChatDraft).toHaveBeenCalledWith({
-      workspaceId: 'workspace-1', workspacePath: 'D:/workspace/OpenBitFun',
+      workspaceId: 'workspace-1', workspacePath: 'D:/workspace/StarMate',
     }, 'Standard');
     expect(workspaceMocks.openMainSession).toHaveBeenCalledWith('selected-workspace-draft', {
       workspaceId: 'workspace-1', activateWorkspace: expect.any(Function), isCurrent: expect.any(Function),

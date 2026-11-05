@@ -44,7 +44,7 @@ Best for public HTTP content that needs no login session. For JavaScript-rendere
 
 Supports different output formats:
 - raw: Raw response content (original HTML or text)
-- markdown: Readable content mode. For HTML pages, OpenBitFun extracts the main content and returns markdown when possible, automatically falling back to plain text when markdown conversion is not reliable.
+- markdown: Readable content mode. For HTML pages, StarMate extracts the main content and returns markdown when possible, automatically falling back to plain text when markdown conversion is not reliable.
 - json: Parse JSON responses
 
 Example usage:

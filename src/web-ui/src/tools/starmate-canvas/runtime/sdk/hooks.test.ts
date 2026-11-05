@@ -15,7 +15,7 @@ function withWindow<T>(run: () => T): T {
   }
 }
 
-describe('OpenBitFun Canvas hook adapters', () => {
+describe('StarMate Canvas hook adapters', () => {
   it('delegates host appearance access to runtime hooks', () => {
     withWindow(() => {
       window.StarMateCanvasRuntimeHooks = {

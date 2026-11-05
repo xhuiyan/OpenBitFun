@@ -381,7 +381,7 @@ describe('ecosystem compatibility scene presentation contract', () => {
     expect(scene).not.toContain("'other-acp'");
   });
 
-  it('does not expose the removed use-OpenBitFun-in-product view', () => {
+  it('does not expose the removed use-StarMate-in-product view', () => {
     const scene = source('./EcosystemCompatibilityScene.tsx');
     const model = source('./ecosystemCompatibilityModel.ts');
 

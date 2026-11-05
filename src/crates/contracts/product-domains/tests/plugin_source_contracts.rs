@@ -558,7 +558,7 @@ fn pre_openbitfun_trust_store_requires_explicit_migration() {
         serde_json::from_value(pre_openbitfun).expect("deserialize shaped trust store");
     let error = store
         .validate()
-        .expect_err("pre-OpenBitFun trust store must not enter the current runtime");
+        .expect_err("pre-StarMate trust store must not enter the current runtime");
     assert!(error.to_string().contains("explicit data migration tool"));
 }
 

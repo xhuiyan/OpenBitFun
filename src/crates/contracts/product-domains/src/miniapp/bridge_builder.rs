@@ -1,4 +1,4 @@
-//! Bridge script builder — generate window.app Runtime Adapter (OpenBitFun Hosted) for iframe.
+//! Bridge script builder — generate window.app Runtime Adapter (StarMate Hosted) for iframe.
 
 use crate::miniapp::types::{EsmDep, MiniAppPermissions};
 use serde_json;
@@ -325,7 +325,7 @@ pub fn build_bridge_script(
       onEvent:        (fn) => app.on('agent:event', fn),
       offEvent:       (fn) => app.off('agent:event', fn),
 
-      // Reverse direction: expose bounded live state to the OpenBitFun Agent and
+      // Reverse direction: expose bounded live state to the StarMate Agent and
       // accept semantic actions from it. Only what the handlers return is
       // visible; the host never inspects app internals. Optional: every frame
       // already reports automatic observations (loop liveness, input

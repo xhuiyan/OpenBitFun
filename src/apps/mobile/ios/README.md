@@ -1,4 +1,4 @@
-# OpenBitFun iOS
+# StarMate iOS
 
 Native SwiftUI client for local and remote conversations, account device connection,
 workspace and session management, approvals, attachments, and file previews.
@@ -8,14 +8,14 @@ floating composer with 52pt collapsed height.
 
 ## Project layout
 
-- `OpenBitFun/App/`: lifecycle, launch configuration, and composition root.
-- `OpenBitFun/Features/Chat/`: conversation home, header, timeline bubbles, and composer.
-- `OpenBitFun/Features/Remote/`: remote conversation home surfaces.
-- `OpenBitFun/Features/Settings/`: app settings composition and reusable settings cards.
-- `OpenBitFun/Features/Account/`: sign-in step, account device picker, and inline account sections embedded in settings.
-- `OpenBitFun/Features/Shell/`: theme tokens, drawer, shell layout, and remote supporting surfaces.
-- `OpenBitFun/Infrastructure/`: observable state, failure copy, and platform adapters.
-- `OpenBitFun/Presentation/Models/`: SwiftUI-facing presentation DTOs.
+- `StarMate/App/`: lifecycle, launch configuration, and composition root.
+- `StarMate/Features/Chat/`: conversation home, header, timeline bubbles, and composer.
+- `StarMate/Features/Remote/`: remote conversation home surfaces.
+- `StarMate/Features/Settings/`: app settings composition and reusable settings cards.
+- `StarMate/Features/Account/`: sign-in step, account device picker, and inline account sections embedded in settings.
+- `StarMate/Features/Shell/`: theme tokens, drawer, shell layout, and remote supporting surfaces.
+- `StarMate/Infrastructure/`: observable state, failure copy, and platform adapters.
+- `StarMate/Presentation/Models/`: SwiftUI-facing presentation DTOs.
 - `OpenBitFun/Resources.xcassets/`: app icon and future native assets.
 
 ## Build and run
@@ -26,15 +26,15 @@ Xcode copy in `~/Downloads` when it is the compatible version:
 ```bash
 export DEVELOPER_DIR="$HOME/Downloads/Xcode.app/Contents/Developer"
 "$DEVELOPER_DIR/usr/bin/xcodebuild" \
-  -project OpenBitFun.xcodeproj -scheme OpenBitFun \
+  -project OpenBitFun.xcodeproj -scheme StarMate \
   -destination 'platform=iOS Simulator,id=1D7E5AA6-1AE9-4CAB-966B-A83B5F113B4A' \
-  -derivedDataPath /tmp/OpenBitFun-iOS-Derived \
+  -derivedDataPath /tmp/StarMate-iOS-Derived \
   CODE_SIGNING_ALLOWED=YES CODE_SIGNING_IDENTITY=- build
 ```
 
 `MobileAppModel` is kept in `Infrastructure` so the SwiftUI views do not know
 about transport or persistence. Local chat, pairing, and remote session state
-are supplied by the generated `OpenBitFunMobileCore` framework from
+are supplied by the generated `StarMateMobileCore` framework from
 `src/apps/mobile/shared/core-feature`; SwiftUI only maps the typed state to its
 presentation model. Desktops are connected through the signed-in account's
 device list; there is no QR scanner or manual link entry. Connections paired by
@@ -59,7 +59,7 @@ export JAVA_HOME="/Applications/DevEco-Studio.app/Contents/jbr/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 export DEVELOPER_DIR="$HOME/Downloads/Xcode.app/Contents/Developer"
 cd ../shared
-./gradlew :core-feature:assembleOpenBitFunMobileCoreDebugXCFramework
+./gradlew :core-feature:assembleStarMateMobileCoreDebugXCFramework
 ```
 
 The shell includes both product surfaces already: Local opens the HarmonyOS
@@ -89,7 +89,7 @@ To verify that skipping notification onboarding survives restart, run this on a
 fresh simulator installation with undecided notification authorization:
 
 ```bash
-xcodebuild -project OpenBitFun.xcodeproj -scheme OpenBitFun \
+xcodebuild -project OpenBitFun.xcodeproj -scheme StarMate \
   -destination 'platform=iOS Simulator,name=Notification Onboarding QA' \
   -only-testing:OpenBitFunUITests/NotificationOnboardingUITests test
 ```

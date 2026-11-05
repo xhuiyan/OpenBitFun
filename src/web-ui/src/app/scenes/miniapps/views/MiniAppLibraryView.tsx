@@ -1173,7 +1173,7 @@ const MiniAppLibraryContent: React.FC<MiniAppLibraryViewProps> = ({
                 {releaseHistory.visible.map((release) => (
                   <div key={release.releaseId}>
                     <span>v{release.releaseNumber}</span>
-                    <span>{release.minOpenBitFunVersion}+</span>
+                    <span>{release.minStarMateVersion}+</span>
                     {release.yanked
                       ? <StatusPill tone="warning">{t('market.detail.yanked')}</StatusPill>
                       : <Icon name="check-line" size="sm" />}

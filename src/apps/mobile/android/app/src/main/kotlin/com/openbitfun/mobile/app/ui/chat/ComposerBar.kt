@@ -73,7 +73,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openbitfun.mobile.app.R
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunEaseOut
+import com.openbitfun.mobile.app.ui.theme.StarMateEaseOut
 import com.openbitfun.mobile.app.ui.theme.MotionQuickMillis
 import com.openbitfun.mobile.app.ui.theme.MotionStructureMillis
 import com.openbitfun.mobile.app.ui.theme.openBitFunColors
@@ -185,7 +185,7 @@ internal fun ComposerBar(
     )
     val structureSpec = tween<androidx.compose.ui.unit.Dp>(
         durationMillis = MotionStructureMillis,
-        easing = OpenBitFunEaseOut,
+        easing = StarMateEaseOut,
     )
     val radius by animateDpAsState(
         if (expanded || images.isNotEmpty()) {
@@ -217,14 +217,14 @@ internal fun ComposerBar(
         label = "composer-action-spacing",
     )
     val actionRowOffset = with(LocalDensity.current) { 8.dp.roundToPx() }
-    val actionEnter = fadeIn(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
-        slideInVertically(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) { actionRowOffset }
-    val actionExit = fadeOut(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
-        slideOutVertically(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) { actionRowOffset }
-    val compactControlEnter = fadeIn(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
-        expandHorizontally(tween(MotionQuickMillis, easing = OpenBitFunEaseOut))
-    val compactControlExit = fadeOut(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
-        shrinkHorizontally(tween(MotionQuickMillis, easing = OpenBitFunEaseOut))
+    val actionEnter = fadeIn(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
+        slideInVertically(tween(MotionQuickMillis, easing = StarMateEaseOut)) { actionRowOffset }
+    val actionExit = fadeOut(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
+        slideOutVertically(tween(MotionQuickMillis, easing = StarMateEaseOut)) { actionRowOffset }
+    val compactControlEnter = fadeIn(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
+        expandHorizontally(tween(MotionQuickMillis, easing = StarMateEaseOut))
+    val compactControlExit = fadeOut(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
+        shrinkHorizontally(tween(MotionQuickMillis, easing = StarMateEaseOut))
 
     Column(
         modifier = modifier

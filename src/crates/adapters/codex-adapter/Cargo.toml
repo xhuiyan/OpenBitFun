@@ -3,7 +3,7 @@ name = "starmate-codex-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Codex static source adapter for OpenBitFun"
+description = "Codex static source adapter for StarMate"
 autotests = false
 
 [lib]

@@ -1,6 +1,6 @@
-//! OpenBitFun Agent Client Protocol integration.
+//! StarMate Agent Client Protocol integration.
 //!
-//! This crate owns the ACP client and server surfaces over OpenBitFun's assembled
+//! This crate owns the ACP client and server surfaces over StarMate's assembled
 //! runtime. Product hosts select the additive `client` and `server` features
 //! explicitly; the compatibility default enables both roles.
 

@@ -43,7 +43,7 @@ try {
         $lock.Dispose()
     }
     if (-not $failedAsExpected) {
-        throw 'Installer unexpectedly succeeded while the OpenBitFun CLI was locked'
+        throw 'Installer unexpectedly succeeded while the StarMate CLI was locked'
     }
 
     if ((Get-FileHash -LiteralPath $primary -Algorithm SHA256).Hash -cne $primaryHash) {

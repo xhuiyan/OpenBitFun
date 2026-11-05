@@ -103,7 +103,7 @@ class CommandPalettePreviewClient implements RemoteCommandPaletteClient {
     }
     if (this.catalogOutcome === 'version_gap') {
       throw new HostInvokeRefusal('get_mode_skill_configs',
-        "command 'get_mode_skill_configs' is unknown to this OpenBitFun desktop peer host version; " +
+        "command 'get_mode_skill_configs' is unknown to this StarMate desktop peer host version; " +
         'upgrade the peer host or check the command name');
     }
     if (this.catalogOutcome === 'refused') {

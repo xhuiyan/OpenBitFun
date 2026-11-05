@@ -50,7 +50,7 @@ fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_age
         &project_openbitfun.join("shared.md"),
         "Shared",
         "Shared",
-        "Project OpenBitFun agent",
+        "Project StarMate agent",
         CustomSubagentKind::Project,
     );
     write_agent(
@@ -64,7 +64,7 @@ fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_age
         &user_openbitfun.join("user-only.md"),
         "UserOnly",
         "UserOnly",
-        "OpenBitFun user agent",
+        "StarMate user agent",
         CustomSubagentKind::User,
     );
     write_agent(
@@ -115,7 +115,7 @@ fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_age
     );
     assert_eq!(
         report.definitions[0].definition.description,
-        "Project OpenBitFun agent"
+        "Project StarMate agent"
     );
     assert_eq!(
         report.definitions[0].path,

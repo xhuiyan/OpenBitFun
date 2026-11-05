@@ -1,7 +1,7 @@
-//! Product wiring for native OpenBitFun agent hooks.
+//! Product wiring for native StarMate agent hooks.
 //!
 //! This module connects the portable hook engine
-//! (`starmate_agent_runtime::native_hooks`) to OpenBitFun configuration and the
+//! (`starmate_agent_runtime::native_hooks`) to StarMate configuration and the
 //! agent runtime dispatch sites:
 //!
 //! - Settings discovery: user scope `~/.config/openbitfun/config/hooks.json`
@@ -306,7 +306,7 @@ impl PluginToolAfterOutput {
             metadata,
         } = self;
         // The Host carries title and metadata through the complete ordered
-        // OpenCode Hook chain. OpenBitFun's stable ToolResult contract currently
+        // OpenCode Hook chain. StarMate's stable ToolResult contract currently
         // has one mutable presentation field: the model-visible output. Keep
         // the raw result immutable and avoid inventing a second persistence/UI
         // schema until a product consumer for these two presentation facts is

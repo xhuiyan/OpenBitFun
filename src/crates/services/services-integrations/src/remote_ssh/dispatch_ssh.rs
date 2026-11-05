@@ -1,4 +1,4 @@
-//! SSH transport for persistent OpenBitFun dispatch jobs.
+//! SSH transport for persistent StarMate dispatch jobs.
 //!
 //! The target-side runner is the `openbitfun dispatch` CLI surface. This module is
 //! deliberately only a controller transport: the remote CLI owns jobs,
@@ -222,7 +222,7 @@ struct ResolvedRelease {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ReleaseOrigin {
     GitHub,
-    OpenBitFun,
+    StarMate,
 }
 
 #[derive(Debug, Clone)]
@@ -312,7 +312,7 @@ pub async fn probe(
                 Ok(release) => (
                     None,
                     Some(format!(
-                        "published OpenBitFun CLI {} does not carry the dispatch capabilities this controller requires",
+                        "published StarMate CLI {} does not carry the dispatch capabilities this controller requires",
                         release.public.version
                     )),
                 ),
@@ -355,7 +355,7 @@ impl PrebuiltIncompatibility {
     fn describe(&self) -> String {
         match self {
             Self::UnsupportedPlatform { os, arch } => format!(
-                "OpenBitFun publishes no CLI binary for {os} {arch}"
+                "StarMate publishes no CLI binary for {os} {arch}"
             ),
             Self::MuslLibc => format!(
                 "target uses musl libc; published binaries are linked against glibc {GLIBC_FLOOR} or newer"
@@ -419,7 +419,7 @@ fn compare_versions(left: &str, right: &str) -> std::cmp::Ordering {
 /// Whether a published artifact is expected to implement the controller's
 /// required protocol.
 ///
-/// OpenBitFun starts at 1.0.0. No OpenBitFun 0.x artifact is a compatible install
+/// StarMate starts at 1.0.0. No StarMate 0.x artifact is a compatible install
 /// candidate, even if it was built from a checkout that happened to carry a
 /// similar dispatch surface.
 fn published_release_supports_required_dispatch_protocol(version: &str) -> bool {
@@ -508,7 +508,7 @@ pub fn validate_dispatch_protocol(protocol: &Value, approval_policy: Option<&str
     Ok(())
 }
 
-/// Explicitly install the latest confirmed OpenBitFun CLI release on the SSH target.
+/// Explicitly install the latest confirmed StarMate CLI release on the SSH target.
 ///
 /// This function fails closed when the build has no release trust root, a
 /// checksum/signature is absent, or either verification fails. It never uses
@@ -528,7 +528,7 @@ pub async fn install_cli_start(
     let release = resolve_release(&target.os, &target.arch).await?;
     if !published_release_supports_required_dispatch_protocol(&release.public.version) {
         return Err(anyhow!(
-            "published OpenBitFun CLI {} does not contain the dispatch capabilities required by this controller",
+            "published StarMate CLI {} does not contain the dispatch capabilities required by this controller",
             release.public.version
         ));
     }
@@ -539,7 +539,7 @@ pub async fn install_cli_start(
     // may still be reading the archive or paths this attempt would replace.
     install_cli_cancel(manager, connection_id)
         .await
-        .context("stop an earlier OpenBitFun CLI installation")?;
+        .context("stop an earlier StarMate CLI installation")?;
 
     let dir = product_data_path(&target.home, &["dispatch", "install"]);
     let archive_path = format!("{dir}/{}", release.filename);
@@ -593,12 +593,12 @@ pub async fn install_cli_start(
     ));
     let driver = to_unix_script(&install_driver_script(&dir, &body_path, &install_token));
     if let ArchiveSource::ControllerPush { reason } = &archive_source {
-        log::info!("OpenBitFun CLI dispatch install is pushing the archive over SFTP: {reason}");
+        log::info!("StarMate CLI dispatch install is pushing the archive over SFTP: {reason}");
         let archive = download_verified_archive(&release).await?;
         manager
             .sftp_write(connection_id, &archive_path, &archive)
             .await
-            .context("stage verified OpenBitFun CLI archive")?;
+            .context("stage verified StarMate CLI archive")?;
     }
     stage_and_launch_installer(
         manager,
@@ -681,7 +681,7 @@ async fn download_archive_on_target(
     let mirror_url = release
         .sources
         .iter()
-        .find(|source| source.origin == ReleaseOrigin::OpenBitFun)
+        .find(|source| source.origin == ReleaseOrigin::StarMate)
         .map(|source| source.url.as_str())
         .unwrap_or("");
     let script = target_download_script(
@@ -702,10 +702,10 @@ async fn download_archive_on_target(
             },
         )
         .await?;
-    ensure_command_completed(&result, "download OpenBitFun CLI release on the target")?;
+    ensure_command_completed(&result, "download StarMate CLI release on the target")?;
     if result.exit_code != 0 {
         return Err(remote_command_error(
-            "download OpenBitFun CLI release on the target",
+            "download StarMate CLI release on the target",
             result.exit_code,
             &result.stdout,
             &result.stderr,
@@ -786,7 +786,7 @@ case "$GITHUB_SPEED" in ''|*[!0-9]*) GITHUB_SPEED=0 ;; esac
 FIRST_URL="$GITHUB_URL"
 SECOND_URL="$MIRROR_URL"
 if [ -n "$MIRROR_URL" ] && [ "$GITHUB_SPEED" -lt {healthy_bps} ]; then
-  echo "GitHub CLI probe: $((GITHUB_SPEED / 1024)) KiB/s; trying OpenBitFun mirror first."
+  echo "GitHub CLI probe: $((GITHUB_SPEED / 1024)) KiB/s; trying StarMate mirror first."
   FIRST_URL="$MIRROR_URL"
   SECOND_URL="$GITHUB_URL"
 else
@@ -796,7 +796,7 @@ INSTALLED=0
 for URL in "$FIRST_URL" "$SECOND_URL"; do
   [ -n "$URL" ] || continue
   rm -f "$PART"
-  echo "Downloading OpenBitFun CLI from $URL"
+  echo "Downloading StarMate CLI from $URL"
   if {fetch}; then
     SIZE=$(wc -c <"$PART" | tr -d '[:space:]')
     if [ "$SIZE" -le "$MAX" ] && printf '%s  %s\n' "$EXPECTED" "$PART" | {verify}; then
@@ -807,7 +807,7 @@ for URL in "$FIRST_URL" "$SECOND_URL"; do
   fi
   echo "Download source failed verification; trying the next source." >&2
 done
-[ "$INSTALLED" = "1" ] || {{ echo "ERROR: every OpenBitFun CLI source failed" >&2; exit 1; }}
+[ "$INSTALLED" = "1" ] || {{ echo "ERROR: every StarMate CLI source failed" >&2; exit 1; }}
 chmod 600 "$ARCHIVE"
 trap - EXIT
 "#,
@@ -839,11 +839,11 @@ async fn stage_and_launch_installer(
     manager
         .sftp_write(connection_id, body_path, body.as_bytes())
         .await
-        .context("stage OpenBitFun CLI install body")?;
+        .context("stage StarMate CLI install body")?;
     manager
         .sftp_write(connection_id, script_path, driver.as_bytes())
         .await
-        .context("stage OpenBitFun CLI install driver")?;
+        .context("stage StarMate CLI install driver")?;
 
     exec_ok(
         manager,
@@ -887,7 +887,7 @@ async fn stage_and_launch_installer(
         Ok(channel) => channel,
         Err(error) => {
             let _ = install_cli_cancel(manager, connection_id).await;
-            return Err(error).context("start remote OpenBitFun CLI installer");
+            return Err(error).context("start remote StarMate CLI installer");
         }
     };
     tokio::spawn(async move {
@@ -903,7 +903,7 @@ fn ensure_confirmed_release(
 ) -> Result<()> {
     if resolved != expected {
         return Err(anyhow!(
-            "OpenBitFun CLI release metadata changed after confirmation; probe the target and confirm the new asset"
+            "StarMate CLI release metadata changed after confirmation; probe the target and confirm the new asset"
         ));
     }
     Ok(())
@@ -964,7 +964,7 @@ pub async fn install_cli_poll(
     };
     let mut output = output.to_string();
     if status == DispatchInstallStatus::Failed && exit_code == Some(130) && output.is_empty() {
-        output.push_str("OpenBitFun CLI installation was cancelled.\n");
+        output.push_str("StarMate CLI installation was cancelled.\n");
     }
     Ok(DispatchInstallPoll {
         cursor: size,
@@ -1020,17 +1020,17 @@ pub async fn account_daemon_identity(
             },
         )
         .await?;
-    ensure_command_completed(&result, "read OpenBitFun daemon target identity")?;
+    ensure_command_completed(&result, "read StarMate daemon target identity")?;
     if result.exit_code != 0 {
         return Err(remote_command_error(
-            "read OpenBitFun daemon target identity",
+            "read StarMate daemon target identity",
             result.exit_code,
             &result.stdout,
             &result.stderr,
         ));
     }
     let identity: DispatchAccountDaemonIdentity = serde_json::from_str(result.stdout.trim())
-        .context("OpenBitFun daemon target returned an invalid identity")?;
+        .context("StarMate daemon target returned an invalid identity")?;
     if identity.device_id.len() != 32
         || !identity
             .device_id
@@ -1041,7 +1041,7 @@ pub async fn account_daemon_identity(
         || identity.device_name.chars().any(char::is_control)
     {
         return Err(anyhow!(
-            "OpenBitFun daemon target returned an unsafe identity"
+            "StarMate daemon target returned an unsafe identity"
         ));
     }
     Ok(identity)
@@ -1110,10 +1110,10 @@ pub async fn provision_account_daemon(
         .await;
     let _ = manager.sftp_remove(connection_id, &request_path).await;
     let result = result?;
-    ensure_command_completed(&result, "provision persistent OpenBitFun daemon")?;
+    ensure_command_completed(&result, "provision persistent StarMate daemon")?;
     if result.exit_code != 0 {
         return Err(remote_command_error(
-            "provision persistent OpenBitFun daemon",
+            "provision persistent StarMate daemon",
             result.exit_code,
             &result.stdout,
             &result.stderr,
@@ -1121,10 +1121,10 @@ pub async fn provision_account_daemon(
     }
     let response: DispatchAccountDaemonProvisionResponse =
         serde_json::from_str(result.stdout.trim())
-            .context("OpenBitFun daemon provisioning returned invalid JSON")?;
+            .context("StarMate daemon provisioning returned invalid JSON")?;
     if response.device_id != request.device_id || !response.service_installed {
         return Err(anyhow!(
-            "OpenBitFun daemon provisioning returned an inconsistent result"
+            "StarMate daemon provisioning returned an inconsistent result"
         ));
     }
     Ok(response)
@@ -1155,10 +1155,10 @@ pub async fn deprovision_account_daemon(
             },
         )
         .await?;
-    ensure_command_completed(&result, "roll back OpenBitFun daemon provisioning")?;
+    ensure_command_completed(&result, "roll back StarMate daemon provisioning")?;
     if result.exit_code != 0 {
         return Err(remote_command_error(
-            "roll back OpenBitFun daemon provisioning",
+            "roll back StarMate daemon provisioning",
             result.exit_code,
             &result.stdout,
             &result.stderr,
@@ -1176,7 +1176,7 @@ async fn account_daemon_cli_path(
     let protocol = probed
         .protocol
         .as_ref()
-        .ok_or_else(|| anyhow!("the SSH target has no compatible OpenBitFun dispatch protocol"))?;
+        .ok_or_else(|| anyhow!("the SSH target has no compatible StarMate dispatch protocol"))?;
     validate_dispatch_protocol(protocol, None)?;
     let supports_provisioning = protocol
         .get("capabilities")
@@ -1188,12 +1188,12 @@ async fn account_daemon_cli_path(
         });
     if !supports_provisioning {
         return Err(anyhow!(
-            "the target OpenBitFun CLI does not support account daemon provisioning"
+            "the target StarMate CLI does not support account daemon provisioning"
         ));
     }
     probed
         .cli_path
-        .ok_or_else(|| anyhow!("the SSH target has no OpenBitFun CLI"))
+        .ok_or_else(|| anyhow!("the SSH target has no StarMate CLI"))
 }
 
 /// Keys of the `ai` config section that make up "model configuration": the
@@ -1244,7 +1244,7 @@ pub async fn sync_model_config(
     let config_dir = get("dir");
     if config_dir.is_empty() {
         return Err(anyhow!(
-            "could not resolve the target OpenBitFun config directory"
+            "could not resolve the target StarMate config directory"
         ));
     }
     let config_path = format!("{config_dir}/app.json");
@@ -1463,7 +1463,7 @@ pub async fn sync_workspace(
     ensure_plain_ssh_target(manager, connection_id).await?;
     let target = probe_remote_target(manager, connection_id).await?;
     let cli_path = target.cli_path.as_deref().ok_or_else(|| {
-        anyhow!("OpenBitFun CLI is not installed on the SSH target; install it before syncing")
+        anyhow!("StarMate CLI is not installed on the SSH target; install it before syncing")
     })?;
 
     // A clean incremental sync has `headCommit == knownHead`. Without an
@@ -1703,7 +1703,7 @@ async fn invoke_workspace_operation(
     ensure_plain_ssh_target(manager, connection_id).await?;
     let target = probe_remote_target(manager, connection_id).await?;
     let cli_path = target.cli_path.as_deref().ok_or_else(|| {
-        anyhow!("OpenBitFun CLI is not installed on the SSH target; install it before dispatching")
+        anyhow!("StarMate CLI is not installed on the SSH target; install it before dispatching")
     })?;
     let deadline = tokio::time::Instant::now() + WORKSPACE_OPERATION_WAIT;
     loop {
@@ -1745,7 +1745,7 @@ pub async fn upload_bundle(
     ensure_plain_ssh_target(manager, connection_id).await?;
     let target = probe_remote_target(manager, connection_id).await?;
     let cli_path = target.cli_path.as_deref().ok_or_else(|| {
-        anyhow!("OpenBitFun CLI is not installed on the SSH target; install it before dispatching")
+        anyhow!("StarMate CLI is not installed on the SSH target; install it before dispatching")
     })?;
 
     let begin = invoke_json_at_path(
@@ -1871,16 +1871,16 @@ where
                 .install_error
                 .as_deref()
                 .or(probed.protocol_error.as_deref())
-                .unwrap_or("this SSH target cannot run the OpenBitFun CLI")
+                .unwrap_or("this SSH target cannot run the StarMate CLI")
         ));
     }
     if let Some(reason) = probed.prebuilt_incompatible.as_deref() {
         return Err(anyhow!(
-            "no published OpenBitFun CLI can run on this target ({reason}); install OpenBitFun there manually and retry"
+            "no published StarMate CLI can run on this target ({reason}); install StarMate there manually and retry"
         ));
     }
     let release = probed.release.clone().ok_or_else(|| {
-        anyhow!("could not resolve an OpenBitFun CLI release for this target's platform")
+        anyhow!("could not resolve an StarMate CLI release for this target's platform")
     })?;
 
     progress(
@@ -1893,7 +1893,7 @@ where
             "reason": probed
                 .protocol_error
                 .clone()
-                .unwrap_or_else(|| "the target has no compatible OpenBitFun CLI".to_string()),
+                .unwrap_or_else(|| "the target has no compatible StarMate CLI".to_string()),
         }),
     )
     .await
@@ -1918,7 +1918,7 @@ where
             DispatchInstallStatus::Succeeded => break,
             DispatchInstallStatus::Failed => {
                 let error = anyhow!(
-                    "OpenBitFun CLI installation failed on the SSH target: {}",
+                    "StarMate CLI installation failed on the SSH target: {}",
                     bounded_detail(&poll.output)
                 );
                 emit_cli_install_failure(&mut progress, "install-status", &error).await?;
@@ -1929,7 +1929,7 @@ where
         if tokio::time::Instant::now() >= deadline {
             let _ = install_cli_cancel(manager, connection_id).await;
             let error = anyhow!(
-                "OpenBitFun CLI installation did not finish within {} minutes",
+                "StarMate CLI installation did not finish within {} minutes",
                 CLI_INSTALL_WAIT.as_secs() / 60
             );
             emit_cli_install_failure(&mut progress, "install-timeout", &error).await?;
@@ -1951,7 +1951,7 @@ where
             let error = anyhow!(
                 "{}",
                 reprobed.protocol_error.as_deref().unwrap_or(
-                    "the installed OpenBitFun CLI still does not answer the dispatch protocol"
+                    "the installed StarMate CLI still does not answer the dispatch protocol"
                 )
             );
             emit_cli_install_failure(&mut progress, "protocol-validation", &error).await?;
@@ -2020,7 +2020,7 @@ async fn invoke_json(
     ensure_plain_ssh_target(manager, connection_id).await?;
     let target = probe_remote_target(manager, connection_id).await?;
     let cli_path = target.cli_path.as_deref().ok_or_else(|| {
-        anyhow!("OpenBitFun CLI is not installed on the SSH target; confirm installation first")
+        anyhow!("StarMate CLI is not installed on the SSH target; confirm installation first")
     })?;
     invoke_json_at_path(
         manager,
@@ -2292,7 +2292,7 @@ fn release_sources(version: &str, filename: &str) -> Vec<ReleaseArtifactSource> 
             format!("{GITHUB_RELEASE_BASE}/download/{tag}"),
         ),
         (
-            ReleaseOrigin::OpenBitFun,
+            ReleaseOrigin::StarMate,
             format!("{STARMATE_RELEASE_BASE}/{version}"),
         ),
     ]
@@ -2326,7 +2326,7 @@ async fn fetch_latest_release_version(client: &reqwest::Client) -> Result<String
         }
     }
     Err(anyhow!(
-        "could not resolve the latest OpenBitFun release: {}",
+        "could not resolve the latest StarMate release: {}",
         failures.join("; ")
     ))
 }
@@ -2397,7 +2397,7 @@ fn release_target(os: &str, arch: &str) -> Result<&'static str> {
         ("Darwin", "x86_64" | "amd64") => Ok("x86_64-apple-darwin"),
         ("Darwin", "aarch64" | "arm64") => Ok("aarch64-apple-darwin"),
         (os, arch) => Err(anyhow!(
-            "OpenBitFun SSH dispatch CLI install does not support {os} {arch}"
+            "StarMate SSH dispatch CLI install does not support {os} {arch}"
         )),
     }
 }
@@ -2410,7 +2410,7 @@ fn release_http_client() -> Result<reqwest::Client> {
         // still fail instead of hanging the installer forever.
         .read_timeout(Duration::from_secs(RELEASE_READ_TIMEOUT_SECONDS))
         .build()
-        .context("build OpenBitFun release HTTP client")
+        .context("build StarMate release HTTP client")
 }
 
 async fn fetch_required_text(client: &reqwest::Client, url: &str) -> Result<String> {
@@ -2510,7 +2510,7 @@ async fn download_verified_archive(release: &ResolvedRelease) -> Result<Vec<u8>>
     }
 
     Err(anyhow!(
-        "OpenBitFun CLI archive failed from every source: {}",
+        "StarMate CLI archive failed from every source: {}",
         failures.join("; ")
     ))
 }
@@ -2546,12 +2546,12 @@ fn order_release_sources_for_speed(sources: &mut [ReleaseArtifactSource], github
     if github_speed >= GITHUB_HEALTHY_THROUGHPUT
         || !sources
             .iter()
-            .any(|source| source.origin == ReleaseOrigin::OpenBitFun)
+            .any(|source| source.origin == ReleaseOrigin::StarMate)
     {
         sources.swap(0, github_index);
     } else if let Some(mirror_index) = sources
         .iter()
-        .position(|source| source.origin == ReleaseOrigin::OpenBitFun)
+        .position(|source| source.origin == ReleaseOrigin::StarMate)
     {
         sources.swap(0, mirror_index);
     }
@@ -2604,7 +2604,7 @@ async fn download_release_bytes(client: &reqwest::Client, url: &str) -> Result<V
         .is_some_and(|length| length > MAX_ARCHIVE_BYTES as u64)
     {
         return Err(anyhow!(
-            "OpenBitFun CLI archive exceeds the {} MB safety limit",
+            "StarMate CLI archive exceeds the {} MB safety limit",
             MAX_ARCHIVE_BYTES / (1024 * 1024)
         ));
     }
@@ -2622,7 +2622,7 @@ async fn download_release_bytes(client: &reqwest::Client, url: &str) -> Result<V
 fn extend_bounded_archive(archive: &mut Vec<u8>, chunk: &[u8], limit: usize) -> Result<()> {
     if archive.len().saturating_add(chunk.len()) > limit {
         return Err(anyhow!(
-            "OpenBitFun CLI archive exceeds the {} MB safety limit",
+            "StarMate CLI archive exceeds the {} MB safety limit",
             limit / (1024 * 1024)
         ));
     }
@@ -2703,28 +2703,28 @@ esac
 # anything is replaced — turns "install succeeded but the target is still
 # reported incompatible" into one honest error at the point of cause.
 if ! staged_dispatch="$("$NEW" dispatch --help 2>&1 >/dev/null)"; then
-  echo "ERROR: this OpenBitFun build does not provide dispatch support: $staged_dispatch" >&2
+  echo "ERROR: this StarMate build does not provide dispatch support: $staged_dispatch" >&2
   exit 1
 fi
 if ! staged_probe="$(printf '{{}}\n' | "$NEW" dispatch probe 2>/dev/null)"; then
-  echo "ERROR: staged OpenBitFun dispatch probe failed" >&2
+  echo "ERROR: staged StarMate dispatch probe failed" >&2
   exit 1
 fi
 case "$staged_probe" in
   *'"productId":"{product_id}",'*) ;;
-  *) echo "ERROR: staged OpenBitFun CLI returned the wrong product identity" >&2; exit 1 ;;
+  *) echo "ERROR: staged StarMate CLI returned the wrong product identity" >&2; exit 1 ;;
 esac
 case "$staged_probe" in
   *'"dataNamespace":"{data_namespace}",'*) ;;
-  *) echo "ERROR: staged OpenBitFun CLI returned the wrong data namespace" >&2; exit 1 ;;
+  *) echo "ERROR: staged StarMate CLI returned the wrong data namespace" >&2; exit 1 ;;
 esac
 case "$staged_probe" in
   *'"protocolVersion":{protocol_version},'*) ;;
-  *) echo "ERROR: staged OpenBitFun CLI returned an incompatible dispatch protocol" >&2; exit 1 ;;
+  *) echo "ERROR: staged StarMate CLI returned an incompatible dispatch protocol" >&2; exit 1 ;;
 esac
 case "$staged_probe" in
   *'"{worker_profile_capability}"'*) ;;
-  *) echo "ERROR: staged OpenBitFun CLI lacks safe dispatch worker profile selection" >&2; exit 1 ;;
+  *) echo "ERROR: staged StarMate CLI lacks safe dispatch worker profile selection" >&2; exit 1 ;;
 esac
 if [ -e "$TARGET" ]; then
   mv -f "$TARGET" "$BACKUP"
@@ -3044,7 +3044,7 @@ fi
 rm -f "$PIDF" "$DRIVER_PIDF" "$PREPF"
 if [ "$active" = "1" ]; then
   printf '130\n' >"$EXITF"
-  printf '\nOpenBitFun CLI installation cancelled by client.\n' >>"$LOG"
+  printf '\nStarMate CLI installation cancelled by client.\n' >>"$LOG"
 fi
 exit 0
 "#
@@ -3167,7 +3167,7 @@ mod tests {
             filename: "openbitfun-cli.tar.gz".to_string(),
             sources: [
                 (ReleaseOrigin::GitHub, github_url),
-                (ReleaseOrigin::OpenBitFun, mirror_url),
+                (ReleaseOrigin::StarMate, mirror_url),
             ]
             .into_iter()
             .map(|(origin, url)| ReleaseArtifactSource {
@@ -3390,7 +3390,7 @@ mod tests {
         );
         assert!(
             !release.contains("cargo build"),
-            "no install path may compile OpenBitFun on the target"
+            "no install path may compile StarMate on the target"
         );
     }
 
@@ -3398,11 +3398,11 @@ mod tests {
     fn release_compatibility_uses_capability_floor_not_installed_version() {
         assert!(
             !published_release_supports_required_dispatch_protocol("0.2.15"),
-            "OpenBitFun releases predate the OpenBitFun product contract"
+            "StarMate releases predate the StarMate product contract"
         );
         assert!(
             !published_release_supports_required_dispatch_protocol("0.2.16"),
-            "a previously compatible OpenBitFun release is not an OpenBitFun release"
+            "a previously compatible StarMate release is not an StarMate release"
         );
         assert!(!published_release_supports_required_dispatch_protocol(
             "0.3.0+build.1"
@@ -3443,7 +3443,7 @@ mod tests {
             sources[0].url,
             format!("https://github.com/xhuiyan/OpenBitFun/releases/download/v1.2.3/{filename}")
         );
-        assert_eq!(sources[1].origin, ReleaseOrigin::OpenBitFun);
+        assert_eq!(sources[1].origin, ReleaseOrigin::StarMate);
         assert_eq!(
             sources[1].url,
             format!("https://starmate.xtdl.ltd/release/1.2.3/{filename}")
@@ -3454,7 +3454,7 @@ mod tests {
     fn dispatch_cli_uses_the_mirror_only_below_the_github_speed_floor() {
         let mut slow = test_release(true).sources;
         order_release_sources_for_speed(&mut slow, GITHUB_HEALTHY_THROUGHPUT - 1);
-        assert_eq!(slow[0].origin, ReleaseOrigin::OpenBitFun);
+        assert_eq!(slow[0].origin, ReleaseOrigin::StarMate);
 
         let mut healthy = test_release(true).sources;
         healthy.swap(0, 1);
@@ -3750,7 +3750,7 @@ mod tests {
 
         assert!(
             output.status.success(),
-            "install must succeed on a host with no pre-existing OpenBitFun CLI:\nstdout: {}\nstderr: {}",
+            "install must succeed on a host with no pre-existing StarMate CLI:\nstdout: {}\nstderr: {}",
             String::from_utf8_lossy(&output.stdout),
             String::from_utf8_lossy(&output.stderr)
         );

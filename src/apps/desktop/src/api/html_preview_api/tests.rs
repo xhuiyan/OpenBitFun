@@ -615,7 +615,7 @@ fn peer_capability_is_required_even_for_desktop_and_wire_failures_are_explicit()
         assert!(require_preview_capability(&ping)
             .unwrap_err()
             .message
-            .contains("update OpenBitFun"));
+            .contains("update StarMate"));
     }
     for host in ["desktop", "cli"] {
         assert!(require_preview_capability(

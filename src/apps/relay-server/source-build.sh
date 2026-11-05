@@ -16,7 +16,7 @@ starmate_build_relay_from_source() (
   trap "rm -rf -- $(printf '%q' "$checkout")" EXIT
   trap 'exit 1' INT TERM
 
-  echo ">>> Building current OpenBitFun Relay from source. This can take several minutes."
+  echo ">>> Building current StarMate Relay from source. This can take several minutes."
   echo ">>> The existing Relay will keep running until the build completes."
   export GIT_TERMINAL_PROMPT=0
   git init -q "$checkout"
@@ -75,7 +75,7 @@ starmate_deploy_with_source_fallback() {
     if starmate_try_release_deploy; then return 0; fi
     echo ">>> Published Relay deployment failed; falling back to a source build."
   else
-    echo ">>> No published image is available for current OpenBitFun Relay; falling back to a source build."
+    echo ">>> No published image is available for current StarMate Relay; falling back to a source build."
   fi
   starmate_build_relay_from_source "$source_root" "$platform"
 }

@@ -45,7 +45,7 @@ struct MobileDesignGallery: View {
             ChatTimelineView(model: model)
             ComposerBar(model: model)
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 
     private var platformLabel: some View {
@@ -55,30 +55,30 @@ struct MobileDesignGallery: View {
                 .fontWeight(.medium)
             Text(verbatim: "NATIVE")
                 .font(MobileDesignTypography.labelSmall.font)
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
-                .background(OpenBitFunTheme.soft)
+                .background(StarMateTheme.soft)
                 .clipShape(Capsule())
             Spacer()
             Text(verbatim: "\(Int(scenario.viewportWidth)) × \(Int(scenario.viewportHeight))")
                 .font(MobileDesignTypography.labelSmall.font)
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
         }
         .frame(height: MobileDesignGeometry.connectionStripHeight)
         .padding(.horizontal, MobileDesignGeometry.contentGutter)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
         }
     }
 }
 
-#Preview("OpenBitFun Mobile · Compact") {
+#Preview("StarMate Mobile · Compact") {
     MobileDesignGallery(scenario: MobilePreviewScenarios.connectedConversation)
         .preferredColorScheme(.light)
 }
 
-#Preview("OpenBitFun Mobile · Dark") {
+#Preview("StarMate Mobile · Dark") {
     MobileDesignGallery(scenario: MobilePreviewScenarios.streamingDark)
         .preferredColorScheme(.dark)
 }

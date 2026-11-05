@@ -1,6 +1,6 @@
 # Deployment references
 
-Community self-hosting references for OpenBitFun. The official hosted services
+Community self-hosting references for StarMate. The official hosted services
 are operated separately; their configuration and access details are not
 published in this repository.
 

@@ -4,7 +4,7 @@ import { display, window } from '@kit.ArkUI';
 import { MobileDesignColors, MobileTextScale } from '../generated/MobileDesignTokens';
 
 const DOMAIN = 0x0000;
-const TAG = 'OpenBitFunRemote';
+const TAG = 'StarMateRemote';
 
 export default class EntryAbility extends UIAbility {
   private mainWindow?: window.Window;

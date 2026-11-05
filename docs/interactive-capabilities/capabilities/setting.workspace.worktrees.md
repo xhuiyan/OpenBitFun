@@ -41,13 +41,13 @@ Configure the root, branch prefix, and cleanup rules for Git worktrees, and insp
 3. 保存规则或管理现有 Worktree
    Save policy or manage existing worktrees
 
-入口 / Entry: OpenBitFun 设置
+入口 / Entry: StarMate 设置
 
 ## 智能体可替你做什么 / What an agent can do for you
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| 打开对应界面 / Open the UI | 进入 OpenBitFun 中对应的功能界面。 | Open the matching feature in OpenBitFun. |
+| 打开对应界面 / Open the UI | 进入 StarMate 中对应的功能界面。 | Open the matching feature in StarMate. |
 
 ## 可配置选项 / Configurable options
 

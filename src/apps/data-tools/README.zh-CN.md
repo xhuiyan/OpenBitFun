@@ -28,7 +28,7 @@ GUI 使用原生 Rust 后端，不需要安装 Python。
 与 GUI 使用各自独立的计划和恢复记录格式。两者共享 `.session-storage-repair.lock` 锁。
 异常强制退出后，请先确认所有修复工具及产品写入进程已停止，再手动删除残留锁并继续。
 
-产品名改为 **星伴数据工具**，可执行文件为 `openbitfun-data-tools`，
+产品名改为 **星伴数据工具**，可执行文件为 `starmate-data-tools`，
 新发布使用 `data-tools-v<版本>` 标签。保留原有迁移历史；工具配置使用新的
 `com.openbitfun.data-tools` 身份，不导入旧工具的位置和语言偏好。
 兼容历史 `data-migrator-v` 标签；签名配置使用 `DATA_TOOLS_SIGNING_*` 前缀。
@@ -41,10 +41,10 @@ GUI 使用原生 Rust 后端，不需要安装 Python。
 
 | 系统 | 下载文件 | 启动方式 |
 | --- | --- | --- |
-| Windows x64 | `openbitfun-data-tools-v<版本>-windows-x64.zip` | 解压后双击 `openbitfun-data-tools.exe` |
-| macOS Apple Silicon | `openbitfun-data-tools-v<版本>-macos-arm64.dmg` | 打开 DMG 中的数据工具 |
-| macOS Intel | `openbitfun-data-tools-v<版本>-macos-x64.dmg` | 打开 DMG 中的数据工具 |
-| Linux x64 | `openbitfun-data-tools-v<版本>-linux-x64.AppImage` | 添加可执行权限，在桌面会话中启动 |
+| Windows x64 | `starmate-data-tools-v<版本>-windows-x64.zip` | 解压后双击 `starmate-data-tools.exe` |
+| macOS Apple Silicon | `starmate-data-tools-v<版本>-macos-arm64.dmg` | 打开 DMG 中的数据工具 |
+| macOS Intel | `starmate-data-tools-v<版本>-macos-x64.dmg` | 打开 DMG 中的数据工具 |
+| Linux x64 | `starmate-data-tools-v<版本>-linux-x64.AppImage` | 添加可执行权限，在桌面会话中启动 |
 
 Windows 需要 Microsoft Edge WebView2；macOS 使用系统 WebView，Linux 包以 Ubuntu 22.04
 为构建基线。迁移不需要登录或联网，目前不产出 Windows/Linux ARM 安装包。
@@ -156,7 +156,7 @@ Windows 迁移日志目录：
 pnpm install
 pnpm run data-tools:dev       # 独立窗口，无需主应用或开发服务器
 pnpm run data-tools:build     # 独立发行包
-cargo build -p openbitfun-data-tools --bin openbitfun-data-tools
+cargo build -p starmate-data-tools --bin starmate-data-tools
 ```
 
 直接 Cargo 构建使用已提交的静态 UI 和设计系统 CSS。修改主题源后运行

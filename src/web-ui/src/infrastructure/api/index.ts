@@ -1,7 +1,7 @@
 /**
- * OpenBitFun API unified exports.
+ * StarMate API unified exports.
  *
- * Follows the OpenBitFun Tauri command conventions.
+ * Follows the StarMate Tauri command conventions.
  */
 
 export * from './service-api/types';

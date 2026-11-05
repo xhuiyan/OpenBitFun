@@ -392,7 +392,7 @@ async fn refresh(refresh_token: &str, options: &SubscriptionHttpOptions) -> Resu
 }
 
 /// Starts the Nous Portal device-code flow. It works when the browser and the
-/// OpenBitFun execution host are on different machines.
+/// StarMate execution host are on different machines.
 pub(crate) async fn begin_login_for_account(
     slot: String,
     cancel: CancellationToken,
@@ -435,7 +435,7 @@ pub(crate) async fn begin_login_for_account(
         authorization_url,
         user_code: Some(user_code),
         instructions:
-            "Open the Nous Portal verification link on any device, approve the code, then return to OpenBitFun."
+            "Open the Nous Portal verification link on any device, approve the code, then return to StarMate."
                 .to_string(),
         runner: Box::pin(runner),
     })
@@ -471,7 +471,7 @@ async fn ensure_fresh_in_account(
     options: &SubscriptionHttpOptions,
 ) -> Result<(String, i64, String)> {
     // Nous refresh tokens rotate after one use. Collapse concurrent refreshes
-    // across OpenBitFun processes before reading the latest durable revision.
+    // across StarMate processes before reading the latest durable revision.
     let _refresh_lease = store::acquire_provider_refresh_lease(slot).await?;
     let snapshot = store::load_entry_with_revision(slot).await?;
     let entry = snapshot
@@ -501,7 +501,7 @@ async fn ensure_fresh_in_account(
     let refreshed = match refresh(&refresh_token, options).await {
         Ok(tokens) => tokens,
         Err(error) => {
-            // A different OpenBitFun process may have rotated and committed first.
+            // A different StarMate process may have rotated and committed first.
             // Prefer its newer usable credential over a stale refresh error.
             if let Ok(current) = store::load_entry_with_revision(slot).await {
                 if current.revision != snapshot.revision {

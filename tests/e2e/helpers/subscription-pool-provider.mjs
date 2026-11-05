@@ -8,7 +8,7 @@ import net from 'node:net';
 import path from 'node:path';
 import { subscriptionProviderServices, SUBSCRIPTION_FIXTURE_HOSTS } from './subscription-provider-services.mjs';
 
-/** External-service fixture only. It never selects an OpenBitFun candidate. */
+/** External-service fixture only. It never selects an StarMate candidate. */
 export async function createPoolProvider(root, workspace) {
   const certificate = path.join(root, 'fixture-ca.pem');
   const rootKey = path.join(root, 'fixture-ca.key');
@@ -21,7 +21,7 @@ export async function createPoolProvider(root, workspace) {
     assert.equal(generated.status, 0, generated.stderr);
   };
   openssl(['req', '-x509', '-newkey', 'rsa:2048', '-nodes', '-keyout', rootKey, '-out', certificate,
-    '-days', '1', '-subj', '/CN=OpenBitFun isolated fixture CA', '-addext', 'basicConstraints=critical,CA:TRUE']);
+    '-days', '1', '-subj', '/CN=StarMate isolated fixture CA', '-addext', 'basicConstraints=critical,CA:TRUE']);
   openssl(['req', '-new', '-newkey', 'rsa:2048', '-nodes', '-keyout', key, '-out', csr, '-subj', '/CN=auth.openai.com']);
   await writeFile(extensions, 'basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature,keyEncipherment\nextendedKeyUsage=serverAuth\nsubjectAltName='
     + SUBSCRIPTION_FIXTURE_HOSTS.map(host => 'DNS:' + host).join(',') + '\n');

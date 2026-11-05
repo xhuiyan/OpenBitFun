@@ -23,7 +23,7 @@ import {
 const CREDENTIAL_ROW_HEIGHT: number = 60;
 
 @ComponentV2
-export struct OpenBitFunAccountLoginPage {
+export struct StarMateAccountLoginPage {
   @Event cloudLogin: () => Promise<string> =
     async (): Promise<string> => '';
   @Event cloudCancelLogin: () => void = () => {};

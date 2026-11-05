@@ -53,13 +53,13 @@ Inspect external AI content and status, import supported Skills, MCP, Hooks, and
 5. 前往对应管理页确认副本启用或连接；当前页不将“已导入”视为可用
    Confirm copy activation or connection in the relevant settings; Imported does not mean available
 
-入口 / Entry: OpenBitFun 设置
+入口 / Entry: StarMate 设置
 
 ## 智能体可替你做什么 / What an agent can do for you
 
 | 操作 / Action | 中文说明 | English description |
 | --- | --- | --- |
-| 打开对应界面 / Open the UI | 进入 OpenBitFun 中对应的功能界面。 | Open the matching feature in OpenBitFun. |
+| 打开对应界面 / Open the UI | 进入 StarMate 中对应的功能界面。 | Open the matching feature in StarMate. |
 
 ## 可配置选项 / Configurable options
 

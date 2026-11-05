@@ -646,7 +646,7 @@ async function main() {
   };
   const modeLabel = modeLabelMap[mode] || 'Web';
   
-  printHeader(`OpenBitFun ${modeLabel} Development`);
+  printHeader(`StarMate ${modeLabel} Development`);
   printBlank();
   if (desktopMode) {
     printInfo(`Desktop data mode: ${desktopDataMode}`);

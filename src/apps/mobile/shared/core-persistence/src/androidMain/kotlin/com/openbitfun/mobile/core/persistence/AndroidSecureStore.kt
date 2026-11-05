@@ -82,7 +82,7 @@ private class AndroidSecureStore(
     companion object {
         private const val KEY_STORE = "AndroidKeyStore"
         private const val TRANSFORMATION = "AES/GCM/NoPadding"
-        private const val TAG = "OpenBitFunSecureStore"
+        private const val TAG = "StarMateSecureStore"
     }
 }
 

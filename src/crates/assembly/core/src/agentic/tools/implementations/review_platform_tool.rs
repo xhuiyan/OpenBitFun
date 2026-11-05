@@ -1397,12 +1397,12 @@ mod tests {
     #[test]
     fn different_provider_repositories_return_typed_remote_selection() {
         let remotes = vec![
-            github_remote("origin-id", "origin", "limityan/OpenBitFun"),
+            github_remote("origin-id", "origin", "limityan/StarMate"),
             github_remote("upstream-id", "upstream", "xhuiyan/OpenBitFun"),
         ];
         let supported = canonical_supported_remotes(&remotes);
 
-        let selection = remote_selection_result(ACTION_GET, "D:/workspace/OpenBitFun", &supported);
+        let selection = remote_selection_result(ACTION_GET, "D:/workspace/StarMate", &supported);
 
         assert_eq!(selection["status"], "needs_remote_selection");
         assert_eq!(selection["action"], ACTION_GET);

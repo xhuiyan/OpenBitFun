@@ -30,17 +30,17 @@ struct SessionActionSurface: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(model.localized("会话操作"))
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                     Text(session.title.isEmpty ? model.localized("未命名会话") : session.title)
                         .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                 }
                 Spacer(minLength: 8)
                 Button(action: onClose) {
                     Image(systemName: "xmark")
                         .font(.system(size: 16, weight: .regular))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 40, height: 40)
                 }
                 .buttonStyle(.plain)
@@ -48,7 +48,7 @@ struct SessionActionSurface: View {
             }
             .frame(height: 52)
 
-            Divider().overlay(OpenBitFunTheme.line).padding(.top, 6).padding(.bottom, 8)
+            Divider().overlay(StarMateTheme.line).padding(.top, 6).padding(.bottom, 8)
 
             if confirmingDelete {
                 deleteConfirmation
@@ -61,7 +61,7 @@ struct SessionActionSurface: View {
         .padding(.bottom, 18)
         .frame(width: presentation == .popover ? 300 : nil)
         .frame(maxWidth: presentation == .bottomSheet ? .infinity : nil)
-        .background(OpenBitFunTheme.card)
+        .background(StarMateTheme.card)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: presentation == .popover ? MobileDesignGeometry.popoverRadius : 0
@@ -70,11 +70,11 @@ struct SessionActionSurface: View {
         .overlay {
             if presentation == .popover {
                 RoundedRectangle(cornerRadius: MobileDesignGeometry.popoverRadius)
-                    .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                    .stroke(StarMateTheme.line, lineWidth: 1)
             }
         }
         .shadow(
-            color: presentation == .popover ? OpenBitFunTheme.line : OpenBitFunTheme.transparent,
+            color: presentation == .popover ? StarMateTheme.line : StarMateTheme.transparent,
             radius: presentation == .popover ? 20 : 0,
             y: presentation == .popover ? 8 : 0
         )
@@ -106,7 +106,7 @@ struct SessionActionSurface: View {
         }
         if canDelete {
             if canArchive || canExport {
-                Divider().overlay(OpenBitFunTheme.line).padding(.vertical, 6)
+                Divider().overlay(StarMateTheme.line).padding(.vertical, 6)
             }
             actionRow("删除", icon: "trash", destructive: true) {
                 confirmingDelete = true
@@ -118,21 +118,21 @@ struct SessionActionSurface: View {
         VStack(spacing: 12) {
             Text(model.localized("删除后无法恢复此会话，是否继续？"))
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .frame(maxWidth: .infinity, alignment: .leading)
             HStack(spacing: 10) {
                 confirmationButton(
                     "取消",
-                    fill: OpenBitFunTheme.soft,
-                    foreground: OpenBitFunTheme.ink,
+                    fill: StarMateTheme.soft,
+                    foreground: StarMateTheme.ink,
                     emphasized: false
                 ) {
                     confirmingDelete = false
                 }
                 confirmationButton(
                     "删除",
-                    fill: OpenBitFunTheme.statusDanger,
-                    foreground: OpenBitFunTheme.contentOnAction,
+                    fill: StarMateTheme.statusDanger,
+                    foreground: StarMateTheme.contentOnAction,
                     emphasized: true
                 ) {
                     onDelete()
@@ -152,11 +152,11 @@ struct SessionActionSurface: View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 19, weight: .regular))
-                    .foregroundStyle(destructive ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.muted)
+                    .foregroundStyle(destructive ? StarMateTheme.statusDanger : StarMateTheme.muted)
                     .frame(width: 23, height: 23)
                 Text(model.localized(title))
                     .font(.system(size: 15))
-                    .foregroundStyle(destructive ? OpenBitFunTheme.statusDanger : OpenBitFunTheme.ink)
+                    .foregroundStyle(destructive ? StarMateTheme.statusDanger : StarMateTheme.ink)
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 10)
@@ -198,19 +198,19 @@ struct SessionDetailsView: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(model.localized("会话详情"))
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                     Text(session.title.isEmpty ? model.localized("未命名会话") : session.title)
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(2)
                 }
                 Spacer(minLength: 8)
                 Button(action: onClose) {
                     Image(systemName: "xmark")
                         .font(.system(size: 17))
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .frame(width: 44, height: 44)
-                        .background(OpenBitFunTheme.soft)
+                        .background(StarMateTheme.soft)
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -221,7 +221,7 @@ struct SessionDetailsView: View {
             .padding(.top, 18)
             .padding(.bottom, 16)
 
-            Divider().overlay(OpenBitFunTheme.line)
+            Divider().overlay(StarMateTheme.line)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -245,7 +245,7 @@ struct SessionDetailsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 
     private var statusLabel: String {
@@ -260,11 +260,11 @@ struct SessionDetailsView: View {
         HStack(spacing: 16) {
             Text(model.localized(label))
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .frame(width: 104, alignment: .leading)
             Text(value)
                 .font(.system(size: 15))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .multilineTextAlignment(.trailing)
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .lineLimit(2)
@@ -272,7 +272,7 @@ struct SessionDetailsView: View {
         .padding(.vertical, 8)
         .frame(minHeight: 52)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
         }
     }
 
@@ -280,21 +280,21 @@ struct SessionDetailsView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(model.localized("工作区路径"))
                 .font(.system(size: 13))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
             Text(path)
                 .font(.system(size: 12, design: .monospaced))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(OpenBitFunTheme.card)
-                .overlay(RoundedRectangle(cornerRadius: 6).stroke(OpenBitFunTheme.line, lineWidth: 1))
+                .background(StarMateTheme.card)
+                .overlay(RoundedRectangle(cornerRadius: 6).stroke(StarMateTheme.line, lineWidth: 1))
                 .clipShape(RoundedRectangle(cornerRadius: 6))
                 .textSelection(.enabled)
         }
         .padding(.vertical, 12)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
         }
     }
 }

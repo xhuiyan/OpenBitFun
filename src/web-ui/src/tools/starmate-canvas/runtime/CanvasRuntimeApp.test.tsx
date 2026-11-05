@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { installOpenBitFunCanvasRuntimeApp } from './CanvasRuntimeApp';
+import { installStarMateCanvasRuntimeApp } from './CanvasRuntimeApp';
 
 type TestWindow = Window & {
   StarMateCanvasSDK?: Record<string, unknown>;
@@ -54,7 +54,7 @@ describe('CanvasRuntimeApp', () => {
   it('installs runtime hooks without removing fallback runtime fields', () => {
     const { testWindow } = installTestDom();
 
-    installOpenBitFunCanvasRuntimeApp();
+    installStarMateCanvasRuntimeApp();
 
     expect(testWindow.StarMateCanvasRuntime?.fallback).toBe(true);
     expect(testWindow.StarMateCanvasRuntime?.h).toBeTypeOf('function');
@@ -64,7 +64,7 @@ describe('CanvasRuntimeApp', () => {
   it('merges SDK adapters on module start and posts startup event', () => {
     const { postMessage, testWindow } = installTestDom();
 
-    installOpenBitFunCanvasRuntimeApp();
+    installStarMateCanvasRuntimeApp();
     testWindow.StarMateCanvasRuntime?.moduleStarted();
 
     expect(testWindow.StarMateCanvasSDK).toMatchObject({ Fallback: true, Adapter: true });
@@ -83,7 +83,7 @@ describe('CanvasRuntimeApp', () => {
       return null;
     }
 
-    installOpenBitFunCanvasRuntimeApp();
+    installStarMateCanvasRuntimeApp();
     testWindow.StarMateCanvasRuntime?.mount(Canvas);
 
     expect(testWindow.ReactDOM?.createRoot).toHaveBeenCalled();

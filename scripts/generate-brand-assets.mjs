@@ -63,7 +63,7 @@ const LEGACY_APPLICATION_ASSETS = [
   'src/apps/desktop/icons/StoreLogo.png',
   'src/web-ui/public/Logo-ICON.png',
   'src/web-ui/public/Logo-ICON-128.png',
-  'src/web-ui/public/OpenBitFun-Logo.png',
+  'src/web-ui/public/StarMate-Logo.png',
   'src/mobile-web/src/assets/Logo-ICON.png',
   'OpenBitFun-Installer/src/Logo-ICON.png',
   'OpenBitFun-Installer/src-tauri/icons/icon.png',
@@ -439,11 +439,11 @@ async function generateBrandAssets() {
   }
 
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'AppIcon.appiconset', 'starmate-app-icon.png'),
+    outputPath('src', 'apps', 'mobile', 'ios', 'StarMate', 'Resources.xcassets', 'AppIcon.appiconset', 'starmate-app-icon.png'),
     await createIosStoreIcon(applicationIcon),
   );
   await writePng(
-    outputPath('src', 'apps', 'mobile', 'ios', 'OpenBitFun', 'Resources.xcassets', 'StarMateMark.imageset', 'starmate-mark-light.png'),
+    outputPath('src', 'apps', 'mobile', 'ios', 'StarMate', 'Resources.xcassets', 'StarMateMark.imageset', 'starmate-mark-light.png'),
     lightMark,
   );
 

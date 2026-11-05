@@ -250,9 +250,9 @@ fn make_projection(model: &mut Value, entry: Value) {
         .and_then(Value::as_str)
         .unwrap_or("Subscription account");
     let suffix = if entry_version_is_channel(fields) {
-        " [requires channel-capable OpenBitFun]"
+        " [requires channel-capable StarMate]"
     } else {
-        " [requires account-capable OpenBitFun]"
+        " [requires account-capable StarMate]"
     };
     if !name.ends_with(suffix) {
         fields.insert("name".into(), format!("{name}{suffix}").into());
@@ -370,7 +370,7 @@ pub fn restore_account_models(value: &mut Value) -> Vec<ConfigDiagnostic> {
                 message: if ambiguous {
                     "Multiple models share this account binding's configuration ID; their original records were preserved and requests are blocked.".into()
                 } else {
-                    "This subscription account binding is unreadable or requires a newer OpenBitFun; its original data was preserved and requests are blocked.".into()
+                    "This subscription account binding is unreadable or requires a newer StarMate; its original data was preserved and requests are blocked.".into()
                 },
                 code: "SUBSCRIPTION_ACCOUNT_BINDING_UNSUPPORTED".into(),
                 severity: ConfigDiagnosticSeverity::Warning,

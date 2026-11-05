@@ -2,7 +2,7 @@
 name = "starmate-core-types"
 version.workspace = true
 edition.workspace = true
-description = "OpenBitFun shared low-level product DTOs"
+description = "StarMate shared low-level product DTOs"
 autotests = false
 
 [lib]

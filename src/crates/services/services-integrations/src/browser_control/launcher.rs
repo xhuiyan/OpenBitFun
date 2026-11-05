@@ -157,7 +157,7 @@ impl BrowserLauncher {
     }
 
     /// Browser-level endpoint for a guarded remote-debugging port whose
-    /// `DevToolsActivePort` file is not where OpenBitFun looks for it. A 404
+    /// `DevToolsActivePort` file is not where StarMate looks for it. A 404
     /// alone does not identify a browser, so the fallback additionally
     /// requires the selected browser to be running, and skips a port that
     /// the other guarded browser's `DevToolsActivePort` already claims
@@ -858,11 +858,11 @@ impl BrowserLauncher {
 
         let instructions = if opened {
             format!(
-                "{kind} opened its Remote debugging settings. Turn on \"Allow remote debugging for this browser instance\" there; the browser remembers this preference for normal future starts. Then connect again and approve OpenBitFun's connection request. This guarded flow uses your current browser profile, including its existing tabs and login state."
+                "{kind} opened its Remote debugging settings. Turn on \"Allow remote debugging for this browser instance\" there; the browser remembers this preference for normal future starts. Then connect again and approve StarMate's connection request. This guarded flow uses your current browser profile, including its existing tabs and login state."
             )
         } else {
             format!(
-                "Open {setup_url} in {kind} and turn on \"Allow remote debugging for this browser instance\"; the browser remembers this preference for normal future starts. Then connect again and approve OpenBitFun's connection request. This guarded flow uses your current browser profile, including its existing tabs and login state."
+                "Open {setup_url} in {kind} and turn on \"Allow remote debugging for this browser instance\"; the browser remembers this preference for normal future starts. Then connect again and approve StarMate's connection request. This guarded flow uses your current browser profile, including its existing tabs and login state."
             )
         };
 
@@ -878,7 +878,7 @@ impl BrowserLauncher {
         dirs::data_local_dir()
             .or_else(dirs::data_dir)
             .unwrap_or_else(std::env::temp_dir)
-            .join("OpenBitFun")
+            .join("StarMate")
     }
 
     fn ensure_managed_user_data_dir(kind: &BrowserKind, root: &Path) -> Result<PathBuf> {

@@ -1,6 +1,6 @@
 //! Host-local arbitration of one device's machine-scoped Relay socket.
 //!
-//! Every OpenBitFun host on a machine shares `device_identity.json`, and the
+//! Every StarMate host on a machine shares `device_identity.json`, and the
 //! Relay keeps only the newest machine socket per `device_id`. Two hosts that
 //! both reconnect would therefore replace each other indefinitely. A host holds
 //! an OS advisory lock for its priority tier while it owns routing; the OS

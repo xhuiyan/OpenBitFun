@@ -882,7 +882,7 @@ fn computer_use_native_cli_observes_and_stops_fixture() {
     let mut command = environment.std_command();
     command.args([
         "exec",
-        "Observe the disposable OpenBitFun AX context fixture, then stop control",
+        "Observe the disposable StarMate AX context fixture, then stop control",
         "--auto",
         "--no-verify-final-changes",
         "--output-format",

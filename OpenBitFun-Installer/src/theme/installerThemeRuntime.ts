@@ -49,7 +49,7 @@ export function applyInstallerThemeToDocument(theme: InstallerTheme): void {
 
 /**
  * Keeps the installer shell CSS variables aligned with the user's theme preference.
- * When preference is `system`, follows `prefers-color-scheme` like the main OpenBitFun ThemeService.
+ * When preference is `system`, follows `prefers-color-scheme` like the main StarMate ThemeService.
  */
 export function useSyncInstallerRootTheme(preference: ThemePreferenceId): void {
   useLayoutEffect(() => {

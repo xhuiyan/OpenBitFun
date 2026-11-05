@@ -30,7 +30,7 @@ impl Fixture {
                 CreateWindowExW(
                     WS_EX_APPWINDOW,
                     w!("STATIC"),
-                    w!("OpenBitFun WGC main fixture"),
+                    w!("StarMate WGC main fixture"),
                     WS_OVERLAPPEDWINDOW,
                     40,
                     40,
@@ -49,7 +49,7 @@ impl Fixture {
                 CreateWindowExW(
                     WS_EX_APPWINDOW | WS_EX_TOPMOST,
                     w!("STATIC"),
-                    w!("OpenBitFun WGC companion fixture"),
+                    w!("StarMate WGC companion fixture"),
                     WS_OVERLAPPEDWINDOW,
                     400,
                     100,

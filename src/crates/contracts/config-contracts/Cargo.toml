@@ -2,7 +2,7 @@
 name = "starmate-config-contracts"
 version.workspace = true
 edition.workspace = true
-description = "Persisted OpenBitFun configuration contracts without product runtime"
+description = "Persisted StarMate configuration contracts without product runtime"
 
 [dependencies]
 starmate-core-types = { path = "../core-types" }

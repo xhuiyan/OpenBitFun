@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import test from 'node:test';
-import { installOpenBitFunBackendAdapter } from '../src/openbitfun-backend-adapter.js';
+import { installStarMateBackendAdapter } from '../src/openbitfun-backend-adapter.js';
 
 const source = await readFile(new URL('../ui.js', import.meta.url), 'utf8');
 const images = Array.from({ length: 5 }, (_, index) => ({
@@ -40,7 +40,7 @@ test('PPT backend passes image pixels outside its internal text protocol and ret
     onEvent() {},
     async run(...args) { runs.push(args); return { sessionId: 'deck', turnId: 'turn' }; },
   } };
-  installOpenBitFunBackendAdapter(app);
+  installStarMateBackendAdapter(app);
   await app.backend.call('ppt.generate', { instruction: 'Use this reference' }, { imageContexts: images, sessionId: 'deck' });
   assert.equal(runs[0][1].imageContexts, images);
   for (const image of images) assert.ok(!runs[0][0].includes(image.data_url));

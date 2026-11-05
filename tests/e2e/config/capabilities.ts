@@ -23,7 +23,7 @@ export function getApplicationPath(): string {
   if (isWindows) {
     appName = 'starmate-desktop.exe';
   } else if (isMac) {
-    appName = 'OpenBitFun.app/Contents/MacOS/OpenBitFun';
+    appName = 'StarMate.app/Contents/MacOS/StarMate';
   } else {
     appName = 'starmate-desktop';
   }

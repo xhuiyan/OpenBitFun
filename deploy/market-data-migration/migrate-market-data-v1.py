@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""One-time BitFun 0.2.x -> OpenBitFun 1.x market data migration.
+"""One-time BitFun 0.2.x -> StarMate 1.x market data migration.
 
 Run this only against an offline copy of the production database and artifact
-tree. The OpenBitFun services intentionally keep no legacy field aliases, so
+tree. The StarMate services intentionally keep no legacy field aliases, so
 the persisted JSON and Skin archives must be converted before first startup.
 """
 
@@ -19,7 +19,7 @@ from typing import Any
 import zipfile
 
 
-CURRENT_VERSION_FIELD = "minOpenBitFunVersion"
+CURRENT_VERSION_FIELD = "minStarMateVersion"
 RETIRED_VERSION_FIELDS = ("minBitfunVersion", "minOpenbitfunVersion")
 STARMATE_MINIMUM_VERSION = "1.0.0"
 RETIRED_APPEARANCE_SCHEMA = "bitfun.appearance"

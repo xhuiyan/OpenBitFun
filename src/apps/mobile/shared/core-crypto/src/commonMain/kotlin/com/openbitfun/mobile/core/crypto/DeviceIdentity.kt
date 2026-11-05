@@ -24,7 +24,7 @@ public object DeviceIdentity {
         val info = if (localFirst) local + peerPublic else peerPublic + local
         return try {
             relayCryptographyProvider.get(HKDF).secretDerivation(
-                SHA256, 32.bytes, "OpenBitFun Relay v1.0.0 device key".encodeToByteArray(), info,
+                SHA256, 32.bytes, "StarMate Relay v1.0.0 device key".encodeToByteArray(), info,
             ).deriveSecretToByteArray(shared)
         } finally { shared.fill(0) }
     }

@@ -26,11 +26,11 @@ node MiniApp/Demo/background-remover/source/build.mjs
 适合简单背景；复杂照片、已经烘焙进图片的棋盘格、与背景相连的同色主体无法可靠分离。
 容差过大可能清空图片，此时禁用导出并提示调整设置。
 
-## OpenBitFun MiniApp
+## StarMate MiniApp
 
 **源码文件夹和独立 HTML 不会自动出现在应用列表里，需要先导入。**
 
-在 OpenBitFun 中打开 Mini Apps，点击「导入小应用」→「从文件夹导入」，
+在 StarMate 中打开 Mini Apps，点击「导入小应用」→「从文件夹导入」，
 选择本目录 `MiniApp/Demo/background-remover`（含 `meta.json` 的目录，不是 `source` 子目录）。
 客户端会完成安装、编译并更新应用列表；无需把它改成内置应用，也无需重新构建客户端。
 
@@ -50,7 +50,7 @@ python3 MiniApp/Demo/background-remover/source/package.py
 
 仅申请 `{user-selected}` 写权限，用于 `app.dialog.save` 选择位置后保存 PNG。
 图片输入来自页面文件选择器、拖拽或粘贴，不读取工作区、宿主路径或任意目录。
-在 OpenBitFun 中保存使用 `app.fs.writeFile`；独立 HTML 使用页面下载。
+在 StarMate 中保存使用 `app.fs.writeFile`；独立 HTML 使用页面下载。
 不支持文件保存的宿主会显示明确提示。
 随宿主切换明暗主题和中英文；独立版也提供语言和主题切换。
 

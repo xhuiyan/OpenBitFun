@@ -37,7 +37,7 @@ import com.openbitfun.mobile.app.platform.StartupRevealPreference
 import com.openbitfun.mobile.app.platform.AppLocaleController
 import com.openbitfun.mobile.app.ui.preview.MobileDesignGallery
 import com.openbitfun.mobile.app.ui.preview.mobileDesignScenario
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunTheme
+import com.openbitfun.mobile.app.ui.theme.StarMateTheme
 import com.openbitfun.mobile.app.viewmodel.AppSettingsViewModel
 import com.openbitfun.mobile.app.viewmodel.AppThemeMode
 
@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                 AppThemeMode.LIGHT -> false
                 AppThemeMode.DARK -> true
             }
-            OpenBitFunTheme(dark = dark) {
+            StarMateTheme(dark = dark) {
                 LaunchedEffect(dark, showWelcomeNavigationProtection, showStartupBrand, showColdStart, allowColdStart) {
                     val welcomeIsVisible = showWelcomeNavigationProtection &&
                         !showStartupBrand && !showColdStart && !allowColdStart

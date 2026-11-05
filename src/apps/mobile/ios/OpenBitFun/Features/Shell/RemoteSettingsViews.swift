@@ -17,13 +17,13 @@ struct RemoteViewSettingsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            OpenBitFunModalHeader(
+            StarMateModalHeader(
                 title: "视图设置",
                 subtitle: "调整会话列表的分组和信息密度",
                 onClose: { model.remoteViewSettingsOpen = false }
             )
             .padding(.horizontal, 20)
-            Divider().overlay(OpenBitFunTheme.line)
+            Divider().overlay(StarMateTheme.line)
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -87,13 +87,13 @@ struct RemoteViewSettingsView: View {
                 .padding(.bottom, 34)
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
     }
 
     private func sectionTitle(_ title: String) -> some View {
         Text(model.localized(title))
             .font(MobileDesignTypography.labelSmall.font.weight(.medium))
-            .foregroundStyle(OpenBitFunTheme.muted)
+            .foregroundStyle(StarMateTheme.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 4)
             .padding(.top, 12)
@@ -103,7 +103,7 @@ struct RemoteViewSettingsView: View {
     private func filterLabel(_ title: String) -> some View {
         Text(model.localized(title))
             .font(MobileDesignTypography.labelSmall.font)
-            .foregroundStyle(OpenBitFunTheme.muted)
+            .foregroundStyle(StarMateTheme.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 10)
             .padding(.top, 10)
@@ -119,20 +119,20 @@ struct RemoteViewSettingsView: View {
             HStack(spacing: 12) {
                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                     .font(.system(size: 20, weight: .regular))
-                    .foregroundStyle(selected ? OpenBitFunTheme.ink : OpenBitFunTheme.muted)
+                    .foregroundStyle(selected ? StarMateTheme.ink : StarMateTheme.muted)
                     .frame(width: 22)
                 Text(model.localized(title))
                     .font(MobileDesignTypography.titleSmall.font)
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .lineLimit(1)
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 10)
             .frame(height: 46)
             .frame(maxWidth: .infinity)
-            .background(selected ? OpenBitFunTheme.card : OpenBitFunTheme.transparent)
+            .background(selected ? StarMateTheme.card : StarMateTheme.transparent)
             .overlay(alignment: .bottom) {
-                Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+                Rectangle().fill(StarMateTheme.line).frame(height: 1)
             }
             .contentShape(Rectangle())
         }
@@ -144,14 +144,14 @@ struct RemoteViewSettingsView: View {
         Toggle(isOn: isOn) {
             Text(model.localized(title))
                 .font(MobileDesignTypography.titleSmall.font)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
         }
-        .tint(OpenBitFunTheme.ink)
+        .tint(StarMateTheme.ink)
         .padding(.leading, 10)
         .padding(.trailing, 6)
         .frame(height: 52)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(OpenBitFunTheme.line).frame(height: 1)
+            Rectangle().fill(StarMateTheme.line).frame(height: 1)
         }
     }
 

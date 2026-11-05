@@ -6,7 +6,7 @@
 
 ## 能力边界
 
-MiniApp **能且只能**用以下 API，没有任何"通用 OpenBitFun 后端通道"。生成代码前请先确认你需要的能力在表内：
+MiniApp **能且只能**用以下 API，没有任何"通用 StarMate 后端通道"。生成代码前请先确认你需要的能力在表内：
 
 - `app.fs.*` —— 文件系统（受 `permissions.fs.read/write` 限制）
 - `app.shell.exec` —— 子进程命令行（受 `permissions.shell.allow` 命令名白名单限制）
@@ -20,7 +20,7 @@ MiniApp **能且只能**用以下 API，没有任何"通用 OpenBitFun 后端通
 - `app.call('xxx', ...)` + `worker.js` —— 自定义 Node 后端（仅 `node.enabled = true` 时）
 - `app.appearanceMode / locale / on*` —— 主题与 i18n
 
-MiniApp 不提供通用 OpenBitFun 后端通道。不要假设这些接口存在：
+MiniApp 不提供通用 StarMate 后端通道。不要假设这些接口存在：
 
 - `app.openbitfun.*`
 - `app.workspace.*`
@@ -531,7 +531,7 @@ const savePath = await app.dialog.save({
 `meta.json` may contain an optional `chrome.titlebar`. The host renders a
 customizable row while preserving platform window conventions: actual native
 traffic lights on macOS, and the main app's right-hand caption controls on Windows.
-The same declared app actions appear at the right of OpenBitFun's top bar when
+The same declared app actions appear at the right of StarMate's top bar when
 embedded. The Shell keeps its native lifecycle controls and return-to-app icon.
 
 ```json

@@ -147,7 +147,7 @@ async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider
                 let http = &config.providers.openbitfun_search_http;
                 if http.endpoint.trim().is_empty() {
                     return Err(StarMateError::config(
-                        "OpenBitFun Search HTTP endpoint is not configured".to_string(),
+                        "StarMate Search HTTP endpoint is not configured".to_string(),
                     ));
                 }
                 let auth = match http.auth.mode.trim() {
@@ -161,7 +161,7 @@ async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider
                     "header" => {
                         if http.auth.header_name.trim().is_empty() {
                             return Err(StarMateError::config(
-                                "OpenBitFun Search HTTP auth header name is not configured"
+                                "StarMate Search HTTP auth header name is not configured"
                                     .to_string(),
                             ));
                         }
@@ -173,7 +173,7 @@ async fn resolve_provider(config: &WebSearchConfig) -> Arc<dyn WebSearchProvider
                     }
                     mode => {
                         return Err(StarMateError::config(format!(
-                            "Unsupported OpenBitFun Search HTTP authentication mode '{mode}'"
+                            "Unsupported StarMate Search HTTP authentication mode '{mode}'"
                         )))
                     }
                 };
@@ -255,7 +255,7 @@ fn credential_id_for_provider<'a>(
                 "" | "none"
             ) {
                 return Err(StarMateError::validation(
-                    "OpenBitFun Search HTTP authentication mode does not use a credential"
+                    "StarMate Search HTTP authentication mode does not use a credential"
                         .to_string(),
                 ));
             }

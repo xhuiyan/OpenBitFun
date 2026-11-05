@@ -47,13 +47,13 @@ test('rejects raw CSS sizes, weights, line heights, tracking, and font stacks', 
 test('accepts only build-owned font faces and stacks in Web font profiles', () => {
   const issues = auditTypographyText(`
     @font-face {
-      font-family: "OpenBitFun HarmonyOS Sans";
+      font-family: "StarMate HarmonyOS Sans";
       font-weight: 500;
     }
     @layer openbitfun.tokens.system {
       :where([data-starmate-design-system-root]) {
-        --starmate-font-family-sans: "OpenBitFun HarmonyOS Sans", system-ui, sans-serif;
-        --starmate-font-family-control: "OpenBitFun HarmonyOS Sans", system-ui, sans-serif;
+        --starmate-font-family-sans: "StarMate HarmonyOS Sans", system-ui, sans-serif;
+        --starmate-font-family-control: "StarMate HarmonyOS Sans", system-ui, sans-serif;
         --starmate-font-family-mono: "Fira Code", monospace;
       }
     }

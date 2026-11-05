@@ -551,9 +551,9 @@ fn mcp_server_timeout_config_is_optional_positive_milliseconds() {
 
 #[test]
 fn mcp_remote_client_info_declares_supported_client_capabilities() {
-    let info = create_mcp_client_info("OpenBitFun", "1.0.0");
+    let info = create_mcp_client_info("StarMate", "1.0.0");
 
-    assert_eq!(info.client_info.name, "OpenBitFun");
+    assert_eq!(info.client_info.name, "StarMate");
     assert_eq!(info.client_info.version, "1.0.0");
     assert!(info.capabilities.roots.is_some());
     assert!(info.capabilities.sampling.is_some());
@@ -864,7 +864,7 @@ fn mcp_protocol_jsonrpc_helpers_preserve_wire_shape() {
 #[test]
 fn mcp_protocol_request_builders_preserve_wire_shape() {
     assert_eq!(
-        serde_json::to_value(create_initialize_request(9, "OpenBitFun", "1.0.0")).unwrap(),
+        serde_json::to_value(create_initialize_request(9, "StarMate", "1.0.0")).unwrap(),
         serde_json::json!({
             "jsonrpc": "2.0",
             "id": 9,
@@ -884,10 +884,10 @@ fn mcp_protocol_request_builders_preserve_wire_shape() {
                     }
                 },
                 "clientInfo": {
-                    "name": "OpenBitFun",
+                    "name": "StarMate",
                     "version": "1.0.0",
-                    "description": "OpenBitFun MCP Client",
-                    "vendor": "OpenBitFun"
+                    "description": "StarMate MCP Client",
+                    "vendor": "StarMate"
                 }
             }
         })
@@ -2671,7 +2671,7 @@ fn mcp_cursor_format_helpers_preserve_cursor_compatibility_contract() {
 #[test]
 fn mcp_config_accepts_camel_case_streamable_http_type() {
     // Cursor, Cline, and other MCP clients emit `type: "streamableHttp"`.
-    // OpenBitFun must accept it (and other casings) as streamable HTTP.
+    // StarMate must accept it (and other casings) as streamable HTTP.
     let config = serde_json::json!({
         "mcpServers": {
             "remote": {

@@ -38,7 +38,7 @@ pub(crate) async fn execute_computer_use_locate(
         .map_err(|_| StarMateError::tool("Computer use configuration is unavailable."))?;
     if !enabled {
         return Err(StarMateError::tool(
-            "Computer use is disabled in OpenBitFun settings.".to_string(),
+            "Computer use is disabled in StarMate settings.".to_string(),
         ));
     }
 

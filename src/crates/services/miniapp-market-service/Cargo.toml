@@ -3,7 +3,7 @@ name = "starmate-miniapp-market-service"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun MiniApp marketplace service"
+description = "StarMate MiniApp marketplace service"
 
 [lib]
 name = "starmate_miniapp_market_service"

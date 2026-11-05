@@ -15,7 +15,7 @@ pub(crate) struct InstallOptions {
     pub launch_after_install: bool,
     /// First-launch app language (zh-CN / en-US)
     pub app_language: String,
-    /// First-launch theme preference (`system` or OpenBitFun built-in theme id)
+    /// First-launch theme preference (`system` or StarMate built-in theme id)
     pub theme_preference: String,
     /// Optional first-launch model configuration.
     pub model_config: Option<ModelConfig>,

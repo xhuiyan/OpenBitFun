@@ -345,7 +345,7 @@ fn subscription_model_sync_requirements(
         .is_empty()
     {
         return Err(SubscriptionModelSyncUnsupported {
-            reason: "The controller has an unsupported subscription binding version or invalid record; the source and target configurations were preserved. Update OpenBitFun before syncing this model.".into(),
+            reason: "The controller has an unsupported subscription binding version or invalid record; the source and target configurations were preserved. Update StarMate before syncing this model.".into(),
         });
     }
     let mut bindings = false;
@@ -443,7 +443,7 @@ fn validate_subscription_model_sync(
     if !missing.is_empty() {
         return Err(SubscriptionModelSyncUnsupported {
             reason: format!(
-                "The target OpenBitFun host does not support the configured model routing (missing {}). Update the target before syncing; OAuth credentials are not transferred and must be authorized on the executing host.",
+                "The target StarMate host does not support the configured model routing (missing {}). Update the target before syncing; OAuth credentials are not transferred and must be authorized on the executing host.",
                 missing.join(", "),
             ),
         });
@@ -468,7 +468,7 @@ fn validate_subscription_model_sync(
 /// ready model.
 ///
 /// Credential-bearing: this writes the controller's API keys into the target
-/// user's OpenBitFun configuration. Callers are the explicit UI command and the
+/// user's StarMate configuration. Callers are the explicit UI command and the
 /// automatic submit-time repair in [`ensure_target_model_config`]; both leave
 /// a durable record of having done it.
 /// Explicit account bindings use the protected export codec and require the
@@ -618,7 +618,7 @@ pub async fn submit(
                 .protocol_error
                 .as_deref()
                 .or(cli_probe.install_error.as_deref())
-                .unwrap_or("OpenBitFun CLI dispatch protocol is unavailable on the SSH target")
+                .unwrap_or("StarMate CLI dispatch protocol is unavailable on the SSH target")
         )
     })?;
     dispatch_ssh::validate_dispatch_protocol(cli_protocol, Some(&request.approval_policy))?;
@@ -638,7 +638,7 @@ pub async fn submit(
     )
     .await?;
     let cli_protocol = cli_probe.protocol.as_ref().ok_or_else(|| {
-        anyhow::anyhow!("OpenBitFun CLI dispatch protocol is unavailable on the SSH target")
+        anyhow::anyhow!("StarMate CLI dispatch protocol is unavailable on the SSH target")
     })?;
     if !target_serves_model(cli_protocol, request.model.as_deref()) {
         anyhow::bail!(
@@ -697,7 +697,7 @@ pub async fn submit(
             anyhow::bail!(
                 "{}",
                 workspace_probe.protocol_error.as_deref().unwrap_or(
-                    "OpenBitFun CLI dispatch protocol is unavailable in the target worktree"
+                    "StarMate CLI dispatch protocol is unavailable in the target worktree"
                 )
             );
         }

@@ -93,7 +93,7 @@ async function main() {
   await writeFile(path.join(outputRoot, 'assets/design-tokens.css'), designTokensSource);
   await writeFile(path.join(outputRoot, 'assets/theme.css'), themeSource);
   await cp(path.join(sourceRoot, 'styles.css'), path.join(outputRoot, 'assets/styles.css'));
-  await cp(logoPath, path.join(outputRoot, 'assets/openbitfun.png'));
+  await cp(logoPath, path.join(outputRoot, 'assets/starmate.png'));
 
   try {
     await cp(socialImage, path.join(outputRoot, 'og.png'));
@@ -115,9 +115,9 @@ async function main() {
     }, null, 2)}\n`,
   );
 
-  const homeDescription = `Learn ${catalog.counts.features} OpenBitFun features and ${catalog.counts.settings} settings pages in Chinese or English.`;
+  const homeDescription = `Learn ${catalog.counts.features} StarMate features and ${catalog.counts.settings} settings pages in Chinese or English.`;
   await writeFile(path.join(outputRoot, 'index.html'), renderPage(template, {
-    title: 'OpenBitFun Playbook — Features, settings, and practical guides',
+    title: 'StarMate Playbook — Features, settings, and practical guides',
     description: homeDescription,
     url: `${catalog.origin}/`,
     assetVersion,
@@ -128,7 +128,7 @@ async function main() {
     const directory = path.join(outputRoot, 'capabilities', capability.id);
     await mkdir(directory, { recursive: true });
     await writeFile(path.join(directory, 'index.html'), renderPage(template, {
-      title: `${capability.titleEn} / ${capability.titleZh} — OpenBitFun Playbook`,
+      title: `${capability.titleEn} / ${capability.titleZh} — StarMate Playbook`,
       description: capability.summaryEn,
       url: capability.docsUrl,
       assetVersion,
@@ -149,7 +149,7 @@ async function main() {
   );
 
   process.stdout.write(
-    `Built OpenBitFun Playbook ${assetVersion} with ${catalog.counts.features} feature guides + ${catalog.counts.settings} settings guides (${catalog.digest.slice(0, 12)} catalog).\n`,
+    `Built StarMate Playbook ${assetVersion} with ${catalog.counts.features} feature guides + ${catalog.counts.settings} settings guides (${catalog.digest.slice(0, 12)} catalog).\n`,
   );
 }
 

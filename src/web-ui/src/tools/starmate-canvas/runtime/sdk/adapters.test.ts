@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 import * as adapters from './index';
 
-describe('OpenBitFun Canvas SDK adapters', () => {
+describe('StarMate Canvas SDK adapters', () => {
   it('exports the initial Canvas runtime adapter set', () => {
     expect(Object.keys(adapters).sort()).toEqual([
       'Alert',

@@ -131,7 +131,7 @@ describe('NewProjectDialog composition', () => {
     await render();
     expect(document.querySelector('.new-project-dialog__save-location')).toBeNull();
     enterName('example');
-    expect(document.querySelector('.new-project-dialog__save-location')?.textContent).toBe('newProject.emptyProjectHint ~/OpenBitFun/Projects/example');
+    expect(document.querySelector('.new-project-dialog__save-location')?.textContent).toBe('newProject.emptyProjectHint ~/StarMate/Projects/example');
     await click('newProject.create');
     expect(pickDirectory).not.toHaveBeenCalled();
     expect(confirm).toHaveBeenCalledWith({ name: 'example', folders: [] });

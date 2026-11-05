@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
-import com.openbitfun.mobile.app.ui.theme.OpenBitFunEaseOut
+import com.openbitfun.mobile.app.ui.theme.StarMateEaseOut
 import com.openbitfun.mobile.app.ui.theme.MotionQuickMillis
 import com.openbitfun.mobile.app.ui.theme.generated.MobileDesignGeometry
 import com.openbitfun.mobile.app.ui.theme.openBitFunColors
@@ -54,7 +54,7 @@ import com.openbitfun.mobile.app.ui.theme.openBitFunColors
 internal const val HEADER_ACTION_MENU_TEST_TAG: String = "header-action-menu"
 
 /** One row in the fixed-width header menu shared by local and remote chat. */
-internal data class OpenBitFunHeaderAction(
+internal data class StarMateHeaderAction(
     @DrawableRes val icon: Int,
     val label: String,
     val onClick: () -> Unit,
@@ -74,11 +74,11 @@ internal data class OpenBitFunHeaderAction(
  * owns only the shared presentation contract.
  */
 @Composable
-internal fun OpenBitFunHeaderActionMenu(
+internal fun StarMateHeaderActionMenu(
     expanded: Boolean,
     onDismiss: () -> Unit,
     sectionTitle: String,
-    actions: List<OpenBitFunHeaderAction>,
+    actions: List<StarMateHeaderAction>,
     modifier: Modifier = Modifier,
 ) {
     val visibility = remember { MutableTransitionState(false) }
@@ -100,14 +100,14 @@ internal fun OpenBitFunHeaderActionMenu(
         ) {
             AnimatedVisibility(
                 visibleState = visibility,
-                enter = fadeIn(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
+                enter = fadeIn(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
                     slideIn(
-                        animationSpec = tween(MotionQuickMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionQuickMillis, easing = StarMateEaseOut),
                         initialOffset = { IntOffset(motionOffset, -motionOffset) },
                     ),
-                exit = fadeOut(tween(MotionQuickMillis, easing = OpenBitFunEaseOut)) +
+                exit = fadeOut(tween(MotionQuickMillis, easing = StarMateEaseOut)) +
                     slideOut(
-                        animationSpec = tween(MotionQuickMillis, easing = OpenBitFunEaseOut),
+                        animationSpec = tween(MotionQuickMillis, easing = StarMateEaseOut),
                         targetOffset = { IntOffset(motionOffset, -motionOffset) },
                     ),
             ) {
@@ -179,13 +179,13 @@ private class HeaderMenuPositionProvider(
     }
 }
 
-private fun shouldDivide(previous: OpenBitFunHeaderAction, current: OpenBitFunHeaderAction): Boolean =
+private fun shouldDivide(previous: StarMateHeaderAction, current: StarMateHeaderAction): Boolean =
     current.dividerBefore ||
         (previous.label.contains("model", ignoreCase = true) &&
             !current.label.contains("model", ignoreCase = true))
 
 @Composable
-private fun HeaderActionRow(action: OpenBitFunHeaderAction, onDismiss: () -> Unit) {
+private fun HeaderActionRow(action: StarMateHeaderAction, onDismiss: () -> Unit) {
     val contentColor = when {
         !action.enabled -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.42f)
         action.destructive -> MaterialTheme.colorScheme.error

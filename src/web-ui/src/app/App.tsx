@@ -82,7 +82,7 @@ const LazyAppLayout = lazy(async () => {
 const LazyGlobalSearchRoot = lazyWithRecovery(() => import('./global-search/GlobalSearchRoot'));
 
 /**
- * OpenBitFun main application component.
+ * StarMate main application component.
  *
  * Unified architecture:
  * - Use a single AppLayout component
@@ -441,7 +441,7 @@ function App() {
       })
       .catch(error => {
         openBitFunControlStartupRef.current = false;
-        log.error('Failed to initialize the OpenBitFun control surface', error);
+        log.error('Failed to initialize the StarMate control surface', error);
       });
   }, [interactiveShellReady, startupOverlayVisible]);
 

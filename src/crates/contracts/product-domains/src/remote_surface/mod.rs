@@ -1,7 +1,7 @@
 //! Product Operation Registry: the surface-neutral contract for every product
 //! operation that can cross a host boundary.
 //!
-//! OpenBitFun has one Agent Runtime but several ways to reach it: the local Desktop
+//! StarMate has one Agent Runtime but several ways to reach it: the local Desktop
 //! window, a remote SSH/Docker workspace, a Peer Device controller driving a
 //! Desktop or CLI host, and detached dispatch. Each of those surfaces used to
 //! keep its own hand-written table of what a command may do there (the desktop
@@ -195,7 +195,7 @@ impl OperationDefinition {
 /// refused with a stable message so an older controller learns the owner is
 /// gone instead of receiving an unknown-command error.
 pub const RETIRED_COMMAND_PREFIXES: &[(&str, &str)] =
-    &[("lsp_", "the OpenBitFun LSP runtime has been retired")];
+    &[("lsp_", "the StarMate LSP runtime has been retired")];
 
 /// Every operation, sorted by id.
 pub fn operations() -> &'static [OperationDefinition] {
@@ -687,7 +687,7 @@ mod tests {
                 reason: retired_reason("lsp_open").unwrap()
             }
             .message("lsp_open"),
-            "command 'lsp_open' is unsupported because the OpenBitFun LSP runtime has been retired"
+            "command 'lsp_open' is unsupported because the StarMate LSP runtime has been retired"
         );
         let cli = PeerRefusal::HostUnsupported {
             host: PeerHostKind::Cli,

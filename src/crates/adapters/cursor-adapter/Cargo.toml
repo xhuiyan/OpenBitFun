@@ -3,7 +3,7 @@ name = "starmate-cursor-adapter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Read-only Cursor session history translation for OpenBitFun"
+description = "Read-only Cursor session history translation for StarMate"
 
 [dependencies]
 starmate-product-domains = { path = "../../contracts/product-domains", features = ["external-sources"] }

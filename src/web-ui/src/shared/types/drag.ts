@@ -99,7 +99,7 @@ export interface DragEventPayload {
 }
 
 /**
- * Custom MIME type for transferring OpenBitFun context payloads via the browser DnD API.
+ * Custom MIME type for transferring StarMate context payloads via the browser DnD API.
  */
 export const STARMATE_CONTEXT_MIME_TYPE = 'application/x-openbitfun-context';
 export const STARMATE_CONTEXT_JSON_MIME_TYPE = 'application/json';

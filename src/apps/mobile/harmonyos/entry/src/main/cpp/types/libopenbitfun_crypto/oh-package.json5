@@ -2,5 +2,5 @@
   "name": "libopenbitfun_crypto.so",
   "types": "./index.d.ts",
   "version": "1.0.0",
-  "description": "OpenBitFun Argon2id NAPI bindings."
+  "description": "StarMate Argon2id NAPI bindings."
 }

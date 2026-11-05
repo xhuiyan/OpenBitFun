@@ -136,7 +136,7 @@ pub(super) fn remove_autostart_run_entry() -> Result<()> {
     Ok(())
 }
 
-/// Data read from `Uninstall\OpenBitFun` (Tauri NSIS / this installer).
+/// Data read from `Uninstall\StarMate` (Tauri NSIS / this installer).
 #[derive(Debug, Clone)]
 pub(super) struct UninstallRegistryData {
     pub install_location: String,
@@ -164,7 +164,7 @@ pub(super) fn read_existing_install_from_uninstall_registry() -> Option<Uninstal
         .or_else(|| read_uninstall_key(RegKey::predef(HKEY_LOCAL_MACHINE), "hklm"))
 }
 
-/// Remove OpenBitFun context menu entries (no longer registered on install).
+/// Remove StarMate context menu entries (no longer registered on install).
 pub(super) fn remove_context_menu() -> Result<()> {
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
     let _ = hkcu.delete_subkey_all(r"Software\Classes\Directory\Background\shell\StarMate");

@@ -81,7 +81,7 @@ fn reject_protected_metadata_path(path: &str) -> StarMateResult<()> {
         "product_id" | "schema_version" | "version" | "last_modified"
     ) {
         return Err(StarMateError::validation(format!(
-            "Configuration metadata '{path}' is managed by OpenBitFun and cannot be changed directly"
+            "Configuration metadata '{path}' is managed by StarMate and cannot be changed directly"
         )));
     }
     Ok(())
@@ -432,7 +432,7 @@ impl ConfigManager {
         Ok(())
     }
 
-    /// Loads an existing OpenBitFun config, with a narrow repair for the sparse
+    /// Loads an existing StarMate config, with a narrow repair for the sparse
     /// document written by released standalone installers.
     async fn load_existing_config(&mut self) -> StarMateResult<()> {
         let content = fs::read_to_string(&self.config_file)
@@ -499,7 +499,7 @@ impl ConfigManager {
         self.config = config;
         self.load_diagnostics = diagnostics;
         self.account_guard_sources = guard_sources;
-        debug!("Loaded OpenBitFun config from file");
+        debug!("Loaded StarMate config from file");
         Ok(())
     }
 

@@ -1,9 +1,9 @@
 import SwiftUI
-import OpenBitFunMobileCore
+import StarMateMobileCore
 
-/// Shared chrome for every OpenBitFun modal page. The presentation primitive stays
+/// Shared chrome for every StarMate modal page. The presentation primitive stays
 /// native; this view owns the paper-and-ink header geometry inside it.
-struct OpenBitFunModalHeader: View {
+struct StarMateModalHeader: View {
     let title: String
     var subtitle: String? = nil
     let onClose: () -> Void
@@ -13,12 +13,12 @@ struct OpenBitFunModalHeader: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(MobileLocalization.text(title))
                     .font(MobileDesignTypography.conversationHeaderTitle.font)
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .lineLimit(1)
                 if let subtitle, !subtitle.isEmpty {
                     Text(MobileLocalization.text(subtitle))
                         .font(MobileDesignTypography.labelSmall.font)
-                        .foregroundStyle(OpenBitFunTheme.muted)
+                        .foregroundStyle(StarMateTheme.muted)
                         .lineLimit(2)
                 }
             }
@@ -26,7 +26,7 @@ struct OpenBitFunModalHeader: View {
             Button(action: onClose) {
                 Image(systemName: "xmark")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                     .frame(
                         width: MobileDesignGeometry.controlTouchSize,
                         height: MobileDesignGeometry.controlTouchSize
@@ -42,7 +42,7 @@ struct OpenBitFunModalHeader: View {
 /// Header used when a picker or provider page replaces the current modal
 /// content. Harmony's selection panels use a quiet 32-point dismissal target
 /// on a 56-point row rather than another filled circular control.
-struct OpenBitFunSelectionHeader: View {
+struct StarMateSelectionHeader: View {
     let title: String
     let onClose: () -> Void
 
@@ -50,13 +50,13 @@ struct OpenBitFunSelectionHeader: View {
         HStack(spacing: 12) {
             Text(MobileLocalization.text(title))
                 .font(MobileDesignTypography.headlineSmall.font)
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .lineLimit(1)
             Spacer(minLength: 8)
             Button(action: onClose) {
                 Image(systemName: "xmark")
                     .font(.system(size: 18, weight: .regular))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(
                         width: MobileDesignGeometry.selectionCloseSize,
                         height: MobileDesignGeometry.selectionCloseSize
@@ -70,18 +70,18 @@ struct OpenBitFunSelectionHeader: View {
     }
 }
 
-struct OpenBitFunModalCard<Content: View>: View {
+struct StarMateModalCard<Content: View>: View {
     var radius: CGFloat = MobileDesignGeometry.settingsCardRadius
     var bordered: Bool = true
     @ViewBuilder let content: () -> Content
 
     var body: some View {
         VStack(spacing: 0, content: content)
-            .background(OpenBitFunTheme.card)
+            .background(StarMateTheme.card)
             .clipShape(RoundedRectangle(cornerRadius: radius))
             .overlay(
                 RoundedRectangle(cornerRadius: radius)
-                    .stroke(bordered ? OpenBitFunTheme.line : OpenBitFunTheme.transparent, lineWidth: 1)
+                    .stroke(bordered ? StarMateTheme.line : StarMateTheme.transparent, lineWidth: 1)
             )
     }
 }
@@ -102,7 +102,7 @@ struct SignedOutConnectionActions: View {
             Button(action: onOpenAccount) {
                 Text(accountTitle)
                     .font(.system(size: fontSize, weight: .bold))
-                    .foregroundStyle(OpenBitFunTheme.contentOnAction)
+                    .foregroundStyle(StarMateTheme.contentOnAction)
                     .frame(maxWidth: .infinity, minHeight: buttonHeight)
                     .background(MobileDesignColors.primaryAction)
                     .overlay(Capsule().stroke(MobileDesignColors.primaryAction, lineWidth: 1))
@@ -114,7 +114,7 @@ struct SignedOutConnectionActions: View {
     }
 }
 
-struct OpenBitFunPopoverSurfaceModifier: ViewModifier {
+struct StarMatePopoverSurfaceModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, MobileDesignGeometry.popoverPadding)
@@ -124,17 +124,17 @@ struct OpenBitFunPopoverSurfaceModifier: ViewModifier {
             .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.popoverRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: MobileDesignGeometry.popoverRadius)
-                    .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                    .stroke(StarMateTheme.line, lineWidth: 1)
             )
             .shadow(
-                color: OpenBitFunTheme.line,
+                color: StarMateTheme.line,
                 radius: MobileDesignGeometry.popoverShadowRadius,
                 y: 7
             )
     }
 }
 
-struct OpenBitFunCompactPopoverSurfaceModifier: ViewModifier {
+struct StarMateCompactPopoverSurfaceModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.vertical, 8)
@@ -143,19 +143,19 @@ struct OpenBitFunCompactPopoverSurfaceModifier: ViewModifier {
             .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.compactPopoverRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: MobileDesignGeometry.compactPopoverRadius)
-                    .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                    .stroke(StarMateTheme.line, lineWidth: 1)
             )
-            .shadow(color: OpenBitFunTheme.line, radius: MobileDesignGeometry.popoverShadowRadius, y: 7)
+            .shadow(color: StarMateTheme.line, radius: MobileDesignGeometry.popoverShadowRadius, y: 7)
     }
 }
 
 extension View {
     func openBitFunPopoverSurface() -> some View {
-        modifier(OpenBitFunPopoverSurfaceModifier())
+        modifier(StarMatePopoverSurfaceModifier())
     }
 
     func openBitFunCompactPopoverSurface() -> some View {
-        modifier(OpenBitFunCompactPopoverSurfaceModifier())
+        modifier(StarMateCompactPopoverSurfaceModifier())
     }
 
     func openBitFunAdaptiveModal<ModalContent: View>(
@@ -166,7 +166,7 @@ extension View {
         @ViewBuilder content: @escaping () -> ModalContent
     ) -> some View {
         modifier(
-            OpenBitFunAdaptiveModalModifier(
+            StarMateAdaptiveModalModifier(
                 isPresented: isPresented,
                 placement: placement,
                 onDismiss: onDismiss,
@@ -181,7 +181,7 @@ extension View {
 /// Compact devices keep a system sheet; side placements use a native full-screen
 /// cover containing a trailing paper surface so focus and VoiceOver are isolated
 /// from the covered conversation while the dimensions remain Harmony-compatible.
-private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier {
+private struct StarMateAdaptiveModalModifier<ModalContent: View>: ViewModifier {
     @Binding var isPresented: Bool
     let placement: SettingsPlacement
     let onDismiss: (() -> Void)?
@@ -234,7 +234,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
     @ViewBuilder
     private var fittedCover: some View {
         if #available(iOS 16.4, *) {
-            fittedPanel.presentationBackground(OpenBitFunTheme.transparent)
+            fittedPanel.presentationBackground(StarMateTheme.transparent)
         } else {
             fittedPanel
         }
@@ -243,7 +243,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
     private var fittedPanel: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottom) {
-                OpenBitFunTheme.scrim.ignoresSafeArea()
+                StarMateTheme.scrim.ignoresSafeArea()
                     .contentShape(Rectangle())
                     .onTapGesture { isPresented = false }
                 ScrollView(showsIndicators: false) {
@@ -257,7 +257,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
                 .frame(width: min(MobileDesignGeometry.loginSheetMaxWidth,
                     geometry.size.width - 2 * MobileDesignGeometry.loginSheetOuterMargin),
                     height: min(contentHeight, max(0, geometry.size.height - 2 * MobileDesignGeometry.loginSheetOuterMargin)))
-                .background(OpenBitFunTheme.page)
+                .background(StarMateTheme.page)
                 .clipShape(RoundedRectangle(cornerRadius: MobileDesignGeometry.sheetTopRadius, style: .circular))
                 .padding(.bottom, MobileDesignGeometry.loginSheetOuterMargin)
                 .onPreferenceChange(ConnectionSheetHeightKey.self) { height in
@@ -272,7 +272,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
     @ViewBuilder
     private var compactSheet: some View {
         let surface = sizedContent
-            .background(OpenBitFunTheme.page)
+            .background(StarMateTheme.page)
             .onPreferenceChange(ConnectionSheetHeightKey.self) { height in
                 if fitContent && height > 0 { contentHeight = max(280, height) }
             }
@@ -304,7 +304,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
     @ViewBuilder
     private var sideCover: some View {
         let cover = ZStack(alignment: .trailing) {
-            OpenBitFunTheme.scrim
+            StarMateTheme.scrim
                 .ignoresSafeArea()
                 .contentShape(Rectangle())
                 .onTapGesture { isPresented = false }
@@ -314,7 +314,7 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
                     width: CGFloat(placement.width),
                     height: CGFloat(placement.height)
                 )
-                .background(OpenBitFunTheme.page)
+                .background(StarMateTheme.page)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: MobileDesignGeometry.sheetSideRadius,
@@ -326,13 +326,13 @@ private struct OpenBitFunAdaptiveModalModifier<ModalContent: View>: ViewModifier
                         cornerRadius: MobileDesignGeometry.sheetSideRadius,
                         style: .continuous
                     )
-                    .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                    .stroke(StarMateTheme.line, lineWidth: 1)
                 )
-                .shadow(color: OpenBitFunTheme.shadowStrong, radius: 18, x: -5, y: 8)
+                .shadow(color: StarMateTheme.shadowStrong, radius: 18, x: -5, y: 8)
                 .accessibilityAddTraits(.isModal)
         }
         if #available(iOS 16.4, *) {
-            cover.presentationBackground(OpenBitFunTheme.transparent)
+            cover.presentationBackground(StarMateTheme.transparent)
         } else {
             cover
         }
@@ -353,12 +353,12 @@ struct ConnectionSheetHeader: View {
                             path.move(to: CGPoint(x: 2, y: 2)); path.addLine(to: CGPoint(x: 16, y: 16))
                             path.move(to: CGPoint(x: 16, y: 2)); path.addLine(to: CGPoint(x: 2, y: 16))
                         }
-                        .stroke(OpenBitFunTheme.ink, style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                        .stroke(StarMateTheme.ink, style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
                         .frame(width: 18, height: 18)
                     } else {
                         Image(systemName: "xmark")
                             .font(.system(size: 18, weight: .medium))
-                            .foregroundStyle(OpenBitFunTheme.ink)
+                            .foregroundStyle(StarMateTheme.ink)
                     }
                 }
                 .frame(width: MobileDesignGeometry.controlTouchSize, height: MobileDesignGeometry.controlTouchSize)
@@ -381,11 +381,11 @@ struct ConnectionSheetFooter: View {
         Button(action: onAction) {
             Text(label)
                 .font(MobileDesignTypography.labelLarge.font)
-                .foregroundStyle(primary ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
+                .foregroundStyle(primary ? StarMateTheme.contentOnAction : StarMateTheme.ink)
                 .frame(maxWidth: .infinity, minHeight: MobileDesignGeometry.sheetActionHeight)
-                .background(primary ? MobileDesignColors.primaryAction : OpenBitFunTheme.card)
+                .background(primary ? MobileDesignColors.primaryAction : StarMateTheme.card)
                 .clipShape(Capsule())
-                .overlay(Capsule().stroke(primary ? OpenBitFunTheme.transparent : OpenBitFunTheme.line, lineWidth: 1))
+                .overlay(Capsule().stroke(primary ? StarMateTheme.transparent : StarMateTheme.line, lineWidth: 1))
                 .shadow(color: primary ? MobileDesignColors.shadowSubtle : MobileDesignColors.shadowFaint,
                     radius: elevated ? 14 : 0, y: elevated ? 5 : 0)
         }

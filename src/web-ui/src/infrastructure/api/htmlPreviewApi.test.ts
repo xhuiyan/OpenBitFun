@@ -43,8 +43,8 @@ describe('HTML preview workspace and device identity', () => {
 
   it('preserves an explicit old-peer or offline failure without a local retry', async () => {
     activateSurface('old-peer');
-    invoke.mockRejectedValueOnce(new Error('Update OpenBitFun on the controlled device'));
-    await expect(htmlPreviewApi.create(request)).rejects.toThrow('Update OpenBitFun');
+    invoke.mockRejectedValueOnce(new Error('Update StarMate on the controlled device'));
+    await expect(htmlPreviewApi.create(request)).rejects.toThrow('Update StarMate');
     expect(invoke).toHaveBeenCalledTimes(1);
   });
 });

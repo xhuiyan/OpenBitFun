@@ -1,4 +1,4 @@
-"""Package the built MiniApp for OpenBitFun's local .bfminiapp importer."""
+"""Package the built MiniApp for StarMate's local .bfminiapp importer."""
 
 import json
 from pathlib import Path

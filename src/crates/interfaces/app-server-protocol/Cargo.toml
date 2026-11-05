@@ -3,7 +3,7 @@ name = "starmate-app-server-protocol"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "Behavior-light wire contracts and roles for the OpenBitFun App Server"
+description = "Behavior-light wire contracts and roles for the StarMate App Server"
 
 [lib]
 name = "starmate_app_server_protocol"

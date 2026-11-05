@@ -13,7 +13,7 @@ struct ConversationHeader: View {
 
     private var resolvedTitle: String {
         if let title = model.selectedSession?.title, !title.isEmpty { return title }
-        return "OpenBitFun"
+        return "StarMate"
     }
 
     private var resolvedSubtitle: String? {
@@ -37,9 +37,9 @@ struct ConversationHeader: View {
                                 width: conversationHeaderActionSurfaceSize,
                                 height: conversationHeaderActionSurfaceSize
                             )
-                            .background(OpenBitFunTheme.card)
+                            .background(StarMateTheme.card)
                             .clipShape(Circle())
-                            .shadow(color: OpenBitFunTheme.shadowSubtle, radius: 15, y: 4)
+                            .shadow(color: StarMateTheme.shadowSubtle, radius: 15, y: 4)
                             .frame(
                                 width: MobileDesignGeometry.controlTouchSize,
                                 height: MobileDesignGeometry.controlTouchSize
@@ -48,7 +48,7 @@ struct ConversationHeader: View {
                     .buttonStyle(.plain)
                     .accessibilityLabel(MobileLocalization.text(sidebarActionLabel))
                 } else {
-                    OpenBitFunTheme.transparent
+                    StarMateTheme.transparent
                         .frame(
                             width: MobileDesignGeometry.controlTouchSize,
                             height: MobileDesignGeometry.controlTouchSize
@@ -62,12 +62,12 @@ struct ConversationHeader: View {
                                 ? MobileDesignTypography.titleMedium
                                 : MobileDesignTypography.conversationHeaderTitle).font
                         )
-                        .foregroundStyle(OpenBitFunTheme.ink)
+                        .foregroundStyle(StarMateTheme.ink)
                         .lineLimit(1)
                     if let resolvedSubtitle {
                         Text(resolvedSubtitle)
                             .font(MobileDesignTypography.labelMedium.font)
-                            .foregroundStyle(OpenBitFunTheme.muted)
+                            .foregroundStyle(StarMateTheme.muted)
                             .lineLimit(1)
                     }
                 }
@@ -82,7 +82,7 @@ struct ConversationHeader: View {
                 if model.selectedSession != nil {
                     actionsMenu
                 } else {
-                    OpenBitFunTheme.transparent
+                    StarMateTheme.transparent
                         .frame(
                             width: MobileDesignGeometry.controlTouchSize,
                             height: MobileDesignGeometry.controlTouchSize
@@ -98,7 +98,7 @@ struct ConversationHeader: View {
                 renameEditor
             }
         }
-        .background(OpenBitFunTheme.page)
+        .background(StarMateTheme.page)
         .onChange(of: model.selectedSession?.title) { _ in
             editing = false
         }
@@ -116,9 +116,9 @@ struct ConversationHeader: View {
                     width: conversationHeaderActionSurfaceSize,
                     height: conversationHeaderActionSurfaceSize
                 )
-                .background(OpenBitFunTheme.card)
+                .background(StarMateTheme.card)
                 .clipShape(Circle())
-                .shadow(color: OpenBitFunTheme.shadowSubtle, radius: 15, y: 4)
+                .shadow(color: StarMateTheme.shadowSubtle, radius: 15, y: 4)
                 .frame(
                     width: MobileDesignGeometry.controlTouchSize,
                     height: MobileDesignGeometry.controlTouchSize
@@ -133,13 +133,13 @@ struct ConversationHeader: View {
         HStack(spacing: 8) {
             TextField(model.localized("会话标题"), text: $renameDraft)
                 .font(.system(size: 14))
-                .foregroundStyle(OpenBitFunTheme.ink)
+                .foregroundStyle(StarMateTheme.ink)
                 .padding(.horizontal, 12)
                 .frame(height: 42)
-                .background(OpenBitFunTheme.card)
+                .background(StarMateTheme.card)
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
-                        .stroke(OpenBitFunTheme.line, lineWidth: 1)
+                        .stroke(StarMateTheme.line, lineWidth: 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 14))
 
@@ -166,9 +166,9 @@ struct ConversationHeader: View {
         Button(action: action) {
             Text(model.localized(title))
                 .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(primary && enabled ? OpenBitFunTheme.contentOnAction : OpenBitFunTheme.ink)
+                .foregroundStyle(primary && enabled ? StarMateTheme.contentOnAction : StarMateTheme.ink)
                 .frame(width: 52, height: 42)
-                .background(primary && enabled ? OpenBitFunTheme.accent : OpenBitFunTheme.soft)
+                .background(primary && enabled ? StarMateTheme.accent : StarMateTheme.soft)
                 .clipShape(RoundedRectangle(cornerRadius: 14))
         }
         .buttonStyle(.plain)
@@ -196,12 +196,12 @@ struct ConversationActionsPopover: View {
         VStack(alignment: .leading, spacing: 0) {
             Text(model.localized("会话"))
                 .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(OpenBitFunTheme.muted)
+                .foregroundStyle(StarMateTheme.muted)
                 .frame(height: 28)
                 .padding(.leading, 8)
             action("已上传文件", icon: "cloud", perform: model.showUploadedFiles)
             if model.isSending && model.remoteConnected && model.connectionPhase == .connected {
-                Divider().overlay(OpenBitFunTheme.line).padding(.vertical, 8)
+                Divider().overlay(StarMateTheme.line).padding(.vertical, 8)
                 action("停止", icon: "gearshape", perform: model.stopSending)
             }
         }
@@ -222,16 +222,16 @@ struct ConversationActionsPopover: View {
             HStack(spacing: 10) {
                 Image(systemName: icon)
                     .font(.system(size: 20, weight: .regular))
-                    .foregroundStyle(OpenBitFunTheme.muted)
+                    .foregroundStyle(StarMateTheme.muted)
                     .frame(width: 23, height: 23)
                 Text(model.localized(title))
                     .font(.system(size: 15, weight: .regular))
-                    .foregroundStyle(OpenBitFunTheme.ink)
+                    .foregroundStyle(StarMateTheme.ink)
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 8)
             .frame(height: MobileDesignGeometry.popoverActionHeight)
-            .background(selected ? OpenBitFunTheme.soft : OpenBitFunTheme.transparent)
+            .background(selected ? StarMateTheme.soft : StarMateTheme.transparent)
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)

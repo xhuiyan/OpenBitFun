@@ -1,7 +1,7 @@
-# OpenBitFun MiniApp Market 自建部署手册
+# StarMate MiniApp Market 自建部署手册
 
 这份 Runbook 用于在自建 Linux 主机上部署和更新 MiniApp 市场网页与后端。它同时
-面向人工操作和 AI Agent，命令默认从 OpenBitFun 仓库根目录执行。
+面向人工操作和 AI Agent，命令默认从 StarMate 仓库根目录执行。
 
 > 本文是社区自部署模板。`$DEPLOY_HOST`、`market.example.com`、`auth.example.com`
 > 以及 `/srv/starmate-miniapp-market`、`/etc/starmate-miniapp-market` 等路径都是
@@ -286,7 +286,7 @@ curl -fsS https://market.example.com/miniapp/ >/dev/null
 ```
 
 `/config` 应返回 `"webSubmissionsEnabled":false`。此开关关闭时，Web
-投稿写请求由后端拒绝，网页仅保留“我的投稿”历史；OpenBitFun Desktop 的 Bearer
+投稿写请求由后端拒绝，网页仅保留“我的投稿”历史；StarMate Desktop 的 Bearer
 投稿和 Web 管理员审核继续可用。未来重新开放网页投稿时，必须先完成对应安全
 回归，再显式修改 root-only `market.env` 并仅 recreate 市场容器。
 环境变量缺失时后端也默认关闭，但 `market.env` 应显式保留
@@ -297,7 +297,7 @@ curl -fsS https://market.example.com/miniapp/ >/dev/null
 - `/miniapp/` 能加载，刷新子页面不会 404；
 - `MARKET_PUBLIC_BROWSE=false` 时匿名目录按预期关闭；
 - `MARKET_WEB_SUBMISSIONS_ENABLED=false` 时投稿/更新/撤回按钮不可见，直接访问
-  `/miniapp/submit` 提示改用 OpenBitFun Desktop，“我的投稿”仍可读取；
+  `/miniapp/submit` 提示改用 StarMate Desktop，“我的投稿”仍可读取；
 - OAuth 已配置时，GitHub 登录 callback 正常；
 - 与本次改动有关的浏览、下载、投稿、审核、安装或更新流程正常；
 - 同一主机上的其他服务仍可用，且它们的容器/vhost 没被重启或改写。

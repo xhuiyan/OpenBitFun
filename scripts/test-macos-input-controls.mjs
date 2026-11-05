@@ -98,8 +98,8 @@ try {
   // Build before opening either fixture window, so compiler latency never
   // leaves the foreground observer sitting above the user's work.
   const testBinary = await nativeTestBinary();
-  const targetBinary = await bundleExecutable('OpenBitFun Input Target', 'dev.openbitfun.input-fixture.target');
-  const observerBinary = await bundleExecutable('OpenBitFun Input Observer', 'dev.openbitfun.input-fixture.observer');
+  const targetBinary = await bundleExecutable('StarMate Input Target', 'dev.openbitfun.input-fixture.target');
+  const observerBinary = await bundleExecutable('StarMate Input Observer', 'dev.openbitfun.input-fixture.observer');
   await run(binary, ['--wait-input-idle', '20']);
   fixture = spawn(targetBinary, [result], { cwd: root, stdio: ['ignore', 'pipe', 'inherit'], windowsHide: true });
   const [pid] = await new Promise((resolve, reject) => {
@@ -117,7 +117,7 @@ try {
   const hostReady = join(directory, 'host-ready');
   const testEnvironment = {
     ...process.env, STARMATE_INPUT_FIXTURE_PID: pid,
-    STARMATE_INPUT_FIXTURE_APP: join(directory, 'OpenBitFun Input Target.app'),
+    STARMATE_INPUT_FIXTURE_APP: join(directory, 'StarMate Input Target.app'),
     STARMATE_INPUT_FIXTURE_RESULT: result, STARMATE_INPUT_OBSERVER_RESULT: `${result}.observer`,
     STARMATE_INPUT_HOST_READY: hostReady,
     ...(busyAx ? { STARMATE_INPUT_BUSY_AX: '1' } : {}),

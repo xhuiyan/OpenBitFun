@@ -47,7 +47,7 @@ type LongSessionPostVisibleInteraction =
   | 'resize-window'
   | 'resize-window-width';
 
-function defaultOpenBitFunHome(): string {
+function defaultStarMateHome(): string {
   if (process.env.STARMATE_E2E_HOME) {
     return process.env.STARMATE_E2E_HOME;
   }
@@ -857,7 +857,7 @@ async function readLongSessionMetadata(sessionId: string): Promise<LongSessionMe
 }
 
 async function findLongSessionMetadataPath(sessionId: string): Promise<string | null> {
-  const openbitfunHome = defaultOpenBitFunHome();
+  const openbitfunHome = defaultStarMateHome();
   const workspaceCandidates = Array.from(new Set([
     process.env.E2E_TEST_WORKSPACE,
     path.resolve(process.cwd(), '..', '..'),

@@ -370,7 +370,7 @@ mod tests {
         let resolver = UsageAttributionResolver::new(&[
             config(
                 "cfg-openbitfun",
-                "OpenBitFun",
+                "StarMate",
                 "anthropic",
                 "MiniMax-M3",
                 "https://gateway.example.com",
@@ -392,7 +392,7 @@ mod tests {
         let second = resolver.attribute(&record("cfg-minimax", "MiniMax-M3"));
         assert_eq!(first.model.name, second.model.name);
         assert_ne!(first.model.key, second.model.key);
-        assert_eq!(first.model.provider_name.as_deref(), Some("OpenBitFun"));
+        assert_eq!(first.model.provider_name.as_deref(), Some("StarMate"));
         assert_eq!(second.model.provider_name.as_deref(), Some("MiniMax"));
     }
 

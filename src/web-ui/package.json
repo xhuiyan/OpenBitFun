@@ -2,7 +2,7 @@
   "name": "@starmate/web-ui",
   "version": "1.0.8",
   "private": true,
-  "description": "OpenBitFun Web UI - 支持 Desktop 和 Server 两种部署方式",
+  "description": "StarMate Web UI - 支持 Desktop 和 Server 两种部署方式",
   "type": "module",
   "scripts": {
     "icons:generate": "node scripts/generate-lucide-static-icons.mjs",
