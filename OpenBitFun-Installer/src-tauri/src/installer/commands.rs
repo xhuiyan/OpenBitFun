@@ -139,7 +139,7 @@ pub(crate) fn get_default_install_path() -> String {
             .unwrap_or_else(|| PathBuf::from("/opt"))
     };
 
-    base.join("OpenBitFun").to_string_lossy().to_string()
+    base.join("StarMate").to_string_lossy().to_string()
 }
 
 /// Last successful install path if still valid, otherwise platform default.
@@ -167,7 +167,7 @@ pub(crate) fn get_initial_install_path() -> String {
     get_default_install_path()
 }
 
-/// Detect an existing OpenBitFun install (Tauri NSIS or this installer) via Add/Remove Programs registry.
+/// Detect an existing StarMate install (Tauri NSIS or this installer) via Add/Remove Programs registry.
 #[tauri::command]
 pub(crate) fn get_existing_installation() -> ExistingInstallationResponse {
     #[cfg(not(target_os = "windows"))]
@@ -663,7 +663,7 @@ pub(crate) async fn start_installation(
     Ok(())
 }
 
-/// Uninstall OpenBitFun (for the uninstaller companion).
+/// Uninstall StarMate (for the uninstaller companion).
 #[tauri::command]
 pub(crate) async fn uninstall(install_path: String) -> Result<(), String> {
     let install_path = PathBuf::from(&install_path);
@@ -830,9 +830,9 @@ pub(crate) fn launch_application(install_path: String) -> Result<(), String> {
     let exe = if cfg!(target_os = "windows") {
         PathBuf::from(&install_path).join(MAIN_APP_EXE)
     } else if cfg!(target_os = "macos") {
-        PathBuf::from(&install_path).join("OpenBitFun")
+        PathBuf::from(&install_path).join("StarMate")
     } else {
-        PathBuf::from(&install_path).join("openbitfun")
+        PathBuf::from(&install_path).join("starmate")
     };
 
     #[cfg(target_os = "windows")]
@@ -1195,18 +1195,18 @@ fn find_existing_ancestor(path: &Path) -> PathBuf {
     current
 }
 
-/// Actual install root is always under an `OpenBitFun` directory: `{user choice}/OpenBitFun`.
-/// If the user already chose a path whose last segment is `OpenBitFun`, do not append again.
-fn with_openbitfun_install_subdir(path: PathBuf) -> PathBuf {
-    let already_openbitfun = path
+/// Actual install root is always under a `StarMate` directory: `{user choice}/StarMate`.
+/// If the user already chose a path whose last segment is `StarMate`, do not append again.
+fn with_starmate_install_subdir(path: PathBuf) -> PathBuf {
+    let already_starmate = path
         .file_name()
         .and_then(|n| n.to_str())
-        .map(|s| s.eq_ignore_ascii_case("OpenBitFun"))
+        .map(|s| s.eq_ignore_ascii_case("StarMate"))
         .unwrap_or(false);
-    if already_openbitfun {
+    if already_starmate {
         path
     } else {
-        path.join("OpenBitFun")
+        path.join("StarMate")
     }
 }
 
@@ -1226,7 +1226,7 @@ fn prepare_install_target(requested_path: &Path) -> Result<PathBuf, String> {
         return Err(format!("{}path_not_directory", INSTALL_PATH_ERR_PREFIX));
     }
 
-    let install_path = with_openbitfun_install_subdir(requested_path.to_path_buf());
+    let install_path = with_starmate_install_subdir(requested_path.to_path_buf());
 
     if install_path.exists() {
         if !install_path.is_dir() {

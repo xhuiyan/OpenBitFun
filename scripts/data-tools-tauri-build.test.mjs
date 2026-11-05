@@ -23,7 +23,7 @@ test('independent bundle owns version, offline assets, icons and identity', (t) 
   const output = prepareDataToolsTauriConfig(join(APP, 'tauri.conf.json'), fixtureDirectory(t));
   const config = JSON.parse(readFileSync(output, 'utf8'));
   assert.equal(config.productName, 'StarMate Data Tools');
-  assert.equal(config.identifier, 'com.openbitfun.data-tools');
+  assert.equal(config.identifier, 'com.starmate.data-tools');
   assert.deepEqual(config.app.windows.map(({ label }) => label), ['data-tools']);
   const capability = JSON.parse(readFileSync(join(APP, 'capabilities/data-tools.json'), 'utf8'));
   assert.equal(capability.identifier, 'data-tools');

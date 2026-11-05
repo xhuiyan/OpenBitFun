@@ -428,7 +428,7 @@ pub(crate) async fn run(path: PathBuf) {
         record
     };
     let mut context = tauri::generate_context!();
-    context.config_mut().identifier = format!("com.openbitfun.miniapp.{}", record.launch_id);
+    context.config_mut().identifier = format!("com.starmate.miniapp.{}", record.launch_id);
     context.config_mut().product_name = Some(record.name.clone());
     context.package_info_mut().name = record.name.clone();
     #[cfg(target_os = "linux")]

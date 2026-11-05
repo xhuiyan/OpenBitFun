@@ -10,7 +10,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{anyhow, Context, Result};
 
 #[cfg(target_os = "macos")]
-const LAUNCH_AGENT_LABEL: &str = "com.openbitfun.cli.daemon";
+const LAUNCH_AGENT_LABEL: &str = "com.starmate.cli.daemon";
 
 #[cfg(all(unix, not(target_os = "macos")))]
 const SYSTEMD_UNIT_NAME: &str = "openbitfun-cli-daemon.service";

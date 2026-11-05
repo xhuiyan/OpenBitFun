@@ -281,9 +281,9 @@ fn macos_development_launch_ignores_saved_fullscreen() {
     update_document(&mut document, good_geometry(), Some((true, true)));
     let plan = restore_plan(&document, &desktop());
 
-    assert!(!plan.fullscreen_on_launch(true, "com.openbitfun.desktop.dev"));
-    assert!(plan.fullscreen_on_launch(true, "com.openbitfun.desktop"));
-    assert!(plan.fullscreen_on_launch(false, "com.openbitfun.desktop.dev"));
+    assert!(!plan.fullscreen_on_launch(true, "com.starmate.desktop.dev"));
+    assert!(plan.fullscreen_on_launch(true, "com.starmate.desktop"));
+    assert!(plan.fullscreen_on_launch(false, "com.starmate.desktop.dev"));
     assert!(plan.maximized);
     assert_eq!(plan.geometry, good_geometry());
 }

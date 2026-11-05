@@ -3,7 +3,7 @@
   "productName": "StarMate Data Tools",
   "version": "0.2.0",
   "mainBinaryName": "openbitfun-data-tools",
-  "identifier": "com.openbitfun.data-tools",
+  "identifier": "com.starmate.data-tools",
   "build": {
     "frontendDist": "ui"
   },

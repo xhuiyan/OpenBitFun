@@ -253,7 +253,7 @@ restart_daemon_for_upgrade() {
   local os unit_name agent_label config_home plist uid
   os="$(uname -s)"
   unit_name="openbitfun-cli-daemon.service"
-  agent_label="com.openbitfun.cli.daemon"
+  agent_label="com.starmate.cli.daemon"
 
   case "$os" in
     Linux)

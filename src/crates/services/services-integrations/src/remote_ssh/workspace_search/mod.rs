@@ -261,7 +261,7 @@ fn resolve_local_flashgrep_bundle(binary_name: &str) -> Option<PathBuf> {
             );
             candidates.push(
                 parent
-                    .join("../share/com.openbitfun.desktop/flashgrep")
+                    .join("../share/com.starmate.desktop/flashgrep")
                     .join(binary_name),
             );
         }

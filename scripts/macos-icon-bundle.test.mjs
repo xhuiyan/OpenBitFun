@@ -192,7 +192,7 @@ function bundleFixture(modern) {
     const desktop = join(ROOT, 'src/apps/desktop');
     const selected = json(join(desktop, modern ? 'tauri.macos.conf.json' : 'tauri.conf.json'));
     writeFileSync(join(directory, 'tauri.conf.json'), JSON.stringify({
-      productName: 'Icon Probe', version: '0.1.0', identifier: 'com.openbitfun.iconprobe',
+      productName: 'Icon Probe', version: '0.1.0', identifier: 'com.starmate.iconprobe',
       build: { frontendDist: 'frontend' },
       bundle: { active: true, targets: ['app'], icon: selected.bundle.icon.map(icon => resolve(desktop, icon)) },
     }));

@@ -121,7 +121,7 @@ fn set_inhibitor_enabled(
                 .idle(true)
                 .reason("Prevent sleep is enabled in OpenBitFun")
                 .app_name("StarMate")
-                .app_reverse_domain("com.openbitfun.desktop")
+                .app_reverse_domain("com.starmate.desktop")
                 .create()
                 .map_err(|error| {
                     let message = format!("Failed to prevent system sleep: {}", error);

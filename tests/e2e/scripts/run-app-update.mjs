@@ -15,7 +15,7 @@ if (process.argv.includes('--build')) {
   const publicKey = verificationGuide.match(/Public key: `(RW[A-Za-z0-9+/=]+)`/)?.[1];
   assert.ok(publicKey, 'The documented release public key is required for live signature verification');
   const config = JSON.parse(process.env.TAURI_CONFIG || '{}');
-  config.identifier ??= 'com.openbitfun.desktop.dev';
+  config.identifier ??= 'com.starmate.desktop.dev';
   config.plugins = { ...config.plugins, updater: {
     ...config.plugins?.updater,
     pubkey: Buffer.from('untrusted comment: minisign public key\n' + publicKey + '\n').toString('base64'),

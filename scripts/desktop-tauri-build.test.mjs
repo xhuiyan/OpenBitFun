@@ -330,7 +330,7 @@ test('Desktop Tauri projection consumes only the resolved member identity', () =
   const baseConfig = join(fixture, 'tauri.conf.json');
   writeFileSync(baseConfig, JSON.stringify({
     productName: 'OpenBitFun',
-    identifier: 'com.openbitfun.desktop',
+    identifier: 'com.starmate.desktop',
     bundle: { resources: {} },
   }));
   try {

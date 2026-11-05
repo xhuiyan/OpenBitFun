@@ -313,7 +313,7 @@ pub(crate) fn install(record: &LaunchRecord, svg: Option<&str>) -> Result<PathBu
         let applications = super::system_install::applications_directory()?;
         std::fs::create_dir_all(&applications).map_err(|e| e.to_string())?;
         let target = applications.join(format!(
-            "com.openbitfun.miniapp.{}.desktop",
+            "com.starmate.miniapp.{}.desktop",
             record.launch_id
         ));
         let exec = format!(
@@ -322,7 +322,7 @@ pub(crate) fn install(record: &LaunchRecord, svg: Option<&str>) -> Result<PathBu
             desktop_exec_arg(&path)?
         );
         let icon = dir.join("icon-256.png");
-        std::fs::write(&target, format!("[Desktop Entry]\nType=Application\nName={}\nExec={}\nIcon={}\nTerminal=false\nStartupWMClass=com.openbitfun.miniapp.{}\nCategories=Utility;\n", desktop_value(&native_name(record)), desktop_value(&exec), desktop_value(&icon.to_string_lossy()), record.launch_id)).map_err(|e| e.to_string())?;
+        std::fs::write(&target, format!("[Desktop Entry]\nType=Application\nName={}\nExec={}\nIcon={}\nTerminal=false\nStartupWMClass=com.starmate.miniapp.{}\nCategories=Utility;\n", desktop_value(&native_name(record)), desktop_value(&exec), desktop_value(&icon.to_string_lossy()), record.launch_id)).map_err(|e| e.to_string())?;
         return Ok(target);
     }
     #[cfg(target_os = "windows")]
@@ -387,7 +387,7 @@ fn install_macos(
     .map_err(|e| e.to_string())?;
     ipc::private_json(&contents.join("Resources/openbitfun-miniapp.json"), record)?;
     ipc::private_json(&contents.join("Resources/build.json"), &fingerprint)?;
-    std::fs::write(contents.join("Info.plist"), format!(r#"<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>CFBundleExecutable</key><string>MiniApp</string><key>CFBundleIdentifier</key><string>com.openbitfun.miniapp.{}</string><key>CFBundleName</key><string>{}</string><key>CFBundleDisplayName</key><string>{}</string><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleVersion</key><string>1</string><key>CFBundleIconFile</key><string>icon.icns</string><key>NSHighResolutionCapable</key><true/></dict></plist>"#, record.launch_id, xml(&record.name), xml(&record.name))).map_err(|e| e.to_string())?;
+    std::fs::write(contents.join("Info.plist"), format!(r#"<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>CFBundleExecutable</key><string>MiniApp</string><key>CFBundleIdentifier</key><string>com.starmate.miniapp.{}</string><key>CFBundleName</key><string>{}</string><key>CFBundleDisplayName</key><string>{}</string><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleVersion</key><string>1</string><key>CFBundleIconFile</key><string>icon.icns</string><key>NSHighResolutionCapable</key><true/></dict></plist>"#, record.launch_id, xml(&record.name), xml(&record.name))).map_err(|e| e.to_string())?;
     let status = create_command("/usr/bin/codesign")
         .args(["--force", "--sign", "-"])
         .arg(&staged_bundle)
@@ -429,7 +429,7 @@ fn app_user_model_id_property(
     use windows::Win32::System::Variant::VT_LPWSTR;
     use windows::Win32::UI::Shell::SHStrDupW;
 
-    let app_id = windows::core::HSTRING::from(format!("com.openbitfun.miniapp.{launch_id}"));
+    let app_id = windows::core::HSTRING::from(format!("com.starmate.miniapp.{launch_id}"));
     // SAFETY: SHStrDupW copies the live UTF-16 string with the COM allocator.
     // PROPVARIANT owns that allocation and frees it through PropVariantClear.
     let owned = unsafe { SHStrDupW(&app_id)? };
@@ -530,7 +530,7 @@ mod tests {
         // SAFETY: the helper returns an owning VT_LPWSTR value, which remains
         // alive while its null-terminated string is read, then frees it on Drop.
         let app_id = unsafe { value.Anonymous.Anonymous.Anonymous.pwszVal.to_string() }.unwrap();
-        assert_eq!(app_id, "com.openbitfun.miniapp.notes");
+        assert_eq!(app_id, "com.starmate.miniapp.notes");
     }
 
     fn fixture(root: &Path) -> LaunchRecord {

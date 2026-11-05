@@ -1711,8 +1711,8 @@ fn detect_from_exe() -> Option<String> {
         candidates.push(exe_dir.join("../lib/openbitfun/mobile-web"));
         candidates.push(exe_dir.join("../share/openbitfun/mobile-web/dist"));
         candidates.push(exe_dir.join("../share/openbitfun/mobile-web"));
-        candidates.push(exe_dir.join("../share/com.openbitfun.desktop/mobile-web/dist"));
-        candidates.push(exe_dir.join("../share/com.openbitfun.desktop/mobile-web"));
+        candidates.push(exe_dir.join("../share/com.starmate.desktop/mobile-web/dist"));
+        candidates.push(exe_dir.join("../share/com.starmate.desktop/mobile-web"));
     }
 
     check_candidates(&candidates, "exe-relative")

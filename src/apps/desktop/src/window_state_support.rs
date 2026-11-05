@@ -51,7 +51,7 @@ struct RestorePlan {
 impl RestorePlan {
     fn fullscreen_on_launch(&self, is_macos: bool, app_identifier: &str) -> bool {
         // A dev reload can bypass the exit save and replay a stale fullscreen Space.
-        self.fullscreen && !(is_macos && app_identifier == "com.openbitfun.desktop.dev")
+        self.fullscreen && !(is_macos && app_identifier == "com.starmate.desktop.dev")
     }
 }
 

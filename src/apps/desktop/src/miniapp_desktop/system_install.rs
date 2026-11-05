@@ -119,7 +119,7 @@ fn owns(path: &Path, record: &LaunchRecord) -> bool {
         );
     #[cfg(target_os = "linux")]
     return path.file_name().is_some_and(|name| {
-        name == format!("com.openbitfun.miniapp.{}.desktop", record.launch_id).as_str()
+        name == format!("com.starmate.miniapp.{}.desktop", record.launch_id).as_str()
     }) && std::fs::read_to_string(path).is_ok_and(|text| linux_entry_owned(&text, record));
     #[cfg(target_os = "windows")]
     return path.extension().is_some_and(|ext| ext == "lnk") && windows_link_owned(path, record);

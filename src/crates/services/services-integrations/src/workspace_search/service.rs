@@ -1250,7 +1250,7 @@ fn push_exe_relative_bundle_candidates(
             );
             push_candidate(
                 exe_dir
-                    .join("../share/com.openbitfun.desktop/flashgrep")
+                    .join("../share/com.starmate.desktop/flashgrep")
                     .join(binary_name),
             );
         }
