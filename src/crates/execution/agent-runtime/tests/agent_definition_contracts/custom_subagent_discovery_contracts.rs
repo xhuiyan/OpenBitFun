@@ -36,7 +36,7 @@ fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_age
     let openbitfun_user = TestTempDir::new("openbitfun-runtime-subagent-user");
     let home = TestTempDir::new("openbitfun-runtime-subagent-home");
 
-    let project_openbitfun = workspace.path.join(".openbitfun").join("agents");
+    let project_openbitfun = workspace.path.join(".starmate").join("agents");
     let project_claude = workspace.path.join(".claude").join("agents");
     let user_openbitfun = openbitfun_user.path.join("agents");
     let home_claude = home.path.join(".claude").join("agents");
@@ -126,7 +126,7 @@ fn custom_subagent_discovery_preserves_starmate_priority_and_ignores_foreign_age
 #[test]
 fn custom_subagent_discovery_reports_parse_errors_without_dropping_valid_files() {
     let workspace = TestTempDir::new("openbitfun-runtime-subagent-invalid");
-    let project_openbitfun = workspace.path.join(".openbitfun").join("agents");
+    let project_openbitfun = workspace.path.join(".starmate").join("agents");
     fs::create_dir_all(&project_openbitfun).expect("project agents dir should be created");
     let broken_path = project_openbitfun.join("broken.md");
     fs::write(&broken_path, "No front matter").expect("broken markdown file should be written");

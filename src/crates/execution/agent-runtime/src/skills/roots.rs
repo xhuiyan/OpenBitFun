@@ -10,7 +10,7 @@ pub const STARMATE_USER_SKILL_SLOT: &str = "openbitfun";
 pub const STARMATE_SYSTEM_SKILL_SLOT: &str = "openbitfun-system";
 pub const STARMATE_SYSTEM_SKILL_DIR: &str = ".system";
 pub const STARMATE_SKILL_SOURCE_ID: &str = "openbitfun";
-pub const STARMATE_SKILL_SOURCE_LABEL: &str = "OpenBitFun";
+pub const STARMATE_SKILL_SOURCE_LABEL: &str = "StarMate";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SkillRootSpec {
