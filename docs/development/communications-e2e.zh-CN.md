@@ -310,7 +310,7 @@ cargo test --locked -p starmate-cli --bin openbitfun dispatch::
 cargo test --locked -p starmate-cli --bin openbitfun peer_host::
 cargo test --locked -p openbitfun-agent-runtime-ipc
 cargo test --locked -p openbitfun-app-server --lib server::wire::tests
-cargo test --locked -p openbitfun-app-server-protocol --test legacy_wire_contracts
+cargo test --locked -p starmate-app-server-protocol --test legacy_wire_contracts
 ```
 
 ```bash

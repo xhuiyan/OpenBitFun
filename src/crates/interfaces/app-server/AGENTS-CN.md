@@ -64,6 +64,6 @@ kind 和结构化 data，不泄露 Runtime 内部细节。Host transport/auth/sc
 ```bash
 cargo check --locked -p openbitfun-app-server --offline
 cargo test --locked -p openbitfun-app-server --offline --lib server::wire::tests
-cargo test --locked -p openbitfun-app-server-protocol --offline --test legacy_wire_contracts
+cargo test --locked -p starmate-app-server-protocol --offline --test legacy_wire_contracts
 pnpm run check:core-boundaries
 ```
