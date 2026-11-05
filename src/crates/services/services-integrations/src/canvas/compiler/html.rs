@@ -14,7 +14,7 @@ pub fn compile_canvas_html(source: &CanvasSource, component_js: &str) -> String 
   <style>{style}</style>
 </head>
 <body>
-  <div id="openbitfun-canvas-root"></div>
+  <div id="starmate-canvas-root"></div>
   <script>
 {runtime}
   </script>

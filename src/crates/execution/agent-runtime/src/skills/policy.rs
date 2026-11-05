@@ -312,7 +312,7 @@ mod tests {
         for skill in [
             "agent-eval-canvas",
             "docs-canvas",
-            "openbitfun-canvas",
+            "starmate-canvas",
             "pr-review-canvas",
         ] {
             for mode_id in [

@@ -1,5 +1,6 @@
 use crate::canvas::types::{
     CanvasArtifactRef, CanvasId, CanvasSessionId, CANVAS_ARTIFACT_REF_SCHEME,
+    LEGACY_CANVAS_ARTIFACT_REF_SCHEME,
 };
 use serde::{Deserialize, Serialize};
 
@@ -26,9 +27,11 @@ impl std::error::Error for CanvasArtifactRefParseError {}
 pub fn parse_canvas_artifact_ref(
     uri: &str,
 ) -> Result<CanvasArtifactRef, CanvasArtifactRefParseError> {
-    let prefix = format!("{CANVAS_ARTIFACT_REF_SCHEME}://");
+    let canonical_prefix = format!("{CANVAS_ARTIFACT_REF_SCHEME}://");
+    let legacy_prefix = format!("{LEGACY_CANVAS_ARTIFACT_REF_SCHEME}://");
     let rest = uri
-        .strip_prefix(&prefix)
+        .strip_prefix(&canonical_prefix)
+        .or_else(|| uri.strip_prefix(&legacy_prefix))
         .ok_or(CanvasArtifactRefParseError::InvalidScheme)?;
     let parts: Vec<&str> = rest.split('/').collect();
     if parts.len() != 4 || parts[0] != "session" || parts[2] != "canvas" {

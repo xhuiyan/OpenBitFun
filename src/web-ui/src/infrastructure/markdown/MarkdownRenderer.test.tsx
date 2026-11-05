@@ -599,8 +599,8 @@ Second paragraph.
   });
 
   it.each([
-    '[Open Canvas](openbitfun-canvas://session/session_1/canvas/canvas_1)',
-    'openbitfun-canvas://session/session_1/canvas/canvas_1',
+    '[Open Canvas](starmate-canvas://session/session_1/canvas/canvas_1)',
+    'starmate-canvas://session/session_1/canvas/canvas_1',
   ])('opens Canvas artifact links in the Canvas panel: %s', async (content) => {
     openSessionHost({
       workspaceId: SESSION_WORKSPACE.id,
@@ -633,7 +633,7 @@ Second paragraph.
         type: 'openbitfun-canvas',
         title: 'StarMate Canvas',
         data: {
-          artifactReference: 'openbitfun-canvas://session/session_1/canvas/canvas_1',
+          artifactReference: 'starmate-canvas://session/session_1/canvas/canvas_1',
           workspaceId: SESSION_WORKSPACE.id,
           workspacePath: '/srv/project',
           remoteConnectionId: 'remote-connection-1',
@@ -641,7 +641,7 @@ Second paragraph.
           _source: { type: 'markdown-link' },
         },
         metadata: {
-          artifactReference: 'openbitfun-canvas://session/session_1/canvas/canvas_1',
+          artifactReference: 'starmate-canvas://session/session_1/canvas/canvas_1',
           fromMarkdown: true,
         },
 

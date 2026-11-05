@@ -287,11 +287,11 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
   }, []);
 
   const postAppearanceToIframe = useCallback(() => {
-    postToIframe({ type: 'openbitfun-canvas-appearance', appearance: readHostAppearancePayload() });
+    postToIframe({ type: 'starmate-canvas-appearance', appearance: readHostAppearancePayload() });
   }, [postToIframe]);
 
   const postDesignModeToIframe = useCallback((enabled: boolean) => {
-    postToIframe({ type: 'openbitfun-canvas-design-mode', enabled });
+    postToIframe({ type: 'starmate-canvas-design-mode', enabled });
   }, [postToIframe]);
 
   const applyLoadedCanvas = useCallback((canvas: CanvasSnapshotValue | null, reason: string) => {
@@ -548,7 +548,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
     postDesignModeToIframe(designMode);
     if (artifactReference) {
       const state = await loadState();
-      postToIframe({ type: 'openbitfun-canvas-state', state });
+      postToIframe({ type: 'starmate-canvas-state', state });
     }
   }, [
     artifactReference,
@@ -732,7 +732,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
       const data = event.data;
       if (!data || typeof data !== 'object') return;
       const maybeType = (data as { type?: unknown }).type;
-      if (typeof maybeType !== 'string' || !maybeType.startsWith('openbitfun-canvas-')) return;
+      if (typeof maybeType !== 'string' || !maybeType.startsWith('starmate-canvas-')) return;
       if (!iframeWindow) return;
       if (event.source !== iframeWindow) {
         log.warn('Canvas iframe message source mismatch; ignoring message', {
@@ -755,7 +755,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
 
       try {
         switch (message.type) {
-          case 'openbitfun-canvas-boot-started': {
+          case 'starmate-canvas-boot-started': {
             iframeStatusRef.current.bootStarted = true;
             log.info('Canvas iframe boot script started', {
               artifactReference,
@@ -764,7 +764,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             break;
           }
-          case 'openbitfun-canvas-react-loaded': {
+          case 'starmate-canvas-react-loaded': {
             log.info('Canvas iframe React loaded', {
               artifactReference,
               runtime: renderedCanvas.runtime,
@@ -773,7 +773,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             break;
           }
-          case 'openbitfun-canvas-react-dom-loaded': {
+          case 'starmate-canvas-react-dom-loaded': {
             log.info('Canvas iframe ReactDOM loaded', {
               artifactReference,
               runtime: renderedCanvas.runtime,
@@ -783,7 +783,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             break;
           }
-          case 'openbitfun-canvas-early-error': {
+          case 'starmate-canvas-early-error': {
             iframeStatusRef.current.runtimeError = true;
             log.warn('Canvas iframe early runtime error', {
               artifactReference,
@@ -798,7 +798,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             void reportRuntimeError(data);
             break;
           }
-          case 'openbitfun-canvas-ready': {
+          case 'starmate-canvas-ready': {
             iframeStatusRef.current.ready = true;
             log.info('Canvas iframe reported ready', {
               artifactReference,
@@ -809,7 +809,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             await reportRuntimeReady(data);
             break;
           }
-          case 'openbitfun-canvas-module-started': {
+          case 'starmate-canvas-module-started': {
             iframeStatusRef.current.moduleStarted = true;
             log.info('Canvas iframe module started', {
               artifactReference,
@@ -819,7 +819,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             await initializeIframe('module-started');
             break;
           }
-          case 'openbitfun-canvas-state-warning': {
+          case 'starmate-canvas-state-warning': {
             log.warn('Canvas rejected incompatible persisted state', {
               artifactReference,
               revision: renderedCanvas.revision,
@@ -828,7 +828,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             break;
           }
-          case 'openbitfun-canvas-prop-warning': {
+          case 'starmate-canvas-prop-warning': {
             log.warn('Canvas ignored an invalid component prop value', {
               artifactReference,
               revision: renderedCanvas.revision,
@@ -838,16 +838,16 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             });
             break;
           }
-          case 'openbitfun-canvas-load-state': {
+          case 'starmate-canvas-load-state': {
             const state = await loadState();
             postToIframe({
-              type: 'openbitfun-canvas-load-state-result',
+              type: 'starmate-canvas-load-state-result',
               requestId: message.requestId,
               state,
             });
             break;
           }
-          case 'openbitfun-canvas-save-state': {
+          case 'starmate-canvas-save-state': {
             const response = await canvasAPI.saveState({
 
       workspaceId: workspaceId ?? '',
@@ -858,22 +858,22 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
               updatedAt: Date.now(),
             });
             postToIframe({
-              type: 'openbitfun-canvas-save-state-result',
+              type: 'starmate-canvas-save-state-result',
               requestId: message.requestId,
               state: response.state ?? null,
             });
             break;
           }
-          case 'openbitfun-canvas-action': {
+          case 'starmate-canvas-action': {
             const result = await handleCanvasAction(message.action);
             postToIframe({
-              type: 'openbitfun-canvas-action-result',
+              type: 'starmate-canvas-action-result',
               requestId: message.requestId,
               result,
             });
             break;
           }
-          case 'openbitfun-canvas-runtime-error': {
+          case 'starmate-canvas-runtime-error': {
             iframeStatusRef.current.runtimeError = true;
             log.warn('Canvas runtime error', {
               artifactReference,
@@ -886,7 +886,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             void reportRuntimeError(data);
             break;
           }
-          case 'openbitfun-canvas-element-selected': {
+          case 'starmate-canvas-element-selected': {
             setDesignMode(false);
             if (message.reference) {
               globalEventBus.emit(
@@ -906,9 +906,9 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
         log.error('Canvas iframe message handling failed', { type: message.type, error });
         if (message.requestId) {
           postToIframe({
-            type: message.type === 'openbitfun-canvas-action'
-              ? 'openbitfun-canvas-action-result'
-              : 'openbitfun-canvas-error',
+            type: message.type === 'starmate-canvas-action'
+              ? 'starmate-canvas-action-result'
+              : 'starmate-canvas-error',
             requestId: message.requestId,
             error: error instanceof Error ? error.message : String(error),
           });
@@ -978,8 +978,8 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
 
   if (!hasHtml) {
     return (
-      <div className="openbitfun-canvas-panel openbitfun-canvas-panel--empty" data-openbitfun-component="canvas-tool" data-openbitfun-part="empty" data-openbitfun-state="empty" data-starmate-component="canvas-tool" data-starmate-part="empty" data-starmate-state="empty" >
-        <div className="openbitfun-canvas-panel__message" data-openbitfun-component="canvas-tool" data-openbitfun-part="message" data-starmate-component="canvas-tool" data-starmate-part="message" >
+      <div className="starmate-canvas-panel starmate-canvas-panel--empty" data-openbitfun-component="canvas-tool" data-openbitfun-part="empty" data-openbitfun-state="empty" data-starmate-component="canvas-tool" data-starmate-part="empty" data-starmate-state="empty" >
+        <div className="starmate-canvas-panel__message" data-openbitfun-component="canvas-tool" data-openbitfun-part="message" data-starmate-component="canvas-tool" data-starmate-part="message" >
           <AlertTriangle size={18} />
           <div>
             <h3>{resolvedTitle}</h3>
@@ -988,7 +988,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
           </div>
         </div>
         {resolvedDiagnostics.length > 0 && (
-          <ul className="openbitfun-canvas-panel__diagnostics" data-openbitfun-component="canvas-tool" data-openbitfun-part="diagnostics" data-starmate-component="canvas-tool" data-starmate-part="diagnostics" >
+          <ul className="starmate-canvas-panel__diagnostics" data-openbitfun-component="canvas-tool" data-openbitfun-part="diagnostics" data-starmate-component="canvas-tool" data-starmate-part="diagnostics" >
             {resolvedDiagnostics.map((diagnostic, index) => (
               <li key={`${diagnostic.code || diagnostic.message || 'diagnostic'}-${index}`}>
                 {diagnostic.message || diagnostic.code || 'Canvas diagnostic'}
@@ -996,17 +996,17 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
             ))}
           </ul>
         )}
-        {sourcePreview && <pre className="openbitfun-canvas-panel__source" data-openbitfun-component="canvas-tool" data-openbitfun-part="source" data-starmate-component="canvas-tool" data-starmate-part="source" >{sourcePreview}</pre>}
+        {sourcePreview && <pre className="starmate-canvas-panel__source" data-openbitfun-component="canvas-tool" data-openbitfun-part="source" data-starmate-component="canvas-tool" data-starmate-part="source" >{sourcePreview}</pre>}
       </div>
     );
   }
 
   return (
-    <div className="openbitfun-canvas-panel" data-openbitfun-component="canvas-tool" data-openbitfun-part="root" data-starmate-component="canvas-tool" data-starmate-part="root" >
-      <div className="openbitfun-canvas-panel__toolbar" data-openbitfun-component="canvas-tool" data-openbitfun-part="toolbar" data-starmate-component="canvas-tool" data-starmate-part="toolbar" >
+    <div className="starmate-canvas-panel" data-openbitfun-component="canvas-tool" data-openbitfun-part="root" data-starmate-component="canvas-tool" data-starmate-part="root" >
+      <div className="starmate-canvas-panel__toolbar" data-openbitfun-component="canvas-tool" data-openbitfun-part="toolbar" data-starmate-component="canvas-tool" data-starmate-part="toolbar" >
         <IconButton
           type="button"
-          className={`openbitfun-canvas-panel__toolbar-button${sourceVisible ? ' openbitfun-canvas-panel__toolbar-button--active' : ''}`}
+          className={`starmate-canvas-panel__toolbar-button${sourceVisible ? ' starmate-canvas-panel__toolbar-button--active' : ''}`}
           aria-pressed={sourceVisible}
           aria-label={sourceVisible ? 'Hide Canvas source' : 'Show Canvas source'}
           title={sourceVisible ? 'Hide Canvas source' : 'Show Canvas source'}
@@ -1016,7 +1016,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
         />
         <IconButton
           type="button"
-          className={`openbitfun-canvas-panel__toolbar-button${designMode ? ' openbitfun-canvas-panel__toolbar-button--active' : ''}`}
+          className={`starmate-canvas-panel__toolbar-button${designMode ? ' starmate-canvas-panel__toolbar-button--active' : ''}`}
           aria-pressed={designMode}
           title="Select Canvas element"
           onClick={() => setDesignMode(value => !value)}
@@ -1025,19 +1025,19 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
         />
         <IconButton
           type="button"
-          className="openbitfun-canvas-panel__toolbar-button"
+          className="starmate-canvas-panel__toolbar-button"
           title="Export HTML"
           aria-label="Export Canvas HTML"
           disabled={exportingHtml}
           onClick={handleExportHtml}
-          icon={exportingHtml ? <Loader2 size={15} className="openbitfun-canvas-panel__toolbar-icon--spin" /> : <Icon name="arrow-down" size="sm" />}
+          icon={exportingHtml ? <Loader2 size={15} className="starmate-canvas-panel__toolbar-icon--spin" /> : <Icon name="arrow-down" size="sm" />}
         />
       </div>
       {isFrameReady && (
         <iframe
           key={frameDocumentKey}
           ref={iframeRef}
-          className="openbitfun-canvas-panel__frame"
+          className="starmate-canvas-panel__frame"
           data-openbitfun-component="canvas-tool"
           data-openbitfun-part="frame"
           title={resolvedTitle}
@@ -1056,10 +1056,10 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
          data-starmate-component="canvas-tool" data-starmate-part="frame" />
       )}
       {sourceVisible && (
-        <div className="openbitfun-canvas-panel__source-overlay" role="dialog" aria-modal="true" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceOverlay" data-starmate-component="canvas-tool" data-starmate-part="sourceOverlay" >
-          <div className="openbitfun-canvas-panel__source-dialog" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceDialog" data-starmate-component="canvas-tool" data-starmate-part="sourceDialog" >
-            <div className="openbitfun-canvas-panel__source-editor">
-              <Suspense fallback={<div className="openbitfun-canvas-panel__source-loading">Loading editor...</div>}>
+        <div className="starmate-canvas-panel__source-overlay" role="dialog" aria-modal="true" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceOverlay" data-starmate-component="canvas-tool" data-starmate-part="sourceOverlay" >
+          <div className="starmate-canvas-panel__source-dialog" data-openbitfun-component="canvas-tool" data-openbitfun-part="sourceDialog" data-starmate-component="canvas-tool" data-starmate-part="sourceDialog" >
+            <div className="starmate-canvas-panel__source-editor">
+              <Suspense fallback={<div className="starmate-canvas-panel__source-loading">Loading editor...</div>}>
                 <CanvasSourceCodeEditor
                   key={sourceDialogKey}
                   filePath={sourceDialogFilePath}
@@ -1071,7 +1071,7 @@ export const StarMateCanvasPanel: React.FC<StarMateCanvasPanelProps> = ({
                   showLineNumbers
                   showMinimap
                   isActiveTab={sourceVisible}
-                  className="openbitfun-canvas-panel__source-code-editor"
+                  className="starmate-canvas-panel__source-code-editor"
                 />
               </Suspense>
             </div>

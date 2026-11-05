@@ -69,7 +69,7 @@ const outputs = [
     content: generateTypeScript(),
   },
   {
-    path: 'src/crates/assembly/core/builtin_skills/openbitfun-canvas/sdk/sdk-contract.generated.json',
+    path: 'src/crates/assembly/core/builtin_skills/starmate-canvas/sdk/sdk-contract.generated.json',
     content: `${JSON.stringify({ ...contract, runtimeExports }, null, 2)}\n`,
   },
 ];

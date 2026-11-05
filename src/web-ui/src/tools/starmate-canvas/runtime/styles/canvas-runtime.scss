@@ -55,7 +55,7 @@
 
 html,
 body,
-#openbitfun-canvas-root {
+#starmate-canvas-root {
   min-height: 100%;
 }
 
@@ -89,11 +89,11 @@ button {
   color: inherit;
 }
 
-#openbitfun-canvas-root {
+#starmate-canvas-root {
   padding: 24px 20px 56px;
 }
 
-.openbitfun-canvas-boot {
+.starmate-canvas-boot {
   max-width: 860px;
   margin: 0 auto;
   padding: 12px;
@@ -103,12 +103,12 @@ button {
   background: color-mix(in srgb, var(--starmate-color-surface-panel) 72%, transparent);
 }
 
-.openbitfun-canvas-stack {
+.starmate-canvas-stack {
   min-width: 0;
   width: 100%;
 }
 
-#openbitfun-canvas-root > .openbitfun-canvas-stack {
+#starmate-canvas-root > .starmate-canvas-stack {
   max-width: min(100%, 980px);
   margin-inline: auto;
 }
@@ -341,27 +341,27 @@ html[data-starmate-canvas-design-mode] body {
   overflow: visible;
 }
 
-.openbitfun-canvas-toggle {
+.starmate-canvas-toggle {
   display: inline-flex;
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
 }
 
-.openbitfun-canvas-toggle__copy {
+.starmate-canvas-toggle__copy {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
 
-.openbitfun-canvas-toggle__label {
+.starmate-canvas-toggle__label {
   color: var(--starmate-color-content-primary);
   font-size: var(--starmate-type-label-md-font-size);
 }
 
-.openbitfun-canvas-toggle__description,
-.openbitfun-canvas-toggle__status {
+.starmate-canvas-toggle__description,
+.starmate-canvas-toggle__status {
   color: var(--starmate-color-content-muted);
   font-size: var(--starmate-type-label-sm-font-size);
 }

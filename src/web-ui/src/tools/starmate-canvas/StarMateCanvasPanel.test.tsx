@@ -117,7 +117,7 @@ describe('StarMateCanvasPanel message boundary', () => {
       root.render(
         <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
-          artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
+          artifactReference="starmate-canvas://session/session_1/canvas/canvas_1"
           html="<!doctype html><html><body>Canvas</body></html>"
         />,
       );
@@ -139,7 +139,7 @@ describe('StarMateCanvasPanel message boundary', () => {
       root.render(
         <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
-          artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
+          artifactReference="starmate-canvas://session/session_1/canvas/canvas_1"
           html="<!doctype html><html><body>Canvas</body></html>"
         />,
       );
@@ -152,7 +152,7 @@ describe('StarMateCanvasPanel message boundary', () => {
     await act(async () => {
       window.dispatchEvent(new MessageEvent('message', {
         data: {
-          type: 'openbitfun-canvas-action',
+          type: 'starmate-canvas-action',
           requestId: 'forged-action',
           action: { type: 'copyText', text: 'forged clipboard write' },
         },
@@ -176,7 +176,7 @@ describe('StarMateCanvasPanel message boundary', () => {
       root.render(
         <StarMateCanvasPanel
           workspaceId="canvas-workspace-id"
-          artifactReference="openbitfun-canvas://session/session_1/canvas/canvas_1"
+          artifactReference="starmate-canvas://session/session_1/canvas/canvas_1"
           html={`<!doctype html><html><body><script data-revision="rev_1">window.StarMateCanvasRuntime.mount(Canvas);</script></body></html>`}
           workspacePath="/repo"
         />,
@@ -195,7 +195,7 @@ describe('StarMateCanvasPanel message boundary', () => {
     await act(async () => {
       window.dispatchEvent(new MessageEvent('message', {
         data: {
-          type: 'openbitfun-canvas-runtime-error',
+          type: 'starmate-canvas-runtime-error',
           message: "undefined is not an object (evaluating 'appearance.surface.primary')",
           name: 'TypeError',
           stack: 'LayerDiagram@blob:test:1:1',
@@ -218,7 +218,7 @@ describe('StarMateCanvasPanel message boundary', () => {
     await act(async () => {
       window.dispatchEvent(new MessageEvent('message', {
         data: {
-          type: 'openbitfun-canvas-runtime-error',
+          type: 'starmate-canvas-runtime-error',
           message: "undefined is not an object (evaluating 'appearance.surface.primary')",
           name: 'TypeError',
           stack: 'LayerDiagram@blob:test:1:1',

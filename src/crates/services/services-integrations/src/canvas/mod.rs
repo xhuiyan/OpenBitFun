@@ -665,7 +665,7 @@ mod tests {
     #[tokio::test]
     async fn canvas_store_persists_snapshots_by_session() {
         let sessions_dir = std::env::temp_dir().join(format!(
-            "openbitfun-canvas-store-test-{}",
+            "starmate-canvas-store-test-{}",
             uuid::Uuid::new_v4()
         ));
         let store = CanvasMemoryStore::persistent(&sessions_dir);
@@ -730,7 +730,7 @@ mod tests {
     #[tokio::test]
     async fn persistent_canvas_store_rejects_unsafe_path_segments() {
         let sessions_dir = std::env::temp_dir().join(format!(
-            "openbitfun-canvas-store-test-{}",
+            "starmate-canvas-store-test-{}",
             uuid::Uuid::new_v4()
         ));
         let store = CanvasMemoryStore::persistent(&sessions_dir);
@@ -989,7 +989,7 @@ mod tests {
         assert!(result.compiled, "{:?}", result.diagnostics);
         let html = result.payload.unwrap().html;
 
-        assert!(html.contains("openbitfun-canvas-root"));
+        assert!(html.contains("starmate-canvas-root"));
         assert!(html.contains("StarMateCanvasRuntime.mount"));
         assert!(html.contains("connect-src 'none'"));
         assert!(!html.contains("</script><unsafe>"));

@@ -1,6 +1,6 @@
 import reactUmd from '../../../node_modules/react/umd/react.production.min.js?raw';
 import reactDomUmd from '../../../node_modules/react-dom/umd/react-dom.production.min.js?raw';
-import openbitfunCanvasRuntimeBundle from 'virtual:openbitfun-canvas-runtime-bundle';
+import openbitfunCanvasRuntimeBundle from 'virtual:starmate-canvas-runtime-bundle';
 import { buildCanvasRuntimeInstallerScript } from './runtime/canvasRuntimeInstaller';
 import { CANVAS_RUNTIME_VERSION } from './runtime/sdk/contract.generated';
 
@@ -86,19 +86,19 @@ export function buildReactCanvasHtmlResult(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; frame-src 'none';">
-  <meta name="openbitfun-canvas-revision" content="${escapeHtml(revision)}">
+  <meta name="starmate-canvas-revision" content="${escapeHtml(revision)}">
   <title>${escapeHtml(options.title)}</title>
   <style>${openbitfunCanvasRuntimeBundle.css}</style>
 </head>
 <body>
-  <div id="openbitfun-canvas-root">
-    <main class="openbitfun-canvas-boot">Canvas runtime is starting...</main>
+  <div id="starmate-canvas-root">
+    <main class="starmate-canvas-boot">Canvas runtime is starting...</main>
   </div>
   <script>${sanitizeInlineScript(reactCanvasEarlyBridge(revision))}</script>
   <script>${sanitizeInlineScript(reactUmd)}</script>
-  <script>window.__openbitfunCanvasPost?.('openbitfun-canvas-react-loaded', { hasReact: Boolean(window.React) });</script>
+  <script>window.__openbitfunCanvasPost?.('starmate-canvas-react-loaded', { hasReact: Boolean(window.React) });</script>
   <script>${sanitizeInlineScript(reactDomUmd)}</script>
-  <script>window.__openbitfunCanvasPost?.('openbitfun-canvas-react-dom-loaded', { hasReactDOM: Boolean(window.ReactDOM), hasCreateRoot: Boolean(window.ReactDOM?.createRoot) });</script>
+  <script>window.__openbitfunCanvasPost?.('starmate-canvas-react-dom-loaded', { hasReactDOM: Boolean(window.ReactDOM), hasCreateRoot: Boolean(window.ReactDOM?.createRoot) });</script>
   <script>${sanitizeInlineScript(buildCanvasRuntimeInstallerScript(revision))}</script>
   <script>${sanitizeInlineScript(openbitfunCanvasRuntimeBundle.js)}</script>
   <script>${sanitizeInlineScript(wrapUserCanvasScript(componentScript.code, revision))}</script>
@@ -125,7 +125,7 @@ function reactCanvasEarlyBridge(revision: string): string {
     window.parent?.postMessage({ type, sourceRevisionSeen: sourceRevision, ...(payload || {}) }, '*');
   };
   window.addEventListener('error', event => {
-    window.__openbitfunCanvasPost('openbitfun-canvas-early-error', {
+    window.__openbitfunCanvasPost('starmate-canvas-early-error', {
       ...errorPayload(event.error || event.message),
       filename: event.filename,
       lineno: event.lineno,
@@ -133,9 +133,9 @@ function reactCanvasEarlyBridge(revision: string): string {
     });
   });
   window.addEventListener('unhandledrejection', event => {
-    window.__openbitfunCanvasPost('openbitfun-canvas-early-error', errorPayload(event.reason || 'Canvas runtime promise rejection'));
+    window.__openbitfunCanvasPost('starmate-canvas-early-error', errorPayload(event.reason || 'Canvas runtime promise rejection'));
   });
-  window.__openbitfunCanvasPost('openbitfun-canvas-boot-started');
+  window.__openbitfunCanvasPost('starmate-canvas-boot-started');
 })();
 `;
 }
@@ -150,6 +150,6 @@ ${componentCode}
     window.StarMateCanvasRuntime.reportRuntimeError(error);
   }
 })();
-//# sourceURL=openbitfun-canvas-${revision || 'unknown'}.js
+//# sourceURL=starmate-canvas-${revision || 'unknown'}.js
 `;
 }

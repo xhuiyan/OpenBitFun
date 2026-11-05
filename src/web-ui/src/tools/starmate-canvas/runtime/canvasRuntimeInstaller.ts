@@ -23,7 +23,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
   const runtimeWindow = window as unknown as RuntimeWindow;
   const React = runtimeWindow.React as RuntimeReact | undefined;
   const ReactDOM = runtimeWindow.ReactDOM as RuntimeReactDOM | undefined;
-  const rootElement = document.getElementById('openbitfun-canvas-root');
+  const rootElement = document.getElementById('starmate-canvas-root');
   let reactRoot: ReturnType<RuntimeReactDOM['createRoot']> | null = null;
   let renderComponent: any = null;
   let hostAppearance = makeAppearance({
@@ -249,7 +249,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     if (!rejectedStateKeys.has(key)) {
       rejectedStateKeys.add(key);
       window.parent?.postMessage({
-        type: 'openbitfun-canvas-state-warning',
+        type: 'starmate-canvas-state-warning',
         sourceRevisionSeen: sourceRevision,
         key,
         message: `Ignored incompatible persisted Canvas state for key "${key}"`,
@@ -297,7 +297,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
         setValue(resolved);
         window.parent?.postMessage(
           {
-            type: 'openbitfun-canvas-save-state',
+            type: 'starmate-canvas-save-state',
             sourceRevisionSeen: sourceRevision,
             values: hostStateValues,
             valueVersions: hostStateVersions,
@@ -317,7 +317,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
         new Promise((resolve, reject) => {
           const requestId = `canvas-action-${++requestSeq}`;
           pendingRequests.set(requestId, { resolve, reject });
-          window.parent?.postMessage({ type: 'openbitfun-canvas-action', requestId, action }, '*');
+          window.parent?.postMessage({ type: 'starmate-canvas-action', requestId, action }, '*');
         }),
       [],
     );
@@ -328,12 +328,12 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
   }
 
   function postReady(): void {
-    window.parent?.postMessage({ type: 'openbitfun-canvas-ready', sourceRevisionSeen: sourceRevision }, '*');
+    window.parent?.postMessage({ type: 'starmate-canvas-ready', sourceRevisionSeen: sourceRevision }, '*');
   }
 
   function postRuntimeError(error: any): void {
     window.parent?.postMessage({
-      type: 'openbitfun-canvas-runtime-error',
+      type: 'starmate-canvas-runtime-error',
       sourceRevisionSeen: sourceRevision,
       message: String(error?.message || error || 'Canvas runtime error'),
       name: error?.name ? String(error.name) : undefined,
@@ -381,7 +381,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     if (!className) return undefined;
     return className
       .replace(/^openbitfun-/, '')
-      .replace(/^openbitfun-canvas-/, '')
+      .replace(/^starmate-canvas-/, '')
       .split('-')
       .filter(Boolean)
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
@@ -406,7 +406,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
   }
 
   function clearDesignHover(): void {
-    hoveredDesignElement?.removeAttribute('data-openbitfun-canvas-hovered');
+    hoveredDesignElement?.removeAttribute('data-starmate-canvas-hovered');
     hoveredDesignElement = null;
   }
 
@@ -414,12 +414,12 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     if (hoveredDesignElement === element) return;
     clearDesignHover();
     hoveredDesignElement = element;
-    hoveredDesignElement?.setAttribute('data-openbitfun-canvas-hovered', 'true');
+    hoveredDesignElement?.setAttribute('data-starmate-canvas-hovered', 'true');
   }
 
   function setDesignMode(enabled: boolean): void {
     designModeEnabled = enabled;
-    document.documentElement.toggleAttribute('data-openbitfun-canvas-design-mode', enabled);
+    document.documentElement.toggleAttribute('data-starmate-canvas-design-mode', enabled);
     if (!enabled) clearDesignHover();
   }
 
@@ -438,7 +438,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     event.preventDefault();
     event.stopPropagation();
     window.parent?.postMessage({
-      type: 'openbitfun-canvas-element-selected',
+      type: 'starmate-canvas-element-selected',
       sourceRevisionSeen: sourceRevision,
       reference: elementReference(event.target),
     }, '*');
@@ -512,15 +512,15 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
   window.addEventListener('message', event => {
     const data = event.data;
     if (!data || typeof data !== 'object') return;
-    if (data.type === 'openbitfun-canvas-appearance') {
+    if (data.type === 'starmate-canvas-appearance') {
       applyAppearance(data.appearance);
       stateListeners.forEach(listener => listener());
-    } else if (data.type === 'openbitfun-canvas-design-mode') {
+    } else if (data.type === 'starmate-canvas-design-mode') {
       setDesignMode(Boolean(data.enabled));
     } else if (
-      data.type === 'openbitfun-canvas-state' ||
-      data.type === 'openbitfun-canvas-load-state-result' ||
-      data.type === 'openbitfun-canvas-save-state-result'
+      data.type === 'starmate-canvas-state' ||
+      data.type === 'starmate-canvas-load-state-result' ||
+      data.type === 'starmate-canvas-save-state-result'
     ) {
       if (data.state && typeof data.state === 'object' && data.state.values && typeof data.state.values === 'object') {
         hostStateValues = { ...data.state.values };
@@ -530,7 +530,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
         stateListeners.forEach(listener => listener());
       }
       markStateReady();
-    } else if (data.type === 'openbitfun-canvas-action-result' || data.type === 'openbitfun-canvas-error') {
+    } else if (data.type === 'starmate-canvas-action-result' || data.type === 'starmate-canvas-error') {
       const request = data.requestId ? pendingRequests.get(data.requestId) : null;
       if (!request) return;
       pendingRequests.delete(data.requestId);
@@ -576,7 +576,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
     Fragment: React.Fragment,
     moduleStarted() {
       installSdkAdapters();
-      window.parent?.postMessage({ type: 'openbitfun-canvas-module-started', sourceRevisionSeen: sourceRevision }, '*');
+      window.parent?.postMessage({ type: 'starmate-canvas-module-started', sourceRevisionSeen: sourceRevision }, '*');
     },
     reportRuntimeError,
     mount(component: any) {
@@ -588,7 +588,7 @@ function installOpenBitFunCanvasRuntime(initialRevision: string): void {
 
   const stateRequestId = `canvas-state-${++requestSeq}`;
   window.parent?.postMessage({
-    type: 'openbitfun-canvas-load-state',
+    type: 'starmate-canvas-load-state',
     requestId: stateRequestId,
     sourceRevisionSeen: sourceRevision,
   }, '*');

@@ -78,14 +78,14 @@ export function Toggle({
   }
 
   return (
-    <label className="openbitfun-canvas-toggle">
+    <label className="starmate-canvas-toggle">
       {control}
-      <span className="openbitfun-canvas-toggle__copy">
-        {label ? <span className="openbitfun-canvas-toggle__label">{label}</span> : null}
+      <span className="starmate-canvas-toggle__copy">
+        {label ? <span className="starmate-canvas-toggle__label">{label}</span> : null}
         {description ? (
-          <span className="openbitfun-canvas-toggle__description">{description}</span>
+          <span className="starmate-canvas-toggle__description">{description}</span>
         ) : null}
-        {statusText ? <span className="openbitfun-canvas-toggle__status">{statusText}</span> : null}
+        {statusText ? <span className="starmate-canvas-toggle__status">{statusText}</span> : null}
       </span>
     </label>
   );

@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { build, type Plugin } from 'vite';
 
-const VIRTUAL_MODULE_ID = 'virtual:openbitfun-canvas-runtime-bundle';
+const VIRTUAL_MODULE_ID = 'virtual:starmate-canvas-runtime-bundle';
 const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 
 interface RuntimeBundleCache {
@@ -88,7 +88,7 @@ export function openbitfunCanvasRuntimeBundlePlugin(): Plugin {
   }
 
   return {
-    name: 'openbitfun-canvas-runtime-bundle',
+    name: 'starmate-canvas-runtime-bundle',
     enforce: 'pre',
     watchChange(id) {
       if (path.resolve(id).startsWith(runtimeRoot)) {

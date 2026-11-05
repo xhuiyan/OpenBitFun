@@ -47,7 +47,7 @@ function canvasToolItem(toolName: string): FlowToolItem {
       success: true,
       result: {
         action: toolName,
-        artifactReference: 'openbitfun-canvas://session/test/canvas/canvas_123',
+        artifactReference: 'starmate-canvas://session/test/canvas/canvas_123',
         compiled: true,
         canvas: {
           status: 'compiled',
@@ -134,7 +134,7 @@ describe('CanvasToolCard', () => {
 
     expect(mocks.openCanvasArtifactTab).toHaveBeenCalledTimes(1);
     expect(mocks.openCanvasArtifactTab).toHaveBeenCalledWith(expect.objectContaining({
-      artifactReference: 'openbitfun-canvas://session/test/canvas/canvas_123',
+      artifactReference: 'starmate-canvas://session/test/canvas/canvas_123',
       title: 'Architecture Map',
       sourceMetadata: expect.objectContaining({
         type: 'tool-call',

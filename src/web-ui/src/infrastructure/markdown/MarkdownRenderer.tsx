@@ -49,7 +49,9 @@ import { rehypeWindowsDrivePaths } from './rehypeWindowsDrivePaths';
 const log = createLogger('Markdown');
 const COMPUTER_LINK_PREFIX = 'computer://';
 const FILE_LINK_PREFIX = 'file://';
-const CANVAS_LINK_PREFIX = 'openbitfun-canvas://';
+const CANVAS_LINK_PREFIX = 'starmate-canvas://';
+const LEGACY_CANVAS_LINK_PREFIX = 'openbitfun-canvas://';
+const CANVAS_LINK_PREFIX_PATTERN = /^(?:starmate|openbitfun)-canvas:\/\//;
 const WORKSPACE_FOLDER_PLACEHOLDER = '{{workspaceFolder}}';
 
 const MarkdownMathRenderer = lazyWithRecovery(() => import('./MarkdownMathRenderer'));
@@ -77,7 +79,7 @@ function markdownUrlTransform(value: string, key?: string): string {
     }
   }
   if (key === 'src' && /^data:image\/(png|jpeg|gif|webp|bmp|svg\+xml|avif);base64,/i.test(value)) return value;
-  if (value.startsWith(CANVAS_LINK_PREFIX) && parseCanvasArtifactReference(value)) {
+  if (CANVAS_LINK_PREFIX_PATTERN.test(value) && parseCanvasArtifactReference(value)) {
     return value;
   }
   return defaultUrlTransform(value);
@@ -169,13 +171,13 @@ function mayNeedWorkspacePathForMarkdownLinks(content: string): boolean {
   // while false negatives could make relative local links display poorly.
   if (
     hasMarkdownLinkSyntax &&
-    /!?\[[^\]]+\]\(\s*(?!https?:|mailto:|data:|asset:|tauri:|visualization:|tab:|openbitfun-canvas:|#)[^)]+\)/i.test(content)
+    /!?\[[^\]]+\]\(\s*(?!https?:|mailto:|data:|asset:|tauri:|visualization:|tab:|(?:starmate|openbitfun)-canvas:|#)[^)]+\)/i.test(content)
   ) {
     return true;
   }
 
   return hasRawAnchorSyntax &&
-    /<a\s+[^>]*href=["']\s*(?!https?:|mailto:|visualization:|tab:|openbitfun-canvas:|#)[^"']+["']/i.test(content);
+    /<a\s+[^>]*href=["']\s*(?!https?:|mailto:|visualization:|tab:|(?:starmate|openbitfun)-canvas:|#)[^"']+["']/i.test(content);
 }
 
 function mayContainMarkdownMath(content: string): boolean {
@@ -295,7 +297,7 @@ const sanitizeSchema = {
   },
   protocols: {
     ...defaultSchema.protocols,
-    href: [...(defaultSchema.protocols?.href || []), 'openbitfun-canvas', 'computer', 'file', 'tab', 'visualization', 'openbitfun'],
+    href: [...(defaultSchema.protocols?.href || []), 'starmate-canvas', 'openbitfun-canvas', 'computer', 'file', 'tab', 'visualization', 'openbitfun'],
     src: [...(defaultSchema.protocols?.src || []), 'asset', 'data', 'http', 'https', 'tauri', 'computer', 'file', 'openbitfun'],
   },
 };
@@ -317,13 +319,13 @@ function remarkAutolinkInternalLinks() {
         || (
           !value.includes(COMPUTER_LINK_PREFIX)
           && !value.includes(FILE_LINK_PREFIX)
-          && !value.includes(CANVAS_LINK_PREFIX)
+          && !CANVAS_LINK_PREFIX_PATTERN.test(value)
         )
       ) {
         return;
       }
 
-      const re = /(computer:\/\/|file:\/\/|openbitfun-canvas:\/\/)[^\s<>()]+/g;
+      const re = /(computer:\/\/|file:\/\/|(?:starmate|openbitfun)-canvas:\/\/)[^\s<>()]+/g;
       let match: RegExpExecArray | null;
       let lastIndex = 0;
       const nextChildren: any[] = [];
@@ -1415,7 +1417,7 @@ const MarkdownSurface = React.memo<MarkdownRendererProps & { thinking?: boolean;
       const isHashLink = typeof hrefValue === 'string' && hrefValue.startsWith('#');
       const isVisualizationLink = typeof hrefValue === 'string' && hrefValue.startsWith('visualization:');
       const isTabLink = typeof hrefValue === 'string' && hrefValue.startsWith('tab:');
-      const isCanvasLink = typeof hrefValue === 'string' && hrefValue.startsWith(CANVAS_LINK_PREFIX);
+      const isCanvasLink = typeof hrefValue === 'string' && CANVAS_LINK_PREFIX_PATTERN.test(hrefValue);
       const isHttpLink = typeof hrefValue === 'string' &&
         (hrefValue.startsWith('http://') || hrefValue.startsWith('https://'));
       const isMailtoLink = typeof hrefValue === 'string' && hrefValue.startsWith('mailto:');

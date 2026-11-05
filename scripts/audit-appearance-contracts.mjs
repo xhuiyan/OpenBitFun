@@ -22,7 +22,7 @@ const crossBoundaryRoots = [
   path.join(repoRoot, 'tests', 'e2e', 'helpers'),
   path.join(repoRoot, 'src', 'crates', 'contracts', 'product-domains', 'src', 'miniapp'),
   path.join(repoRoot, 'src', 'crates', 'services', 'services-integrations', 'src', 'canvas'),
-  path.join(repoRoot, 'src', 'crates', 'assembly', 'core', 'builtin_skills', 'openbitfun-canvas'),
+  path.join(repoRoot, 'src', 'crates', 'assembly', 'core', 'builtin_skills', 'starmate-canvas'),
   path.join(repoRoot, 'src', 'crates', 'assembly', 'core', 'builtin_skills', 'miniapp-dev'),
 ];
 const failures = [];
@@ -854,7 +854,7 @@ for (const [file, source] of productionSources) {
 const crossBoundaryForbiddenContracts = [
   ['hostTheme', /\bhostTheme\b/],
   ['CanvasHostTheme', /\bCanvasHostTheme\b/],
-  ['openbitfun-canvas-theme', /openbitfun-canvas-theme/],
+  ['starmate-canvas-theme', /starmate-canvas-theme/],
   ['onThemeChange', /\bonThemeChange\b/],
   ['data-theme-type', /data-theme-type/],
   ['openbitfun/request-theme', /openbitfun\/request-theme/],

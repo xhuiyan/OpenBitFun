@@ -13,7 +13,7 @@ export function canvasArrayProp<T>(
     const message = `${component}.${prop} expected an array; the invalid value was ignored`;
     console.warn(message);
     window.parent?.postMessage({
-      type: 'openbitfun-canvas-prop-warning',
+      type: 'starmate-canvas-prop-warning',
       component,
       prop,
       message,

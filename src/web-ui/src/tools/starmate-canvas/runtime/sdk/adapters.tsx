@@ -125,7 +125,7 @@ export function Pill({
       className={className}
     >
       {children}
-      {keyboardHint ? <span className="openbitfun-canvas-adapter-pill__hint">{keyboardHint}</span> : null}
+      {keyboardHint ? <span className="starmate-canvas-adapter-pill__hint">{keyboardHint}</span> : null}
     </DesignStatusPill>
   );
 }
@@ -163,7 +163,7 @@ export function Tabs({
 
   return (
     <div
-      className={['openbitfun-canvas-adapter-tabs', className].filter(Boolean).join(' ')}
+      className={['starmate-canvas-adapter-tabs', className].filter(Boolean).join(' ')}
       data-size={size}
       data-stretch={stretch ? 'true' : 'false'}
       data-type={type}

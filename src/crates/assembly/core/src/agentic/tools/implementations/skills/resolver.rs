@@ -126,7 +126,7 @@ mod tests {
 
     #[test]
     fn canvas_skill_can_be_explicitly_enabled() {
-        let canvas = builtin_skill("openbitfun-canvas");
+        let canvas = builtin_skill("starmate-canvas");
         let mut overrides = UserModeSkillOverrides::default();
         let disabled_project = HashSet::new();
 

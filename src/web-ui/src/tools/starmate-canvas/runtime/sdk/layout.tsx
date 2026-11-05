@@ -63,7 +63,7 @@ export function Stack({ children, gap = 12, style, ...props }: CanvasStackProps)
   return (
     <DesignStack
       {...elementProps}
-      className={['openbitfun-canvas-stack', elementProps.className].filter(Boolean).join(' ')}
+      className={['starmate-canvas-stack', elementProps.className].filter(Boolean).join(' ')}
       direction="vertical"
       gap="0"
       style={{

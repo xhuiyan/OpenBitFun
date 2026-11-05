@@ -75,7 +75,7 @@ export function CanvasRuntimeRoot({
   return (
     <CanvasRuntimeErrorBoundary onError={onError}>
       <DesignSystemProvider colorScheme={colorScheme} portalHost={document.body}>
-        <ThemeRoot colorScheme={colorScheme} className="openbitfun-canvas-design-system-root">
+        <ThemeRoot colorScheme={colorScheme} className="starmate-canvas-design-system-root">
           {Component ? <Component /> : null}
           <CanvasCommitProbe onReady={onReady} />
         </ThemeRoot>

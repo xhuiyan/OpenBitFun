@@ -41,7 +41,7 @@ describe('Canvas runtime installer', () => {
     expect(script).toContain('...runtimeWindow.StarMateCanvasSDKAdapters');
     expect(script).toContain('runtimeWindow.StarMateCanvasRuntimeHooks');
     expect(script.indexOf('installSdkAdapters();')).toBeLessThan(
-      script.indexOf('openbitfun-canvas-module-started'),
+      script.indexOf('starmate-canvas-module-started'),
     );
   });
 
@@ -77,9 +77,9 @@ describe('Canvas runtime installer', () => {
   it('installs design-mode element selection handlers', () => {
     const script = buildCanvasRuntimeInstallerScript('rev_test');
 
-    expect(script).toContain('openbitfun-canvas-design-mode');
-    expect(script).toContain('data-openbitfun-canvas-design-mode');
-    expect(script).toContain('openbitfun-canvas-element-selected');
+    expect(script).toContain('starmate-canvas-design-mode');
+    expect(script).toContain('data-starmate-canvas-design-mode');
+    expect(script).toContain('starmate-canvas-element-selected');
     expect(script).toContain('document.addEventListener("pointermove"');
     expect(script).toContain('document.addEventListener("click"');
   });

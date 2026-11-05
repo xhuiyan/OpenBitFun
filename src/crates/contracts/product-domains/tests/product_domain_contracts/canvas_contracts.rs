@@ -29,7 +29,7 @@ fn canvas_artifact_ref_uses_logical_uri_not_path() {
 
     assert_eq!(
         uri,
-        "openbitfun-canvas://session/session%201/canvas/canvas%201"
+        "starmate-canvas://session/session%201/canvas/canvas%201"
     );
     assert!(!uri.contains("/Users/"));
     assert!(!uri.contains("\\"));
@@ -39,12 +39,22 @@ fn canvas_artifact_ref_uses_logical_uri_not_path() {
 }
 
 #[test]
+fn canvas_artifact_ref_still_accepts_legacy_scheme() {
+    let parsed = parse_canvas_artifact_ref(
+        "openbitfun-canvas://session/session%201/canvas/canvas%201",
+    )
+    .expect("legacy reference should parse");
+    assert_eq!(parsed.session_id.as_str(), "session 1");
+    assert_eq!(parsed.canvas_id.as_str(), "canvas 1");
+}
+
+#[test]
 fn canvas_artifact_ref_rejects_unsafe_path_segments() {
     for uri in [
-        "openbitfun-canvas://session/..%2Fother/canvas/canvas_1",
-        "openbitfun-canvas://session/../canvas/canvas_1",
-        "openbitfun-canvas://session/session_1/canvas/canvas%2Fwith%2Fslash",
-        "openbitfun-canvas://session/session%5C1/canvas/canvas_1",
+        "starmate-canvas://session/..%2Fother/canvas/canvas_1",
+        "starmate-canvas://session/../canvas/canvas_1",
+        "starmate-canvas://session/session_1/canvas/canvas%2Fwith%2Fslash",
+        "starmate-canvas://session/session%5C1/canvas/canvas_1",
     ] {
         assert!(
             parse_canvas_artifact_ref(uri).is_err(),

@@ -24,7 +24,7 @@ async function runCanvasHtml(html: string, state: Record<string, unknown> = {}) 
   const dom = new JSDOM(html, {
     pretendToBeVisual: true,
     runScripts: 'outside-only',
-    url: 'https://openbitfun-canvas.local/',
+    url: 'https://starmate-canvas.local/',
   });
   const messages: unknown[] = [];
 
@@ -34,11 +34,11 @@ async function runCanvasHtml(html: string, state: Record<string, unknown> = {}) 
       postMessage(message: unknown) {
         messages.push(message);
         const record = message as { type?: string; requestId?: string };
-        if (record?.type === 'openbitfun-canvas-load-state') {
+        if (record?.type === 'starmate-canvas-load-state') {
           dom.window.setTimeout(() => {
             dom.window.dispatchEvent(new dom.window.MessageEvent('message', {
               data: {
-                type: 'openbitfun-canvas-load-state-result',
+                type: 'starmate-canvas-load-state-result',
                 requestId: record.requestId,
                 state: {
                   canvasId: 'canvas_test',
@@ -75,7 +75,7 @@ async function runCanvasHtml(html: string, state: Record<string, unknown> = {}) 
       const poll = () => {
         const settled = messages.some(message => {
           const type = (message as { type?: string })?.type;
-          return type === 'openbitfun-canvas-ready' || type === 'openbitfun-canvas-runtime-error';
+          return type === 'starmate-canvas-ready' || type === 'starmate-canvas-runtime-error';
         });
         if (settled || Date.now() >= deadline) {
           resolve();
@@ -118,13 +118,13 @@ describe('React Canvas runtime bridge', () => {
     expect(html).toContain('window.StarMateCanvasRuntime');
     expect(html).toContain('window.StarMateCanvasSDKAdapters');
     expect(html).toContain('ReactDOM.createRoot');
-    expect(html).toContain('<meta name="openbitfun-canvas-revision" content="rev_test">');
+    expect(html).toContain('<meta name="starmate-canvas-revision" content="rev_test">');
     expect(html).toContain("function Canvas() { return h(Stack, null, 'Hello'); }");
     expect(html).not.toContain('process.env.NODE_ENV');
     expect(html).not.toContain('jsxDEV');
     expect(html).not.toContain('jsxRuntime');
     expect(html).not.toContain('legacy runtime');
-    expect(html).toContain('//# sourceURL=openbitfun-canvas-rev_test.js');
+    expect(html).toContain('//# sourceURL=starmate-canvas-rev_test.js');
   });
 
   it('keeps a compiled payload on its matching legacy runtime', () => {
@@ -147,7 +147,7 @@ describe('React Canvas runtime bridge', () => {
 
     expect(html).toContain('color-scheme:light');
     expect(html).toContain('--openbitfun-canvas-bg: Canvas');
-    expect(html).toContain('.openbitfun-canvas-stack{max-width:min(100%,980px);margin-inline:auto}');
+    expect(html).toContain('.starmate-canvas-stack{max-width:min(100%,980px);margin-inline:auto}');
   });
 
   it('emits syntactically valid inline scripts', () => {
@@ -197,8 +197,8 @@ window.StarMateCanvasRuntime.mount(Canvas);
     const { dom, messages } = await runCanvasHtml(html ?? '');
 
     try {
-      expect(messages).toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-ready' }));
-      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-runtime-error' }));
+      expect(messages).toContainEqual(expect.objectContaining({ type: 'starmate-canvas-ready' }));
+      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'starmate-canvas-runtime-error' }));
       expect(dom.window.document.querySelector('[data-testid="node"]')?.getAttribute('fill')).toBe(
         'var(--openbitfun-canvas-panel)',
       );
@@ -232,7 +232,7 @@ window.StarMateCanvasRuntime.mount(Canvas);
     expect(wrapped).toContain('window.StarMateCanvasSDKAdapters');
     expect(wrapped).toContain('BarChart:');
     expect(wrapped).not.toContain('function BarChart(props = {})');
-    expect(wrapped).toContain('<meta name="openbitfun-canvas-revision" content="rev_chart">');
+    expect(wrapped).toContain('<meta name="starmate-canvas-revision" content="rev_chart">');
     expect(wrapped).toContain('ReactDOM.createRoot');
     expect(wrapped).not.toContain('legacy runtime');
   });
@@ -290,14 +290,14 @@ window.StarMateCanvasRuntime.mount(Canvas);
     const { dom, messages } = await runCanvasHtml(html ?? '');
 
     try {
-      expect(messages).toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-module-started' }));
-      expect(messages).toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-ready' }));
-      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-runtime-error' }));
+      expect(messages).toContainEqual(expect.objectContaining({ type: 'starmate-canvas-module-started' }));
+      expect(messages).toContainEqual(expect.objectContaining({ type: 'starmate-canvas-ready' }));
+      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'starmate-canvas-runtime-error' }));
       expect(dom.window.document.body.textContent).toContain('Runtime smoke');
       expect(dom.window.document.querySelector('.openbitfun-chart')).toBeTruthy();
       expect(dom.window.document.querySelector('.openbitfun-collapsible-section')).toBeTruthy();
       expect(dom.window.document.querySelector('.openbitfun-diagram')).toBeTruthy();
-      expect(dom.window.document.querySelector('.openbitfun-canvas-adapter-tabs')).toBeTruthy();
+      expect(dom.window.document.querySelector('.starmate-canvas-adapter-tabs')).toBeTruthy();
       expect(dom.window.document.querySelector('[data-openbitfun-component="tab-group"]')).toBeTruthy();
       expect(dom.window.document.querySelector('[data-openbitfun-component="input"]')).toBeTruthy();
       expect(dom.window.document.querySelector('[data-openbitfun-component="empty"]')).toBeTruthy();
@@ -328,19 +328,19 @@ window.StarMateCanvasRuntime.mount(Canvas);
     const { dom, messages } = await runCanvasHtml(html ?? '', { rows: 'stale value' });
     try {
       expect(messages).toContainEqual(expect.objectContaining({
-        type: 'openbitfun-canvas-state-warning',
+        type: 'starmate-canvas-state-warning',
         key: 'rows',
       }));
       expect(messages).toContainEqual(expect.objectContaining({
-        type: 'openbitfun-canvas-prop-warning',
+        type: 'starmate-canvas-prop-warning',
         component: 'Tabs',
         prop: 'items',
       }));
-      expect(messages).toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-ready' }));
-      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'openbitfun-canvas-runtime-error' }));
+      expect(messages).toContainEqual(expect.objectContaining({ type: 'starmate-canvas-ready' }));
+      expect(messages).not.toContainEqual(expect.objectContaining({ type: 'starmate-canvas-runtime-error' }));
       expect(dom.window.document.querySelector('[data-testid="row-count"]')?.textContent).toBe('2');
       expect(messages).toContainEqual(expect.objectContaining({
-        type: 'openbitfun-canvas-save-state',
+        type: 'starmate-canvas-save-state',
         values: { rows: [{ label: 'Current' }, { label: 'Added' }] },
       }));
     } finally {

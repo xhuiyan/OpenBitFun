@@ -70,7 +70,7 @@ describe('CanvasRuntimeApp', () => {
     expect(testWindow.StarMateCanvasSDK).toMatchObject({ Fallback: true, Adapter: true });
     expect(postMessage).toHaveBeenCalledWith(
       expect.objectContaining({
-        type: 'openbitfun-canvas-module-started',
+        type: 'starmate-canvas-module-started',
         sourceRevisionSeen: 'rev_test',
       }),
       '*',
@@ -89,14 +89,14 @@ describe('CanvasRuntimeApp', () => {
     expect(testWindow.ReactDOM?.createRoot).toHaveBeenCalled();
     expect(render).toHaveBeenCalled();
     expect(postMessage).not.toHaveBeenCalledWith(
-      expect.objectContaining({ type: 'openbitfun-canvas-ready' }),
+      expect.objectContaining({ type: 'starmate-canvas-ready' }),
       '*',
     );
     const runtimeRoot = render.mock.calls[0][0] as React.ReactElement<{ onReady: () => void }>;
     runtimeRoot.props.onReady();
     expect(postMessage).toHaveBeenCalledWith(
       expect.objectContaining({
-        type: 'openbitfun-canvas-ready',
+        type: 'starmate-canvas-ready',
         sourceRevisionSeen: 'rev_test',
         runtimeVersion: 'runtime_test',
         sdkVersion: 'sdk_test',

@@ -35,7 +35,7 @@ function runtimeWindow(): CanvasRuntimeWindow {
 
 function currentRevision(): string {
   return document
-    .querySelector('meta[name="openbitfun-canvas-revision"]')
+    .querySelector('meta[name="starmate-canvas-revision"]')
     ?.getAttribute('content') || '';
 }
 
@@ -65,14 +65,14 @@ function errorText(error: unknown): string {
 }
 
 function postReady(): void {
-  postCanvasMessage('openbitfun-canvas-ready');
+  postCanvasMessage('starmate-canvas-ready');
 }
 
 function postRuntimeError(error: unknown, componentStack?: string): void {
   const details = error && typeof error === 'object'
     ? error as { message?: unknown; name?: unknown; stack?: unknown }
     : null;
-  postCanvasMessage('openbitfun-canvas-runtime-error', {
+  postCanvasMessage('starmate-canvas-runtime-error', {
     message: details?.message ? String(details.message) : String(error || 'Canvas runtime error'),
     name: details?.name ? String(details.name) : undefined,
     stack: details?.stack ? String(details.stack) : undefined,
@@ -134,7 +134,7 @@ function reportRuntimeError(error: unknown): void {
 }
 
 export function installOpenBitFunCanvasRuntimeApp(): void {
-  rootElement = document.getElementById('openbitfun-canvas-root');
+  rootElement = document.getElementById('starmate-canvas-root');
   const target = runtimeWindow();
   const previousRuntime = target.StarMateCanvasRuntime || {};
 
@@ -144,7 +144,7 @@ export function installOpenBitFunCanvasRuntimeApp(): void {
     Fragment: React.Fragment,
     moduleStarted() {
       installSdkAdapters();
-      postCanvasMessage('openbitfun-canvas-module-started');
+      postCanvasMessage('starmate-canvas-module-started');
     },
     reportRuntimeError,
     mount(component: React.ComponentType) {

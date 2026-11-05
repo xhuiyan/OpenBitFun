@@ -44,41 +44,41 @@ export function CanvasPreflight({
       if (!iframe?.contentWindow || event.source !== iframe.contentWindow) return;
       const message = event.data as Record<string, unknown> | null;
       const type = typeof message?.type === 'string' ? message.type : '';
-      if (!type.startsWith('openbitfun-canvas-')) return;
+      if (!type.startsWith('starmate-canvas-')) return;
       try {
-        if (type === 'openbitfun-canvas-load-state') {
+        if (type === 'starmate-canvas-load-state') {
           const response = await canvasAPI.loadState(context);
           iframe.contentWindow.postMessage({
-            type: 'openbitfun-canvas-load-state-result',
+            type: 'starmate-canvas-load-state-result',
             requestId: message?.requestId,
             state: response.state ?? null,
           }, '*');
           return;
         }
-        if (type === 'openbitfun-canvas-module-started') {
+        if (type === 'starmate-canvas-module-started') {
           iframe.contentWindow.postMessage({
-            type: 'openbitfun-canvas-appearance',
+            type: 'starmate-canvas-appearance',
             appearance: readHostAppearancePayload(),
           }, '*');
           return;
         }
-        if (type === 'openbitfun-canvas-save-state') {
+        if (type === 'starmate-canvas-save-state') {
           iframe.contentWindow.postMessage({
-            type: 'openbitfun-canvas-save-state-result',
+            type: 'starmate-canvas-save-state-result',
             requestId: message?.requestId,
             state: null,
           }, '*');
           return;
         }
-        if (type === 'openbitfun-canvas-action') {
+        if (type === 'starmate-canvas-action') {
           iframe.contentWindow.postMessage({
-            type: 'openbitfun-canvas-error',
+            type: 'starmate-canvas-error',
             requestId: message?.requestId,
             error: 'Canvas host actions are disabled during preflight validation',
           }, '*');
           return;
         }
-        if (type === 'openbitfun-canvas-ready') {
+        if (type === 'starmate-canvas-ready') {
           const sourceRevisionSeen = String(message?.sourceRevisionSeen || '');
           const runtimeVersion = String(message?.runtimeVersion || '');
           const sdkVersion = String(message?.sdkVersion || '');
@@ -94,7 +94,7 @@ export function CanvasPreflight({
           finish('ready');
           return;
         }
-        if (type === 'openbitfun-canvas-runtime-error' || type === 'openbitfun-canvas-early-error') {
+        if (type === 'starmate-canvas-runtime-error' || type === 'starmate-canvas-early-error') {
           await canvasAPI.reportRuntimeError({
             ...context,
             sourceRevisionSeen: String(message?.sourceRevisionSeen || '') || undefined,

@@ -87,7 +87,7 @@ Rules:
 - Do not use relative imports, dynamic imports, npm packages, network fetches, or helper files.
 - The source must include `export default`.
 
-Returns a stable `openbitfun-canvas://...` artifact reference for subsequent Canvas tool calls. The client presents the artifact as an openable card automatically; do not copy the internal reference into user-facing prose. Use ReadCanvas to inspect it, PatchCanvas for small targeted revisions, and UpdateCanvas for full-source rewrites."#
+Returns a stable `starmate-canvas://...` artifact reference for subsequent Canvas tool calls. The client presents the artifact as an openable card automatically; do not copy the internal reference into user-facing prose. Use ReadCanvas to inspect it, PatchCanvas for small targeted revisions, and UpdateCanvas for full-source rewrites."#
             .to_string())
     }
 
@@ -213,7 +213,7 @@ Provide either `artifact_reference` returned by CreateCanvas/PatchCanvas/UpdateC
             "properties": {
                 "artifact_reference": {
                     "type": "string",
-                    "description": "Stable openbitfun-canvas:// artifact reference."
+                    "description": "Stable starmate-canvas:// artifact reference."
                 },
                 "canvas_id": {
                     "type": "string",
@@ -297,7 +297,7 @@ Provide either `artifact_reference` or `canvas_id`, plus one complete replacemen
             "properties": {
                 "artifact_reference": {
                     "type": "string",
-                    "description": "Stable openbitfun-canvas:// artifact reference."
+                    "description": "Stable starmate-canvas:// artifact reference."
                 },
                 "canvas_id": {
                     "type": "string",
@@ -379,7 +379,7 @@ Use this for small, targeted edits such as changing a label, number, style prop,
             "properties": {
                 "artifact_reference": {
                     "type": "string",
-                    "description": "Stable openbitfun-canvas:// artifact reference."
+                    "description": "Stable starmate-canvas:// artifact reference."
                 },
                 "canvas_id": {
                     "type": "string",
@@ -859,7 +859,7 @@ mod tests {
             dialog_turn_id: Some("turn_1".to_string()),
             workspace: Some(WorkspaceBinding::new(
                 Some(format!("workspace_{session_id}")),
-                std::env::temp_dir().join(format!("openbitfun-canvas-tool-test-{}", uuid_short())),
+                std::env::temp_dir().join(format!("starmate-canvas-tool-test-{}", uuid_short())),
             )),
             loaded_deferred_tool_specs: Vec::new(),
             primary_model_facts: tool_runtime::context::PrimaryModelFacts::default(),
@@ -900,7 +900,7 @@ mod tests {
         let reference = data["artifactReference"]
             .as_str()
             .expect("reference should be returned");
-        assert!(reference.starts_with("openbitfun-canvas://session/"));
+        assert!(reference.starts_with("starmate-canvas://session/"));
         assert_eq!(
             data["compiledPayload"]["html"],
             Value::Null,

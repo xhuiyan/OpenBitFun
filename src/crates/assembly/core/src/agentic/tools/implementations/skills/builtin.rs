@@ -434,7 +434,7 @@ mod tests {
     #[test]
     fn canvas_skills_keep_internal_artifact_references_out_of_chat() {
         for path in [
-            "openbitfun-canvas/SKILL.md",
+            "starmate-canvas/SKILL.md",
             "pr-review-canvas/SKILL.md",
             "agent-eval-canvas/SKILL.md",
         ] {
@@ -444,7 +444,7 @@ mod tests {
                 "{path} must tell the agent to leave Canvas URI presentation to the client"
             );
             assert!(
-                !text.contains("give the returned `openbitfun-canvas://...` artifact reference"),
+                !text.contains("give the returned `starmate-canvas://...` artifact reference"),
                 "{path} still instructs the agent to expose an internal Canvas URI"
             );
         }
