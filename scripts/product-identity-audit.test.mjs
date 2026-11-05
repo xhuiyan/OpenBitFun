@@ -34,14 +34,14 @@ test('accepts the canonical product identity in supported casing and contracts',
     'STARMATE_USER_ROOT',
     '@starmate/ui',
     '.openbitfun/config',
-    'openbitfun://runtime/',
-    '--openbitfun-color-surface',
-    'data-openbitfun-component',
+    'starmate://runtime/',
+    '--starmate-color-surface',
+    'data-starmate-component',
     'node.dataset.openbitfunPart',
     '@layer openbitfun.components',
     'minOpenBitFunVersion: "1.0.0"',
-    'min_openbitfun_version: "1.2.0"',
-    'openbitfun-cli-1.0.0-aarch64-unknown-linux-gnu.tar.gz',
+    'min_starmate_version: "1.2.0"',
+    'starmate-cli-1.0.0-aarch64-unknown-linux-gnu.tar.gz',
     'OpenBitFun_1.0.0_windows-x86_64-setup.exe',
   ].join('\n');
 
@@ -63,10 +63,10 @@ test('rejects non-canonical casing and abbreviated OpenBitFun names', () => {
   assert.deepEqual(
     violationsFor(source).map((violation) => violation.rule),
     [
-      'noncanonical-openbitfun-casing',
-      'noncanonical-openbitfun-casing',
-      'abbreviated-openbitfun-name',
-      'abbreviated-openbitfun-name',
+      'noncanonical-starmate-casing',
+      'noncanonical-starmate-casing',
+      'abbreviated-starmate-name',
+      'abbreviated-starmate-name',
     ],
   );
 });
@@ -261,7 +261,7 @@ test('checks a retired identity when it appears in a repository path', () => {
 });
 
 test('scans untracked files while ignoring tracked files deleted by a rename', (t) => {
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-identity-audit-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-identity-audit-'));
   const retiredDirectory = path.join(root, retiredLowerName);
   const retiredFile = path.join(retiredDirectory, 'config.json');
   const canonicalFile = path.join(root, 'openbitfun', 'config.json');
@@ -327,18 +327,18 @@ test('rejects pre-1.0 minimum versions and OpenBitFun release assets', () => {
   const preOneVersion = [0, 9, 0].join('.');
   const source = [
     `minOpenBitFunVersion: '${preOneVersion}'`,
-    `min_openbitfun_version: "${preOneVersion}"`,
-    `openbitfun-cli-${preOneVersion}-aarch64-unknown-linux-gnu.tar.gz`,
+    `min_starmate_version: "${preOneVersion}"`,
+    `starmate-cli-${preOneVersion}-aarch64-unknown-linux-gnu.tar.gz`,
     `OpenBitFun_${preOneVersion}_windows-x86_64-setup.exe`,
   ].join('\n');
 
   assert.deepEqual(
     violationsFor(source).map((violation) => violation.rule),
     [
-      'pre-1.0-openbitfun-minimum-version',
-      'pre-1.0-openbitfun-minimum-version',
-      'pre-1.0-openbitfun-release-asset',
-      'pre-1.0-openbitfun-release-asset',
+      'pre-1.0-starmate-minimum-version',
+      'pre-1.0-starmate-minimum-version',
+      'pre-1.0-starmate-release-asset',
+      'pre-1.0-starmate-release-asset',
     ],
   );
 });

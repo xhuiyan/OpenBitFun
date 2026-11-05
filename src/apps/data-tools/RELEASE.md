@@ -21,7 +21,7 @@ The GUI uses native Rust and does not require Python. Older migration tasks and
 the existing bundle identity remain compatible. The executable is now
 `openbitfun-data-tools`; build with `pnpm run data-tools:build`.
 
-最新版本与使用指南：[中文](https://github.com/GCWing/OpenBitFun/blob/main/src/apps/data-tools/README.zh-CN.md) · Latest release and guide: [English](https://github.com/GCWing/OpenBitFun/blob/main/src/apps/data-tools/README.md)
+最新版本与使用指南：[中文](https://github.com/xhuiyan/OpenBitFun/blob/main/src/apps/data-tools/README.zh-CN.md) · Latest release and guide: [English](https://github.com/xhuiyan/OpenBitFun/blob/main/src/apps/data-tools/README.md)
 
 ## 中文
 
@@ -63,7 +63,7 @@ Windows 目标目录：
 
 **重试后仍然异常**
 
-请在 [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) 提交问题，或在 StarMate 用户微信群中反馈，并提供：
+请在 [GitHub Issues](https://github.com/xhuiyan/OpenBitFun/issues) 提交问题，或在 StarMate 用户微信群中反馈，并提供：
 
 - 操作系统、BitFun 版本、StarMate 版本和数据工具版本。
 - 操作步骤、预期结果及实际结果。
@@ -124,7 +124,7 @@ Windows destination directories:
 
 **The issue persists after retrying**
 
-Open a report in [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) or share your feedback in the StarMate user WeChat group. Include:
+Open a report in [GitHub Issues](https://github.com/xhuiyan/OpenBitFun/issues) or share your feedback in the StarMate user WeChat group. Include:
 
 - Your operating system and the BitFun, StarMate, and Data Tools versions.
 - Steps to reproduce, the expected result, and the actual result.

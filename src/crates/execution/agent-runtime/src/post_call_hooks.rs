@@ -110,5 +110,5 @@ fn git_relative_path(workspace_root: &Path, path: &str) -> Option<String> {
 }
 
 fn is_openbitfun_runtime_uri(path: &str) -> bool {
-    path.trim().starts_with("openbitfun://runtime/")
+    path.trim().starts_with("starmate://runtime/")
 }

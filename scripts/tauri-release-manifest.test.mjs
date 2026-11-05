@@ -26,7 +26,7 @@ test('mobile release metadata rejects drift within the mobile group', () => {
 });
 
 test('prepares a versioned custom Windows installer asset', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-manual-installer-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-manual-installer-'));
   const assets = path.join(temp, 'assets', 'nested');
   const out = path.join(temp, 'manual');
   fs.mkdirSync(assets, { recursive: true });
@@ -45,7 +45,7 @@ test('prepares a versioned custom Windows installer asset', () => {
 });
 
 test('1.0.0-beta manifest keeps the updater URL separate from the manual installer URL', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-latest-manual-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-latest-manual-'));
   const updater = path.join(temp, 'updater');
   const manual = path.join(temp, 'manual');
   const out = path.join(temp, 'latest-v1.json');
@@ -64,7 +64,7 @@ test('1.0.0-beta manifest keeps the updater URL separate from the manual install
     '--manual-assets-dir', manual,
     '--version', '1.0.0-beta',
     '--tag', 'v1.0.0-beta',
-    '--repo', 'GCWing/OpenBitFun',
+    '--repo', 'xhuiyan/OpenBitFun',
     '--out', out,
     '--required-platforms', 'windows-x86_64',
   ]);
@@ -88,7 +88,7 @@ test('1.0.0-beta manifest keeps the updater URL separate from the manual install
 });
 
 test('updater manifest carries the version release notes for the update prompt', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-release-notes-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-release-notes-'));
   const updater = path.join(temp, 'updater');
   const out = path.join(temp, 'latest-v1.json');
   const notes = path.join(temp, '1.0.3.md');
@@ -101,7 +101,7 @@ test('updater manifest carries the version release notes for the update prompt',
     '--assets-dir', updater,
     '--version', '1.0.3',
     '--tag', 'v1.0.3',
-    '--repo', 'GCWing/OpenBitFun',
+    '--repo', 'xhuiyan/OpenBitFun',
     '--notes-file', notes,
     '--out', out,
     '--required-platforms', 'windows-x86_64',
@@ -114,7 +114,7 @@ test('updater manifest carries the version release notes for the update prompt',
 });
 
 test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz updater packages', (t) => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-latest-dmg-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-latest-dmg-'));
   t.after(() => fs.rmSync(temp, { recursive: true, force: true }));
   const updater = path.join(temp, 'updater');
   const manual = path.join(temp, 'manual');
@@ -149,7 +149,7 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
     '--installer-assets-dir', path.join(temp, 'release-assets'),
     '--version', '1.2.3',
     '--tag', 'v1.2.3',
-    '--repo', 'GCWing/OpenBitFun',
+    '--repo', 'xhuiyan/OpenBitFun',
     '--out', out,
     '--required-platforms', 'darwin-aarch64,darwin-x86_64,windows-x86_64',
   ];
@@ -163,11 +163,11 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
   assert.match(manifest.platforms['darwin-x86_64'].url, /_darwin-x86_64\.app\.tar\.gz$/);
   assert.equal(
     manifest.manual_installers['darwin-aarch64'].url,
-    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_aarch64.dmg'
+    'https://github.com/xhuiyan/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_aarch64.dmg'
   );
   assert.equal(
     manifest.manual_installers['darwin-x86_64'].url,
-    'https://github.com/GCWing/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_x64.dmg'
+    'https://github.com/xhuiyan/OpenBitFun/releases/download/v1.2.3/StarMate_1.2.3_x64.dmg'
   );
   assert.match(manifest.manual_installers['windows-x86_64'].url, /-installer\.exe$/);
 
@@ -198,7 +198,7 @@ test('manifest declares the signed macOS .dmg installers next to the .app.tar.gz
 // AppImage under the bare linux-x86_64 key and every deb install failed in-app
 // updates with "invalid updater binary format".
 test('deb and rpm installs get bundle-type Linux updater keys through collect + generate', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-deb-updater-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-deb-updater-'));
   const collected = path.join(temp, 'collected');
   const out = path.join(temp, 'latest-v1.json');
   const assets = [
@@ -237,7 +237,7 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
     '--assets-dir', collected,
     '--version', '1.2.3',
     '--tag', 'v1.2.3',
-    '--repo', 'GCWing/OpenBitFun',
+    '--repo', 'xhuiyan/OpenBitFun',
     '--out', out,
     '--required-platforms', 'linux-x86_64,linux-x86_64-deb,linux-x86_64-rpm,linux-aarch64-deb,linux-aarch64-rpm',
   ]);
@@ -271,7 +271,7 @@ test('deb and rpm installs get bundle-type Linux updater keys through collect + 
 });
 
 test('stages GitHub release assets in a flat directory', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-release-assets-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-release-assets-'));
   const first = path.join(temp, 'updater', 'latest.json');
   const second = path.join(temp, 'manual', 'installer.exe');
   const out = path.join(temp, 'staged');
@@ -292,7 +292,7 @@ test('stages GitHub release assets in a flat directory', () => {
 });
 
 test('rejects duplicate GitHub release asset names before upload', () => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-release-duplicates-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-release-duplicates-'));
   const first = path.join(temp, 'macos-x64', 'OpenBitFun.app.tar.gz.sig');
   const second = path.join(temp, 'macos-arm64', 'OpenBitFun.app.tar.gz.sig');
   const out = path.join(temp, 'staged');
@@ -315,12 +315,12 @@ test('rejects duplicate GitHub release asset names before upload', () => {
 
 for (const version of ['1.0.0-beta', '1.0.0-beta.3']) {
 test(`${version} Linux CLI and Relay manifests keep signed assets on the versioned repository release`, (t) => {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-beta-linux-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-beta-linux-'));
   t.after(() => fs.rmSync(temp, { recursive: true, force: true }));
   const tag = `v${version}`;
   const assets = [];
   for (const target of ['x86_64-unknown-linux-gnu', 'aarch64-unknown-linux-gnu']) {
-    for (const name of [`openbitfun-cli-${version}-${target}.tar.gz`, `openbitfun-relay-server-${target}.tar.gz`]) {
+    for (const name of [`starmate-cli-${version}-${target}.tar.gz`, `starmate-relay-server-${target}.tar.gz`]) {
       for (const suffix of ['', '.sha256', '.sig', '.sha256.sig']) {
         const filename = path.join(temp, name + suffix);
         fs.writeFileSync(filename, `fixture ${name}${suffix}`);

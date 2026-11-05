@@ -1,6 +1,6 @@
 //! OpenBitFun standalone relay library facade.
 //!
-//! Runtime ownership lives in `openbitfun-relay-service`. New code should depend
+//! Runtime ownership lives in `starmate-relay-service`. New code should depend
 //! on that crate directly; this facade keeps the standalone host thin.
 
 pub use starmate_relay_service::{

@@ -4,7 +4,7 @@
  * Build the DeepSeek Harness bridge into the profile directory the desktop
  * bundle ships (`packages/dsh-acp/dist-profile`).
  *
- * OpenBitFun launches DeepSeek Harness as `dsh --profile openbitfun-acp`, and copies
+ * OpenBitFun launches DeepSeek Harness as `dsh --profile starmate-acp`, and copies
  * that directory into the user's own dsh install on first use — see
  * `src/crates/interfaces/acp/src/client/dsh_profile.rs`. The build has to
  * happen here rather than in Cargo because it is a TypeScript compile.

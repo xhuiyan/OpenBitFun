@@ -12,11 +12,11 @@
 
 **如果你也期待这样的 Agent，欢迎点亮 ⭐ Star，让更多人发现星伴。**
 
-[下载桌面端](https://openbitfun.com/zh/download) · [移动端 Release](https://github.com/GCWing/星伴/releases?q=mobile-&expanded=true) · [Mini App 市场](https://market.openbitfun.com/miniapp/) · [加入社群](#加入社区群) · [参与共建](./CONTRIBUTING_CN.md)
+[下载桌面端](https://starmate.xtdl.ltd/zh/download) · [移动端 Release](https://github.com/GCWing/星伴/releases?q=mobile-&expanded=true) · [Mini App 市场](https://market.starmate.xtdl.ltd/miniapp/) · [加入社群](#加入社区群) · [参与共建](./CONTRIBUTING_CN.md)
 
-[![官网](https://img.shields.io/badge/%E5%AE%98%E7%BD%91-openbitfun.com-0b7285?style=flat-square)](https://openbitfun.com/zh)
+[![官网](https://img.shields.io/badge/%E5%AE%98%E7%BD%91-starmate.xtdl.ltd-0b7285?style=flat-square)](https://starmate.xtdl.ltd/zh)
 [![Core code: MIT](https://img.shields.io/badge/core_code-MIT-yellow?style=flat-square)](./LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue?style=flat-square)](https://openbitfun.com/zh/download)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue?style=flat-square)](https://starmate.xtdl.ltd/zh/download)
 
 [![Trendshift](https://trendshift.io/api/badge/repositories/44672)](https://trendshift.io/repositories/44672)
 
@@ -80,7 +80,7 @@
 
 描述需求，让 Agent 创建应用。每个 Mini App 都有自己的界面和 Agent 会话：你可以操作界面处理任务，也可以通过对话调整功能，让工具在使用中不断完善。
 
-做好的应用可以安装、反复使用。你也可以去 [Mini App 市场](https://market.openbitfun.com/miniapp/)发现适合自己的工具。
+做好的应用可以安装、反复使用。你也可以去 [Mini App 市场](https://market.starmate.xtdl.ltd/miniapp/)发现适合自己的工具。
 
 ## 用星伴，创造星伴
 
@@ -88,7 +88,7 @@
 
 - **定制专属 Agent。** 围绕漫剧创作、视觉设计、代码评审等领域，选择模型、设定角色，组合需要的工具与工作方法。
 - **接入工具与流程。** 通过 MCP 连接专业工具，把常用工作方法保存为 Skills，用 Hooks 扩展任务执行流程。
-- **改变界面与源码。** 安装[皮肤](https://market.openbitfun.com/skin/)调整外观，也可以修改 UI、工具与 Runtime 源码，构建自己的星伴。
+- **改变界面与源码。** 安装[皮肤](https://market.starmate.xtdl.ltd/skin/)调整外观，也可以修改 UI、工具与 Runtime 源码，构建自己的星伴。
 
 **你可以直接让星伴的 Code Agent 修改和扩展星伴本身。**
 
@@ -130,7 +130,7 @@ Rust Agent Runtime 承载会话状态、上下文管理与工具执行。持久�
 <details>
 <summary>下载、使用与源码运行</summary>
 
-前往[官方下载页](https://openbitfun.com/zh/download)，选择 Windows、macOS 或 Linux 安装包。安装后配置模型，打开工作区即可开始；操作说明见[使用手册](https://playbook.openbitfun.com)，安装包签名见[下载校验](./docs/verify-downloads.zh-CN.md)。
+前往[官方下载页](https://starmate.xtdl.ltd/zh/download)，选择 Windows、macOS 或 Linux 安装包。安装后配置模型，打开工作区即可开始；操作说明见[使用手册](https://playbook.starmate.xtdl.ltd)，安装包签名见[下载校验](./docs/verify-downloads.zh-CN.md)。
 
 **数据迁移提醒：** 星伴 1.0.0 与 0.2.x 旧版数据不互通。需要迁移旧版数据时，请使用
 [星伴数据工具](src/apps/data-tools/README.zh-CN.md)，当前支持 0.2.17～0.2.19 正式版。

@@ -9,8 +9,8 @@
 # command lines and executable paths are available for all processes.
 #
 # Examples:
-#   .\probe-openbitfun-process-events.ps1 -DurationSec 60 -OutputPath .\openbitfun-process-events.log
-#   .\probe-openbitfun-process-events.ps1 -OpenBitFunPid 8352 -DurationSec 120
+#   .\probe-starmate-process-events.ps1 -DurationSec 60 -OutputPath .\starmate-process-events.log
+#   .\probe-starmate-process-events.ps1 -OpenBitFunPid 8352 -DurationSec 120
 
 [CmdletBinding()]
 param(
@@ -315,7 +315,7 @@ $lines.Add('OpenBitFun process event probe')
 $lines.Add("probe_started_at=$(Format-LogValue $probeStartedAt)")
 $lines.Add("probe_finished_at=$(Format-LogValue $probeFinishedAt)")
 $lines.Add("probe_pid=$probeProcessId")
-$lines.Add("openbitfun_pids=$(Format-LogValue (($rootProcessIds | ForEach-Object { [string]$_ }) -join ','))")
+$lines.Add("starmate_pids=$(Format-LogValue (($rootProcessIds | ForEach-Object { [string]$_ }) -join ','))")
 $lines.Add("duration_sec=$DurationSec")
 $lines.Add("elevated=$isElevated")
 $lines.Add("powershell_version=$(Format-LogValue $PSVersionTable.PSVersion.ToString())")

@@ -6626,7 +6626,7 @@ mod tests {
                 let mut image = crate::agentic::image_analysis::attachments::test_image();
                 image.id = format!("reference-{index}");
                 image.image_path = Some(format!(
-                    "openbitfun://runtime/current/attachments/images/reference-{index}.png"
+                    "starmate://runtime/current/attachments/images/reference-{index}.png"
                 ));
                 image
             })

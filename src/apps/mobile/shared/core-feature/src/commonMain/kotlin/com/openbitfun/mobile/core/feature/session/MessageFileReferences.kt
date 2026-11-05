@@ -88,7 +88,7 @@ public object MessageFileReferenceProjector {
         seen: MutableSet<String>,
     ) {
         val lower = reference.trim().lowercase()
-        val explicit = listOf("computer://", "file:", "openbitfun://runtime/", "openbitfun://current-session/").any(lower::startsWith)
+        val explicit = listOf("computer://", "file:", "starmate://runtime/", "starmate://current-session/").any(lower::startsWith)
         val extension = lower.substringBefore('#').substringAfterLast('.', "")
         if (!explicit && extension !in OUTPUT_EXTENSIONS) return
         val resolution = FileTargetResolver.resolve(reference, "", CONTEXT)

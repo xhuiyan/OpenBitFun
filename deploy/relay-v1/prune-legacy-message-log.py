@@ -30,8 +30,8 @@ import sqlite3
 import sys
 import time
 
-DEFAULT_DB = "/srv/openbitfun-relay-v1.0.1/data/relay.db"
-LOCK_FILE = "/var/lock/openbitfun-relay-1.0.1-prune.lock"
+DEFAULT_DB = "/srv/starmate-relay-v1.0.1/data/relay.db"
+LOCK_FILE = "/var/lock/starmate-relay-1.0.1-prune.lock"
 
 
 def human(n):

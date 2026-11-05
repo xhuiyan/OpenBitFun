@@ -31,7 +31,7 @@ vi.mock('@/infrastructure/i18n/hooks/useI18n', () => ({
   useI18n: () => ({ t: (key: string) => key, formatNumber: String }),
 }));
 
-const url = 'https://github.com/GCWing/OpenBitFun/pull/3573';
+const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573';
 const call: FlowToolItem = {
   id: 'review-call', type: 'tool', toolName: 'ReviewPlatform', status: 'completed', timestamp: 1,
   toolCall: { id: 'review-call', input: { action: 'get_pull_request', repository_path: '/workspace' } },

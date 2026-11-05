@@ -5,7 +5,7 @@ Description=Daily OpenBitFun Skin market backup
 OnCalendar=*-*-* 03:37:00 UTC
 Persistent=true
 RandomizedDelaySec=900
-Unit=openbitfun-skin-market-backup.service
+Unit=starmate-skin-market-backup.service
 
 [Install]
 WantedBy=timers.target

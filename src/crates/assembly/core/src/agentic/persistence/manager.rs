@@ -5071,7 +5071,7 @@ impl PersistenceManager {
 
         Ok(MaterializedSessionReferenceTranscript {
             uri: format!(
-                "openbitfun://current-session/artifacts/session-references/{}.txt",
+                "starmate://current-session/artifacts/session-references/{}.txt",
                 reference_artifact_stem
             ),
             turn_count: selected_indices_reversed.len(),
@@ -5866,7 +5866,7 @@ mod tests {
         assert_eq!(
             first.uri,
             format!(
-                "openbitfun://current-session/artifacts/session-references/{}.txt",
+                "starmate://current-session/artifacts/session-references/{}.txt",
                 reference_artifact_stem
             )
         );
@@ -7412,10 +7412,10 @@ mod tests {
         assert_ne!(first.transcript_path, second.transcript_path);
         assert!(first
             .uri
-            .starts_with("openbitfun://current-session/artifacts/compression-transcripts/1-"));
+            .starts_with("starmate://current-session/artifacts/compression-transcripts/1-"));
         assert!(second
             .uri
-            .starts_with("openbitfun://current-session/artifacts/compression-transcripts/2-"));
+            .starts_with("starmate://current-session/artifacts/compression-transcripts/2-"));
         assert_eq!(first.index_range.start_line, 1);
         assert_eq!(first.index_range.end_line, 3);
         assert_eq!(second.index_range.start_line, 1);

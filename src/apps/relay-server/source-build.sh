@@ -2,7 +2,7 @@
 # Source fallback for the SSH deployment wizard. Requires mirror.sh and
 # release-download.sh; container start/health/rollback remain shared with images.
 
-openbitfun_build_relay_from_source() (
+starmate_build_relay_from_source() (
   set -euo pipefail
   local source_root="$1" platform="$2" checkout revision image_id repository
   command -v git >/dev/null 2>&1 || {
@@ -42,7 +42,7 @@ openbitfun_build_relay_from_source() (
   test -f "$checkout/src/apps/relay-server/Dockerfile"
 
   export DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM="$platform"
-  openbitfun_image_docker build --progress plain --platform "$platform" \
+  starmate_image_docker build --progress plain --platform "$platform" \
     --iidfile "$checkout/relay-image.id" \
     --build-arg "CARGO_BUILD_JOBS=${RELAY_CARGO_BUILD_JOBS:-1}" \
     --build-arg "RELAY_GIT_COMMIT=$revision" \
@@ -56,7 +56,7 @@ openbitfun_build_relay_from_source() (
     return 1
   fi
   local actual_arch
-  actual_arch="$(openbitfun_image_docker image inspect -f '{{.Architecture}}' "$image_id")"
+  actual_arch="$(starmate_image_docker image inspect -f '{{.Architecture}}' "$image_id")"
   if [ "$actual_arch" != "${platform#linux/}" ]; then
     echo ">>> ERROR: source image architecture does not match $platform." >&2
     return 1
@@ -65,17 +65,17 @@ openbitfun_build_relay_from_source() (
   export STARMATE_RELAY_IMAGE_DIGEST="$image_id"
   # Starts by local image ID, with the same volumes, port, health and rollback
   # contract as the published-image path. No Compose or host Rust is needed.
-  openbitfun_run_relay_image "$image_id" "$platform"
+  starmate_run_relay_image "$image_id" "$platform"
 )
 
-openbitfun_deploy_with_source_fallback() {
+starmate_deploy_with_source_fallback() {
   local mode="$1" source_root="$2" platform
-  platform="$(openbitfun_relay_native_platform)" || return 1
+  platform="$(starmate_relay_native_platform)" || return 1
   if [ "$mode" = image ]; then
-    if openbitfun_try_release_deploy; then return 0; fi
+    if starmate_try_release_deploy; then return 0; fi
     echo ">>> Published Relay deployment failed; falling back to a source build."
   else
     echo ">>> No published image is available for current OpenBitFun Relay; falling back to a source build."
   fi
-  openbitfun_build_relay_from_source "$source_root" "$platform"
+  starmate_build_relay_from_source "$source_root" "$platform"
 }

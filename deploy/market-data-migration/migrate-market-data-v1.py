@@ -25,7 +25,7 @@ STARMATE_MINIMUM_VERSION = "1.0.0"
 RETIRED_APPEARANCE_SCHEMA = "bitfun.appearance"
 STARMATE_APPEARANCE_SCHEMA = "starmate.appearance"
 RETIRED_APPEARANCE_EXTENSION = "bitfun-appearance"
-STARMATE_APPEARANCE_EXTENSION = "openbitfun-appearance"
+STARMATE_APPEARANCE_EXTENSION = "starmate-appearance"
 RETIRED_ARCHIVE_ROOT = "migrated-bitfun-v1"
 
 
@@ -234,7 +234,7 @@ def migrate_skin_packages(
         ORDER BY package_sha256
         """
     ).fetchall()
-    temporary_root = artifacts / ".migration-openbitfun-v1"
+    temporary_root = artifacts / ".migration-starmate-v1"
     migrated_packages = 0
     for (old_sha256,) in rows:
         old_path = skin_package_path(

@@ -392,7 +392,7 @@ export const ZH_CN_MESSAGES: [string, string][] = [
   ['connect.filled', '已填写'],
   ['connect.fill', '填写'],
   ['connect.clear', '清除'],
-  ['connect.urlPlaceholder', 'openbitfun:// 或 https://...#/pair?room=...&pk=...&relay=...'],
+  ['connect.urlPlaceholder', 'starmate:// 或 https://...#/pair?room=...&pk=...&relay=...'],
   ['connect.statusTitle', '连接状态'],
   ['connect.targetDesktop', '目标桌面端'],
   ['connect.noDesktop', '尚未选择桌面端'],

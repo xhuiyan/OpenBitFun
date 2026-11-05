@@ -486,12 +486,12 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let config = MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".into(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".into(),
             database_path: dir.path().join("db"),
             artifact_dir: dir.path().join("artifacts"),
             web_dir: dir.path().into(),
             github_callback_url: Some(
-                "https://auth.openbitfun.com/api/v1/auth/github/callback".into(),
+                "https://auth.starmate.xtdl.ltd/api/v1/auth/github/callback".into(),
             ),
             github_client_id: Some("id".into()),
             github_client_secret: Some("secret".into()),
@@ -970,7 +970,7 @@ mod tests {
             ),
             (
                 "/auth/desktop/start?methods=all",
-                "https://auth.openbitfun.com/sign-in#ticket=",
+                "https://auth.starmate.xtdl.ltd/sign-in#ticket=",
             ),
         ] {
             let response = app

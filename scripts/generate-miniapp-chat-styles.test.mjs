@@ -22,7 +22,7 @@ test('the native stylesheet stays identical to its current Hi/FlowChat owners', 
   for (const [name, content] of Object.entries(output)) assert.equal(readFileSync(resolve(generated, name), 'utf8'), content, `${name} must be regenerated`);
   const css = output['chat-styles.css'];
   for (const [path, selectors] of [
-    ['src/web-ui/src/app/layout/FloatingMiniChat.scss', ['.openbitfun-fmc', '.openbitfun-fmc__panel', '.openbitfun-fmc__header', '.openbitfun-fmc__miniapp-suggestion']],
+    ['src/web-ui/src/app/layout/FloatingMiniChat.scss', ['.starmate-fmc', '.starmate-fmc__panel', '.starmate-fmc__header', '.starmate-fmc__miniapp-suggestion']],
     ['src/web-ui/src/flow_chat/components/FlowTextBlock.scss', ['.flow-text-block', '.flow-text-block--runtime-status']],
     ['src/web-ui/src/flow_chat/components/modern/UserMessageItem.scss', ['.user-message-item', '.user-message-item__content']],
   ]) {

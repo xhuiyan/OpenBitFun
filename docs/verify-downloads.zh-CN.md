@@ -23,7 +23,7 @@ OpenBitFun 固定使用以下 minisign 公钥：
 ```bash
 VERSION=v1.0.0
 ASSET=openbitfun-cli-1.0.0-aarch64-unknown-linux-gnu.tar.gz
-BASE="https://github.com/GCWing/OpenBitFun/releases/download/$VERSION"
+BASE="https://github.com/xhuiyan/OpenBitFun/releases/download/$VERSION"
 PUBLIC_KEY=RWR2o8Bsvnz0UOBc3NoTVW06wdiGM7pLP3LpiL4A3Sp4nxkBsWlJRTxn
 
 curl --fail --location --remote-name "$BASE/$ASSET"
@@ -43,7 +43,7 @@ tag 和文件名：
 ```powershell
 $Version = "v1.0.0"
 $Asset = "OpenBitFun_1.0.0_windows-x86_64-setup.exe"
-$Base = "https://github.com/GCWing/OpenBitFun/releases/download/$Version"
+$Base = "https://github.com/xhuiyan/OpenBitFun/releases/download/$Version"
 $PublicKey = "RWR2o8Bsvnz0UOBc3NoTVW06wdiGM7pLP3LpiL4A3Sp4nxkBsWlJRTxn"
 
 Invoke-WebRequest "$Base/$Asset" -OutFile $Asset

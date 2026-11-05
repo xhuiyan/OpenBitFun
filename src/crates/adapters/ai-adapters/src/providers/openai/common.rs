@@ -30,7 +30,7 @@ pub(crate) fn apply_headers(client: &AIClient, builder: RequestBuilder) -> Reque
             .header("Content-Type", "application/json")
             .header("Authorization", format!("Bearer {}", client.config.api_key));
 
-        if client.config.base_url.contains("openbitfun.com") {
+        if client.config.base_url.contains("starmate.xtdl.ltd") {
             builder = builder.header("X-Verification-Code", "from_openbitfun");
         }
 

@@ -669,8 +669,8 @@ mod tests {
     #[test]
     fn openbitfun_models_use_their_exact_upstream_reasoning_catalogs() {
         for (provider, base_url) in [
-            ("anthropic", "https://api.openbitfun.com"),
-            ("openai", "https://api.openbitfun.com/v1"),
+            ("anthropic", "https://api.starmate.xtdl.ltd"),
+            ("openai", "https://api.starmate.xtdl.ltd/v1"),
         ] {
             for (model_name, expected_provider, expected_presets) in [
                 ("glm-5.2", "zhipuai", vec!["off", "on", "high", "max"]),

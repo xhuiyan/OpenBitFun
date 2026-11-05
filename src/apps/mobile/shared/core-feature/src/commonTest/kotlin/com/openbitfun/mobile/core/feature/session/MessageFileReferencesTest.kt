@@ -9,9 +9,9 @@ class MessageFileReferencesTest {
     fun generatedImagesFilesAndRuntimeArtifactsShareTheFileCardPath() {
         val references = MessageFileReferenceProjector.project(
             "![Preview](preview.png)\n[Image](computer://preview.png)\n[Animation](file:///workspace/movie.html)\n" +
-                "[Report](openbitfun://current-session/artifacts/report.pdf)",
+                "[Report](starmate://current-session/artifacts/report.pdf)",
         )
-        assertEquals(listOf("preview.png", "/workspace/movie.html", "openbitfun://current-session/artifacts/report.pdf"), references.map { it.remotePath })
+        assertEquals(listOf("preview.png", "/workspace/movie.html", "starmate://current-session/artifacts/report.pdf"), references.map { it.remotePath })
     }
 
     @Test

@@ -7,7 +7,7 @@ import { themes, themeCssVariables } from '../design-system/packages/theme-openb
 const root = new URL('../', import.meta.url);
 const output = new URL('src/shared/miniapp-chrome/generated/theme.css', root);
 const sources = ['src/shared/miniapp-chrome/titlebar.css', 'src/shared/miniapp-chrome/window-controls.css', 'src/apps/miniapp-shell/src/shell.html', 'src/apps/miniapp-shell/src/generated/chat-styles.css'];
-const used = new Set(sources.flatMap(path => [...readFileSync(new URL(path, root), 'utf8').matchAll(/var\((--openbitfun-[a-z0-9-]+)\)/g)].map(match => match[1])));
+const used = new Set(sources.flatMap(path => [...readFileSync(new URL(path, root), 'utf8').matchAll(/var\((--starmate-[a-z0-9-]+)\)/g)].map(match => match[1])));
 const system = Object.fromEntries(Object.entries(cssVariables).map(([key, variable]) => [variable, tokens[key]]));
 const themed = mode => Object.fromEntries(Object.entries(themeCssVariables).map(([key, variable]) => [variable, themes[mode][key]]));
 for (const variable of used) if (!(variable in system) && !(variable in themed('dark'))) throw new Error(`Unknown MiniApp chrome token: ${variable}`);

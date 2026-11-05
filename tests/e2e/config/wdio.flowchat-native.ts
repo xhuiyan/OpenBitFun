@@ -8,7 +8,7 @@ import { createEmbeddedConfig } from './embedded-driver';
 const recorded = process.env.STARMATE_FLOWCHAT_RECORDED_SESSIONS;
 const ids = process.env.STARMATE_FLOWCHAT_SESSION_IDS?.split(',').filter(Boolean) ?? [];
 if (!recorded || ids.length < 2) throw new Error('Set STARMATE_FLOWCHAT_RECORDED_SESSIONS and at least two STARMATE_FLOWCHAT_SESSION_IDS.');
-const root = process.env.STARMATE_FLOWCHAT_E2E_ROOT ?? mkdtempSync(join(tmpdir(), 'openbitfun-flowchat-e2e-'));
+const root = process.env.STARMATE_FLOWCHAT_E2E_ROOT ?? mkdtempSync(join(tmpdir(), 'starmate-flowchat-e2e-'));
 const home = join(root, 'home');
 const destination = join(home, 'projects', basename(resolve(recorded, '..')), 'sessions');
 mkdirSync(destination, { recursive: true });

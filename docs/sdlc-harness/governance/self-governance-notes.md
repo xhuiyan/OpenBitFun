@@ -36,7 +36,7 @@ OpenBitFun 仓库可以作为可配置工程能力的内部验证项目。产品
 ## 4. OpenBitFun 特定规则的适用边界
 
 - `pnpm`、`cargo`、Tauri、Rust 工作区和 React 前端只代表 OpenBitFun 技术栈样本。
-- fork PR 到 `GCWing/OpenBitFun` 只代表 OpenBitFun 当前协作模式样本。
+- fork PR 到 `xhuiyan/OpenBitFun` 只代表 OpenBitFun 当前协作模式样本。
 - OpenBitFun 的严格审查习惯用于验证 `guarded/regulated` 场景，不作为所有项目默认质量要求。
 - OpenBitFun 的 AGENTS.md 完整度用于验证规则读取能力，不作为目标项目最低要求。
 - OpenBitFun 的 CI 行为、耗时和不稳定风险用于验证复杂项目指标，不作为通用阈值。

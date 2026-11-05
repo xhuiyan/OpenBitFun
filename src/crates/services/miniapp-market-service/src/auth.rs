@@ -894,7 +894,7 @@ mod tests {
     fn test_config(root: &Path) -> MarketConfig {
         MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".to_string(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".to_string(),
             database_path: root.join("market.sqlite"),
             artifact_dir: root.join("artifacts"),
             web_dir: root.join("web"),
@@ -917,10 +917,10 @@ mod tests {
         let mut config = test_config(temporary.path());
         assert_eq!(
             config.github_callback_url(),
-            "https://market.openbitfun.com/miniapp/api/v1/auth/github/callback"
+            "https://market.starmate.xtdl.ltd/miniapp/api/v1/auth/github/callback"
         );
         config.github_callback_url =
-            Some("https://auth.openbitfun.com/api/v1/auth/github/callback".to_string());
+            Some("https://auth.starmate.xtdl.ltd/api/v1/auth/github/callback".to_string());
         let service = AuthService::new(config, database).unwrap();
         for authorization_url in [
             service.start_web_oauth("/miniapp/").await.unwrap(),
@@ -936,7 +936,7 @@ mod tests {
                     .find(|(key, _)| key == "redirect_uri")
                     .unwrap()
                     .1,
-                "https://auth.openbitfun.com/api/v1/auth/github/callback"
+                "https://auth.starmate.xtdl.ltd/api/v1/auth/github/callback"
             );
         }
         assert!(service

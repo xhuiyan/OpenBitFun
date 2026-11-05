@@ -606,20 +606,20 @@ export default function transportAndGeneralChatUnitTest() {
     });
 
     it('uses the same device selector for official and LAN endpoints', 0, () => {
-      for (const endpoint of ['https://remote.openbitfun.com/v/1.0.2', 'http://192.168.1.10:9700']) {
+      for (const endpoint of ['https://remote.starmate.xtdl.ltd/v/1.0.2', 'http://192.168.1.10:9700']) {
         const parsed = accountDeviceLink(`${endpoint}/#/pair?did=desktop-1`);
         expect(parsed?.deviceId).assertEqual('desktop-1');
         expect(parsed?.relayUrl).assertEqual(endpoint);
       }
     });
     it('rejects credentials, legacy rooms, duplicate targets and public lookalikes', 0, () => {
-      const prefix = 'https://remote.openbitfun.com/v/1.0.2/#/pair?';
+      const prefix = 'https://remote.starmate.xtdl.ltd/v/1.0.2/#/pair?';
       for (const suffix of ['did=desktop-1&pk=untrusted', 'did=desktop-1&relay=evil',
         'did=desktop-1&did=desktop-2', 'did=%00', 'did=%ZZ', 'room=old&pk=old']) {
         expect(accountDeviceLink(prefix + suffix)).assertUndefined();
       }
       expect(accountDeviceLink('https://evil.test/v/1.0.0/#/pair?did=desktop-1')).assertUndefined();
-      expect(accountDeviceLink('https://remote.openbitfun.com@evil.test/v/1.0.0/#/pair?did=desktop-1')).assertUndefined();
+      expect(accountDeviceLink('https://remote.starmate.xtdl.ltd@evil.test/v/1.0.0/#/pair?did=desktop-1')).assertUndefined();
     });
   });
 
@@ -656,7 +656,7 @@ export default function transportAndGeneralChatUnitTest() {
   describe('RemoteSessionManager account connection', () => {
     it('loads account device sessions through either relay endpoint', 0, async () => {
       const manager = new RemoteSessionManager();
-      for (const endpoint of ['https://remote.openbitfun.com/v/1.0.2', 'http://192.168.1.10:9700']) {
+      for (const endpoint of ['https://remote.starmate.xtdl.ltd/v/1.0.2', 'http://192.168.1.10:9700']) {
         const result = await manager.connectAccountDevice(new RecordingAccountDeviceClient(), endpoint,
           { token: 'token', userId: 'account-user', masterKey: new Uint8Array(32) }, 'desktop-device');
         expect(result.workspace.path).assertEqual('/account-workspace');
@@ -1556,15 +1556,15 @@ export default function transportAndGeneralChatUnitTest() {
 
   describe('ModelProviderGeneralChatAdapter', () => {
     it('infers provider protocol and request URL without a protocol setting', 0, () => {
-      const openBitFunProtocol = ModelProviderGeneralChatAdapter.resolveProtocol('https://api.openbitfun.com');
+      const openBitFunProtocol = ModelProviderGeneralChatAdapter.resolveProtocol('https://api.starmate.xtdl.ltd');
       const customProtocol = ModelProviderGeneralChatAdapter.resolveProtocol('https://llm.example.com/v1');
 
       expect(openBitFunProtocol).assertEqual(ModelProviderProtocol.Anthropic);
       expect(customProtocol).assertEqual(ModelProviderProtocol.OpenAi);
       expect(ModelProviderGeneralChatAdapter.resolveRequestUrl(
-        'https://api.openbitfun.com/',
+        'https://api.starmate.xtdl.ltd/',
         openBitFunProtocol
-      )).assertEqual('https://api.openbitfun.com/v1/messages');
+      )).assertEqual('https://api.starmate.xtdl.ltd/v1/messages');
       expect(ModelProviderGeneralChatAdapter.resolveRequestUrl(
         'https://llm.example.com/v1',
         customProtocol
@@ -1579,14 +1579,14 @@ export default function transportAndGeneralChatUnitTest() {
       ));
 
       await ModelProviderGeneralChatAdapter.probeConfiguration(
-        'https://api.openbitfun.com/',
+        'https://api.starmate.xtdl.ltd/',
         'sk-test-token',
         'deepseek-v4-flash',
         transport
       );
 
       expect(transport.requests.length).assertEqual(1);
-      expect(transport.requests[0].url).assertEqual('https://api.openbitfun.com/v1/messages');
+      expect(transport.requests[0].url).assertEqual('https://api.starmate.xtdl.ltd/v1/messages');
       expect(transport.requests[0].apiKey).assertEqual('sk-test-token');
       expect(transport.requests[0].protocol).assertEqual(ModelProviderProtocol.Anthropic);
       expect(transport.requests[0].body.indexOf('"max_tokens":1')).assertLarger(-1);
@@ -1600,7 +1600,7 @@ export default function transportAndGeneralChatUnitTest() {
       let message = '';
       try {
         await ModelProviderGeneralChatAdapter.probeConfiguration(
-          'https://api.openbitfun.com',
+          'https://api.starmate.xtdl.ltd',
           'sk-test-token',
           'deepseek-v4-flash',
           transport
@@ -1648,7 +1648,7 @@ export default function transportAndGeneralChatUnitTest() {
     it('sends attached images on the Anthropic-compatible local chat path', 0, async () => {
       const config = new InMemorySettingsConfigStore();
       config.snapshotResult = {
-        apiUrl: 'https://api.openbitfun.com',
+        apiUrl: 'https://api.starmate.xtdl.ltd',
         modelName: 'vision-model',
         hasApiKey: true
       };
@@ -1703,7 +1703,7 @@ export default function transportAndGeneralChatUnitTest() {
     it('replays prior local-chat images when continuing a conversation', 0, async () => {
       const config = new InMemorySettingsConfigStore();
       config.snapshotResult = {
-        apiUrl: 'https://api.openbitfun.com',
+        apiUrl: 'https://api.starmate.xtdl.ltd',
         modelName: 'vision-model',
         hasApiKey: true
       };

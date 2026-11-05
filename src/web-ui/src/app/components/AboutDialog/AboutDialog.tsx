@@ -31,7 +31,7 @@ import { StarMateBrandMotion } from '@starmate/ui/brand';
 import './AboutDialog.scss';
 
 const log = createLogger('AboutDialog');
-const GITHUB_REPOSITORY_URL = 'https://github.com/GCWing/OpenBitFun';
+const GITHUB_REPOSITORY_URL = 'https://github.com/xhuiyan/OpenBitFun';
 
 interface AboutDialogProps {
   /** Whether visible */

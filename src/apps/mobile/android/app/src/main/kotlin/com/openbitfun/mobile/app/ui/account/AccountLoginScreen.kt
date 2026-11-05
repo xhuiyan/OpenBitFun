@@ -72,10 +72,10 @@ internal fun AccountLoginPage(
     val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0].toLanguageTag()
     val authorizationUrl = (state as? AccountUiState.Authorizing)?.authorizationUrl?.let { value ->
         val uri = android.net.Uri.parse(value)
-        if (uri.scheme == "https" && uri.host == "auth.openbitfun.com") {
+        if (uri.scheme == "https" && uri.host == "auth.starmate.xtdl.ltd") {
             uri.buildUpon()
                 .appendQueryParameter("locale", locale)
-                .appendQueryParameter("returnTo", "openbitfun://auth/callback")
+                .appendQueryParameter("returnTo", "starmate://auth/callback")
                 .build().toString()
         } else value
     }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openbitfun.com/schemas/product-definition-v1.json",
+  "$id": "https://starmate.xtdl.ltd/schemas/product-definition-v1.json",
   "title": "OpenBitFun product definition",
   "type": "object",
   "additionalProperties": false,

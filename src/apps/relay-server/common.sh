@@ -2,8 +2,8 @@
 # Shared helpers for OpenBitFun Relay Server deploy/start/stop/restart scripts.
 # Sourced by the other *.sh files in this directory (not executed directly).
 
-CONTAINER_NAME="${CONTAINER_NAME:-openbitfun-relay}"
-RELAY_ADMIN_DB="${RELAY_ADMIN_DB:-/app/data/openbitfun_relay.db}"
+CONTAINER_NAME="${CONTAINER_NAME:-starmate-relay}"
+RELAY_ADMIN_DB="${RELAY_ADMIN_DB:-/app/data/starmate_relay.db}"
 RELAY_PORT="${RELAY_PORT:-9700}"
 RELAY_HEALTH_URL="${RELAY_HEALTH_URL:-http://127.0.0.1:${RELAY_PORT}/health}"
 COMPOSE=()

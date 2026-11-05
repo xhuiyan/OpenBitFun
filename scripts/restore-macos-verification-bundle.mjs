@@ -22,7 +22,7 @@ export function planMacVerificationRecovery(repository, tag, platform, { run, jo
       !passed('Upload macOS verification recovery bundles')) {
     throw new Error('Recovery requires a built package that failed only Apple verification');
   }
-  const name = `openbitfun-${tag}-${platform}-verification-recovery`;
+  const name = `starmate-${tag}-${platform}-verification-recovery`;
   const matches = artifacts.filter((artifact) => artifact.name === name);
   if (matches.length !== 1 || matches[0].expired !== false) throw new Error('Missing, duplicate, or expired recovery artifact');
   return { runId: String(run.id), name, head: run.head_sha };
@@ -53,7 +53,7 @@ function main() {
   const target = platform === 'macos-x64' ? 'x86_64-apple-darwin' : 'aarch64-apple-darwin';
   const output = path.resolve('target', target, 'release');
   if (fs.existsSync(path.join(output, 'bundle'))) throw new Error('Refusing to overwrite existing bundles');
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'openbitfun-macos-recovery-'));
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'starmate-macos-recovery-'));
   try {
     command('gh', ['run', 'download', plan.runId, '--repo', repository, '--name', plan.name, '--dir', temporary], true);
     const archive = path.join(temporary, 'macos-verification-recovery.tar.gz');

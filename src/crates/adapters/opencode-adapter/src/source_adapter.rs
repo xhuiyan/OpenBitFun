@@ -145,11 +145,11 @@ impl OpenCodePluginRuntimeAdapter {
             .to_string();
         let package_path = format!("/managed-plugins/{provenance_id}/{}", source.package_id);
         let package_uri = format!(
-            "openbitfun://managed-plugins/{provenance_id}/{}",
+            "starmate://managed-plugins/{provenance_id}/{}",
             urlencoding::encode(&source.package_id)
         );
         let config_uri = format!(
-            "openbitfun://managed-plugins/{provenance_id}/{}/opencode.json",
+            "starmate://managed-plugins/{provenance_id}/{}/opencode.json",
             source.package_id
         );
         let mut projections = Vec::new();
@@ -2210,7 +2210,7 @@ impl OpenCodeCustomTool {
                 artifact_kind: "opencode_plugin_source".to_string(),
                 display_name: self.id.clone(),
                 uri: Some(format!(
-                    "openbitfun://plugins/{plugin_id}/tools/{target_id}"
+                    "starmate://plugins/{plugin_id}/tools/{target_id}"
                 )),
             }),
         }
@@ -2746,7 +2746,7 @@ fn managed_source_uri(provenance_id: &str, package_id: &str, relative_path: &str
         .collect::<Vec<_>>()
         .join("/");
     format!(
-        "openbitfun://managed-plugins/{provenance_id}/{}/{encoded_path}",
+        "starmate://managed-plugins/{provenance_id}/{}/{encoded_path}",
         urlencoding::encode(package_id)
     )
 }
@@ -3139,7 +3139,7 @@ export const DemoPlugin = async () => ({
                 schema_version: "agent.turn.completed.v1".to_string(),
                 data_classification: PluginDataClassification::Workspace,
                 redaction: PluginPayloadRedaction::Partial,
-                uri: Some("openbitfun://payloads/payload-1".to_string()),
+                uri: Some("starmate://payloads/payload-1".to_string()),
             }),
         }
     }

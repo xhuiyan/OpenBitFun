@@ -85,7 +85,7 @@ import { MiniAppNavigationAction } from '../components/MiniAppNavigationAction';
 import { useMiniAppNavigationStore } from '../miniAppNavigationStore';
 
 const log = createLogger('MiniAppLibraryView');
-const MINIAPP_MARKET_WEBSITE_URL = 'https://market.openbitfun.com/miniapp/';
+const MINIAPP_MARKET_WEBSITE_URL = 'https://market.starmate.xtdl.ltd/miniapp/';
 const CATEGORIES = [
   'all',
   'developer',

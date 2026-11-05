@@ -54,9 +54,9 @@ RUN set -eux; \
       # while global builds kept working.
       printf '%s\n' \
         '[source.crates-io]' \
-        'replace-with = "openbitfun-rsproxy-sparse"' \
+        'replace-with = "starmate-rsproxy-sparse"' \
         '' \
-        '[source.openbitfun-rsproxy-sparse]' \
+        '[source.starmate-rsproxy-sparse]' \
         "registry = \"${STARMATE_CARGO_SPARSE_URL}\"" \
         > /usr/local/cargo/config.toml; \
     fi
@@ -80,14 +80,14 @@ COPY src/crates/services/page-function-runtime/Cargo.toml ../../crates/services/
 
 # Warm dependency objects into the BuildKit target cache. Placeholder sources
 # live only in this layer; real sources are copied afterward.
-RUN --mount=type=cache,id=openbitfun-relay-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
-    --mount=type=cache,id=openbitfun-relay-cargo-git,target=/usr/local/cargo/git,sharing=locked \
-    --mount=type=cache,id=openbitfun-relay-target,target=/build/src/apps/relay-server/target,sharing=locked \
+RUN --mount=type=cache,id=starmate-relay-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=starmate-relay-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=starmate-relay-target,target=/build/src/apps/relay-server/target,sharing=locked \
     mkdir -p src/bin \
         ../../crates/services/relay-service/src \
         ../../crates/services/page-function-runtime/src \
     && printf 'fn main() {}\n' > src/main.rs \
-    && printf 'pub use openbitfun_relay_service::*;\n' > src/lib.rs \
+    && printf 'pub use starmate_relay_service::*;\n' > src/lib.rs \
     && printf 'fn main() {}\n' > src/bin/relay_admin.rs \
     && printf '// placeholder\n' > ../../crates/services/relay-service/src/lib.rs \
     && printf '// placeholder\n' > ../../crates/services/page-function-runtime/src/lib.rs \
@@ -103,18 +103,18 @@ COPY src/crates/services/page-function-runtime/src/ ../../crates/services/page-f
 
 # Rebuild workspace crates against cached dependency objects, then copy
 # release binaries out of the cache mount into the image.
-RUN --mount=type=cache,id=openbitfun-relay-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
-    --mount=type=cache,id=openbitfun-relay-cargo-git,target=/usr/local/cargo/git,sharing=locked \
-    --mount=type=cache,id=openbitfun-relay-target,target=/build/src/apps/relay-server/target,sharing=locked \
-    rm -f target/release/openbitfun-relay-server \
+RUN --mount=type=cache,id=starmate-relay-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=starmate-relay-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=starmate-relay-target,target=/build/src/apps/relay-server/target,sharing=locked \
+    rm -f target/release/starmate-relay-server \
         target/release/relay-admin \
-        target/release/deps/*openbitfun_relay_service* \
-        target/release/deps/*openbitfun_page_function_runtime* \
-        target/release/deps/*openbitfun_relay_server* \
+        target/release/deps/*starmate_relay_service* \
+        target/release/deps/*starmate_page_function_runtime* \
+        target/release/deps/*starmate_relay_server* \
         target/release/deps/*relay_admin* \
-    && rm -rf target/release/.fingerprint/openbitfun-relay-service-* \
-        target/release/.fingerprint/openbitfun-page-function-runtime-* \
-        target/release/.fingerprint/openbitfun-relay-server-* \
+    && rm -rf target/release/.fingerprint/starmate-relay-service-* \
+        target/release/.fingerprint/starmate-page-function-runtime-* \
+        target/release/.fingerprint/starmate-relay-server-* \
         target/release/.fingerprint/relay-admin-* \
     && touch ../../crates/services/relay-service/src/lib.rs \
         ../../crates/services/page-function-runtime/src/lib.rs \
@@ -123,8 +123,8 @@ RUN --mount=type=cache,id=openbitfun-relay-cargo-registry,target=/usr/local/carg
         src/bin/relay_admin.rs \
     && { [ -n "${CARGO_BUILD_JOBS:-}" ] || unset CARGO_BUILD_JOBS; } \
     && cargo build --release \
-    && cp target/release/openbitfun-relay-server target/release/relay-admin /out/ \
-    && (strip /out/openbitfun-relay-server /out/relay-admin || true)
+    && cp target/release/starmate-relay-server target/release/relay-admin /out/ \
+    && (strip /out/starmate-relay-server /out/relay-admin || true)
 
 FROM debian:bookworm-slim
 
@@ -134,7 +134,7 @@ ARG STARMATE_APT_MIRROR=mirrors.aliyun.com
 
 LABEL org.opencontainers.image.title="OpenBitFun Relay Server" \
       org.opencontainers.image.description="Self-hosted relay server for OpenBitFun" \
-      org.opencontainers.image.source="https://github.com/GCWing/OpenBitFun" \
+      org.opencontainers.image.source="https://github.com/xhuiyan/OpenBitFun" \
       org.opencontainers.image.revision="${RELAY_GIT_COMMIT}" \
       org.opencontainers.image.licenses="MIT"
 
@@ -159,7 +159,7 @@ RUN set -eux; \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY --from=builder /out/openbitfun-relay-server /app/openbitfun-relay-server
+COPY --from=builder /out/starmate-relay-server /app/starmate-relay-server
 COPY --from=builder /out/relay-admin /app/relay-admin
 COPY src/apps/relay-server/static/ /app/static/
 RUN mkdir -p /app/static /app/data /app/room-web
@@ -171,4 +171,4 @@ EXPOSE 9700
 HEALTHCHECK --interval=15s --timeout=5s --start-period=20s --retries=5 \
   CMD curl -fsS "http://127.0.0.1:${RELAY_PORT}/health" || exit 1
 
-CMD ["/app/openbitfun-relay-server"]
+CMD ["/app/starmate-relay-server"]

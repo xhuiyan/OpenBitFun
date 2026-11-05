@@ -51,7 +51,7 @@ source or use a subsequent release to access it.
 
 ## Download and run
 
-**Historical migration-only release: [v0.1.2 — download Data Migrator](https://github.com/GCWing/OpenBitFun/releases/tag/data-migrator-v0.1.2).**
+**Historical migration-only release: [v0.1.2 — download Data Migrator](https://github.com/xhuiyan/OpenBitFun/releases/tag/data-migrator-v0.1.2).**
 
 | Platform | Download | Launch |
 | --- | --- | --- |
@@ -170,7 +170,7 @@ Always review the actual paths shown by the tool before confirming.
 
 **The issue persists after retrying**
 
-Open a report in [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) or share your feedback in the StarMate user WeChat group. Include:
+Open a report in [GitHub Issues](https://github.com/xhuiyan/OpenBitFun/issues) or share your feedback in the StarMate user WeChat group. Include:
 
 - Your operating system and the BitFun, StarMate, and Data Tools versions.
 - Steps to reproduce, the expected result, and the actual result.

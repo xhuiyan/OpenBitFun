@@ -24,7 +24,7 @@ const requireFromWebUi = createRequire(
 const yaml = requireFromWebUi('yaml');
 
 function createRepo({ workflow, nodeVersionFile }) {
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-github-config-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-github-config-'));
   mkdirSync(path.join(root, '.github/workflows'), { recursive: true });
   writeFileSync(
     path.join(root, 'package.json'),
@@ -65,7 +65,7 @@ test('partial Desktop publication requires successful trusted producers and leav
     'standalone publication uses Node built-ins and has no pnpm installation');
   const validate = steps.find((step) => step.name === 'Validate source and completed producers').run;
   const publish = steps.find((step) => step.name === 'Publish available installers without changing update feeds').run;
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-partial-release-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-partial-release-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(path.join(root, 'bin'));
   function executable(name, source) {
@@ -102,7 +102,7 @@ test('partial Desktop publication requires successful trusted producers and leav
   const env = {
     ...process.env, PATH: `${path.join(root, 'bin')}:${process.env.PATH}`,
     FIXTURE: root, GITHUB_ENV: path.join(root, 'env'),
-    GITHUB_REPOSITORY: 'GCWing/OpenBitFun', RELEASE_TAG: 'v1.0.6', SOURCE_RUN: '123',
+    GITHUB_REPOSITORY: 'xhuiyan/OpenBitFun', RELEASE_TAG: 'v1.0.6', SOURCE_RUN: '123',
     STARMATE_SIGNING_KEY: 'fixture-only', STARMATE_SIGNING_PUBKEY: 'fixture-only', GH_TOKEN: 'fixture-only',
   };
   const run = {
@@ -167,7 +167,7 @@ test('partial Desktop publication requires successful trusted producers and leav
   const macJobs = { jobs: ['Prepare', 'Package (macos-arm64)'].map((name) => ({
     name, conclusion: 'success', steps: [{ name: 'Verify Apple signature and notarization', conclusion: 'success' }],
   })) };
-  const artifact = { name: 'openbitfun-v1.0.6-macos-arm64-bundle', expired: false };
+  const artifact = { name: 'starmate-v1.0.6-macos-arm64-bundle', expired: false };
   function macFixtures(nextRun = run, nextJobs = macJobs, artifacts = [artifact]) {
     fixtures(nextRun, nextJobs);
     writeFileSync(path.join(root, 'artifacts.json'), JSON.stringify({ artifacts }));
@@ -185,7 +185,7 @@ test('partial Desktop publication requires successful trusted producers and leav
     assert.notEqual(execute(macValidate, macEnv).status, 0);
   }
   for (const artifacts of [[], [{ ...artifact, expired: true }], [artifact, artifact],
-    [{ ...artifact, name: 'openbitfun-v1.0.6-macos-arm64-verification-recovery' }]]) {
+    [{ ...artifact, name: 'starmate-v1.0.6-macos-arm64-verification-recovery' }]]) {
     macFixtures(run, macJobs, artifacts);
     assert.notEqual(execute(macValidate, macEnv).status, 0);
   }
@@ -1063,7 +1063,7 @@ test('nightly orchestrates the shared build before the separately privileged pub
     build_linux_binaries: true,
     build_relay_image: true,
     upload_artifacts: true,
-    cache_write: "${{ github.repository_owner == 'GCWing' }}",
+    cache_write: "${{ github.repository_owner == 'xhuiyan' }}",
   });
   assert.deepEqual(publish.needs, ['check-changes', 'build-artifacts']);
   assert.match(publish.if, /inputs\.build_only != true/);
@@ -1205,7 +1205,7 @@ test('nightly publishes and verifies the Relay image in the current repository o
 
   assert.match(
     metadata?.run ?? '',
-    /image=ghcr\.io\/\$\{GITHUB_REPOSITORY_OWNER,,\}\/openbitfun-relay-server/,
+    /image=ghcr\.io\/\$\{GITHUB_REPOSITORY_OWNER,,\}\/starmate-relay-server/,
   );
   assert.equal(
     publish?.with?.tags,
@@ -1349,7 +1349,7 @@ test('Desktop packaging keeps beta identity explicit and stable-safe', () => {
   const prepareStep = workflow.jobs.prepare.steps.find(
     (step) => step.name === 'Resolve version metadata',
   );
-  assert.match(prepareStep.run, /GITHUB_REPOSITORY.*GCWing\/OpenBitFun/);
+  assert.match(prepareStep.run, /GITHUB_REPOSITORY.*xhuiyan\/OpenBitFun/);
   assert.match(prepareStep.run, /merge-base --is-ancestor/);
   assert.match(prepareStep.run, /rev-parse --verify --quiet/);
 
@@ -1521,8 +1521,8 @@ test('stable and beta publication require every producer, while artifact-only ru
   }
   const stage = steps.find((step) => step.name === 'Stage release assets');
   for (const pattern of [
-    'linux-release-assets/openbitfun-cli-*.tar.gz',
-    'linux-release-assets/openbitfun-relay-server-*.tar.gz',
+    'linux-release-assets/starmate-cli-*.tar.gz',
+    'linux-release-assets/starmate-relay-server-*.tar.gz',
     'linux-release-assets/*.tar.gz.sig', 'linux-release-assets/*.tar.gz.sha256.sig',
     'linux-release-assets/linux-binaries-v1.json', 'relay-image-assets/relay-image.json.sig',
   ]) assert.ok(stage.run.includes(pattern), pattern);
@@ -1538,7 +1538,7 @@ test('stable and beta publication require every producer, while artifact-only ru
 test('Desktop recovery selects only one Mac target and cannot publish an incomplete release', (t) => {
   const workflow = yaml.parse(readFileSync(path.join(repoRoot, '.github/workflows/desktop-package.yml'), 'utf8'));
   const step = workflow.jobs.prepare.steps.find((entry) => entry.name === 'Select Desktop package platforms');
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-platform-recovery-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-platform-recovery-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const target of ['all', 'macos-arm64', 'macos-x64', 'unknown']) {
     for (const relay of ['true', 'false']) {
@@ -1604,7 +1604,7 @@ test('Desktop recovery selects only one Mac target and cannot publish an incompl
 
 test('Mac verification recovery requires the exact failed trusted producer and unexpired checkpoint', async () => {
   const { planMacVerificationRecovery } = await import('./restore-macos-verification-bundle.mjs');
-  const repo = 'GCWing/OpenBitFun', tag = 'v1.0.6', platform = 'macos-x64';
+  const repo = 'xhuiyan/OpenBitFun', tag = 'v1.0.6', platform = 'macos-x64';
   const source = {
     run: { id: 123, repository: { full_name: repo }, head_repository: { full_name: repo },
       path: '.github/workflows/desktop-package.yml', event: 'workflow_dispatch', head_sha: 'a'.repeat(40) },
@@ -1613,7 +1613,7 @@ test('Mac verification recovery requires the exact failed trusted producer and u
       { name: 'Verify Apple signature and notarization', conclusion: 'failure' },
       { name: 'Upload macOS verification recovery bundles', conclusion: 'success' },
     ] }],
-    artifacts: [{ name: 'openbitfun-v1.0.6-macos-x64-verification-recovery', expired: false }],
+    artifacts: [{ name: 'starmate-v1.0.6-macos-x64-verification-recovery', expired: false }],
   };
   assert.equal(planMacVerificationRecovery(repo, tag, platform, source).runId, '123');
   const mutations = [
@@ -1648,7 +1648,7 @@ test('Mac recovery architecture command accepts a real Mach-O executable', { ski
   assert.ok(start >= 0);
   const script = restore.slice(start);
   assert.match(script, /lipo /);
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-recovery-architecture-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-recovery-architecture-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const target = process.arch === 'arm64' ? 'aarch64-apple-darwin' : 'x86_64-apple-darwin';
   const executable = path.join(root, 'target', target, 'release/bundle/macos/StarMate.app/Contents/MacOS/starmate-desktop');
@@ -1661,7 +1661,7 @@ test('Mac recovery architecture command accepts a real Mach-O executable', { ski
 });
 
 test('Mac ticket repair repacks both distributions and fails closed on unrelated errors', (t) => {
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-staple-repair-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-staple-repair-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const bundle = path.join(root, 'target/x86_64-apple-darwin/release/bundle');
   const app = path.join(bundle, 'macos/StarMate.app');
@@ -1767,13 +1767,13 @@ test('Mac ticket repair repacks both distributions and fails closed on unrelated
 
 test('release finalization requires the complete unique successful producer set', async (t) => {
   const { planReleaseArtifactDownloads } = await import('./download-desktop-release-artifacts.mjs');
-  const repo = 'GCWing/OpenBitFun';
+  const repo = 'xhuiyan/OpenBitFun';
   const tag = 'v1.0.6';
   const platforms = ['windows-x64', 'linux-x64', 'linux-arm64', 'macos-arm64', 'macos-x64'];
   const entries = [
-    ...platforms.map((platform) => [`openbitfun-${tag}-${platform}-bundle`, `Package (${platform})`]),
-    ...['linux-x64', 'linux-arm64'].map((platform) => [`openbitfun-linux-${tag}-${platform}`, `Linux CLI and Relay Server / Linux Binaries (${platform})`]),
-    [`openbitfun-relay-image-${tag}`, 'Publish Relay Server Image'],
+    ...platforms.map((platform) => [`starmate-${tag}-${platform}-bundle`, `Package (${platform})`]),
+    ...['linux-x64', 'linux-arm64'].map((platform) => [`starmate-linux-${tag}-${platform}`, `Linux CLI and Relay Server / Linux Binaries (${platform})`]),
+    [`starmate-relay-image-${tag}`, 'Publish Relay Server Image'],
   ];
   const source = {
     run: { id: 123, repository: { full_name: repo }, head_repository: { full_name: repo },
@@ -1782,7 +1782,7 @@ test('release finalization requires the complete unique successful producer set'
     artifacts: entries.map(([name]) => ({ name, expired: false })),
   };
   assert.equal(planReleaseArtifactDownloads(repo, tag, [source]).length, 8);
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-finalize-history-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-finalize-history-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(path.join(root, 'bin'));
   writeFileSync(path.join(root, 'run.json'), JSON.stringify(source.run));
@@ -1861,7 +1861,7 @@ test('Relay image rebuild resolves the release tag instead of the newer workflow
   const verification = jobs['upload-release-assets'].steps.find((entry) => entry.name === 'Verify published Relay image descriptor');
   assert.match(verification.run, /cmp relay-image-assets\/relay-image.json relay-image.published.json/);
   assert.match(verification.run, /cmp relay-image-assets\/relay-image.json.sig relay-image.published.json.sig/);
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-relay-rebuild-ref-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-relay-rebuild-ref-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const tagSha = 'a'.repeat(40);
   const headSha = 'b'.repeat(40);
@@ -1884,7 +1884,7 @@ test('Relay image rebuild resolves the release tag instead of the newer workflow
       env: {
         ...process.env,
         GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_SHA: headSha,
-        GITHUB_REPOSITORY: 'GCWing/OpenBitFun', GITHUB_OUTPUT: output,
+        GITHUB_REPOSITORY: 'xhuiyan/OpenBitFun', GITHUB_OUTPUT: output,
         INPUT_TAG_NAME: 'v1.0.0', INPUT_CHECKOUT_REF: checkoutRef,
         INPUT_RELEASE_CHANNEL: 'stable', INPUT_UPLOAD_TO_RELEASE: 'true',
         INPUT_RELAY_IMAGE_ONLY: 'true', TAG_SHA: tagSha,
@@ -1907,7 +1907,7 @@ test('Relay image tag selection keeps Beta and old stable backfills away from la
     path.join(repoRoot, '.github/workflows/desktop-package.yml'), 'utf8',
   ));
   const step = jobs['publish-relay-image'].steps.find((entry) => entry.name === 'Resolve image tags');
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-image-tags-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-image-tags-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const scenario of [
     { channel: 'beta', version: '1.0.0-beta.3', imageOnly: 'false', latest: false },
@@ -1921,16 +1921,16 @@ test('Relay image tag selection keeps Beta and old stable backfills away from la
     writeFileSync(output, '');
     const result = spawnSync('bash', ['-c', `gh() { printf 'v1.0.0\\n'; }\n${step.run}`], {
       env: { ...process.env, GITHUB_OUTPUT: output, GITHUB_REPOSITORY: 'test-owner/OpenBitFun',
-        IMAGE: 'ghcr.io/test-owner/openbitfun-relay-server', RELEASE_TAG: `v${scenario.version}`,
+        IMAGE: 'ghcr.io/test-owner/starmate-relay-server', RELEASE_TAG: `v${scenario.version}`,
         RELEASE_VERSION: scenario.version, RELEASE_CHANNEL: scenario.channel, IMAGE_ONLY: scenario.imageOnly },
       encoding: 'utf8', windowsHide: true,
     });
     assert.equal(result.status, 0, result.stderr);
     const tags = readFileSync(output, 'utf8').trim().split('\n');
     assert.deepEqual(tags, [
-      'value<<EOF', `ghcr.io/test-owner/openbitfun-relay-server:v${scenario.version}`,
-      `ghcr.io/test-owner/openbitfun-relay-server:${scenario.version}`,
-      ...(scenario.latest ? ['ghcr.io/test-owner/openbitfun-relay-server:latest'] : []), 'EOF',
+      'value<<EOF', `ghcr.io/test-owner/starmate-relay-server:v${scenario.version}`,
+      `ghcr.io/test-owner/starmate-relay-server:${scenario.version}`,
+      ...(scenario.latest ? ['ghcr.io/test-owner/starmate-relay-server:latest'] : []), 'EOF',
     ]);
   }
 });
@@ -1945,7 +1945,7 @@ test('beta channel readback retries stale content and fails if it never converge
     (entry) => entry.name === 'Publish beta channel manifest',
   );
   assert.equal(step.env.CANDIDATE_VERSION, '${{ steps.beta-channel.outputs.candidate_version }}');
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-beta-readback-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-beta-readback-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const bin = path.join(root, 'bin');
   mkdirSync(bin);
@@ -1978,7 +1978,9 @@ fs.writeFileSync(output, content);
         CANDIDATE_VERSION: '1.0.0-beta.1',
       },
       encoding: 'utf8',
-      timeout: 10000,
+      // The stale scenario intentionally exhausts every bounded retry; keep
+      // enough headroom for slow CI hosts that spawn curl/jq per iteration.
+      timeout: 30000,
       windowsHide: true,
     });
     assert.equal(result.status, scenario === 'stale' ? 1 : 0, `${scenario}: ${result.stderr}`);
@@ -2005,11 +2007,11 @@ test('nightly and beta use the shared build-version projection', () => {
   assert.equal(artifacts.jobs.package.env.STARMATE_RELEASE_CHANNEL, 'nightly');
   assert.equal(
     artifacts.jobs.package.env.TAURI_UPDATER_ENDPOINT,
-    'https://github.com/GCWing/OpenBitFun/releases/latest/download/latest-v1.json',
+    'https://github.com/xhuiyan/OpenBitFun/releases/latest/download/latest-v1.json',
   );
   assert.equal(
     artifacts.jobs.package.env.TAURI_UPDATER_FALLBACK_ENDPOINT,
-    'https://openbitfun.com/release/latest-v1.json',
+    'https://starmate.xtdl.ltd/release/latest-v1.json',
   );
   assert.equal(artifacts.jobs.package.env.STARMATE_ENABLE_UPDATER_ARTIFACTS, undefined);
   const signingStep = nightly.jobs['publish-nightly'].steps.find(
@@ -2054,7 +2056,7 @@ test('public beta launch uses Latest while legacy updater feeds stay on the pinn
   assert.match(preserve.run, /notes/);
   // The pinned step downloads nothing, so the released version can never leak
   // into a legacy feed; the sandbox only proves the copy + guard behavior.
-  const cwd = mkdtempSync(path.join(tmpdir(), 'openbitfun-legacy-feed-'));
+  const cwd = mkdtempSync(path.join(tmpdir(), 'starmate-legacy-feed-'));
   try {
     // The step reads its pinned manifests via a repo-root-relative path and
     // writes into release-upload-assets/, so mirror the CI working tree
@@ -2089,7 +2091,7 @@ test('public beta launch uses Latest while legacy updater feeds stay on the pinn
 test('release publication omits target overrides and uploads before publishing', (t) => {
   const workflow = yaml.parse(readFileSync(path.join(repoRoot, '.github/workflows/desktop-package.yml'), 'utf8'));
   const step = workflow.jobs['upload-release-assets'].steps.find((entry) => entry.name === 'Upload to release');
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-publish-api-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-publish-api-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const status of ['200', '404', '403']) {
     const cwd = path.join(root, status);
@@ -2123,7 +2125,7 @@ test('release publication omits target overrides and uploads before publishing',
 test('macOS release verification uses the pinned workflow revision without changing old-tag artifacts', (t) => {
   const workflow = yaml.parse(readFileSync(path.join(repoRoot, '.github/workflows/desktop-package.yml'), 'utf8'));
   const step = workflow.jobs.package.steps.find(entry => entry.name === 'Verify Apple signature and notarization');
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-apple-policy-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-apple-policy-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const source = path.join(root, 'source');
   const checkout = path.join(root, 'checkout');
@@ -2187,7 +2189,7 @@ test('failed Mac verification retains a tar archive without publishing it', (t) 
   }
   assert.match(upload.with.name, /-verification-recovery$/);
   assert.doesNotMatch(upload.with.name, /-bundle$/);
-  const cwd = mkdtempSync(path.join(tmpdir(), 'openbitfun-notary-archive-'));
+  const cwd = mkdtempSync(path.join(tmpdir(), 'starmate-notary-archive-'));
   t.after(() => rmSync(cwd, { recursive: true, force: true }));
   const app = path.join(cwd, 'target/fixture/release/bundle/macos/Test.app');
   mkdirSync(app, { recursive: true });
@@ -2223,7 +2225,7 @@ for (const scenario of [
 
 ]) {
   test(`macOS verification ${scenario.name}`, (t) => {
-    const cwd = mkdtempSync(path.join(tmpdir(), 'openbitfun-apple-ticket-'));
+    const cwd = mkdtempSync(path.join(tmpdir(), 'starmate-apple-ticket-'));
     t.after(() => rmSync(cwd, { recursive: true, force: true }));
     mkdirSync(path.join(cwd, 'scripts/ci'), { recursive: true });
     copyFileSync(path.join(repoRoot, 'scripts/ci/verify-macos-signing.sh'), path.join(cwd, 'scripts/ci/verify-macos-signing.sh'));

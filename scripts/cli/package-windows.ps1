@@ -72,7 +72,7 @@ Assert-LastExitCode 'openbitfun --help'
 Assert-NoRedistributableRuntime $primary
 Assert-PluginHostResources $pluginHostDist
 
-$stageName = "openbitfun-cli-$Version-$Target"
+$stageName = "starmate-cli-$Version-$Target"
 $stageDir = Join-Path (Join-Path $OutputDir 'dist-cli') $stageName
 New-Item -ItemType Directory -Path $stageDir -Force | Out-Null
 Copy-Item -LiteralPath $primary -Destination $stageDir -Force
@@ -114,7 +114,7 @@ if ($recordedHash -cne $hash) {
     throw 'Packaged archive checksum mismatch'
 }
 
-$extractDir = Join-Path ([IO.Path]::GetTempPath()) "openbitfun-cli-package-$([guid]::NewGuid().ToString('N'))"
+$extractDir = Join-Path ([IO.Path]::GetTempPath()) "starmate-cli-package-$([guid]::NewGuid().ToString('N'))"
 try {
     Expand-Archive -LiteralPath $archive -DestinationPath $extractDir
     $primaryCandidates = @(Get-ChildItem -LiteralPath $extractDir -Recurse -Filter 'openbitfun.exe')

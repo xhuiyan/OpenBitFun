@@ -1101,7 +1101,7 @@ export default function conversationStateUnitTest() {
     it('projects configuration, busy state, and status text', 0, () => {
       const state = new GeneralChatPageState();
       state.setConfiguration(
-        'https://api.openbitfun.com',
+        'https://api.starmate.xtdl.ltd',
         'deepseek-v4-flash',
         true,
         GeneralChatServiceState.Ready
@@ -1109,7 +1109,7 @@ export default function conversationStateUnitTest() {
       state.setBusy(true);
       state.setStatus('Generating');
 
-      expect(state.apiUrl).assertEqual('https://api.openbitfun.com');
+      expect(state.apiUrl).assertEqual('https://api.starmate.xtdl.ltd');
       expect(state.modelName).assertEqual('deepseek-v4-flash');
       expect(state.hasApiKey).assertTrue();
       expect(state.serviceState).assertEqual(GeneralChatServiceState.Ready);
@@ -1262,8 +1262,8 @@ export default function conversationStateUnitTest() {
 
       expect(state.desktopName).assertEqual('');
       expect(state.desktopId).assertEqual('');
-      expect(RemoteUiState.desktopNameFromRemoteUrl('openbitfun://pair?room=room-1')).assertEqual('');
-      expect(RemoteUiState.desktopNameFromRemoteUrl('openbitfun://pair?room=room-1&dn=Developer%20Mac'))
+      expect(RemoteUiState.desktopNameFromRemoteUrl('starmate://pair?room=room-1')).assertEqual('');
+      expect(RemoteUiState.desktopNameFromRemoteUrl('starmate://pair?room=room-1&dn=Developer%20Mac'))
         .assertEqual('Developer Mac');
     });
 

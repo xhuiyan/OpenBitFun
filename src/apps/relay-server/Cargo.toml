@@ -10,7 +10,7 @@ name = "starmate_relay_server"
 path = "src/lib.rs"
 
 [[bin]]
-name = "openbitfun-relay-server"
+name = "starmate-relay-server"
 path = "src/main.rs"
 
 [[bin]]

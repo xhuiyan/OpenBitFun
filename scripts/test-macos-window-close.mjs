@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 assert.equal(process.platform, 'darwin', 'Native fullscreen verification requires macOS');
 const root = fileURLToPath(new URL('../', import.meta.url));
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-window-close-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-window-close-'));
 const run = args => new Promise((resolve, reject) => {
   const child = spawn('cargo', args, {
     cwd: directory, stdio: 'inherit', windowsHide: true,
@@ -22,7 +22,7 @@ try {
   // runtime/services graph. No substitute implementation or user data is used.
   await mkdir(join(directory, 'src'));
   await writeFile(join(directory, 'Cargo.toml'), `[package]
-name = "openbitfun-window-close-fixture"
+name = "starmate-window-close-fixture"
 version = "0.0.0"
 edition = "2021"
 [dependencies]

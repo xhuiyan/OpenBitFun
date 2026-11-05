@@ -37,7 +37,7 @@ test('localized names are validated against the shared locale contract', () => {
 });
 
 test('schema version one rejects future owner sections instead of pretending to support them', () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-product-c0a-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-product-c0a-'));
   const source = readFileSync(ACME, 'utf8').replace(
     /\n}\s*$/,
     ',\n  "assets": { "desktopAppIcon": "icon.png" }\n}\n',
@@ -52,7 +52,7 @@ test('schema version one rejects future owner sections instead of pretending to 
 });
 
 test('locale paths cannot escape the product definition directory', () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-product-c0a-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-product-c0a-'));
   const source = readFileSync(ACME, 'utf8').replace('"./locales"', '"../"');
   const config = join(directory, 'product.jsonc');
   writeFileSync(config, source, 'utf8');
@@ -69,7 +69,7 @@ test('invalid member and unsafe binary identity fail with stable codes', () => {
     (error) => error instanceof ProductDefinitionError && error.code === 'invalid_member',
   );
 
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-product-c0a-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-product-c0a-'));
   cpSync(join(ROOT, 'products', 'fixtures', 'acme', 'locales'), join(directory, 'locales'), {
     recursive: true,
   });
@@ -83,7 +83,7 @@ test('invalid member and unsafe binary identity fail with stable codes', () => {
 });
 
 test('product and data identities reject display names and path fragments', () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-product-identity-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-product-identity-'));
   cpSync(join(ROOT, 'products', 'fixtures', 'acme', 'locales'), join(directory, 'locales'), {
     recursive: true,
   });

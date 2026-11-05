@@ -661,7 +661,7 @@ Second paragraph.
     container.className = 'openbitfun-session-scene modern-flowchat-container';
     activateSurface('linux-peer');
     openSessionHost();
-    const url = 'https://github.com/GCWing/OpenBitFun/pull/3573/files?diff=split#diff-example';
+    const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573/files?diff=split#diff-example';
     await act(async () => root.render(
       <PeerDeviceContext.Provider value={peerContext(capabilities)}>
         <ChatPullRequestLink url={url} />
@@ -683,7 +683,7 @@ Second paragraph.
     container.className = 'openbitfun-session-scene modern-flowchat-container';
     if (peer) activateSurface('linux-peer');
     openSessionHost();
-    const url = 'https://github.com/GCWing/OpenBitFun/pull/3573';
+    const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573';
     await act(async () => root.render(
       <PeerDeviceContext.Provider value={peer}>
         <ChatPullRequestLink url={url} />
@@ -717,7 +717,7 @@ Second paragraph.
   it.each(['metaKey', 'ctrlKey', 'shiftKey', 'altKey'])('honors %s on a PR link', async modifier => {
     container.className = 'openbitfun-session-scene modern-flowchat-container';
     openSessionHost();
-    const url = 'https://github.com/GCWing/OpenBitFun/pull/3573';
+    const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573';
     await act(async () => root.render(<ChatPullRequestLink url={url} />));
     await act(async () => container.querySelector<HTMLAnchorElement>('a')?.dispatchEvent(
       new MouseEvent('click', { bubbles: true, cancelable: true, [modifier]: true }),
@@ -944,7 +944,7 @@ Second paragraph.
     expect(mocks.revealInExplorer).not.toHaveBeenCalled();
   });
 
-  it.each(['computer://preview.png', 'openbitfun://current-session/artifacts/preview.png'])(
+  it.each(['computer://preview.png', 'starmate://current-session/artifacts/preview.png'])(
     'renders dispatched image %s through the session provider only', async source => {
       const read = vi.fn().mockResolvedValue('data:image/png;base64,YQ==');
       await act(async () => root.render(<MarkdownRenderer content={`![Preview](${source})`}

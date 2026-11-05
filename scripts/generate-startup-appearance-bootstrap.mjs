@@ -50,7 +50,7 @@ function createDesktopBootstrapThemeCss(themeValues, cssVariables) {
       if (!cssVariable) {
         throw new Error(`Missing CSS variable mapping for bootstrap theme token ${name}.`);
       }
-      const aliasVariable = cssVariable.replace(/^--openbitfun-/, '--starmate-');
+      const aliasVariable = cssVariable.replace(/^--starmate-/, '--starmate-');
       return `    ${aliasVariable}: var(${cssVariable});`;
     })
     .join('\n');

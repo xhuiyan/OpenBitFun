@@ -170,7 +170,7 @@ const summary = {
   minOpenBitFunVersion: '1.0.0',
   requiredCapabilities: ['components.v1'],
   owner: { githubId: 1, login: 'studio', avatarUrl: '' },
-  previewUrl: `https://market.openbitfun.com/skin/api/v1/artifacts/previews/${'a'.repeat(64)}`,
+  previewUrl: `https://market.starmate.xtdl.ltd/skin/api/v1/artifacts/previews/${'a'.repeat(64)}`,
   downloadCount: 10,
   publishedAt: 1,
 } as const;

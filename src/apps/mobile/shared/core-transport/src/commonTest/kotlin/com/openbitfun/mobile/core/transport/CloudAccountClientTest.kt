@@ -68,10 +68,10 @@ class CloudAccountClientTest {
 
     @Test
     fun authorizationAcceptsTheIdentityAuthorityGithubUrlAndRejectsOtherDestinations() = runTest {
-        for (url in listOf("https://github.com/login/oauth/authorize?state=test", "https://auth.openbitfun.com/sign-in#ticket=test", "https://auth.openbitfun.com.evil.example/sign-in", "https://user@auth.openbitfun.com/sign-in", "https://auth.openbitfun.com:444/sign-in", "https://github.com.evil.example/login/oauth/authorize", "https://github.com/login", "https://user@github.com/login/oauth/authorize", "http://github.com/login/oauth/authorize")) {
+        for (url in listOf("https://github.com/login/oauth/authorize?state=test", "https://auth.starmate.xtdl.ltd/sign-in#ticket=test", "https://auth.starmate.xtdl.ltd.evil.example/sign-in", "https://user@auth.starmate.xtdl.ltd/sign-in", "https://auth.starmate.xtdl.ltd:444/sign-in", "https://github.com.evil.example/login/oauth/authorize", "https://github.com/login", "https://user@github.com/login/oauth/authorize", "http://github.com/login/oauth/authorize")) {
             val engine = MockEngine { json("""{"transactionId":"txn","transactionSecret":"secret","authorizationUrl":"$url","expiresAt":9999999999,"pollIntervalSeconds":3}""") }
             val client = CloudAccountClient(relayHttpClient(engine))
-            if (url == "https://github.com/login/oauth/authorize?state=test" || url == "https://auth.openbitfun.com/sign-in#ticket=test") assertEquals(url, client.startAuthorization(DEFAULT_CLOUD_RELAY_URL).authorizationUrl)
+            if (url == "https://github.com/login/oauth/authorize?state=test" || url == "https://auth.starmate.xtdl.ltd/sign-in#ticket=test") assertEquals(url, client.startAuthorization(DEFAULT_CLOUD_RELAY_URL).authorizationUrl)
             else assertFailsWith<IllegalArgumentException> { client.startAuthorization(DEFAULT_CLOUD_RELAY_URL) }
         }
     }
@@ -80,7 +80,7 @@ class CloudAccountClientTest {
     fun githubLoginRegistersOnlyThePublicDeviceKey() = runTest {
         val bodies = mutableListOf<kotlinx.serialization.json.JsonObject>()
         val engine = MockEngine { request ->
-            assertEquals("https://remote.openbitfun.com/v/1.0.2/api/auth/login", request.url.toString())
+            assertEquals("https://remote.starmate.xtdl.ltd/v/1.0.2/api/auth/login", request.url.toString())
             bodies += RelayJson.parseToJsonElement(request.text()).jsonObject
             json("""{"token":"token-1","user_id":"123"}""")
         }

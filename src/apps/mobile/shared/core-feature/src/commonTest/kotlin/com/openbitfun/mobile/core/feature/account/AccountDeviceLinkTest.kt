@@ -8,13 +8,13 @@ class AccountDeviceLinkTest {
     @Test fun explicitLegacyConstructorsPreserveTheExistingDefaults() {
         assertNull(AccountDeviceLinkResult(AccountDeviceLinkStatus.INVALID, null).relayUrl)
         val legacy = AccountUiState.Ready("user", "name", emptyList(), null, null)
-        assertEquals("https://remote.openbitfun.com/v/1.0.2", legacy.relayUrl)
+        assertEquals("https://remote.starmate.xtdl.ltd/v/1.0.2", legacy.relayUrl)
         assertEquals(false, legacy.refreshing)
         assertNull(legacy.refreshFailure)
     }
 
-    private val link = "https://remote.openbitfun.com/v/1.0.2/#/pair?did=desktop-1"
-    private val ready = AccountUiState.Ready(userId = "user", username = "name", relayUrl = "https://remote.openbitfun.com/v/1.0.2", devices = listOf(AccountDeviceUi("desktop-1", "Desktop", true, null)), selectedDeviceId = null, selectedDeviceName = null)
+    private val link = "https://remote.starmate.xtdl.ltd/v/1.0.2/#/pair?did=desktop-1"
+    private val ready = AccountUiState.Ready(userId = "user", username = "name", relayUrl = "https://remote.starmate.xtdl.ltd/v/1.0.2", devices = listOf(AccountDeviceUi("desktop-1", "Desktop", true, null)), selectedDeviceId = null, selectedDeviceName = null)
 
     @Test fun onlyAuthenticatedOnlineMembershipCanResolveTheTarget() {
         assertEquals(AccountDeviceLinkStatus.SIGN_IN_REQUIRED, resolveAccountDeviceLink(link, AccountUiState.SignedOut).status)
@@ -36,8 +36,8 @@ class AccountDeviceLinkTest {
 
     @Test fun rejectsLegacyAndLookalikeLinksWithoutUsingTheirRoutingFields() {
         for (invalid in listOf(
-            link.replace("https:", "http:"), link.replace("remote.openbitfun.com", "evil.example"),
-            link.replace("remote.openbitfun.com", "user@remote.openbitfun.com"),
+            link.replace("https:", "http:"), link.replace("remote.starmate.xtdl.ltd", "evil.example"),
+            link.replace("remote.starmate.xtdl.ltd", "user@remote.starmate.xtdl.ltd"),
             link.replace("/v/1.0.2/", "/relay/"), link + "&did=foreign", link + "&pk=untrusted", link + "&relay=evil", link.replace("did=desktop-1", "room=old"),
             link.replace("did=desktop-1", "did=../bad"),
         )) {

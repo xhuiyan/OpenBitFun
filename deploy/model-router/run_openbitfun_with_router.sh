@@ -7,7 +7,7 @@ repo_root=$(cd -- "$script_dir/../.." && pwd)
 : "${ROUTER_API_URL:?Set ROUTER_API_URL to the Router base URL or chat/completions endpoint}"
 
 # 默认执行本仓库已编译的 OpenBitFun；也可通过 STARMATE_BIN 指定其他二进制。
-openbitfun_bin=${STARMATE_BIN:-$repo_root/target/debug/openbitfun}
+starmate_bin=${STARMATE_BIN:-$repo_root/target/debug/openbitfun}
 
 router_endpoint=${ROUTER_API_URL%/}
 if [[ "$router_endpoint" != */chat/completions ]]; then
@@ -47,4 +47,4 @@ if [[ -n ${ROUTER_TRACE_PATH:-} ]]; then
 fi
 
 # 不添加参数时保持 OpenBitFun 原本的交互模式；传入 exec 等参数时则原样转发。
-exec "$openbitfun_bin" "$@"
+exec "$starmate_bin" "$@"

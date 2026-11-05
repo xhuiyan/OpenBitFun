@@ -254,7 +254,7 @@ public class AccountStore internal constructor(
                 )
                 return@launch
             }
-            if (restored.relayUrl.trimEnd('/').startsWith("https://remote.openbitfun.com/v/") &&
+            if (restored.relayUrl.trimEnd('/').startsWith("https://remote.starmate.xtdl.ltd/v/") &&
                 restored.relayUrl.trimEnd('/') != AccountDefaults.CLOUD_RELAY_URL) {
                 // Relay tokens belong to their issuing database. Keep the old encrypted
                 // record/cache, but require a fresh login before using the new endpoint.

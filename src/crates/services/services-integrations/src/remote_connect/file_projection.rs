@@ -17,7 +17,7 @@ pub enum FileReadScope {
 
 pub fn controller_file_read_scope(reference: &str) -> Result<FileReadScope, String> {
     Ok(
-        if normalize_file_reference(reference)?.starts_with("openbitfun://") {
+        if normalize_file_reference(reference)?.starts_with("starmate://") {
             FileReadScope::Workspace
         } else {
             FileReadScope::Provider
@@ -35,7 +35,7 @@ pub struct SessionFileTarget {
 
 /// Decode a link once, before path resolution. Runtime URIs have their own parser.
 pub fn normalize_file_reference(raw: &str) -> Result<String, String> {
-    if raw.starts_with("openbitfun://") {
+    if raw.starts_with("starmate://") {
         return Ok(raw.to_string());
     }
     let uri_path = raw
@@ -531,7 +531,7 @@ mod tests {
             assert!(controller_file_read_scope(reference).unwrap() == FileReadScope::Provider);
         }
         for reference in [
-            "openbitfun://current-session/artifacts/qr.png",
+            "starmate://current-session/artifacts/qr.png",
             "computer://openbitfun%3A%2F%2Fcurrent-session%2Fartifacts%2Fqr.png",
         ] {
             assert!(controller_file_read_scope(reference).unwrap() == FileReadScope::Workspace);
@@ -553,8 +553,8 @@ mod tests {
             "C:/output/preview.png"
         );
         assert_eq!(
-            normalize_file_reference("openbitfun://current-session/artifacts/preview.png").unwrap(),
-            "openbitfun://current-session/artifacts/preview.png"
+            normalize_file_reference("starmate://current-session/artifacts/preview.png").unwrap(),
+            "starmate://current-session/artifacts/preview.png"
         );
     }
 }

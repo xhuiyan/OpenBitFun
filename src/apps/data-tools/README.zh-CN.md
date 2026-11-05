@@ -37,7 +37,7 @@ GUI 使用原生 Rust 后端，不需要安装 Python。
 
 ## 下载和使用
 
-**历史版本（仅支持迁移）：[v0.1.2 — 下载数据迁移器](https://github.com/GCWing/OpenBitFun/releases/tag/data-migrator-v0.1.2)。**
+**历史版本（仅支持迁移）：[v0.1.2 — 下载数据迁移器](https://github.com/xhuiyan/OpenBitFun/releases/tag/data-migrator-v0.1.2)。**
 
 | 系统 | 下载文件 | 启动方式 |
 | --- | --- | --- |
@@ -131,7 +131,7 @@ macOS 标准目录为 `~/.openbitfun` 和
 
 **重试后仍然异常**
 
-请在 [GitHub Issues](https://github.com/GCWing/OpenBitFun/issues) 提交问题，或在星伴用户微信群中反馈，并提供：
+请在 [GitHub Issues](https://github.com/xhuiyan/OpenBitFun/issues) 提交问题，或在星伴用户微信群中反馈，并提供：
 
 - 操作系统、BitFun 版本、星伴版本和数据工具版本。
 - 操作步骤、预期结果及实际结果。

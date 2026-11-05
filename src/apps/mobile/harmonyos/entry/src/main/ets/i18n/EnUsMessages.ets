@@ -392,7 +392,7 @@ export const EN_US_MESSAGES: [string, string][] = [
   ['connect.filled', 'Filled'],
   ['connect.fill', 'Fill'],
   ['connect.clear', 'Clear'],
-  ['connect.urlPlaceholder', 'openbitfun:// or https://...#/pair?room=...&pk=...&relay=...'],
+  ['connect.urlPlaceholder', 'starmate:// or https://...#/pair?room=...&pk=...&relay=...'],
   ['connect.statusTitle', 'Connection status'],
   ['connect.targetDesktop', 'Target desktop'],
   ['connect.noDesktop', 'No desktop selected'],

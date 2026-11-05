@@ -7,7 +7,7 @@ echo ""
 
 BINARY="${STARMATE_CLI:-target/debug/openbitfun}"
 WORKSPACE="/tmp/test-acp"
-PIPE_DIR="$(mktemp -d /tmp/openbitfun-acp-test-sh.XXXXXX)"
+PIPE_DIR="$(mktemp -d /tmp/starmate-acp-test-sh.XXXXXX)"
 ACP_IN="$PIPE_DIR/in"
 ACP_OUT="$PIPE_DIR/out"
 mkdir -p "$WORKSPACE"

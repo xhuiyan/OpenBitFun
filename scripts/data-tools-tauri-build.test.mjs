@@ -59,7 +59,7 @@ test('Desktop package generation has no Data Tools payload or build hook', () =>
 
 test('Data Tools dependency and command closure exclude the main app and restart handshake', () => {
   const manifest = readFileSync(join(APP, 'Cargo.toml'), 'utf8');
-  assert.doesNotMatch(manifest, /^openbitfun-core\s*=|product-full|product-capabilities|plugin-runtime/m);
+  assert.doesNotMatch(manifest, /^starmate-core\s*=|product-full|product-capabilities|plugin-runtime/m);
   const source = readFileSync(join(APP, 'src/app_state.rs'), 'utf8');
   assert.doesNotMatch(source, /HandoffStore|MigrationOnboardingStore|restart_desktop|TrustedInstallationResolver/);
   const capability = readFileSync(join(APP, 'capabilities/data-tools.json'), 'utf8');

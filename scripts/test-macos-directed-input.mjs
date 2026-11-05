@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 assert.equal(process.platform, 'darwin', 'directed input fixture requires macOS');
 const root = fileURLToPath(new URL('../', import.meta.url));
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-directed-input-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-directed-input-'));
 const run = (command, args, env = process.env) => new Promise((resolve, reject) => {
   const child = spawn(command, args, { cwd: root, stdio: 'inherit', windowsHide: true, env });
   child.on('error', reject);

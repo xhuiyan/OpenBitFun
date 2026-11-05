@@ -383,7 +383,7 @@ Returns numbered lines (line number, tab, text). Prefer one call per file: omit 
             "properties": {
                 "file_path": {
                     "type": "string",
-                    "description": "The file to read. Use a workspace-relative path, an absolute path inside the current workspace, or an exact openbitfun:// URI returned by another tool."
+                    "description": "The file to read. Use a workspace-relative path, an absolute path inside the current workspace, or an exact starmate:// URI returned by another tool."
                 },
                 "offset": {
                     "type": "number",

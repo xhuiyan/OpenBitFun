@@ -649,8 +649,8 @@ mod tests {
                 ))
                 .collect::<Vec<_>>(),
             [
-                ("openai", "https://api.openbitfun.com/v1", "openai", true,),
-                ("default", "https://api.openbitfun.com", "anthropic", false,),
+                ("openai", "https://api.starmate.xtdl.ltd/v1", "openai", true,),
+                ("default", "https://api.starmate.xtdl.ltd", "anthropic", false,),
             ]
         );
         let qwen = overlay
@@ -916,7 +916,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "anthropic",
-                "https://api.openbitfun.com/v1/messages",
+                "https://api.starmate.xtdl.ltd/v1/messages",
                 "GLM-5.2",
                 &relayed,
             ),
@@ -925,7 +925,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "openai",
-                "https://api.openbitfun.com/v1",
+                "https://api.starmate.xtdl.ltd/v1",
                 "GLM-5.2",
                 &relayed,
             ),
@@ -934,7 +934,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "anthropic",
-                "https://api.openbitfun.com",
+                "https://api.starmate.xtdl.ltd",
                 "deepseek-v4-flash",
                 &relayed,
             ),
@@ -943,7 +943,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "openai",
-                "https://api.openbitfun.com/v1/chat/completions",
+                "https://api.starmate.xtdl.ltd/v1/chat/completions",
                 "deepseek-v4-flash",
                 &relayed,
             ),
@@ -961,7 +961,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "anthropic",
-                "https://api.openbitfun.com",
+                "https://api.starmate.xtdl.ltd",
                 "deepseek-v4-pro",
                 &relayed,
             ),
@@ -970,7 +970,7 @@ mod tests {
         assert_eq!(
             trusted_models_dev_binding(
                 "anthropic",
-                "https://api.openbitfun.com",
+                "https://api.starmate.xtdl.ltd",
                 "unmapped-model",
                 &relayed,
             ),

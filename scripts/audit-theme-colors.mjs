@@ -623,11 +623,11 @@ function createAuditContent(content, relativePath) {
     stripLineComments: !relativePath.endsWith('.css'),
   });
   // StarMate prefix compatibility: generated theme CSS aliases every
-  // --starmate-* token to its canonical --openbitfun-* declaration, so the
+  // --starmate-* token to its canonical --starmate-* declaration, so the
   // audit resolves new-prefix usage against the same token contract.
   return withoutComments
     .replace(/&#(?:x[0-9a-f]+|\d+);/gi, match => ' '.repeat(match.length))
-    .replace(/--starmate-/g, '--openbitfun-');
+    .replace(/--starmate-/g, '--starmate-');
 }
 
 function parseColor(color) {

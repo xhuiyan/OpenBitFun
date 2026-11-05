@@ -139,7 +139,7 @@ internal object GeneralChatCloudConfigPolicy {
     private const val ACCOUNT_PROVIDER = "account"
     private const val ANTHROPIC_PROVIDER = "anthropic"
     private const val ANTHROPIC_MESSAGES_PATH = "/v1/messages"
-    private const val STARMATE_HOST = "openbitfun.com"
+    private const val STARMATE_HOST = "starmate.xtdl.ltd"
 
     /** Namespaces an account model's id so it can never collide with the local one. */
     const val CLOUD_MODEL_PREFIX: String = "cloud:"

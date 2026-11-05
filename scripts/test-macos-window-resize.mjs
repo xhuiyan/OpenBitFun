@@ -7,12 +7,12 @@ import { fileURLToPath } from 'node:url';
 
 assert.equal(process.platform, 'darwin', 'Native resize verification requires macOS');
 const root = fileURLToPath(new URL('../', import.meta.url));
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-window-resize-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-window-resize-'));
 
 try {
   await mkdir(join(directory, 'src'));
   await writeFile(join(directory, 'Cargo.toml'), `[package]
-name = "openbitfun-window-resize-fixture"
+name = "starmate-window-resize-fixture"
 version = "0.0.0"
 edition = "2021"
 [dependencies]

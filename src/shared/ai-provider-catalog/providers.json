@@ -13,7 +13,7 @@
       "endpoints": [
         {
           "id": "openai",
-          "base_url": "https://api.openbitfun.com/v1",
+          "base_url": "https://api.starmate.xtdl.ltd/v1",
           "api_format": "openai",
           "label": "openai",
           "is_default": true,
@@ -27,7 +27,7 @@
         },
         {
           "id": "default",
-          "base_url": "https://api.openbitfun.com",
+          "base_url": "https://api.starmate.xtdl.ltd",
           "api_format": "anthropic",
           "label": "default",
           "trusted_for_auto_detection": true,

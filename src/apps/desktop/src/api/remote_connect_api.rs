@@ -3646,7 +3646,7 @@ mod sync_state_tests {
         for (method, endpoint) in [
             (
                 serde_json::json!("starmate_server"),
-                "https://remote.openbitfun.com/v/1.0.2",
+                "https://remote.starmate.xtdl.ltd/v/1.0.2",
             ),
             (
                 serde_json::json!({"lan":{"ip":"192.168.1.2"}}),

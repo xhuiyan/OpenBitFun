@@ -195,7 +195,7 @@ const ACTIVE_DISPATCH_STATES = new Set<DeviceOverviewDispatchJob['state']>([
   'running',
 ]);
 
-const OFFICIAL_RELAY_HOST = 'remote.openbitfun.com';
+const OFFICIAL_RELAY_HOST = 'remote.starmate.xtdl.ltd';
 
 // Device names reach us as discovery host names, so macOS reports
 // `<name>.local` and LAN hosts add their own zone. That suffix identifies a

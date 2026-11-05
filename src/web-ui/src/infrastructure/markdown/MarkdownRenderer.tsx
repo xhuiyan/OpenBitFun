@@ -59,7 +59,7 @@ const ThinkingMarkdown = lazyWithRecovery(() => import('./ThinkingMarkdown'));
 const InlineFragment = ({ children }: { children?: ReactNode }) => <>{children}</>;
 
 function markdownUrlTransform(value: string, key?: string): string {
-  if (/^openbitfun:\/\/(?:runtime|current-session)\//.test(value)) return value;
+  if (/^starmate:\/\/(?:runtime|current-session)\//.test(value)) return value;
   // These references are resolved through the owning host, never by the browser.
   if (/^(computer:\/\/|file:)/i.test(value)) return value;
   // A Windows drive-letter path looks like a custom URL scheme to the
@@ -297,8 +297,8 @@ const sanitizeSchema = {
   },
   protocols: {
     ...defaultSchema.protocols,
-    href: [...(defaultSchema.protocols?.href || []), 'starmate-canvas', 'openbitfun-canvas', 'computer', 'file', 'tab', 'visualization', 'openbitfun'],
-    src: [...(defaultSchema.protocols?.src || []), 'asset', 'data', 'http', 'https', 'tauri', 'computer', 'file', 'openbitfun'],
+    href: [...(defaultSchema.protocols?.href || []), 'starmate', 'starmate-canvas', 'computer', 'file', 'tab', 'visualization'],
+    src: [...(defaultSchema.protocols?.src || []), 'asset', 'data', 'http', 'https', 'tauri', 'starmate', 'computer', 'file'],
   },
 };
 
@@ -370,7 +370,7 @@ function remarkAutolinkInternalLinks() {
 }
 
 function normalizeFileLikeHref(rawHref: string): string {
-  if (/^openbitfun:\/\/(?:runtime|current-session)\//.test(rawHref)) return rawHref;
+  if (/^starmate:\/\/(?:runtime|current-session)\//.test(rawHref)) return rawHref;
   let filePath = rawHref;
 
   if (rawHref.startsWith(COMPUTER_LINK_PREFIX)) {
@@ -431,7 +431,7 @@ function isAbsoluteFilesystemPath(filePath: string): boolean {
 }
 
 function resolveBaseRelativePath(targetPath: string, basePath?: string): string {
-  if (/^openbitfun:\/\/(?:runtime|current-session)\//.test(targetPath)) return targetPath;
+  if (/^starmate:\/\/(?:runtime|current-session)\//.test(targetPath)) return targetPath;
   if (!targetPath || !basePath || isAbsoluteFilesystemPath(targetPath)) {
     return targetPath;
   }

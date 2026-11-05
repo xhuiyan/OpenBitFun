@@ -429,7 +429,7 @@ IndexedDB 前完成相同 preflight；覆盖活动包时，存储、目录或后
 ## Skin 市场边界
 
 产品在目录、设置入口和公网 URL 中把 Appearance 包称为 **Skin**；这只是产品文案，不新增
-Skin runtime、manifest 或文件格式。公网入口固定为 `market.openbitfun.com/skin/`，稳定 API 为
+Skin runtime、manifest 或文件格式。公网入口固定为 `market.starmate.xtdl.ltd/skin/`，稳定 API 为
 `/skin/api/v1`，下载物仍是 `.starmate-appearance`，根 manifest 仍是 `appearance.json` 和
 `schema: starmate.appearance`。
 

@@ -30,4 +30,4 @@ Every build writes `dist/release.json`. Deploy using its `releaseId`, which
 changes for either catalog or website-source changes, so a presentation-only
 update never mutates an older release directory.
 
-The production origin is <https://playbook.openbitfun.com>.
+The production origin is <https://playbook.starmate.xtdl.ltd>.

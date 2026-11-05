@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn runtime_uri_round_trips_and_normalizes_separators() {
         let uri = build_openbitfun_runtime_uri("workspace-123", r"plans\demo.plan.md").unwrap();
-        assert_eq!(uri, "openbitfun://runtime/workspace-123/plans/demo.plan.md");
+        assert_eq!(uri, "starmate://runtime/workspace-123/plans/demo.plan.md");
 
         let parsed = parse_openbitfun_runtime_uri(&uri).unwrap();
         assert_eq!(parsed.workspace_scope, "workspace-123");

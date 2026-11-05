@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly MARKET_ROOT="${MARKET_ROOT:-/srv/openbitfun-miniapp-market}"
+readonly MARKET_ROOT="${MARKET_ROOT:-/srv/starmate-miniapp-market}"
 readonly DATA_ROOT="${MARKET_ROOT}/data"
 readonly ARTIFACT_ROOT="${MARKET_ROOT}/artifacts"
 readonly BACKUP_ROOT="${MARKET_ROOT}/backups"

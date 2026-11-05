@@ -7,7 +7,7 @@
 No. Released clients use the official Relay for same-account device control.
 Sign in on the host and controller with the same StarMate account and follow
 the Remote Connect invitation or device-selection flow. Keep the host running
-and reachable. The official endpoint is `https://remote.openbitfun.com/v/1.0.2`;
+and reachable. The official endpoint is `https://remote.starmate.xtdl.ltd/v/1.0.2`;
 the path is a service-protocol prefix, not the current desktop release number.
 
 | Connection | What you need |
@@ -42,7 +42,7 @@ same-account directory.
 ## Can I use LAN mode without internet access?
 
 LAN device traffic stays on the selected local Relay, but both LAN and official
-modes use `auth.openbitfun.com` for identity verification at sign-in. A local
+modes use `auth.starmate.xtdl.ltd` for identity verification at sign-in. A local
 Relay therefore does not provide an offline account-setup or sign-in flow.
 An existing authenticated connection is not a guarantee that a new login or
 credential renewal will work during an outage.
@@ -77,7 +77,7 @@ apply the device-control encryption claim to all StarMate network traffic.
 This repository documents technical resource controls, but does not publish a
 Relay pricing schedule, monthly traffic allowance, or service-level agreement
 (SLA). Check current service announcements or ask the maintainers through the
-[repository](https://github.com/GCWing/OpenBitFun) before relying on specific
+[repository](https://github.com/xhuiyan/OpenBitFun) before relying on specific
 commercial or availability terms. Open-source licensing does not establish
 hosted-service terms.
 

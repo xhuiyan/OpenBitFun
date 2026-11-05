@@ -1,7 +1,7 @@
 # OpenBitFun MiniApp Market Web
 
 这里是 MiniApp 市场独立网页的源码目录。生产地址是
-`https://market.openbitfun.com/miniapp/`。
+`https://market.starmate.xtdl.ltd/miniapp/`。
 
 > 最短结论：修改这个目录里的网页，完成检查并提交 Git commit 后，按照
 > [部署手册](../../deploy/miniapp-market/README.md)重建并重启
@@ -202,7 +202,7 @@ pnpm run theme:color-audit:all
 完整的备份、精确 commit 发布、健康检查和回滚命令见
 [部署手册](../../deploy/miniapp-market/README.md)。
 
-GitHub sign-in uses `https://auth.openbitfun.com/sign-in`; desktop completion
+GitHub sign-in uses `https://auth.starmate.xtdl.ltd/sign-in`; desktop completion
 uses its standalone `/complete` page without marketplace navigation. The page
 is built from this frontend, while the registered OAuth callback remains on the
 market host so MiniApp and Skin receive their existing path-scoped session

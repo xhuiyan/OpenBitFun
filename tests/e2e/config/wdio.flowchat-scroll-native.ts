@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createEmbeddedConfig } from './embedded-driver';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const root = process.env.STARMATE_FLOWCHAT_SCROLL_EVIDENCE || realpathSync(mkdtempSync(join(tmpdir(), 'openbitfun-flowchat-scroll-')));
+const root = process.env.STARMATE_FLOWCHAT_SCROLL_EVIDENCE || realpathSync(mkdtempSync(join(tmpdir(), 'starmate-flowchat-scroll-')));
 const workspace = join(root, 'workspace');
 const home = join(root, 'home');
 const user = join(root, 'user');
@@ -18,7 +18,7 @@ if (!existsSync(join(root, 'frontend'))) {
   mkdirSync(workspace, { recursive: true });
   writeFileSync(join(workspace, 'README.md'), '# FlowChat scroll fixture\n');
   const fixture = spawnSync(process.execPath, [join(repo, 'tests/e2e/scripts/generate-long-session-fixture.mjs'),
-    '--workspace', workspace, '--openbitfun-home', home, '--openbitfun-user-root', user,
+    '--workspace', workspace, '--starmate-home', home, '--starmate-user-root', user,
     '--session-prefix', 'scroll-history', '--session-count', '2', '--long-turns', '80',
     '--assistant-chars', '4000', '--tool-items', '3', '--tool-result-chars', '6000',
   ], { cwd: repo, windowsHide: true, encoding: 'utf8' });

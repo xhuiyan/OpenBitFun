@@ -723,7 +723,7 @@ async fn managed_source_uri_encodes_reserved_path_characters() {
         .remove(0)
         .source;
 
-    assert!(source.starts_with("openbitfun://managed-plugins/"));
+    assert!(source.starts_with("starmate://managed-plugins/"));
     assert!(source.contains("nested%20%23dir"));
     assert!(!source.starts_with("file://"));
 }
@@ -948,7 +948,7 @@ fn dispatch_envelope_for(
             schema_version: "agent.turn.completed.v1".to_string(),
             data_classification: PluginDataClassification::Workspace,
             redaction: PluginPayloadRedaction::Partial,
-            uri: Some("openbitfun://payloads/payload-1".to_string()),
+            uri: Some("starmate://payloads/payload-1".to_string()),
         }),
         epochs: PluginRuntimeEpochs {
             trust_epoch,

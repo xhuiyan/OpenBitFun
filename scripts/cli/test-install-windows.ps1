@@ -9,7 +9,7 @@ Set-StrictMode -Version Latest
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $installer = Join-Path $repoRoot 'src\apps\cli\install.ps1'
-$testRoot = Join-Path ([IO.Path]::GetTempPath()) "openbitfun-cli-install-$([guid]::NewGuid().ToString('N'))"
+$testRoot = Join-Path ([IO.Path]::GetTempPath()) "starmate-cli-install-$([guid]::NewGuid().ToString('N'))"
 $binDir = Join-Path $testRoot 'bin'
 
 try {

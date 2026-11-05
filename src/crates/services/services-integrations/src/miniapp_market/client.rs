@@ -10,7 +10,7 @@ use reqwest::{Method, RequestBuilder, Response};
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 
-const DEFAULT_MARKET_API_URL: &str = "https://market.openbitfun.com/miniapp/api/v1";
+const DEFAULT_MARKET_API_URL: &str = "https://market.starmate.xtdl.ltd/miniapp/api/v1";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

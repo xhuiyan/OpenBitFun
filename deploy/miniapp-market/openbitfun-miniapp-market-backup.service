@@ -4,7 +4,7 @@ After=docker.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/sbin/openbitfun-miniapp-market-backup
+ExecStart=/usr/local/sbin/starmate-miniapp-market-backup
 User=root
 Group=root
 Nice=10

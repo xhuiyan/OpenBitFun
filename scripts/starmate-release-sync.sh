@@ -17,8 +17,8 @@
 #
 # Cron (every 10 minutes). Run the in-repo script from the OpenBitFun checkout so a
 # new host only needs this repository, not a detached AutoUpdate copy:
-#   */10 * * * * /root/repos/OpenBitFun/scripts/openbitfun-release-sync.sh \
-#       >> /var/log/openbitfun-release-sync.log 2>&1
+#   */10 * * * * /root/repos/OpenBitFun/scripts/starmate-release-sync.sh \
+#       >> /var/log/starmate-release-sync.log 2>&1
 # Host-specific paths and mirror configuration belong to your deployment.
 #
 # Optional immediate trigger. The release workflow POSTs to
@@ -30,8 +30,8 @@
 #   while true; do
 #     nc -l -p 8787 -q 1 >/dev/null \
 #       && STARMATE_RELEASE_CHANNEL=stable \
-#            /root/repos/OpenBitFun/scripts/openbitfun-release-sync.sh \
-#            >> /var/log/openbitfun-release-sync.log 2>&1
+#            /root/repos/OpenBitFun/scripts/starmate-release-sync.sh \
+#            >> /var/log/starmate-release-sync.log 2>&1
 #   done
 #
 # The current production origin is cron-only. Do not invent a detached webhook
@@ -48,11 +48,11 @@ RELEASE_CHANNEL="${STARMATE_RELEASE_CHANNEL:-stable}"
 case "$RELEASE_CHANNEL" in
   stable)
     CHANNEL_PATH=""
-    GITHUB_RELEASE_ROOT="https://github.com/GCWing/OpenBitFun/releases/latest/download"
+    GITHUB_RELEASE_ROOT="https://github.com/xhuiyan/OpenBitFun/releases/latest/download"
     ;;
   beta)
     CHANNEL_PATH="/beta"
-    GITHUB_RELEASE_ROOT="https://github.com/GCWing/OpenBitFun/releases/download/channel-v1-beta"
+    GITHUB_RELEASE_ROOT="https://github.com/xhuiyan/OpenBitFun/releases/download/channel-v1-beta"
     ;;
   *)
     echo "Unsupported STARMATE_RELEASE_CHANNEL: $RELEASE_CHANNEL" >&2
@@ -62,17 +62,17 @@ esac
 GITHUB_LATEST_JSON_URL="${GITHUB_RELEASE_ROOT}/latest-v1.json"
 GITHUB_LINUX_BINARIES_URL="${GITHUB_RELEASE_ROOT}/linux-binaries-v1.json"
 GITHUB_RELAY_IMAGE_URL="${GITHUB_RELEASE_ROOT}/relay-image.json"
-STARMATE_BASE_URL="https://openbitfun.com/release${CHANNEL_PATH}"
+STARMATE_BASE_URL="https://starmate.xtdl.ltd/release${CHANNEL_PATH}"
 # The mirror deliberately lives outside the website checkout. It used to be
 # OpenBitFun-Website/dist/release, but `npm run build` empties dist/, so every
 # website deploy silently deleted the mirrored installers and manifests —
 # breaking downloads and the updater fallback until someone noticed. nginx
 # serves this directory through a `location ^~ /release/` alias instead.
-WEBSITE_RELEASE_ROOT="${WEBSITE_RELEASE_DIR:-/srv/openbitfun-release}"
+WEBSITE_RELEASE_ROOT="${WEBSITE_RELEASE_DIR:-/srv/starmate-release}"
 WEBSITE_RELEASE_DIR="${WEBSITE_RELEASE_ROOT}${CHANNEL_PATH}"
 # Keep the lock off the Nginx /release/ alias. Override with
 # STARMATE_RELEASE_SYNC_LOCK if a host must share a lock across checkouts.
-LOCK_FILE="${STARMATE_RELEASE_SYNC_LOCK:-/var/lock/openbitfun-release-sync.lock}"
+LOCK_FILE="${STARMATE_RELEASE_SYNC_LOCK:-/var/lock/starmate-release-sync.lock}"
 WINDOWS_INSTALLER_FILENAME="starmate-installer.exe"
 WINDOWS_INSTALLER_URL=""
 WINDOWS_INSTALLER_SIGNATURE_URL=""
@@ -398,7 +398,7 @@ mirror_dispatch_macos_cli_archives() {
   local target filename base_url suffix ready failed checksum_list
   checksum_list=""
   for target in x86_64-apple-darwin aarch64-apple-darwin; do
-    filename="openbitfun-cli-${VERSION}-${target}.tar.gz"
+    filename="starmate-cli-${VERSION}-${target}.tar.gz"
     base_url="${RELEASE_ASSET_BASE_URL}/${filename}"
     ready=1
     for suffix in "" .sha256 .sha256.sig .sig; do
@@ -477,7 +477,7 @@ import json, re, sys
 with open(sys.argv[1], encoding="utf-8") as f:
     data = json.load(f)
 assert data.get("schema_version") == 1
-assert data.get("image") == "ghcr.io/gcwing/openbitfun-relay-server"
+assert data.get("image") == "ghcr.io/gcwing/starmate-relay-server"
 assert re.fullmatch(r"sha256:[0-9a-f]{64}", data.get("digest", ""))
 print(data["version"])
 PY
@@ -645,7 +645,7 @@ for target, entry in data.get('manual_installers', {}).items():
     download_asset "$url" "${VERSION_DIR}/${url##*/}" || exit 1
   done <<< "$EXTRA_INSTALLERS"
 
-  # 6. Rewrite URLs in latest-v1.json to point at openbitfun.com
+  # 6. Rewrite URLs in latest-v1.json to point at starmate.xtdl.ltd
   LATEST_MANIFEST_TMP="${VERSION_DIR}/latest-v1.json.part"
   printf '%s' "$LATEST_JSON" | "$PYTHON" -c "
 import sys, json

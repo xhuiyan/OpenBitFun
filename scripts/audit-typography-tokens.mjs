@@ -29,9 +29,9 @@ const SELF_AUDIT_FILES = new Set([
 ]);
 const WEB_FONT_PROFILE_STYLE_ROOT = 'src/web-ui/src/font-profiles/';
 const WEB_FONT_PROFILE_STACK_PROPERTIES = new Set([
-  '--openbitfun-font-family-sans',
-  '--openbitfun-font-family-control',
-  '--openbitfun-font-family-mono',
+  '--starmate-font-family-sans',
+  '--starmate-font-family-control',
+  '--starmate-font-family-mono',
 ]);
 
 const SEMANTIC_ROLE_COMPONENT_STYLE_ROOT = 'design-system/packages/ui/src/';
@@ -84,11 +84,11 @@ const CSS_PROPERTY_TO_JS_PROPERTY = Object.freeze({
 });
 
 const CANONICAL_CSS_VALUE_PATTERNS = Object.freeze({
-  fontFamily: /^var\(--openbitfun-(?:font-family-[a-z0-9-]+|type-[a-z0-9-]+-font-family)\)$/i,
-  fontSize: /^var\(--openbitfun-(?:font-size-[a-z0-9-]+|type-[a-z0-9-]+-font-size)\)$/i,
-  fontWeight: /^var\(--openbitfun-(?:font-weight-[a-z0-9-]+|type-[a-z0-9-]+-font-weight)\)$/i,
-  letterSpacing: /^var\(--openbitfun-(?:letter-spacing-[a-z0-9-]+|type-[a-z0-9-]+-letter-spacing)\)$/i,
-  lineHeight: /^var\(--openbitfun-(?:line-height-[a-z0-9-]+|type-[a-z0-9-]+-line-height)\)$/i,
+  fontFamily: /^var\(--starmate-(?:font-family-[a-z0-9-]+|type-[a-z0-9-]+-font-family)\)$/i,
+  fontSize: /^var\(--starmate-(?:font-size-[a-z0-9-]+|type-[a-z0-9-]+-font-size)\)$/i,
+  fontWeight: /^var\(--starmate-(?:font-weight-[a-z0-9-]+|type-[a-z0-9-]+-font-weight)\)$/i,
+  letterSpacing: /^var\(--starmate-(?:letter-spacing-[a-z0-9-]+|type-[a-z0-9-]+-letter-spacing)\)$/i,
+  lineHeight: /^var\(--starmate-(?:line-height-[a-z0-9-]+|type-[a-z0-9-]+-line-height)\)$/i,
 });
 
 const COMPOSITE_TYPOGRAPHY_IDENTIFIERS = Object.freeze([
@@ -103,11 +103,11 @@ const COMPOSITE_TYPOGRAPHY_IDENTIFIERS = Object.freeze([
 const RETIRED_PATTERNS = Object.freeze([
   {
     code: 'retired-appearance-font-variable',
-    pattern: /--openbitfun-appearance-token-font(?:-[a-z0-9_-]+)?/gi,
+    pattern: /--starmate-appearance-token-font(?:-[a-z0-9_-]+)?/gi,
   },
   {
     code: 'retired-flowchat-font-variable',
-    pattern: /--openbitfun-appearance-token-flowchat-font(?:-[a-z0-9_-]+)?/gi,
+    pattern: /--starmate-appearance-token-flowchat-font(?:-[a-z0-9_-]+)?/gi,
   },
   {
     code: 'retired-font-token-name',
@@ -115,11 +115,11 @@ const RETIRED_PATTERNS = Object.freeze([
   },
   {
     code: 'retired-font-css-variable',
-    pattern: /--openbitfun-font-size-(?:body|caption|display|small|title)\b/g,
+    pattern: /--starmate-font-size-(?:body|caption|display|small|title)\b/g,
   },
   {
     code: 'retired-line-height-token',
-    pattern: /\blineHeight\.body\b|--openbitfun-line-height-body\b/g,
+    pattern: /\blineHeight\.body\b|--starmate-line-height-body\b/g,
   },
   {
     code: 'retired-flowchat-sass-api',
@@ -139,7 +139,7 @@ const RETIRED_PATTERNS = Object.freeze([
   },
   {
     code: 'retired-component-typography-variable',
-    pattern: /--openbitfun-(?:control-activity-item-inline-(?:font-size|line-height)|control-ask-user-description-line-height|control-button-xs-font-size|control-change-count-font-size|control-segmented-control-font-size|control-status-pill-font-size|layout-form-section-title-font-size|layout-navigation-panel-heading-font-size|layout-toolbar-badge-font-size|overlay-menu-heading-font-size|overlay-modal-title-font-(?:size|weight)|overlay-tooltip-font-size)\b/g,
+    pattern: /--starmate-(?:control-activity-item-inline-(?:font-size|line-height)|control-ask-user-description-line-height|control-button-xs-font-size|control-change-count-font-size|control-segmented-control-font-size|control-status-pill-font-size|layout-form-section-title-font-size|layout-navigation-panel-heading-font-size|layout-toolbar-badge-font-size|overlay-menu-heading-font-size|overlay-modal-title-font-(?:size|weight)|overlay-tooltip-font-size)\b/g,
   },
 ]);
 
@@ -223,14 +223,14 @@ const FILE_CONTRACTS = Object.freeze([
     required: [
       {
         code: 'canonical-font-runtime-missing',
-        pattern: /setProperty\(`--openbitfun-font-size-\$\{key\}`/,
-        message: 'Global font preference must override canonical --openbitfun-font-size-* primitives.',
+        pattern: /setProperty\(`--starmate-font-size-\$\{key\}`/,
+        message: 'Global font preference must override canonical --starmate-font-size-* primitives.',
       },
     ],
     forbidden: [
       {
         code: 'appearance-font-runtime-reintroduced',
-        pattern: /--openbitfun-appearance-token-(?:flowchat-)?font/,
+        pattern: /--starmate-appearance-token-(?:flowchat-)?font/,
         message: 'FontPreferenceService must not write Appearance or FlowChat font variables.',
       },
       {
@@ -255,7 +255,7 @@ const FILE_CONTRACTS = Object.freeze([
     forbidden: [
       {
         code: 'appearance-registry-flowchat-font-contract-reintroduced',
-        pattern: /"flowChatControls"|--openbitfun-appearance-token-flowchat-font/,
+        pattern: /"flowChatControls"|--starmate-appearance-token-flowchat-font/,
         message: 'The distributed Appearance registry must not advertise retired FlowChat typography controls or variables.',
       },
     ],
@@ -574,7 +574,7 @@ function isRawTypographyLiteral(property, literal) {
 
 function isFoundationTypographyLiteral(literal) {
   return literal?.kind === 'string'
-    && /^var\(--openbitfun-(?:font-(?:family|size|weight)|line-height|letter-spacing)-[a-z0-9-]+\)$/i.test(literal.value.trim());
+    && /^var\(--starmate-(?:font-(?:family|size|weight)|line-height|letter-spacing)-[a-z0-9-]+\)$/i.test(literal.value.trim());
 }
 
 function scriptKindForPath(relativePath) {
@@ -602,7 +602,7 @@ function auditScriptTypography(text, relativePath) {
         relativePath,
         line + 1,
         'foundation-typography-in-semantic-consumer',
-        'Product frontend inline text styles must consume a semantic --openbitfun-type-* role.',
+        'Product frontend inline text styles must consume a semantic --starmate-type-* role.',
         node.getText(sourceFile),
       ));
       return;
@@ -693,8 +693,8 @@ function auditSemanticRoleConsumption(text, relativePath) {
   const governsCompleteProductStyle = COMPLETE_PRODUCT_STYLE_ROOTS.some(root => relativePath.startsWith(root))
     && STYLE_EXTENSIONS.has(path.extname(relativePath).toLowerCase());
   const foundationPattern = governsCompleteProductStyle
-    ? /(--openbitfun-(?:font-family|font-size|font-weight|line-height|letter-spacing)-[a-z0-9-]+)/gi
-    : /(?:font-family|font-size|font-weight|line-height|letter-spacing)\s*:\s*[^;{}\r\n]*?(--openbitfun-(?:font-family|font-size|font-weight|line-height|letter-spacing)-[a-z0-9-]+)/gi;
+    ? /(--starmate-(?:font-family|font-size|font-weight|line-height|letter-spacing)-[a-z0-9-]+)/gi
+    : /(?:font-family|font-size|font-weight|line-height|letter-spacing)\s*:\s*[^;{}\r\n]*?(--starmate-(?:font-family|font-size|font-weight|line-height|letter-spacing)-[a-z0-9-]+)/gi;
   for (const match of source.matchAll(foundationPattern)) {
     const token = match[1];
     const tokenOffset = match[0].lastIndexOf(token);
@@ -704,18 +704,18 @@ function auditSemanticRoleConsumption(text, relativePath) {
       relativePath,
       line,
       'foundation-typography-in-semantic-consumer',
-      'Text-bearing public components and migrated product surfaces must consume a semantic --openbitfun-type-* role.',
+      'Text-bearing public components and migrated product surfaces must consume a semantic --starmate-type-* role.',
       token,
     ));
   }
 
   const hasTypographyDeclaration = /(?:^|[;{}\r\n])\s*(?:font-family|font-size|font-weight|letter-spacing|line-height)\s*:/im.test(source);
-  if (hasTypographyDeclaration && !/--openbitfun-type-[a-z0-9-]+-(?:font-family|font-size|font-weight|letter-spacing|line-height)/i.test(source)) {
+  if (hasTypographyDeclaration && !/--starmate-type-[a-z0-9-]+-(?:font-family|font-size|font-weight|letter-spacing|line-height)/i.test(source)) {
     issues.push(createIssue(
       relativePath,
       1,
       'semantic-typography-role-missing',
-      'A governed text-bearing stylesheet must identify its typography through a semantic --openbitfun-type-* role.',
+      'A governed text-bearing stylesheet must identify its typography through a semantic --starmate-type-* role.',
     ));
   }
 

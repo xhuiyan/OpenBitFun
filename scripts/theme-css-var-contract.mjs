@@ -333,17 +333,17 @@ export const SURFACE_TOKEN_RENAME_CONTRACTS = [];
 
 export const DYNAMIC_VAR_FAMILY_CONTRACTS = [
   {
-    prefix: '--openbitfun-appearance-asset-',
+    prefix: '--starmate-appearance-asset-',
     owner: 'src/web-ui/src/infrastructure/appearance/compiler/AppearanceCompiler.ts; src/web-ui/src/infrastructure/appearance/runtime/AppearanceRuntime.ts',
     reason: 'Appearance package image ids are validated by the package schema, then projected to host-created blob URL variables for registered component parts.',
   },
   {
-    prefix: '--openbitfun-canvas-',
+    prefix: '--starmate-canvas-',
     owner: 'src/web-ui/src/tools/starmate-canvas/runtime/canvasRuntimeInstaller.ts; src/web-ui/src/tools/starmate-canvas/runtime/styles/canvas-runtime.scss',
     reason: 'OpenBitFun Canvas iframe runtime receives host Appearance values through a scoped CSS variable family that must stay isolated from app root tokens.',
   },
   {
-    prefix: '--openbitfun-font-size-',
+    prefix: '--starmate-font-size-',
     owner: 'src/web-ui/src/infrastructure/font-preference/core/FontPreferenceService.ts',
     reason: 'Font preference runtime overrides the canonical design-system font-size primitives so every semantic role follows one global scale.',
   },

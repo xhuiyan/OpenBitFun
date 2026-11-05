@@ -188,10 +188,10 @@ async function probeDocumentReady(sessionId: string): Promise<boolean> {
     body: JSON.stringify({
       script: `() => {
         const root = document.getElementById('root');
-        const appLayout = document.querySelector('[data-testid="app-layout"], .openbitfun-app-layout');
-        const mainContent = document.querySelector('[data-testid="app-main-content"], .openbitfun-app-main-workspace');
+        const appLayout = document.querySelector('[data-testid="app-layout"], .starmate-app-layout');
+        const mainContent = document.querySelector('[data-testid="app-main-content"], .starmate-app-main-workspace');
         const shell = document.querySelector(
-          '.openbitfun-nav-panel, .openbitfun-scene-bar, .openbitfun-nav-bar, .welcome-scene'
+          '.starmate-nav-panel, .starmate-scene-bar, .starmate-nav-bar, .welcome-scene'
         );
         const splashVisible = Boolean(document.querySelector('.splash-screen'));
         const tauriReady =
@@ -443,15 +443,15 @@ async function startOpenBitFunApp(): Promise<void> {
   });
 
   openbitfunApp.stdout?.on('data', (data: Buffer) => {
-    console.log(`[openbitfun-app] ${data.toString().trim()}`);
+    console.log(`[starmate-app] ${data.toString().trim()}`);
   });
 
   openbitfunApp.stderr?.on('data', (data: Buffer) => {
-    console.error(`[openbitfun-app] ${data.toString().trim()}`);
+    console.error(`[starmate-app] ${data.toString().trim()}`);
   });
 
   openbitfunApp.on('exit', (code, signal) => {
-    console.log(`[openbitfun-app] exited (code=${code ?? 'null'}, signal=${signal ?? 'null'})`);
+    console.log(`[starmate-app] exited (code=${code ?? 'null'}, signal=${signal ?? 'null'})`);
   });
 
   await waitForEmbeddedDriverReady();

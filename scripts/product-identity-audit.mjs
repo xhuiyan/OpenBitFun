@@ -90,14 +90,14 @@ function isExternalAttributionOnlyLine(lineText) {
 
 const identityRules = Object.freeze([
   Object.freeze({
-    id: 'noncanonical-openbitfun-casing',
+    id: 'noncanonical-starmate-casing',
     description: 'non-canonical OpenBitFun casing',
     pattern: /openbitfun/giu,
     isViolation: (value) => !['OpenBitFun', 'openBitFun', 'openbitfun', 'OPENBITFUN'].includes(value),
     allowedFiles: noncanonicalIdentityDataBoundaryFiles,
   }),
   Object.freeze({
-    id: 'abbreviated-openbitfun-name',
+    id: 'abbreviated-starmate-name',
     description: 'abbreviated OpenBitFun product name',
     pattern: /\bopen[\s_-]*bf\b/giu,
   }),
@@ -160,14 +160,14 @@ const identityRules = Object.freeze([
     allowedFiles: new Set([productIdentityOwner]),
   }),
   Object.freeze({
-    id: 'pre-1.0-openbitfun-minimum-version',
+    id: 'pre-1.0-starmate-minimum-version',
     description: 'minimum OpenBitFun version earlier than 1.0.0',
-    pattern: /\b(?:minOpenBitFunVersion|min_openbitfun_version)\b\s*(?::|=)\s*['"]0\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?['"]/giu,
+    pattern: /\b(?:minOpenBitFunVersion|min_starmate_version)\b\s*(?::|=)\s*['"]0\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?['"]/giu,
   }),
   Object.freeze({
-    id: 'pre-1.0-openbitfun-release-asset',
+    id: 'pre-1.0-starmate-release-asset',
     description: 'OpenBitFun release asset earlier than 1.0.0',
-    pattern: /\b(?:openbitfun-cli-|openbitfun[_-])0\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?/giu,
+    pattern: /\b(?:starmate-cli-|openbitfun[_-])0\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?/giu,
   }),
 ]);
 

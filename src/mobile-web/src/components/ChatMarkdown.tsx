@@ -202,7 +202,7 @@ function isLocalFileLink(href: string): string | null {
 }
 
 function resolveFileReferenceHref(href: string): string | null {
-  if (/^openbitfun:\/\/(?:runtime|current-session)\//.test(href)) return href;
+  if (/^starmate:\/\/(?:runtime|current-session)\//.test(href)) return href;
   if (
     href.startsWith(COMPUTER_LINK_PREFIX) ||
     href.startsWith(FILE_LINK_PREFIX) ||
@@ -509,7 +509,7 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content, onFil
   const markdownUrlTransform = useCallback<UrlTransform>((url, key) => {
     if (key === 'src' && /^data:image\/(?:png|jpeg|gif|webp|bmp|svg\+xml|avif);base64,/i.test(url)) return url;
     if (/^[A-Za-z]:[\\/]/.test(url)) return url;
-    if (url.startsWith('computer://') || /^openbitfun:\/\/(?:runtime|current-session)\//.test(url)) return url;
+    if (url.startsWith('computer://') || /^starmate:\/\/(?:runtime|current-session)\//.test(url)) return url;
     if (/^(https?|mailto|tel|file):/i.test(url) || url.startsWith('#') || url.startsWith('/')) {
       return url;
     }

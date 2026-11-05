@@ -15,8 +15,8 @@ use std::time::{Duration, Instant, SystemTime};
 use tar::Archive;
 
 const GITHUB_MANIFEST: &str =
-    "https://github.com/GCWing/OpenBitFun/releases/latest/download/linux-binaries-v1.json";
-const STARMATE_MANIFEST: &str = "https://openbitfun.com/release/linux-binaries-v1.json";
+    "https://github.com/xhuiyan/OpenBitFun/releases/latest/download/linux-binaries-v1.json";
+const STARMATE_MANIFEST: &str = "https://starmate.xtdl.ltd/release/linux-binaries-v1.json";
 const AUTO_CHECK_INTERVAL: Duration = Duration::from_secs(6 * 60 * 60);
 
 /// Source-selection tuning. Mirrors the relay deploy path in
@@ -604,7 +604,7 @@ async fn fetch_manifests(
 
     let mut manifests = Vec::new();
     let mut errors = Vec::new();
-    for (source, result) in [("GitHub", github), ("openbitfun.com", mirror)] {
+    for (source, result) in [("GitHub", github), ("starmate.xtdl.ltd", mirror)] {
         match result {
             Ok(manifest) => manifests.push((source, manifest)),
             Err(error) => errors.push(format!("{source}: {error:#}")),
@@ -1513,13 +1513,13 @@ mod tests {
         // Mirror lags GitHub during its sync window; the newer one must win.
         let manifests = vec![
             ("GitHub", manifest("1.0.1")),
-            ("openbitfun.com", manifest("1.0.0")),
+            ("starmate.xtdl.ltd", manifest("1.0.0")),
         ];
         assert_eq!(newest_version(&manifests), "1.0.1");
 
         let reversed = vec![
             ("GitHub", manifest("1.0.0")),
-            ("openbitfun.com", manifest("1.0.1")),
+            ("starmate.xtdl.ltd", manifest("1.0.1")),
         ];
         assert_eq!(newest_version(&reversed), "1.0.1");
     }

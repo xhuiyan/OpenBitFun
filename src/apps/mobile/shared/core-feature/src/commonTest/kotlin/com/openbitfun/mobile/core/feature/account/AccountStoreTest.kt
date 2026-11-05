@@ -37,7 +37,7 @@ class AccountStoreTest {
      * only for a refusal the relay actually meant.
      */
     @Test fun signInPollOutlastsNetworkFailuresButNotARefusal() = runTest {
-        val start = GitHubAuthorization("txn", "secret", "https://auth.openbitfun.com/sign-in#ticket=t", 9_999_999_999L, 3)
+        val start = GitHubAuthorization("txn", "secret", "https://auth.starmate.xtdl.ltd/sign-in#ticket=t", 9_999_999_999L, 3)
 
         var attempts = 0
         val token = AuthorizationPoll.awaitAccessToken(start, TransportLog.None, nowSeconds = { 0 }) {
@@ -83,7 +83,7 @@ class AccountStoreTest {
     }
 
     @Test fun signInPollChecksImmediatelyAfterBrowserHandoff() = runTest {
-        val start = GitHubAuthorization("txn", "secret", "https://auth.openbitfun.com/sign-in#ticket=t", 100L, 30)
+        val start = GitHubAuthorization("txn", "secret", "https://auth.starmate.xtdl.ltd/sign-in#ticket=t", 100L, 30)
         var firstPollAt = -1L
         val token = AuthorizationPoll.awaitAccessToken(
             start,
@@ -98,7 +98,7 @@ class AccountStoreTest {
     }
 
     @Test fun signInPollWaitsInBackgroundAndResumesWhenForegroundReturns() = runTest {
-        val start = GitHubAuthorization("txn", "secret", "https://auth.openbitfun.com/sign-in#ticket=t", 100L, 30)
+        val start = GitHubAuthorization("txn", "secret", "https://auth.starmate.xtdl.ltd/sign-in#ticket=t", 100L, 30)
         val foreground = MutableStateFlow(true)
         var attempts = 0
         val token = async {
@@ -215,7 +215,7 @@ class AccountStoreTest {
         val secure = MemorySecureStore(); val backend = FakeAccountBackend()
         val first = AccountStore.create(this, backend, secure, "phone-1", "Android")
         first.dispatch(AccountIntent.Login); advanceUntilIdle()
-        val old = secure.read("github_device_session_v1")!!.decodeToString().replace(AccountDefaults.CLOUD_RELAY_URL, "https://remote.openbitfun.com/v/retired")
+        val old = secure.read("github_device_session_v1")!!.decodeToString().replace(AccountDefaults.CLOUD_RELAY_URL, "https://remote.starmate.xtdl.ltd/v/retired")
         secure.write("github_device_session_v1", old.encodeToByteArray())
         val requests = backend.listRequests
         val restored = AccountStore.create(this, backend, secure, "phone-1", "Android")
@@ -825,7 +825,7 @@ private class FakeAccountBackend : AccountBackend {
         loginThrowable?.let { throw it }
         failure?.let { throw CloudAccountException(it) }
         return AccountSessionData(
-            "https://remote.openbitfun.com/v/1.0.2",
+            "https://remote.starmate.xtdl.ltd/v/1.0.2",
             "user",
             "token",
             userId,

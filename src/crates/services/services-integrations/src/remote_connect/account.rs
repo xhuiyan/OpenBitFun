@@ -16,7 +16,7 @@ pub const MASTER_KEY_LEN: usize = 32;
 /// A retired official deployment has its own credential database. Authenticate
 /// with the new deployment instead of replaying its token or deleting the record.
 ///
-/// Every official release lives under `https://remote.openbitfun.com/v/<version>`;
+/// Every official release lives under `https://remote.starmate.xtdl.ltd/v/<version>`;
 /// any such endpoint other than the one this build targets is retired.
 pub fn is_retired_official_relay(value: &str) -> bool {
     let current = reqwest::Url::parse(starmate_product_domains::account::DEFAULT_RELAY_URL)
@@ -933,7 +933,7 @@ mod tests {
             assert!(persisted_relay_requires_migration(url), "{url}");
         }
         for url in [
-            "https://remote.openbitfun.com/v/1.0.2",
+            "https://remote.starmate.xtdl.ltd/v/1.0.2",
             "http://192.168.1.2:8080",
             "http://192.168.1.2:9700/custom",
             "http://relay.example:9700",
@@ -1226,10 +1226,10 @@ mod tests {
     #[test]
     fn retired_official_endpoint_does_not_capture_custom_relays() {
         let current = starmate_product_domains::account::DEFAULT_RELAY_URL;
-        assert_eq!(current, "https://remote.openbitfun.com/v/1.0.2");
+        assert_eq!(current, "https://remote.starmate.xtdl.ltd/v/1.0.2");
         for old in [
-            ["https://remote.openbitfun.com", "/v/1.0.0"].concat(),
-            ["https://remote.openbitfun.com", "/v/1.0.1"].concat(),
+            ["https://remote.starmate.xtdl.ltd", "/v/1.0.0"].concat(),
+            ["https://remote.starmate.xtdl.ltd", "/v/1.0.1"].concat(),
         ] {
             assert!(is_retired_official_relay(&old), "{old}");
             assert!(is_retired_official_relay(&format!("{old}/")), "{old}/");
@@ -1241,12 +1241,12 @@ mod tests {
             &format!("{current}/"),
             "https://custom.example/v/1.0.0",
             "http://127.0.0.1:9700",
-            "https://remote.openbitfun.com/relay",
-            "https://remote.openbitfun.com/v/",
-            "https://remote.openbitfun.com/v/1.0.0/p/alice/demo",
-            "https://user@remote.openbitfun.com/v/1.0.0",
-            "https://remote.openbitfun.com:444/v/1.0.0",
-            "http://remote.openbitfun.com/v/1.0.1",
+            "https://remote.starmate.xtdl.ltd/relay",
+            "https://remote.starmate.xtdl.ltd/v/",
+            "https://remote.starmate.xtdl.ltd/v/1.0.0/p/alice/demo",
+            "https://user@remote.starmate.xtdl.ltd/v/1.0.0",
+            "https://remote.starmate.xtdl.ltd:444/v/1.0.0",
+            "http://remote.starmate.xtdl.ltd/v/1.0.1",
         ] {
             assert!(!is_retired_official_relay(endpoint), "{endpoint}");
         }

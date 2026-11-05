@@ -637,7 +637,7 @@ export function ComponentDetailPage({
       return `import { Icon, KeyHint } from "@starmate/ui";\n\n<KeyHint icon={<Icon name="command-mac" />}>K</KeyHint>`;
     }
     if (component.name === "FieldGroup") {
-      return `import { Icon, Field, FieldGroup, FieldRow, FormSection, Input } from "@starmate/ui";\n\n<FormSection\n  description="${t("components.preview.fieldDescription")}"\n  headingAs="h3"\n  leading={<Icon name="gear" />}\n  title="${t("components.preview.modalSectionTitle")}"\n>\n  <FieldGroup appearance="subtle" dividers>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalProviderName")}" labelWidth="md" orientation="horizontal" required>\n        <Input defaultValue="StarMate" />\n      </Field>\n    </FieldRow>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalApiUrl")}" labelWidth="md" orientation="horizontal">\n        <Input defaultValue="https://api.openbitfun.com" />\n      </Field>\n    </FieldRow>\n  </FieldGroup>\n</FormSection>`;
+      return `import { Icon, Field, FieldGroup, FieldRow, FormSection, Input } from "@starmate/ui";\n\n<FormSection\n  description="${t("components.preview.fieldDescription")}"\n  headingAs="h3"\n  leading={<Icon name="gear" />}\n  title="${t("components.preview.modalSectionTitle")}"\n>\n  <FieldGroup appearance="subtle" dividers>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalProviderName")}" labelWidth="md" orientation="horizontal" required>\n        <Input defaultValue="StarMate" />\n      </Field>\n    </FieldRow>\n    <FieldRow>\n      <Field controlWidth="fill" label="${t("components.preview.modalApiUrl")}" labelWidth="md" orientation="horizontal">\n        <Input defaultValue="https://api.starmate.xtdl.ltd" />\n      </Field>\n    </FieldRow>\n  </FieldGroup>\n</FormSection>`;
     }
     if (component.name === "LoadingState") {
       return `import { LoadingState } from "@starmate/ui";\n\n<LoadingState>${t("detail.loading")}</LoadingState>`;
@@ -821,7 +821,7 @@ export function ComponentDetailPage({
               orientation="horizontal"
             >
               <Input
-                defaultValue="https://api.openbitfun.com"
+                defaultValue="https://api.starmate.xtdl.ltd"
               />
             </Field>
           </FieldRow>
@@ -1647,7 +1647,7 @@ export function ComponentDetailPage({
                 labelWidth="md"
                 orientation="horizontal"
               >
-                <Input defaultValue="https://api.openbitfun.com" />
+                <Input defaultValue="https://api.starmate.xtdl.ltd" />
               </Field>
             </FieldRow>
           </FieldGroup>

@@ -17,7 +17,7 @@ const browser = await puppeteer.launch({
   ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : { channel: 'chrome' }),
   headless: 'new',
 });
-const dir = await mkdtemp(join(tmpdir(), 'openbitfun-dom-context-'));
+const dir = await mkdtemp(join(tmpdir(), 'starmate-dom-context-'));
 try {
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 900 });

@@ -21,7 +21,7 @@ export function hasNonFileUriScheme(path: string): boolean {
 }
 
 export function isOpenBitFunRuntimeUri(path: string): boolean {
-  return typeof path === 'string' && path.startsWith('openbitfun://runtime/');
+  return typeof path === 'string' && path.startsWith('starmate://runtime/');
 }
 
 export function normalizePath(path: string): string {

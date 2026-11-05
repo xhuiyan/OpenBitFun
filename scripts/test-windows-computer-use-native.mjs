@@ -21,12 +21,12 @@ const run = cargoArgs => new Promise((resolve, reject) => {
 if (!check) {
   process.exitCode = await run(['test', '--locked', '-p', 'starmate-computer-use', '--lib', ...args]);
 } else {
-  const dir = await mkdtemp(join(tmpdir(), 'openbitfun-windows-native-'));
+  const dir = await mkdtemp(join(tmpdir(), 'starmate-windows-native-'));
   try {
     const metadata = JSON.parse(execFileSync('cargo', ['metadata', '--locked', '--no-deps', '--format-version=1'], {
       cwd: root, encoding: 'utf8', windowsHide: true, maxBuffer: 16 * 1024 * 1024,
     }));
-    const pkg = metadata.packages.find(item => item.name === 'openbitfun-computer-use');
+    const pkg = metadata.packages.find(item => item.name === 'starmate-computer-use');
     const quote = JSON.stringify;
     let manifest = `[package]\nname = "windows-computer-use-typecheck"\nversion = "0.0.0"\nedition = ${quote(pkg.edition)}\n[workspace]\n[lib]\npath = ${quote(pkg.targets.find(t => t.kind.includes('lib')).src_path)}\n[features]\n`;
     for (const [feature, values] of Object.entries(pkg.features)) manifest += `${quote(feature)} = ${quote(values)}\n`;

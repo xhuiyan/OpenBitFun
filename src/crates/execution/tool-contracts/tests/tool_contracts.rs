@@ -1077,8 +1077,8 @@ fn path_resolution_contract_keeps_backend_and_runtime_helpers() {
 
     let runtime_root = PathBuf::from("/runtime/workspace");
     let runtime = ToolPathResolution {
-        requested_path: "openbitfun://runtime/workspace-1/logs/tool.txt".to_string(),
-        logical_path: "openbitfun://runtime/workspace-1/logs/tool.txt".to_string(),
+        requested_path: "starmate://runtime/workspace-1/logs/tool.txt".to_string(),
+        logical_path: "starmate://runtime/workspace-1/logs/tool.txt".to_string(),
         resolved_path: runtime_root
             .join("logs")
             .join("tool.txt")
@@ -1093,7 +1093,7 @@ fn path_resolution_contract_keeps_backend_and_runtime_helpers() {
     assert!(runtime.is_runtime_artifact());
     assert_eq!(
         runtime.logical_child_path(&runtime_root.join("logs").join("tool.txt")),
-        Some("openbitfun://runtime/workspace-1/logs/tool.txt".to_string())
+        Some("starmate://runtime/workspace-1/logs/tool.txt".to_string())
     );
     assert_eq!(
         runtime.logical_child_path(&PathBuf::from("/outside/tool.txt")),
@@ -1193,7 +1193,7 @@ fn tool_path_resolution_owner_preserves_runtime_uri_scope_and_backend() {
     let runtime_root = PathBuf::from("/runtime/workspace");
 
     let resolution = resolve_tool_path_with_context(
-        "openbitfun://runtime/workspace-123/plans/demo.plan.md",
+        "starmate://runtime/workspace-123/plans/demo.plan.md",
         Some("/home/project"),
         true,
         Some("workspace-123"),
@@ -1203,11 +1203,11 @@ fn tool_path_resolution_owner_preserves_runtime_uri_scope_and_backend() {
 
     assert_eq!(
         resolution.requested_path,
-        "openbitfun://runtime/workspace-123/plans/demo.plan.md"
+        "starmate://runtime/workspace-123/plans/demo.plan.md"
     );
     assert_eq!(
         resolution.logical_path,
-        "openbitfun://runtime/workspace-123/plans/demo.plan.md"
+        "starmate://runtime/workspace-123/plans/demo.plan.md"
     );
     assert_eq!(
         PathBuf::from(&resolution.resolved_path),
@@ -1225,7 +1225,7 @@ fn tool_path_resolution_owner_preserves_runtime_uri_scope_and_backend() {
 fn tool_path_resolution_owner_resolves_current_session_uri() {
     let session_root = PathBuf::from("/runtime/workspace/sessions/session-123");
     let resolution = resolve_tool_path_with_context_roots(
-        "openbitfun://current-session/artifacts/compression-transcripts/12-a3f9.txt",
+        "starmate://current-session/artifacts/compression-transcripts/12-a3f9.txt",
         Some("/home/project"),
         true,
         Some("workspace-123"),
@@ -1251,7 +1251,7 @@ fn tool_path_resolution_owner_resolves_current_session_uri() {
                 .join("child.txt")
         ),
         Some(
-            "openbitfun://current-session/artifacts/compression-transcripts/child.txt".to_string()
+            "starmate://current-session/artifacts/compression-transcripts/child.txt".to_string()
         )
     );
 }
@@ -1259,7 +1259,7 @@ fn tool_path_resolution_owner_resolves_current_session_uri() {
 #[test]
 fn current_session_uri_contract_rejects_missing_context_escape_and_unknown_authority() {
     let missing = resolve_tool_path_with_context_roots(
-        "openbitfun://current-session/artifacts/file.txt",
+        "starmate://current-session/artifacts/file.txt",
         None,
         false,
         None,
@@ -1273,7 +1273,7 @@ fn current_session_uri_contract_rejects_missing_context_escape_and_unknown_autho
     );
 
     let escape = parse_openbitfun_current_session_uri(
-        "openbitfun://current-session/artifacts/../secret.txt",
+        "starmate://current-session/artifacts/../secret.txt",
     )
     .expect_err("parent escape should be rejected");
     assert_eq!(
@@ -1282,7 +1282,7 @@ fn current_session_uri_contract_rejects_missing_context_escape_and_unknown_autho
     );
 
     let unknown = resolve_tool_path_with_context_roots(
-        "openbitfun://other/artifacts/file.txt",
+        "starmate://other/artifacts/file.txt",
         Some("/repo"),
         false,
         None,
@@ -1296,7 +1296,7 @@ fn current_session_uri_contract_rejects_missing_context_escape_and_unknown_autho
 #[test]
 fn tool_path_resolution_owner_rejects_mismatched_runtime_scope() {
     let err = resolve_tool_path_with_context(
-        "openbitfun://runtime/workspace-456/plans/demo.plan.md",
+        "starmate://runtime/workspace-456/plans/demo.plan.md",
         Some("/home/project"),
         true,
         Some("workspace-123"),
@@ -1332,7 +1332,7 @@ fn tool_path_resolution_owner_selects_workspace_backend_semantics() {
 #[test]
 fn tool_path_absolute_contract_keeps_remote_posix_and_runtime_uri_semantics() {
     assert!(tool_path_is_effectively_absolute(
-        "openbitfun://runtime/current/logs/tool.txt",
+        "starmate://runtime/current/logs/tool.txt",
         false
     ));
     assert!(tool_path_is_effectively_absolute(
@@ -1351,7 +1351,7 @@ fn runtime_uri_contract_is_provider_neutral_and_normalized() {
     let uri = build_openbitfun_runtime_uri("workspace-123", r"plans\demo.plan.md")
         .expect("runtime URI should build");
 
-    assert_eq!(uri, "openbitfun://runtime/workspace-123/plans/demo.plan.md");
+    assert_eq!(uri, "starmate://runtime/workspace-123/plans/demo.plan.md");
     assert!(is_openbitfun_runtime_uri(&uri));
 
     let parsed = parse_openbitfun_runtime_uri(&uri).expect("runtime URI should parse");
@@ -1400,7 +1400,7 @@ fn runtime_artifact_reference_owner_preserves_remote_uri_shape() {
 
     assert_eq!(
         reference,
-        "openbitfun://runtime/workspace-123/plans/demo.plan.md"
+        "starmate://runtime/workspace-123/plans/demo.plan.md"
     );
 }
 
@@ -1439,7 +1439,7 @@ fn runtime_artifact_reference_owner_preserves_session_prefix_and_rejects_escape(
 
     assert_eq!(
         session_reference,
-        "openbitfun://runtime/workspace-123/sessions/session-1/tool-results/result.json"
+        "starmate://runtime/workspace-123/sessions/session-1/tool-results/result.json"
     );
 
     let runtime_root = PathBuf::from("/runtime/workspace");

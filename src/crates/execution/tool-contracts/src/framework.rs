@@ -1696,8 +1696,8 @@ impl ToolPathResolution {
     }
 }
 
-pub const STARMATE_RUNTIME_URI_PREFIX: &str = "openbitfun://runtime/";
-pub const STARMATE_CURRENT_SESSION_URI_PREFIX: &str = "openbitfun://current-session/";
+pub const STARMATE_RUNTIME_URI_PREFIX: &str = "starmate://runtime/";
+pub const STARMATE_CURRENT_SESSION_URI_PREFIX: &str = "starmate://current-session/";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ParsedStarMateRuntimeUri {
@@ -1791,7 +1791,7 @@ pub fn is_openbitfun_current_session_uri(path: &str) -> bool {
 }
 
 pub fn is_openbitfun_tool_uri(path: &str) -> bool {
-    path.trim().starts_with("openbitfun://")
+    path.trim().starts_with("starmate://")
 }
 
 pub fn normalize_host_path(path: &str) -> String {

@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 class ModelProviderStreamTest {
     @Test
     fun resolvesProviderUrlsWithoutDuplicatingPaths() {
-        assertEquals(ModelProviderProtocol.ANTHROPIC, ModelProviderRequest.resolveProtocol("https://api.openbitfun.com"))
+        assertEquals(ModelProviderProtocol.ANTHROPIC, ModelProviderRequest.resolveProtocol("https://api.starmate.xtdl.ltd"))
         assertEquals("https://api.example.com/v1/messages", ModelProviderRequest.resolveUrl("https://api.example.com", ModelProviderProtocol.ANTHROPIC))
         assertEquals("https://api.example.com/v1/chat/completions", ModelProviderRequest.resolveUrl("https://api.example.com/v1", ModelProviderProtocol.OPEN_AI))
         assertEquals("https://api.example.com/v1/chat/completions", ModelProviderRequest.resolveUrl("https://api.example.com/v1/chat/completions", ModelProviderProtocol.OPEN_AI))

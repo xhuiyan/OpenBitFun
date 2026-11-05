@@ -175,7 +175,7 @@ async fn review_safe_workspace_diff_forces_rename_detection() {
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     let original = (0..10)
         .map(|index| format!("stable line {index}\n"))
@@ -248,7 +248,7 @@ async fn workspace_diff_port_reports_staged_unstaged_and_untracked_changes() {
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     fs::write(repo_dir.path().join("both.txt"), "base\n").unwrap();
     run_git(repo_dir.path(), &["add", "--", "both.txt"]);
@@ -302,7 +302,7 @@ async fn workspace_diff_port_keeps_staged_changes_when_worktree_returns_to_head(
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     fs::write(repo_dir.path().join("both.txt"), "base\n").unwrap();
     run_git(repo_dir.path(), &["add", "--", "both.txt"]);
@@ -365,7 +365,7 @@ async fn workspace_diff_port_preserves_staged_delete_and_recreated_file_sources(
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     fs::write(repo_dir.path().join("rebuilt.txt"), "base\n").unwrap();
     run_git(repo_dir.path(), &["add", "--", "rebuilt.txt"]);
@@ -397,7 +397,7 @@ async fn workspace_diff_port_marks_conflicts_without_projecting_an_incomplete_pa
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     fs::write(repo_dir.path().join("conflict.txt"), "base\n").unwrap();
     run_git(repo_dir.path(), &["add", "--", "conflict.txt"]);
@@ -438,7 +438,7 @@ async fn workspace_diff_port_scopes_parent_repository_paths_to_the_bound_workspa
     );
     run_git(
         repo_dir.path(),
-        &["config", "user.email", "tests@openbitfun.dev"],
+        &["config", "user.email", "tests@starmate.xtdl.ltd"],
     );
     fs::create_dir_all(repo_dir.path().join("scope[1]")).unwrap();
     fs::write(repo_dir.path().join("outside.txt"), "base\n").unwrap();

@@ -22,18 +22,18 @@
 #   RELAY_PORT                  published/container port (default 9700)
 #   RELAY_HOST_BIND_IP          host bind address (default 0.0.0.0)
 
-STARMATE_RELAY_IMAGE="${STARMATE_RELAY_IMAGE:-ghcr.io/gcwing/openbitfun-relay-server}"
+STARMATE_RELAY_IMAGE="${STARMATE_RELAY_IMAGE:-ghcr.io/gcwing/starmate-relay-server}"
 STARMATE_RELAY_IMAGE_TAG="${STARMATE_RELAY_IMAGE_TAG:-${STARMATE_RELEASE_TAG:-latest}}"
 STARMATE_IMAGE_PULL_TIMEOUT="${STARMATE_IMAGE_PULL_TIMEOUT:-900}"
 STARMATE_GITHUB_PROBE_WINDOW="${STARMATE_GITHUB_PROBE_WINDOW:-10}"
 STARMATE_GITHUB_HEALTHY_BPS="${STARMATE_GITHUB_HEALTHY_BPS:-524288}"
-STARMATE_GITHUB_RELEASE_BASE="${STARMATE_GITHUB_RELEASE_BASE:-https://github.com/GCWing/OpenBitFun/releases}"
+STARMATE_GITHUB_RELEASE_BASE="${STARMATE_GITHUB_RELEASE_BASE:-https://github.com/xhuiyan/OpenBitFun/releases}"
 
-# The embedded Desktop helpers call Docker through openbitfun_docker; the manual
+# The embedded Desktop helpers call Docker through starmate_docker; the manual
 # script exposes docker_cmd. Keep this file independent of either caller.
-openbitfun_image_docker() {
-  if declare -F openbitfun_docker >/dev/null 2>&1; then
-    openbitfun_docker "$@"
+starmate_image_docker() {
+  if declare -F starmate_docker >/dev/null 2>&1; then
+    starmate_docker "$@"
   elif declare -F docker_cmd >/dev/null 2>&1; then
     docker_cmd "$@"
   else
@@ -42,7 +42,7 @@ openbitfun_image_docker() {
 }
 
 # POSIX-quote arguments passed through `sg docker -c`.
-openbitfun_image_shell_join() {
+starmate_image_shell_join() {
   local out="" arg
   for arg in "$@"; do
     out="$out'$(printf '%s' "$arg" | sed "s/'/'\\\\''/g")' "
@@ -53,16 +53,16 @@ openbitfun_image_shell_join() {
 # Bound each registry route. A dead accelerator must not prevent falling back
 # to the next route forever. Hosts without GNU timeout still retain Docker's
 # own network timeouts and progress reporting.
-openbitfun_image_docker_with_timeout() {
+starmate_image_docker_with_timeout() {
   local seconds="$1"
   shift
   if ! command -v timeout >/dev/null 2>&1; then
-    openbitfun_image_docker "$@"
+    starmate_image_docker "$@"
     return
   fi
   case "${STARMATE_DOCKER_MODE:-direct}" in
     sg)
-      sg docker -c "$(openbitfun_image_shell_join timeout "$seconds" docker "$@")"
+      sg docker -c "$(starmate_image_shell_join timeout "$seconds" docker "$@")"
       ;;
     sudo)
       if sudo -n true >/dev/null 2>&1; then
@@ -75,7 +75,7 @@ openbitfun_image_docker_with_timeout() {
   esac
 }
 
-openbitfun_relay_native_platform() {
+starmate_relay_native_platform() {
   case "$(uname -m 2>/dev/null)" in
     x86_64 | amd64) echo linux/amd64 ;;
     aarch64 | arm64) echo linux/arm64 ;;
@@ -83,7 +83,7 @@ openbitfun_relay_native_platform() {
   esac
 }
 
-openbitfun_relay_image_ref() {
+starmate_relay_image_ref() {
   local repository="$1"
   if [ -n "${STARMATE_RELAY_IMAGE_DIGEST:-}" ]; then
     printf '%s@%s' "$repository" "$STARMATE_RELAY_IMAGE_DIGEST"
@@ -92,7 +92,7 @@ openbitfun_relay_image_ref() {
   fi
 }
 
-openbitfun_relay_archive_target() {
+starmate_relay_archive_target() {
   case "$1" in
     linux/amd64) echo x86_64-unknown-linux-gnu ;;
     linux/arm64) echo aarch64-unknown-linux-gnu ;;
@@ -103,17 +103,17 @@ openbitfun_relay_archive_target() {
 # Measure the GitHub release CDN that carries the exact Relay binary bytes.
 # Relay itself stays a digest-pinned OCI deployment; this byte probe decides
 # whether official GHCR or its accelerators are attempted first.
-openbitfun_probe_github_throughput() {
+starmate_probe_github_throughput() {
   local platform="$1" target tag url metrics speed
-  target="$(openbitfun_relay_archive_target "$platform")" || {
+  target="$(starmate_relay_archive_target "$platform")" || {
     echo 0
     return 0
   }
   tag="${STARMATE_RELEASE_TAG:-latest}"
   if [ "$tag" = latest ]; then
-    url="${STARMATE_GITHUB_RELEASE_BASE}/latest/download/openbitfun-relay-server-${target}.tar.gz"
+    url="${STARMATE_GITHUB_RELEASE_BASE}/latest/download/starmate-relay-server-${target}.tar.gz"
   else
-    url="${STARMATE_GITHUB_RELEASE_BASE}/download/${tag}/openbitfun-relay-server-${target}.tar.gz"
+    url="${STARMATE_GITHUB_RELEASE_BASE}/download/${tag}/starmate-relay-server-${target}.tar.gz"
   fi
   if ! command -v curl >/dev/null 2>&1; then
     echo ">>> GitHub throughput probe skipped: curl is unavailable" >&2
@@ -148,7 +148,7 @@ openbitfun_probe_github_throughput() {
 # 512 KiB/s moves the registry accelerators first. Explicit cn/global choices
 # remain authoritative. The digest is identical across routes, so transport
 # selection never changes the image Desktop authenticated.
-openbitfun_pull_relay_image() {
+starmate_pull_relay_image() {
   local platform="$1" routes route_name repository image_ref selected=""
   local requested_mode github_speed mirror_first=0
   local pull_timeout="${STARMATE_IMAGE_PULL_TIMEOUT:-900}"
@@ -165,7 +165,7 @@ openbitfun_pull_relay_image() {
     cn) mirror_first=1 ;;
     global) mirror_first=0 ;;
     *)
-      github_speed="$(openbitfun_probe_github_throughput "$platform")"
+      github_speed="$(starmate_probe_github_throughput "$platform")"
       if [ "$github_speed" -lt "$STARMATE_GITHUB_HEALTHY_BPS" ]; then
         mirror_first=1
       fi
@@ -188,9 +188,9 @@ openbitfun_pull_relay_image() {
 
   while IFS=$'\t' read -r route_name repository; do
     [ -n "$repository" ] || continue
-    image_ref="$(openbitfun_relay_image_ref "$repository")"
+    image_ref="$(starmate_relay_image_ref "$repository")"
     echo ">>> Pulling Relay image via ${route_name}: ${image_ref}" >&2
-    if openbitfun_image_docker_with_timeout "$pull_timeout" pull --platform "$platform" "$image_ref" >&2; then
+    if starmate_image_docker_with_timeout "$pull_timeout" pull --platform "$platform" "$image_ref" >&2; then
       selected="$image_ref"
       break
     fi
@@ -204,7 +204,7 @@ openbitfun_pull_relay_image() {
   fi
 
   local expected_arch="${platform#linux/}" actual_arch
-  actual_arch="$(openbitfun_image_docker image inspect -f '{{.Architecture}}' "$selected" 2>/dev/null || true)"
+  actual_arch="$(starmate_image_docker image inspect -f '{{.Architecture}}' "$selected" 2>/dev/null || true)"
   if [ "$actual_arch" != "$expected_arch" ]; then
     echo ">>> ERROR: pulled image architecture '$actual_arch' does not match '$expected_arch'." >&2
     return 1
@@ -212,36 +212,36 @@ openbitfun_pull_relay_image() {
   printf '%s' "$selected"
 }
 
-openbitfun_restore_previous_relay() {
-  openbitfun_image_docker rm -f openbitfun-relay >/dev/null 2>&1 || true
+starmate_restore_previous_relay() {
+  starmate_image_docker rm -f starmate-relay >/dev/null 2>&1 || true
   if [ -n "${STARMATE_RELAY_BACKUP_CONTAINER:-}" ]; then
-    openbitfun_image_docker rename "$STARMATE_RELAY_BACKUP_CONTAINER" openbitfun-relay >/dev/null 2>&1 || true
-    openbitfun_image_docker start openbitfun-relay >/dev/null 2>&1 || true
+    starmate_image_docker rename "$STARMATE_RELAY_BACKUP_CONTAINER" starmate-relay >/dev/null 2>&1 || true
+    starmate_image_docker start starmate-relay >/dev/null 2>&1 || true
   fi
 }
 
-openbitfun_run_relay_image() {
+starmate_run_relay_image() {
   local image_ref="$1" platform="$2" attempt stale
-  openbitfun_image_docker volume create relay-server_relay-db >/dev/null || return 1
-  openbitfun_image_docker volume create relay-server_room-web >/dev/null || return 1
+  starmate_image_docker volume create relay-server_relay-db >/dev/null || return 1
+  starmate_image_docker volume create relay-server_room-web >/dev/null || return 1
 
   STARMATE_RELAY_BACKUP_CONTAINER=""
-  if openbitfun_image_docker container inspect openbitfun-relay >/dev/null 2>&1; then
-    STARMATE_RELAY_BACKUP_CONTAINER="openbitfun-relay-before-image-$$"
-    openbitfun_image_docker stop openbitfun-relay >/dev/null 2>&1 || true
-    if ! openbitfun_image_docker rename openbitfun-relay "$STARMATE_RELAY_BACKUP_CONTAINER"; then
+  if starmate_image_docker container inspect starmate-relay >/dev/null 2>&1; then
+    STARMATE_RELAY_BACKUP_CONTAINER="starmate-relay-before-image-$$"
+    starmate_image_docker stop starmate-relay >/dev/null 2>&1 || true
+    if ! starmate_image_docker rename starmate-relay "$STARMATE_RELAY_BACKUP_CONTAINER"; then
       echo ">>> ERROR: could not stage the existing Relay container." >&2
-      openbitfun_image_docker start openbitfun-relay >/dev/null 2>&1 || true
+      starmate_image_docker start starmate-relay >/dev/null 2>&1 || true
       return 1
     fi
   fi
 
   # A cancelled wizard must put the previously healthy Relay back.
-  trap 'openbitfun_restore_previous_relay; trap - INT TERM; exit 1' INT TERM
+  trap 'starmate_restore_previous_relay; trap - INT TERM; exit 1' INT TERM
 
   echo ">>> Starting Relay image on port ${RELAY_PORT:-9700}..."
-  if ! openbitfun_image_docker run -d \
-    --name openbitfun-relay \
+  if ! starmate_image_docker run -d \
+    --name starmate-relay \
     --platform "$platform" \
     --restart unless-stopped \
     --label com.docker.compose.project=relay-server \
@@ -254,14 +254,14 @@ openbitfun_run_relay_image() {
     -e RELAY_ROOM_WEB_DIR=/app/room-web \
     -e RELAY_ROOM_TTL=300 \
     -e RELAY_ASSET_STORE_MAX_BYTES=1073741824 \
-    -e RELAY_DB_PATH=/app/data/openbitfun_relay.db \
+    -e RELAY_DB_PATH=/app/data/starmate_relay.db \
     -e "RELAY_PAGE_PUBLIC_BASE_URL=${RELAY_PAGE_PUBLIC_BASE_URL:-}" \
     -e "RELAY_PAGE_AUTH_BASE_URL=${RELAY_PAGE_AUTH_BASE_URL:-}" \
     -v relay-server_room-web:/app/room-web \
     -v relay-server_relay-db:/app/data \
     "$image_ref" >/dev/null; then
     echo ">>> ERROR: the Relay image could not start; restoring the previous container." >&2
-    openbitfun_restore_previous_relay
+    starmate_restore_previous_relay
     trap - INT TERM
     return 1
   fi
@@ -269,40 +269,40 @@ openbitfun_run_relay_image() {
   # Probe inside the image. This avoids requiring curl on an otherwise ready
   # Docker host and verifies the exact container that will be kept.
   for attempt in $(seq 1 30); do
-    if openbitfun_image_docker exec openbitfun-relay \
+    if starmate_image_docker exec starmate-relay \
       curl -fsS --max-time 3 "http://127.0.0.1:${RELAY_PORT:-9700}/health" >/dev/null 2>&1; then
       trap - INT TERM
       if [ -n "$STARMATE_RELAY_BACKUP_CONTAINER" ]; then
-        openbitfun_image_docker rm "$STARMATE_RELAY_BACKUP_CONTAINER" >/dev/null 2>&1 || true
+        starmate_image_docker rm "$STARMATE_RELAY_BACKUP_CONTAINER" >/dev/null 2>&1 || true
       fi
-      for stale in $(openbitfun_image_docker ps -aq \
-        --filter 'name=^openbitfun-relay-before-image-' \
-        --filter 'name=^openbitfun-relay-before-release-' 2>/dev/null); do
-        openbitfun_image_docker rm -f "$stale" >/dev/null 2>&1 || true
+      for stale in $(starmate_image_docker ps -aq \
+        --filter 'name=^starmate-relay-before-image-' \
+        --filter 'name=^starmate-relay-before-release-' 2>/dev/null); do
+        starmate_image_docker rm -f "$stale" >/dev/null 2>&1 || true
       done
       echo ">>> Relay image is healthy."
       return 0
     fi
-    if ! openbitfun_image_docker inspect -f '{{.State.Running}}' openbitfun-relay 2>/dev/null | grep -qx true; then
+    if ! starmate_image_docker inspect -f '{{.State.Running}}' starmate-relay 2>/dev/null | grep -qx true; then
       break
     fi
     sleep 2
   done
 
   echo ">>> ERROR: Relay image failed its health check; restoring the previous container." >&2
-  echo ">>> Container state: $(openbitfun_image_docker inspect \
+  echo ">>> Container state: $(starmate_image_docker inspect \
     -f 'running={{.State.Running}} exit={{.State.ExitCode}} oom={{.State.OOMKilled}} err={{.State.Error}}' \
-    openbitfun-relay 2>&1 || true)"
-  echo ">>> Last 40 log lines from openbitfun-relay:"
-  openbitfun_image_docker logs --tail 40 openbitfun-relay 2>&1 | sed 's/^/    /' || true
-  openbitfun_restore_previous_relay
+    starmate-relay 2>&1 || true)"
+  echo ">>> Last 40 log lines from starmate-relay:"
+  starmate_image_docker logs --tail 40 starmate-relay 2>&1 | sed 's/^/    /' || true
+  starmate_restore_previous_relay
   trap - INT TERM
   return 1
 }
 
-openbitfun_try_release_deploy() {
+starmate_try_release_deploy() {
   local platform image_ref
-  platform="$(openbitfun_relay_native_platform)" || {
+  platform="$(starmate_relay_native_platform)" || {
     echo ">>> ERROR: no published Relay image for architecture $(uname -m)." >&2
     return 1
   }
@@ -320,6 +320,6 @@ openbitfun_try_release_deploy() {
   # Ignore a user-level foreign-platform default. Relay one-click deployment is
   # deliberately native on its two supported server architectures.
   export DOCKER_DEFAULT_PLATFORM="$platform"
-  image_ref="$(openbitfun_pull_relay_image "$platform")" || return 1
-  openbitfun_run_relay_image "$image_ref" "$platform"
+  image_ref="$(starmate_pull_relay_image "$platform")" || return 1
+  starmate_run_relay_image "$image_ref" "$platform"
 }

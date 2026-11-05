@@ -265,14 +265,14 @@ describe('built-in browser open request projection', () => {
 
   it('correlates replacement and new-tab requests with distinct stable keys', () => {
     expect(buildBuiltInBrowserTabOptions({
-      url: ' https://openbitfun.com/ ',
+      url: ' https://starmate.xtdl.ltd/ ',
       title: ' Docs ',
       requestId: ' request-1 ',
       replaceExisting: true,
     })).toMatchObject({
       title: 'Docs',
       data: {
-        url: 'https://openbitfun.com/',
+        url: 'https://starmate.xtdl.ltd/',
         openRequestId: 'request-1',
       },
       duplicateCheckKey: 'browser-panel',
@@ -280,7 +280,7 @@ describe('built-in browser open request projection', () => {
     });
 
     expect(buildBuiltInBrowserTabOptions({
-      url: 'https://openbitfun.com/',
+      url: 'https://starmate.xtdl.ltd/',
       requestId: 'request-2',
       replaceExisting: false,
     })).toMatchObject({

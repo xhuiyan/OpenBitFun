@@ -6,7 +6,7 @@ export const APP_INFO = {
   version: '1.0.0',
   description: 'AI code analysis and visualization tool',
   author: 'StarMate Team',
-  homepage: 'https://openbitfun.dev'
+  homepage: 'https://starmate.xtdl.ltd'
 } as const;
 
 

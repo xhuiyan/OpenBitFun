@@ -25,7 +25,7 @@
             <string>com.starmate.mobile.ios.auth</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>openbitfun</string>
+                <string>starmate</string>
             </array>
         </dict>
     </array>

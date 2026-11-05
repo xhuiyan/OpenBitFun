@@ -9,7 +9,7 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
-pub(crate) const IDENTITY_ME_URL: &str = "https://auth.openbitfun.com/api/v1/me";
+pub(crate) const IDENTITY_ME_URL: &str = "https://auth.starmate.xtdl.ltd/api/v1/me";
 
 #[derive(Clone)]
 pub(crate) struct IdentityVerifier {

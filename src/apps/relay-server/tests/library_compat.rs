@@ -6,7 +6,7 @@ use std::sync::Arc;
 use std::time::Instant;
 
 #[tokio::test]
-async fn openbitfun_library_path_exposes_supported_relay_api() {
+async fn starmate_library_path_exposes_supported_relay_api() {
     let _: fn(Arc<dyn WebAssetStore>, Instant, Arc<db::DbPool>) -> axum::Router =
         build_relay_router;
     let _ = admin::list_users;

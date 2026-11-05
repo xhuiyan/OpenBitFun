@@ -12,11 +12,11 @@ StarMate is a highly customizable, open-source agent workspace that keeps work m
 
 **If this is the kind of agent workspace you want, ⭐ Star StarMate and help more people discover it.**
 
-[Download Desktop](https://openbitfun.com/download) · [Mobile Releases](https://github.com/GCWing/OpenBitFun/releases?q=mobile-&expanded=true) · [Mini App Marketplace](https://market.openbitfun.com/miniapp/) · [Join the community](#join-the-community) · [Contribute](./CONTRIBUTING.md)
+[Download Desktop](https://starmate.xtdl.ltd/download) · [Mobile Releases](https://github.com/xhuiyan/OpenBitFun/releases?q=mobile-&expanded=true) · [Mini App Marketplace](https://market.starmate.xtdl.ltd/miniapp/) · [Join the community](#join-the-community) · [Contribute](./CONTRIBUTING.md)
 
-[![Website](https://img.shields.io/badge/Website-openbitfun.com-0b7285?style=flat-square)](https://openbitfun.com/)
+[![Website](https://img.shields.io/badge/Website-starmate.xtdl.ltd-0b7285?style=flat-square)](https://starmate.xtdl.ltd/)
 [![Core code: MIT](https://img.shields.io/badge/core_code-MIT-yellow?style=flat-square)](./LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue?style=flat-square)](https://openbitfun.com/download)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue?style=flat-square)](https://starmate.xtdl.ltd/download)
 
 [![Trendshift](https://trendshift.io/api/badge/repositories/44672)](https://trendshift.io/repositories/44672)
 
@@ -80,7 +80,7 @@ Build a Git insights panel for a repository, a workspace for presentations, or a
 
 Describe what you need and let the agent build it. Each Mini App pairs a dedicated interface with an agent conversation, so you can use the app for everyday work and keep improving it through chat.
 
-Install and reuse the apps you build, or explore the [Mini App Marketplace](https://market.openbitfun.com/miniapp/) for tools that fit your work.
+Install and reuse the apps you build, or explore the [Mini App Marketplace](https://market.starmate.xtdl.ltd/miniapp/) for tools that fit your work.
 
 ## Extend StarMate with StarMate
 
@@ -88,7 +88,7 @@ Install and reuse the apps you build, or explore the [Mini App Marketplace](http
 
 - **Build a specialist agent.** Choose a model, define its role, and equip it with the tools and workflows it needs for motion comic production, visual design, code review, or your own field.
 - **Connect tools and workflows.** Connect tools through MCP, turn repeatable processes into Skills, and use Hooks to customize how tasks run.
-- **Change the interface and source.** Install [skins](https://market.openbitfun.com/skin/) for a new look, or modify the UI, tools, and runtime source to build your own version of StarMate.
+- **Change the interface and source.** Install [skins](https://market.starmate.xtdl.ltd/skin/) for a new look, or modify the UI, tools, and runtime source to build your own version of StarMate.
 
 **You can ask StarMate's Code Agent to modify and extend StarMate itself.**
 
@@ -130,7 +130,7 @@ Share your use cases and experience, contribute agents, Skills, Mini Apps, or sk
 <details>
 <summary>Download, setup, and running from source</summary>
 
-Get the Windows, macOS, or Linux package from the [official download page](https://openbitfun.com/download). Install it, configure a model, and open a workspace to get started. See the [user guide](https://playbook.openbitfun.com) for usage instructions and [download verification](./docs/verify-downloads.md) for package signature checks.
+Get the Windows, macOS, or Linux package from the [official download page](https://starmate.xtdl.ltd/download). Install it, configure a model, and open a workspace to get started. See the [user guide](https://playbook.starmate.xtdl.ltd) for usage instructions and [download verification](./docs/verify-downloads.md) for package signature checks.
 
 **Migration note:** StarMate 1.0.0 is not data-compatible with legacy 0.2.x releases. To migrate legacy data,
 use the [StarMate Data Tools](src/apps/data-tools/README.md), currently available

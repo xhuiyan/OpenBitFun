@@ -1384,8 +1384,8 @@ mod tests {
     #[test]
     fn canonical_remotes_collapse_origin_and_upstream_aliases_for_the_same_repository() {
         let remotes = vec![
-            github_remote("upstream-id", "upstream", "GCWing/OpenBitFun"),
-            github_remote("origin-id", "origin", "gcwing/openbitfun"),
+            github_remote("upstream-id", "upstream", "xhuiyan/OpenBitFun"),
+            github_remote("origin-id", "origin", "xhuiyan/openbitfun"),
         ];
 
         let supported = canonical_supported_remotes(&remotes);
@@ -1398,7 +1398,7 @@ mod tests {
     fn different_provider_repositories_return_typed_remote_selection() {
         let remotes = vec![
             github_remote("origin-id", "origin", "limityan/OpenBitFun"),
-            github_remote("upstream-id", "upstream", "GCWing/OpenBitFun"),
+            github_remote("upstream-id", "upstream", "xhuiyan/OpenBitFun"),
         ];
         let supported = canonical_supported_remotes(&remotes);
 

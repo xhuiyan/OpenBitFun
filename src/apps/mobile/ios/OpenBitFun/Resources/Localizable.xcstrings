@@ -4713,12 +4713,12 @@
         }
       }
     },
-    "openbitfun:// 或 https://...#/pair?room=...&pk=...&relay=...": {
+    "starmate:// 或 https://...#/pair?room=...&pk=...&relay=...": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "openbitfun:// or https://...#/pair?room=...&pk=...&relay=..."
+            "value": "starmate:// or https://...#/pair?room=...&pk=...&relay=..."
           }
         }
       }

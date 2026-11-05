@@ -10,7 +10,7 @@ use starmate_product_domains::account::GitHubUser;
 use reqwest::{RequestBuilder, Response, StatusCode};
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
-pub const DEFAULT_ACCOUNT_API_URL: &str = "https://auth.openbitfun.com/api/v1";
+pub const DEFAULT_ACCOUNT_API_URL: &str = "https://auth.starmate.xtdl.ltd/api/v1";
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DesktopAuthStart {

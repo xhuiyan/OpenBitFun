@@ -17,7 +17,7 @@ import { getDshProfileRebuildPlan } from './prepare-dsh-profile.mjs';
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function createPackageTree() {
-  const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-dsh-profile-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-dsh-profile-'));
   const packageDir = path.join(root, 'packages', 'dsh-acp');
   const outDir = path.join(packageDir, 'dist-profile');
   const prepareScriptPath = path.join(root, 'scripts', 'prepare-dsh-profile.mjs');
@@ -40,7 +40,7 @@ function createPackageTree() {
   return { root, packageDir, outDir, prepareScriptPath };
 }
 
-function writeStamp(outDir, stamp = { profile: 'openbitfun-acp', content: 'abc' }) {
+function writeStamp(outDir, stamp = { profile: 'starmate-acp', content: 'abc' }) {
   const stampPath = path.join(outDir, '.starmate-bridge.json');
   writeFileSync(stampPath, `${JSON.stringify(stamp)}\n`);
   return stampPath;
@@ -84,7 +84,7 @@ test('rebuilds when force is requested', () => {
 test('rebuilds when the stamp is incomplete', () => {
   const { root, packageDir, outDir, prepareScriptPath } = createPackageTree();
   try {
-    writeStamp(outDir, { profile: 'openbitfun-acp' });
+    writeStamp(outDir, { profile: 'starmate-acp' });
     const plan = getDshProfileRebuildPlan({ packageDir, outDir, prepareScriptPath });
     assert.equal(plan.shouldBuild, true);
     assert.match(plan.reason, /incomplete/);

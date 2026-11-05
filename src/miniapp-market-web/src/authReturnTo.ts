@@ -1,6 +1,6 @@
 const AUTH_RETURN_TO_KEY = 'starmate.auth.returnTo';
 const LEGACY_AUTH_RETURN_TO_KEY = 'openbitfun.auth.returnTo';
-export const STARMATE_AUTH_CALLBACK = 'openbitfun://auth/callback';
+export const STARMATE_AUTH_CALLBACK = 'starmate://auth/callback';
 
 /**
  * The return target is only a wake-up signal. Keep the allowlist exact so a
@@ -11,7 +11,7 @@ export function parseNativeAuthReturnTo(value: string | null): string | null {
   try {
     const target = new URL(value);
     if (
-      target.protocol !== 'openbitfun:' ||
+      target.protocol !== 'starmate:' ||
       target.hostname !== 'auth' ||
       target.pathname !== '/callback' ||
       target.username ||

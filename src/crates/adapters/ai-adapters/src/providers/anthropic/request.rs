@@ -70,7 +70,7 @@ pub(crate) fn apply_headers(
                 .header("anthropic-version", "2023-06-01");
         }
 
-        if url.contains("openbitfun.com") {
+        if url.contains("starmate.xtdl.ltd") {
             builder = builder.header("X-Verification-Code", "from_openbitfun");
         }
 

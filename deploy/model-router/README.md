@@ -46,7 +46,7 @@ GUI 内置提示词由 Core 随程序打包，不依赖本部署目录存在。
 
 - `router_system_prompt.txt`：OpenBitFun 在每个参与路由的主 Agent round 开始前发送给 Router 的
   固定系统提示词。
-- `run_openbitfun_with_router.sh`：配置 Router 客户端环境变量，然后完整启动 OpenBitFun；不传
+- `run_starmate_with_router.sh`：配置 Router 客户端环境变量，然后完整启动 OpenBitFun；不传
   参数时进入原有交互模式，传入参数时则原样转发。
 
 ## 编译 OpenBitFun
@@ -54,7 +54,7 @@ GUI 内置提示词由 Core 随程序打包，不依赖本部署目录存在。
 在 OpenBitFun 仓库根目录执行：
 
 ```bash
-cargo build --locked -p openbitfun-cli --bin openbitfun
+cargo build --locked -p starmate-cli --bin openbitfun
 ```
 
 启动脚本默认使用 `target/debug/openbitfun`。如果使用 release 构建或复制到其他位置的
@@ -77,7 +77,7 @@ export ROUTER_API_URL='https://<router-host>/v1'
 然后进入需要 OpenBitFun 操作的目标代码仓库，直接启动完整的交互式 OpenBitFun：
 
 ```bash
-/path/to/OpenBitFun/deploy/model-router/run_openbitfun_with_router.sh
+/path/to/OpenBitFun/deploy/model-router/run_starmate_with_router.sh
 ```
 
 脚本没有改变 OpenBitFun 的运行模式，只是在启动前注入 Router 配置。进入交互界面后可以
@@ -87,7 +87,7 @@ export ROUTER_API_URL='https://<router-host>/v1'
 需要执行单个非交互任务时，才传入 OpenBitFun CLI 的 `exec` 参数：
 
 ```bash
-/path/to/OpenBitFun/deploy/model-router/run_openbitfun_with_router.sh \
+/path/to/OpenBitFun/deploy/model-router/run_starmate_with_router.sh \
   exec '真实任务描述'
 ```
 

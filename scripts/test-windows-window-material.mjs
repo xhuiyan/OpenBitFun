@@ -22,7 +22,7 @@ if (check && buildOnly) throw new Error('Choose --check or --build-only.');
 if (process.platform !== 'win32' && !check && !buildOnly) {
   throw new Error('Native verification requires Windows. Use --check --target x86_64-pc-windows-msvc or --build-only --xwin --target x86_64-pc-windows-msvc.');
 }
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-window-material-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-window-material-'));
 const targetDirectory = resolve(process.env.CARGO_TARGET_DIR ?? join(root, 'target/windows-window-material-native'));
 const source = path => JSON.stringify(resolve(root, path));
 const run = cargoArgs => new Promise((resolveExit, reject) => {
@@ -57,7 +57,7 @@ try {
   await mkdir(join(directory, 'src'));
   await mkdir(join(directory, 'assets'));
   await writeFile(join(directory, 'Cargo.toml'), `[package]
-name = "openbitfun-window-material-fixture"
+name = "starmate-window-material-fixture"
 version = "0.0.0"
 edition = "2021"
 [workspace]
@@ -123,7 +123,7 @@ ${fixture}`);
     const profile = option('--profile') ?? (args.includes('--release') ? 'release' : 'debug');
     // Cargo also accepts a JSON target path; its file stem is the output folder.
     const targetFolder = target && isAbsolute(target) ? target.split(/[\\/]/).at(-1).replace(/\.json$/, '') : target;
-    console.log(`Native fixture executable: ${join(targetDirectory, ...(targetFolder ? [targetFolder] : []), profile, 'openbitfun-window-material-fixture.exe')}`);
+    console.log(`Native fixture executable: ${join(targetDirectory, ...(targetFolder ? [targetFolder] : []), profile, 'starmate-window-material-fixture.exe')}`);
     console.log('Build-only verification does not establish Windows runtime behavior.');
   }
 } finally {

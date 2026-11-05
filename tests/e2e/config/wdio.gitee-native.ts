@@ -9,7 +9,7 @@ process.env.NO_PROXY = [process.env.NO_PROXY, '127.0.0.1', 'localhost', '::1'].f
 
 // Keep the isolated profile and evidence for inspection after a live failure.
 const root = process.env.STARMATE_GITEE_E2E_ROOT
-  ?? mkdtempSync(join(tmpdir(), 'openbitfun-gitee-e2e-'));
+  ?? mkdtempSync(join(tmpdir(), 'starmate-gitee-e2e-'));
 Object.assign(process.env, {
   STARMATE_GITEE_E2E_ROOT: root,
   STARMATE_E2E_STORAGE_ROOT: root,

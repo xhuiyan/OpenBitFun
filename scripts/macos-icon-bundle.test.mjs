@@ -34,7 +34,7 @@ test('macOS uses a full-bleed Composer source and a current independent legacy e
 });
 
 test('Windows autocrlf checkout preserves the committed macOS icon source digest', () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-icon-checkout-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-icon-checkout-'));
   const files = [
     '.gitattributes',
     'scripts/macos-icon-assets.mjs',
@@ -90,7 +90,7 @@ test('CLI is locked and macOS overlays preserve the same dev/legacy icon', () =>
 });
 
 test('generated release config cannot overwrite platform icon selection', () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-icon-config-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-icon-config-'));
   const updaterEnabled = process.env.STARMATE_ENABLE_UPDATER_ARTIFACTS;
   process.env.STARMATE_ENABLE_UPDATER_ARTIFACTS = 'false';
   try {
@@ -121,7 +121,7 @@ test('missing, old, and unparseable actool fail instead of silently dropping mod
 });
 
 test('bundle validation rejects a missing catalog, wrong icon name, and mismatched fallback', () => {
-  const app = mkdtempSync(join(tmpdir(), 'openbitfun-icon-validation-'));
+  const app = mkdtempSync(join(tmpdir(), 'starmate-icon-validation-'));
   const resources = join(app, 'Contents/Resources');
   mkdirSync(resources, { recursive: true });
   let plist = { CFBundleIconName: 'Icon', CFBundleIconFile: 'app.icns' };
@@ -151,7 +151,7 @@ test('bundle validation rejects a missing catalog, wrong icon name, and mismatch
 test('Apple iconutil decodes all ten legacy/Retina representations with Dock margins', {
   skip: process.platform !== 'darwin',
 }, async () => {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-icon-decode-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-icon-decode-'));
   try {
     const iconset = join(directory, 'fallback.iconset');
     run('/usr/bin/iconutil', ['--convert', 'iconset', '--output', iconset,
@@ -180,7 +180,7 @@ test('Apple iconutil decodes all ten legacy/Retina representations with Dock mar
 });
 
 function bundleFixture(modern) {
-  const directory = mkdtempSync(join(tmpdir(), 'openbitfun-icon-bundle-'));
+  const directory = mkdtempSync(join(tmpdir(), 'starmate-icon-bundle-'));
   try {
     for (const name of ['src', 'frontend', 'target/release']) mkdirSync(join(directory, name), { recursive: true });
     writeFileSync(join(directory, 'src/main.rs'), 'fn main() {}');

@@ -2347,7 +2347,7 @@ mod tests {
         let temporary = tempfile::tempdir().unwrap();
         let config = MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".to_string(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".to_string(),
             database_path: temporary.path().join("market.sqlite"),
             artifact_dir: temporary.path().join("artifacts"),
             web_dir: temporary.path().join("web"),
@@ -2539,7 +2539,7 @@ mod tests {
         let temporary = tempfile::tempdir().unwrap();
         let config = MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".to_string(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".to_string(),
             database_path: temporary.path().join("market.sqlite"),
             artifact_dir: temporary.path().join("artifacts"),
             web_dir: temporary.path().join("web"),
@@ -2716,7 +2716,7 @@ mod tests {
         let temporary = tempfile::tempdir().unwrap();
         let config = MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".to_string(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".to_string(),
             database_path: temporary.path().join("market.sqlite"),
             artifact_dir: temporary.path().join("artifacts"),
             web_dir: temporary.path().join("web"),
@@ -2881,7 +2881,7 @@ mod tests {
         let temporary = tempfile::tempdir().unwrap();
         let config = MarketConfig {
             bind: "127.0.0.1:0".parse().unwrap(),
-            public_base_url: "https://market.openbitfun.com/miniapp".to_string(),
+            public_base_url: "https://market.starmate.xtdl.ltd/miniapp".to_string(),
             database_path: temporary.path().join("market.sqlite"),
             artifact_dir: temporary.path().join("artifacts"),
             web_dir: temporary.path().join("web"),

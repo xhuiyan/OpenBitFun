@@ -38,7 +38,7 @@ describe('SystemAPI', () => {
   });
 
   it('opens external URLs with the controller OS without invoking the product transport', async () => {
-    const url = 'https://github.com/GCWing/OpenBitFun/pull/3573';
+    const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573';
     await systemAPI.openExternal(url);
     expect(openUrlMock).toHaveBeenCalledWith(url);
     expect(invokeMock).not.toHaveBeenCalled();

@@ -31,7 +31,7 @@ assert_plugin_host_resources() {
 "$PRIMARY" --help >/dev/null
 assert_plugin_host_resources "$PLUGIN_HOST_DIST"
 
-STAGE_NAME="openbitfun-cli-${VERSION}-${TARGET}"
+STAGE_NAME="starmate-cli-${VERSION}-${TARGET}"
 STAGE_DIR="${OUTPUT_DIR}/dist-cli/${STAGE_NAME}"
 mkdir -p "$STAGE_DIR"
 cp "$PRIMARY" "$STAGE_DIR/"

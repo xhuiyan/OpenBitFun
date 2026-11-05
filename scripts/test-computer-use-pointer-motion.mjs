@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-pointer-motion-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-pointer-motion-'));
 async function run(command, args) {
   await new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd: root, stdio: 'inherit', windowsHide: true });

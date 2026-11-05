@@ -26,7 +26,7 @@ def compact_json(value: object) -> str:
 
 
 class MarketDataMigrationTest(unittest.TestCase):
-    def test_miniapp_migrates_to_the_single_openbitfun_field_and_is_idempotent(self) -> None:
+    def test_miniapp_migrates_to_the_single_starmate_field_and_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             database = Path(temporary) / "market.sqlite"
             connection = sqlite3.connect(database)

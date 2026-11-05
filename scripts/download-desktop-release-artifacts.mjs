@@ -10,14 +10,14 @@ export function planReleaseArtifactDownloads(repository, tag, runs) {
   }
   const expected = [
     ...['windows-x64', 'linux-x64', 'linux-arm64', 'macos-arm64', 'macos-x64'].map((platform) => ({
-      name: `openbitfun-${tag}-${platform}-bundle`,
+      name: `starmate-${tag}-${platform}-bundle`,
       job: `Package (${platform})`, directory: `release-assets/${platform}`,
     })),
     ...['linux-x64', 'linux-arm64'].map((platform) => ({
-      name: `openbitfun-linux-${tag}-${platform}`,
+      name: `starmate-linux-${tag}-${platform}`,
       job: `Linux CLI and Relay Server / Linux Binaries (${platform})`, directory: 'linux-release-assets',
     })),
-    { name: `openbitfun-relay-image-${tag}`, job: 'Publish Relay Server Image', directory: 'relay-image-assets' },
+    { name: `starmate-relay-image-${tag}`, job: 'Publish Relay Server Image', directory: 'relay-image-assets' },
   ];
   const found = new Map();
   for (const { run, jobs, artifacts } of runs) {

@@ -242,7 +242,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
             {/* The lockup is the way out of the Lab: same mark-and-name treatment as the topbar's
                 own, now an outbound link to the product site. It leaves the Lab, so it opens in a
                 new tab and carries the arrow that says so. */}
-            <a className="design-home-footer-wordmark" href="https://openbitfun.com/" rel="noreferrer"
+            <a className="design-home-footer-wordmark" href="https://starmate.xtdl.ltd/" rel="noreferrer"
               target="_blank" aria-label={t("design.homeFooter.siteLabel")}>
               <span aria-hidden="true">&gt;_</span> StarMate
               <Icon className="design-home-footer-wordmark-arrow" aria-hidden="true" name="arrow-up-right" size="sm" />
@@ -277,7 +277,7 @@ export function OverviewPage({ onNavigate, colorScheme, contrast, density, token
         </div>
         <div className="design-home-footer-meta">
           <p>{t("design.homeFooter.copyright", { year: new Date().getFullYear() })}</p>
-          <a href="mailto:hello@openbitfun.com" aria-label={t("design.homeFooter.contactLabel")}>
+          <a href="mailto:hello@starmate.xtdl.ltd" aria-label={t("design.homeFooter.contactLabel")}>
             {t("design.homeFooter.contact")}
           </a>
           <p>{t("design.homeFooter.openSource")}<span aria-hidden="true"> · </span>{t("design.homeFooter.license")}</p>

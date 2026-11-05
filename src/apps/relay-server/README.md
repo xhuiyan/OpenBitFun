@@ -10,7 +10,7 @@ deploy a server. Older clients can remain on the GitHub-only authorization flow.
 For connection choices, internet requirements, privacy, service limits, and
 self-hosting, see the user FAQ: [English](FAQ.md) / [中文](FAQ.zh-CN.md).
 
-The official endpoint is `https://remote.openbitfun.com/v/1.0.2`. This release is deployed with
+The official endpoint is `https://remote.starmate.xtdl.ltd/v/1.0.2`. This release is deployed with
 its own process, database, assets, and reverse-proxy location. An existing
 `/relay` deployment remains on its existing binary and data directory.
 
@@ -35,7 +35,7 @@ account synchronization, and account-device Detached Dispatch continue to use
 the official account endpoint. Starting or stopping LAN mode does not switch
 that endpoint. See the [Desktop connection lifecycle](../desktop/README.md#remote-connect).
 
-Both modes verify account identity through `auth.openbitfun.com`, so signing in
+Both modes verify account identity through `auth.starmate.xtdl.ltd`, so signing in
 requires internet access. An invitation contains only the selected endpoint
 and device id (`/#/pair?did=<device-id>`); scanning it grants no authority.
 The controller must sign in and resolve that id in its same-account directory.
@@ -55,7 +55,7 @@ Relay URL. A private Relay therefore needs a matching client build.
    and `src/mobile-web/src/services/pairingLink.ts`. Native clients have
    matching constants in KMP `core-transport/AccountDeviceLink.kt` and HarmonyOS
    `services/AccountDeviceLink.ets`; update the HarmonyOS account-link parser too.
-   Search for `https://remote.openbitfun.com/v/1.0.2` to verify every runtime
+   Search for `https://remote.starmate.xtdl.ltd/v/1.0.2` to verify every runtime
    reference and corresponding test before building your distribution.
 3. Decide who owns identity. You can retain the official StarMate identity
    authority, or run the [shared identity service](../../../deploy/miniapp-market/README.md)
@@ -96,13 +96,13 @@ shared HTTP/WebSocket implementation lives in `src/crates/services/relay-service
 Set `RELAY_DB_PATH` to a persistent SQLite database before starting the service.
 Startup fails if it is missing; anonymous public relay mode is unsupported.
 The service validates StarMate access tokens against the fixed StarMate identity
-authority at `https://auth.openbitfun.com/api/v1/me`.
+authority at `https://auth.starmate.xtdl.ltd/api/v1/me`.
 
 ```bash
-cargo build --release -p openbitfun-relay-server
-RELAY_PORT=9700 RELAY_DB_PATH=/var/lib/openbitfun-relay-v1/relay.db \
-  RELAY_ASSET_DIR=/var/lib/openbitfun-relay-v1/assets \
-  ./target/release/openbitfun-relay-server
+cargo build --release -p starmate-relay-server
+RELAY_PORT=9700 RELAY_DB_PATH=/var/lib/starmate-relay-v1/relay.db \
+  RELAY_ASSET_DIR=/var/lib/starmate-relay-v1/assets \
+  ./target/release/starmate-relay-server
 ```
 
 Use the isolated [v1 Compose project](../../../deploy/relay-v1/README.md).
@@ -384,9 +384,9 @@ together and use distinct origins when protected Pages are deployed.
 ## Verification
 
 ```bash
-cargo test -p openbitfun-relay-server --bin openbitfun-relay-server
-cargo test -p openbitfun-relay-service
-cargo check -p openbitfun-relay-server
+cargo test -p starmate-relay-server --bin starmate-relay-server
+cargo test -p starmate-relay-service
+cargo check -p starmate-relay-server
 node scripts/check-core-boundaries.mjs
 ```
 

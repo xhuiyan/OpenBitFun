@@ -54,7 +54,7 @@ import kotlin.uuid.Uuid
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.time.TimeSource
 
-public const val DEFAULT_CLOUD_RELAY_URL: String = "https://remote.openbitfun.com/v/1.0.2"
+public const val DEFAULT_CLOUD_RELAY_URL: String = "https://remote.starmate.xtdl.ltd/v/1.0.2"
 
 /** A relayed stream page slower than this is worth a breadcrumb; faster ones are not. */
 internal const val SLOW_STREAM_PAGE_MS: Long = 300L
@@ -240,7 +240,7 @@ public class CloudAccountClient internal constructor(
         JsonObject.serializer(), JsonObject(emptyMap()), GitHubAuthorization.serializer(), "", RELAY_DEFAULT_TIMEOUT_MS,
     ).also {
         val url = io.ktor.http.Url(it.authorizationUrl)
-        require(url.protocol.name == "https" && ((url.host == "github.com" && url.encodedPath == "/login/oauth/authorize") || (url.host == "auth.openbitfun.com" && url.encodedPath == "/sign-in")) && url.port == 443 && url.user == null && url.password == null)
+        require(url.protocol.name == "https" && ((url.host == "github.com" && url.encodedPath == "/login/oauth/authorize") || (url.host == "auth.starmate.xtdl.ltd" && url.encodedPath == "/sign-in")) && url.port == 443 && url.user == null && url.password == null)
     }
 
     public suspend fun pollAuthorization(relayUrl: String, start: GitHubAuthorization): GitHubAuthorizationPoll = request(

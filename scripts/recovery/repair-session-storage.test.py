@@ -489,7 +489,7 @@ class RepairTests(unittest.TestCase):
             repair.check_closed(False)
         if os.name == "nt":
             with patch.object(repair.subprocess, "run", return_value=subprocess.CompletedProcess(
-                    [], 0, b'"openbitfun-cli.exe","1234"\n')):
+                    [], 0, b'"starmate-cli.exe","1234"\n')):
                 with self.assertRaises(ValueError):
                     repair.check_closed(True)
 

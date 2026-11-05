@@ -1594,7 +1594,7 @@
     },
     {
       "name": "connect_urlPlaceholder",
-      "value": "openbitfun:// or https://...#/pair?room=...&pk=...&relay=..."
+      "value": "starmate:// or https://...#/pair?room=...&pk=...&relay=..."
     },
     {
       "name": "connect_statusTitle",

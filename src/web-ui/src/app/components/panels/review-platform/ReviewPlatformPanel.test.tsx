@@ -120,7 +120,7 @@ describe('Gitee panel state and asynchronous request ordering', () => {
     'keeps unsupported restored panels out of the peer transport: %j', async capabilities => {
       peer.active = true;
       peer.capabilities = capabilities;
-      const url = 'https://github.com/GCWing/OpenBitFun/pull/3573/files#diff-example';
+      const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573/files#diff-example';
       await act(async () => root.render(
         <ReviewPlatformPanel workspaceId="workspace-1" workspacePath="/workspace" initialPullRequestUrl={url} detailOnly />,
       ));
@@ -231,7 +231,7 @@ describe('Gitee panel state and asynchronous request ordering', () => {
   });
 
   it('keeps a browser action when a supported peer cannot load the PR context', async () => {
-    const url = 'https://github.com/GCWing/OpenBitFun/pull/3573';
+    const url = 'https://github.com/xhuiyan/OpenBitFun/pull/3573';
     mocks.context.mockRejectedValueOnce(new Error('Provider unavailable'));
     await act(async () => root.render(
       <ReviewPlatformPanel workspaceId="failed-context" workspacePath="/workspace" initialPullRequestUrl={url} detailOnly />,

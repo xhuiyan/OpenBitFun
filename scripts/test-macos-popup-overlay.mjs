@@ -10,7 +10,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 assert.equal(process.platform, 'darwin', 'popup overlay fixture requires macOS');
 const root = fileURLToPath(new URL('../', import.meta.url));
-const directory = await mkdtemp(join(tmpdir(), 'openbitfun-popup-overlay-'));
+const directory = await mkdtemp(join(tmpdir(), 'starmate-popup-overlay-'));
 const run = (command, args, env = process.env) => new Promise((resolve, reject) => {
   const child = spawn(command, args, { cwd: root, stdio: 'inherit', windowsHide: true, env });
   child.on('error', reject);

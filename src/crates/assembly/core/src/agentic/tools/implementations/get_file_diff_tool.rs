@@ -1236,7 +1236,7 @@ This tool compares the current file content against:
 3. Full file content (if neither baseline nor git is available)
 
 Usage:
-- The file_path parameter must be workspace-relative, an absolute path inside the current workspace, or an exact `openbitfun://...` URI returned by another tool.
+- The file_path parameter must be workspace-relative, an absolute path inside the current workspace, or an exact `starmate://...` URI returned by another tool.
 - The diff is returned in unified diff format, showing additions (+) and deletions (-).
 - The response includes diff_type indicating the source: "baseline", "git", or "full".
 - The response includes stats for additions and deletions.
@@ -1285,7 +1285,7 @@ Usage:
             "properties": {
                 "file_path": {
                     "type": "string",
-                    "description": "The file to get diff for. Use a workspace-relative path, an absolute path inside the current workspace, or an exact openbitfun:// URI returned by another tool."
+                    "description": "The file to get diff for. Use a workspace-relative path, an absolute path inside the current workspace, or an exact starmate:// URI returned by another tool."
                 }
             },
             "required": ["file_path"],
@@ -1956,7 +1956,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "fixture",
@@ -2529,7 +2529,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "rename base",
@@ -2599,7 +2599,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "nested base",
@@ -2660,7 +2660,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "move head",
@@ -2779,7 +2779,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "inner base",
@@ -2893,7 +2893,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "base",
@@ -2911,7 +2911,7 @@ mod tests {
                 "-c",
                 "user.name=OpenBitFun Tests",
                 "-c",
-                "user.email=tests@openbitfun.dev",
+                "user.email=tests@starmate.xtdl.ltd",
                 "commit",
                 "-m",
                 "head",

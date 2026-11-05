@@ -15,24 +15,24 @@ const parseTsx = source => ts.createSourceFile('fixture.tsx', source, ts.ScriptT
 
 test('FlowGroup forwards literal identities to the actual public parts and state source', () => {
   const [parts] = collectForwardedFlowGroupParts(parseTsx(`import { FlowGroup as Group } from '@starmate/ui/flow-chat';
-    <Group {...props} data-openbitfun-component="explore-group" data-openbitfun-part="root" />;`), parseTsx(flowGroupSource)).values();
-  assert.deepEqual(parts.map(node => findDomAttribute(node, 'data-openbitfun-part').initializer.text),
+    <Group {...props} data-starmate-component="explore-group" data-starmate-part="root" />;`), parseTsx(flowGroupSource)).values();
+  assert.deepEqual(parts.map(node => findDomAttribute(node, 'data-starmate-part').initializer.text),
     ['root', 'header', 'summary', 'controls', 'contentWrapper', 'content']);
-  assert.match(findDomAttribute(parts[0], 'data-openbitfun-state').getText(), /expanded/);
+  assert.match(findDomAttribute(parts[0], 'data-starmate-state').getText(), /expanded/);
   // Removing forwarding at the owner removes the proof; an inventory is not DOM evidence.
-  const changedOwner = flowGroupSource.replace('data-openbitfun-part="summary"', 'data-other-part="summary"');
+  const changedOwner = flowGroupSource.replace('data-starmate-part="summary"', 'data-other-part="summary"');
   const [changedParts] = collectForwardedFlowGroupParts(parseTsx(`import { FlowGroup } from '@starmate/ui/flow-chat';
-    <FlowGroup data-openbitfun-component="context-load-group" data-openbitfun-part="root" />;`), parseTsx(changedOwner)).values();
+    <FlowGroup data-starmate-component="context-load-group" data-starmate-part="root" />;`), parseTsx(changedOwner)).values();
   assert.equal(changedParts.length, parts.length - 1);
 });
 
 test('FlowGroup forwarding rejects local lookalikes, dynamic identities and overriding spreads', () => {
   for (const source of [
-    `import { FlowGroup } from './fake'; <FlowGroup data-openbitfun-component="x" data-openbitfun-part="root" />;`,
-    `import { Button as FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-openbitfun-component="x" data-openbitfun-part="root" />;`,
-    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-openbitfun-component={dynamic} data-openbitfun-part="root" />;`,
-    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-openbitfun-component="x" data-openbitfun-part="root" {...unknown} />;`,
-    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-openbitfun-component="x" data-openbitfun-part="invented" />;`,
+    `import { FlowGroup } from './fake'; <FlowGroup data-starmate-component="x" data-starmate-part="root" />;`,
+    `import { Button as FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-starmate-component="x" data-starmate-part="root" />;`,
+    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-starmate-component={dynamic} data-starmate-part="root" />;`,
+    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-starmate-component="x" data-starmate-part="root" {...unknown} />;`,
+    `import { FlowGroup } from '@starmate/ui/flow-chat'; <FlowGroup data-starmate-component="x" data-starmate-part="invented" />;`,
   ]) assert.equal(collectForwardedFlowGroupParts(parseTsx(source), parseTsx(flowGroupSource)).size, 0, source);
 });
 
@@ -43,9 +43,9 @@ function collect(source) {
 test('Dialog overlay props prove only forwarded product markers, not overridden library markers', () => {
   const parse = source => [...collectForwardedOverlayProps(ts.createSourceFile('fixture.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX))];
   for (const component of ['Dialog', 'Sheet']) {
-    const [node] = parse(`import { ${component} as Surface } from '@starmate/ui'; <Surface overlayProps={{'data-openbitfun-product-part': 'lightbox', 'data-openbitfun-component': 'fake', 'data-state': 'fake'}} />;`);
-    assert.equal(findDomAttribute(node, 'data-openbitfun-product-part').initializer.text, 'lightbox');
-    assert.equal(findDomAttribute(node, 'data-openbitfun-component'), undefined);
+    const [node] = parse(`import { ${component} as Surface } from '@starmate/ui'; <Surface overlayProps={{'data-starmate-product-part': 'lightbox', 'data-starmate-component': 'fake', 'data-state': 'fake'}} />;`);
+    assert.equal(findDomAttribute(node, 'data-starmate-product-part').initializer.text, 'lightbox');
+    assert.equal(findDomAttribute(node, 'data-starmate-component'), undefined);
     assert.equal(findDomAttribute(node, 'data-state'), undefined);
   }
   for (const source of [
@@ -60,19 +60,19 @@ test('Dialog overlay props prove only forwarded product markers, not overridden 
 
 test('TabGroup literal and mapped items expose the real native tab attributes', () => {
   for (const items of [
-    `[{value: 'models', tabProps: {'data-openbitfun-product-part': 'tab'}}]`,
-    `tabs.map(tab => ({value: tab, tabProps: {'data-openbitfun-product-part': 'tab'}}))`,
+    `[{value: 'models', tabProps: {'data-starmate-product-part': 'tab'}}]`,
+    `tabs.map(tab => ({value: tab, tabProps: {'data-starmate-product-part': 'tab'}}))`,
   ]) {
     const nodes = collect(`import { TabGroup as Tabs } from '@starmate/ui'; <Tabs items={${items}} />;`);
     assert.equal(nodes.length, 1);
-    assert.equal(findDomAttribute(nodes[0], 'data-openbitfun-product-part').initializer.text, 'tab');
+    assert.equal(findDomAttribute(nodes[0], 'data-starmate-product-part').initializer.text, 'tab');
     assert.equal(findDomAttribute(nodes[0], 'missing'), undefined);
   }
 });
 
 test('unrelated objects, non-forwarding props and unknown spreads cannot establish DOM contracts', () => {
   for (const source of [
-    `const unused = {tabProps: {'data-openbitfun-product-part': 'tab'}};`,
+    `const unused = {tabProps: {'data-starmate-product-part': 'tab'}};`,
     `import { TabGroup } from './fake'; <TabGroup items={[{tabProps: {part: 'tab'}}]} />;`,
     `import { Button } from '@starmate/ui'; <Button items={[{tabProps: {part: 'tab'}}]} />;`,
     `import { TabGroup } from '@starmate/ui'; <TabGroup other={[{tabProps: {part: 'tab'}}]} />;`,
@@ -85,10 +85,10 @@ test('unrelated objects, non-forwarding props and unknown spreads cannot establi
 test('component-owned part and value markers cannot be supplied as forwarding evidence', () => {
   const [node] = collect(`import { TabGroup } from '@starmate/ui';
     <TabGroup items={[{value: 'models', tabProps: {
-      'data-openbitfun-part': 'invented', 'data-openbitfun-value': 'invented',
-      'data-openbitfun-product-part': 'tab'
+      'data-starmate-part': 'invented', 'data-starmate-value': 'invented',
+      'data-starmate-product-part': 'tab'
     }}]} />;`);
-  assert.equal(findDomAttribute(node, 'data-openbitfun-part'), undefined);
-  assert.equal(findDomAttribute(node, 'data-openbitfun-value'), undefined);
-  assert.equal(findDomAttribute(node, 'data-openbitfun-product-part').initializer.text, 'tab');
+  assert.equal(findDomAttribute(node, 'data-starmate-part'), undefined);
+  assert.equal(findDomAttribute(node, 'data-starmate-value'), undefined);
+  assert.equal(findDomAttribute(node, 'data-starmate-product-part').initializer.text, 'tab');
 });

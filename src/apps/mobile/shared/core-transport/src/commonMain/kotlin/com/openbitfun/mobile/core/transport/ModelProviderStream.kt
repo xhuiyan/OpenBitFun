@@ -92,7 +92,7 @@ public class ModelProviderSseParser public constructor(
 public object ModelProviderRequest {
     public fun resolveProtocol(baseUrl: String): ModelProviderProtocol {
         val normalized = baseUrl.trim().trimEnd('/').lowercase()
-        return if ("openbitfun.com" in normalized || normalized.endsWith("/v1/messages")) {
+        return if ("starmate.xtdl.ltd" in normalized || normalized.endsWith("/v1/messages")) {
             ModelProviderProtocol.ANTHROPIC
         } else {
             ModelProviderProtocol.OPEN_AI
@@ -223,7 +223,7 @@ public class ModelProviderStreamClient internal constructor(
                 ModelProviderProtocol.ANTHROPIC -> {
                     header("x-api-key", apiKey)
                     header("anthropic-version", "2023-06-01")
-                    if ("openbitfun.com" in baseUrl.lowercase()) header("X-Verification-Code", "from_openbitfun")
+                    if ("starmate.xtdl.ltd" in baseUrl.lowercase()) header("X-Verification-Code", "from_openbitfun")
                 }
                 ModelProviderProtocol.OPEN_AI -> header(HttpHeaders.Authorization, "Bearer $apiKey")
             }
