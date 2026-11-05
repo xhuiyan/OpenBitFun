@@ -1,5 +1,5 @@
 ---
-name: create-openbitfun-skin
+name: create-starmate-skin
 description: Inspect the current StarMate Appearance contract and author, repair, package, or validate sparse .openbitfun-appearance skins. Use when Codex needs to discover registered scenes/components/parts/states/facets, check Style IR properties or renderer tokens, initialize or inspect a package, diagnose import failures, verify a skin against a StarMate checkout, or choose a bundled style example for design-specific guidance.
 ---
 
@@ -23,14 +23,14 @@ The bundled registry and package references define capabilities. Files under `ex
 Run commands from this Skill directory:
 
 ```powershell
-python scripts/openbitfun_appearance.py contract list components
-python scripts/openbitfun_appearance.py contract list scenes
-python scripts/openbitfun_appearance.py contract list renderers
-python scripts/openbitfun_appearance.py contract show components <component-id>
-python scripts/openbitfun_appearance.py contract show scenes <scene-id>
-python scripts/openbitfun_appearance.py contract properties
-python scripts/openbitfun_appearance.py contract tokens theme
-python scripts/openbitfun_appearance.py contract tokens widget
+python scripts/starmate_appearance.py contract list components
+python scripts/starmate_appearance.py contract list scenes
+python scripts/starmate_appearance.py contract list renderers
+python scripts/starmate_appearance.py contract show components <component-id>
+python scripts/starmate_appearance.py contract show scenes <scene-id>
+python scripts/starmate_appearance.py contract properties
+python scripts/starmate_appearance.py contract tokens theme
+python scripts/starmate_appearance.py contract tokens widget
 ```
 
 Only author registered surfaces, Parts, facets, states, renderer adapters, tokens, and Style IR properties returned by these commands. A Part descriptor may further restrict its allowed properties.
@@ -54,7 +54,7 @@ The following Parts are not registered and must not be used:
 Initialize the smallest valid overlay:
 
 ```powershell
-python scripts/openbitfun_appearance.py init <project-dir> --id <id> --name "<name>" --mode <light-or-dark>
+python scripts/starmate_appearance.py init <project-dir> --id <id> --name "<name>" --mode <light-or-dark>
 ```
 
 Edit `<project-dir>/appearance.json` and declare only the values the skin needs to change. StarMate merges the package over its built-in light or dark Appearance.
@@ -74,10 +74,10 @@ Read [style-example-contract.md](references/style-example-contract.md) before ad
 ## Validate importability
 
 ```powershell
-python scripts/openbitfun_appearance.py validate <project-dir>
-python scripts/openbitfun_appearance.py build <project-dir> --output <skin>.openbitfun-appearance
-python scripts/openbitfun_appearance.py validate <skin>.openbitfun-appearance
-python scripts/openbitfun_appearance.py inspect <project-or-archive>
+python scripts/starmate_appearance.py validate <project-dir>
+python scripts/starmate_appearance.py build <project-dir> --output <skin>.openbitfun-appearance
+python scripts/starmate_appearance.py validate <skin>.openbitfun-appearance
+python scripts/starmate_appearance.py inspect <project-or-archive>
 ```
 
 When a StarMate checkout is available, verify with the production registry, Validator, Compiler, and packaged-video display-dimension probe:

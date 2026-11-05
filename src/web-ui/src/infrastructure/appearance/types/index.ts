@@ -384,7 +384,7 @@ export type AppearanceRendererId =
   | 'xterm'
   | 'mermaid'
   | 'generative-widget'
-  | 'openbitfun-canvas';
+  | 'starmate-canvas';
 
 export type AppearanceThemeTokenName =
   | `--openbitfun-color-${string}`
@@ -509,7 +509,7 @@ export interface AppearanceRendererSettingsMap {
   xterm: XtermAppearanceSettings;
   mermaid: MermaidAppearanceSettings;
   'generative-widget': WidgetAppearanceSettings;
-  'openbitfun-canvas': CanvasAppearanceSettings;
+  'starmate-canvas': CanvasAppearanceSettings;
 }
 
 export type AppearanceRendererSettings = AppearanceRendererSettingsMap[AppearanceRendererId];

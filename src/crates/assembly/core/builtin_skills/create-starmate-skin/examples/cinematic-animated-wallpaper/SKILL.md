@@ -1,11 +1,11 @@
 ---
 name: create-openbitfun-cinematic-wallpaper-skin
-description: Apply the cinematic animated-wallpaper style recipe to a StarMate Appearance skin. Use after loading the parent create-openbitfun-skin Skill when the user provides animated character artwork and wants a host-managed video background, source-derived glass materials, image-led cards, illustrated dialogs, reproducible builds, or cinematic drift checks.
+description: Apply the cinematic animated-wallpaper style recipe to a StarMate Appearance skin. Use after loading the parent create-starmate-skin Skill when the user provides animated character artwork and wants a host-managed video background, source-derived glass materials, image-led cards, illustrated dialogs, reproducible builds, or cinematic drift checks.
 ---
 
 # Cinematic animated-wallpaper recipe
 
-Load the parent `create-openbitfun-skin` Skill first. The parent registry and package references define what can be changed; this example defines one optional visual strategy.
+Load the parent `create-starmate-skin` Skill first. The parent registry and package references define what can be changed; this example defines one optional visual strategy.
 
 Do not reuse this example's asset roles, crop defaults, palette, opacity, or material choices unless they fit the user's artwork and intent. Its [surface-plan.json](references/surface-plan.json) is an example style selection validated against one registry revision, not a list of all current Appearance surfaces. Re-query the parent registry whenever the host checkout or bundled snapshot changes.
 

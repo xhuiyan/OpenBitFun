@@ -595,7 +595,7 @@ export function buildBuiltinAppearance(palette: AppearancePalette): AppearancePa
           vars: createWidgetAppearanceVars(themeTokens),
         },
       },
-      'openbitfun-canvas': {
+      'starmate-canvas': {
         version: 1,
         settings: {
           id: `builtin.${palette.id}`,

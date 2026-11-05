@@ -31,7 +31,7 @@ export type PanelContentType =
   | 'review-platform-pr-detail'
   | 'terminal'
   | 'generative-widget'
-  | 'openbitfun-canvas'
+  | 'starmate-canvas'
   | 'browser'
   | 'html-preview';
 

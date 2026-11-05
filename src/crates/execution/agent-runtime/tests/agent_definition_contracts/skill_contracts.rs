@@ -468,7 +468,7 @@ fn builtin_skill_catalog_and_mode_policy_are_runtime_owned() {
         assert_eq!(builtin_skill_group_key(removed), None);
     }
     assert_eq!(
-        builtin_skill_group_key("create-openbitfun-skin"),
+        builtin_skill_group_key("create-starmate-skin"),
         Some("meta")
     );
     assert_eq!(builtin_skill_group_key("commit-push-pr"), Some("meta"));
@@ -499,7 +499,7 @@ fn builtin_skill_catalog_and_mode_policy_are_runtime_owned() {
         Some(true)
     );
     assert_eq!(
-        resolve_builtin_default_enabled("create-openbitfun-skin", "DeepResearch"),
+        resolve_builtin_default_enabled("create-starmate-skin", "DeepResearch"),
         Some(true)
     );
     for mode in ["Standard", "Claw", "Creative", "Cowork", "DeepResearch"] {

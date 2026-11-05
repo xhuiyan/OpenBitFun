@@ -16,7 +16,7 @@ mod tests {
             assert_eq!(builtin_skill_group_key(removed), None);
         }
         assert_eq!(
-            builtin_skill_group_key("create-openbitfun-skin"),
+            builtin_skill_group_key("create-starmate-skin"),
             Some("meta")
         );
         assert_eq!(builtin_skill_group_key("commit-push-pr"), Some("meta"));

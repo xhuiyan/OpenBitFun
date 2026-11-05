@@ -13,7 +13,7 @@ from typing import Any, Iterable, Mapping, Sequence
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-APPEARANCE_TOOL = SKILL_ROOT / "scripts" / "openbitfun_appearance.py"
+APPEARANCE_TOOL = SKILL_ROOT / "scripts" / "starmate_appearance.py"
 HOST_VERIFY = SKILL_ROOT / "scripts" / "verify_host.py"
 SYNC_REGISTRY = SKILL_ROOT / "scripts" / "sync_registry.py"
 REGISTRY_PATH = SKILL_ROOT / "references" / "appearance-registry.json"

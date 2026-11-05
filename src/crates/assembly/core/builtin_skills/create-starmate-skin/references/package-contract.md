@@ -45,7 +45,7 @@ An Appearance manifest may define:
 
 The video asset must be `video/mp4` or `video/webm`; the poster must be an image. Declare `background-media.v1`. Playback is host-owned: muted, looping, non-interactive, paused while hidden, and replaced by the poster for reduced-motion users.
 
-Use `scripts/openbitfun_appearance.py init` for a valid starting structure. Use its `contract` commands for the exact standalone registry.
+Use `scripts/starmate_appearance.py init` for a valid starting structure. Use its `contract` commands for the exact standalone registry.
 
 ## Style IR
 

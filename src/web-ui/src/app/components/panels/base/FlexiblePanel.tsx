@@ -1052,7 +1052,7 @@ const FlexiblePanel: React.FC<ExtendedFlexiblePanelProps> = memo(({
           </React.Suspense>
         );
 
-      case 'openbitfun-canvas':
+      case 'starmate-canvas':
         return (
           <React.Suspense fallback={<div className="openbitfun-flexible-panel__loading" data-openbitfun-component="flexible-panel" data-openbitfun-part="loading" data-openbitfun-state="loading" data-starmate-component="flexible-panel" data-starmate-part="loading" data-starmate-state="loading" >Loading Canvas preview...</div>}>
             <StarMateCanvasPanel

@@ -55,7 +55,7 @@ pub(super) const BUILTIN_SKILL_SPECS: &[BuiltinSkillSpec] = &[
         group: BuiltinSkillGroup::Meta,
     },
     BuiltinSkillSpec {
-        dir_name: "create-openbitfun-skin",
+        dir_name: "create-starmate-skin",
         group: BuiltinSkillGroup::Meta,
     },
     BuiltinSkillSpec {

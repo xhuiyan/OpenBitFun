@@ -81,9 +81,9 @@ export function openCanvasArtifactTab(options: OpenCanvasArtifactTabOptions): bo
     return false;
   }
 
-  const duplicateCheckKey = JSON.stringify(['openbitfun-canvas', options.workspaceId, artifactReference]);
+  const duplicateCheckKey = JSON.stringify(['starmate-canvas', options.workspaceId, artifactReference]);
   createTab({
-    type: 'openbitfun-canvas',
+    type: 'starmate-canvas',
     title: options.title?.trim() || 'StarMate Canvas',
     data: {
       artifactReference,

@@ -1,3 +1,4 @@
+import { normalizeLegacyRendererIds } from './appearanceRendererIdMigration';
 import type {
   AppearanceGlobalTokens,
   AppearanceMaterialDefinition,
@@ -180,14 +181,16 @@ function mergeRenderers(
         },
       },
     } : base?.['generative-widget'],
-    'openbitfun-canvas': override?.['openbitfun-canvas'] ? {
+    'starmate-canvas': override?.['starmate-canvas'] ? {
       version: 1,
-      settings: { ...base?.['openbitfun-canvas']?.settings, ...override['openbitfun-canvas'].settings },
-    } : base?.['openbitfun-canvas'],
+      settings: { ...base?.['starmate-canvas']?.settings, ...override['starmate-canvas'].settings },
+    } : base?.['starmate-canvas'],
   };
 }
 
 export function composeAppearancePackage(pkg: AppearancePackage): AppearancePackage {
+  pkg = normalizeLegacyRendererIds(pkg);
+
   const registered = getBuiltinAppearance(pkg.id);
   if (registered === pkg) return pkg;
   const baseId = pkg.mode === 'dark' ? DEFAULT_DARK_APPEARANCE_ID : DEFAULT_LIGHT_APPEARANCE_ID;

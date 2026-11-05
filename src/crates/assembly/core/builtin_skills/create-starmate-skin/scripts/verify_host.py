@@ -12,7 +12,7 @@ import zipfile
 from pathlib import Path
 from typing import Any, Sequence
 
-import openbitfun_appearance as appearance
+import starmate_appearance as appearance
 import media_support
 import sync_registry as registry_sync
 

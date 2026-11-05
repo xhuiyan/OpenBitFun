@@ -475,23 +475,23 @@ mod tests {
 
     #[test]
     fn create_openbitfun_skin_embeds_authoring_contract_and_example() {
-        let skill = embedded_skill_text("create-openbitfun-skin/SKILL.md");
-        assert!(skill.contains("name: create-openbitfun-skin"));
+        let skill = embedded_skill_text("create-starmate-skin/SKILL.md");
+        assert!(skill.contains("name: create-starmate-skin"));
 
         let registry =
-            embedded_skill_text("create-openbitfun-skin/references/appearance-registry.json");
+            embedded_skill_text("create-starmate-skin/references/appearance-registry.json");
         assert!(registry.contains("schemaVersion"));
 
         let example = embedded_skill_text(
-            "create-openbitfun-skin/examples/cinematic-animated-wallpaper/SKILL.md",
+            "create-starmate-skin/examples/cinematic-animated-wallpaper/SKILL.md",
         );
         assert!(example.contains("cinematic animated-wallpaper"));
 
-        let metadata = embedded_skill_text("create-openbitfun-skin/agents/openai.yaml");
+        let metadata = embedded_skill_text("create-starmate-skin/agents/openai.yaml");
         assert!(metadata.contains("display_name: \"StarMate Appearance Manual\""));
 
         let workflow =
-            embedded_skill_text("create-openbitfun-skin/references/authoring-workflow.md");
+            embedded_skill_text("create-starmate-skin/references/authoring-workflow.md");
         assert!(workflow.contains("Bump it whenever the manifest"));
     }
 

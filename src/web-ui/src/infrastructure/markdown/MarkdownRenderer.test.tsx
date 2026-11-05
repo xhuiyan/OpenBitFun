@@ -630,7 +630,7 @@ Second paragraph.
 
       expect(useAgentCanvasStore.getState().primaryGroup.tabs).toHaveLength(1);
       expect(useAgentCanvasStore.getState().primaryGroup.tabs[0].content).toMatchObject({
-        type: 'openbitfun-canvas',
+        type: 'starmate-canvas',
         title: 'StarMate Canvas',
         data: {
           artifactReference: 'starmate-canvas://session/session_1/canvas/canvas_1',

@@ -276,8 +276,8 @@ export const PANEL_CONTENT_CONFIGS: Record<PanelContentType, PanelContentConfig>
     supportsDownload: false,
     showHeader: false
   },
-  'openbitfun-canvas': {
-    type: 'openbitfun-canvas',
+  'starmate-canvas': {
+    type: 'starmate-canvas',
     displayName: 'StarMate Canvas',
     icon: { glyph: Network },
     supportsCopy: false,

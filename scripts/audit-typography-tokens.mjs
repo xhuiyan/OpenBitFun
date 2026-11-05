@@ -251,7 +251,7 @@ const FILE_CONTRACTS = Object.freeze([
     ],
   },
   {
-    path: 'src/crates/assembly/core/builtin_skills/create-openbitfun-skin/references/appearance-registry.json',
+    path: 'src/crates/assembly/core/builtin_skills/create-starmate-skin/references/appearance-registry.json',
     forbidden: [
       {
         code: 'appearance-registry-flowchat-font-contract-reintroduced',
@@ -261,7 +261,7 @@ const FILE_CONTRACTS = Object.freeze([
     ],
   },
   {
-    path: 'src/crates/assembly/core/builtin_skills/create-openbitfun-skin/scripts/openbitfun_appearance.py',
+    path: 'src/crates/assembly/core/builtin_skills/create-starmate-skin/scripts/starmate_appearance.py',
     forbidden: [
       {
         code: 'standalone-appearance-typography-reintroduced',

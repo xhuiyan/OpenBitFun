@@ -1,3 +1,4 @@
+import { normalizeRendererId } from '../builtins/appearanceRendererIdMigration';
 import type { AppearanceRegistry } from '../registry/AppearanceRegistry';
 import {
   APPEARANCE_SCHEMA,
@@ -953,7 +954,7 @@ export class AppearancePackageValidator {
       return;
     }
     Object.entries(value).forEach(([id, definition]) => {
-      const adapter = registry.getRenderer(id);
+      const adapter = registry.getRenderer(normalizeRendererId(id));
       const path = `renderers.${id}`;
       if (!adapter) {
         error(path, 'UNKNOWN_RENDERER', `No registered renderer adapter for ${id}`);
