@@ -8,7 +8,7 @@ export const computerUseToolCardAppearanceDescriptor: AppearanceSurfaceDescripto
     { id: 'loopWarning' },
   ],
   states: [
-    { id: 'expanded', selector: { kind: 'self', suffix: '[data-openbitfun-state~="expanded"]' } },
-    { id: 'failed', selector: { kind: 'self', suffix: '[data-openbitfun-state~="failed"]' } },
+    { id: 'expanded', selector: { kind: 'self', suffix: '[data-starmate-state~="expanded"]' } },
+    { id: 'failed', selector: { kind: 'self', suffix: '[data-starmate-state~="failed"]' } },
   ],
 };

@@ -23,7 +23,7 @@ export const runtimeSettingsAppearanceDescriptor: AppearanceSurfaceDescriptor = 
   facets: [
     {
       id: 'view',
-      attribute: 'data-openbitfun-view',
+      attribute: 'data-starmate-view',
       values: [
         'pet',
         'permissions',
@@ -33,7 +33,7 @@ export const runtimeSettingsAppearanceDescriptor: AppearanceSurfaceDescriptor = 
     },
   ],
   states: [
-    { id: 'selected', selector: { kind: 'self', suffix: '[data-openbitfun-state~="selected"]' } },
-    { id: 'expanded', selector: { kind: 'self', suffix: '[data-openbitfun-state~="expanded"]' } },
+    { id: 'selected', selector: { kind: 'self', suffix: '[data-starmate-state~="selected"]' } },
+    { id: 'expanded', selector: { kind: 'self', suffix: '[data-starmate-state~="expanded"]' } },
   ],
 };

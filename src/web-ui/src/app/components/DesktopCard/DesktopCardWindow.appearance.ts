@@ -8,8 +8,8 @@ export const desktopCardAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'countdown' }, { id: 'checklist' }, { id: 'note' }, { id: 'progress' }, { id: 'metrics' }, { id: 'chart' }, { id: 'cron' },
   ],
   states: [
-    { id: 'loading', selector: { kind: 'self', suffix: '[data-openbitfun-state~="loading"]' } },
-    { id: 'error', selector: { kind: 'self', suffix: '[data-openbitfun-state~="error"]' } },
-    { id: 'warning', selector: { kind: 'self', suffix: '[data-openbitfun-state~="warning"]' } },
+    { id: 'loading', selector: { kind: 'self', suffix: '[data-starmate-state~="loading"]' } },
+    { id: 'error', selector: { kind: 'self', suffix: '[data-starmate-state~="error"]' } },
+    { id: 'warning', selector: { kind: 'self', suffix: '[data-starmate-state~="warning"]' } },
   ],
 };

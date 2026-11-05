@@ -6,8 +6,8 @@ export const workspaceListSectionAppearanceDescriptor: AppearanceSurfaceDescript
     { id: 'viewTransition' }, { id: 'viewContent' }, { id: 'viewExits' },
   ],
   states: [
-    { id: 'dragging', selector: { kind: 'self', suffix: '[data-openbitfun-state~="dragging"]' } },
-    { id: 'selected', selector: { kind: 'self', suffix: '[data-openbitfun-state~="selected"]' } },
-    { id: 'transitioning', selector: { kind: 'self', suffix: '[data-openbitfun-state~="transitioning"]' } },
+    { id: 'dragging', selector: { kind: 'self', suffix: '[data-starmate-state~="dragging"]' } },
+    { id: 'selected', selector: { kind: 'self', suffix: '[data-starmate-state~="selected"]' } },
+    { id: 'transitioning', selector: { kind: 'self', suffix: '[data-starmate-state~="transitioning"]' } },
   ],
 };

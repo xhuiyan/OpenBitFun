@@ -34,6 +34,7 @@ export function ImageLightbox({ image, onClose }: {
       overlayProps={{
         className: 'image-lightbox',
         'data-openbitfun-native-webview-occlusion': true,
+        'data-starmate-native-webview-occlusion': true,
       }}
       autoFocus={false}
       restoreFocus={false}

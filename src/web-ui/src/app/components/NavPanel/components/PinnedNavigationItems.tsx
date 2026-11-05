@@ -19,6 +19,7 @@ export default function PinnedNavigationItems({ navigation }: { navigation: Retu
       className: 'openbitfun-nav-panel__top-action-item openbitfun-nav-panel__top-action-item--root',
       triggerClassName: `openbitfun-nav-panel__top-action-btn${selected ? ' is-active' : ''}`,
       'data-openbitfun-state': selected ? 'active' : '',
+      'data-starmate-state': selected ? 'active' : '',
       'aria-label': label,
       selected,
       disabled: unavailable,

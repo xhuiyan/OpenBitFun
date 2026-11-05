@@ -247,13 +247,16 @@ Appearance 契约按“可见 surface owner”而不是按 React 文件数量划
 
 ```tsx
 <button
-  data-openbitfun-component="button"
-  data-openbitfun-part="root"
-  data-openbitfun-variant={variant}
-  data-openbitfun-size={size}
-  data-openbitfun-state={state}
+  data-starmate-component="button"
+  data-starmate-part="root"
+  data-starmate-variant={variant}
+  data-starmate-size={size}
+  data-starmate-state={state}
 />
 ```
+
+迁移期 DOM 仍同时输出 `data-openbitfun-*` 旧属性作为兼容副本；descriptor、compiler 选择器和
+审计契约只读 `data-starmate-*`。旧属性删除是独立阶段，不能提前移除。
 
 descriptor 声明：
 
@@ -288,13 +291,13 @@ states: [
 自己的 selector。编译器按 descriptor 生成规则，例如：
 
 ```css
-:root[data-openbitfun-appearance="example.aurora"]
-  [data-openbitfun-component="button"][data-openbitfun-part="root"][data-openbitfun-variant="primary"]:hover:not(:disabled) { ... }
+:root[data-starmate-appearance="example.aurora"]
+  [data-starmate-component="button"][data-starmate-part="root"][data-starmate-variant="primary"]:hover:not(:disabled) { ... }
 ```
 
 产品控件复用组件库时，可在 descriptor 中声明
-`componentAttribute: 'data-openbitfun-product-component'`，由编译器匹配
-`data-openbitfun-product-component` / `data-openbitfun-product-part`，避免覆盖库组件自己的标识。
+`componentAttribute: 'data-starmate-product-component'`，由编译器匹配
+`data-starmate-product-component` / `data-starmate-product-part`，避免覆盖库组件自己的标识。
 模型轮次、图片导出、紧凑工具栏和消息定位控件使用这一映射；外观包仍使用
 `model-round-item`、`export-image`、`toolbar-mode`、`scroll-to-latest-bar`、
 `scroll-to-turn-header-button` 及原有
@@ -332,7 +335,7 @@ CSS。超过 25% 的 part 使用 override 时，validator 会产生 `EXCESSIVE_O
 的祖先目录中不能通过审计，也禁止恢复目录级 ownership 规则。
 
 descriptor 只建立源码所有权还不够：所有需要独立定制的可见部件必须同时暴露稳定
-`data-openbitfun-component` / `data-openbitfun-scene` 与 `data-openbitfun-part` DOM 契约。审计同时验证 descriptor、
+`data-starmate-component` / `data-starmate-scene` 与 `data-starmate-part` DOM 契约。审计同时验证 descriptor、
 DOM 和 registry 三者闭合。
 
 审计逐个 JSX 节点验证 component/scene 与 part 必须在同一真实 DOM 节点成对出现，ID 必须是
@@ -341,7 +344,7 @@ DOM 和 registry 三者闭合。
 
 ## Scene 与 Portal
 
-Scene 使用与组件相同的规则，但稳定根属性是 `data-openbitfun-scene`。每个场景必须登记自己的
+Scene 使用与组件相同的规则，但稳定根属性是 `data-starmate-scene`。每个场景必须登记自己的
 canvas、navigation、toolbar、content、emptyState 等可见 part。
 
 Portal 必须挂载到统一 `AppearanceOverlayHost`，Portal 内组件仍使用普通 component/part
@@ -390,8 +393,8 @@ flowchart LR
 
 每次成功提交都会增加单调 revision，并原子更新：
 
-- `<style data-openbitfun-appearance-runtime="revision">`；
-- `data-openbitfun-appearance`、`data-openbitfun-appearance-mode`、`data-openbitfun-appearance-revision`；
+- `<style data-starmate-appearance-runtime="revision">`；
+- `data-starmate-appearance`、`data-starmate-appearance-mode`、`data-starmate-appearance-revision`（迁移期同时输出旧前缀副本）；
 - `ResolvedAppearance`；
 - renderer adapter 状态；
 - 当前包的 blob URL 生命周期。

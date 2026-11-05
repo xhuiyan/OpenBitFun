@@ -9,12 +9,12 @@ export const composerVoiceInputAppearanceDescriptor: AppearanceSurfaceDescriptor
     { id: 'action' },
   ],
   facets: [
-    { id: 'phase', attribute: 'data-openbitfun-phase', values: ['idle', 'setup', 'downloading', 'preparing', 'recording', 'transcribing'] },
-    { id: 'action', attribute: 'data-openbitfun-action', values: ['install', 'dismiss', 'cancel', 'transcribe', 'send'] },
+    { id: 'phase', attribute: 'data-starmate-phase', values: ['idle', 'setup', 'downloading', 'preparing', 'recording', 'transcribing'] },
+    { id: 'action', attribute: 'data-starmate-action', values: ['install', 'dismiss', 'cancel', 'transcribe', 'send'] },
   ],
   states: [
-    { id: 'active', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-openbitfun-state~="active"]' } },
-    { id: 'lowVolume', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-openbitfun-state~="low-volume"]' } },
-    { id: 'disabled', selector: { kind: 'self', suffix: '[data-openbitfun-state~="disabled"]' } },
+    { id: 'active', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-starmate-state~="active"]' } },
+    { id: 'lowVolume', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-starmate-state~="low-volume"]' } },
+    { id: 'disabled', selector: { kind: 'self', suffix: '[data-starmate-state~="disabled"]' } },
   ],
 };

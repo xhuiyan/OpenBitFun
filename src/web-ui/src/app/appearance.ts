@@ -24,7 +24,7 @@ export const workbenchAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   facets: [
     {
       id: 'sceneId',
-      attribute: 'data-openbitfun-scene-id',
+      attribute: 'data-starmate-scene-id',
       values: [
         'welcome',
         'session',
@@ -49,10 +49,10 @@ export const workbenchAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     },
   ],
   states: [
-    { id: 'fullscreen', selector: { kind: 'self', suffix: '[data-openbitfun-state~="fullscreen"]' } },
-    { id: 'toolbar', selector: { kind: 'self', suffix: '[data-openbitfun-state~="toolbar"]' } },
-    { id: 'collapsed', selector: { kind: 'self', suffix: '[data-openbitfun-state~="collapsed"]' } },
-    { id: 'active', selector: { kind: 'self', suffix: '[data-openbitfun-state~="active"]' } },
-    { id: 'empty', selector: { kind: 'self', suffix: '[data-openbitfun-state~="empty"]' } },
+    { id: 'fullscreen', selector: { kind: 'self', suffix: '[data-starmate-state~="fullscreen"]' } },
+    { id: 'toolbar', selector: { kind: 'self', suffix: '[data-starmate-state~="toolbar"]' } },
+    { id: 'collapsed', selector: { kind: 'self', suffix: '[data-starmate-state~="collapsed"]' } },
+    { id: 'active', selector: { kind: 'self', suffix: '[data-starmate-state~="active"]' } },
+    { id: 'empty', selector: { kind: 'self', suffix: '[data-starmate-state~="empty"]' } },
   ],
 };

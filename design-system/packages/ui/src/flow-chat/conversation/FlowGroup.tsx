@@ -71,6 +71,8 @@ export interface FlowGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ch
   /** A shared file identity with bound revision pages instead of a capsule. */
   fileRevision?: FlowGroupFileRevision;
   /** Stable anatomy identity for semantic presets and installed Appearance packages. */
+  'data-starmate-component'?: string;
+  /** @deprecated Legacy twin; honored only when the StarMate identity is absent. */
   'data-openbitfun-component'?: string;
   'data-testid'?: string;
   'data-group-kind'?: string;
@@ -81,7 +83,10 @@ export const FlowGroup = forwardRef<HTMLDivElement, FlowGroupProps>(function Flo
   children, expanded, onExpandedChange, leading, summary, summaryItems, summaryDescription,
   itemCount = 0, placement = 'standalone', streaming = false, bounded = false,
   receiveFeedback, contentRef, onContentScroll, contentProps, browser, fileRevision, externalContent = false, className = '',
-  'data-openbitfun-component': component = 'flow-group',
+  // The public identity is the StarMate twin; the legacy attribute still works
+  // so older callers keep resolving every forwarded part.
+  'data-openbitfun-component': legacyComponent,
+  'data-starmate-component': component = legacyComponent ?? 'flow-group',
   'data-testid': testId = 'chat-flow-group', 'data-group-kind': kind,
   ...props
 }, ref) {

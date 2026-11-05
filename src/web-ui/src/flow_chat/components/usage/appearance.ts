@@ -2,7 +2,7 @@ import type { AppearanceSurfaceDescriptor } from '@/infrastructure/appearance';
 
 export const contextUsagePopoverAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   id: 'context-usage-popover',
-  componentAttribute: 'data-openbitfun-product-component',
+  componentAttribute: 'data-starmate-product-component',
   parts: [
     { id: 'root' }, { id: 'header' }, { id: 'totals' }, { id: 'body', propertyProfile: 'layout' },
     { id: 'bar', propertyProfile: 'layout' },
@@ -12,7 +12,7 @@ export const contextUsagePopoverAppearanceDescriptor: AppearanceSurfaceDescripto
 
 export const toolDefinitionsPreviewAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   id: 'tool-definitions-preview',
-  componentAttribute: 'data-openbitfun-product-component',
+  componentAttribute: 'data-starmate-product-component',
   parts: [
     { id: 'root' },
     { id: 'viewport', propertyProfile: 'layout' },
@@ -29,7 +29,7 @@ export const toolDefinitionsPreviewAppearanceDescriptor: AppearanceSurfaceDescri
 
 export const sessionUsagePanelAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   id: 'session-usage-panel',
-  componentAttribute: 'data-openbitfun-product-component',
+  componentAttribute: 'data-starmate-product-component',
   parts: [
     { id: 'root' },
     { id: 'header' },
@@ -42,6 +42,6 @@ export const sessionUsagePanelAppearanceDescriptor: AppearanceSurfaceDescriptor 
     { id: 'legendShare', propertyProfile: 'layout' },
   ],
   states: [
-    { id: 'fallback', selector: { kind: 'self', suffix: '[data-openbitfun-state~="fallback"]' } },
+    { id: 'fallback', selector: { kind: 'self', suffix: '[data-starmate-state~="fallback"]' } },
   ],
 };

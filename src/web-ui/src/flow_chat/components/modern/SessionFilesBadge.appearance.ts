@@ -18,12 +18,12 @@ export const sessionFilesBadgeAppearanceDescriptor: AppearanceSurfaceDescriptor 
     { id: 'fileStats' },
   ],
   facets: [
-    { id: 'operation', attribute: 'data-openbitfun-operation', values: ['create', 'modify', 'delete'] },
+    { id: 'operation', attribute: 'data-starmate-operation', values: ['create', 'modify', 'delete'] },
   ],
   states: [
-    { id: 'expanded', selector: { kind: 'self', suffix: '[data-openbitfun-state~="expanded"]' } },
-    { id: 'open', selector: { kind: 'self', suffix: '[data-openbitfun-state~="open"]' } },
-    { id: 'selected', selector: { kind: 'self', suffix: '[data-openbitfun-state~="selected"]' } },
-    { id: 'error', selector: { kind: 'self', suffix: '[data-openbitfun-state~="error"]' } },
+    { id: 'expanded', selector: { kind: 'self', suffix: '[data-starmate-state~="expanded"]' } },
+    { id: 'open', selector: { kind: 'self', suffix: '[data-starmate-state~="open"]' } },
+    { id: 'selected', selector: { kind: 'self', suffix: '[data-starmate-state~="selected"]' } },
+    { id: 'error', selector: { kind: 'self', suffix: '[data-starmate-state~="error"]' } },
   ],
 };

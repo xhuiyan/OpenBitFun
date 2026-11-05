@@ -141,6 +141,7 @@ export const OpenBitFunControlToolCard: React.FC<ToolCardProps> = ({ toolItem, o
   );
   const common = {
     'data-openbitfun-tool-card': 'openbitfun-control',
+    'data-starmate-tool-card': 'openbitfun-control',
     status: model.status,
     isExpanded: isExpanded && hasDetails,
     expandedContent: hasDetails ? details : undefined,

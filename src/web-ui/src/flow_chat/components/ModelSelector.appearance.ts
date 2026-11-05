@@ -30,8 +30,8 @@ export const modelSelectorAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'optionMain' },
   ],
   states: [
-    { id: 'open', selector: { kind: 'self', suffix: '[data-openbitfun-state~="open"]' } },
-    { id: 'loading', selector: { kind: 'self', suffix: '[data-openbitfun-state~="loading"]' } },
-    { id: 'selected', selector: { kind: 'self', suffix: '[data-openbitfun-state~="selected"]' } },
+    { id: 'open', selector: { kind: 'self', suffix: '[data-starmate-state~="open"]' } },
+    { id: 'loading', selector: { kind: 'self', suffix: '[data-starmate-state~="loading"]' } },
+    { id: 'selected', selector: { kind: 'self', suffix: '[data-starmate-state~="selected"]' } },
   ],
 };

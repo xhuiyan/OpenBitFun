@@ -5,7 +5,7 @@ export const windowControlsAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   id: 'window-controls',
   parts: [{ id: 'root' }],
   states: [
-    { id: 'disabled', selector: { kind: 'self', suffix: '[data-openbitfun-state~="disabled"]' } },
-    { id: 'maximized', selector: { kind: 'self', suffix: '[data-openbitfun-state~="maximized"]' } },
+    { id: 'disabled', selector: { kind: 'self', suffix: '[data-starmate-state~="disabled"]' } },
+    { id: 'maximized', selector: { kind: 'self', suffix: '[data-starmate-state~="maximized"]' } },
   ],
 };

@@ -763,6 +763,9 @@ export const UserMessageItem = React.memo<UserMessageItemProps>(
                 'data-openbitfun-native-webview-occlusion': true,
                 'data-openbitfun-product-component': 'user-message-item',
                 'data-openbitfun-product-part': 'lightbox',
+                'data-starmate-native-webview-occlusion': true,
+                'data-starmate-product-component': 'user-message-item',
+                'data-starmate-product-part': 'lightbox',
               }}
               autoFocus={false}
               restoreFocus={false}

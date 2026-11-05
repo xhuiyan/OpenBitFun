@@ -22,8 +22,8 @@ export const skillsAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'groupEditor' }, { id: 'groupMembers' }, { id: 'groupMember' },
   ],
   facets: [
-    { id: 'tab', attribute: 'data-openbitfun-tab', values: ['installed', 'discover'] },
-    { id: 'category', attribute: 'data-openbitfun-category', values: ['all', 'builtin', 'user', 'project', 'groups'] },
+    { id: 'tab', attribute: 'data-starmate-tab', values: ['installed', 'discover'] },
+    { id: 'category', attribute: 'data-starmate-category', values: ['all', 'builtin', 'user', 'project', 'groups'] },
   ],
   states: [
     { id: 'hover', selector: { kind: 'self', suffix: ':hover' } },

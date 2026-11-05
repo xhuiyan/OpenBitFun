@@ -204,6 +204,8 @@ export const AsyncPrismSyntaxHighlighter: React.FC<AsyncPrismSyntaxHighlighterPr
           ...codeTagProps,
           'data-openbitfun-component': 'markdown',
           'data-openbitfun-part': 'codeContent',
+          'data-starmate-component': 'markdown',
+          'data-starmate-part': 'codeContent',
         }}
         lineNumberStyle={lineNumberStyle}
       >

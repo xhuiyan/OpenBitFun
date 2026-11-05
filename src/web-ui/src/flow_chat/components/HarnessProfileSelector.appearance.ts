@@ -12,21 +12,21 @@ export const harnessProfileSelectorAppearanceDescriptor: AppearanceSurfaceDescri
   facets: [
     {
       id: 'presentation',
-      attribute: 'data-openbitfun-presentation',
+      attribute: 'data-starmate-presentation',
       values: ['standalone', 'menu-item'],
     },
     {
       id: 'profile',
-      attribute: 'data-openbitfun-profile',
+      attribute: 'data-starmate-profile',
       values: ['Minimal', 'Standard', 'Ultimate', 'Creative', 'other'],
     },
   ],
   states: [
-    { id: 'open', selector: { kind: 'self', suffix: '[data-openbitfun-state~="open"]' } },
-    { id: 'fixed', selector: { kind: 'self', suffix: '[data-openbitfun-state~="fixed"]' } },
-    { id: 'current', selector: { kind: 'self', suffix: '[data-openbitfun-state~="current"]' } },
-    { id: 'available', selector: { kind: 'self', suffix: '[data-openbitfun-state~="available"]' } },
-    { id: 'unavailable', selector: { kind: 'self', suffix: '[data-openbitfun-state~="unavailable"]' } },
-    { id: 'comingSoon', selector: { kind: 'self', suffix: '[data-openbitfun-state~="coming-soon"]' } },
+    { id: 'open', selector: { kind: 'self', suffix: '[data-starmate-state~="open"]' } },
+    { id: 'fixed', selector: { kind: 'self', suffix: '[data-starmate-state~="fixed"]' } },
+    { id: 'current', selector: { kind: 'self', suffix: '[data-starmate-state~="current"]' } },
+    { id: 'available', selector: { kind: 'self', suffix: '[data-starmate-state~="available"]' } },
+    { id: 'unavailable', selector: { kind: 'self', suffix: '[data-starmate-state~="unavailable"]' } },
+    { id: 'comingSoon', selector: { kind: 'self', suffix: '[data-starmate-state~="coming-soon"]' } },
   ],
 };

@@ -52,6 +52,6 @@ export const canvasToolAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'sourceDialog' },
   ],
   states: [
-    { id: 'empty', selector: { kind: 'self', suffix: '[data-openbitfun-state~="empty"]' } },
+    { id: 'empty', selector: { kind: 'self', suffix: '[data-starmate-state~="empty"]' } },
   ],
 };

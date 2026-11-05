@@ -19,5 +19,5 @@ export const miniAppAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'preview' },
     { id: 'notice' },
   ],
-  states: [{ id: 'customizing', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-openbitfun-state~="customizing"]' } }],
+  states: [{ id: 'customizing', selector: { kind: 'ancestorPart', part: 'root', suffix: '[data-starmate-state~="customizing"]' } }],
 };

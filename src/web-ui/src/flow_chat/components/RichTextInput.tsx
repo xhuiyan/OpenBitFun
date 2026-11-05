@@ -356,6 +356,7 @@ export const RichTextInput = React.forwardRef<HTMLDivElement, RichTextInputProps
     tag.dataset.openbitfunComponent = 'rich-text-input';
     tag.dataset.openbitfunPart = 'contextTag';
     tag.dataset.openbitfunContextType = context.type;
+    tag.dataset.starmateContextType = context.type;
     tag.contentEditable = 'false';
     tag.dataset.contextId = context.id;
     tag.dataset.contextType = context.type;
@@ -527,6 +528,7 @@ export const RichTextInput = React.forwardRef<HTMLDivElement, RichTextInputProps
     tag.dataset.openbitfunComponent = 'rich-text-input';
     tag.dataset.openbitfunPart = 'contextTag';
     tag.dataset.openbitfunContextType = options.contextType;
+    tag.dataset.starmateContextType = options.contextType;
     tag.contentEditable = 'false';
     tag.setAttribute('contenteditable', 'false');
     tag.dataset.tagFormat = options.token;

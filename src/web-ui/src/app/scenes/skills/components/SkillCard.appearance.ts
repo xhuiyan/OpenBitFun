@@ -8,14 +8,14 @@ export const skillCardAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'description' }, { id: 'actions' }, { id: 'action' },
   ],
   facets: [
-    { id: 'variant', attribute: 'data-openbitfun-variant', values: ['skill', 'market'] },
-    { id: 'level', attribute: 'data-openbitfun-level', values: ['user', 'project'] },
+    { id: 'variant', attribute: 'data-starmate-variant', values: ['skill', 'market'] },
+    { id: 'level', attribute: 'data-starmate-level', values: ['user', 'project'] },
   ],
   states: [
     { id: 'hover', selector: { kind: 'self', suffix: ':hover' } },
     { id: 'focusVisible', selector: { kind: 'self', suffix: ':focus-visible' } },
     { id: 'disabled', selector: { kind: 'self', suffix: ':disabled' } },
-    { id: 'shadowed', selector: { kind: 'self', suffix: '[data-openbitfun-state~="shadowed"]' } },
-    { id: 'builtin', selector: { kind: 'self', suffix: '[data-openbitfun-state~="builtin"]' } },
+    { id: 'shadowed', selector: { kind: 'self', suffix: '[data-starmate-state~="shadowed"]' } },
+    { id: 'builtin', selector: { kind: 'self', suffix: '[data-starmate-state~="builtin"]' } },
   ],
 };

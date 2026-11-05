@@ -13,7 +13,7 @@ export const confirmDialogAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   ],
   facets: [{
     id: 'status',
-    attribute: 'data-openbitfun-status',
+    attribute: 'data-starmate-status',
     values: ['info', 'warning', 'danger', 'success'],
   }],
 };

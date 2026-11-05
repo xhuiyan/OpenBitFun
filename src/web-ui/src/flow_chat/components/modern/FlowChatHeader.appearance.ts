@@ -32,18 +32,18 @@ export const flowChatHeaderAppearanceDescriptor: AppearanceSurfaceDescriptor = {
   facets: [
     {
       id: 'status',
-      attribute: 'data-openbitfun-status',
+      attribute: 'data-starmate-status',
       values: ['running', 'finishing', 'waiting', 'completed', 'cancelled', 'error', 'idle'],
     },
   ],
   states: [
-    { id: 'open', selector: { kind: 'self', suffix: '[data-openbitfun-state~="open"]' } },
-    { id: 'collapsed', selector: { kind: 'self', suffix: '[data-openbitfun-state~="collapsed"]' } },
-    { id: 'active', selector: { kind: 'self', suffix: '[data-openbitfun-state~="active"]' } },
-    { id: 'cancelling', selector: { kind: 'self', suffix: '[data-openbitfun-state~="cancelling"]' } },
-    { id: 'loading', selector: { kind: 'self', suffix: '[data-openbitfun-state~="loading"]' } },
-    { id: 'empty', selector: { kind: 'self', suffix: '[data-openbitfun-state~="empty"]' } },
-    { id: 'unavailable', selector: { kind: 'self', suffix: '[data-openbitfun-state~="unavailable"]' } },
-    { id: 'error', selector: { kind: 'self', suffix: '[data-openbitfun-state~="error"]' } },
+    { id: 'open', selector: { kind: 'self', suffix: '[data-starmate-state~="open"]' } },
+    { id: 'collapsed', selector: { kind: 'self', suffix: '[data-starmate-state~="collapsed"]' } },
+    { id: 'active', selector: { kind: 'self', suffix: '[data-starmate-state~="active"]' } },
+    { id: 'cancelling', selector: { kind: 'self', suffix: '[data-starmate-state~="cancelling"]' } },
+    { id: 'loading', selector: { kind: 'self', suffix: '[data-starmate-state~="loading"]' } },
+    { id: 'empty', selector: { kind: 'self', suffix: '[data-starmate-state~="empty"]' } },
+    { id: 'unavailable', selector: { kind: 'self', suffix: '[data-starmate-state~="unavailable"]' } },
+    { id: 'error', selector: { kind: 'self', suffix: '[data-starmate-state~="error"]' } },
   ],
 };

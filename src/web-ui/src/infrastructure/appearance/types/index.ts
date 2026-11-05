@@ -577,7 +577,7 @@ export interface AppearancePartDescriptor {
 
 export interface AppearanceFacetDescriptor {
   id: string;
-  attribute: `data-openbitfun-${string}`;
+  attribute: `data-starmate-${string}`;
   values: readonly string[];
 }
 
@@ -592,7 +592,7 @@ export interface AppearanceSurfaceDescriptor {
   id: string;
   /** Current DOM surface id used when this descriptor reads a legacy persisted id. */
   hostSelectorId?: string;
-  componentAttribute?: 'data-openbitfun-component' | 'data-openbitfun-product-component';
+  componentAttribute?: 'data-starmate-component' | 'data-starmate-product-component';
   parts: readonly AppearancePartDescriptor[];
   facets?: readonly AppearanceFacetDescriptor[];
   states?: readonly AppearanceStateDescriptor[];
