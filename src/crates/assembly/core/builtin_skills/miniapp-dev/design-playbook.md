@@ -41,13 +41,13 @@
 /* === Design System ===
  * Theme: <一句话描述视觉调性，比如 "克制的工具感，深色优先">
  * Palette:
- *   - dominant: var(--openbitfun-bg) / var(--openbitfun-text)
- *   - supporting: var(--openbitfun-bg-secondary), var(--openbitfun-border)
- *   - accent: var(--openbitfun-accent)  // 仅用于关键 CTA / 选中态
+ *   - dominant: var(--starmate-bg) / var(--starmate-text)
+ *   - supporting: var(--starmate-bg-secondary), var(--starmate-border)
+ *   - accent: var(--starmate-accent)  // 仅用于关键 CTA / 选中态
  * Typography:
  *   - heading: 600, 18-22px
  *   - body:    400, 13-14px
- *   - caption: 400, 11-12px, --openbitfun-text-muted
+ *   - caption: 400, 11-12px, --starmate-text-muted
  * Radius: 8px (cards) / 4px (inputs)
  * Motif: <一种重复的视觉元素，例：图标统一放在 24×24 圆角容器里 / 标题左侧 3px 实心色块>
  * ===================== */
@@ -84,12 +84,12 @@
 
 | 反模式 | 替代方案 |
 |---|---|
-| 默认蓝紫渐变 / Aurora 风背景 | 用 `var(--openbitfun-bg)` 或单色 + 一处微妙强调 |
+| 默认蓝紫渐变 / Aurora 风背景 | 用 `var(--starmate-bg)` 或单色 + 一处微妙强调 |
 | Emoji 当主图标 | inline SVG 占位（描边图标），或 1-2 字母圆形容器 |
 | 左侧色条 + 圆角卡片组合 | 整张卡片同色边框 + 顶部细条；或仅靠留白与字重区分 |
 | 标题下面加 1px / 2px accent 横线 | 用字重 + 字号 + 留白做层级；横线只在 section 分隔时使用且要全局一致 |
 | 硬画复杂插画 SVG | 占位框 + 显式标注 "Image: 256×160, 待用户提供素材" |
-| Inter / Roboto / Arial 兜底就完事 | `var(--openbitfun-font-sans)` 优先，fallback 写完整：`-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif` |
+| Inter / Roboto / Arial 兜底就完事 | `var(--starmate-font-sans)` 优先，fallback 写完整：`-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif` |
 | 全部色块/字号给同等视觉权重 | dominance：一个颜色占 60-70%，1-2 个 supporting，1 个 accent |
 | 文字 < 12px / hit target < 32px | 任何可点击元素 ≥ 32px；正文 ≥ 13px；caption ≥ 11px |
 | 每个 section 都用一种新的卡片样式 | 一个 motif 贯穿；不同区块用相同卡片，靠内容区分 |
@@ -125,9 +125,9 @@
 
 ```css
 :root {
-  --font-heading: var(--openbitfun-font-sans, -apple-system, 'Segoe UI', sans-serif);
-  --font-body:    var(--openbitfun-font-sans, -apple-system, 'Segoe UI', sans-serif);
-  --font-mono:    var(--openbitfun-font-mono, ui-monospace, SFMono-Regular, monospace);
+  --font-heading: var(--starmate-font-sans, -apple-system, 'Segoe UI', sans-serif);
+  --font-body:    var(--starmate-font-sans, -apple-system, 'Segoe UI', sans-serif);
+  --font-mono:    var(--starmate-font-mono, ui-monospace, SFMono-Regular, monospace);
 }
 ```
 
@@ -142,7 +142,7 @@
 ### 间距与圆角
 
 - 间距档位：`4 / 8 / 12 / 16 / 24 / 32`，挑 4 个用，不要全用。
-- 圆角档位：`var(--openbitfun-radius)`（卡片）+ `var(--openbitfun-radius-lg)`（浮层）；输入框可固定 4-6px。
+- 圆角档位：`var(--starmate-radius)`（卡片）+ `var(--starmate-radius-lg)`（浮层）；输入框可固定 4-6px。
 - 卡片内边距：紧凑 12px / 标准 16px / 宽松 20px——**全应用统一**。
 
 ---

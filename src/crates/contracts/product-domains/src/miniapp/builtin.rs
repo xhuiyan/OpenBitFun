@@ -631,6 +631,6 @@ mod tests {
         assert!(app.html.contains("exportPptx"));
         assert!(!app.html.contains("src=\"./ui.js\""));
         assert!(!app.html.contains("href=\"./style.css\""));
-        assert!(app.css.contains("--openbitfun-bg"));
+        assert!(app.css.contains("--starmate-bg"));
     }
 }

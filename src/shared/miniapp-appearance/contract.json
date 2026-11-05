@@ -2,42 +2,190 @@
   "version": 1,
   "description": "Public MiniApp appearance variables projected from canonical StarMate design-system tokens.",
   "variables": [
-    { "name": "--openbitfun-bg", "kind": "theme", "source": "--openbitfun-color-surface-canvas" },
-    { "name": "--openbitfun-bg-secondary", "kind": "theme", "source": "--openbitfun-color-surface-panel" },
-    { "name": "--openbitfun-bg-tertiary", "kind": "theme", "source": "--openbitfun-color-surface-tertiary" },
-    { "name": "--openbitfun-bg-elevated", "kind": "theme", "source": "--openbitfun-color-surface-raised" },
-    { "name": "--openbitfun-text", "kind": "theme", "source": "--openbitfun-color-content-primary" },
-    { "name": "--openbitfun-text-secondary", "kind": "theme", "source": "--openbitfun-color-content-secondary" },
-    { "name": "--openbitfun-text-muted", "kind": "theme", "source": "--openbitfun-color-content-muted" },
-    { "name": "--openbitfun-text-on-accent", "kind": "theme", "source": "--openbitfun-color-action-primary-content" },
-    { "name": "--openbitfun-accent", "kind": "theme", "source": "--openbitfun-color-accent-default" },
-    { "name": "--openbitfun-accent-hover", "kind": "theme", "source": "--openbitfun-color-accent-hover" },
-    { "name": "--openbitfun-accent-secondary", "kind": "theme", "source": "--openbitfun-color-accent-secondary" },
-    { "name": "--openbitfun-success", "kind": "theme", "source": "--openbitfun-color-status-success-content" },
-    { "name": "--openbitfun-warning", "kind": "theme", "source": "--openbitfun-color-status-warning-content" },
-    { "name": "--openbitfun-error", "kind": "theme", "source": "--openbitfun-color-status-danger-content" },
-    { "name": "--openbitfun-info", "kind": "theme", "source": "--openbitfun-color-status-info-content" },
-    { "name": "--openbitfun-border", "kind": "theme", "source": "--openbitfun-color-border-default" },
-    { "name": "--openbitfun-border-subtle", "kind": "theme", "source": "--openbitfun-color-border-subtle" },
-    { "name": "--openbitfun-element-bg", "kind": "theme", "source": "--openbitfun-color-action-neutral-surface" },
-    { "name": "--openbitfun-element-hover", "kind": "theme", "source": "--openbitfun-color-action-neutral-surface-hover" },
-    { "name": "--openbitfun-focus-ring", "kind": "theme", "source": "--openbitfun-color-focus-ring" },
-    { "name": "--openbitfun-link", "kind": "theme", "source": "--openbitfun-color-link-default" },
-    { "name": "--openbitfun-field-bg", "kind": "theme", "source": "--openbitfun-color-field-background" },
-    { "name": "--openbitfun-field-border", "kind": "theme", "source": "--openbitfun-color-field-border" },
-    { "name": "--openbitfun-field-border-focus", "kind": "theme", "source": "--openbitfun-color-field-border-focus" },
-    { "name": "--openbitfun-scrollbar-thumb", "kind": "theme", "source": "--openbitfun-color-scrollbar-thumb" },
-    { "name": "--openbitfun-scrollbar-thumb-hover", "kind": "theme", "source": "--openbitfun-color-scrollbar-thumb-hover" },
-    { "name": "--openbitfun-overlay-scrim", "kind": "theme", "source": "--openbitfun-color-overlay-scrim" },
-    { "name": "--openbitfun-shadow-xs", "kind": "theme", "source": "--openbitfun-shadow-xs" },
-    { "name": "--openbitfun-shadow-sm", "kind": "theme", "source": "--openbitfun-shadow-sm" },
-    { "name": "--openbitfun-shadow-card", "kind": "theme", "source": "--openbitfun-shadow-raised" },
-    { "name": "--openbitfun-shadow-lg", "kind": "theme", "source": "--openbitfun-shadow-lg" },
-    { "name": "--openbitfun-shadow-xl", "kind": "theme", "source": "--openbitfun-shadow-xl" },
-    { "name": "--openbitfun-shadow-overlay", "kind": "theme", "source": "--openbitfun-shadow-overlay" },
-    { "name": "--openbitfun-radius", "kind": "system", "source": "--openbitfun-radius-base" },
-    { "name": "--openbitfun-radius-lg", "kind": "system", "source": "--openbitfun-radius-lg" },
-    { "name": "--openbitfun-font-sans", "kind": "system", "source": "--openbitfun-font-family-sans" },
-    { "name": "--openbitfun-font-mono", "kind": "system", "source": "--openbitfun-font-family-mono" }
+    {
+      "name": "--starmate-bg",
+      "kind": "theme",
+      "source": "--openbitfun-color-surface-canvas"
+    },
+    {
+      "name": "--starmate-bg-secondary",
+      "kind": "theme",
+      "source": "--openbitfun-color-surface-panel"
+    },
+    {
+      "name": "--starmate-bg-tertiary",
+      "kind": "theme",
+      "source": "--openbitfun-color-surface-tertiary"
+    },
+    {
+      "name": "--starmate-bg-elevated",
+      "kind": "theme",
+      "source": "--openbitfun-color-surface-raised"
+    },
+    {
+      "name": "--starmate-text",
+      "kind": "theme",
+      "source": "--openbitfun-color-content-primary"
+    },
+    {
+      "name": "--starmate-text-secondary",
+      "kind": "theme",
+      "source": "--openbitfun-color-content-secondary"
+    },
+    {
+      "name": "--starmate-text-muted",
+      "kind": "theme",
+      "source": "--openbitfun-color-content-muted"
+    },
+    {
+      "name": "--starmate-text-on-accent",
+      "kind": "theme",
+      "source": "--openbitfun-color-action-primary-content"
+    },
+    {
+      "name": "--starmate-accent",
+      "kind": "theme",
+      "source": "--openbitfun-color-accent-default"
+    },
+    {
+      "name": "--starmate-accent-hover",
+      "kind": "theme",
+      "source": "--openbitfun-color-accent-hover"
+    },
+    {
+      "name": "--starmate-accent-secondary",
+      "kind": "theme",
+      "source": "--openbitfun-color-accent-secondary"
+    },
+    {
+      "name": "--starmate-success",
+      "kind": "theme",
+      "source": "--openbitfun-color-status-success-content"
+    },
+    {
+      "name": "--starmate-warning",
+      "kind": "theme",
+      "source": "--openbitfun-color-status-warning-content"
+    },
+    {
+      "name": "--starmate-error",
+      "kind": "theme",
+      "source": "--openbitfun-color-status-danger-content"
+    },
+    {
+      "name": "--starmate-info",
+      "kind": "theme",
+      "source": "--openbitfun-color-status-info-content"
+    },
+    {
+      "name": "--starmate-border",
+      "kind": "theme",
+      "source": "--openbitfun-color-border-default"
+    },
+    {
+      "name": "--starmate-border-subtle",
+      "kind": "theme",
+      "source": "--openbitfun-color-border-subtle"
+    },
+    {
+      "name": "--starmate-element-bg",
+      "kind": "theme",
+      "source": "--openbitfun-color-action-neutral-surface"
+    },
+    {
+      "name": "--starmate-element-hover",
+      "kind": "theme",
+      "source": "--openbitfun-color-action-neutral-surface-hover"
+    },
+    {
+      "name": "--starmate-focus-ring",
+      "kind": "theme",
+      "source": "--openbitfun-color-focus-ring"
+    },
+    {
+      "name": "--starmate-link",
+      "kind": "theme",
+      "source": "--openbitfun-color-link-default"
+    },
+    {
+      "name": "--starmate-field-bg",
+      "kind": "theme",
+      "source": "--openbitfun-color-field-background"
+    },
+    {
+      "name": "--starmate-field-border",
+      "kind": "theme",
+      "source": "--openbitfun-color-field-border"
+    },
+    {
+      "name": "--starmate-field-border-focus",
+      "kind": "theme",
+      "source": "--openbitfun-color-field-border-focus"
+    },
+    {
+      "name": "--starmate-scrollbar-thumb",
+      "kind": "theme",
+      "source": "--openbitfun-color-scrollbar-thumb"
+    },
+    {
+      "name": "--starmate-scrollbar-thumb-hover",
+      "kind": "theme",
+      "source": "--openbitfun-color-scrollbar-thumb-hover"
+    },
+    {
+      "name": "--starmate-overlay-scrim",
+      "kind": "theme",
+      "source": "--openbitfun-color-overlay-scrim"
+    },
+    {
+      "name": "--starmate-shadow-xs",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-xs"
+    },
+    {
+      "name": "--starmate-shadow-sm",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-sm"
+    },
+    {
+      "name": "--starmate-shadow-card",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-raised"
+    },
+    {
+      "name": "--starmate-shadow-lg",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-lg"
+    },
+    {
+      "name": "--starmate-shadow-xl",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-xl"
+    },
+    {
+      "name": "--starmate-shadow-overlay",
+      "kind": "theme",
+      "source": "--openbitfun-shadow-overlay"
+    },
+    {
+      "name": "--starmate-radius",
+      "kind": "system",
+      "source": "--openbitfun-radius-base"
+    },
+    {
+      "name": "--starmate-radius-lg",
+      "kind": "system",
+      "source": "--openbitfun-radius-lg"
+    },
+    {
+      "name": "--starmate-font-sans",
+      "kind": "system",
+      "source": "--openbitfun-font-family-sans"
+    },
+    {
+      "name": "--starmate-font-mono",
+      "kind": "system",
+      "source": "--openbitfun-font-family-mono"
+    }
   ]
 }

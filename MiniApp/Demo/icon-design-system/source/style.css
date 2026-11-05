@@ -1,35 +1,35 @@
 /* ── Theme token aliases ────────────────────────────────────────────────────── */
 /* Map --openbitfun-* host variables to local names so every rule auto-adapts.    */
 :root {
-  --bg:           var(--openbitfun-bg);
-  --bg2:          var(--openbitfun-bg-secondary);
-  --bg3:          var(--openbitfun-bg-tertiary);
-  --bg-el:        var(--openbitfun-element-bg);
-  --bg-hover:     var(--openbitfun-element-hover);
-  --text:         var(--openbitfun-text);
-  --text2:        var(--openbitfun-text-secondary);
-  --text3:        var(--openbitfun-text-muted);
-  --accent:       var(--openbitfun-accent);
-  --accent2:      var(--openbitfun-accent-hover);
-  --success:      var(--openbitfun-success);
-  --warning:      var(--openbitfun-warning);
-  --danger:       var(--openbitfun-error);
-  --info:         var(--openbitfun-info);
-  --border:       var(--openbitfun-border);
-  --border2:      var(--openbitfun-border-subtle);
-  --radius:       var(--openbitfun-radius);
-  --radius-lg:    var(--openbitfun-radius-lg);
-  --font:         var(--openbitfun-font-sans);
-  --font-mono:    var(--openbitfun-font-mono);
-  --scrollbar:    var(--openbitfun-scrollbar-thumb);
+  --bg:           var(--starmate-bg);
+  --bg2:          var(--starmate-bg-secondary);
+  --bg3:          var(--starmate-bg-tertiary);
+  --bg-el:        var(--starmate-element-bg);
+  --bg-hover:     var(--starmate-element-hover);
+  --text:         var(--starmate-text);
+  --text2:        var(--starmate-text-secondary);
+  --text3:        var(--starmate-text-muted);
+  --accent:       var(--starmate-accent);
+  --accent2:      var(--starmate-accent-hover);
+  --success:      var(--starmate-success);
+  --warning:      var(--starmate-warning);
+  --danger:       var(--starmate-error);
+  --info:         var(--starmate-info);
+  --border:       var(--starmate-border);
+  --border2:      var(--starmate-border-subtle);
+  --radius:       var(--starmate-radius);
+  --radius-lg:    var(--starmate-radius-lg);
+  --font:         var(--starmate-font-sans);
+  --font-mono:    var(--starmate-font-mono);
+  --scrollbar:    var(--starmate-scrollbar-thumb);
 
   /* Derived semantic tokens */
-  --on-accent:    var(--openbitfun-text-on-accent);
-  --on-danger:    var(--openbitfun-text-on-accent);
-  --on-success:   var(--openbitfun-text-on-accent);
+  --on-accent:    var(--starmate-text-on-accent);
+  --on-danger:    var(--starmate-text-on-accent);
+  --on-success:   var(--starmate-text-on-accent);
 }
 
-/* On-accent and danger text use the registered --openbitfun-text-on-accent projection. */
+/* On-accent and danger text use the registered --starmate-text-on-accent projection. */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

@@ -23,42 +23,42 @@ body, html { margin: 0; padding: 0; height: 100%; }
   color-scheme: dark;
   /* Surfaces — drive everything off host bg tokens so the playground tracks
    * StarMate light/dark automatically. Fallbacks mirror the default dark theme. */
-  --rx-bg:        var(--openbitfun-bg);
-  --rx-bg-2:      var(--openbitfun-bg-tertiary);
-  --rx-surface:   var(--openbitfun-bg-secondary);
-  --rx-surface-2: var(--openbitfun-element-bg);
-  --rx-surface-3: var(--openbitfun-element-hover);
+  --rx-bg:        var(--starmate-bg);
+  --rx-bg-2:      var(--starmate-bg-tertiary);
+  --rx-surface:   var(--starmate-bg-secondary);
+  --rx-surface-2: var(--starmate-element-bg);
+  --rx-surface-3: var(--starmate-element-hover);
 
-  --rx-border:        var(--openbitfun-border-subtle);
-  --rx-border-strong: var(--openbitfun-border);
-  --rx-border-bright: var(--openbitfun-border);
+  --rx-border:        var(--starmate-border-subtle);
+  --rx-border-strong: var(--starmate-border);
+  --rx-border-bright: var(--starmate-border);
 
-  --rx-text:      var(--openbitfun-text);
-  --rx-text-soft: var(--openbitfun-text-secondary);
-  --rx-text-mute: var(--openbitfun-text-muted);
-  --rx-text-dim:  var(--openbitfun-text-muted);
+  --rx-text:      var(--starmate-text);
+  --rx-text-soft: var(--starmate-text-secondary);
+  --rx-text-mute: var(--starmate-text-muted);
+  --rx-text-dim:  var(--starmate-text-muted);
 
   /* Accent — follows host primary (blue in dark, slate in light) instead of
    * the previous saturated "run green" which clashed with StarMate's neutral palette. */
-  --rx-accent:        var(--openbitfun-accent);
-  --rx-accent-strong: var(--openbitfun-accent-hover);
+  --rx-accent:        var(--starmate-accent);
+  --rx-accent-strong: var(--starmate-accent-hover);
   --rx-accent-soft:   color-mix(in srgb, var(--rx-accent) 14%, transparent);
 
   /* Semantic colors — pulled from host so they harmonize with the rest of StarMate. */
-  --rx-match:      var(--openbitfun-warning);            /* warm match highlight */
+  --rx-match:      var(--starmate-warning);            /* warm match highlight */
   --rx-match-soft: color-mix(in srgb, var(--rx-match) 18%, transparent);
-  --rx-error:      var(--openbitfun-error);
-  --rx-info:       var(--openbitfun-info);
-  --rx-group:      var(--openbitfun-accent-secondary);              /* capture-group accent */
-  --rx-string:     var(--openbitfun-success);
+  --rx-error:      var(--starmate-error);
+  --rx-info:       var(--starmate-info);
+  --rx-group:      var(--starmate-accent-secondary);              /* capture-group accent */
+  --rx-string:     var(--starmate-success);
 
-  --rx-radius:    var(--openbitfun-radius);
+  --rx-radius:    var(--starmate-radius);
   --rx-radius-sm: 6px;
-  --rx-shadow-card: var(--openbitfun-shadow-card);
-  --rx-shadow-elevated: var(--openbitfun-shadow-overlay);
+  --rx-shadow-card: var(--starmate-shadow-card);
+  --rx-shadow-elevated: var(--starmate-shadow-overlay);
 
-  --rx-mono: var(--openbitfun-font-mono);
-  --rx-sans: var(--openbitfun-font-sans);
+  --rx-mono: var(--starmate-font-mono);
+  --rx-sans: var(--starmate-font-sans);
 
   --rx-dur: 200ms;
   --rx-ease: cubic-bezier(.2,.8,.2,1);
@@ -651,11 +651,11 @@ button, input, textarea, select { font-family: inherit; color: inherit; }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--openbitfun-scrollbar-thumb);
+  background: var(--starmate-scrollbar-thumb);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--openbitfun-scrollbar-thumb-hover);
+  background: var(--starmate-scrollbar-thumb-hover);
 }
 
 /* ── Reduced motion ─────────────────────────────────── */
