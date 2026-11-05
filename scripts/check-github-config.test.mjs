@@ -1908,6 +1908,49 @@ test('Relay image rebuild resolves the release tag instead of the newer workflow
   }
 });
 
+test('artifact-only Desktop builds do not require an existing version tag at HEAD', (t) => {
+  const { jobs } = yaml.parse(readFileSync(
+    path.join(repoRoot, '.github/workflows/desktop-package.yml'), 'utf8',
+  ));
+  const step = jobs.prepare.steps.find((entry) => entry.name === 'Resolve version metadata');
+  const root = mkdtempSync(path.join(tmpdir(), 'starmate-head-build-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const version = JSON.parse(readFileSync(path.join(repoRoot, 'package.json'), 'utf8')).version;
+  const headSha = 'b'.repeat(40);
+  const tagSha = 'a'.repeat(40);
+  const output = path.join(root, 'output');
+  const result = spawnSync('bash', ['-c', `
+    git() {
+      case "$1" in
+        fetch|merge-base) return 0 ;;
+        rev-parse)
+          case "\${!#}" in
+            'v${version}^{commit}') echo "$TAG_SHA" ;;
+            *) echo "$GITHUB_SHA" ;;
+          esac ;;
+      esac
+    }
+    ${step.run.replaceAll('${{ github.event.release.prerelease }}', 'false')}
+  `], {
+    cwd: repoRoot, encoding: 'utf8', windowsHide: true,
+    env: {
+      ...process.env,
+      GITHUB_EVENT_NAME: 'workflow_dispatch', GITHUB_SHA: headSha,
+      GITHUB_REPOSITORY: 'xhuiyan/OpenBitFun', GITHUB_OUTPUT: output,
+      INPUT_TAG_NAME: '', INPUT_CHECKOUT_REF: '', INPUT_RELEASE_CHANNEL: 'stable',
+      // Even an explicit upload request cannot publish without a requested tag.
+      INPUT_UPLOAD_TO_RELEASE: 'true', INPUT_RELAY_IMAGE_ONLY: 'false', TAG_SHA: tagSha,
+    },
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const text = readFileSync(output, 'utf8');
+  const escaped = version.replaceAll('.', '\\.');
+  assert.match(text, new RegExp(`^version=${escaped}$`, 'm'));
+  assert.match(text, new RegExp(`^release_tag=v${escaped}$`, 'm'));
+  assert.match(text, new RegExp(`^checkout_ref=${headSha}$`, 'm'));
+  assert.match(text, /^upload_to_release=false$/m);
+});
+
 test('Relay image tag selection keeps Beta and old stable backfills away from latest', {
   skip: process.platform === 'win32',
 }, (t) => {

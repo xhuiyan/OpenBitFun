@@ -16,7 +16,11 @@ GitHub release status are separate contracts. Merging this version bump to
 `main` triggers packaging and publication; preparing it locally does not.
 
 Before a manual publishing run, push the immutable version tag to the repository
-being built. Artifact-only builds may omit it. The workflow rejects missing or
+being built. Artifact-only builds may omit it: a run without `tag_name` builds
+the dispatched ref's HEAD and labels its artifacts with the `package.json`
+version, even when that version's tag already points at an older commit, and it
+never publishes. An explicitly requested `tag_name` is a source contract and
+must point at the built commit. The workflow rejects missing or
 mismatched publishing tags before compiling. The version-bump workflow creates
 its tag automatically. Release creation and editing use GitHub CLI without
 `--target`: sending `target_commitish` for workflow-changing commits can require
@@ -42,6 +46,11 @@ gh workflow run desktop-package.yml --ref main \
   -f target_platform=macos-arm64-windows-x64
 ```
 
+Leave `tag_name` empty to build the dispatched ref's HEAD; pass
+`-f tag_name=v<version>` only to rebuild the exact commit of an existing tag.
+Artifacts are labeled with the `package.json` version, so a HEAD run that is
+ahead of that version's tag still carries the older version in its file names.
+
 Every preset other than `all` is artifacts-only. The `linux-binaries`,
 `publish-relay-image`, and `upload-release-assets` jobs are skipped, so a partial
 run never creates Release assets, pushes a Relay image tag, or moves an update
@@ -49,11 +58,11 @@ feed. Download the per-platform `starmate-<tag>-<platform>-bundle` artifacts fro
 the run page; that bundle holds the DMG, the NSIS installer, and the custom
 Desktop installer for the selected platforms.
 
-`upload_to_release` still controls signing strictness and updater artifacts, so
-leave it `false` for a quick unsigned check and set it to `true` only when the
-build must be signed and produce updater signatures. A partial run with
-`upload_to_release=true` still requires an existing tag and still never
-publishes. `artifact_run_ids` finalization and the Relay image backfill remain
+`upload_to_release` only has an effect together with a requested `tag_name`: it
+turns the tag into a signing requirement and enables updater signatures, and a
+partial run still never publishes. Without `tag_name` the run always builds the
+dispatched ref's HEAD as artifacts and ignores this input.
+`artifact_run_ids` finalization and the Relay image backfill remain
 `all`-only, and `verification_recovery_run_id` keeps accepting exactly one macOS
 target. Publishing a real release still needs every platform plus the Relay image
 descriptor.

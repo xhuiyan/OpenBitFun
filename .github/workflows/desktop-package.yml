@@ -96,10 +96,17 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Only a requested tag is a source contract: the tag must point at the
+          # commit being built. Artifact-only builds without `tag_name` take
+          # their release label from package.json instead and may legitimately
+          # sit ahead of that version's tag, so they are not compared to it.
+          TAG_IS_SOURCE="false"
+
           if [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
             TAG="${RELEASE_TAG_NAME}"
             VERSION="${TAG#v}"
             UPLOAD="true"
+            TAG_IS_SOURCE="true"
             CHECKOUT_REF="${TAG}"
             if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
               CHANNEL="beta"
@@ -109,6 +116,7 @@ jobs:
           elif [[ -n "${INPUT_TAG_NAME}" ]]; then
             TAG="${INPUT_TAG_NAME}"
             VERSION="${TAG#v}"
+            TAG_IS_SOURCE="true"
             CHANNEL="${INPUT_RELEASE_CHANNEL:-stable}"
             # Image-only rebuilds use the same immutable source tag as their
             # archives. Using the workflow branch breaks the tag/SHA guard and
@@ -143,7 +151,7 @@ jobs:
             exit 1
           fi
           TAG_SHA="$(git rev-parse --verify --quiet "${TAG}^{commit}" || true)"
-          if [[ -n "${TAG_SHA}" && "${TAG_SHA}" != "${CHECKOUT_SHA}" ]]; then
+          if [[ "${TAG_IS_SOURCE}" == "true" && -n "${TAG_SHA}" && "${TAG_SHA}" != "${CHECKOUT_SHA}" ]]; then
             echo "Existing tag ${TAG} points to ${TAG_SHA}, not requested commit ${CHECKOUT_SHA}." >&2
             exit 1
           fi
