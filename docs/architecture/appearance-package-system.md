@@ -49,10 +49,10 @@ material 结构；外观包必须按本文和当前 registry 重新生成。
 
 ## 包格式
 
-文件扩展名为 `.openbitfun-appearance`，内容为 ZIP，根目录必须包含 `appearance.json`：
+文件扩展名为 `.starmate-appearance`，内容为 ZIP，根目录必须包含 `appearance.json`：
 
 ```text
-aurora.openbitfun-appearance
+aurora.starmate-appearance
 ├── appearance.json
 └── assets/
     ├── preview.webp
@@ -65,7 +65,7 @@ aurora.openbitfun-appearance
 
 ```json
 {
-  "schema": "openbitfun.appearance",
+  "schema": "starmate.appearance",
   "schemaVersion": 1,
   "id": "example.aurora",
   "name": "Aurora",
@@ -78,7 +78,7 @@ aurora.openbitfun-appearance
 
 ```json
 {
-  "schema": "openbitfun.appearance",
+  "schema": "starmate.appearance",
   "schemaVersion": 1,
   "id": "example.aurora",
   "name": "Aurora",
@@ -430,8 +430,8 @@ IndexedDB 前完成相同 preflight；覆盖活动包时，存储、目录或后
 
 产品在目录、设置入口和公网 URL 中把 Appearance 包称为 **Skin**；这只是产品文案，不新增
 Skin runtime、manifest 或文件格式。公网入口固定为 `market.openbitfun.com/skin/`，稳定 API 为
-`/skin/api/v1`，下载物仍是 `.openbitfun-appearance`，根 manifest 仍是 `appearance.json` 和
-`schema: openbitfun.appearance`。
+`/skin/api/v1`，下载物仍是 `.starmate-appearance`，根 manifest 仍是 `appearance.json` 和
+`schema: starmate.appearance`。
 
 市场稳定 DTO 和发布状态机由 `openbitfun-product-domains::appearance_market` 拥有。独立
 `openbitfun-skin-market` 服务使用自己的 SQLite、content-addressed package/preview artifacts、审核日志、
@@ -454,7 +454,7 @@ UI 明确显示为本地版本，不能继续伪装成已安装的市场 release
 安装是当前设备 UI 行为，与 workspace 本地/远程无关，绝不能把 package 发送到 SSH workspace。
 
 Agent 的 outward-facing `PublishAppearance` 只接受用户明确指定的本机绝对
-`.openbitfun-appearance` 路径，在上传前执行本地 package envelope 校验，并复用 Desktop 登录与投稿编排。
+`.starmate-appearance` 路径，在上传前执行本地 package envelope 校验，并复用 Desktop 登录与投稿编排。
 远程 SSH workspace 中它必须 fail closed；Agent Runtime 不得扫描目录、猜测用户许可，或假装能读取
 WebView IndexedDB 中已安装的包。
 

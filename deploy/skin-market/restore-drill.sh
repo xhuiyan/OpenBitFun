@@ -56,7 +56,7 @@ while IFS='|' read -r sha256 expected_size; do
     echo "Restore drill found an invalid package reference" >&2
     exit 1
   }
-  package="${DRILL_DIR}/artifacts/packages/${sha256:0:2}/${sha256}.openbitfun-appearance"
+  package="${DRILL_DIR}/artifacts/packages/${sha256:0:2}/${sha256}.starmate-appearance"
   [[ -f "${package}" && "$(stat -c %s "${package}")" == "${expected_size}" ]] || {
     echo "Restore drill found a missing or incorrectly sized package artifact" >&2
     exit 1

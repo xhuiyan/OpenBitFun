@@ -340,7 +340,7 @@ async fn download_release(
     response.headers_mut().insert(
         header::CONTENT_DISPOSITION,
         HeaderValue::from_str(&format!(
-            "attachment; filename=\"{}-{}.openbitfun-appearance\"",
+            "attachment; filename=\"{}-{}.starmate-appearance\"",
             slug, meta.package_version
         ))
         .map_err(SkinMarketError::internal)?,

@@ -40,7 +40,7 @@ Use this metadata:
 
 ```json
 {
-  "schema": "openbitfun.appearance.style-surface-plan",
+  "schema": "starmate.appearance.style-surface-plan",
   "schemaVersion": 1,
   "scope": "example-style-selection",
   "styleId": "example-id",

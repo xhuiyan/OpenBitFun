@@ -279,11 +279,11 @@ fn normalize_manual_submission(
         .file_name()
         .and_then(|name| name.to_str())
         .is_some_and(|name| {
-            name.to_ascii_lowercase()
-                .ends_with(".openbitfun-appearance")
+            let name = name.to_ascii_lowercase();
+            name.ends_with(".starmate-appearance") || name.ends_with(".openbitfun-appearance")
         })
     {
-        return Err("Skin submissions must use a .openbitfun-appearance package.".to_string());
+        return Err("Skin submissions must use a .starmate-appearance package.".to_string());
     }
     let fallback_name = package_path
         .file_stem()
@@ -437,9 +437,9 @@ mod tests {
     #[test]
     fn normalizes_manual_submission_defaults_without_opening_the_package() {
         let package_path = if cfg!(windows) {
-            r"C:\tmp\Ocean Night.openbitfun-appearance"
+            r"C:\tmp\Ocean Night.starmate-appearance"
         } else {
-            "/tmp/Ocean Night.openbitfun-appearance"
+            "/tmp/Ocean Night.starmate-appearance"
         };
         let normalized = normalize_manual_submission(AppearanceMarketSubmitPackageRequest {
             package_path: package_path.to_string(),
@@ -465,11 +465,33 @@ mod tests {
     }
 
     #[test]
+    fn accepts_legacy_openbitfun_appearance_extension() {
+        let package_path = if cfg!(windows) {
+            r"C:\tmp\Ocean Night.openbitfun-appearance"
+        } else {
+            "/tmp/Ocean Night.openbitfun-appearance"
+        };
+        let normalized = normalize_manual_submission(AppearanceMarketSubmitPackageRequest {
+            package_path: package_path.to_string(),
+            slug: String::new(),
+            min_openbitfun_version: String::new(),
+            changelog: String::new(),
+            license: AppearanceMarketLicense {
+                spdx_expression: Some("MIT".to_string()),
+                custom_url: None,
+            },
+            repository_url: None,
+        })
+        .expect("legacy package extension should still submit");
+        assert_eq!(normalized.slug, "ocean-night");
+    }
+
+    #[test]
     fn manual_submission_requires_exactly_one_license_form() {
         let package_path = if cfg!(windows) {
-            r"C:\tmp\ocean-night.openbitfun-appearance"
+            r"C:\tmp\ocean-night.starmate-appearance"
         } else {
-            "/tmp/ocean-night.openbitfun-appearance"
+            "/tmp/ocean-night.starmate-appearance"
         };
         let result = normalize_manual_submission(AppearanceMarketSubmitPackageRequest {
             package_path: package_path.to_string(),

@@ -2,10 +2,10 @@
 
 ## Package shape
 
-- Archive extension: `.openbitfun-appearance`
+- Archive extension: `.starmate-appearance`
 - Archive format: ZIP
 - Root manifest: `appearance.json`
-- `schema`: `openbitfun.appearance`
+- `schema`: `starmate.appearance`
 - `schemaVersion`: `2`
 - Image formats: PNG, JPEG, WebP, or GIF
 - Background video formats: MP4 or WebM

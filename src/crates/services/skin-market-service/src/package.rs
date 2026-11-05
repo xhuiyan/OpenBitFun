@@ -389,10 +389,14 @@ pub fn validate_appearance_package(bytes: &[u8]) -> SkinMarketResult<ValidatedAp
 }
 
 fn validate_manifest(manifest: &AppearanceManifest) -> SkinMarketResult<()> {
-    if manifest.schema != "openbitfun.appearance" || manifest.schema_version != 1 {
+    if !matches!(
+        manifest.schema.as_str(),
+        "starmate.appearance" | "openbitfun.appearance"
+    ) || manifest.schema_version != 1
+    {
         return Err(SkinMarketError::bad_request(
             "unsupported_manifest_schema",
-            "Appearance packages must use openbitfun.appearance schema version 1.",
+            "Appearance packages must use starmate.appearance (or legacy openbitfun.appearance) schema version 1.",
         ));
     }
     validate_identifier(&manifest.id, "package id")?;
@@ -969,7 +973,7 @@ mod tests {
 
     fn manifest() -> Value {
         serde_json::json!({
-            "schema": "openbitfun.appearance",
+            "schema": "starmate.appearance",
             "schemaVersion": 1,
             "id": "example.aurora",
             "name": "Aurora",
@@ -998,6 +1002,14 @@ mod tests {
             image::guess_format(&result.preview.bytes).unwrap(),
             image::ImageFormat::WebP
         );
+    }
+
+    #[test]
+    fn legacy_openbitfun_schema_is_still_accepted() {
+        let mut legacy = manifest();
+        legacy["schema"] = Value::from("openbitfun.appearance");
+        let result = validate_appearance_package(&package(legacy, &[])).unwrap();
+        assert_eq!(result.meta.package_id, "example.aurora");
     }
 
     #[test]

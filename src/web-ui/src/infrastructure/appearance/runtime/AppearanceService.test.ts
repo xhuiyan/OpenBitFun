@@ -206,7 +206,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const stored: StoredAppearancePackage = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'market.shared', name: 'Shared',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'market.shared', name: 'Shared',
         version: '1.0.0', mode: 'dark',
       },
       archive: new ArrayBuffer(4),
@@ -245,7 +245,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const first: StoredAppearancePackage = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'market.theme', name: 'Market Theme',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'market.theme', name: 'Market Theme',
         version: '1.0.0', mode: 'dark',
       },
       archive: new ArrayBuffer(4),
@@ -298,7 +298,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const parsed: StoredAppearancePackage = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'unexpected.theme', name: 'Unexpected',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'unexpected.theme', name: 'Unexpected',
         version: '1.0.0', mode: 'dark',
       },
       archive: new ArrayBuffer(4),
@@ -328,7 +328,7 @@ describe('AppearanceService', () => {
     const importedAt = '2026-08-03T00:00:00.000Z';
     const unsupported = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: 1, id: 'unsupported.saved', name: 'Unsupported Saved',
+        schema: 'starmate.appearance', schemaVersion: 1, id: 'unsupported.saved', name: 'Unsupported Saved',
         version: '1.0.0', mode: 'dark',
         renderers: {
           'css-tokens': {
@@ -420,7 +420,7 @@ describe('AppearanceService', () => {
     await storage.put({
       ...packageBase,
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'explicit.preview', name: 'Explicit',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'explicit.preview', name: 'Explicit',
         version: '1.0.0', mode: 'light', preview: { kind: 'asset', assetId: 'hero' },
       },
       assets: { hero: { mimeType: 'image/webp', bytes: previewBytes, width: 16, height: 9 } },
@@ -428,7 +428,7 @@ describe('AppearanceService', () => {
     await storage.put({
       ...packageBase,
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'fallback.preview', name: 'Fallback',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'fallback.preview', name: 'Fallback',
         version: '1.0.0', mode: 'light',
       },
       assets: { background: { mimeType: 'image/png', bytes: backgroundBytes, width: 16, height: 9 } },
@@ -449,7 +449,7 @@ describe('AppearanceService', () => {
       archiveSchemaVersion: APPEARANCE_SCHEMA_VERSION,
       importedAt: '2026-07-29T00:00:00.000Z',
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'video.preview', name: 'Video',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'video.preview', name: 'Video',
         version: '1.0.0', mode: 'dark',
       },
       assets: {
@@ -499,7 +499,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const stored: StoredAppearancePackage = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'shared.market-theme',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'shared.market-theme',
         name: 'Shared Market Theme', version: '1.0.0', mode: 'dark',
       },
       archive: new ArrayBuffer(4),
@@ -547,7 +547,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const oldPackage = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.active', name: 'Old',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.active', name: 'Old',
         version: '1.0.0', mode: 'dark',
       } as AppearancePackage,
       archive: new ArrayBuffer(1),
@@ -592,7 +592,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const stored = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.saved', name: 'Saved',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.saved', name: 'Saved',
         version: '1.0.0', mode: 'dark',
       } as AppearancePackage,
       archive: new ArrayBuffer(1),
@@ -621,7 +621,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const stored = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.active-delete', name: 'Active',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.active-delete', name: 'Active',
         version: '1.0.0', mode: 'dark',
       } as AppearancePackage,
       archive: new ArrayBuffer(1),
@@ -660,7 +660,7 @@ describe('AppearanceService', () => {
     const storage = new MemoryAppearanceStorage();
     const stored = {
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.degraded-delete', name: 'Degraded',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.degraded-delete', name: 'Degraded',
         version: '1.0.0', mode: 'dark',
       } as AppearancePackage,
       archive: new ArrayBuffer(1),
@@ -746,7 +746,7 @@ describe('AppearanceService', () => {
     const { runtime, service, storage } = createService();
     await storage.put({
       manifest: {
-        schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.dynamic', name: 'Dynamic',
+        schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.dynamic', name: 'Dynamic',
         version: '1.0.0', mode: 'dark',
       },
       archive: new ArrayBuffer(1),
@@ -779,7 +779,7 @@ describe('AppearanceService', () => {
     configMocks.getConfig.mockResolvedValue('sample.dynamic');
     const { runtime, service, storage } = createService();
     const manifest: AppearancePackage = {
-      schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.dynamic', name: 'Dynamic',
+      schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION, id: 'sample.dynamic', name: 'Dynamic',
       version: '1.0.0', mode: 'dark',
     };
     await storage.put({

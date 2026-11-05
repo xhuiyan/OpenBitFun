@@ -5,7 +5,7 @@ files use this shape:
 
 ```json
 {
-  "schema": "openbitfun.appearance.cinematic-palette",
+  "schema": "starmate.appearance.cinematic-palette",
   "schemaVersion": 1,
   "id": "cold-cinematic",
   "colors": {

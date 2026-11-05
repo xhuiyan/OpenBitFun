@@ -45,7 +45,7 @@ Keep the importable project isolated from source and report files:
     surface-plan.json
   contact-sheet.png
   asset-preview-sheet.png
-  <skin-id>.openbitfun-appearance
+  <skin-id>.starmate-appearance
   host-verification.json
   skin-build.json
   runtime-checklist.json
@@ -104,7 +104,7 @@ python examples/cinematic-animated-wallpaper/scripts/build_cinematic_skin.py che
   --output <skin-root>
 ```
 
-Build records use `openbitfun.appearance.recipe-build` and identify this recipe.
+Build records use `starmate.appearance.recipe-build` and identify this recipe.
 
 `skin-build.json` records the requested policy, every attempted encoding, and the selected codec-lossless/CRF or WebP quality result. `check` verifies source, palette, surface-plan, manifest and archive drift, package validity, and current host compatibility. Add `--skip-host-verify` only for an offline check.
 

@@ -4,7 +4,7 @@
   "title": "StarMate Playbook",
   "origin": "https://playbook.openbitfun.com",
   "source": "src/shared/interactive-capabilities/catalog.json",
-  "digest": "24590e6d32bbbe44e2d9695d1cee2844078443f50db6e7f9e8e6599472529f44",
+  "digest": "45521a7fba55f3316b6efb2f10a299b53c0e4db1eaa8ba5525bd34b1ab1af028",
   "ownerDigest": "bf020ed2873824dae7c60f1e029649f525b7ec35d33aa45a7d4e1fa79827ebad",
   "searchAcceptance": [
     {
@@ -27560,11 +27560,11 @@
               "PublishAppearance"
             ],
             "workflowZh": [
-              "仅在用户明确要求对外投稿时调用 PublishAppearance，并使用本机绝对 `.openbitfun-appearance` 路径及用户确认的许可证",
+              "仅在用户明确要求对外投稿时调用 PublishAppearance，并使用本机绝对 `.starmate-appearance` 路径及用户确认的许可证",
               "登录或校验返回待处理状态时展示具体下一步；工具不支持远程 SSH 路径，也不能把提交审核报告为已经上架"
             ],
             "workflowEn": [
-              "Call PublishAppearance only after an explicit external-submission request, using a local absolute `.openbitfun-appearance` path and a user-confirmed license",
+              "Call PublishAppearance only after an explicit external-submission request, using a local absolute `.starmate-appearance` path and a user-confirmed license",
               "Show the exact next step for pending authentication or validation; remote SSH paths are unsupported and submission for review is not publication"
             ]
           }
@@ -27705,9 +27705,9 @@
         "Change the interface language to English",
         "Open Appearance settings",
         "PublishAppearance",
-        "仅在用户明确要求对外投稿时调用 PublishAppearance，并使用本机绝对 `.openbitfun-appearance` 路径及用户确认的许可证",
+        "仅在用户明确要求对外投稿时调用 PublishAppearance，并使用本机绝对 `.starmate-appearance` 路径及用户确认的许可证",
         "登录或校验返回待处理状态时展示具体下一步；工具不支持远程 SSH 路径，也不能把提交审核报告为已经上架",
-        "Call PublishAppearance only after an explicit external-submission request, using a local absolute `.openbitfun-appearance` path and a user-confirmed license",
+        "Call PublishAppearance only after an explicit external-submission request, using a local absolute `.starmate-appearance` path and a user-confirmed license",
         "Show the exact next step for pending authentication or validation; remote SSH paths are unsupported and submission for review is not publication"
       ],
       "docsUrl": "https://playbook.openbitfun.com/capabilities/setting.application.appearance/"

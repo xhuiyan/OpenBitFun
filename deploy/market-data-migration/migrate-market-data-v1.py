@@ -23,7 +23,7 @@ CURRENT_VERSION_FIELD = "minOpenBitFunVersion"
 RETIRED_VERSION_FIELDS = ("minBitfunVersion", "minOpenbitfunVersion")
 STARMATE_MINIMUM_VERSION = "1.0.0"
 RETIRED_APPEARANCE_SCHEMA = "bitfun.appearance"
-STARMATE_APPEARANCE_SCHEMA = "openbitfun.appearance"
+STARMATE_APPEARANCE_SCHEMA = "starmate.appearance"
 RETIRED_APPEARANCE_EXTENSION = "bitfun-appearance"
 STARMATE_APPEARANCE_EXTENSION = "openbitfun-appearance"
 RETIRED_ARCHIVE_ROOT = "migrated-bitfun-v1"
@@ -137,7 +137,7 @@ def write_migrated_skin_archive(source: Path, temporary_root: Path) -> tuple[Pat
     source_stat = source.stat()
     temporary_root.mkdir(parents=True, exist_ok=True)
     file_descriptor, temporary_name = tempfile.mkstemp(
-        prefix="skin-v1-", suffix=".openbitfun-appearance", dir=temporary_root
+        prefix="skin-v1-", suffix=".starmate-appearance", dir=temporary_root
     )
     os.close(file_descriptor)
     temporary = Path(temporary_name)

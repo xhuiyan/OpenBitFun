@@ -1,6 +1,6 @@
 ---
 name: create-starmate-skin
-description: Inspect the current StarMate Appearance contract and author, repair, package, or validate sparse .openbitfun-appearance skins. Use when Codex needs to discover registered scenes/components/parts/states/facets, check Style IR properties or renderer tokens, initialize or inspect a package, diagnose import failures, verify a skin against a StarMate checkout, or choose a bundled style example for design-specific guidance.
+description: Inspect the current StarMate Appearance contract and author, repair, package, or validate sparse .starmate-appearance skins. Use when Codex needs to discover registered scenes/components/parts/states/facets, check Style IR properties or renderer tokens, initialize or inspect a package, diagnose import failures, verify a skin against a StarMate checkout, or choose a bundled style example for design-specific guidance.
 ---
 
 # StarMate Appearance Authoring
@@ -75,15 +75,15 @@ Read [style-example-contract.md](references/style-example-contract.md) before ad
 
 ```powershell
 python scripts/starmate_appearance.py validate <project-dir>
-python scripts/starmate_appearance.py build <project-dir> --output <skin>.openbitfun-appearance
-python scripts/starmate_appearance.py validate <skin>.openbitfun-appearance
+python scripts/starmate_appearance.py build <project-dir> --output <skin>.starmate-appearance
+python scripts/starmate_appearance.py validate <skin>.starmate-appearance
 python scripts/starmate_appearance.py inspect <project-or-archive>
 ```
 
 When a StarMate checkout is available, verify with the production registry, Validator, Compiler, and packaged-video display-dimension probe:
 
 ```powershell
-python scripts/verify_host.py <openbitfun-repo> <skin>.openbitfun-appearance --report <host-verification.json> --strict-warnings
+python scripts/verify_host.py <openbitfun-repo> <skin>.starmate-appearance --report <host-verification.json> --strict-warnings
 ```
 
 Standalone validation proves package and bundled-registry compatibility. Host verification proves the selected checkout accepts and compiles the package. Neither proves runtime visual quality; import the skin and inspect the actual surfaces.

@@ -1341,7 +1341,7 @@ describe('Session usage report UI components', () => {
 
   it('preserves saved header appearance and accepts old panel destinations after removing details', () => {
     const legacyPackage: AppearancePackage = {
-      schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
+      schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
       id: 'test.usage-header', name: 'Usage header', version: '1.0.0', mode: 'dark',
       components: { 'session-usage-panel': { parts: {
         header: { base: { opacity: { kind: 'number', value: 0.6 } } },

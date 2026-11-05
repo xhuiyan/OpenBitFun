@@ -1739,7 +1739,7 @@ describe('ExternalSourcesConfig', () => {
     expect(notice?.querySelector('[data-openbitfun-part="icon"]')).toBeNull();
 
     const legacy: AppearancePackage = {
-      schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
+      schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
       id: 'test.external-notice', name: 'External notice', version: '1.0.0', mode: 'dark',
       components: { 'external-sources-config': { parts: {
         notice: { base: { opacity: { kind: 'number', value: 0.8 } } },

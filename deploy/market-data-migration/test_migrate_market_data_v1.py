@@ -196,7 +196,7 @@ class MarketDataMigrationTest(unittest.TestCase):
             draft_json, new_sha, new_size, manifest_json = submission
             migrated_manifest = json.loads(manifest_json)
             self.assertEqual(json.loads(draft_json)["minOpenBitFunVersion"], "1.0.0")
-            self.assertEqual(migrated_manifest["schema"], "openbitfun.appearance")
+            self.assertEqual(migrated_manifest["schema"], "starmate.appearance")
             self.assertNotEqual(new_sha, retired_sha)
 
             migrated_path = migration.skin_package_path(

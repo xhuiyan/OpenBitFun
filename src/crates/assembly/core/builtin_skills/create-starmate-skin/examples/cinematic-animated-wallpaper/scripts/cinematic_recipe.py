@@ -17,8 +17,8 @@ import starmate_appearance as appearance  # noqa: E402
 from build_support import atomic_write_json, read_json  # noqa: E402
 
 
-PALETTE_SCHEMA = "openbitfun.appearance.cinematic-palette"
-SURFACE_PLAN_SCHEMA = "openbitfun.appearance.style-surface-plan"
+PALETTE_SCHEMA = "starmate.appearance.cinematic-palette"
+SURFACE_PLAN_SCHEMA = "starmate.appearance.style-surface-plan"
 STYLE_ID = "cinematic-animated-wallpaper"
 PALETTE_KEYS = {
     "background",
@@ -410,7 +410,7 @@ def build_manifest(
 ) -> dict[str, Any]:
     colors = palette["colors"]
     manifest: dict[str, Any] = {
-        "schema": "openbitfun.appearance",
+        "schema": "starmate.appearance",
         "schemaVersion": 2,
         "id": appearance_id,
         "name": name,

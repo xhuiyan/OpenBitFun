@@ -452,7 +452,7 @@ describe('WelcomePanel empty session presentation', () => {
 
   it('keeps saved open-workspace action styles targeting the Button', async () => {
     const legacyPackage: AppearancePackage = {
-      schema: 'openbitfun.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
+      schema: 'starmate.appearance', schemaVersion: APPEARANCE_SCHEMA_VERSION,
       id: 'test.welcome', name: 'Welcome', version: '1.0.0', mode: 'dark',
       components: {
         'welcome-panel': { parts: {

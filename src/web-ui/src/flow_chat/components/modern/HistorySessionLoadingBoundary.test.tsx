@@ -98,7 +98,7 @@ describe('history loading presentation handoff', () => {
 
   it('preserves legacy appearance packages while keeping the old spinner invisible', () => {
     const legacyPackage = JSON.parse(JSON.stringify({
-      schema: 'openbitfun.appearance', schemaVersion: 2, id: 'test.legacy-loading',
+      schema: 'starmate.appearance', schemaVersion: 2, id: 'test.legacy-loading',
       name: 'Legacy loading appearance', version: '1.0.0', mode: 'light',
       components: {
         'modern-flow-chat': {

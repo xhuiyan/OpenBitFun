@@ -10,7 +10,7 @@ import sync_registry as registry_sync
 
 def base_manifest() -> dict[str, object]:
     return {
-        "schema": "openbitfun.appearance",
+        "schema": "starmate.appearance",
         "schemaVersion": 2,
         "id": "validator-test",
         "name": "Validator Test",
@@ -27,6 +27,12 @@ class ManifestValidatorTests(unittest.TestCase):
         validator = appearance.ManifestValidator(self.registry)
         validator.validate(manifest)
         return validator
+
+    def test_legacy_openbitfun_schema_is_accepted(self) -> None:
+        manifest = base_manifest()
+        manifest["schema"] = "openbitfun.appearance"
+        validator = self.validate(manifest)
+        self.assertNotIn("INVALID_SCHEMA", {issue["code"] for issue in validator.errors})
 
     def test_unknown_and_circular_references_are_rejected(self) -> None:
         unknown = base_manifest()
@@ -170,7 +176,7 @@ class ManifestValidatorTests(unittest.TestCase):
 
     def test_registry_contract_comparison_ignores_provenance_only_changes(self) -> None:
         current = {
-            "schema": "openbitfun.appearance.registry",
+            "schema": "starmate.appearance.registry",
             "schemaVersion": 2,
             "sourceRevision": "old-revision",
             "generatedAt": "old-time",

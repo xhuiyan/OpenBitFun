@@ -1,4 +1,5 @@
 import { normalizeRendererId } from '../builtins/appearanceRendererIdMigration';
+import { isSupportedAppearanceSchema } from '../builtins/appearancePackageFormatMigration';
 import type { AppearanceRegistry } from '../registry/AppearanceRegistry';
 import {
   APPEARANCE_SCHEMA,
@@ -156,7 +157,7 @@ export class AppearancePackageValidator {
       'assets', 'integrity',
     ], '$', error);
 
-    if (input.schema !== APPEARANCE_SCHEMA) {
+    if (!isSupportedAppearanceSchema(input.schema)) {
       error('schema', 'INVALID_SCHEMA', `Schema must be ${APPEARANCE_SCHEMA}`);
     }
     if (input.schemaVersion !== APPEARANCE_SCHEMA_VERSION) {

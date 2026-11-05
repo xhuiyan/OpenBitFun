@@ -1,4 +1,5 @@
 import { normalizeLegacyRendererIds } from './appearanceRendererIdMigration';
+import { normalizeLegacyAppearanceSchema } from './appearancePackageFormatMigration';
 import type {
   AppearanceGlobalTokens,
   AppearanceMaterialDefinition,
@@ -20,7 +21,7 @@ import { withLegacyActionCardToken } from './actionCardThemeCompatibility';
 import { withLegacyIndicatorTokens } from './indicatorThemeCompatibility';
 import { withLegacyComposerTokens } from './composerThemeCompatibility';
 
-const COMPOSITION_LAYERS = Symbol('openbitfun.appearance.composition-layers');
+const COMPOSITION_LAYERS = Symbol('starmate.appearance.composition-layers');
 
 interface AppearanceCompositionLayers {
   base: AppearancePackage;
@@ -189,7 +190,7 @@ function mergeRenderers(
 }
 
 export function composeAppearancePackage(pkg: AppearancePackage): AppearancePackage {
-  pkg = normalizeLegacyRendererIds(pkg);
+  pkg = normalizeLegacyRendererIds(normalizeLegacyAppearanceSchema(pkg));
 
   const registered = getBuiltinAppearance(pkg.id);
   if (registered === pkg) return pkg;
