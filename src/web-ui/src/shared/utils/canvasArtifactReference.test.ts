@@ -8,11 +8,6 @@ describe('parseCanvasArtifactReference', () => {
     )).toEqual({ sessionId: 'session 1', canvasId: 'canvas 1' });
   });
 
-  it('still accepts the legacy scheme', () => {
-    expect(parseCanvasArtifactReference(
-      'openbitfun-canvas://session/session_1/canvas/canvas_1',
-    )).toEqual({ sessionId: 'session_1', canvasId: 'canvas_1' });
-  });
 
   it.each([
     'https://example.com/canvas/1',

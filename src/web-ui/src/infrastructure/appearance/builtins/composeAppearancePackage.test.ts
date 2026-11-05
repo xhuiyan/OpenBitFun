@@ -43,7 +43,7 @@ describe('composeAppearancePackage', () => {
     const payload = JSON.stringify(original);
     const resolved = composeAppearancePackage(JSON.parse(payload));
     const tokens = resolved.renderers!['theme-tokens']!.settings.tokens;
-    const defaults = getBuiltinAppearanceThemeTokens(`openbitfun-${mode}`);
+    const defaults = getBuiltinAppearanceThemeTokens(`starmate-${mode}`);
     for (const name of APPEARANCE_THEME_TOKEN_NAMES.filter(name => name.startsWith('--openbitfun-domain-subagent-'))) {
       expect(tokens[name as keyof typeof tokens]).toBe(defaults[name as keyof typeof defaults]);
     }

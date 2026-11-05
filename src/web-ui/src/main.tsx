@@ -17,7 +17,6 @@ import { startupTrace } from './shared/utils/startupTrace';
 import { scheduleAfterStartupSignal } from './shared/utils/startupTaskScheduling';
 import { installInteractionModalityTracking } from './shared/utils/motionPreference';
 import { installTextInputGuard } from '../../shared/text-input/textInputGuard';
-import { migrateBrandStorage } from './shared/utils/brandStorageMigration';
 import {
   buildReactCrashLogPayload,
   isMinifiedReactErrorMessage,
@@ -25,12 +24,6 @@ import {
 
 // Install console forwarding before app startup so early console output is persisted too.
 bootstrapLogger();
-try {
-  migrateBrandStorage(window.localStorage);
-  migrateBrandStorage(window.sessionStorage);
-} catch (error) {
-  log.warn('Failed to migrate legacy storage keys', { error });
-}
 
 const log = createLogger('App');
 startupTrace.markPhase('first_script_eval', {

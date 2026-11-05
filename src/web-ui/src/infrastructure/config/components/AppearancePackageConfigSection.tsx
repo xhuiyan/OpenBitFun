@@ -478,7 +478,7 @@ export function AppearancePackageConfigSection() {
           ref={inputRef}
           className="appearance-package-config__file-input"
           type="file"
-          accept=".starmate-appearance,.openbitfun-appearance,.zip,application/zip"
+          accept=".starmate-appearance,.zip,application/zip"
           onChange={handleImport}
         />
       )}

@@ -345,46 +345,6 @@ test('a closed and reopened browser profile retains its login and controller key
   }
 });
 
-test('legacy tab credentials migrate with their keys and navigation without reviving a signed-out account', { timeout: 40_000 }, async () => {
-  const context = await browser.createIncognitoBrowserContext();
-  const relay = new RelayFixture();
-  relay.register(LAN, 'legacy-a', new Uint8Array(32).fill(7), '123', 'legacy-token-a');
-  relay.register(LAN, 'legacy-b', new Uint8Array(32).fill(8), '123', 'legacy-token-b');
-  try {
-    const first = await relay.page(context, source.origin, invitation(), () => {
-      sessionStorage.setItem('openbitfun.mobile.account_session.v2', JSON.stringify({
-        version: 2, relay_url: location.origin, username: '123', token: 'legacy-token-a', user_id: '123',
-        controller_device_id: 'legacy-a', device_secret: btoa(String.fromCharCode(...new Uint8Array(32).fill(7))),
-      }));
-      sessionStorage.setItem('openbitfun.mobile.navigation.v1', JSON.stringify({ version: 1, accountId: '123',
-        relayUrl: location.origin, controllerDeviceId: 'legacy-a', routeKey: location.pathname + location.hash,
-        deviceId: 'desktop-b' }));
-    });
-    await connected(first, 'desktop-b');
-    const second = await relay.page(context, source.origin, invitation(), () => {
-      sessionStorage.setItem('openbitfun.mobile.account_session.v2', JSON.stringify({
-        version: 2, relay_url: location.origin, username: '123', token: 'legacy-token-b', user_id: '123',
-        controller_device_id: 'legacy-b', device_secret: btoa(String.fromCharCode(...new Uint8Array(32).fill(8))),
-      }));
-      sessionStorage.setItem('openbitfun.mobile.navigation.v1', JSON.stringify({ version: 1, accountId: '123',
-        relayUrl: location.origin, controllerDeviceId: 'legacy-b', routeKey: location.pathname + location.hash,
-        deviceId: 'desktop-a' }));
-    });
-    await connected(second);
-    assert.equal((await readAccount(second)).controllerDeviceId, 'legacy-a');
-    assert.equal(relay.logins.length, 0);
-    assert.ok(relay.pings.every(ping => ping.controller === 'legacy-a' && ping.client.id === 'legacy-a'));
-    assert.equal(await second.evaluate(() => JSON.parse(sessionStorage.getItem('starmate.mobile.navigation.v1')).controllerDeviceId), 'legacy-a');
-    await signOut(first);
-    await second.waitForSelector('.pairing-page__form');
-    await second.reload(); // init script deliberately reintroduces a stale legacy token.
-    await second.waitForSelector('.pairing-page__form');
-    assert.equal((await readAccount(second)).token, null);
-    assert.equal(relay.logins.length, 0);
-    assert.deepEqual(relay.errors, []);
-  } finally { await context.close(); }
-});
-
 test('transient Relay errors preserve login; genuine expiry signs out tabs without rotating identity', { timeout: 45_000 }, async () => {
   const context = await browser.createIncognitoBrowserContext();
   const relay = new RelayFixture();

@@ -550,7 +550,7 @@ export function initialLocale(): Locale {
   const requested = resolveMarketLocale(new URLSearchParams(window.location.search).get('locale'));
   if (requested) return requested;
   let stored: string | null = null;
-  try { stored = localStorage.getItem('starmate-market-locale') ?? localStorage.getItem('openbitfun-market-locale'); } catch { /* Storage can be blocked in an auth popup. */ }
+  try { stored = localStorage.getItem('starmate-market-locale'); } catch { /* Storage can be blocked in an auth popup. */ }
   return resolveMarketLocale(stored) ?? resolveMarketLocale(navigator.language) ?? localeContract.fallbackLocale as Locale;
 }
 

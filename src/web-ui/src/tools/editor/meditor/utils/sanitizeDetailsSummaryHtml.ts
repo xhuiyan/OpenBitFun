@@ -1,6 +1,6 @@
 const linkProtocols = new Set([
   'http:', 'https:', 'mailto:', 'tel:', 'sms:', 'xmpp:', 'irc:', 'ircs:',
-  'file:', 'starmate-canvas:', 'openbitfun-canvas:', 'computer:', 'tab:', 'visualization:',
+  'file:', 'starmate-canvas:', 'computer:', 'tab:', 'visualization:',
 ]);
 const imageProtocols = new Set(['http:', 'https:', 'file:', 'asset:', 'tauri:', 'blob:', 'data:']);
 

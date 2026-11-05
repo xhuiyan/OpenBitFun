@@ -90,13 +90,9 @@ require_cargo() {
   fi
 }
 
-# Marker keeps shellrc edits idempotent across re-installs. The legacy
-# OpenBitFun marker is migrated in place so upgrades do not leave duplicate
-# PATH blocks behind.
+# Marker keeps shellrc edits idempotent across re-installs.
 SHELLRC_MARKER_BEGIN="# >>> StarMate CLI PATH (managed by src/apps/cli/install.sh) >>>"
 SHELLRC_MARKER_END="# <<< StarMate CLI PATH (managed by src/apps/cli/install.sh) <<<"
-LEGACY_SHELLRC_MARKER_BEGIN="# >>> OpenBitFun CLI PATH (managed by src/apps/cli/install.sh) >>>"
-LEGACY_SHELLRC_MARKER_END="# <<< OpenBitFun CLI PATH (managed by src/apps/cli/install.sh) <<<"
 
 remove_managed_block() {
   local rc_file="$1" begin="$2" end="$3" tmp
@@ -130,27 +126,14 @@ upsert_shellrc_path() {
   touch "$rc_file"
 
   block="$(ensure_bin_dir_on_path_block "$bin_dir")"
-  local migrated=0
 
-  if grep -Fq "$LEGACY_SHELLRC_MARKER_BEGIN" "$rc_file" 2>/dev/null; then
-    remove_managed_block "$rc_file" "$LEGACY_SHELLRC_MARKER_BEGIN" "$LEGACY_SHELLRC_MARKER_END"
-    migrated=1
-  fi
   if grep -Fq "$SHELLRC_MARKER_BEGIN" "$rc_file" 2>/dev/null; then
     remove_managed_block "$rc_file" "$SHELLRC_MARKER_BEGIN" "$SHELLRC_MARKER_END"
     printf '\n%s\n' "$block" >>"$rc_file"
-    if [ "$migrated" = "1" ]; then
-      echo "Migrated PATH block in $rc_file"
-    else
-      echo "Updated PATH block in $rc_file"
-    fi
+    echo "Updated PATH block in $rc_file"
   else
     printf '\n%s\n' "$block" >>"$rc_file"
-    if [ "$migrated" = "1" ]; then
-      echo "Migrated PATH block in $rc_file"
-    else
-      echo "Appended PATH block to $rc_file"
-    fi
+    echo "Appended PATH block to $rc_file"
   fi
 }
 
@@ -326,7 +309,7 @@ for arg in "$@"; do
 done
 
 REPO_ROOT="$(resolve_repo_root)"
-BIN_DIR="${STARMATE_CLI_BIN_DIR:-${OPENBITFUN_CLI_BIN_DIR:-${HOME}/.local/bin}}"
+BIN_DIR="${STARMATE_CLI_BIN_DIR:-${HOME}/.local/bin}"
 HOST_ARCH="$(host_arch_label)"
 HOST_OS="$(uname -s)"
 

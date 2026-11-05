@@ -1,8 +1,6 @@
 import JSZip from 'jszip';
 import type { AppearanceRegistry } from '../registry/AppearanceRegistry';
 import { assertValidAppearancePackage } from './AppearancePackageValidator';
-import { normalizeLegacyRendererIds } from '../builtins/appearanceRendererIdMigration';
-import { normalizeLegacyAppearanceSchema } from '../builtins/appearancePackageFormatMigration';
 import type {
   AppearancePackageAsset,
   StoredAppearanceAsset,
@@ -118,10 +116,7 @@ export class AppearancePackageParser {
     } catch (error) {
       throw new Error(`Appearance manifest is not valid JSON: ${error instanceof Error ? error.message : String(error)}`);
     }
-    const manifest = assertValidAppearancePackage(
-      normalizeLegacyAppearanceSchema(normalizeLegacyRendererIds(rawManifest)),
-      this.registry,
-    );
+    const manifest = assertValidAppearancePackage(rawManifest, this.registry);
     const declaredPaths = new Map<string, { id: string; definition: AppearancePackageAsset }>();
     Object.entries(manifest.assets ?? {}).forEach(([id, definition]) => {
       const path = definition.source.path;

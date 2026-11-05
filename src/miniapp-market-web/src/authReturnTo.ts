@@ -1,5 +1,4 @@
 const AUTH_RETURN_TO_KEY = 'starmate.auth.returnTo';
-const LEGACY_AUTH_RETURN_TO_KEY = 'openbitfun.auth.returnTo';
 export const STARMATE_AUTH_CALLBACK = 'starmate://auth/callback';
 
 /**
@@ -29,10 +28,7 @@ export function rememberNativeAuthReturnTo(value: string | null): string | null 
   const target = parseNativeAuthReturnTo(value);
   try {
     if (target) sessionStorage.setItem(AUTH_RETURN_TO_KEY, target);
-    else {
-      sessionStorage.removeItem(AUTH_RETURN_TO_KEY);
-      sessionStorage.removeItem(LEGACY_AUTH_RETURN_TO_KEY);
-    }
+    else sessionStorage.removeItem(AUTH_RETURN_TO_KEY);
   } catch {
     // Private browsing modes may deny sessionStorage. The manual fallback is
     // still available when the marker can be read from the current URL.
@@ -42,11 +38,8 @@ export function rememberNativeAuthReturnTo(value: string | null): string | null 
 
 export function takeNativeAuthReturnTo(): string | null {
   try {
-    const target = parseNativeAuthReturnTo(
-      sessionStorage.getItem(AUTH_RETURN_TO_KEY) ?? sessionStorage.getItem(LEGACY_AUTH_RETURN_TO_KEY),
-    );
+    const target = parseNativeAuthReturnTo(sessionStorage.getItem(AUTH_RETURN_TO_KEY));
     sessionStorage.removeItem(AUTH_RETURN_TO_KEY);
-    sessionStorage.removeItem(LEGACY_AUTH_RETURN_TO_KEY);
     return target;
   } catch {
     return null;

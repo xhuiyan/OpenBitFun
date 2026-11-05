@@ -4,9 +4,7 @@
 
 use crate::util::errors::*;
 use log::{debug, error, warn};
-use starmate_services_core::product_identity::{
-    data_namespace, hidden_data_directory, legacy_data_namespace, legacy_hidden_data_directory,
-};
+use starmate_services_core::product_identity::{data_namespace, hidden_data_directory};
 use starmate_services_core::workspace_identity::{
     local_workspace_runtime_key, remote_workspace_runtime_key, remote_workspace_runtime_root,
 };
@@ -67,82 +65,8 @@ impl PathManager {
         })
     }
 
-    /// Copy a legacy namespace root to the rebranded one on first access.
-    ///
-    /// The copy is staged and renamed into place so a failed migration never
-    /// leaves a partial directory that would suppress a retry. When the copy
-    /// fails we keep using the legacy root, so existing data stays readable.
-    fn migrate_legacy_root(legacy: Option<&Path>, current: &Path, label: &str) -> PathBuf {
-        let Some(legacy) = legacy else {
-            return current.to_path_buf();
-        };
-        if current.exists() || !legacy.exists() {
-            return current.to_path_buf();
-        }
-        let file_name = current
-            .file_name()
-            .map(|name| name.to_string_lossy().to_string())
-            .unwrap_or_else(|| "data".to_string());
-        let staging = current.with_file_name(format!(".{file_name}.migrating"));
-        if staging.exists() {
-            let _ = std::fs::remove_dir_all(&staging);
-        }
-        match Self::copy_directory(legacy, &staging).and_then(|()| std::fs::rename(&staging, current)) {
-            Ok(()) => {
-                log::info!(
-                    "Migrated legacy {} from {} to {}",
-                    label,
-                    legacy.display(),
-                    current.display()
-                );
-                current.to_path_buf()
-            }
-            Err(error) => {
-                let _ = std::fs::remove_dir_all(&staging);
-                warn!(
-                    "Failed to migrate legacy {} from {} ({}); continuing with the legacy location",
-                    label,
-                    legacy.display(),
-                    error
-                );
-                legacy.to_path_buf()
-            }
-        }
-    }
-
-    fn copy_directory(source: &Path, destination: &Path) -> std::io::Result<()> {
-        std::fs::create_dir_all(destination)?;
-        for entry in std::fs::read_dir(source)? {
-            let entry = entry?;
-            let file_type = entry.file_type()?;
-            let target = destination.join(entry.file_name());
-            if file_type.is_dir() {
-                Self::copy_directory(&entry.path(), &target)?;
-            } else if file_type.is_file() {
-                std::fs::copy(entry.path(), target)?;
-            }
-        }
-        Ok(())
-    }
-
-    fn namespace_dir(base: &Path) -> PathBuf {
-        base.join(data_namespace())
-    }
-
-    fn migrate_namespace_dir(base: &Path, label: &str) -> PathBuf {
-        let current = Self::namespace_dir(base);
-        let legacy = legacy_data_namespace().map(|namespace| base.join(namespace));
-        Self::migrate_legacy_root(legacy.as_deref(), &current, label)
-    }
-
     fn env_path(name: &str) -> Option<PathBuf> {
-        // Upgrade compatibility: user shells and older launchers may still
-        // export the pre-rename OPENBITFUN_* storage overrides.
-        let value = env::var_os(name).or_else(|| {
-            name.strip_prefix("STARMATE_")
-                .and_then(|suffix| env::var_os(format!("OPENBITFUN_{suffix}")))
-        });
-        value
+        env::var_os(name)
             .map(PathBuf::from)
             .filter(|path| !path.as_os_str().is_empty())
     }
@@ -180,7 +104,6 @@ impl PathManager {
     /// - Linux: ~/.config/starmate/
     fn get_user_config_root() -> StarMateResult<PathBuf> {
         if let Some(path) = Self::env_path("STARMATE_USER_ROOT")
-            .or_else(|| Self::env_path("OPENBITFUN_USER_ROOT"))
             .or_else(|| Self::env_path("STARMATE_E2E_USER_ROOT"))
         {
             return Ok(path);
@@ -189,18 +112,11 @@ impl PathManager {
         let config_dir = dirs::config_dir()
             .ok_or_else(|| StarMateError::config("Failed to get config directory".to_string()))?;
 
-        let legacy = legacy_data_namespace().map(|namespace| config_dir.join(namespace));
-        Ok(Self::migrate_legacy_root(
-            legacy.as_deref(),
-            &config_dir.join(data_namespace()),
-            "user data root",
-        ))
+        Ok(config_dir.join(data_namespace()))
     }
 
     fn get_product_home_override() -> Option<PathBuf> {
-        Self::env_path("STARMATE_HOME")
-            .or_else(|| Self::env_path("OPENBITFUN_HOME"))
-            .or_else(|| Self::env_path("STARMATE_E2E_HOME"))
+        Self::env_path("STARMATE_HOME").or_else(|| Self::env_path("STARMATE_E2E_HOME"))
     }
 
     /// Get assistant home root directory: ~/.starmate/
@@ -208,13 +124,9 @@ impl PathManager {
         if let Some(path) = &self.product_home_override {
             return path.clone();
         }
-        let home_dir = dirs::home_dir().unwrap_or_else(|| self.user_root.clone());
-        let legacy = legacy_hidden_data_directory().map(|directory| home_dir.join(directory));
-        Self::migrate_legacy_root(
-            legacy.as_deref(),
-            &home_dir.join(hidden_data_directory()),
-            "product home",
-        )
+        dirs::home_dir()
+            .unwrap_or_else(|| self.user_root.clone())
+            .join(hidden_data_directory())
     }
 
     /// Get assistant workspace base directory: ~/.starmate/personal_assistant/
@@ -308,7 +220,7 @@ impl PathManager {
         } else {
             dirs::data_local_dir().unwrap_or_else(|| PathBuf::from("/tmp"))
         };
-        Self::migrate_namespace_dir(&base, "user skills").join("skills")
+        base.join(data_namespace()).join("skills")
     }
 
     /// Get OpenBitFun-managed built-in skills directory under the user skills root.
@@ -454,10 +366,7 @@ impl PathManager {
 
     /// Get project config root directory: {project}/.starmate/
     pub fn project_root(&self, workspace_path: &Path) -> PathBuf {
-        let current = workspace_path.join(hidden_data_directory());
-        let legacy = legacy_hidden_data_directory()
-            .map(|directory| workspace_path.join(directory));
-        Self::migrate_legacy_root(legacy.as_deref(), &current, "project data")
+        workspace_path.join(hidden_data_directory())
     }
 
     /// Get the shared runtime projects root directory: ~/.starmate/projects/
@@ -1255,10 +1164,8 @@ mod tests {
         let _guard = ENV_LOCK.lock().expect("env lock poisoned");
         let _env_guard = EnvVarGuard::capture([
             "STARMATE_USER_ROOT",
-            "OPENBITFUN_USER_ROOT",
             "STARMATE_E2E_USER_ROOT",
             "STARMATE_HOME",
-            "OPENBITFUN_HOME",
             "STARMATE_E2E_HOME",
             "STARMATE_E2E_STORAGE_GUARD",
         ]);
@@ -1279,95 +1186,12 @@ mod tests {
     }
 
     #[test]
-    fn legacy_openbitfun_env_fallbacks_still_resolve() {
-        let _guard = ENV_LOCK.lock().expect("env lock poisoned");
-        let _env_guard = EnvVarGuard::capture([
-            "STARMATE_USER_ROOT",
-            "OPENBITFUN_USER_ROOT",
-            "STARMATE_E2E_USER_ROOT",
-            "STARMATE_HOME",
-            "OPENBITFUN_HOME",
-            "STARMATE_E2E_HOME",
-        ]);
-        let temp_root = std::env::temp_dir().join("openbitfun-legacy-env-path-manager-test");
-        let user_root = temp_root.join("user-root");
-        let home_root = temp_root.join("home");
-        std::env::remove_var("STARMATE_USER_ROOT");
-        std::env::remove_var("STARMATE_E2E_USER_ROOT");
-        std::env::set_var("OPENBITFUN_USER_ROOT", &user_root);
-        std::env::remove_var("STARMATE_HOME");
-        std::env::remove_var("STARMATE_E2E_HOME");
-        std::env::set_var("OPENBITFUN_HOME", &home_root);
-
-        let pm = PathManager::new().expect("path manager should accept legacy env names");
-        assert_eq!(pm.user_config_dir(), user_root.join("config"));
-        assert_eq!(pm.product_home_dir(), home_root);
-    }
-
-    #[test]
-    fn migrates_legacy_project_hidden_dir_on_first_access() {
-        let _guard = ENV_LOCK.lock().expect("env lock poisoned");
-        let _env_guard = EnvVarGuard::capture([
-            "STARMATE_USER_ROOT",
-            "OPENBITFUN_USER_ROOT",
-            "STARMATE_E2E_USER_ROOT",
-            "STARMATE_HOME",
-            "OPENBITFUN_HOME",
-            "STARMATE_E2E_HOME",
-        ]);
-        std::env::remove_var("STARMATE_E2E_USER_ROOT");
-        std::env::remove_var("STARMATE_HOME");
-        std::env::remove_var("OPENBITFUN_HOME");
-        std::env::remove_var("STARMATE_E2E_HOME");
-        let temp_root =
-            std::env::temp_dir().join(format!("starmate-project-migration-{}", std::process::id()));
-        let _ = std::fs::remove_dir_all(&temp_root);
-        let workspace = temp_root.join("workspace");
-        std::fs::create_dir_all(workspace.join(".openbitfun").join("plans")).unwrap();
-        std::fs::write(workspace.join(".openbitfun/plans/example.md"), "plan").unwrap();
-        std::env::set_var("STARMATE_USER_ROOT", temp_root.join("user-root"));
-
-        let pm = PathManager::new().expect("path manager should initialize");
-        let root = pm.project_root(&workspace);
-        assert_eq!(root, workspace.join(hidden_data_directory()));
-        assert!(workspace.join(hidden_data_directory()).join("plans/example.md").exists());
-        assert!(workspace.join(".openbitfun").exists(), "legacy dir must stay for downgrade");
-
-        std::fs::write(root.join("plans/example.md"), "updated").unwrap();
-        let _ = pm.project_root(&workspace);
-        assert_eq!(
-            std::fs::read_to_string(root.join("plans/example.md")).unwrap(),
-            "updated",
-            "an existing rebranded directory must not be migrated over"
-        );
-        let _ = std::fs::remove_dir_all(&temp_root);
-    }
-
-    #[test]
-    fn copies_legacy_namespace_root_without_destroying_source() {
-        let temp_root =
-            std::env::temp_dir().join(format!("starmate-namespace-migration-{}", std::process::id()));
-        let _ = std::fs::remove_dir_all(&temp_root);
-        let base = temp_root.join("base");
-        std::fs::create_dir_all(base.join("openbitfun").join("config")).unwrap();
-        std::fs::write(base.join("openbitfun/config/app.json"), "{}").unwrap();
-
-        let migrated = PathManager::migrate_namespace_dir(&base, "test namespace");
-        assert_eq!(migrated, base.join(data_namespace()));
-        assert!(migrated.join("config/app.json").exists());
-        assert!(base.join("openbitfun/config/app.json").exists());
-        let _ = std::fs::remove_dir_all(&temp_root);
-    }
-
-    #[test]
     fn e2e_storage_guard_rejects_missing_isolated_roots() {
         let _guard = ENV_LOCK.lock().expect("env lock poisoned");
         let _env_guard = EnvVarGuard::capture([
             "STARMATE_USER_ROOT",
-            "OPENBITFUN_USER_ROOT",
             "STARMATE_E2E_USER_ROOT",
             "STARMATE_HOME",
-            "OPENBITFUN_HOME",
             "STARMATE_E2E_HOME",
             "STARMATE_E2E_STORAGE_GUARD",
         ]);

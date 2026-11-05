@@ -14,7 +14,7 @@ test('default and custom members resolve through one deterministic contract', ()
   const desktop = resolveProductDefinition({ rootDir: ROOT, productConfig: ACME, member: 'desktop' });
   const cli = resolveProductDefinition({ rootDir: ROOT, productConfig: ACME, member: 'cli' });
 
-  assert.equal(openbitfun.assembly.productId, 'openbitfun');
+  assert.equal(openbitfun.assembly.productId, 'starmate');
   assert.equal(openbitfun.assembly.dataNamespace, 'starmate');
   assert.equal(openbitfun.assembly.binaryName, 'starmate-desktop');
   assert.equal(openbitfun.assembly.bundleId, 'com.starmate.desktop');

@@ -1,14 +1,10 @@
 import { generateRequestId, type CloudAccountSession } from './CloudAccountClient';
-import { deserializeCloudAccountSession, type StoredCloudAccountSession } from './CloudAccountSessionStore';
 import { fromB64, generateKeyPair, toB64 } from './E2EEncryption';
-import { migrateMobileNavigationController } from './MobileNavigationStore';
 import { pairingRelayUrl } from './pairingLink';
 
 const DATABASE = 'starmate-mobile-account';
 const ACCOUNTS = 'accounts';
 const CHANGE_CHANNEL = 'starmate.mobile.account.changed';
-const LEGACY_DATABASE = 'openbitfun-mobile-account';
-const LEGACY_SESSION_KEY = 'openbitfun.mobile.account_session.v2';
 
 interface BrowserAccountRecord {
   version: 1;
@@ -26,61 +22,6 @@ export interface BrowserAccountSnapshot {
   revision: number;
   session: CloudAccountSession | null;
   lastChange?: 'signed-out' | 'expired';
-}
-
-function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-}
-
-function openLegacyAccountDatabase(): Promise<IDBDatabase | null> {
-  if (typeof indexedDB === 'undefined') return Promise.resolve(null);
-  return new Promise(resolve => {
-    let request: IDBOpenDBRequest;
-    try { request = indexedDB.open(LEGACY_DATABASE); }
-    catch { resolve(null); return; }
-    request.onblocked = () => resolve(null);
-    request.onerror = () => resolve(null);
-    request.onupgradeneeded = () => { /* do not create stores for a fresh legacy DB */ };
-    request.onsuccess = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains('accounts')) {
-        db.close();
-        resolve(null);
-        return;
-      }
-      resolve(db);
-    };
-  });
-}
-
-/** Copy OpenBitFun-era browser identities into the StarMate database once. */
-async function migrateLegacyAccountDatabase(target: IDBDatabase): Promise<void> {
-  try {
-    const existing = await requestToPromise(target.transaction('accounts', 'readonly').objectStore('accounts').count());
-    if (existing > 0) return;
-    const legacy = await openLegacyAccountDatabase();
-    if (!legacy) return;
-    try {
-      const records = await requestToPromise(
-        legacy.transaction('accounts', 'readonly').objectStore('accounts').getAll(),
-      ) as unknown[];
-      if (records.length === 0) return;
-      await new Promise<void>((resolve, reject) => {
-        const tx = target.transaction('accounts', 'readwrite');
-        tx.oncomplete = () => resolve();
-        tx.onerror = tx.onabort = () => reject(tx.error);
-        const store = tx.objectStore('accounts');
-        for (const record of records) store.put(record);
-      });
-    } finally {
-      legacy.close();
-    }
-  } catch (error) {
-    console.warn('[BrowserAccountStore] legacy account database migration failed', error);
-  }
 }
 
 export class BrowserAccountStorageError extends Error {
@@ -166,7 +107,6 @@ export class BrowserAccountStore {
         const db = request.result;
         if (settled) { db.close(); return; }
         db.onversionchange = () => { db.close(); this.database = null; };
-        await migrateLegacyAccountDatabase(db);
         resolve(db);
       };
     }).catch(error => { this.database = null; throw error; });
@@ -204,59 +144,18 @@ export class BrowserAccountStore {
     return result;
   }
 
-  private legacySession(): StoredCloudAccountSession | null {
-    try {
-      const raw = window.sessionStorage.getItem(LEGACY_SESSION_KEY);
-      if (!raw) return null;
-      const legacy = deserializeCloudAccountSession(raw);
-      if (legacy?.relayUrl === this.relayUrl) return legacy;
-      legacy?.session.masterKey.fill(0);
-    } catch { /* Legacy storage is optional; never reset unreadable records. */ }
-    return null;
-  }
-
-  private retireLegacy(legacy: StoredCloudAccountSession | null, current: BrowserAccountRecord): void {
-    if (!legacy) return;
-    if (current.session?.userId === legacy.session.userId) {
-      migrateMobileNavigationController(legacy.session.userId, this.relayUrl,
-        legacy.controllerDeviceId, current.controllerDeviceId);
-    }
-    try {
-      // Only retire a successfully read legacy credential after the shared
-      // transaction commits. A retained signed-out record prevents resurrection
-      // when another, previously suspended legacy tab later loads this build.
-      window.sessionStorage.removeItem(LEGACY_SESSION_KEY);
-      window.sessionStorage.removeItem(`starmate.mobile.device_key:${this.relayUrl}:${legacy.controllerDeviceId}`);
-      window.sessionStorage.removeItem(`openbitfun.mobile.device_key:${this.relayUrl}:${legacy.controllerDeviceId}`);
-    } catch { /* A shared record is authoritative even if legacy cleanup fails. */ }
-  }
-
   async read(): Promise<BrowserAccountSnapshot> {
-    const legacy = this.legacySession();
-    try {
-      let current = await this.transaction('readonly', value => value);
-      if (!current || (current.revision === 0 && legacy)) {
-        let candidate: BrowserAccountRecord;
-        if (legacy) {
-          candidate = { version: 1, relayUrl: this.relayUrl,
-            controllerDeviceId: legacy.controllerDeviceId, privateKey: toB64(legacy.session.masterKey),
-            revision: 1, session: { token: legacy.session.token, userId: legacy.session.userId } };
-        } else {
-          const keys = await generateKeyPair();
-          candidate = { version: 1, relayUrl: this.relayUrl,
-            controllerDeviceId: generateRequestId(), privateKey: toB64(keys.privateKey),
-            revision: 0, session: null };
-          keys.privateKey.fill(0);
-        }
-        current = await this.transaction('readwrite', value => {
-          if (!value || (value.revision === 0 && !value.session && legacy)) return candidate;
-          return value;
-        });
-      }
-      if (!current) throw new BrowserAccountStorageError('unavailable');
-      this.retireLegacy(legacy, current);
-      return snapshot(current);
-    } finally { legacy?.session.masterKey.fill(0); }
+    let current = await this.transaction('readonly', value => value);
+    if (!current) {
+      const keys = await generateKeyPair();
+      const candidate: BrowserAccountRecord = { version: 1, relayUrl: this.relayUrl,
+        controllerDeviceId: generateRequestId(), privateKey: toB64(keys.privateKey),
+        revision: 0, session: null };
+      keys.privateKey.fill(0);
+      current = await this.transaction('readwrite', value => value ?? candidate);
+    }
+    if (!current) throw new BrowserAccountStorageError('unavailable');
+    return snapshot(current);
   }
 
   async saveSession(

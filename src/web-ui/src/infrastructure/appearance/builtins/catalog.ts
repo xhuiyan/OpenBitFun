@@ -9,7 +9,6 @@ import type {
   AppearanceThemeTokenName,
 } from '../types';
 import { buildBuiltinAppearance } from './buildBuiltinAppearance';
-import { normalizeAppearanceId } from './appearanceIdMigration';
 export { WIDGET_APPEARANCE_VARIABLE_NAMES } from '../adapters/widgetAppearanceVariables';
 
 export { DEFAULT_DARK_APPEARANCE_ID, DEFAULT_LIGHT_APPEARANCE_ID } from './palettes';
@@ -50,7 +49,7 @@ export const builtinAppearanceCatalog: readonly AppearanceCatalogEntry[] = Objec
 );
 
 export function getBuiltinAppearance(id: string): AppearancePackage | null {
-  return builtinById.get(normalizeAppearanceId(id)) ?? null;
+  return builtinById.get(id) ?? null;
 }
 
 export function getBuiltinAppearanceThemeTokens(

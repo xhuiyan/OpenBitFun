@@ -1,5 +1,4 @@
 export const APPEARANCE_SCHEMA = 'starmate.appearance' as const;
-export const LEGACY_APPEARANCE_SCHEMA = 'openbitfun.appearance' as const;
 export const APPEARANCE_SCHEMA_VERSION = 2 as const;
 export const SYSTEM_APPEARANCE_ID = 'system' as const;
 

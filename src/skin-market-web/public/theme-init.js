@@ -1,6 +1,5 @@
 (function () {
   var storageKey = 'starmate-skin-market-theme';
-  var legacyStorageKey = 'openbitfun-skin-market-theme';
   var storedTheme = null;
 
   try {

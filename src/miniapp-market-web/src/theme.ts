@@ -4,7 +4,6 @@ import { themes } from '@starmate/theme-openbitfun';
 export type Theme = 'light' | 'dark';
 
 export const THEME_STORAGE_KEY = 'starmate-market-theme';
-const LEGACY_THEME_STORAGE_KEY = 'openbitfun-market-theme';
 
 export function isTheme(value: string | null): value is Theme {
   return value === 'light' || value === 'dark';
@@ -16,8 +15,7 @@ export function resolveTheme(storedTheme: string | null, systemPrefersDark: bool
 
 function readStoredTheme(): string | null {
   try {
-    return window.localStorage.getItem(THEME_STORAGE_KEY)
-      ?? window.localStorage.getItem(LEGACY_THEME_STORAGE_KEY);
+    return window.localStorage.getItem(THEME_STORAGE_KEY);
   } catch {
     return null;
   }

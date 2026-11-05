@@ -14,7 +14,6 @@ from typing import Any, Callable, Iterable, Mapping, Sequence
 
 
 SCHEMA = "starmate.appearance"
-LEGACY_SCHEMA = "openbitfun.appearance"
 SCHEMA_VERSION = 2
 REGISTRY_PATH = Path(__file__).resolve().parent.parent / "references" / "appearance-registry.json"
 MANIFEST_NAME = "appearance.json"
@@ -268,7 +267,7 @@ class ManifestValidator:
             "preview", "backgroundMedia", "requiredCapabilities", "globals", "materials", "components", "scenes", "renderers",
             "assets", "integrity",
         ], "$", self.error)
-        if value.get("schema") not in {SCHEMA, LEGACY_SCHEMA}:
+        if value.get("schema") != SCHEMA:
             self.error("schema", "INVALID_SCHEMA", f"Schema must be {SCHEMA}")
         if value.get("schemaVersion") != SCHEMA_VERSION:
             self.error("schemaVersion", "UNSUPPORTED_SCHEMA_VERSION", f"Schema version must be {SCHEMA_VERSION}")
@@ -811,7 +810,7 @@ class ManifestValidator:
             return self.validate_mermaid(settings)
         if renderer_id == "generative-widget":
             return self.validate_widget(settings)
-        if renderer_id in {"starmate-canvas", "openbitfun-canvas"}:
+        if renderer_id == "starmate-canvas":
             return self.validate_canvas(settings)
         return [f"Unsupported renderer: {renderer_id}"]
 

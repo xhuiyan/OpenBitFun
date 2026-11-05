@@ -49,9 +49,7 @@ import { rehypeWindowsDrivePaths } from './rehypeWindowsDrivePaths';
 const log = createLogger('Markdown');
 const COMPUTER_LINK_PREFIX = 'computer://';
 const FILE_LINK_PREFIX = 'file://';
-const CANVAS_LINK_PREFIX = 'starmate-canvas://';
-const LEGACY_CANVAS_LINK_PREFIX = 'openbitfun-canvas://';
-const CANVAS_LINK_PREFIX_PATTERN = /^(?:starmate|openbitfun)-canvas:\/\//;
+const CANVAS_LINK_PREFIX_PATTERN = /^starmate-canvas:\/\//;
 const WORKSPACE_FOLDER_PLACEHOLDER = '{{workspaceFolder}}';
 
 const MarkdownMathRenderer = lazyWithRecovery(() => import('./MarkdownMathRenderer'));
@@ -171,7 +169,7 @@ function mayNeedWorkspacePathForMarkdownLinks(content: string): boolean {
   // while false negatives could make relative local links display poorly.
   if (
     hasMarkdownLinkSyntax &&
-    /!?\[[^\]]+\]\(\s*(?!https?:|mailto:|data:|asset:|tauri:|visualization:|tab:|(?:starmate|openbitfun)-canvas:|#)[^)]+\)/i.test(content)
+    /!?\[[^\]]+\]\(\s*(?!https?:|mailto:|data:|asset:|tauri:|visualization:|tab:|starmate-canvas:|#)[^)]+\)/i.test(content)
   ) {
     return true;
   }
@@ -325,7 +323,7 @@ function remarkAutolinkInternalLinks() {
         return;
       }
 
-      const re = /(computer:\/\/|file:\/\/|(?:starmate|openbitfun)-canvas:\/\/)[^\s<>()]+/g;
+      const re = /(computer:\/\/|file:\/\/|starmate-canvas:\/\/)[^\s<>()]+/g;
       let match: RegExpExecArray | null;
       let lastIndex = 0;
       const nextChildren: any[] = [];

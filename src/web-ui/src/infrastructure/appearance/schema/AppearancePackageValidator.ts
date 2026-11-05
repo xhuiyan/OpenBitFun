@@ -1,5 +1,3 @@
-import { normalizeRendererId } from '../builtins/appearanceRendererIdMigration';
-import { isSupportedAppearanceSchema } from '../builtins/appearancePackageFormatMigration';
 import type { AppearanceRegistry } from '../registry/AppearanceRegistry';
 import {
   APPEARANCE_SCHEMA,
@@ -157,7 +155,7 @@ export class AppearancePackageValidator {
       'assets', 'integrity',
     ], '$', error);
 
-    if (!isSupportedAppearanceSchema(input.schema)) {
+    if (input.schema !== APPEARANCE_SCHEMA) {
       error('schema', 'INVALID_SCHEMA', `Schema must be ${APPEARANCE_SCHEMA}`);
     }
     if (input.schemaVersion !== APPEARANCE_SCHEMA_VERSION) {
@@ -955,7 +953,7 @@ export class AppearancePackageValidator {
       return;
     }
     Object.entries(value).forEach(([id, definition]) => {
-      const adapter = registry.getRenderer(normalizeRendererId(id));
+      const adapter = registry.getRenderer(id);
       const path = `renderers.${id}`;
       if (!adapter) {
         error(path, 'UNKNOWN_RENDERER', `No registered renderer adapter for ${id}`);

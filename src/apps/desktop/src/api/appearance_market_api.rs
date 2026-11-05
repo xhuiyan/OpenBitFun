@@ -279,8 +279,8 @@ fn normalize_manual_submission(
         .file_name()
         .and_then(|name| name.to_str())
         .is_some_and(|name| {
-            let name = name.to_ascii_lowercase();
-            name.ends_with(".starmate-appearance") || name.ends_with(".openbitfun-appearance")
+            name.to_ascii_lowercase()
+                .ends_with(".starmate-appearance")
         })
     {
         return Err("Skin submissions must use a .starmate-appearance package.".to_string());
@@ -462,28 +462,6 @@ mod tests {
             normalized.repository_url.as_deref(),
             Some("https://github.com/example/skin")
         );
-    }
-
-    #[test]
-    fn accepts_legacy_openbitfun_appearance_extension() {
-        let package_path = if cfg!(windows) {
-            r"C:\tmp\Ocean Night.openbitfun-appearance"
-        } else {
-            "/tmp/Ocean Night.openbitfun-appearance"
-        };
-        let normalized = normalize_manual_submission(AppearanceMarketSubmitPackageRequest {
-            package_path: package_path.to_string(),
-            slug: String::new(),
-            min_openbitfun_version: String::new(),
-            changelog: String::new(),
-            license: AppearanceMarketLicense {
-                spdx_expression: Some("MIT".to_string()),
-                custom_url: None,
-            },
-            repository_url: None,
-        })
-        .expect("legacy package extension should still submit");
-        assert_eq!(normalized.slug, "ocean-night");
     }
 
     #[test]

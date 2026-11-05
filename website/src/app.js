@@ -8,8 +8,7 @@ const THEME_CHOICES = ['system', 'light', 'dark'];
 
 function readPreference(key) {
   try {
-    return localStorage.getItem(key)
-      ?? localStorage.getItem(key.replace(/^starmate-/, 'openbitfun-'));
+    return localStorage.getItem(key);
   } catch {
     return null;
   }

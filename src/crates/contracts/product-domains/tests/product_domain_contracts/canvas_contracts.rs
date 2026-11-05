@@ -39,16 +39,6 @@ fn canvas_artifact_ref_uses_logical_uri_not_path() {
 }
 
 #[test]
-fn canvas_artifact_ref_still_accepts_legacy_scheme() {
-    let parsed = parse_canvas_artifact_ref(
-        "openbitfun-canvas://session/session%201/canvas/canvas%201",
-    )
-    .expect("legacy reference should parse");
-    assert_eq!(parsed.session_id.as_str(), "session 1");
-    assert_eq!(parsed.canvas_id.as_str(), "canvas 1");
-}
-
-#[test]
 fn canvas_artifact_ref_rejects_unsafe_path_segments() {
     for uri in [
         "starmate-canvas://session/..%2Fother/canvas/canvas_1",

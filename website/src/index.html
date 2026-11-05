@@ -16,8 +16,7 @@
       (() => {
         let theme = 'system';
         try {
-          const stored = localStorage.getItem('starmate-playbook-theme')
-            ?? localStorage.getItem('openbitfun-playbook-theme');
+          const stored = localStorage.getItem('starmate-playbook-theme');
           if (['light', 'dark'].includes(stored)) theme = stored;
         } catch {}
         const root = document.documentElement;

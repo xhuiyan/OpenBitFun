@@ -401,9 +401,6 @@ export class AppManager implements IAppManager {
       localStorage.removeItem('starmate-app-state');
       
       // Clear other potential panel state keys
-      localStorage.removeItem('OpenBitFun-left-panel-width');
-      localStorage.removeItem('OpenBitFun-left-panel-collapsed');
-      localStorage.removeItem('OpenBitFun-right-panel-collapsed');
       localStorage.removeItem('right-panel-collapsed');
       localStorage.removeItem(STORAGE_KEYS.RIGHT_PANEL_WIDTH);
     } catch (error) {

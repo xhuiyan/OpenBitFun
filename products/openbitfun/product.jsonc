@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/product-definition.schema.json",
   "schemaVersion": 1,
-  "productId": "openbitfun",
+  "productId": "starmate",
   "dataNamespace": "starmate",
   "localeRoot": "./locales",
   "members": {

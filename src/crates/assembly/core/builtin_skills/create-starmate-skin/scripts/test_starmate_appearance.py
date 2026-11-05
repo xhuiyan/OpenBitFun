@@ -28,12 +28,6 @@ class ManifestValidatorTests(unittest.TestCase):
         validator.validate(manifest)
         return validator
 
-    def test_legacy_openbitfun_schema_is_accepted(self) -> None:
-        manifest = base_manifest()
-        manifest["schema"] = "openbitfun.appearance"
-        validator = self.validate(manifest)
-        self.assertNotIn("INVALID_SCHEMA", {issue["code"] for issue in validator.errors})
-
     def test_unknown_and_circular_references_are_rejected(self) -> None:
         unknown = base_manifest()
         unknown["globals"] = {

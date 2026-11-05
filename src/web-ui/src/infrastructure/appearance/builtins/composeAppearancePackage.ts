@@ -1,5 +1,3 @@
-import { normalizeLegacyRendererIds } from './appearanceRendererIdMigration';
-import { normalizeLegacyAppearanceSchema } from './appearancePackageFormatMigration';
 import type {
   AppearanceGlobalTokens,
   AppearanceMaterialDefinition,
@@ -190,7 +188,6 @@ function mergeRenderers(
 }
 
 export function composeAppearancePackage(pkg: AppearancePackage): AppearancePackage {
-  pkg = normalizeLegacyRendererIds(normalizeLegacyAppearanceSchema(pkg));
 
   const registered = getBuiltinAppearance(pkg.id);
   if (registered === pkg) return pkg;
