@@ -1479,7 +1479,7 @@ test('stable and beta publication require every producer, while artifact-only ru
   const results = ['success', 'failure', 'cancelled', 'skipped'];
   for (const channel of ['stable', 'beta']) {
     for (const upload of ['true', 'false']) {
-      for (const target of ['all', 'macos-arm64', 'macos-x64']) {
+      for (const target of ['all', 'macos-arm64', 'macos-x64', 'windows-x64', 'macos-arm64-windows-x64']) {
         for (const desktop of results) for (const linux of results) for (const image of results) {
           const needs = {
             prepare: { result: 'success', outputs: { release_channel: channel, upload_to_release: upload, relay_image_only: 'false', target_platform: target } },
@@ -1540,7 +1540,11 @@ test('Desktop recovery selects only one Mac target and cannot publish an incompl
   const step = workflow.jobs.prepare.steps.find((entry) => entry.name === 'Select Desktop package platforms');
   const root = mkdtempSync(path.join(tmpdir(), 'starmate-platform-recovery-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  for (const target of ['all', 'macos-arm64', 'macos-x64', 'unknown']) {
+  const platformOptions = workflow.on.workflow_dispatch.inputs.target_platform.options;
+  for (const option of ['all', 'macos-arm64', 'macos-x64', 'windows-x64', 'macos-arm64-windows-x64']) {
+    assert.ok(platformOptions.includes(option), option);
+  }
+  for (const target of ['all', 'macos-arm64', 'macos-x64', 'windows-x64', 'macos-arm64-windows-x64', 'unknown']) {
     for (const relay of ['true', 'false']) {
       const output = path.join(root, `${target}-${relay}`);
       const result = spawnSync('bash', ['-c', step.run], {
@@ -1554,17 +1558,20 @@ test('Desktop recovery selects only one Mac target and cannot publish an incompl
       assert.equal(result.status, 0, result.stderr);
       const matrix = JSON.parse(readFileSync(output, 'utf8').trim().slice('matrix='.length));
       assert.deepEqual(matrix.map((platform) => platform.name), target === 'all'
-        ? ['linux-x64', 'linux-arm64', 'macos-arm64', 'macos-x64', 'windows-x64'] : [target]);
+        ? ['linux-x64', 'linux-arm64', 'macos-arm64', 'macos-x64', 'windows-x64']
+        : target === 'macos-arm64-windows-x64' ? ['macos-arm64', 'windows-x64'] : [target]);
       for (const platform of matrix) {
         assert.ok(platform.os && platform.target && platform.build_command);
       }
       if (target === 'macos-arm64') assert.equal(matrix[0].build_command, 'pnpm run desktop:build:arm64');
       if (target === 'macos-x64') assert.equal(matrix[0].build_command, 'pnpm run desktop:build:x86_64');
+      if (target === 'windows-x64') assert.match(matrix[0].build_command, /desktop-tauri-build\.mjs.*x86_64-pc-windows-msvc/);
     }
   }
   for (const [target, relay, runs, success] of [
     ['all', 'false', '123,456', true], ['all', 'false', 'not-a-run', false],
     ['macos-arm64', 'false', '123', false], ['all', 'true', '123', false],
+    ['macos-arm64-windows-x64', 'false', '123', false],
   ]) {
     const result = spawnSync('bash', ['-c', step.run], {
       cwd: repoRoot, encoding: 'utf8', windowsHide: true,
@@ -1584,6 +1591,7 @@ test('Desktop recovery selects only one Mac target and cannot publish an incompl
     ['macos-x64', 'true', '123', '', true], ['macos-arm64', 'true', '123', '', true],
     ['all', 'true', '123', '', false], ['macos-x64', 'false', '123', '', false],
     ['macos-x64', 'true', 'invalid', '', false], ['macos-x64', 'true', '123', '456', false],
+    ['macos-arm64-windows-x64', 'true', '123', '', false], ['windows-x64', 'true', '123', '', false],
   ]) {
     const result = spawnSync('bash', ['-c', step.run], {
       cwd: repoRoot, encoding: 'utf8', windowsHide: true,

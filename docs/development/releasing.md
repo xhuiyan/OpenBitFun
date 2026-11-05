@@ -22,6 +22,42 @@ its tag automatically. Release creation and editing use GitHub CLI without
 `--target`: sending `target_commitish` for workflow-changing commits can require
 `workflows:write`, even for an existing tag. Asset upload precedes publication.
 
+## Partial Desktop builds (artifacts only)
+
+`Desktop Package` accepts `target_platform` presets that build fewer than the five
+release platforms. Use them for smoke tests or to hand a few installers to
+testers on one or two platforms; they are not a release path.
+
+| Preset | Builds |
+|---|---|
+| `all` (default) | Linux x64/arm64, macOS arm64/x64, Windows x64 — the complete release gate |
+| `macos-arm64`, `macos-x64` | one macOS target (also the two Apple verification recovery targets) |
+| `windows-x64` | Windows NSIS installer plus the custom Desktop installer |
+| `macos-arm64-windows-x64` | Apple Silicon macOS and Windows, skipping the Linux packagers |
+
+Dispatch from the current `main` workflow:
+
+```bash
+gh workflow run desktop-package.yml --ref main \
+  -f target_platform=macos-arm64-windows-x64
+```
+
+Every preset other than `all` is artifacts-only. The `linux-binaries`,
+`publish-relay-image`, and `upload-release-assets` jobs are skipped, so a partial
+run never creates Release assets, pushes a Relay image tag, or moves an update
+feed. Download the per-platform `starmate-<tag>-<platform>-bundle` artifacts from
+the run page; that bundle holds the DMG, the NSIS installer, and the custom
+Desktop installer for the selected platforms.
+
+`upload_to_release` still controls signing strictness and updater artifacts, so
+leave it `false` for a quick unsigned check and set it to `true` only when the
+build must be signed and produce updater signatures. A partial run with
+`upload_to_release=true` still requires an existing tag and still never
+publishes. `artifact_run_ids` finalization and the Relay image backfill remain
+`all`-only, and `verification_recovery_run_id` keeps accepting exactly one macOS
+target. Publishing a real release still needs every platform plus the Relay image
+descriptor.
+
 ## Recovering one macOS package
 
 For an existing immutable tag, dispatch `Desktop Package` from the current
