@@ -796,7 +796,7 @@ pub async fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(
             tauri_plugin_autostart::Builder::new()
-                .app_name("OpenBitFun")
+                .app_name("StarMate")
                 .build(),
         )
         .plugin(tauri_plugin_notification::init())

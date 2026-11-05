@@ -110,6 +110,7 @@ impl PathManager {
     /// - Linux: ~/.config/openbitfun/
     fn get_user_config_root() -> StarMateResult<PathBuf> {
         if let Some(path) = Self::env_path("STARMATE_USER_ROOT")
+            .or_else(|| Self::env_path("OPENBITFUN_USER_ROOT"))
             .or_else(|| Self::env_path("STARMATE_E2E_USER_ROOT"))
         {
             return Ok(path);
@@ -122,7 +123,9 @@ impl PathManager {
     }
 
     fn get_product_home_override() -> Option<PathBuf> {
-        Self::env_path("STARMATE_HOME").or_else(|| Self::env_path("STARMATE_E2E_HOME"))
+        Self::env_path("STARMATE_HOME")
+            .or_else(|| Self::env_path("OPENBITFUN_HOME"))
+            .or_else(|| Self::env_path("STARMATE_E2E_HOME"))
     }
 
     /// Get assistant home root directory: ~/.openbitfun/
@@ -1173,8 +1176,10 @@ mod tests {
         let _guard = ENV_LOCK.lock().expect("env lock poisoned");
         let _env_guard = EnvVarGuard::capture([
             "STARMATE_USER_ROOT",
+            "OPENBITFUN_USER_ROOT",
             "STARMATE_E2E_USER_ROOT",
             "STARMATE_HOME",
+            "OPENBITFUN_HOME",
             "STARMATE_E2E_HOME",
             "STARMATE_E2E_STORAGE_GUARD",
         ]);
@@ -1195,12 +1200,40 @@ mod tests {
     }
 
     #[test]
+    fn legacy_openbitfun_env_fallbacks_still_resolve() {
+        let _guard = ENV_LOCK.lock().expect("env lock poisoned");
+        let _env_guard = EnvVarGuard::capture([
+            "STARMATE_USER_ROOT",
+            "OPENBITFUN_USER_ROOT",
+            "STARMATE_E2E_USER_ROOT",
+            "STARMATE_HOME",
+            "OPENBITFUN_HOME",
+            "STARMATE_E2E_HOME",
+        ]);
+        let temp_root = std::env::temp_dir().join("openbitfun-legacy-env-path-manager-test");
+        let user_root = temp_root.join("user-root");
+        let home_root = temp_root.join("home");
+        std::env::remove_var("STARMATE_USER_ROOT");
+        std::env::remove_var("STARMATE_E2E_USER_ROOT");
+        std::env::set_var("OPENBITFUN_USER_ROOT", &user_root);
+        std::env::remove_var("STARMATE_HOME");
+        std::env::remove_var("STARMATE_E2E_HOME");
+        std::env::set_var("OPENBITFUN_HOME", &home_root);
+
+        let pm = PathManager::new().expect("path manager should accept legacy env names");
+        assert_eq!(pm.user_config_dir(), user_root.join("config"));
+        assert_eq!(pm.product_home_dir(), home_root);
+    }
+
+    #[test]
     fn e2e_storage_guard_rejects_missing_isolated_roots() {
         let _guard = ENV_LOCK.lock().expect("env lock poisoned");
         let _env_guard = EnvVarGuard::capture([
             "STARMATE_USER_ROOT",
+            "OPENBITFUN_USER_ROOT",
             "STARMATE_E2E_USER_ROOT",
             "STARMATE_HOME",
+            "OPENBITFUN_HOME",
             "STARMATE_E2E_HOME",
             "STARMATE_E2E_STORAGE_GUARD",
         ]);
