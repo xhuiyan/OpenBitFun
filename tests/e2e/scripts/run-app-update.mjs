@@ -21,7 +21,7 @@ if (process.argv.includes('--build')) {
     pubkey: Buffer.from('untrusted comment: minisign public key\n' + publicKey + '\n').toString('base64'),
     endpoints: ['https://github.com/GCWing/OpenBitFun/releases/latest/download/latest-v1.json', 'https://openbitfun.com/release/latest-v1.json'],
   } };
-  const build = spawn('cargo', ['build', '-p', 'openbitfun-desktop'], {
+  const build = spawn('cargo', ['build', '-p', 'starmate-desktop'], {
     cwd: repo, windowsHide: true, stdio: ['ignore', 'inherit', 'inherit'],
     env: { ...process.env, TAURI_CONFIG: JSON.stringify(config) },
   });
@@ -40,7 +40,7 @@ assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'),
 assert.equal(await readFile(path.join(frontend, 'frontend-revision.json'), 'utf8'), manifest);
 await mkdir(userRoot, { recursive: true });
 await mkdir(productHome, { recursive: true });
-const binaryName = 'openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '');
+const binaryName = 'starmate-desktop' + (process.platform === 'win32' ? '.exe' : '');
 const binarySource = path.resolve(process.env.STARMATE_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
 const binary = path.join(root, binaryName);
 const binaryStat = await stat(binarySource);

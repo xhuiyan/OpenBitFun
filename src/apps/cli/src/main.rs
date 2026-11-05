@@ -137,7 +137,7 @@ pub(crate) fn ensure_cli_mcp_service(
 }
 
 #[derive(Parser)]
-#[command(name = "openbitfun")]
+#[command(name = "starmate")]
 #[command(about = "StarMate CLI - AI agent-driven command-line programming assistant", long_about = None)]
 #[command(version)]
 struct Cli {
@@ -501,13 +501,13 @@ enum AcpAction {
     /// Show ACP server status and capabilities
     Status {
         /// Command name or path to show in generated examples
-        #[arg(long, default_value = "openbitfun")]
+        #[arg(long, default_value = "starmate")]
         command: String,
     },
     /// Check local readiness for ACP clients
     Doctor {
         /// Command name or path to show in generated examples
-        #[arg(long, default_value = "openbitfun")]
+        #[arg(long, default_value = "starmate")]
         command: String,
     },
     /// Print editor/client integration snippets
@@ -517,7 +517,7 @@ enum AcpAction {
         client: acp_cli::AcpConfigClient,
 
         /// Command name or path your editor should execute
-        #[arg(long, default_value = "openbitfun")]
+        #[arg(long, default_value = "starmate")]
         command: String,
     },
     /// Manage external ACP agents that StarMate can launch
@@ -1298,7 +1298,7 @@ fn is_dispatch_command(command: &Option<Commands>) -> bool {
 
 async fn run_cli() -> Result<()> {
     let raw_args = std::env::args_os().collect::<Vec<_>>();
-    let product_binary_name = option_env!("STARMATE_PRODUCT_BINARY_NAME").unwrap_or("openbitfun");
+    let product_binary_name = option_env!("STARMATE_PRODUCT_BINARY_NAME").unwrap_or("starmate");
     let product_display_name =
         option_env!("STARMATE_PRODUCT_DISPLAY_NAME").unwrap_or("StarMate CLI");
     let parsed = Cli::command()

@@ -21,7 +21,7 @@ assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'),
 assert.equal(await readFile(path.join(frontend, 'frontend-revision.json'), 'utf8'), manifest);
 await mkdir(userRoot, { recursive: true });
 await mkdir(productHome, { recursive: true });
-const binaryName = 'openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '');
+const binaryName = 'starmate-desktop' + (process.platform === 'win32' ? '.exe' : '');
 const binarySource = path.resolve(process.env.STARMATE_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
 const binary = path.join(root, binaryName);
 const binaryStat = await stat(binarySource);

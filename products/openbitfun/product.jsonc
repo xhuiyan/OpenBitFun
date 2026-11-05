@@ -7,12 +7,12 @@
   "members": {
     "desktop": {
       "displayNameKey": "product.desktop.name",
-      "binaryName": "openbitfun-desktop",
+      "binaryName": "starmate-desktop",
       "bundleId": "com.starmate.desktop"
     },
     "cli": {
       "displayNameKey": "product.cli.name",
-      "binaryName": "openbitfun"
+      "binaryName": "starmate"
     }
   }
 }

@@ -10,7 +10,7 @@ name = "starmate_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [[bin]]
-name = "openbitfun-desktop"
+name = "starmate-desktop"
 path = "src/main.rs"
 
 [build-dependencies]

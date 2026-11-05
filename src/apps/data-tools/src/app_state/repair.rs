@@ -276,7 +276,7 @@ impl DataToolsCoordinator {
                     let blockers =
                         starmate_legacy_migration::blocking_writer_processes_for_product(
                             0,
-                            &["openbitfun-data-tools", "openbitfun-data-migrator"],
+                            &["starmate-data-tools", "starmate-data-migrator"],
                         )
                         .map_err(failure)?;
                     let stopped = blockers.is_empty();

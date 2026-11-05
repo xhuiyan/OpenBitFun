@@ -20,7 +20,7 @@ assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'),
   'The frontend changed during the snapshot. Finish the build and rerun.');
 await mkdir(userRoot, { recursive: true });
 await mkdir(productHome, { recursive: true });
-const binaryName = 'openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '');
+const binaryName = 'starmate-desktop' + (process.platform === 'win32' ? '.exe' : '');
 const binarySource = path.resolve(process.env.STARMATE_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
 const binary = path.join(root, binaryName);
 const before = await stat(binarySource);

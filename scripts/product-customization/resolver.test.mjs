@@ -16,7 +16,7 @@ test('default and custom members resolve through one deterministic contract', ()
 
   assert.equal(openbitfun.assembly.productId, 'openbitfun');
   assert.equal(openbitfun.assembly.dataNamespace, 'starmate');
-  assert.equal(openbitfun.assembly.binaryName, 'openbitfun-desktop');
+  assert.equal(openbitfun.assembly.binaryName, 'starmate-desktop');
   assert.equal(openbitfun.assembly.bundleId, 'com.starmate.desktop');
   assert.equal(desktop.assembly.bundleId, 'com.acme.desktop');
   assert.equal(cli.assembly.binaryName, 'acme');

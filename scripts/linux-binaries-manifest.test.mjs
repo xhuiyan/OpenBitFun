@@ -280,8 +280,8 @@ test('openbitfun sync uses the canonical fixed installer fallback', () => {
   );
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(fs.readFileSync(calls, 'utf8').trim().split('\n'), [
-    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.2/openbitfun-installer.exe\t${versionDir}/openbitfun-installer.exe`,
-    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.2/openbitfun-installer.exe.sig\t${versionDir}/openbitfun-installer.exe.sig`,
+    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.2/starmate-installer.exe\t${versionDir}/starmate-installer.exe`,
+    `https://github.com/GCWing/OpenBitFun/releases/download/v1.2.2/starmate-installer.exe.sig\t${versionDir}/starmate-installer.exe.sig`,
   ]);
 });
 
@@ -376,7 +376,7 @@ test('website download manifest uses installer while updater manifest keeps setu
       source "$SYNC_SCRIPT"
       VERSION_DIR="$TEST_VERSION_DIR"
       STARMATE_BASE_URL="https://openbitfun.test/release"
-      WINDOWS_INSTALLER_FILENAME="openbitfun-installer.exe"
+      WINDOWS_INSTALLER_FILENAME="starmate-installer.exe"
       WEBSITE_DOWNLOADS_MANIFEST="downloads.json"
       write_website_download_manifest
     `],

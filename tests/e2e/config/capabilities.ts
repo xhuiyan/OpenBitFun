@@ -21,11 +21,11 @@ export function getApplicationPath(): string {
   let appName: string;
   
   if (isWindows) {
-    appName = 'openbitfun-desktop.exe';
+    appName = 'starmate-desktop.exe';
   } else if (isMac) {
     appName = 'OpenBitFun.app/Contents/MacOS/OpenBitFun';
   } else {
-    appName = 'openbitfun-desktop';
+    appName = 'starmate-desktop';
   }
   
   return path.resolve(__dirname, '..', '..', '..', 'target', 'debug', appName);

@@ -958,7 +958,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
     let install_dir = current_exe
         .parent()
         .ok_or_else(|| anyhow!("current executable has no parent directory"))?;
-    if current_exe.file_name().and_then(|name| name.to_str()) != Some("openbitfun") {
+    if current_exe.file_name().and_then(|name| name.to_str()) != Some("starmate") {
         return Err(anyhow!(
             "self-update requires the official executable name `openbitfun`"
         ));
@@ -970,7 +970,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
         .unpack(extract_dir.path())
         .context("extract CLI update archive")?;
     let package_dir = find_package_dir(extract_dir.path())?;
-    let new_primary = package_dir.join("openbitfun");
+    let new_primary = package_dir.join("starmate");
     let new_plugin_host = package_dir.join("resources").join("ext-host");
     validate_entrypoint(&new_primary)?;
     validate_plugin_host_resources(&new_plugin_host)?;
@@ -988,7 +988,7 @@ fn install_archive(archive: &[u8], current_exe: &Path) -> Result<()> {
                 install_dir.display()
             )
         })?;
-    let staged_primary = stage.path().join("openbitfun");
+    let staged_primary = stage.path().join("starmate");
     let staged_plugin_host = stage.path().join("ext-host");
     fs::copy(&new_primary, &staged_primary).context("stage openbitfun")?;
     copy_plugin_host_resources(&new_plugin_host, &staged_plugin_host)?;
@@ -1127,7 +1127,7 @@ fn install_archive(_archive: &[u8], _current_exe: &Path) -> Result<()> {
 fn find_package_dir(root: &Path) -> Result<PathBuf> {
     for entry in fs::read_dir(root).context("inspect CLI update archive")? {
         let path = entry?.path();
-        if path.is_dir() && path.join("openbitfun").is_file() {
+        if path.is_dir() && path.join("starmate").is_file() {
             return Ok(path);
         }
     }

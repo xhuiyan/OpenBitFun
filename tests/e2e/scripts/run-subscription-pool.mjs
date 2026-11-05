@@ -24,7 +24,7 @@ const frontend = path.join(root, 'frontend');
 const manifest = await readFile(path.join(frontendSource, 'frontend-revision.json'), 'utf8');
 await cp(frontendSource, frontend, { recursive: true });
 assert.equal(await readFile(path.join(frontendSource, 'frontend-revision.json'), 'utf8'), manifest, 'Frontend changed while being snapshotted');
-const binaryName = 'openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '');
+const binaryName = 'starmate-desktop' + (process.platform === 'win32' ? '.exe' : '');
 const binarySource = path.resolve(process.env.STARMATE_E2E_DESKTOP_BINARY || path.join(repo, 'target/debug', binaryName));
 const binary = path.join(root, binaryName);
 const beforeCopy = await stat(binarySource);

@@ -28,7 +28,7 @@ $ErrorActionPreference = 'Stop'
 function Get-OpenBitFunProcessIds {
     @(
         Get-CimInstance Win32_Process |
-            Where-Object { $_.Name -ieq 'openbitfun-desktop.exe' } |
+            Where-Object { $_.Name -ieq 'starmate-desktop.exe' } |
             ForEach-Object { [int]$_.ProcessId }
     )
 }
@@ -79,7 +79,7 @@ $rootProcessIds = if (@($OpenBitFunPid).Count -gt 0) {
 }
 
 if (@($rootProcessIds).Count -eq 0) {
-    throw 'No openbitfun-desktop.exe process was found. Pass -OpenBitFunPid explicitly or start OpenBitFun first.'
+    throw 'No starmate-desktop.exe process was found. Pass -OpenBitFunPid explicitly or start OpenBitFun first.'
 }
 
 $probeProcessId = $PID

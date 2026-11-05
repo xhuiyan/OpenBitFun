@@ -27,7 +27,7 @@ const showHelp = rawArgs.includes("--help") || rawArgs.includes("-h");
 const STRICT_PAYLOAD_VALIDATION = !isDev;
 const MIN_APP_EXE_BYTES = 5 * 1024 * 1024;
 const REQUIRED_PAYLOAD_FILES = [
-  "openbitfun-desktop.exe",
+  "starmate-desktop.exe",
   "frontend/dist/index.html",
   "mobile-web/dist/index.html",
   "resources/ext-host/extension-host.js",
@@ -186,7 +186,7 @@ function resolveAppExePath(mode, args = rawArgs, env = process.env) {
   return path.join(
     resolveCargoTargetDir(env),
     getExpectedAppProfile(mode),
-    "openbitfun-desktop.exe"
+    "starmate-desktop.exe"
   );
 }
 
@@ -254,14 +254,14 @@ if (appExePath) {
     files: [],
   };
 
-  const destExe = path.join(PAYLOAD_DIR, "openbitfun-desktop.exe");
+  const destExe = path.join(PAYLOAD_DIR, "starmate-desktop.exe");
   writeFileWithManifest(appExePath, destExe, manifest, PAYLOAD_DIR);
   log(`Copied: ${appExePath} -> ${destExe}`);
 
   const exeSize = fs.statSync(destExe).size;
   if (STRICT_PAYLOAD_VALIDATION && exeSize < MIN_APP_EXE_BYTES) {
     error(
-      `openbitfun-desktop.exe in payload is unexpectedly small (${exeSize} bytes). Refusing to continue.`
+      `starmate-desktop.exe in payload is unexpectedly small (${exeSize} bytes). Refusing to continue.`
     );
   }
 
@@ -346,7 +346,7 @@ if (isDev) {
       "src-tauri",
       "target",
       installerTargetProfile,
-      "openbitfun-installer.exe"
+      "starmate-installer.exe"
     )}`
   );
 }

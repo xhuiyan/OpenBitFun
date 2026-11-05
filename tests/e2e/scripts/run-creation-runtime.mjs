@@ -104,7 +104,7 @@ const probe = createServer(); probe.listen(0, '127.0.0.1'); await once(probe, 'l
 const port = probe.address().port; await new Promise(resolve => probe.close(resolve));
 const endpoint = 'http://127.0.0.1:' + port;
 const log = await open(path.join(root, 'desktop.log'), 'w');
-const app = spawn(path.join(repo, 'target/debug/openbitfun-desktop' + (process.platform === 'win32' ? '.exe' : '')), [], {
+const app = spawn(path.join(repo, 'target/debug/starmate-desktop' + (process.platform === 'win32' ? '.exe' : '')), [], {
   cwd: repo, windowsHide: true, stdio: ['ignore', log.fd, log.fd],
   env: { ...process.env, STARMATE_USER_ROOT: userRoot, STARMATE_E2E_USER_ROOT: userRoot,
     STARMATE_HOME: productHome, STARMATE_E2E_HOME: productHome, STARMATE_E2E_STORAGE_GUARD: '1',

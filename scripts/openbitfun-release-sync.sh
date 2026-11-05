@@ -73,7 +73,7 @@ WEBSITE_RELEASE_DIR="${WEBSITE_RELEASE_ROOT}${CHANNEL_PATH}"
 # Keep the lock off the Nginx /release/ alias. Override with
 # STARMATE_RELEASE_SYNC_LOCK if a host must share a lock across checkouts.
 LOCK_FILE="${STARMATE_RELEASE_SYNC_LOCK:-/var/lock/openbitfun-release-sync.lock}"
-WINDOWS_INSTALLER_FILENAME="openbitfun-installer.exe"
+WINDOWS_INSTALLER_FILENAME="starmate-installer.exe"
 WINDOWS_INSTALLER_URL=""
 WINDOWS_INSTALLER_SIGNATURE_URL=""
 WEBSITE_DOWNLOADS_MANIFEST="downloads.json"

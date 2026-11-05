@@ -638,11 +638,11 @@ test('keeps Rust CI independent, restore-only on PRs, and target-focused', () =>
   );
   assert.match(
     productControlContracts?.run ?? '',
-    /openbitfun-product-domains --no-default-features product_control/,
+    /starmate-product-domains --no-default-features product_control/,
   );
   assert.match(
     productControlContracts?.run ?? '',
-    /openbitfun-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery/,
+    /starmate-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery/,
   );
   const fileWatchContracts = rustJob.steps.find(
     (step) => step.name === 'Run file watch contract tests',
@@ -986,7 +986,7 @@ test('nightly validates generated inputs and projected lockfiles before packagin
   assert.equal(rustCache?.with?.['cache-on-failure'], restoreOnlyOnPr);
   const upload = steps.find((step) => step.uses?.startsWith('actions/upload-artifact@'));
   const verifyOutputs = steps.find((step) => step.name === 'Verify package outputs');
-  assert.match(verifyOutputs?.run ?? '', /openbitfun-installer\.exe/);
+  assert.match(verifyOutputs?.run ?? '', /starmate-installer\.exe/);
   assert.match(verifyOutputs?.run ?? '', /\*\.AppImage/);
   assert.ok(steps.indexOf(verifyOutputs) < steps.indexOf(upload));
   assert.equal(upload?.if, '${{ inputs.upload_artifacts }}');
@@ -1651,7 +1651,7 @@ test('Mac recovery architecture command accepts a real Mach-O executable', { ski
   const root = mkdtempSync(path.join(tmpdir(), 'openbitfun-recovery-architecture-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const target = process.arch === 'arm64' ? 'aarch64-apple-darwin' : 'x86_64-apple-darwin';
-  const executable = path.join(root, 'target', target, 'release/bundle/macos/StarMate.app/Contents/MacOS/openbitfun-desktop');
+  const executable = path.join(root, 'target', target, 'release/bundle/macos/StarMate.app/Contents/MacOS/starmate-desktop');
   mkdirSync(path.dirname(executable), { recursive: true });
   symlinkSync(process.execPath, executable);
   const result = spawnSync('bash', ['-c', `set -euo pipefail\n${script}`], {

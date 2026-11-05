@@ -688,7 +688,7 @@ impl AcpClientService {
                     let init = InitializeRequest::new(ProtocolVersion::V1)
                         .client_capabilities(ClientCapabilities::new())
                         .client_info(Implementation::new(
-                            "openbitfun-desktop",
+                            "starmate-desktop",
                             env!("CARGO_PKG_VERSION"),
                         ));
                     let initialize_response = cx.send_request(init).block_task().await?;

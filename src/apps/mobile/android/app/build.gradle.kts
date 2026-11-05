@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         // Same family as com.openbitfun.desktop; see the implementation plan section 3.
-        applicationId = "com.openbitfun.mobile"
+        applicationId = "com.starmate.mobile"
         minSdk = libs.versions.androidMinSdk.get().toInt()
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 1

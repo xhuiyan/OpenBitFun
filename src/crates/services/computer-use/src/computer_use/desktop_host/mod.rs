@@ -2023,7 +2023,7 @@ async fn resolve_pid_macos(
             return Ok(p);
         }
         // 2) Exact match against the bundle id's last segment (e.g. user
-        //    asks for "OpenBitFun" but `list_apps` returned name="openbitfun-desktop"
+        //    asks for "OpenBitFun" but `list_apps` returned name="starmate-desktop"
         //    with bundle_id="ai.openbitfun.desktop"). This keeps us aligned with
         //    Codex, which is robust to "Cursor" vs "com.todesktop....Cursor".
         if let Some(p) = apps

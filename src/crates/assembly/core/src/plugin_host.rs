@@ -2035,7 +2035,7 @@ mod tests {
     #[test]
     fn bundled_host_entry_supports_desktop_platform_layouts() {
         let entries = bundled_host_entry_candidates(
-            Path::new("product/bin/openbitfun-desktop"),
+            Path::new("product/bin/starmate-desktop"),
             PluginHostLaunchSpec::bun(),
         );
 

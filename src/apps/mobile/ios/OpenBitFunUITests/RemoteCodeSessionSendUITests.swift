@@ -1,7 +1,7 @@
 import XCTest
 
 final class RemoteCodeSessionSendUITests: XCTestCase {
-    private let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+    private let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -91,7 +91,7 @@ final class RemoteCodeSessionSendUITests: XCTestCase {
 /// the workspace picker and observes its first usable row, but never selects a
 /// workspace, creates a session, or sends content.
 final class RemoteWorkspaceLoadingPerformanceUITests: XCTestCase {
-    private let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+    private let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
     private var startedAt = Date()
 
     override func setUpWithError() throws {
@@ -180,7 +180,7 @@ final class RemoteWorkspaceLoadingPerformanceUITests: XCTestCase {
 }
 
 final class RemoteCreateWorkspacePickerUITests: XCTestCase {
-    private let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+    private let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -234,7 +234,7 @@ final class RemoteCreateWorkspacePickerUITests: XCTestCase {
 /// tests enter a disposable character but never submit it or mutate a remote
 /// session.
 final class ComposerFocusResponsivenessUITests: XCTestCase {
-    private let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+    private let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -301,7 +301,7 @@ final class ComposerFocusResponsivenessUITests: XCTestCase {
 /// Credentials are supplied by the invoking process and are never persisted in
 /// the test bundle or emitted in diagnostics.
 final class RemoteAccountWorkflowPerformanceUITests: XCTestCase {
-    private let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+    private let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
     private var workflowStartedAt = Date()
 
     override func setUpWithError() throws {
@@ -735,7 +735,7 @@ final class RemoteAccountWorkflowPerformanceUITests: XCTestCase {
 /// Run on a fresh simulator installation so notification authorization is undecided.
 final class NotificationOnboardingUITests: XCTestCase {
     func testLaterPersistsAcrossRelaunch() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launch()
         let prompt = app.alerts.firstMatch
         XCTAssertTrue(prompt.waitForExistence(timeout: 15))
@@ -766,7 +766,7 @@ final class NotificationOnboardingUITests: XCTestCase {
 
 final class SidebarNavigationUITests: XCTestCase {
     func testNewChatOffersHarnessProfilesInCompactAndWideSidebar() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--drawer", "--simplified-chinese"]
         app.launchMobileReady()
         let later = app.alerts.buttons["稍后"]
@@ -801,7 +801,7 @@ final class SidebarNavigationUITests: XCTestCase {
 
 final class GitHubLoginPresentationUITests: XCTestCase {
     func testLoginUsesCompactSheetAndOpensBrowserAutomatically() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--drawer", "--simplified-chinese"]
         app.launch()
         let later = app.alerts.buttons["稍后"]
@@ -835,7 +835,7 @@ final class GitHubLoginPresentationUITests: XCTestCase {
 
 final class MobileParityUITests: XCTestCase {
     func testFilePreviewPresentsDownloadExporterAbovePreview() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--file-preview", "--download-preview", "--simplified-chinese"]
         app.launchMobileReady()
         let save = app.buttons.matching(NSPredicate(format: "label IN %@", ["存储", "保存", "Save"])).firstMatch
@@ -855,7 +855,7 @@ final class MobileParityUITests: XCTestCase {
     }
 
     func testPlanCardExplainsUnsupportedHost() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--plan-preview", "--simplified-chinese"]
         app.launchMobileReady()
         XCTAssertTrue(app.staticTexts["Mobile parity"].waitForExistence(timeout: 10))
@@ -869,7 +869,7 @@ final class MobileParityUITests: XCTestCase {
     }
 
     func testRemoteCodePreviewShowsNumberedLines() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--file-preview", "--simplified-chinese"]
         app.launchMobileReady()
         let code = app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "fn main()")).firstMatch
@@ -882,7 +882,7 @@ final class MobileParityUITests: XCTestCase {
     }
 
     func testLanguageSwitchUpdatesExistingAndNewScreens() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--settings", "--simplified-chinese"]
         app.launchMobileReady()
         let language = app.buttons.containing(NSPredicate(format: "label CONTAINS %@", "语言")).firstMatch
@@ -902,7 +902,7 @@ final class MobileParityUITests: XCTestCase {
     }
 
     func testOfflineMiniAppsOpenFromSidebar() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchArguments = ["--harness-preview", "--drawer", "--simplified-chinese"]
         app.launchMobileReady()
         let miniapps = app.buttons["小应用"].firstMatch
@@ -1280,7 +1280,7 @@ final class RemoteTimelineScrollProbeUITests: XCTestCase {
         guard ProcessInfo.processInfo.environment["PROBE_SEND_CURRENT"] == "1" else {
             throw XCTSkip("Explicit live send probe is not enabled")
         }
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.activate()
         let conversation = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier BEGINSWITH %@", "conversation.session.")
@@ -1312,7 +1312,7 @@ final class RemoteTimelineScrollProbeUITests: XCTestCase {
     }
 
     func testInspectCurrentScreen() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.activate()
         if app.buttons["查看设备"].waitForExistence(timeout: 3) { app.buttons["查看设备"].tap() }
         let device = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "sidebar.device.")).firstMatch
@@ -1373,7 +1373,7 @@ final class RemoteTimelineScrollProbeUITests: XCTestCase {
     }
 
     func testProfileCurrentComposerInteractions() {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.activate()
         let header = app.buttons["打开侧栏"]
         if header.exists && header.frame.minX > 100 { header.tap() }
@@ -1418,7 +1418,7 @@ final class RemoteTimelineScrollProbeUITests: XCTestCase {
     }
 
     func testCurrentConversationCanScroll() throws {
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.activate()
         let before = XCTAttachment(string: app.debugDescription)
         before.name = "RemoteTimelineBeforeDrag"
@@ -1458,7 +1458,7 @@ final class RemoteTerminalLiveUITests: XCTestCase {
         try XCTSkipIf(target.isEmpty, "Set STARMATE_LIVE_TERMINAL_DEVICE to an authorized test desktop.")
         let sshName = ProcessInfo.processInfo.environment["STARMATE_LIVE_TERMINAL_SSH"] ?? ""
         continueAfterFailure = false
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launch()
         defer {
             let capture = XCTAttachment(screenshot: app.screenshot())
@@ -1557,7 +1557,7 @@ final class RemoteHomeLiveUITests: XCTestCase {
         let target = ProcessInfo.processInfo.environment["STARMATE_LIVE_FILE_DEVICE"] ?? ""
         try XCTSkipIf(target.isEmpty, "Supply an authorized device.")
         continueAfterFailure = false
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launchMobileReady()
         let sidebar = app.buttons["打开侧栏"]
         XCTAssertTrue(sidebar.waitForExistence(timeout: 30)); sidebar.tap()
@@ -1601,7 +1601,7 @@ final class RemoteFileBrowserLiveUITests: XCTestCase {
         let path = environment["STARMATE_LIVE_FILE_PATH"] ?? ""
         try XCTSkipIf(target.isEmpty || path.isEmpty, "Supply an authorized device and fresh temporary file path.")
         continueAfterFailure = false
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launch()
         defer {
             let capture = XCTAttachment(screenshot: app.screenshot()); capture.name = "LiveFilesFinal"; capture.lifetime = .keepAlways; add(capture)
@@ -1737,7 +1737,7 @@ final class RemoteMailboxLiveUITests: XCTestCase {
         let workspacePath = env["STARMATE_LIVE_MAILBOX_WORKSPACE"] ?? ""
         try XCTSkipIf(title.isEmpty || deviceID.isEmpty || workspacePath.isEmpty, "Supply the authorized test conversation title.")
         continueAfterFailure = false
-        let app = XCUIApplication(bundleIdentifier: "com.openbitfun.mobile.ios")
+        let app = XCUIApplication(bundleIdentifier: "com.starmate.mobile.ios")
         app.launch()
         defer {
             let image = XCTAttachment(screenshot: app.screenshot()); image.name = "MailboxFinal"; image.lifetime = .keepAlways; add(image)

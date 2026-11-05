@@ -677,10 +677,10 @@ const WRITER_EXECUTABLE_NAMES: &[&str] = &[
     "bitfun",
     "bitfun-desktop",
     "openbitfun.exe",
-    "openbitfun-desktop.exe",
+    "starmate-desktop.exe",
     "openbitfun-agent-runtime.exe",
     "openbitfun",
-    "openbitfun-desktop",
+    "starmate-desktop",
     "openbitfun-agent-runtime",
 ];
 
@@ -1045,10 +1045,10 @@ mod tests {
     #[test]
     fn macos_inventory_preserves_bundle_names_and_writer_classification() {
         let entries = parse_macos_process_entries(
-            "   42 /Users/test/Development Projects/target/debug/openbitfun-desktop\n\
+            "   42 /Users/test/Development Projects/target/debug/starmate-desktop\n\
               43 /Applications/BitFun.app/Contents/MacOS/BitFun\n\
               44 /Applications/Custom Product.app/Contents/MacOS/Custom Product\n\
-              45 /Applications/OpenBitFun.app/Contents/MacOS/openbitfun-data-migrator\n\
+              45 /Applications/OpenBitFun.app/Contents/MacOS/starmate-data-migrator\n\
               46 /usr/bin/unrelated\n",
         )
         .expect("parse process inventory");
@@ -1245,7 +1245,7 @@ mod tests {
             },
             ProcessEntry {
                 process_id: 42,
-                executable_name: "openbitfun-data-migrator.exe".into(),
+                executable_name: "starmate-data-migrator.exe".into(),
             },
             ProcessEntry {
                 process_id: 81,
@@ -1275,7 +1275,7 @@ mod tests {
             },
             ProcessEntry {
                 process_id: 13,
-                executable_name: "openbitfun-data-migrator.exe".to_string(),
+                executable_name: "starmate-data-migrator.exe".to_string(),
             },
         ];
         let blockers = classify_writer_processes(&processes, 10, 13, &[]);
@@ -1308,17 +1308,17 @@ mod tests {
         let temporary = tempfile::tempdir().expect("temporary directory");
         let current = temporary
             .path()
-            .join(platform_binary_filename("openbitfun-data-migrator"));
+            .join(platform_binary_filename("starmate-data-migrator"));
         let target = temporary
             .path()
-            .join(platform_binary_filename("openbitfun-desktop"));
+            .join(platform_binary_filename("starmate-desktop"));
         fs::write(&current, b"migrator").expect("write current executable");
         fs::write(&target, b"desktop").expect("write target executable");
 
         let resolved = TrustedInstallationResolver::resolve_sibling(
             &current,
-            "openbitfun-data-migrator",
-            "openbitfun-desktop",
+            "starmate-data-migrator",
+            "starmate-desktop",
         )
         .expect("resolve trusted sibling");
         assert_eq!(
@@ -1327,7 +1327,7 @@ mod tests {
         );
         assert!(TrustedInstallationResolver::resolve_sibling(
             &current,
-            "openbitfun-data-migrator",
+            "starmate-data-migrator",
             "../attacker",
         )
         .is_err());

@@ -33,15 +33,15 @@ export function stage(platform, { root = ROOT, environment = process.env } = {})
   const target = resolve(root, environment.CARGO_TARGET_DIR || 'target', metadata.target, 'release');
   const output = join(root, 'target/data-tools-release', platform);
   mkdirSync(output, { recursive: true });
-  const asset = `openbitfun-data-tools-v${version}-${platform}.${metadata.extension}`;
+  const asset = `starmate-data-tools-v${version}-${platform}.${metadata.extension}`;
   const destination = join(output, asset);
   if (platform === 'windows-x64') {
     const portable = join(root, 'target/data-tools-portable', version);
     mkdirSync(portable, { recursive: true });
-    copyFileSync(join(target, 'openbitfun-data-tools.exe'), join(portable, 'openbitfun-data-tools.exe'));
+    copyFileSync(join(target, 'starmate-data-tools.exe'), join(portable, 'starmate-data-tools.exe'));
     for (const file of ['README.md', 'README.zh-CN.md']) copyFileSync(join(root, 'src/apps/data-tools', file), join(portable, file));
     copyFileSync(join(root, 'THIRD_PARTY_NOTICES.md'), join(portable, 'THIRD_PARTY_NOTICES.md'));
-    const result = spawnSync('tar', ['-a', '-cf', destination, '-C', portable, 'openbitfun-data-tools.exe', 'README.md', 'README.zh-CN.md', 'THIRD_PARTY_NOTICES.md'], { stdio: 'inherit', windowsHide: true });
+    const result = spawnSync('tar', ['-a', '-cf', destination, '-C', portable, 'starmate-data-tools.exe', 'README.md', 'README.zh-CN.md', 'THIRD_PARTY_NOTICES.md'], { stdio: 'inherit', windowsHide: true });
     if (result.error) throw result.error;
     if (result.status !== 0) throw new Error('Could not archive the portable Data Tools bundle');
   } else {

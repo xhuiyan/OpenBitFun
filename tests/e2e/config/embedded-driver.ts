@@ -70,7 +70,7 @@ type E2eBuildType = 'debug' | 'release' | 'release-fast';
 function executableCandidates(buildType: E2eBuildType): string[] {
   const root = projectRoot();
   const suffix = process.platform === 'win32' ? '.exe' : '';
-  const binaryName = `openbitfun-desktop${suffix}`;
+  const binaryName = `starmate-desktop${suffix}`;
 
   if (process.platform === 'darwin') {
     return [
@@ -419,7 +419,7 @@ async function startOpenBitFunApp(): Promise<void> {
   if (!fs.existsSync(appPath)) {
     console.error(`Application not found at: ${appPath}`);
     console.error('Please build the selected application first. Common commands:');
-    console.error('cargo build -p openbitfun-desktop');
+    console.error('cargo build -p starmate-desktop');
     console.error('pnpm run desktop:build:release-fast');
     throw new Error('Application not built');
   }
@@ -546,7 +546,7 @@ export function createEmbeddedConfig(specs: string[], label: string): Options.Te
       if (!fs.existsSync(appPath)) {
         console.error(`Application not found at: ${appPath}`);
         console.error('Please build the selected application first. Common commands:');
-        console.error('cargo build -p openbitfun-desktop');
+        console.error('cargo build -p starmate-desktop');
         console.error('pnpm run desktop:build:release-fast');
         throw new Error('Application not built');
       }

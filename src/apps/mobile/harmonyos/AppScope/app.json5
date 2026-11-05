@@ -2,7 +2,7 @@
   "app": {
     // Package identity is intentionally stable across the OpenBitFun rename so
     // upgrades retain encrypted sessions, preferences, and watch handoff data.
-    "bundleName": "com.bitfun.app",
+    "bundleName": "com.starmate.app",
     "vendor": "StarMate",
     "versionCode": 8,
     "versionName": "1.0.0", // x-release-please-version

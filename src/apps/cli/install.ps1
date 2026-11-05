@@ -78,9 +78,9 @@ function Assert-CommandSucceeded([string]$Description) {
 
 function Assert-Entrypoint([string]$Executable) {
     & $Executable --version | Out-Null
-    Assert-CommandSucceeded 'openbitfun --version'
+    Assert-CommandSucceeded 'starmate --version'
     & $Executable --help | Out-Null
-    Assert-CommandSucceeded 'openbitfun --help'
+    Assert-CommandSucceeded 'starmate --help'
 }
 
 function Assert-PluginHostResources([string]$Directory) {
@@ -98,12 +98,12 @@ function Install-OpenBitFunCli(
     [string]$Destination
 ) {
     New-Item -ItemType Directory -Path $Destination -Force | Out-Null
-    $stageDir = Join-Path $Destination ".openbitfun-install-$([guid]::NewGuid().ToString('N'))"
-    $stagedPrimary = Join-Path $stageDir 'openbitfun.exe'
+    $stageDir = Join-Path $Destination ".starmate-install-$([guid]::NewGuid().ToString('N'))"
+    $stagedPrimary = Join-Path $stageDir 'starmate.exe'
     $stagedPluginHost = Join-Path $stageDir 'ext-host'
-    $primaryTarget = Join-Path $Destination 'openbitfun.exe'
+    $primaryTarget = Join-Path $Destination 'starmate.exe'
     $pluginHostTarget = Join-Path $Destination 'resources\ext-host'
-    $primaryBackup = Join-Path $stageDir 'previous-openbitfun.exe'
+    $primaryBackup = Join-Path $stageDir 'previous-starmate.exe'
     $pluginHostBackup = Join-Path $stageDir 'previous-ext-host'
     $primaryBackedUp = $false
     $pluginHostBackedUp = $false
@@ -159,9 +159,9 @@ function Install-OpenBitFunCli(
 
 $repoRoot = Resolve-RepoRoot
 $releaseDir = Resolve-ReleaseDir $repoRoot
-$primarySource = Join-Path $releaseDir 'openbitfun.exe'
+$primarySource = Join-Path $releaseDir 'starmate.exe'
 $pluginHostSource = Join-Path $repoRoot 'src\apps\extension-host\dist'
-$primaryInstalled = Join-Path $BinDir 'openbitfun.exe'
+$primaryInstalled = Join-Path $BinDir 'starmate.exe'
 
 if (-not (Get-Command cargo -ErrorAction SilentlyContinue)) {
     throw 'cargo was not found. Install Rust from https://rustup.rs and re-run.'
@@ -176,8 +176,8 @@ Write-Host "Install dir: $BinDir"
 
 Push-Location $repoRoot
 try {
-    Write-Host '[1/3] Building openbitfun...'
-    & cargo build -p openbitfun-cli --release --bin openbitfun
+    Write-Host '[1/3] Building starmate...'
+    & cargo build -p starmate-cli --release --bin starmate
     Assert-CommandSucceeded 'cargo build'
 }
 finally {
@@ -201,11 +201,11 @@ else {
     Write-Host 'Skipped the user PATH update (-SkipPathUpdate).'
 }
 
-Write-Host '[3/3] Verifying openbitfun...'
+Write-Host '[3/3] Verifying starmate...'
 Assert-Entrypoint $primaryInstalled
 Assert-PluginHostResources (Join-Path $BinDir 'resources\ext-host')
 
 Write-Host '=== Install complete ==='
-Write-Host 'Open a new terminal, then run: openbitfun'
-Write-Host "Current PowerShell: `$env:Path = `"$([IO.Path]::GetFullPath($BinDir));`$env:Path`"; openbitfun"
+Write-Host 'Open a new terminal, then run: starmate'
+Write-Host "Current PowerShell: `$env:Path = `"$([IO.Path]::GetFullPath($BinDir));`$env:Path`"; starmate"
 Write-Host "Direct path: $primaryInstalled"

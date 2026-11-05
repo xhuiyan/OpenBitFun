@@ -225,7 +225,7 @@ function retryFixture() {
     'OpenBitFun.app'
   );
   const executableDir = join(appDir, 'Contents', 'MacOS');
-  const executablePath = join(executableDir, 'openbitfun-desktop');
+  const executablePath = join(executableDir, 'starmate-desktop');
   mkdirSync(desktopDir, { recursive: true });
   mkdirSync(executableDir, { recursive: true });
   writeFileSync(executablePath, 'test executable');

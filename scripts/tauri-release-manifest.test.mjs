@@ -30,7 +30,7 @@ test('prepares a versioned custom Windows installer asset', () => {
   const assets = path.join(temp, 'assets', 'nested');
   const out = path.join(temp, 'manual');
   fs.mkdirSync(assets, { recursive: true });
-  fs.writeFileSync(path.join(assets, 'openbitfun-installer.exe'), 'installer');
+  fs.writeFileSync(path.join(assets, 'starmate-installer.exe'), 'installer');
 
   const result = run('scripts/prepare-windows-installer-asset.mjs', [
     '--assets-dir', path.join(temp, 'assets'),

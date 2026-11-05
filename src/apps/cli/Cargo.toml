@@ -3,13 +3,13 @@ name = "starmate-cli"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-description = "OpenBitFun CLI - Terminal User Interface"
-default-run = "openbitfun"
+description = "StarMate CLI - Terminal User Interface"
+default-run = "starmate"
 autobins = false
 autotests = false
 
 [[bin]]
-name = "openbitfun"
+name = "starmate"
 path = "src/main.rs"
 
 [[test]]

@@ -29,7 +29,7 @@ const DESKTOP_PREVIEW_REBUILD_INPUTS = [
   path.join(ROOT_DIR, 'src', 'crates'),
 ];
 const DESKTOP_PREVIEW_REBUILD_IGNORED_DIRS = new Set([
-  '.openbitfun',
+  '.starmate',
   '.git',
   'coverage',
   'dist',
@@ -73,7 +73,7 @@ function resolveDesktopDevStorageEnvironment(env = process.env, rootDir = ROOT_D
   }
   // Keep both user settings and workspace/session storage separate from the
   // installed app. Each checkout reuses its own persistent development data.
-  const storageDir = path.join(rootDir, '.openbitfun', 'desktop-dev');
+  const storageDir = path.join(rootDir, '.starmate', 'desktop-dev');
   return {
     STARMATE_DESKTOP_HOST_CHANNEL: 'development',
     STARMATE_USER_ROOT: env.STARMATE_USER_ROOT || env.STARMATE_E2E_USER_ROOT || path.join(storageDir, 'user'),
@@ -83,7 +83,7 @@ function resolveDesktopDevStorageEnvironment(env = process.env, rootDir = ROOT_D
 
 function getDesktopBinaryPath() {
   const suffix = process.platform === 'win32' ? '.exe' : '';
-  const binaryName = `openbitfun-desktop${suffix}`;
+  const binaryName = `starmate-desktop${suffix}`;
 
   // Preview rebuilds use cargo build, which emits this executable on macOS
   // as well; it does not create an application bundle.
@@ -372,7 +372,7 @@ async function rebuildDesktopDebugBinary() {
     CARGO_PROFILE_DEV_CODEGEN_UNITS: process.env.CARGO_PROFILE_DEV_CODEGEN_UNITS || '256',
   };
 
-  printInfo('Building openbitfun-desktop in dev mode with reduced debug info for faster local relink');
+  printInfo('Building starmate-desktop in dev mode with reduced debug info for faster local relink');
   printInfo(
     `Fast local build env: CARGO_PROFILE_DEV_DEBUG=${buildEnv.CARGO_PROFILE_DEV_DEBUG}, ` +
     `CARGO_PROFILE_DEV_CODEGEN_UNITS=${buildEnv.CARGO_PROFILE_DEV_CODEGEN_UNITS}`

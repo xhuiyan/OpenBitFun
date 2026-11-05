@@ -47,7 +47,7 @@ export function dataToolsEnvironment(environment = process.env) {
     STARMATE_PRODUCT_ID: 'openbitfun',
     STARMATE_DATA_NAMESPACE: 'openbitfun',
     STARMATE_HIDDEN_DATA_DIRECTORY: '.openbitfun',
-    STARMATE_PRODUCT_BINARY_NAME: 'openbitfun-data-tools',
+    STARMATE_PRODUCT_BINARY_NAME: 'starmate-data-tools',
     STARMATE_PRODUCT_DISPLAY_NAME: 'StarMate Data Tools',
   };
 }

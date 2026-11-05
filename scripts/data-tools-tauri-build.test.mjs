@@ -28,7 +28,7 @@ test('independent bundle owns version, offline assets, icons and identity', (t) 
   const capability = JSON.parse(readFileSync(join(APP, 'capabilities/data-tools.json'), 'utf8'));
   assert.equal(capability.identifier, 'data-tools');
   assert.deepEqual(capability.windows, ['data-tools']);
-  assert.equal(config.mainBinaryName, 'openbitfun-data-tools');
+  assert.equal(config.mainBinaryName, 'starmate-data-tools');
   assert.equal(config.version, releaseVersion());
   assert.deepEqual(config.build, { frontendDist: 'ui' });
   assert.equal(config.plugins?.updater, undefined);
@@ -42,7 +42,7 @@ test('a Desktop product environment cannot change the migration destination iden
   assert.equal(env.STARMATE_PRODUCT_ID, 'openbitfun');
   assert.equal(env.STARMATE_DATA_NAMESPACE, 'openbitfun');
   assert.equal(env.STARMATE_DESKTOP_BINARY_NAME, undefined);
-  assert.equal(env.STARMATE_PRODUCT_BINARY_NAME, 'openbitfun-data-tools');
+  assert.equal(env.STARMATE_PRODUCT_BINARY_NAME, 'starmate-data-tools');
   assert.equal(env.STARMATE_PRODUCT_DISPLAY_NAME, 'StarMate Data Tools');
   assert.equal(env.CI, 'true');
 });
@@ -97,7 +97,7 @@ for (const [platform, metadata] of Object.entries(PLATFORMS)) {
     const target = join(root, 'custom-target', metadata.target, 'release');
     if (platform === 'windows-x64') {
       mkdirSync(target, { recursive: true });
-      writeFileSync(join(target, 'openbitfun-data-tools.exe'), 'fixture executable');
+      writeFileSync(join(target, 'starmate-data-tools.exe'), 'fixture executable');
       for (const file of ['README.md', 'README.zh-CN.md']) writeFileSync(join(app, file), 'fixture guide');
       writeFileSync(join(root, 'THIRD_PARTY_NOTICES.md'), 'fixture notices');
     } else {
@@ -109,7 +109,7 @@ for (const [platform, metadata] of Object.entries(PLATFORMS)) {
     const output = stage(platform, { root, environment: {
       CARGO_TARGET_DIR: 'custom-target', GITHUB_REF_TYPE: 'tag', GITHUB_REF_NAME: `data-tools-v${version}`,
     } });
-    const asset = `openbitfun-data-tools-v${version}-${platform}.${metadata.extension}`;
+    const asset = `starmate-data-tools-v${version}-${platform}.${metadata.extension}`;
     assert.equal(output, join(root, 'target/data-tools-release', platform, asset));
     const hash = createHash('sha256').update(readFileSync(output)).digest('hex');
     assert.equal(readFileSync(`${output}.sha256`, 'utf8'), `${hash}  ${asset}\n`);
@@ -117,7 +117,7 @@ for (const [platform, metadata] of Object.entries(PLATFORMS)) {
       const listing = spawnSync('tar', ['-tf', output], { encoding: 'utf8', windowsHide: true });
       assert.equal(listing.status, 0, listing.stderr);
       assert.deepEqual(listing.stdout.trim().split(/\r?\n/).sort(), [
-        'openbitfun-data-tools.exe', 'README.md', 'README.zh-CN.md', 'THIRD_PARTY_NOTICES.md',
+        'starmate-data-tools.exe', 'README.md', 'README.zh-CN.md', 'THIRD_PARTY_NOTICES.md',
       ].sort());
     } else assert.equal(readFileSync(output, 'utf8'), 'fixture package');
   });

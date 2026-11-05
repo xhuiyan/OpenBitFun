@@ -21,7 +21,7 @@ const run = (command, args, env = process.env, onSpawn) => new Promise((resolve,
 });
 
 const nativeTestBinary = async () => process.env.STARMATE_TEST_BINARY || new Promise((resolve, reject) => {
-  const build = spawn('cargo', ['test', '--locked', '-p', orchestration ? 'openbitfun-desktop' : 'openbitfun-computer-use', ...(orchestration ? ['--features', 'devtools', '--test', 'computer_use_native_roundtrip'] : ['--lib']), '--no-run', '--message-format=json'], {
+  const build = spawn('cargo', ['test', '--locked', '-p', orchestration ? 'starmate-desktop' : 'openbitfun-computer-use', ...(orchestration ? ['--features', 'devtools', '--test', 'computer_use_native_roundtrip'] : ['--lib']), '--no-run', '--message-format=json'], {
     cwd: root, stdio: ['ignore', 'pipe', 'inherit'], windowsHide: true,
   });
   let pending = '';
