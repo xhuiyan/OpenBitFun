@@ -33,11 +33,11 @@ test("Menu composes grouped items, heading actions, and separators with native r
     ),
   );
 
-  assert.match(markup, /data-openbitfun-component="menu"/);
+  assert.match(markup, /data-starmate-component="menu"/);
   assert.match(markup, /role="menu"/);
-  assert.match(markup, /data-openbitfun-scrollbar-visibility="always"/);
+  assert.match(markup, /data-starmate-scrollbar-visibility="always"/);
   assert.match(markup, /aria-labelledby="[^"]+"[^>]+role="group"/);
-  assert.match(markup, /data-openbitfun-part="heading-actions"/);
+  assert.match(markup, /data-starmate-part="heading-actions"/);
   assert.match(markup, /aria-label="Add session"/);
   assert.equal((markup.match(/role="menuitem"/g) ?? []).length, 3);
   assert.match(markup, /aria-checked="true"[^>]+role="menuitemcheckbox"/);
@@ -126,9 +126,9 @@ test("Menu keeps focus rings inside items without adding a permanent gutter", as
   const itemStyles = await readFile(new URL("../src/components/ActionItem/ActionItem.module.css", import.meta.url), "utf8");
   assert.match(styles, /\.list\s*\{[^}]*padding:\s*0/);
   assert.match(itemStyles, /\.root:has\(\.trigger:focus-visible\)\s*\{[^}]*box-shadow:\s*0 0 0 var\(--starmate-focus-width\)/);
-  assert.match(styles, /\.item:has\(> \[data-openbitfun-part="trigger"\]:focus-visible\)\s*\{[^}]*box-shadow:\s*inset 0 0 0 var\(--starmate-focus-width\)/);
+  assert.match(styles, /\.item:has\(> \[data-starmate-part="trigger"\]:focus-visible\)\s*\{[^}]*box-shadow:\s*inset 0 0 0 var\(--starmate-focus-width\)/);
   // Keep clipping and scrolling; the item owns its focus indicator.
-  assert.match(scrollStyles, /data-openbitfun-orientation="vertical"\]\s*\{[^}]*overflow-x:\s*hidden;[^}]*overflow-y:\s*auto/);
+  assert.match(scrollStyles, /data-starmate-orientation="vertical"\]\s*\{[^}]*overflow-x:\s*hidden;[^}]*overflow-y:\s*auto/);
   assert.doesNotMatch(styles, /overflow[^:]*:\s*visible/);
 });
 
@@ -147,7 +147,7 @@ test("Menu keeps equal item insets while its scrollbar stays on the surface edge
 test("content-sized menus hug their widest row inside the shared menu bounds", async () => {
   const styles = await readFile(new URL("../src/components/Menu/Menu.module.css", import.meta.url), "utf8");
   const popover = await readFile(new URL("../src/components/Menu/MenuPopover.tsx", import.meta.url), "utf8");
-  const contentRule = styles.match(/\.root\[data-openbitfun-inline-size="content"\]\s*\{[^}]*\}/)?.[0] ?? "";
+  const contentRule = styles.match(/\.root\[data-starmate-inline-size="content"\]\s*\{[^}]*\}/)?.[0] ?? "";
 
   assert.notEqual(contentRule, "");
   assert.match(contentRule, /inline-size:\s*max-content/);
@@ -158,8 +158,8 @@ test("content-sized menus hug their widest row inside the shared menu bounds", a
 
   const contentMarkup = renderToStaticMarkup(createElement(Menu, { inlineSize: "content" }, createElement(MenuItem, null, "Paste")));
   const defaultMarkup = renderToStaticMarkup(createElement(Menu, null, createElement(MenuItem, null, "Paste")));
-  assert.match(contentMarkup, /data-openbitfun-inline-size="content"/);
-  assert.match(defaultMarkup, /data-openbitfun-inline-size="fixed"/);
+  assert.match(contentMarkup, /data-starmate-inline-size="content"/);
+  assert.match(defaultMarkup, /data-starmate-inline-size="fixed"/);
   // Submenus are separate surfaces and must inherit the requested sizing mode.
   assert.match(popover, /items=\{activeEntry\.submenu!\}[^>]*inlineSize=\{inlineSize\}/);
 });

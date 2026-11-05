@@ -28,7 +28,7 @@
 }
 
 /* The site shell uses the same theme, density and control contracts as its specimens. */
-:root[data-openbitfun-design-system-root] {
+:root[data-starmate-design-system-root] {
   color-scheme: light;
   color: var(--starmate-color-content-primary);
   background: var(--starmate-color-surface-canvas);
@@ -37,7 +37,7 @@
   font-weight: var(--starmate-type-body-md-font-weight);
   line-height: var(--starmate-type-body-md-line-height);
 }
-:root[data-openbitfun-design-system-root][data-color-scheme="dark"] { color-scheme: dark; }
+:root[data-starmate-design-system-root][data-color-scheme="dark"] { color-scheme: dark; }
 
 .lab-shell {
   --_lab-topbar-height: var(--starmate-space-16);
@@ -154,7 +154,7 @@
 /* The app mark is silver artwork on a transparent canvas. The site flattens it to solid ink in
    its light header; the Lab does the same, and lifts it back for the dark theme. */
 .design-app-mark { filter: brightness(0); }
-:root[data-openbitfun-design-system-root][data-color-scheme="dark"] .design-app-mark { filter: brightness(0) invert(1); }
+:root[data-starmate-design-system-root][data-color-scheme="dark"] .design-app-mark { filter: brightness(0) invert(1); }
 .design-primary-navigation, .design-secondary-navigation { display: flex; align-items: center; gap: var(--starmate-control-tab-group-gap); }
 .design-primary-navigation { flex: 1; }
 /* The section level of the site used to be a horizontal tab row under the topbar. It reads as
@@ -490,12 +490,12 @@
 .design-component-tokens { display: grid; gap: var(--starmate-space-4); justify-items: start; }
 .colors-section-navigation, .token-category-navigation, .pattern-navigation { display: flex; max-width: 100%; overflow-x: auto; padding-block: var(--starmate-space-1); margin-bottom: var(--starmate-space-5); }
 .colors-theme-value { display: flex; align-items: center; min-height: var(--starmate-control-height-md); color: var(--starmate-color-content-secondary); font-size: var(--starmate-type-body-sm-font-size); }
-.colors-semantic-tools > [data-openbitfun-component="search-field"] { flex: 1; min-width: 12rem; }
-.colors-semantic-tools > [data-openbitfun-component="select"] { min-width: 10rem; }
+.colors-semantic-tools > [data-starmate-component="search-field"] { flex: 1; min-width: 12rem; }
+.colors-semantic-tools > [data-starmate-component="select"] { min-width: 10rem; }
 .colors-expand-action { display: flex; justify-content: center; padding: var(--starmate-space-4) var(--starmate-space-2); }
 .token-tools > * { min-width: 0; }
 .token-action-row { flex-wrap: wrap; }
-.token-value-control > [data-openbitfun-component="input"] { flex: 1; min-width: 0; }
+.token-value-control > [data-starmate-component="input"] { flex: 1; min-width: 0; }
 .guide-setup-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: start; gap: var(--starmate-space-8); }
 .guide-step-list { display: grid; gap: var(--starmate-space-6); list-style: none; padding: 0; margin: 0; }
 .guide-step-list li { display: flex; align-items: flex-start; gap: var(--starmate-space-3); }

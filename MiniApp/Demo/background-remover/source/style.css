@@ -9,7 +9,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 :root { color-scheme: dark; }
-:root[data-openbitfun-appearance-mode="light"] { color-scheme: light; }
+:root[data-starmate-appearance-mode="light"] { color-scheme: light; }
 body {
   margin: 0;
   background: var(--openbitfun-bg);

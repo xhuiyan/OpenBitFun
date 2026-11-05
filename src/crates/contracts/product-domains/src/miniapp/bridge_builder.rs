@@ -437,8 +437,8 @@ pub fn build_bridge_script(
       if (event === 'appearanceChange') {{
         if (payload && typeof payload === 'object') {{
           if (payload.vars) _applyAppearanceVars(payload.vars);
-          if (payload.id) document.documentElement.setAttribute('data-openbitfun-appearance', payload.id);
-          if (payload.mode) {{ _appearanceMode = payload.mode; document.documentElement.setAttribute('data-openbitfun-appearance-mode', _appearanceMode); }}
+          if (payload.id) {{ document.documentElement.setAttribute('data-openbitfun-appearance', payload.id); document.documentElement.setAttribute('data-starmate-appearance', payload.id); }}
+          if (payload.mode) {{ _appearanceMode = payload.mode; document.documentElement.setAttribute('data-openbitfun-appearance-mode', _appearanceMode); document.documentElement.setAttribute('data-starmate-appearance-mode', _appearanceMode); }}
         }}
         app._lifecycleHandlers.appearanceChange.forEach(f => f(payload));
         (app._eventHandlers[event] || []).forEach(f => f(payload));
@@ -591,6 +591,7 @@ pub fn build_bridge_script(
 
   window.app = app;
   document.documentElement.setAttribute('data-openbitfun-appearance-mode', _appearanceMode);
+  document.documentElement.setAttribute('data-starmate-appearance-mode', _appearanceMode);
   _announceAgentBridge();
   window.parent.postMessage({{ method: 'openbitfun/request-appearance' }}, '*');
   window.parent.postMessage({{ method: 'openbitfun/request-locale' }}, '*');

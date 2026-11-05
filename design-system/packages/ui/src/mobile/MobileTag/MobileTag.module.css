@@ -7,10 +7,10 @@
   .root[data-selected="true"][data-appearance="accent"] { color: var(--starmate-color-action-primary-content); background: var(--starmate-color-accent-default); }
 
   @media (hover: hover) and (pointer: fine) {
-    .root:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
+    .root:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .root:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
-  .root:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
+  .root:is(:active, [data-starmate-preview-state="active"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .root:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
   .root:disabled { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 
   .label { display: block; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

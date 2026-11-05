@@ -40,7 +40,7 @@
   color: var(--starmate-color-status-warning-content);
   font-size: var(--starmate-type-label-sm-font-size);
 
-  > :is(svg, [data-openbitfun-component='icon']) {
+  > :is(svg, [data-starmate-component='icon']) {
     flex-shrink: 0;
     block-size: 1lh;
     color: var(--starmate-color-status-warning-emphasis);

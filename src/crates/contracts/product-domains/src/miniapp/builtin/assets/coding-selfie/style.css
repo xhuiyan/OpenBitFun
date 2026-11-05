@@ -48,7 +48,7 @@
   --cs-sans: var(--openbitfun-font-sans);
 }
 
-[data-openbitfun-appearance-mode="light"] {
+[data-starmate-appearance-mode="light"] {
   color-scheme: light;
   --cs-accent-glow: none;
 }

@@ -16,7 +16,7 @@
 .account { min-inline-size: 0; border-block-start: 1px solid var(--starmate-color-border-subtle); }
 
 @container config-panel (max-width: 360px) {
-  .header > [data-openbitfun-part='actions'] {
+  .header > [data-starmate-part='actions'] {
     flex-basis: 100%;
     margin-inline-start: 0;
   }

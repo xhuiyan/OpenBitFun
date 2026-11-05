@@ -69,8 +69,8 @@ vi.mock('@starmate/ui', async importOriginal => {
         data-openbitfun-shape={shape}
         data-openbitfun-variant={variant}
         data-size={size}
-        {...props}
-       data-starmate-shape={shape} data-starmate-variant={variant} >
+        data-starmate-variant={variant} data-starmate-shape={shape} {...props}
+         >
         {icon}
         {children}
       </button>

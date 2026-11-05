@@ -2,15 +2,15 @@
  * InitMiniApp tool display on the prominent FlowChat tool-card framework.
  */
 
-.miniapp-tool-display[data-openbitfun-attention='prominent'][data-openbitfun-expandable='true']
-  > [data-openbitfun-part='surface']
-  > [data-openbitfun-part='header'] {
+.miniapp-tool-display[data-starmate-attention='prominent'][data-starmate-expandable='true']
+  > [data-starmate-part='surface']
+  > [data-starmate-part='header'] {
   cursor: pointer;
   }
 
-.miniapp-tool-display[data-openbitfun-attention='prominent'][data-openbitfun-expandable='false']
-  > [data-openbitfun-part='surface']
-  > [data-openbitfun-part='header'] {
+.miniapp-tool-display[data-starmate-attention='prominent'][data-starmate-expandable='false']
+  > [data-starmate-part='surface']
+  > [data-starmate-part='header'] {
   cursor: default;
   }
 
@@ -19,7 +19,7 @@
     color: var(--starmate-color-content-secondary);
   }
 
-  [data-openbitfun-part='iconGraphic'].miniapp-icon {
+  [data-starmate-part='iconGraphic'].miniapp-icon {
     color: var(--starmate-color-content-secondary);
   }
 

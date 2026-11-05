@@ -60,7 +60,7 @@ describe('ModelSettingsPage presentation', () => {
   });
 
   it('preserves the intrinsic width of design-system switches in edit rows', () => {
-    expect(styles.match(/> :not\(\[data-openbitfun-component='switch'\]\)/g)).toHaveLength(2);
+    expect(styles.match(/> :not\(\[data-starmate-component='switch'\]\)/g)).toHaveLength(2);
     expect(styles).not.toMatch(/> \* \{\s*min-width: 0;\s*width: 100%/);
     expect(styles).not.toMatch(/> \* \{\s*width: auto;\s*max-width: none;/);
   });

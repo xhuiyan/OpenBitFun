@@ -79,12 +79,12 @@
     min-block-size: calc(var(--starmate-space-6) + var(--starmate-space-1));
     color: inherit;
 
-    [data-openbitfun-part='trigger'] {
+    [data-starmate-part='trigger'] {
       justify-content: center;
       text-align: center;
     }
 
-    [data-openbitfun-part='label'] {
+    [data-starmate-part='label'] {
       flex: 0 1 auto;
       inline-size: max-content;
       min-inline-size: 4em;
@@ -103,11 +103,11 @@
     inline-size: 100%;
     min-inline-size: 0;
 
-    [data-openbitfun-component='segmented-control'] {
+    [data-starmate-component='segmented-control'] {
       min-inline-size: 0;
     }
 
-    [data-openbitfun-part='segment'] {
+    [data-starmate-part='segment'] {
       block-size: calc(var(--starmate-space-6) + var(--starmate-space-1));
       padding-inline: var(--starmate-space-1);
       font-family: var(--starmate-type-label-md-font-family);
@@ -134,20 +134,20 @@
       inline-size: 100%;
       padding-inline: var(--starmate-space-3);
 
-      [data-openbitfun-part='trigger'],
-      [data-openbitfun-part='label'] {
+      [data-starmate-part='trigger'],
+      [data-starmate-part='label'] {
         text-align: start;
         justify-content: flex-start;
       }
 
-      [data-openbitfun-part='label'] {
+      [data-starmate-part='label'] {
         flex: 1 1 auto;
         inline-size: auto;
         min-inline-size: 0;
       }
 
-      [data-openbitfun-part='label'],
-      [data-openbitfun-part='metadata'] {
+      [data-starmate-part='label'],
+      [data-starmate-part='metadata'] {
         font-family: var(--starmate-type-label-md-font-family);
         font-size: var(--starmate-type-label-md-font-size);
         font-weight: var(--starmate-type-label-md-font-weight);
@@ -155,13 +155,13 @@
         letter-spacing: var(--starmate-type-label-md-letter-spacing);
       }
 
-      [data-openbitfun-part='metadata'] {
+      [data-starmate-part='metadata'] {
         max-inline-size: 60%;
         min-inline-size: 0;
         color: var(--starmate-color-content-secondary);
       }
 
-      [data-openbitfun-part='shortcut'] {
+      [data-starmate-part='shortcut'] {
         color: var(--starmate-color-content-muted);
       }
     }

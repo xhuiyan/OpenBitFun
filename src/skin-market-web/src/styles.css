@@ -2284,7 +2284,7 @@ img {
 }
 .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border: 0; }
 
-.search-field > .market-input[data-openbitfun-component='input'] {
+.search-field > .market-input[data-starmate-component='input'] {
   flex: 1;
   min-width: 0;
   block-size: auto;
@@ -2293,14 +2293,14 @@ img {
   background: transparent;
   box-shadow: none;
 }
-.market-input[data-openbitfun-component='input'] > input {
+.market-input[data-starmate-component='input'] > input {
   font: inherit;
   letter-spacing: inherit;
   height: auto;
 }
 
 /* Textarea owns a wrapper; keep the native editor filling its form column. */
-.market-textarea[data-openbitfun-component="textarea"] {
+.market-textarea[data-starmate-component="textarea"] {
   display: flex;
   width: 100%;
   min-width: 0;
@@ -2311,7 +2311,7 @@ img {
 }
 
 /* Keep each surface's control geometry while using shared button semantics. */
-:where([data-openbitfun-component="button"]) {
+:where([data-starmate-component="button"]) {
   display: inline-block;
   block-size: auto;
   padding: 0;
@@ -2321,31 +2321,31 @@ img {
   letter-spacing: inherit;
   white-space: normal;
 }
-:where([data-openbitfun-component="icon-button"]) {
+:where([data-starmate-component="icon-button"]) {
   inline-size: auto;
   block-size: auto;
 }
-[data-openbitfun-component="button"]::before,
-[data-openbitfun-component="icon-button"]::before {
+[data-starmate-component="button"]::before,
+[data-starmate-component="icon-button"]::before {
   content: none;
 }
 /* Rich labels (previews, review cards, icon + text) retain the root layout. */
-[data-openbitfun-component="button"] > [data-openbitfun-part="content"],
-[data-openbitfun-component="button"] > [data-openbitfun-part="content"] > [data-openbitfun-part="label"] {
+[data-starmate-component="button"] > [data-starmate-part="content"],
+[data-starmate-component="button"] > [data-starmate-part="content"] > [data-starmate-part="label"] {
   display: contents;
   white-space: inherit;
 }
-[data-openbitfun-component="icon-button"] > [data-openbitfun-part="icon"] {
+[data-starmate-component="icon-button"] > [data-starmate-part="icon"] {
   position: static;
   inline-size: auto;
   block-size: auto;
 }
-[data-openbitfun-component="icon-button"] > [data-openbitfun-part="icon"] > svg {
+[data-starmate-component="icon-button"] > [data-starmate-part="icon"] > svg {
   inline-size: 18px;
   block-size: 18px;
 }
 
-.header-actions > [data-openbitfun-component="icon-button"] > [data-openbitfun-part="icon"] > svg {
+.header-actions > [data-starmate-component="icon-button"] > [data-starmate-part="icon"] > svg {
   inline-size: 20px;
   block-size: 20px;
 }

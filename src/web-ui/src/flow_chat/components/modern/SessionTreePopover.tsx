@@ -697,13 +697,13 @@ export const SessionTreePopover: React.FC<SessionTreePopoverProps> = ({
           role="dialog"
           aria-label={panelLabel}
           aria-hidden={!isOpen}
-          {...(!isOpen ? { inert: '' } : {})}
+          data-starmate-placement={renderedPanelLayout?.placement ?? 'bottom'} data-starmate-part="sessionTreePanel" data-starmate-component="flow-chat-header" {...(!isOpen ? { inert: '' } : {})}
           style={{
             top: `${renderedPanelLayout?.top ?? 0}px`,
             left: `${renderedPanelLayout?.left ?? 0}px`,
             visibility: renderedPanelLayout ? 'visible' : 'hidden',
           }}
-         data-starmate-component="flow-chat-header" data-starmate-part="sessionTreePanel" data-starmate-placement={renderedPanelLayout?.placement ?? 'bottom'} >
+            >
           <div
             className="session-tree-popover__header"
             data-openbitfun-component="flow-chat-header"

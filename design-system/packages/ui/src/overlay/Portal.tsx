@@ -119,7 +119,7 @@ function LayerMount({
       <ParentLayerContext.Provider value={{ id: ticket.id, stack }}>
         <FieldSurfaceContext.Provider value="default">
           <div ref={slotRef} className={inline ? styles.inlineLayer : styles.layer} data-openbitfun-overlay-layer=""
-            data-openbitfun-overlay-modal={modal || undefined} {...inertProps(!open)} data-starmate-overlay-layer="" data-starmate-overlay-modal={modal || undefined} >
+            data-openbitfun-overlay-modal={modal || undefined} data-starmate-overlay-modal={modal || undefined} data-starmate-overlay-layer="" {...inertProps(!open)}   >
             {children}
           </div>
         </FieldSurfaceContext.Provider>

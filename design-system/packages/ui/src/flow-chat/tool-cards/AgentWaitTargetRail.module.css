@@ -44,7 +44,7 @@
     font: inherit;
   }
 
-  .target[data-openbitfun-affordance="open-panel-right"] {
+  .target[data-starmate-affordance="open-panel-right"] {
     cursor: pointer;
   }
 

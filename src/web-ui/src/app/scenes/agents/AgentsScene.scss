@@ -216,19 +216,19 @@
       cursor: default;
     }
 
-    &[data-openbitfun-profile='Minimal'] {
+    &[data-starmate-profile='Minimal'] {
       color: var(--starmate-color-identity-harness-minimal);
     }
 
-    &[data-openbitfun-profile='Standard'] {
+    &[data-starmate-profile='Standard'] {
       color: var(--starmate-color-identity-harness-standard);
     }
 
-    &[data-openbitfun-profile='Ultimate'] {
+    &[data-starmate-profile='Ultimate'] {
       color: var(--starmate-color-identity-harness-ultimate);
     }
 
-    &[data-openbitfun-profile='Creative'] {
+    &[data-starmate-profile='Creative'] {
       color: var(--starmate-color-identity-harness-creative);
     }
   }

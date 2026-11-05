@@ -50,7 +50,7 @@
   &__preview { display: flex; flex-direction: column; align-items: center; gap: var(--starmate-space-1); padding: var(--starmate-space-2); border-radius: var(--starmate-radius-lg); background: var(--starmate-color-surface-panel); box-shadow: inset 0 0 0 var(--starmate-border-width-default) var(--starmate-color-border-subtle); }
   &__preview[data-selected="true"] { box-shadow: inset 0 0 0 var(--starmate-border-width-strong) var(--starmate-color-border-strong); }
   &__hero { position: relative; inline-size: 112px; block-size: 112px; max-inline-size: 100%; border-radius: var(--starmate-radius-3xl); color: var(--starmate-color-content-secondary); }
-  &__hero > [data-openbitfun-part="icon"], &__swatch > [data-openbitfun-part="icon"] { inline-size: 100%; block-size: 100%; }
+  &__hero > [data-starmate-part="icon"], &__swatch > [data-starmate-part="icon"] { inline-size: 100%; block-size: 100%; }
   &__edit-indicator { position: absolute; inset-inline-end: var(--starmate-space-1); inset-block-end: var(--starmate-space-1); display: grid; place-items: center; inline-size: var(--starmate-control-height-sm); block-size: var(--starmate-control-height-sm); border-radius: var(--starmate-radius-pill); background: var(--starmate-color-surface-subtle); color: var(--starmate-color-content-secondary); }
   &__preview-label { color: var(--starmate-color-content-muted); }
   &__controls { display: flex; justify-content: center; align-items: center; inline-size: 100%; min-block-size: 112px; }

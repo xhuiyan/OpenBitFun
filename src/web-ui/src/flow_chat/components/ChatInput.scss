@@ -186,7 +186,7 @@
   flex: 0 0 auto;
 }
 
-.openbitfun-chat-input__voice-setup-pill > [data-openbitfun-part='action'] {
+.openbitfun-chat-input__voice-setup-pill > [data-starmate-part='action'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -194,7 +194,7 @@
   line-height: 0;
 }
 
-.openbitfun-chat-input__voice-setup-dismiss[data-openbitfun-component='icon-button'] {
+.openbitfun-chat-input__voice-setup-dismiss[data-starmate-component='icon-button'] {
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -280,7 +280,7 @@
   line-height: 0;
 }
 
-.openbitfun-chat-input__voice-pill-action[data-openbitfun-component='icon-button'] {
+.openbitfun-chat-input__voice-pill-action[data-starmate-component='icon-button'] {
   transition:
     color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
     transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
@@ -412,8 +412,8 @@
     transform: translateY(-50%);
   }
 
-  :root[data-openbitfun-appearance-mode="light"] &,
-  :root[data-openbitfun-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
   .light & {
     &__placeholder {
       color: color-mix(in srgb, var(--starmate-color-content-secondary) 48%, transparent);
@@ -457,8 +457,8 @@
     pointer-events: none;
   }
 
-  :root[data-openbitfun-appearance-mode="light"] &,
-  :root[data-openbitfun-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
   .light & {
     .openbitfun-chat-input__capsule-divider {
       background: color-mix(in srgb, var(--starmate-color-content-muted) 20%, transparent);
@@ -554,7 +554,7 @@
   // Product controls fill the stable public ChatComposer slots. The package
   // owns the 42px compact / 120px expanded surface geometry; Web UI owns concrete menus and
   // lifecycle states.
-  &__composer > [data-openbitfun-part='body'] > [data-openbitfun-part='surface'] {
+  &__composer > [data-starmate-part='body'] > [data-starmate-part='surface'] {
     .openbitfun-chat-input__actions-left,
     .openbitfun-chat-input__actions-right {
       display: flex;
@@ -591,7 +591,7 @@
       background: transparent;
 
       &:hover,
-      &[data-openbitfun-state='open'] {
+      &[data-starmate-state='open'] {
         background: var(--starmate-color-action-quiet-hover);
       }
     }
@@ -615,7 +615,7 @@
       max-width: min(72px, 12cqi);
     }
 
-    .openbitfun-reasoning-preset-selector[data-openbitfun-presentation='label']
+    .openbitfun-reasoning-preset-selector[data-starmate-presentation='label']
       .openbitfun-reasoning-preset-selector__trigger {
       width: auto;
       height: 20px;
@@ -646,7 +646,7 @@
       height: var(--starmate-control-chat-composer-control-height) !important;
     }
 
-    &[data-openbitfun-layout='compact'] {
+    &[data-starmate-layout='compact'] {
       // Keep the editing track usable in smaller panes. The reasoning setting
       // remains available in the model menu when its inline summary cannot fit.
       @container chat-input (max-width: 360px) {
@@ -667,7 +667,7 @@
       }
     }
 
-    &[data-openbitfun-layout='expanded'] {
+    &[data-starmate-layout='expanded'] {
       .openbitfun-harness-selector__trigger {
         height: var(--starmate-control-chat-composer-control-height);
         // The idle label's inset adds to the action gap and the add icon's
@@ -1089,8 +1089,8 @@
   }
 
   // Popovers: heavy blur + dark shadows read as gray/black on light theme
-  :root[data-openbitfun-appearance-mode="light"] &,
-  :root[data-openbitfun-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
+  :root[data-starmate-appearance-mode="light"] &,
   .light & {
     &__mode-option:not(.openbitfun-chat-input__mode-option--disabled):hover {
       background: var(--starmate-color-action-quiet-hover);

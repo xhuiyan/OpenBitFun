@@ -16,12 +16,12 @@ for (const actionPlacement of ["overlay", "reserved"]) {
       actionPlacement,
       action: h(Tooltip, { content: "Remove provider" }, action({ tone: "danger", variant: "fill", loading: true })),
     }, h(Button, { size: "sm", "aria-label": "Edit provider" }, "Long provider name")));
-    assert.match(markup, /data-openbitfun-component="capsule"/);
+    assert.match(markup, /data-starmate-component="capsule"/);
     assert.ok(markup.includes(`data-action-placement="${actionPlacement}"`));
-    assert.match(markup, /data-openbitfun-part="action"/);
-    assert.match(markup, /data-openbitfun-variant="glass"/);
-    assert.match(markup, /data-openbitfun-shape="circle"/);
-    assert.match(markup, /data-openbitfun-tone="danger"/);
+    assert.match(markup, /data-starmate-part="action"/);
+    assert.match(markup, /data-starmate-variant="glass"/);
+    assert.match(markup, /data-starmate-shape="circle"/);
+    assert.match(markup, /data-starmate-tone="danger"/);
     assert.match(markup, /aria-label="Remove provider"/);
     assert.match(markup, /aria-busy="true"/);
     assert.match(markup, /disabled=""/);
@@ -34,7 +34,7 @@ for (const actionPlacement of ["overlay", "reserved"]) {
 test("capsules without actions preserve ordinary content and do not add a focus target", () => {
   const markup = renderToStaticMarkup(h(Capsule, { size: "xs", actionPlacement: "reserved" }, "A tag"));
   assert.match(markup, />A tag<\/span>/);
-  assert.doesNotMatch(markup, /tabindex|role=|data-openbitfun-part="action"|data-action-placement/);
+  assert.doesNotMatch(markup, /tabindex|role=|data-starmate-part="action"|data-action-placement/);
 });
 
 test("split capsules align filled edges with equal or compact content-sized widths", async () => {
@@ -50,14 +50,14 @@ test("split capsules align filled edges with equal or compact content-sized widt
   assert.match(markup, /Sign in/);
   assert.equal((markup.match(/<button\b/g) ?? []).length, 2);
   assert.ok(markup.indexOf("</button>") < markup.lastIndexOf("<button"));
-  assert.doesNotMatch(markup, /data-openbitfun-part="action"/);
+  assert.doesNotMatch(markup, /data-starmate-part="action"/);
 
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
   const splitRules = styles.match(/\[data-layout=split\][^{}]*\{[^}]*\}/g)?.join("\n") ?? "";
   assert.match(splitRules, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
   assert.match(splitRules, /\[data-split-sizing=content\]\{grid-template-columns:repeat\(2,max-content\);inline-size:max-content/);
-  assert.match(splitRules, /\[data-split-sizing=content\]>\[data-openbitfun-component=button\]\{inline-size:max-content;max-inline-size:100%/);
-  assert.match(splitRules, /\[data-openbitfun-component=select\]>\[data-openbitfun-part=trigger\]\{border-color:transparent;background-clip:padding-box\}/);
+  assert.match(splitRules, /\[data-split-sizing=content\]>\[data-starmate-component=button\]\{inline-size:max-content;max-inline-size:100%/);
+  assert.match(splitRules, /\[data-starmate-component=select\]>\[data-starmate-part=trigger\]\{border-color:transparent;background-clip:padding-box\}/);
   assert.match(splitRules, /border-inline-end-width:0/);
   assert.match(splitRules, /border-inline-start-width:0/);
   assert.match(splitRules, /border-start-end-radius:0;border-end-end-radius:0/);
@@ -66,21 +66,21 @@ test("split capsules align filled edges with equal or compact content-sized widt
 
 test("tab actions and removable MultiSelect labels adopt the same glass presentation", () => {
   const tabs = renderToStaticMarkup(h(TabGroup, { items: [{ value: "a", label: "A long tab", endAction: action({ variant: "outline" }) }] }));
-  assert.match(tabs, /data-openbitfun-variant="glass"/);
+  assert.match(tabs, /data-starmate-variant="glass"/);
   assert.match(tabs, /role="tab"/);
   assert.match(tabs, /A long tab/);
 
   const select = renderToStaticMarkup(h(MultiSelect, {
     "aria-label": "Tags", value: ["a"], options: [{ value: "a", label: "A long tag" }], disabled: true,
   }));
-  assert.match(select, /data-openbitfun-component="capsule"/);
-  assert.match(select, /data-openbitfun-variant="glass"/);
+  assert.match(select, /data-starmate-component="capsule"/);
+  assert.match(select, /data-starmate-variant="glass"/);
   assert.match(select, /A long tag/);
   assert.match(select, /disabled=""/);
 });
 
 test("a standalone icon retains its chosen variant outside a floating action slot", () => {
   const markup = renderToStaticMarkup(action({ variant: "outline" }));
-  assert.match(markup, /data-openbitfun-variant="outline"/);
-  assert.doesNotMatch(markup, /data-openbitfun-variant="glass"/);
+  assert.match(markup, /data-starmate-variant="outline"/);
+  assert.doesNotMatch(markup, /data-starmate-variant="glass"/);
 });

@@ -1491,11 +1491,11 @@ const WorkspaceItem: React.FC<WorkspaceItemProps> = ({
         data-openbitfun-product-component="workspace-item"
         data-openbitfun-product-part="sessions"
         className={`openbitfun-nav-panel__workspace-item-sessions openbitfun-nav-panel__workspace-item-sessions--project${sessionsCollapsed ? ' is-collapsed' : ''}`}
-        {...{ inert: sessionsCollapsed ? '' : undefined }}
+        data-starmate-product-part="sessions" data-starmate-product-component="workspace-item" {...{ inert: sessionsCollapsed ? '' : undefined }}
         aria-hidden={sessionsCollapsed || undefined}
         data-testid="nav-workspace-session-region"
         data-workspace-id={workspace.id}
-       data-starmate-product-component="workspace-item" data-starmate-product-part="sessions" >
+         >
         <div className="openbitfun-nav-panel__workspace-item-sessions-inner">
           <SessionsSection
             workspaceId={workspace.id}

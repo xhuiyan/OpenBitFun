@@ -18,16 +18,16 @@
     outline-color: transparent;
     background: transparent;
   }
-  [data-openbitfun-component='avatar'] { border: 0; }
+  [data-starmate-component='avatar'] { border: 0; }
   &__trigger { justify-content: center; padding: 0; }
-  &__item > [data-openbitfun-part='actions'] {
+  &__item > [data-starmate-part='actions'] {
     inset: 0;
     inline-size: 100%;
     block-size: 100%;
     transform: none;
     pointer-events: none;
 
-    > [data-openbitfun-component='icon-button'] {
+    > [data-starmate-component='icon-button'] {
       flex-basis: 100%;
       inline-size: 100%;
       block-size: 100%;
@@ -46,7 +46,7 @@
       }
     }
   }
-  &__item > [data-openbitfun-part='actions'] [data-openbitfun-component='icon-button']:is(:hover, :focus-visible):not(:disabled) {
+  &__item > [data-starmate-part='actions'] [data-starmate-component='icon-button']:is(:hover, :focus-visible):not(:disabled) {
     color: var(--starmate-color-status-success-content);
   }
 }

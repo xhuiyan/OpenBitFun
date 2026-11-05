@@ -73,7 +73,7 @@
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
-  .errorTitle > :where(svg, img, [data-openbitfun-component="icon"]) {
+  .errorTitle > :where(svg, img, [data-starmate-component="icon"]) {
     flex: 0 0 auto;
     inline-size: var(--starmate-font-size-xl);
     block-size: var(--starmate-font-size-xl);

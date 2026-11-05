@@ -181,11 +181,11 @@
   max-width: 600px;
   padding-inline-end: var(--starmate-space-10);
 
-  [data-openbitfun-part='heading'] {
+  [data-starmate-part='heading'] {
     @include surface.page-title;
   }
 
-  [data-openbitfun-part='description'] {
+  [data-starmate-part='description'] {
     max-width: 60ch;
     color: var(--starmate-color-content-secondary);
   }
@@ -223,16 +223,16 @@
   background: var(--starmate-color-status-success-content);
 }
 
-.openbitfun-remote-connect [data-openbitfun-part='panel'] {
+.openbitfun-remote-connect [data-starmate-part='panel'] {
   flex: 1;
   min-height: 0;
 }
 
-.openbitfun-remote-connect [data-openbitfun-part='panel'][data-openbitfun-group='account'] {
+.openbitfun-remote-connect [data-starmate-part='panel'][data-starmate-group='account'] {
   display: flex;
 }
 
-.openbitfun-remote-connect [data-openbitfun-part='panel'] > [role='tabpanel'] {
+.openbitfun-remote-connect [data-starmate-part='panel'] > [role='tabpanel'] {
   display: flex;
   min-height: 100%;
   flex-direction: column;
@@ -439,7 +439,7 @@
   border-radius: var(--starmate-radius-base);
   background: var(--starmate-color-status-danger-surface);
 
-  > [data-openbitfun-component='icon'] {
+  > [data-starmate-component='icon'] {
     margin-top: 2px;
   }
 }

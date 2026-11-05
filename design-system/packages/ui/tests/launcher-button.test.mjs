@@ -19,10 +19,10 @@ test("LauncherButton exposes native button semantics and stable icon/label parts
 
   assert.match(markup, /^<button/);
   assert.match(markup, /type="button"/);
-  assert.match(markup, /data-openbitfun-component="launcher-button"/);
-  assert.match(markup, /data-openbitfun-part="icon"/);
-  assert.match(markup, /data-openbitfun-name="mic"/);
-  assert.match(markup, /data-openbitfun-part="label"[^>]*data-overflow-behavior="marquee"[^>]*><span[^>]*>Hello<\/span><\/span>/);
+  assert.match(markup, /data-starmate-component="launcher-button"/);
+  assert.match(markup, /data-starmate-part="icon"/);
+  assert.match(markup, /data-starmate-name="mic"/);
+  assert.match(markup, /data-starmate-part="label"[^>]*data-overflow-behavior="marquee"[^>]*><span[^>]*>Hello<\/span><\/span>/);
 });
 
 test("LauncherButton forwards native disabled state", () => {
@@ -46,6 +46,6 @@ test("LauncherButton styles own reference state colors and shell-edge geometry",
   assert.match(styles, /--starmate-color-control-launcher-background-pressed/);
   assert.match(styles, /--starmate-color-control-launcher-content-hover/);
   assert.match(styles, /--starmate-color-control-launcher-content-pressed/);
-  assert.match(styles, /data-openbitfun-preview-state="hover"/);
-  assert.match(styles, /data-openbitfun-preview-state="active"/);
+  assert.match(styles, /data-starmate-preview-state="hover"/);
+  assert.match(styles, /data-starmate-preview-state="active"/);
 });

@@ -85,9 +85,9 @@ export const ScrollToLatestBar: React.FC<ScrollToLatestBarProps> = ({
           }
         }}
         aria-hidden={!visible}
-        {...(!visible ? { inert: '' } : {})}
+        data-starmate-input="active" data-starmate-product-part="root" data-starmate-product-component="scroll-to-latest-bar" {...(!visible ? { inert: '' } : {})}
         aria-label={t('scroll.toLatest')}
-       data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="root" data-starmate-input="active" >
+          >
         <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="gradient" className="scroll-to-latest-bar__gradient"  data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="gradient" />
 
         <div data-openbitfun-product-component="scroll-to-latest-bar" data-openbitfun-product-part="content" className="scroll-to-latest-bar__content" style={contentStyle} data-starmate-product-component="scroll-to-latest-bar" data-starmate-product-part="content" >

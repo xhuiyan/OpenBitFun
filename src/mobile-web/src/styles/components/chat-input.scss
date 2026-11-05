@@ -87,7 +87,7 @@
   max-width: 100%;
   min-width: 0;
 
-  [data-openbitfun-part="label"] {
+  [data-starmate-part="label"] {
     // MobileButton uses display: contents by default; ellipsis needs a box.
     display: block;
     flex: 1 1 auto;
@@ -532,7 +532,7 @@
   height: 48px;
 }
 
-.chat-composer-sheet > [data-openbitfun-part='header'] {
+.chat-composer-sheet > [data-starmate-part='header'] {
   display: flex;
   align-items: center;
   text-align: left;
@@ -598,7 +598,7 @@
   border-radius: 18px;
 }
 
-.chat-page__composer[data-expanded='true'] [data-openbitfun-part='editor'] {
+.chat-page__composer[data-expanded='true'] [data-starmate-part='editor'] {
   min-height: 60px;
 }
 
@@ -677,6 +677,6 @@
 }
 
 // Keep the action row and collapsed pill on the same inset in both modes.
-.chat-page__composer [data-openbitfun-part='toolbar'] {
+.chat-page__composer [data-starmate-part='toolbar'] {
   min-block-size: 44px;
 }

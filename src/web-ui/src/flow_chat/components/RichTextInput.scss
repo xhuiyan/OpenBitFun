@@ -59,8 +59,8 @@
 }
 
 // Light theme: placeholder slightly softer than body text.
-:root[data-openbitfun-appearance-mode="light"] .rich-text-input,
-:root[data-openbitfun-appearance-mode="light"] .rich-text-input,
+:root[data-starmate-appearance-mode="light"] .rich-text-input,
+:root[data-starmate-appearance-mode="light"] .rich-text-input,
 .light .rich-text-input {
   &:empty::before {
     color: color-mix(in srgb, var(--starmate-color-content-secondary) 48%, transparent);

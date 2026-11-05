@@ -239,7 +239,7 @@
     cursor: pointer;
   }
 
-  .root[data-openbitfun-expanded="true"] .summaryButton {
+  .root[data-starmate-expanded="true"] .summaryButton {
     border-block-end: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }
 
@@ -282,9 +282,9 @@
     color: var(--starmate-color-status-success-content);
   }
 
-  .summaryIcon > [data-openbitfun-component="icon"],
-  .statusIcon > [data-openbitfun-component="icon"],
-  .summaryAction > [data-openbitfun-component="icon"],
+  .summaryIcon > [data-starmate-component="icon"],
+  .statusIcon > [data-starmate-component="icon"],
+  .summaryAction > [data-starmate-component="icon"],
   .summaryIcon > svg,
   .statusIcon > svg,
   .summaryAction > svg {
@@ -349,12 +349,12 @@
    * free of a transition, and keeping the shrinking min-size collapsed-only,
    * stops the 1fr row from inflating past its content while the card is open.
    */
-  .root[data-openbitfun-has-summary="true"][data-openbitfun-expanded="false"] .details {
+  .root[data-starmate-has-summary="true"][data-starmate-expanded="false"] .details {
     grid-template-rows: 0fr;
     transition: grid-template-rows var(--starmate-motion-duration-base) var(--starmate-motion-easing-standard);
   }
 
-  .root[data-openbitfun-has-summary="true"][data-openbitfun-expanded="false"] .detailsInner {
+  .root[data-starmate-has-summary="true"][data-starmate-expanded="false"] .detailsInner {
     min-block-size: 0;
   }
 
@@ -428,7 +428,7 @@
   }
 
   .option:hover:has(.optionSelector[data-disabled="false"][data-readonly="false"]),
-  .option:has([data-openbitfun-preview-state="hover"]) {
+  .option:has([data-starmate-preview-state="hover"]) {
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
@@ -445,11 +445,11 @@
     font: inherit;
   }
 
-  .optionSelector > :global([data-openbitfun-part="control"]) {
+  .optionSelector > :global([data-starmate-part="control"]) {
     margin-block-start: max(0px, calc((1lh - var(--starmate-control-icon-size-md)) / 2));
   }
 
-  .optionSelector > :global([data-openbitfun-part="content"]) {
+  .optionSelector > :global([data-starmate-part="content"]) {
     flex: 1 1 auto;
     min-inline-size: 0;
   }
@@ -494,7 +494,7 @@
     margin-inline-end: var(--starmate-control-ask-user-option-padding-inline);
   }
 
-  .customInput > :global([data-openbitfun-component="input"]) {
+  .customInput > :global([data-starmate-component="input"]) {
     inline-size: 100%;
   }
 
@@ -538,27 +538,27 @@
     line-height: var(--starmate-type-body-sm-line-height);
   }
 
-  .root[data-openbitfun-state="asking"] .statusIcon {
+  .root[data-starmate-state="asking"] .statusIcon {
     color: var(--starmate-color-status-warning-content);
   }
 
-  .root[data-openbitfun-state="submitted"] .statusIcon,
-  .root[data-openbitfun-state="completed"] .statusIcon {
+  .root[data-starmate-state="submitted"] .statusIcon,
+  .root[data-starmate-state="completed"] .statusIcon {
     color: var(--starmate-color-status-success-content);
   }
 
-  .root[data-openbitfun-state="error"] .statusIcon {
+  .root[data-starmate-state="error"] .statusIcon {
     color: var(--starmate-color-status-danger-content);
   }
 
-  .root[data-openbitfun-state="loading"] .statusIcon,
-  .root[data-openbitfun-state="timeout"] .statusIcon,
-  .root[data-openbitfun-state="submitting"] .statusIcon {
+  .root[data-starmate-state="loading"] .statusIcon,
+  .root[data-starmate-state="timeout"] .statusIcon,
+  .root[data-starmate-state="submitting"] .statusIcon {
     color: var(--starmate-color-content-secondary);
   }
 
-  .root[data-openbitfun-state="loading"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]),
-  .root[data-openbitfun-state="submitting"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]) {
+  .root[data-starmate-state="loading"] .statusIcon > :is(svg, [data-starmate-component="icon"]),
+  .root[data-starmate-state="submitting"] .statusIcon > :is(svg, [data-starmate-component="icon"]) {
     animation: openbitfun-ask-user-spin var(--starmate-motion-duration-loop) linear infinite;
   }
 
@@ -581,7 +581,7 @@
     background: var(--starmate-color-status-warning-surface);
   }
 
-  .root[data-openbitfun-state="error"] .feedback {
+  .root[data-starmate-state="error"] .feedback {
     border-color: var(--starmate-color-status-danger-border);
     color: var(--starmate-color-status-danger-content);
     background: var(--starmate-color-status-danger-surface);
@@ -600,13 +600,13 @@
 
   @media (prefers-reduced-motion: reduce) {
     .details,
-    .root[data-openbitfun-has-summary="true"][data-openbitfun-expanded="false"] .details,
+    .root[data-starmate-has-summary="true"][data-starmate-expanded="false"] .details,
     .option {
       transition: none;
     }
 
-    .root[data-openbitfun-state="loading"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]),
-    .root[data-openbitfun-state="submitting"] .statusIcon > :is(svg, [data-openbitfun-component="icon"]) {
+    .root[data-starmate-state="loading"] .statusIcon > :is(svg, [data-starmate-component="icon"]),
+    .root[data-starmate-state="submitting"] .statusIcon > :is(svg, [data-starmate-component="icon"]) {
       animation: none;
     }
   }

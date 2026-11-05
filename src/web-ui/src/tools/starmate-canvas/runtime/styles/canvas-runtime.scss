@@ -113,15 +113,15 @@ button {
   margin-inline: auto;
 }
 
-html[data-openbitfun-canvas-design-mode] {
+html[data-starmate-canvas-design-mode] {
   cursor: crosshair;
 }
 
-html[data-openbitfun-canvas-design-mode] body {
+html[data-starmate-canvas-design-mode] body {
   user-select: none;
 }
 
-[data-openbitfun-canvas-hovered='true'] {
+[data-starmate-canvas-hovered='true'] {
   outline: 2px solid var(--starmate-color-accent-default) !important;
   outline-offset: 2px !important;
 }

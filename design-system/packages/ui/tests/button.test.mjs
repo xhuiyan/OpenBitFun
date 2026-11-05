@@ -8,9 +8,9 @@ import { Button } from "../dist/index.js";
 test("Button exposes the neutral outline contract by default", () => {
   const markup = renderToStaticMarkup(createElement(Button, null, "Session"));
 
-  assert.match(markup, /data-openbitfun-component="button"/);
-  assert.match(markup, /data-openbitfun-tone="neutral"/);
-  assert.match(markup, /data-openbitfun-variant="outline"/);
+  assert.match(markup, /data-starmate-component="button"/);
+  assert.match(markup, /data-starmate-tone="neutral"/);
+  assert.match(markup, /data-starmate-variant="outline"/);
   assert.match(markup, /data-size="md"/);
   assert.match(markup, /type="button"/);
   assert.match(markup, /data-label-behavior="overflow"/);
@@ -27,8 +27,8 @@ test("static labels retain native button semantics without adding overflow machi
   assert.match(markup, /name="action"/);
   assert.match(markup, /value="history"/);
   assert.match(markup, /title="History details"/);
-  assert.match(markup, /data-openbitfun-part="label"[^>]*>Show previous attempts<\/span>/);
-  assert.match(markup, /data-openbitfun-part="leading-icon"/);
+  assert.match(markup, /data-starmate-part="label"[^>]*>Show previous attempts<\/span>/);
+  assert.match(markup, /data-starmate-part="leading-icon"/);
   assert.doesNotMatch(markup, /data-overflow-behavior|data-overflow-content|data-overflow-tooltip/);
   const pending = renderToStaticMarkup(createElement(Button, {
     labelBehavior: "static", loading: true,
@@ -44,9 +44,9 @@ test("danger tone preserves destructive semantics independently from presentatio
   );
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(markup, /data-openbitfun-tone="danger"/);
-  assert.match(markup, /data-openbitfun-variant="fill"/);
-  assert.match(styles, /\[data-openbitfun-tone=danger\]/);
+  assert.match(markup, /data-starmate-tone="danger"/);
+  assert.match(markup, /data-starmate-variant="fill"/);
+  assert.match(styles, /\[data-starmate-tone=danger\]/);
   assert.match(styles, /--starmate-color-status-danger-content/);
   assert.match(styles, /--starmate-color-status-danger-surface/);
   assert.match(styles, /--starmate-color-status-danger-border/);
@@ -66,7 +66,7 @@ test("Button renders decorative icon slots and native disabled state", () => {
     ),
   );
 
-  assert.match(markup, /data-openbitfun-variant="fill"/);
+  assert.match(markup, /data-starmate-variant="fill"/);
   assert.match(markup, /disabled=""/);
   assert.match(markup, /data-icon="session"/);
   assert.match(markup, /data-icon="chevron-down"/);
@@ -87,7 +87,7 @@ test("loading keeps the accessible label while disabling activation", () => {
 test("fill styles bind to the public variant attribute", async () => {
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(styles, /\[data-openbitfun-variant=fill\]/);
+  assert.match(styles, /\[data-starmate-variant=fill\]/);
   assert.doesNotMatch(styles, /\[data-variant=fill\]/);
 });
 
@@ -100,8 +100,8 @@ test("primary and text variants expose semantic emphasis without changing button
   );
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(primaryMarkup, /data-openbitfun-variant="primary"/);
-  assert.match(textMarkup, /data-openbitfun-variant="text"/);
+  assert.match(primaryMarkup, /data-starmate-variant="primary"/);
+  assert.match(textMarkup, /data-starmate-variant="text"/);
   assert.match(styles, /--starmate-component-button-primary-background/);
   assert.match(styles, /--starmate-color-action-primary-content/);
   assert.match(styles, /--starmate-component-button-text-content/);
@@ -115,7 +115,7 @@ test("secondary exposes the filled secondary-action contract", async () => {
   );
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
 
-  assert.match(markup, /data-openbitfun-variant="secondary"/);
+  assert.match(markup, /data-starmate-variant="secondary"/);
   assert.match(styles, /--starmate-color-surface-tertiary/);
   assert.match(styles, /--starmate-color-border-default/);
   assert.match(styles, /--starmate-color-border-strong/);
@@ -125,9 +125,9 @@ test("secondary exposes the filled secondary-action contract", async () => {
 test("quiet owns neutral toolbar text and a hover border without link styling", async () => {
   const markup = renderToStaticMarkup(createElement(Button, { variant: "quiet", size: "sm", loading: true }, "Refresh"));
   const styles = await readFile(new URL("../src/components/Button/Button.module.css", import.meta.url), "utf8");
-  const rule = styles.match(/\.button\[data-openbitfun-variant="quiet"\]\s*\{([^}]+)\}/)?.[1] ?? "";
+  const rule = styles.match(/\.button\[data-starmate-variant="quiet"\]\s*\{([^}]+)\}/)?.[1] ?? "";
 
-  assert.match(markup, /data-openbitfun-variant="quiet"/);
+  assert.match(markup, /data-starmate-variant="quiet"/);
   assert.match(markup, /data-size="sm"/);
   assert.match(markup, /disabled=""/);
   assert.match(markup, /aria-busy="true"/);
@@ -139,8 +139,8 @@ test("quiet owns neutral toolbar text and a hover border without link styling", 
   assert.match(rule, /--_button-content:\s*var\(--starmate-color-content-secondary\)/);
   assert.match(rule, /border-radius:\s*var\(--starmate-radius-base\)/);
   assert.doesNotMatch(rule, /text-decoration/);
-  assert.match(styles, /\[data-openbitfun-tone="neutral"\]\[data-openbitfun-variant="quiet"\][^{]+:not\(:disabled\)\s*\{\s*--_button-content:\s*var\(--starmate-color-content-primary\)/);
-  assert.match(styles, /\[data-openbitfun-tone="danger"\]\[data-openbitfun-variant="quiet"\]\s*\{[^}]*--_button-border:\s*transparent/);
+  assert.match(styles, /\[data-starmate-tone="neutral"\]\[data-starmate-variant="quiet"\][^{]+:not\(:disabled\)\s*\{\s*--_button-content:\s*var\(--starmate-color-content-primary\)/);
+  assert.match(styles, /\[data-starmate-tone="danger"\]\[data-starmate-variant="quiet"\]\s*\{[^}]*--_button-border:\s*transparent/);
 });
 
 test("outline and text composite over the caller surface without changing their hit targets", async () => {
@@ -159,14 +159,14 @@ test("outline and text composite over the caller surface without changing their 
   );
   assert.match(
     styles,
-    /\[data-openbitfun-variant="text"\]\s*\{[^}]*--_button-background:\s*transparent/s,
+    /\[data-starmate-variant="text"\]\s*\{[^}]*--_button-background:\s*transparent/s,
   );
-  const textRule = styles.match(/\[data-openbitfun-variant="text"\]\s*\{([^}]+)\}/)?.[1] ?? "";
+  const textRule = styles.match(/\[data-starmate-variant="text"\]\s*\{([^}]+)\}/)?.[1] ?? "";
   assert.match(textRule, /--_button-background-hover:\s*transparent/);
   assert.match(textRule, /--_button-background-active:\s*transparent/);
   assert.match(textRule, /border-radius:\s*0/);
   assert.doesNotMatch(textRule, /(?:block-size|padding|font-size|icon-size):/);
-  assert.doesNotMatch(styles, /\[data-openbitfun-variant="text"\][^}]*padding-inline:\s*0/s);
+  assert.doesNotMatch(styles, /\[data-starmate-variant="text"\][^}]*padding-inline:\s*0/s);
 });
 
 test("Button owns the reference pill geometry and typography", async () => {
@@ -223,7 +223,7 @@ test("real and preview hover states share the component rule", async () => {
 
   assert.match(
     styles,
-    /:is\(:hover,\s*\[data-openbitfun-preview-state=(?:"hover"|hover)\]\):not\(:disabled\)/,
+    /:is\(:hover,\s*\[data-starmate-preview-state=(?:"hover"|hover)\]\):not\(:disabled\)/,
   );
 });
 
@@ -235,7 +235,7 @@ test("real and preview active states share the semibold component rule", async (
 
   assert.match(
     styles,
-    /:is\(:active,\s*\[data-openbitfun-preview-state=(?:"active"|active)\]\):not\(:disabled\)/,
+    /:is\(:active,\s*\[data-starmate-preview-state=(?:"active"|active)\]\):not\(:disabled\)/,
   );
   assert.match(styles, /font-weight:\s*var\(--starmate-type-label-selected-font-weight\)/);
   assert.equal((styles.match(/--starmate-type-label-selected-font-weight/g) ?? []).length, 1);
@@ -254,11 +254,11 @@ test("native disabled and loading use variant-specific disabled content with a n
   const styles = await readFile(new URL("../src/components/Button/Button.module.css", import.meta.url), "utf8");
   assert.match(styles, /\.button:disabled\s*\{[^}]*color:\s*var\(--_button-content-disabled\)/);
   for (const variant of ["primary", "text"]) {
-    const rule = styles.match(new RegExp(`\\[data-openbitfun-variant="${variant}"\\]\\s*\\{([^}]+)\\}`))?.[1] ?? "";
+    const rule = styles.match(new RegExp(`\\[data-starmate-variant="${variant}"\\]\\s*\\{([^}]+)\\}`))?.[1] ?? "";
     assert.match(rule, new RegExp(`--_button-content-disabled:\\s*var\\(--starmate-component-button-${variant}-content-disabled\\)`));
     const markup = renderToStaticMarkup(createElement(Button, { variant, loading: true }, "Save"));
     assert.match(markup, /disabled=""/);
     assert.match(markup, /aria-busy="true"/);
   }
-  assert.match(styles, /\[data-openbitfun-tone="danger"\]\s*\{[^}]*--_button-content-disabled:\s*var\(--starmate-color-action-neutral-content-disabled\)/);
+  assert.match(styles, /\[data-starmate-tone="danger"\]\s*\{[^}]*--_button-content-disabled:\s*var\(--starmate-color-action-neutral-content-disabled\)/);
 });

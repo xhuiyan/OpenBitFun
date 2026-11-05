@@ -38,7 +38,7 @@
     background: var(--starmate-color-status-warning-surface);
     border-color: var(--starmate-color-status-warning-border);
 
-    > :is(svg, [data-openbitfun-component='icon']) {
+    > :is(svg, [data-starmate-component='icon']) {
       color: var(--starmate-color-status-warning-emphasis);
     }
   }
@@ -55,7 +55,7 @@
     background: var(--starmate-color-status-success-surface);
     border-color: var(--starmate-color-status-success-border);
 
-    > :is(svg, [data-openbitfun-component='icon']) {
+    > :is(svg, [data-starmate-component='icon']) {
       color: var(--starmate-color-status-success-emphasis);
     }
   }

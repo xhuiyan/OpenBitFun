@@ -20,7 +20,7 @@ export const ConfigPageHeader: React.FC<ConfigPageHeaderProps> = ({
   ...props
 }) => {
   return (
-    <div className={`openbitfun-config-page-header ${className}`} data-openbitfun-component="config" data-openbitfun-part="pageHeader" {...props} data-starmate-component="config" data-starmate-part="pageHeader" >
+    <div className={`openbitfun-config-page-header ${className}`} data-openbitfun-component="config" data-openbitfun-part="pageHeader" data-starmate-part="pageHeader" data-starmate-component="config" {...props}   >
       <div className="openbitfun-config-page-header__inner" data-openbitfun-component="config" data-openbitfun-part="pageHeaderInner" data-starmate-component="config" data-starmate-part="pageHeaderInner" >
         <div className="openbitfun-config-page-header__left">
           <div className="openbitfun-config-page-header__info" data-openbitfun-component="config" data-openbitfun-part="pageHeaderInfo" data-starmate-component="config" data-starmate-part="pageHeaderInfo" >

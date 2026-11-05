@@ -155,7 +155,7 @@
     color: var(--starmate-color-content-secondary);
   }
 
-  .todoCompactIcon > [data-openbitfun-component="icon"] {
+  .todoCompactIcon > [data-starmate-component="icon"] {
     inline-size: 100%;
     block-size: 100%;
   }
@@ -185,7 +185,7 @@
     overflow: auto;
   }
 
-  .todoRoot [data-openbitfun-part="expanded"] {
+  .todoRoot [data-starmate-part="expanded"] {
     border-block-start: 0;
   }
 

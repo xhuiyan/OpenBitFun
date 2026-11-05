@@ -149,7 +149,7 @@ function WorkspaceResourceContent({ resourceKey, workspace }: { resourceKey: str
                 data-openbitfun-component="file-viewer-nav" data-openbitfun-part="divider"
                 aria-label={t('nav.resources.resize')} aria-orientation="horizontal" aria-controls={terminalsId}
                 aria-valuemin={15} aria-valuemax={75} aria-valuenow={Math.round(split.fraction * 100)}
-                {...split.handlers}  data-starmate-component="file-viewer-nav" data-starmate-part="divider" />}
+                data-starmate-part="divider" data-starmate-component="file-viewer-nav" {...split.handlers}    />}
               <section className="openbitfun-file-viewer-nav__section openbitfun-file-viewer-nav__section--terminals" aria-label={t('nav.resources.terminals')}
                 style={{ flex: layout.terminalsCollapsed || !hasTerminalContent ? '0 0 auto' : showSplit ? `${split.fraction} 1 0` : '1 1 0' }}>
                 <div className="openbitfun-file-viewer-nav__header" data-openbitfun-component="file-viewer-nav" data-openbitfun-part="header" data-starmate-component="file-viewer-nav" data-starmate-part="header" >

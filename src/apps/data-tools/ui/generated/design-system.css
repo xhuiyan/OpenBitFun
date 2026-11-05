@@ -2,7 +2,7 @@
 @layer openbitfun.tokens.system, openbitfun.tokens.theme, openbitfun.reset, openbitfun.base, openbitfun.components, openbitfun.overrides;
 
 @layer openbitfun.tokens.system {
-  :where([data-openbitfun-design-system-root]) {
+  :where([data-starmate-design-system-root]) {
     --openbitfun-border-width-default: 1px;
     --openbitfun-border-width-strong: 2px;
     --openbitfun-control-action-card-actions-gap: 0px;
@@ -1387,7 +1387,7 @@
 }
 
 @layer openbitfun.tokens.system {
-  :where([data-openbitfun-design-system-root][data-density="compact"]) {
+  :where([data-starmate-design-system-root][data-density="compact"]) {
     --openbitfun-control-height-lg: 44px;
     --openbitfun-control-height-md: 36px;
     --openbitfun-control-height-sm: 28px;
@@ -1422,7 +1422,7 @@
 }
 
 @layer openbitfun.tokens.system {
-  :where([data-openbitfun-design-system-root][data-density="touch"]) {
+  :where([data-starmate-design-system-root][data-density="touch"]) {
     --openbitfun-control-height-lg: 56px;
     --openbitfun-control-height-md: 48px;
     --openbitfun-control-height-sm: 40px;
@@ -1458,7 +1458,7 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  :where([data-openbitfun-design-system-root]) {
+  :where([data-starmate-design-system-root]) {
 
     --openbitfun-motion-duration-fast: 0ms;
 
@@ -1474,7 +1474,7 @@
 
 }
 @layer openbitfun.tokens.theme {
-  :where([data-openbitfun-design-system-root]), :where([data-openbitfun-design-system-root][data-color-scheme="light"]) {
+  :where([data-starmate-design-system-root]), :where([data-starmate-design-system-root][data-color-scheme="light"]) {
     --openbitfun-color-accent-border: color-mix(in srgb, #059cb0 40%, transparent);
     --openbitfun-color-accent-border-subtle: color-mix(in srgb, #059cb0 25%, transparent);
     --openbitfun-color-accent-default: #059cb0;
@@ -1839,7 +1839,7 @@
 }
 
 @layer openbitfun.tokens.theme {
-  :where([data-openbitfun-design-system-root][data-color-scheme="dark"]) {
+  :where([data-starmate-design-system-root][data-color-scheme="dark"]) {
     --openbitfun-color-accent-border: color-mix(in srgb, #60a5fa 40%, transparent);
     --openbitfun-color-accent-border-subtle: color-mix(in srgb, #60a5fa 25%, transparent);
     --openbitfun-color-accent-default: #60a5fa;
@@ -2204,7 +2204,7 @@
 }
 
 @layer openbitfun.tokens.theme {
-  :where([data-openbitfun-design-system-root][data-color-scheme="light"][data-contrast="high"]) {
+  :where([data-starmate-design-system-root][data-color-scheme="light"][data-contrast="high"]) {
     --openbitfun-color-action-neutral-border: #000000;
     --openbitfun-color-action-neutral-content: #000000;
     --openbitfun-color-action-neutral-content-disabled: #343434;
@@ -2337,7 +2337,7 @@
 }
 
 @layer openbitfun.tokens.theme {
-  :where([data-openbitfun-design-system-root][data-color-scheme="dark"][data-contrast="high"]) {
+  :where([data-starmate-design-system-root][data-color-scheme="dark"][data-contrast="high"]) {
     --openbitfun-color-action-neutral-border: #ffffff;
     --openbitfun-color-action-neutral-content: #ffffff;
     --openbitfun-color-action-neutral-content-disabled: #d0d0d0;

@@ -14,7 +14,7 @@ export interface ToolCardSectionProps extends Omit<HTMLAttributes<HTMLElement>, 
 /** A subordinate section. The card shell owns the outer inset. */
 export function ToolCardSection({ label, actions, children, className, ...props }: ToolCardSectionProps) {
   return (
-    <section data-openbitfun-part="section" {...props} className={classNames(styles.section, className)} data-tool-card-action-scope data-starmate-part="section" >
+    <section data-openbitfun-part="section" data-starmate-part="section" {...props} className={classNames(styles.section, className)} data-tool-card-action-scope  >
       {(label || actions) && (
         <div className={styles.heading} data-tool-card-action-heading>
           {label && <div className={styles.label} data-openbitfun-part="sectionLabel" data-starmate-part="sectionLabel" >{label}</div>}

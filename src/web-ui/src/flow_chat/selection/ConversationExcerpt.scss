@@ -16,7 +16,7 @@
     flex: 0 1 auto;
     gap: 0;
 
-    > [data-openbitfun-part='separator'] { block-size: var(--starmate-space-4); }
+    > [data-starmate-part='separator'] { block-size: var(--starmate-space-4); }
   }
 
   &__action {
@@ -27,7 +27,7 @@
     color: var(--starmate-color-content-primary);
     font-size: var(--starmate-type-body-sm-font-size);
 
-    [data-openbitfun-part='leading-icon'] { inline-size: 14px; block-size: 14px; }
+    [data-starmate-part='leading-icon'] { inline-size: 14px; block-size: 14px; }
 
     &:hover:not(:disabled), &:active:not(:disabled) {
       color: var(--openbitfun-component-conversation-excerpt-accent);
@@ -44,12 +44,12 @@
   }
 
   &__dialog {
-    > [data-openbitfun-part='header'] {
+    > [data-starmate-part='header'] {
       align-items: center;
       padding-block: var(--starmate-space-5) var(--starmate-space-3);
       padding-inline: var(--starmate-space-5);
 
-      [data-openbitfun-part='title'] {
+      [data-starmate-part='title'] {
         font-family: var(--starmate-type-heading-section-font-family);
         font-size: var(--starmate-type-heading-section-font-size);
         font-weight: var(--starmate-type-heading-section-font-weight);
@@ -58,12 +58,12 @@
       }
     }
 
-    > [data-openbitfun-part='body'] {
+    > [data-starmate-part='body'] {
       padding-inline: var(--starmate-space-5);
       padding-block-end: var(--starmate-space-4);
     }
 
-    > [data-openbitfun-part='footer'] {
+    > [data-starmate-part='footer'] {
       flex-wrap: wrap;
       padding-block: 0 var(--starmate-space-5);
       padding-inline: var(--starmate-space-5);
@@ -136,7 +136,7 @@
     gap: var(--starmate-space-3);
 
     > .conversation-excerpt__source { flex-shrink: 0; }
-    .conversation-excerpt__input [data-openbitfun-part='input'] { max-block-size: none; }
+    .conversation-excerpt__input [data-starmate-part='input'] { max-block-size: none; }
   }
 
   &__floating-footer {
@@ -209,7 +209,7 @@
     -webkit-line-clamp: 2;
   }
 
-  &__input [data-openbitfun-part='input'] {
+  &__input [data-starmate-part='input'] {
     max-block-size: 40vh;
     overflow-y: auto;
   }

@@ -207,12 +207,12 @@
     // Keep the remove action's existing danger feedback on its root.
     &::before { content: none; }
 
-    > [data-openbitfun-part='icon'] {
+    > [data-starmate-part='icon'] {
       --openbitfun-opacity-icon-artwork: inherit;
       display: contents;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+    > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
       inline-size: var(--starmate-control-icon-size-sm);
       block-size: var(--starmate-control-icon-size-sm);
     }

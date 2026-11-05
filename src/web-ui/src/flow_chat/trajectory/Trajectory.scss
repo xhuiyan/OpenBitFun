@@ -76,8 +76,8 @@
   &__section-title { font-family: var(--starmate-type-body-xs-font-family); font-size: var(--starmate-type-body-xs-font-size);
     line-height: var(--starmate-type-body-xs-line-height); font-weight: var(--starmate-type-label-selected-font-weight); }
   &__section-content, &__nested-content { padding: 0; }
-  &__section[data-open='true'] > [data-openbitfun-part='content'] > .trajectory-details__section-content { padding-block: var(--starmate-space-2) 0; }
-  &__branch[data-open='true'] > [data-openbitfun-part='content'] > .trajectory-details__nested-content {
+  &__section[data-open='true'] > [data-starmate-part='content'] > .trajectory-details__section-content { padding-block: var(--starmate-space-2) 0; }
+  &__branch[data-open='true'] > [data-starmate-part='content'] > .trajectory-details__nested-content {
     padding-block: var(--starmate-space-1); padding-inline-start: var(--starmate-space-3);
     border-inline-start: var(--starmate-border-width-default) solid var(--starmate-color-border-subtle);
   }

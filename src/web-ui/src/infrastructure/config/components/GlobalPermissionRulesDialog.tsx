@@ -452,10 +452,10 @@ export const GlobalPermissionRulesDialog: React.FC<GlobalPermissionRulesDialogPr
                       data-rule-id={rule.localId}
                       data-exiting={exiting ? 'true' : 'false'}
                       aria-hidden={exiting || undefined}
-                      {...(exiting ? { inert: '' } : {})}
+                      data-starmate-part="rule" data-starmate-component="global-permission-rules-dialog" {...(exiting ? { inert: '' } : {})}
                       key={rule.localId}
                       className="global-permission-rules-dialog__rule-row"
-                     data-starmate-component="global-permission-rules-dialog" data-starmate-part="rule" >
+                       >
                       <Select
                         size="sm"
                         value={rule.effect}

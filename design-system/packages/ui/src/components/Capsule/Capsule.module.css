@@ -39,33 +39,33 @@
     inline-size: max-content;
   }
 
-  .root[data-layout="split"] > [data-openbitfun-component="select"],
-  .root[data-layout="split"] > [data-openbitfun-component="button"] {
+  .root[data-layout="split"] > [data-starmate-component="select"],
+  .root[data-layout="split"] > [data-starmate-component="button"] {
     min-inline-size: 0;
     inline-size: 100%;
   }
 
-  .root[data-layout="split"][data-split-sizing="content"] > [data-openbitfun-component="select"],
-  .root[data-layout="split"][data-split-sizing="content"] > [data-openbitfun-component="button"] {
+  .root[data-layout="split"][data-split-sizing="content"] > [data-starmate-component="select"],
+  .root[data-layout="split"][data-split-sizing="content"] > [data-starmate-component="button"] {
     inline-size: max-content;
     max-inline-size: 100%;
   }
 
   /* Match the Select fill to Button's inset fill without changing control size. */
-  .root[data-layout="split"] > [data-openbitfun-component="select"] > [data-openbitfun-part="trigger"] {
+  .root[data-layout="split"] > [data-starmate-component="select"] > [data-starmate-part="trigger"] {
     border-color: transparent;
     background-clip: padding-box;
   }
 
   .root[data-layout="split"] > :first-child,
-  .root[data-layout="split"] > :first-child > [data-openbitfun-part="trigger"] {
+  .root[data-layout="split"] > :first-child > [data-starmate-part="trigger"] {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-inline-end-width: 0;
   }
 
   .root[data-layout="split"] > :last-child,
-  .root[data-layout="split"] > :last-child > [data-openbitfun-part="trigger"] {
+  .root[data-layout="split"] > :last-child > [data-starmate-part="trigger"] {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
     border-inline-start-width: 0;
@@ -79,13 +79,13 @@
     );
   }
 
-  .root[data-action-placement="reserved"] > [data-openbitfun-component="button"] {
+  .root[data-action-placement="reserved"] > [data-starmate-component="button"] {
     padding-inline: var(--_capsule-padding-inline) var(--_capsule-action-padding);
   }
 
   @media (hover: hover) and (pointer: fine) {
     /* Only the content moves; the pill and its action keep fixed hit areas. */
-    .root[data-action-placement="reserved"] > [data-openbitfun-component="button"] > [data-openbitfun-part="content"] {
+    .root[data-action-placement="reserved"] > [data-starmate-component="button"] > [data-starmate-part="content"] {
       transform: translateX(calc(
         (var(--_capsule-action-padding) - var(--_capsule-padding-inline)) / 2
         * var(--_capsule-inline-direction)
@@ -93,18 +93,18 @@
       transition: transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
     }
 
-    .root[data-action-placement="reserved"]:is(:hover, :focus-visible, :has(:focus-visible), [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="focus-visible"]) > [data-openbitfun-component="button"] > [data-openbitfun-part="content"] {
+    .root[data-action-placement="reserved"]:is(:hover, :focus-visible, :has(:focus-visible), [data-starmate-preview-state="hover"], [data-starmate-preview-state="focus-visible"]) > [data-starmate-component="button"] > [data-starmate-part="content"] {
       transform: none;
     }
   }
 
-  .root[data-action-placement="reserved"]:is(:focus-visible, :has(:focus-visible), [data-openbitfun-preview-state="focus-visible"]) > [data-openbitfun-component="button"] > [data-openbitfun-part="content"],
-  .root:is(:focus-visible, :has(:focus-visible), [data-openbitfun-preview-state="focus-visible"]) > .reservedAction > button {
+  .root[data-action-placement="reserved"]:is(:focus-visible, :has(:focus-visible), [data-starmate-preview-state="focus-visible"]) > [data-starmate-component="button"] > [data-starmate-part="content"],
+  .root:is(:focus-visible, :has(:focus-visible), [data-starmate-preview-state="focus-visible"]) > .reservedAction > button {
     transition: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .root[data-action-placement="reserved"] > [data-openbitfun-component="button"] > [data-openbitfun-part="content"] {
+    .root[data-action-placement="reserved"] > [data-starmate-component="button"] > [data-starmate-part="content"] {
       transition: none;
     }
   }

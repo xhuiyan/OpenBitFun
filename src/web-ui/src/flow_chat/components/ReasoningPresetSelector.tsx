@@ -191,11 +191,11 @@ export const ReasoningPresetSelector: React.FC<ReasoningPresetSelectorProps> = (
           data-keyboard-open={keyboardOpen ? 'true' : 'false'}
           style={menuStyle}
           aria-hidden={!open}
-          {...(!open ? { inert: '' } : {})}
+          data-starmate-part="menu" data-starmate-component="reasoning-preset-selector" {...(!open ? { inert: '' } : {})}
           aria-label={t('reasoningSelector.title')}
           data-testid="chat-reasoning-preset-selector-menu"
           onKeyDown={handleMenuKeyDown}
-         data-starmate-component="reasoning-preset-selector" data-starmate-part="menu" >
+           >
           <div
             className="openbitfun-reasoning-preset-selector__header"
             data-openbitfun-component="reasoning-preset-selector"

@@ -116,7 +116,7 @@
     background: var(--starmate-color-status-warning-surface);
     color: var(--starmate-color-content-secondary);
 
-    > :is(svg, [data-openbitfun-component='icon']) {
+    > :is(svg, [data-starmate-component='icon']) {
       color: var(--starmate-color-status-warning-emphasis);
     }
   }
@@ -126,7 +126,7 @@
     background: var(--starmate-color-status-danger-surface);
     color: var(--starmate-color-status-danger-content);
 
-    > :is(svg, [data-openbitfun-component='icon']) {
+    > :is(svg, [data-starmate-component='icon']) {
       color: var(--starmate-color-status-danger-emphasis);
     }
   }

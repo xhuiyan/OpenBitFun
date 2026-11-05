@@ -117,21 +117,21 @@
     border-radius: inherit;
   }
 
-  .trigger:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .trigger:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     border-color: var(--starmate-color-field-border-hover);
     background: var(--starmate-color-field-background-hover);
   }
 
-  .root[data-variant="pill"] > .trigger:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .root[data-variant="pill"] > .trigger:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .root[data-field-surface="ambient"] .trigger,
-  .root[data-field-surface="ambient"] .trigger:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .root[data-field-surface="ambient"] .trigger:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     background: transparent;
   }
 
-  .trigger:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) {
+  .trigger:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) {
     border-color: var(--starmate-color-field-border-focus);
     box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring);
   }
@@ -145,7 +145,7 @@
     border-color: var(--starmate-color-status-danger-border);
   }
 
-  .root[data-invalid="true"] .trigger:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) {
+  .root[data-invalid="true"] .trigger:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) {
     box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-status-danger-surface);
   }
 
@@ -172,9 +172,9 @@
   }
 
   .leading > :where(svg, img),
-  .leading > [data-openbitfun-component="icon"],
+  .leading > [data-starmate-component="icon"],
   .indicator > :where(svg, img),
-  .indicator > [data-openbitfun-component="icon"] {
+  .indicator > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;
@@ -255,12 +255,12 @@
     background: transparent;
   }
 
-  .popoverHeader:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .popoverHeader:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     border-color: transparent;
     background: var(--starmate-color-field-background-hover);
   }
 
-  .popoverHeader:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) {
+  .popoverHeader:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) {
     border-color: transparent;
     box-shadow: inset 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring);
   }
@@ -291,15 +291,15 @@
     min-block-size: 0;
   }
 
-  .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="label"] {
+  .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="label"] {
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
-  .listbox [data-openbitfun-listbox-option][data-selected="true"] {
+  .listbox [data-starmate-listbox-option][data-selected="true"] {
     background: var(--starmate-color-selection-surface);
   }
 
-  .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
+  .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="indicator"] {
     color: var(--starmate-color-control-highlight-background);
   }
 
@@ -356,7 +356,7 @@
       box-shadow: 0 0 0 var(--starmate-focus-width) Highlight;
     }
 
-    .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
+    .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="indicator"] {
       color: Highlight;
     }
   }

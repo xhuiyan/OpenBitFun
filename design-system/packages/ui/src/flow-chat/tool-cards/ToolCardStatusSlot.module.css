@@ -18,8 +18,8 @@
     transition: opacity var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .statusLayer > [data-openbitfun-component="icon"],
-  .iconLayer > [data-openbitfun-component="icon"],
+  .statusLayer > [data-starmate-component="icon"],
+  .iconLayer > [data-starmate-component="icon"],
   .statusLayer > :where(svg, img),
   .iconLayer > :where(svg, img) {
     display: block;

@@ -52,7 +52,7 @@ $session-menu-timing: cubic-bezier(0.4, 0, 0.2, 1);
   animation: session-menu-appear 0.2s $session-menu-timing;
   transform-origin: top left;
 
-  &[data-openbitfun-placement='top'] {
+  &[data-starmate-placement='top'] {
     --session-menu-entry-y: 4px;
     transform-origin: bottom left;
   }

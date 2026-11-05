@@ -93,6 +93,7 @@
         window.__STARMATE_RESOLVE_BOOTSTRAP_LOCALE__ = resolveLocale;
         window.__STARMATE_STARTUP_OVERLAY_STARTED_AT__ = performance.now();
         root.setAttribute('lang', resolveLocale());
+        root.setAttribute('data-starmate-design-system-root', '');
         root.setAttribute('data-openbitfun-design-system-root', '');
         if (!root.hasAttribute('data-color-scheme')) {
           root.setAttribute('data-color-scheme', m && m.matches ? 'dark' : 'light');
@@ -102,7 +103,7 @@
         // The shell owns the window frame background when the desktop bootstrap
         // advertises a client-side frame; painting it here would cover the
         // transparent corners.
-        var bg = root.getAttribute('data-openbitfun-native-frame') === 'client'
+        var bg = root.getAttribute('data-starmate-native-frame') === 'client'
           ? 'transparent'
           : (root.style.backgroundColor || 'var(--starmate-color-surface-chrome)');
         root.style.backgroundColor = bg;
@@ -156,19 +157,19 @@
 
       /* WebKitGTK keeps the GTK frame square on Wayland, so the shell owns the
          frame radius and stands on a transparent window. */
-      html[data-openbitfun-native-frame='client'],
-      html[data-openbitfun-native-frame='client'] body {
+      html[data-starmate-native-frame='client'],
+      html[data-starmate-native-frame='client'] body {
         background-color: transparent;
       }
 
-      html[data-openbitfun-native-frame='client'] #root,
-      html[data-openbitfun-native-frame='client'] #openbitfun-startup-overlay {
+      html[data-starmate-native-frame='client'] #root,
+      html[data-starmate-native-frame='client'] #openbitfun-startup-overlay {
         border-radius: 12px;
       }
 
       /* The startup overlay paints its own translucent sheet; keep the same frame
          shape and stop it from dimming the desktop behind the window. */
-      html[data-openbitfun-native-frame='client'] .splash-screen {
+      html[data-starmate-native-frame='client'] .splash-screen {
         border-radius: 12px;
         background: var(--starmate-color-surface-chrome);
       }
@@ -440,8 +441,8 @@
       <div class="splash-screen">
         <div
           class="window-controls openbitfun-startup-window-controls"
-          data-openbitfun-component="window-controls"
-          data-openbitfun-part="root"
+          data-starmate-component="window-controls"
+          data-starmate-part="root"
           data-startup-window-controls
           hidden
         >
@@ -506,7 +507,7 @@
         function applyStartupLabels() {
           if (hint) hint.textContent = messages.loadingApp;
           if (!controls) return;
-          var isMaximized = controls.getAttribute('data-openbitfun-state') === 'maximized';
+          var isMaximized = controls.getAttribute('data-starmate-state') === 'maximized';
           var labels = {
             minimize: messages.minimize,
             toggle_maximize: isMaximized ? messages.restore : messages.maximize,
@@ -556,9 +557,9 @@
           if (!controls || !response || typeof response.isMaximized !== 'boolean') return;
           var isMaximized = response.isMaximized;
           if (isMaximized) {
-            controls.setAttribute('data-openbitfun-state', 'maximized');
+            controls.setAttribute('data-starmate-state', 'maximized');
           } else {
-            controls.removeAttribute('data-openbitfun-state');
+            controls.removeAttribute('data-starmate-state');
           }
           setButtonLabel(maximizeButton, isMaximized ? messages.restore : messages.maximize);
           if (maximizeButton) {

@@ -98,7 +98,7 @@
       border-radius: 4px;
       color: var(--starmate-color-content-secondary);
 
-      > :is(svg, [data-openbitfun-component='icon']) {
+      > :is(svg, [data-starmate-component='icon']) {
         width: var(--starmate-control-icon-size-md);
         height: var(--starmate-control-icon-size-md);
       }

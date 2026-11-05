@@ -241,15 +241,15 @@
   }
 }
 
-:root[data-openbitfun-appearance-mode='dark'] .diff-fullscreen-container {
+:root[data-starmate-appearance-mode='dark'] .diff-fullscreen-container {
   background: var(--starmate-color-surface-canvas);
 }
 
-:root[data-openbitfun-appearance-mode='dark'] .diff-fullscreen-header {
+:root[data-starmate-appearance-mode='dark'] .diff-fullscreen-header {
   background: color-mix(in srgb, var(--starmate-color-content-on-light) 95%, transparent);
   border-bottom-color: color-mix(in srgb, var(--starmate-color-content-on-dark) 15%, transparent);
 }
 
-:root[data-openbitfun-appearance-mode='dark'] .diff-fullscreen-content {
+:root[data-starmate-appearance-mode='dark'] .diff-fullscreen-content {
   background: var(--starmate-color-surface-canvas);
 }

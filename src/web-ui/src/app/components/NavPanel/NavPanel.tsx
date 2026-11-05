@@ -88,8 +88,8 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
           data-openbitfun-part="mainLayer"
           data-openbitfun-layer="main"
           aria-hidden={hasMountedSceneNav || undefined}
-          {...(hasMountedSceneNav ? { inert: '' } : {})}
-         data-starmate-component="nav-panel" data-starmate-part="mainLayer" data-starmate-layer="main" >
+          data-starmate-layer="main" data-starmate-part="mainLayer" data-starmate-component="nav-panel" {...(hasMountedSceneNav ? { inert: '' } : {})}
+            >
           <MainNav />
         </div>
 
@@ -101,8 +101,8 @@ const NavPanel: React.FC<NavPanelProps> = ({ className = '' }) => {
             data-openbitfun-layer="scene"
             data-openbitfun-state={hasMountedSceneNav ? 'active' : ''}
             aria-hidden={!hasMountedSceneNav || undefined}
-            {...(!hasMountedSceneNav ? { inert: '' } : {})}
-           data-starmate-component="nav-panel" data-starmate-part="sceneLayer" data-starmate-layer="scene" data-starmate-state={hasMountedSceneNav ? 'active' : ''} >
+            data-starmate-state={hasMountedSceneNav ? 'active' : ''} data-starmate-layer="scene" data-starmate-part="sceneLayer" data-starmate-component="nav-panel" {...(!hasMountedSceneNav ? { inert: '' } : {})}
+               >
             <Suspense fallback={null}>
               <NavigationTransitionBoundary
                 transitionKey={mountedSceneId ?? 'main'}

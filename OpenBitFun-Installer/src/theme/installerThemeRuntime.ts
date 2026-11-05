@@ -34,6 +34,8 @@ export function applyInstallerThemeToDocument(theme: InstallerTheme): void {
   root.style.setProperty('--openbitfun-color-accent-default', colors.accent);
 
   root.setAttribute('data-openbitfun-design-system-root', '');
+
+  root.setAttribute('data-starmate-design-system-root', '');
   root.setAttribute('data-color-scheme', theme.type);
   root.setAttribute('data-contrast', 'standard');
   root.setAttribute('data-density', 'comfortable');

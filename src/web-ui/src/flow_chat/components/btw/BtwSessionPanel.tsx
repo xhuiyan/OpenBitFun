@@ -1235,8 +1235,8 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
           data-openbitfun-part="minimized"
           data-openbitfun-state={showMinimizedIndicator ? 'minimized' : 'hidden'}
           aria-hidden={!showMinimizedIndicator}
-          {...(!showMinimizedIndicator ? { inert: '' } : {})}
-         data-starmate-component="btw-session-panel" data-starmate-part="minimized" data-starmate-state={showMinimizedIndicator ? 'minimized' : 'hidden'} >
+          data-starmate-state={showMinimizedIndicator ? 'minimized' : 'hidden'} data-starmate-part="minimized" data-starmate-component="btw-session-panel" {...(!showMinimizedIndicator ? { inert: '' } : {})}
+            >
             <button
               type="button"
               onClick={() => useReviewActionBarStore.getState().restore(childSessionId)}
@@ -1265,8 +1265,8 @@ const BtwSessionPanelContent: React.FC<BtwSessionPanelProps & { viewState: BtwPa
             data-openbitfun-part="actionBar"
             data-visible={showReviewActionBar ? 'true' : 'false'}
             aria-hidden={!showReviewActionBar}
-            {...(!showReviewActionBar ? { inert: '' } : {})}
-           data-starmate-component="btw-session-panel" data-starmate-part="actionBar" >
+            data-starmate-part="actionBar" data-starmate-component="btw-session-panel" {...(!showReviewActionBar ? { inert: '' } : {})}
+             >
             <ReviewActionBar childSessionId={childSessionId} />
           </div>
         </RetainedMountBoundary>

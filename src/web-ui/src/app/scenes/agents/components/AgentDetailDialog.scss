@@ -17,7 +17,7 @@
     align-items: center;
     gap: var(--starmate-space-2);
 
-    > [data-openbitfun-part='heading'] {
+    > [data-starmate-part='heading'] {
       flex: none;
       inline-size: 100%;
       text-align: center;
@@ -140,7 +140,7 @@
     flex-wrap: wrap;
     gap: var(--starmate-space-2);
 
-    > [data-openbitfun-component='status-pill'] { max-inline-size: 100%; }
+    > [data-starmate-component='status-pill'] { max-inline-size: 100%; }
   }
 
   &__count {

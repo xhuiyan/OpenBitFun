@@ -51,7 +51,7 @@ test('accepts only build-owned font faces and stacks in Web font profiles', () =
       font-weight: 500;
     }
     @layer openbitfun.tokens.system {
-      :where([data-openbitfun-design-system-root]) {
+      :where([data-starmate-design-system-root]) {
         --openbitfun-font-family-sans: "OpenBitFun HarmonyOS Sans", system-ui, sans-serif;
         --openbitfun-font-family-control: "OpenBitFun HarmonyOS Sans", system-ui, sans-serif;
         --openbitfun-font-family-mono: "Fira Code", monospace;

@@ -33,7 +33,7 @@
     transform 150ms var(--starmate-motion-easing-enter);
 }
 
-.branch-quick-switch__layer[data-openbitfun-placement='bottom'] .branch-quick-switch {
+.branch-quick-switch__layer[data-starmate-placement='bottom'] .branch-quick-switch {
   transform: translateY(-4px);
 }
 
@@ -75,7 +75,7 @@
   );
 }
 
-.branch-quick-switch__list [data-openbitfun-part='list'] {
+.branch-quick-switch__list [data-starmate-part='list'] {
   min-block-size: 100%;
 }
 
@@ -99,7 +99,7 @@
 .branch-quick-switch__item {
   min-height: var(--starmate-control-height-sm);
 
-  &[data-openbitfun-state='current'] {
+  &[data-starmate-state='current'] {
     cursor: default;
   }
 }

@@ -421,7 +421,7 @@
     &__pane--preview,
     &__preview,
     &__preview .markdown-body,
-    &__preview [data-openbitfun-part='math'],
+    &__preview [data-starmate-part='math'],
     &__preview p { display: inline; margin: 0; }
 
     &__pane--editor {
@@ -836,9 +836,9 @@
   }
 }
 
-:root[data-openbitfun-appearance-mode="light"] .m-editor-tiptap,
-:root[data-openbitfun-appearance-mode="light"] .m-editor-tiptap,
-[data-openbitfun-appearance-mode="light"] .m-editor-tiptap,
+:root[data-starmate-appearance-mode="light"] .m-editor-tiptap,
+:root[data-starmate-appearance-mode="light"] .m-editor-tiptap,
+[data-starmate-appearance-mode="light"] .m-editor-tiptap,
 .light .m-editor-tiptap {
 
 

@@ -103,7 +103,7 @@
       color: var(--starmate-color-content-primary);
     }
 
-    > [data-openbitfun-component='icon'] { color: var(--starmate-color-content-muted); }
+    > [data-starmate-component='icon'] { color: var(--starmate-color-content-muted); }
   }
 
   &__section-label {
@@ -175,7 +175,7 @@
     line-height: var(--starmate-type-label-sm-line-height);
     cursor: pointer;
     &:disabled { cursor: default; }
-    > [data-openbitfun-component='icon'] { color: var(--starmate-color-content-muted); }
+    > [data-starmate-component='icon'] { color: var(--starmate-color-content-muted); }
   }
 
   &__terminal-text { display: flex; flex-direction: column; flex: 1; min-inline-size: 0; gap: calc(var(--starmate-space-1) / 2); }

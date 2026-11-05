@@ -134,7 +134,8 @@ fn compile_internal(
 
     let html = if source.html.trim().is_empty() {
         let appearance_attr = format!(
-            " data-openbitfun-appearance-mode=\"{}\"",
+            " data-openbitfun-appearance-mode=\"{}\" data-starmate-appearance-mode=\"{}\"",
+            escape_html_attr(appearance_mode),
             escape_html_attr(appearance_mode)
         );
         format!(
@@ -246,7 +247,7 @@ fn escape_html_attr(s: &str) -> String {
         .replace('>', "&gt;")
 }
 
-/// Inject data-openbitfun-appearance-mode on the first <html> tag.
+/// Inject data-openbitfun-appearance-mode and its rebranded twin on the first <html> tag.
 fn inject_data_appearance_mode(html: &str, appearance_mode: &str) -> String {
     let safe = escape_html_attr(appearance_mode);
     if let Some(idx) = html.find("<html") {
@@ -254,10 +255,12 @@ fn inject_data_appearance_mode(html: &str, appearance_mode: &str) -> String {
         let rest = &html[after_html..];
         if let Some(close) = rest.find('>') {
             let tag = &html[idx..after_html + close + 1];
-            if tag.contains("data-openbitfun-appearance-mode=") {
+            if tag.contains("data-openbitfun-appearance-mode=")
+                || tag.contains("data-starmate-appearance-mode=")
+            {
                 return html.to_string();
             }
-            let insert = format!(" data-openbitfun-appearance-mode=\"{}\"", safe);
+            let insert = format!(" data-openbitfun-appearance-mode=\"{safe}\" data-starmate-appearance-mode=\"{safe}\"", safe = safe);
             return format!(
                 "{}{}>{}",
                 &html[..after_html + close],

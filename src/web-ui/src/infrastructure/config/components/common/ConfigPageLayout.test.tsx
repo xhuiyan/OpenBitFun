@@ -120,12 +120,12 @@ describe('ConfigPageLayout', () => {
 
   it('uses the public PageHeader while preserving appearance extension targets', () => {
     act(() => root.render(<ConfigPageHeader title="Models" subtitle="Provider configuration" extra={<button>Import</button>} />));
-    const header = container.querySelector('[data-openbitfun-component="page-header"]');
+    const header = container.querySelector('[data-starmate-component="page-header"]');
     expect(header?.getAttribute('data-size')).toBe('md');
     expect(header?.querySelector('h2')?.textContent).toBe('Models');
-    expect(header?.querySelector('[data-openbitfun-part="pageHeaderTitle"]')?.textContent).toBe('Models');
-    expect(header?.querySelector('[data-openbitfun-part="pageHeaderSubtitle"]')?.textContent).toBe('Provider configuration');
-    expect(container.querySelector('[data-openbitfun-part="pageHeaderExtra"] button')?.textContent).toBe('Import');
+    expect(header?.querySelector('[data-starmate-part="pageHeaderTitle"]')?.textContent).toBe('Models');
+    expect(header?.querySelector('[data-starmate-part="pageHeaderSubtitle"]')?.textContent).toBe('Provider configuration');
+    expect(container.querySelector('[data-starmate-part="pageHeaderExtra"] button')?.textContent).toBe('Import');
   });
 
   it('removes sentence periods from standalone copy while preserving ellipses', () => {
@@ -142,11 +142,11 @@ describe('ConfigPageLayout', () => {
       );
     });
 
-    expect(container.querySelector('[data-openbitfun-part="pageHeaderSubtitle"]')?.textContent)
+    expect(container.querySelector('[data-starmate-part="pageHeaderSubtitle"]')?.textContent)
       .toBe('Configure model providers');
-    expect(container.querySelector('[data-openbitfun-part="sectionDescription"]')?.textContent)
+    expect(container.querySelector('[data-starmate-part="sectionDescription"]')?.textContent)
       .toBe('选择界面外观');
-    expect(container.querySelector('[data-openbitfun-part="rowDescription"]')?.textContent)
+    expect(container.querySelector('[data-starmate-part="rowDescription"]')?.textContent)
       .toBe('Loading...');
   });
 
@@ -182,14 +182,14 @@ describe('ConfigPageLayout', () => {
     });
 
     const controls = container.querySelectorAll('.openbitfun-config-page-row__control');
-    const switchRoot = controls[0]?.querySelector('[data-openbitfun-component="switch"]');
-    const inputRoot = controls[1]?.querySelector('[data-openbitfun-component="input"]');
+    const switchRoot = controls[0]?.querySelector('[data-starmate-component="switch"]');
+    const inputRoot = controls[1]?.querySelector('[data-starmate-component="input"]');
 
     expect(controls[0]?.firstElementChild).toBe(switchRoot);
     expect(controls[1]?.firstElementChild).toBe(inputRoot);
-    expect(layout).toContain("[data-openbitfun-component='input']");
-    expect(layout).toContain("[data-openbitfun-component='number-input']");
-    expect(layout).not.toContain("[data-openbitfun-component='switch']");
+    expect(layout).toContain("[data-starmate-component='input']");
+    expect(layout).toContain("[data-starmate-component='number-input']");
+    expect(layout).not.toContain("[data-starmate-component='switch']");
     expect(layout).not.toContain('> :where(span, div)');
   });
 
@@ -237,21 +237,21 @@ describe('ConfigPageLayout', () => {
     expect(rows[6]?.classList.contains('openbitfun-config-page-row--wide')).toBe(true);
     expect(rows[1]?.style.gridTemplateColumns).toBe('');
     expect(rows[6]?.style.gridTemplateColumns).toBe('');
-    expect(container.querySelector('[data-openbitfun-component="select"]')).not.toBeNull();
-    expect(container.querySelector('[data-openbitfun-component="combobox"]')).not.toBeNull();
-    expect(container.querySelector('[data-openbitfun-component="multi-select"]')).not.toBeNull();
-    expect(container.querySelector('[data-openbitfun-component="input"]')).not.toBeNull();
-    expect(container.querySelector('[data-openbitfun-component="search-field"]')).not.toBeNull();
-    expect(container.querySelector('[data-openbitfun-component="number-input"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="select"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="combobox"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="multi-select"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="input"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="search-field"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-component="number-input"]')).not.toBeNull();
     expect(standardControlRules).toContain('.openbitfun-config-page-row--wide');
     expect(standardControlRules).toContain(':only-child');
-    expect(standardControlRules).toContain("[data-openbitfun-component='input']");
-    expect(standardControlRules).toContain("[data-openbitfun-component='search-field']");
-    expect(standardControlRules).toContain("[data-openbitfun-component='number-input']");
-    expect(standardControlRules).toContain("[data-openbitfun-component='select']");
-    expect(standardControlRules).toContain("[data-openbitfun-component='combobox']");
-    expect(standardControlRules).toContain("[data-openbitfun-component='multi-select']");
-    expect(standardControlRules).not.toContain("[data-openbitfun-component='textarea']");
+    expect(standardControlRules).toContain("[data-starmate-component='input']");
+    expect(standardControlRules).toContain("[data-starmate-component='search-field']");
+    expect(standardControlRules).toContain("[data-starmate-component='number-input']");
+    expect(standardControlRules).toContain("[data-starmate-component='select']");
+    expect(standardControlRules).toContain("[data-starmate-component='combobox']");
+    expect(standardControlRules).toContain("[data-starmate-component='multi-select']");
+    expect(standardControlRules).not.toContain("[data-starmate-component='textarea']");
     expect(standardControlRules).toContain('var(--starmate-overlay-menu-inline-size)');
     expect(layout).toMatch(
       /\.openbitfun-config-page-section__extra > :where\([\s\S]*?max-inline-size:\s*var\(--starmate-overlay-menu-inline-size\);/,
@@ -273,13 +273,13 @@ describe('ConfigPageLayout', () => {
     });
 
     const row = container.querySelector('.openbitfun-config-page-row');
-    const marker = row?.querySelector('[data-openbitfun-part="required"]');
+    const marker = row?.querySelector('[data-starmate-part="required"]');
     const input = row?.querySelector('input');
 
     expect(row?.getAttribute('data-required')).toBe('true');
     expect(marker?.textContent).toBe('*');
     expect(marker?.getAttribute('aria-hidden')).toBe('true');
-    expect(marker?.getAttribute('data-openbitfun-component')).toBe('config');
+    expect(marker?.getAttribute('data-starmate-component')).toBe('config');
     expect(input?.required).toBe(true);
     expect(layout).toMatch(/\.openbitfun-config-page-row__required\s*\{[\s\S]*?--starmate-color-content-required-indicator/);
   });
@@ -315,7 +315,7 @@ describe('ConfigPageLayout', () => {
     const body = container.querySelector('.openbitfun-config-page-section__body');
     expect(body?.classList.contains('openbitfun-config-page-section__body--flush')).toBe(false);
     expect(body?.getAttribute('data-appearance')).toBe('subtle');
-    expect(body?.getAttribute('data-openbitfun-component')).toBe('field-group');
+    expect(body?.getAttribute('data-starmate-component')).toBe('field-group');
     expect(body?.getAttribute('data-field-surface')).toBe('ambient');
   });
 
@@ -329,7 +329,7 @@ describe('ConfigPageLayout', () => {
     });
 
     const body = container.querySelector('.openbitfun-config-page-section__body');
-    const input = container.querySelector('[data-openbitfun-component="input"]');
+    const input = container.querySelector('[data-starmate-component="input"]');
 
     expect(body?.getAttribute('data-appearance')).toBe('subtle');
     expect(body?.getAttribute('data-field-surface')).toBe('default');
@@ -345,7 +345,7 @@ describe('ConfigPageLayout', () => {
       );
     });
 
-    expect(container.querySelector('[data-openbitfun-part="sectionTitle"]')?.textContent).toBe('Search provider');
+    expect(container.querySelector('[data-starmate-part="sectionTitle"]')?.textContent).toBe('Search provider');
     expect(container.querySelector('.openbitfun-config-page-section__extra button')?.textContent).toBe('Exa');
     expect(container.querySelector('.openbitfun-config-page-section__body')).toBeNull();
   });
@@ -359,9 +359,9 @@ describe('ConfigPageLayout', () => {
       );
     });
 
-    expect(container.querySelector('[data-openbitfun-component="form-section"]')?.getAttribute('data-description-layout')).toBe('inline');
+    expect(container.querySelector('[data-starmate-component="form-section"]')?.getAttribute('data-description-layout')).toBe('inline');
     expect(container.querySelector('h3')?.textContent).toBe('Memory processing');
-    expect(container.querySelector('[data-openbitfun-part="sectionDescription"]')?.textContent).toBe('Limit session scope');
+    expect(container.querySelector('[data-starmate-part="sectionDescription"]')?.textContent).toBe('Limit session scope');
     expect(container.querySelector('.openbitfun-config-page-section__extra button')?.textContent).toBe('Expand');
     expect(container.querySelector('.openbitfun-config-page-section__body')).toBeNull();
   });
@@ -389,20 +389,20 @@ describe('ConfigPageLayout', () => {
       root.render(
         <ConfigPageLayout
           data-testid="feature-root"
-          data-openbitfun-component="model-settings"
-          data-openbitfun-part="root"
-         data-starmate-component="model-settings" data-starmate-part="root" >
+          data-starmate-component="model-settings"
+          data-starmate-part="root"
+         data-openbitfun-component="model-settings" data-starmate-component="model-settings" data-openbitfun-part="root" data-starmate-part="root" >
           <ConfigPageContent
             data-testid="feature-content"
-            data-openbitfun-component="model-settings"
-            data-openbitfun-part="providerSelection"
-           data-starmate-component="model-settings" data-starmate-part="providerSelection" >
+            data-starmate-component="model-settings"
+            data-starmate-part="providerSelection"
+           data-openbitfun-component="model-settings" data-starmate-component="model-settings" data-openbitfun-part="providerSelection" data-starmate-part="providerSelection" >
             <ConfigPageSection
               title="Models"
               data-testid="feature-section"
-              data-openbitfun-component="model-settings"
-              data-openbitfun-part="providerGroup"
-             data-starmate-component="model-settings" data-starmate-part="providerGroup" >
+              data-starmate-component="model-settings"
+              data-starmate-part="providerGroup"
+             data-openbitfun-component="model-settings" data-starmate-component="model-settings" data-openbitfun-part="providerGroup" data-starmate-part="providerGroup" >
               <div>Body</div>
             </ConfigPageSection>
           </ConfigPageContent>
@@ -414,11 +414,11 @@ describe('ConfigPageLayout', () => {
     const contentElement = container.querySelector('[data-testid="feature-content"]');
     const sectionElement = container.querySelector('[data-testid="feature-section"]');
 
-    expect(rootElement?.getAttribute('data-openbitfun-component')).toBe('model-settings');
-    expect(rootElement?.getAttribute('data-openbitfun-part')).toBe('root');
-    expect(contentElement?.getAttribute('data-openbitfun-component')).toBe('model-settings');
-    expect(contentElement?.getAttribute('data-openbitfun-part')).toBe('providerSelection');
-    expect(sectionElement?.getAttribute('data-openbitfun-component')).toBe('form-section');
-    expect(sectionElement?.getAttribute('data-openbitfun-part')).toBe('providerGroup');
+    expect(rootElement?.getAttribute('data-starmate-component')).toBe('model-settings');
+    expect(rootElement?.getAttribute('data-starmate-part')).toBe('root');
+    expect(contentElement?.getAttribute('data-starmate-component')).toBe('model-settings');
+    expect(contentElement?.getAttribute('data-starmate-part')).toBe('providerSelection');
+    expect(sectionElement?.getAttribute('data-starmate-component')).toBe('form-section');
+    expect(sectionElement?.getAttribute('data-starmate-part')).toBe('providerGroup');
   });
 });

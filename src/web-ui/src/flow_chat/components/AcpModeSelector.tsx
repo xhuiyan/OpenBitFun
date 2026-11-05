@@ -190,11 +190,11 @@ export const AcpModeSelector: React.FC<AcpModeSelectorProps> = ({
             data-keyboard-open={keyboardOpen ? 'true' : 'false'}
             style={menuStyle}
             aria-hidden={!open}
-            {...(!open ? { inert: '' } : {})}
+            data-starmate-part="menu" data-starmate-component="acp-mode-selector" {...(!open ? { inert: '' } : {})}
             aria-label={t('modelSelector.acpMode')}
             data-testid="chat-acp-mode-selector-menu"
             onKeyDown={handleMenuKeyDown}
-           data-starmate-component="acp-mode-selector" data-starmate-part="menu" >
+             >
             <div
               className="openbitfun-acp-mode-selector__header"
               data-openbitfun-component="acp-mode-selector"

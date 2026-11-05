@@ -24,7 +24,7 @@
     width: 100%;
     justify-content: space-between;
 
-    > [data-openbitfun-component='button'] {
+    > [data-starmate-component='button'] {
       flex-shrink: 0;
     }
   }
@@ -76,7 +76,7 @@
     flex-wrap: wrap;
   }
 
-  &__pool-tags > [data-openbitfun-component='status-pill'] {
+  &__pool-tags > [data-starmate-component='status-pill'] {
     max-inline-size: 100%;
   }
 
@@ -99,12 +99,12 @@
     gap: var(--starmate-space-3);
     margin-block: var(--starmate-space-4);
 
-    > [data-openbitfun-component='search-field'] {
+    > [data-starmate-component='search-field'] {
       flex: 1 1 220px;
       min-width: 0;
     }
 
-    > [data-openbitfun-component='select'] {
+    > [data-starmate-component='select'] {
       flex: 0 1 180px;
       min-width: 0;
     }
@@ -130,7 +130,7 @@
     height: 100%;
   }
 
-  &__pool-card-header > [data-openbitfun-part='header-content'] {
+  &__pool-card-header > [data-starmate-part='header-content'] {
     align-items: stretch;
   }
 
@@ -1245,7 +1245,7 @@
       min-width: 0;
       overflow: visible;
 
-      > :not([data-openbitfun-component='switch']) {
+      > :not([data-starmate-component='switch']) {
         min-width: 0;
         width: 100%;
         max-width: none;
@@ -1259,7 +1259,7 @@
       min-width: auto;
       justify-self: end;
 
-      > :not([data-openbitfun-component='switch']) {
+      > :not([data-starmate-component='switch']) {
         width: auto;
         max-width: none;
         flex: 0 0 auto;
@@ -1326,7 +1326,7 @@
     gap: var(--starmate-space-2);
     min-width: 0;
 
-    > [data-openbitfun-component='status-pill'] {
+    > [data-starmate-component='status-pill'] {
       flex: 0 0 auto;
     }
   }
@@ -1352,7 +1352,7 @@
     gap: var(--starmate-space-2);
     min-width: 0;
 
-    > [data-openbitfun-component='status-pill'] {
+    > [data-starmate-component='status-pill'] {
       flex: 0 0 auto;
     }
   }
@@ -1413,7 +1413,7 @@
     min-inline-size: 0;
     min-block-size: var(--starmate-control-height-sm);
 
-    > [data-openbitfun-component='status-pill'] {
+    > [data-starmate-component='status-pill'] {
       flex: none;
       max-inline-size: 100%;
     }
@@ -1566,17 +1566,17 @@
     // Keep the input decoration's existing feedback and intrinsic icon size.
     &::before { content: none; }
 
-    > [data-openbitfun-part='icon'] {
+    > [data-starmate-part='icon'] {
       --openbitfun-opacity-icon-artwork: inherit;
       display: contents;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where(svg) {
+    > :where([data-starmate-part='icon']) > :where(svg) {
       inline-size: 14px;
       block-size: 14px;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+    > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
       inline-size: var(--starmate-control-icon-size-sm);
       block-size: var(--starmate-control-icon-size-sm);
     }
@@ -1664,7 +1664,7 @@
     overflow: hidden;
 
     > .openbitfun-model-settings__model-fetch-hint,
-    > [data-openbitfun-component='search-field'] {
+    > [data-starmate-component='search-field'] {
       flex-shrink: 0;
     }
   }
@@ -1681,7 +1681,7 @@
     align-items: flex-start;
     gap: var(--starmate-space-2);
 
-    > [data-openbitfun-component='button'] {
+    > [data-starmate-component='button'] {
       max-inline-size: 100%;
     }
   }
@@ -1695,7 +1695,7 @@
     min-block-size: var(--starmate-control-height-sm);
   }
 
-  &__model-section > [data-openbitfun-part='header'] {
+  &__model-section > [data-starmate-part='header'] {
     align-items: center;
     flex-wrap: wrap;
   }
@@ -1765,7 +1765,7 @@
       min-inline-size: min(100%, calc(4 * var(--starmate-control-icon-button-xs-size)));
     }
 
-    .openbitfun-model-settings__model-capsule-edit > [data-openbitfun-part='content'] {
+    .openbitfun-model-settings__model-capsule-edit > [data-starmate-part='content'] {
       flex: 1 1 auto;
       justify-content: center;
     }
@@ -2488,7 +2488,7 @@
     min-inline-size: 0;
   }
 
-  &__signed-in-accounts [data-openbitfun-part='subscriptionAccount']:first-child {
+  &__signed-in-accounts [data-starmate-part='subscriptionAccount']:first-child {
     border-block-start: 0;
   }
 
@@ -2560,7 +2560,7 @@
     gap: var(--starmate-space-2) var(--starmate-space-4);
     min-inline-size: 0;
 
-    > [data-openbitfun-part='subscriptionQuota'] {
+    > [data-starmate-part='subscriptionQuota'] {
       flex: 1 1 240px;
       min-inline-size: 0;
     }

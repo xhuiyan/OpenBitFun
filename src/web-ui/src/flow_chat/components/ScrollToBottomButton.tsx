@@ -45,7 +45,7 @@ export const ScrollToBottomButton: React.FC<ScrollToBottomButtonProps> = ({
       <Tooltip content={t('scroll.toBottom')} disabled={!visible}>
         <button data-openbitfun-icon-slot="true" data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="root"
           ref={buttonRef}
-          {...buttonProps}
+          data-starmate-part="root" data-starmate-component="scroll-to-bottom-button" data-starmate-icon-slot="true" {...buttonProps}
           data-visible={visible ? 'true' : 'false'}
           className={`scroll-to-bottom-button ${className}`}
           onClick={visible ? onClick : undefined}
@@ -53,7 +53,7 @@ export const ScrollToBottomButton: React.FC<ScrollToBottomButtonProps> = ({
           aria-label={unreadCount ? t('scroll.toBottomWithCount', { count: unreadCount }) : t('scroll.toBottom')}
           tabIndex={visible ? buttonProps.tabIndex : -1}
           {...(!visible ? { inert: '' } : {})}
-         data-starmate-icon-slot="true" data-starmate-component="scroll-to-bottom-button" data-starmate-part="root" >
+            >
           <LucideChevronDown data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="icon" className="scroll-icon" size="var(--openbitfun-control-icon-size-md)" aria-hidden="true"  data-starmate-component="scroll-to-bottom-button" data-starmate-part="icon" />
           {unreadCount !== undefined && unreadCount > 0 && (
             <span data-openbitfun-component="scroll-to-bottom-button" data-openbitfun-part="badge" className="unread-badge" data-starmate-component="scroll-to-bottom-button" data-starmate-part="badge" >{unreadCount > 99 ? '99+' : unreadCount}</span>

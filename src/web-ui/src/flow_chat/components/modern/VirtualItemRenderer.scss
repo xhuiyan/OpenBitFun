@@ -81,8 +81,8 @@
     > .model-round-item,
     > .flowchat-timeline-content > .model-round-item {
       > .flowchat-flow-item:last-child:has(
-        > .flow-tool-card-wrapper[data-openbitfun-attention='ambient']:not([data-tool-capsule='true']):not(.flow-tool-card-wrapper--permission-pending)
-          [data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-part='root'][data-openbitfun-expanded-shell='false']
+        > .flow-tool-card-wrapper[data-starmate-attention='ambient']:not([data-tool-capsule='true']):not(.flow-tool-card-wrapper--permission-pending)
+          [data-starmate-component='flow-chat-tool-card'][data-starmate-part='root'][data-starmate-expanded-shell='false']
       ) {
         margin-bottom: var(--starmate-control-flow-chat-paragraph-gap);
       }
@@ -141,7 +141,7 @@
     border-inline-start: var(--starmate-focus-width) solid var(--starmate-color-control-switch-track-checked);
   }
 
-  &[data-openbitfun-state~='itemFocus'] {
+  &[data-starmate-state~='itemFocus'] {
     background: var(--starmate-color-accent-surface);
     border-radius: var(--starmate-radius-sm);
 
@@ -166,7 +166,7 @@
 
 @media (forced-colors: active) {
   .flowchat-search-line,
-  .flowchat-search-line[data-openbitfun-state~='itemFocus'] {
+  .flowchat-search-line[data-starmate-state~='itemFocus'] {
     background: transparent;
 
     &::before {

@@ -20,12 +20,12 @@
       transform var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .root[data-openbitfun-state="visible"] {
+  .root[data-starmate-state="visible"] {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
 
-  .root[data-openbitfun-interactive="true"][data-openbitfun-state="visible"] {
+  .root[data-starmate-interactive="true"][data-starmate-state="visible"] {
     pointer-events: auto;
   }
 
@@ -64,56 +64,56 @@
     transform: rotate(45deg);
   }
 
-  .root[data-openbitfun-placement="top"] .arrow,
-  .root[data-openbitfun-placement="bottom"] .arrow {
+  .root[data-starmate-placement="top"] .arrow,
+  .root[data-starmate-placement="bottom"] .arrow {
     left: calc(50% - var(--starmate-overlay-tooltip-arrow-size) / 2);
   }
 
-  .root[data-openbitfun-placement="left"] .arrow,
-  .root[data-openbitfun-placement="right"] .arrow {
+  .root[data-starmate-placement="left"] .arrow,
+  .root[data-starmate-placement="right"] .arrow {
     top: calc(50% - var(--starmate-overlay-tooltip-arrow-size) / 2);
   }
 
-  .root[data-openbitfun-placement="top"] .arrow {
+  .root[data-starmate-placement="top"] .arrow {
     bottom: -3px;
     border-top: 0;
     border-left: 0;
   }
 
-  .root[data-openbitfun-placement="bottom"] .arrow {
+  .root[data-starmate-placement="bottom"] .arrow {
     top: -3px;
     border-right: 0;
     border-bottom: 0;
   }
 
-  .root[data-openbitfun-placement="left"] .arrow {
+  .root[data-starmate-placement="left"] .arrow {
     right: -3px;
     border-bottom: 0;
     border-left: 0;
   }
 
-  .root[data-openbitfun-placement="right"] .arrow {
+  .root[data-starmate-placement="right"] .arrow {
     left: -3px;
     border-top: 0;
     border-right: 0;
   }
 
-  .root[data-openbitfun-placement="top"] {
+  .root[data-starmate-placement="top"] {
     --_enter-y: 3px;
     transform-origin: center bottom;
   }
 
-  .root[data-openbitfun-placement="bottom"] {
+  .root[data-starmate-placement="bottom"] {
     --_enter-y: -3px;
     transform-origin: center top;
   }
 
-  .root[data-openbitfun-placement="left"] {
+  .root[data-starmate-placement="left"] {
     --_enter-x: 3px;
     transform-origin: right center;
   }
 
-  .root[data-openbitfun-placement="right"] {
+  .root[data-starmate-placement="right"] {
     --_enter-x: -3px;
     transform-origin: left center;
   }
@@ -144,7 +144,7 @@
       transform: none;
     }
 
-    .root[data-openbitfun-state="visible"] {
+    .root[data-starmate-state="visible"] {
       transform: none;
     }
 

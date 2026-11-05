@@ -5,7 +5,7 @@
   position: relative;
   user-select: none;
 
-  > [data-openbitfun-part='item'] {
+  > [data-starmate-part='item'] {
     // Let the capsule grow its action area without compressing a capped label.
     max-inline-size: 240px;
   }
@@ -29,7 +29,7 @@
   }
 
   // A pinned document always exposes its unpin control.
-  &.is-pinned [data-openbitfun-part='endAction'] {
+  &.is-pinned [data-starmate-part='endAction'] {
     opacity: 1;
     pointer-events: auto;
   }

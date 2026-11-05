@@ -78,7 +78,7 @@
   padding: 0 var(--starmate-space-5) var(--starmate-space-4);
   min-width: 0;
 
-  > [data-openbitfun-component='button'] {
+  > [data-starmate-component='button'] {
     max-inline-size: 100%;
   }
 }
@@ -447,7 +447,7 @@
       transition: none;
     }
 
-    .appearance-market__nav-item > [data-openbitfun-part='trigger'] {
+    .appearance-market__nav-item > [data-starmate-part='trigger'] {
       padding: var(--starmate-space-2) var(--starmate-space-3);
       border: 0;
       border-radius: var(--starmate-radius-sm);
@@ -463,7 +463,7 @@
         outline: revert-layer;
       }
 
-      > [data-openbitfun-part='label'] {
+      > [data-starmate-part='label'] {
         font: inherit;
         letter-spacing: inherit;
       }
@@ -1039,17 +1039,17 @@
     margin: 0;
   }
 
-  &__empty[data-openbitfun-component='empty'] {
+  &__empty[data-starmate-component='empty'] {
     padding: 0;
     text-align: inherit;
 
-    > [data-openbitfun-part='media'] {
+    > [data-starmate-part='media'] {
       inline-size: 28px;
       block-size: 28px;
       color: inherit;
     }
 
-    > [data-openbitfun-part='description'] {
+    > [data-starmate-part='description'] {
       max-inline-size: none;
       color: inherit;
       font: inherit;
@@ -1870,7 +1870,7 @@
 
 @container config-panel (max-width: 640px) {
   .appearance-package-config {
-    > [data-openbitfun-part='header'] {
+    > [data-starmate-part='header'] {
       flex-direction: column;
     }
 
@@ -1901,7 +1901,7 @@
 }
 
 // The existing card owns feedback and geometry; the shared trigger owns activation.
-.appearance-package-config__card-action[data-openbitfun-component='action-card'] {
+.appearance-package-config__card-action[data-starmate-component='action-card'] {
   min-block-size: 0;
   border-radius: inherit;
   background: transparent;
@@ -1910,7 +1910,7 @@
   box-shadow: none;
   opacity: 1;
 
-  > [data-openbitfun-part='trigger'] {
+  > [data-starmate-part='trigger'] {
     min-block-size: 72px;
   }
 }

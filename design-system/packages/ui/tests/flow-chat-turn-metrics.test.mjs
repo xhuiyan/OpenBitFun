@@ -15,7 +15,7 @@ test('the animated outer card owns the backdrop and provides an opaque fallback'
   const css = await readFile(new URL('../src/flow-chat/conversation/FlowChatTurnMetrics.module.css', import.meta.url), 'utf8');
   assert.match(css, /\.detailsCard\s*\{[^}]*background:\s*var\(--starmate-color-surface-raised\)/);
   assert.match(css, /@supports[^{}]*backdrop-filter[^{}]*\{\s*\.detailsCard\s*\{[^}]*backdrop-filter:\s*var\(--starmate-effect-blur-base\)/);
-  const content = css.match(/\.detailsCard \[data-openbitfun-part='content'\]\s*\{([^}]*)\}/)?.[1];
+  const content = css.match(/\.detailsCard \[data-starmate-part='content'\]\s*\{([^}]*)\}/)?.[1];
   assert.match(content, /background:\s*transparent/);
   assert.match(content, /backdrop-filter:\s*none/);
   assert.match(css, /@media \(prefers-reduced-transparency: reduce\)[^{]*\{\s*\.detailsCard\s*\{[^}]*background:\s*var\(--starmate-color-surface-raised\)/);
@@ -26,7 +26,7 @@ test('metrics retain exact accessible descriptions and reuse the shared Icon gly
   assert.match(html, /aria-label="Turn metrics"/);
   assert.match(html, /aria-label="Total 12.8K, input cache hit 72%"/);
   assert.match(html, /aria-label="Average output 68 tokens\/s, fast"/);
-  assert.match(html, /data-openbitfun-component="icon"/);
+  assert.match(html, /data-starmate-component="icon"/);
   assert.match(html, /lucide-circle/);
   assert.match(html, /lucide-signal-high/);
   assert.match(html, /data-speed-level="3"/);
@@ -38,7 +38,7 @@ test('usage retains its cache icon without a ratio and pending metrics cannot ta
   const unknown = renderToStaticMarkup(React.createElement(FlowChatTurnMetrics, {
     ...props, tokenDescription: 'Total 12.8K', cacheHitRate: null, speedLevel: null, focusable: false,
   }));
-  assert.match(unknown, /data-openbitfun-part="tokens"/);
+  assert.match(unknown, /data-starmate-part="tokens"/);
   assert.match(unknown, /data-cache-state="unknown"/);
   assert.match(unknown, /lucide-circle/);
   assert.match(unknown, />12\.8K<\/span>/);
@@ -49,7 +49,7 @@ test('reported zero usage and cache remain distinct from missing data', () => {
   const zero = renderToStaticMarkup(React.createElement(FlowChatTurnMetrics, {
     ...props, tokenValue: '0', tokenDescription: 'Total 0, input cache hit 0%', cacheHitRate: 0, rateValue: null,
   }));
-  assert.match(zero, /data-openbitfun-part="tokens"/);
+  assert.match(zero, /data-starmate-part="tokens"/);
   assert.match(zero, /data-cache-state="reported"/);
   assert.match(zero, /lucide-circle/);
   assert.match(zero, />0<\/span>/);
@@ -61,10 +61,10 @@ test('cache data keeps the usage unit visible without inventing a total', () => 
     const html = renderToStaticMarkup(React.createElement(FlowChatTurnMetrics, {
       ...props, tokenValue: null, tokenDescription: `Input cache hit ${cacheHitRate * 100}%`, cacheHitRate, rateValue: null,
     }));
-    assert.match(html, /data-openbitfun-part="tokens"/);
+    assert.match(html, /data-starmate-part="tokens"/);
     assert.match(html, /data-cache-state="reported"/);
     assert.match(html, /lucide-circle/);
-    assert.doesNotMatch(html, /12\.8K|Total|data-openbitfun-part="speed"|<span><\/span>/);
+    assert.doesNotMatch(html, /12\.8K|Total|data-starmate-part="speed"|<span><\/span>/);
   }
 });
 
@@ -85,11 +85,11 @@ test('the usage unit is omitted only when both values are missing, independently
   const render = overrides => renderToStaticMarkup(React.createElement(FlowChatTurnMetrics, { ...props, ...overrides }));
   assert.equal(render({ tokenValue: null, cacheHitRate: null, rateValue: null }), '');
   const tokensOnly = render({ rateValue: null });
-  assert.match(tokensOnly, /data-openbitfun-part="tokens"/);
-  assert.doesNotMatch(tokensOnly, /data-openbitfun-part="speed"|68 t\/s/);
+  assert.match(tokensOnly, /data-starmate-part="tokens"/);
+  assert.doesNotMatch(tokensOnly, /data-starmate-part="speed"|68 t\/s/);
   const speedOnly = render({ tokenValue: null, cacheHitRate: null, rateValue: '0 t/s', speedLevel: 1 });
   assert.match(speedOnly, /0 t\/s/);
-  assert.doesNotMatch(speedOnly, /data-openbitfun-part="tokens"|12\.8K/);
+  assert.doesNotMatch(speedOnly, /data-starmate-part="tokens"|12\.8K/);
 });
 
 test('elapsed time uses its own metric trigger and separates visible text from details', () => {
@@ -116,10 +116,10 @@ test('TTFT has its own accessible capsule and remains visible without rate or us
     ...props, tokenValue: null, cacheHitRate: null, rateValue: null,
     ttftValue: 'TTFT 1.25 s', ttftDescription: 'Time to first token: 1.25 seconds',
   }));
-  assert.match(html, /data-openbitfun-part="ttft"/);
+  assert.match(html, /data-starmate-part="ttft"/);
   assert.match(html, /aria-label="Time to first token: 1.25 seconds"/);
   assert.match(html, />TTFT 1.25 s<\/span>/);
-  assert.doesNotMatch(html, /data-openbitfun-part="tokens"|data-openbitfun-part="speed"/);
+  assert.doesNotMatch(html, /data-starmate-part="tokens"|data-starmate-part="speed"/);
   const pending = renderToStaticMarkup(React.createElement(FlowChatTurnMetrics, {
     ...props, ttftValue: 'TTFT 0 s', ttftDescription: 'Time to first token: 0 seconds', focusable: false,
   }));

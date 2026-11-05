@@ -82,7 +82,7 @@ describe('startup preload shell', () => {
     expect(controls?.hidden).toBe(false);
     expect(controls?.classList.contains('window-controls')).toBe(true);
     expect(controls?.classList.contains('window-controls--windows')).toBe(true);
-    expect(controls?.getAttribute('data-openbitfun-component')).toBe('window-controls');
+    expect(controls?.getAttribute('data-starmate-component')).toBe('window-controls');
     expect(dom.window.document.querySelector('.splash-screen')?.hasAttribute('aria-hidden')).toBe(false);
     await Promise.resolve();
 
@@ -95,7 +95,7 @@ describe('startup preload shell', () => {
     const visibleMaximizeGlyph = () => Array.from(maximizeButton?.querySelectorAll('svg') ?? [])
       .find(glyph => glyph.style.display !== 'none')
       ?.getAttribute('class');
-    expect(controls?.getAttribute('data-openbitfun-state')).toBe('maximized');
+    expect(controls?.getAttribute('data-starmate-state')).toBe('maximized');
     expect(maximizeButton?.getAttribute('aria-label')).toBe('还原');
     expect(visibleMaximizeGlyph()).toContain('lucide-copy');
 
@@ -108,7 +108,7 @@ describe('startup preload shell', () => {
 
     maximizeButton?.click();
     await Promise.resolve();
-    expect(controls?.hasAttribute('data-openbitfun-state')).toBe(false);
+    expect(controls?.hasAttribute('data-starmate-state')).toBe(false);
     expect(maximizeButton?.getAttribute('aria-label')).toBe('最大化');
     expect(visibleMaximizeGlyph()).toContain('lucide-square');
 

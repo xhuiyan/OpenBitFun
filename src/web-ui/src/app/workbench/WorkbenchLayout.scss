@@ -38,7 +38,7 @@
 
   // The shell paints the shared material; embedded toolbars only lay out tabs
   // and their actions, including an empty canvas contribution.
-  > [data-openbitfun-component='toolbar'] {
+  > [data-starmate-component='toolbar'] {
     flex: 1;
     border-block-end: 0;
     padding-inline: 0;

@@ -61,7 +61,7 @@ $panel-height: 680px;
 
   // Keep the expanded Hello surface inset from the window corner. MiniApp
   // panels already inherit their spacing from the root container.
-  .openbitfun-fmc[data-openbitfun-mode='chat'] & {
+  .openbitfun-fmc[data-starmate-mode='chat'] & {
     right: 16px;
     bottom: 16px;
   }
@@ -341,7 +341,7 @@ $panel-height: 680px;
 .openbitfun-fmc__panel--drop { outline: 2px solid var(--starmate-color-border-strong); }
 
 // Preserve the original VoiceCallPanel surface, now painted once by the window.
-.openbitfun-fmc[data-openbitfun-communication-mode='voice'] .openbitfun-fmc__panel {
+.openbitfun-fmc[data-starmate-communication-mode='voice'] .openbitfun-fmc__panel {
   border: 0;
   border-radius: calc(var(--starmate-space-8) + var(--starmate-space-1));
   background: var(--starmate-color-content-on-light);

@@ -58,7 +58,7 @@
       box-shadow var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .surface[data-openbitfun-layout="compact"] {
+  .surface[data-starmate-layout="compact"] {
     block-size: var(--starmate-control-chat-composer-compact-height);
     gap: var(--starmate-control-chat-composer-compact-gap);
     grid-template-areas: "start content end";
@@ -72,7 +72,7 @@
     border-radius: var(--starmate-control-composer-surface-radius);
   }
 
-  .surface[data-openbitfun-layout="expanded"] {
+  .surface[data-starmate-layout="expanded"] {
     grid-template-areas:
       "content content"
       "start end";
@@ -103,11 +103,11 @@
     line-height: var(--starmate-type-body-md-line-height);
   }
 
-  .surface[data-openbitfun-layout="expanded"] .content {
+  .surface[data-starmate-layout="expanded"] .content {
     align-items: flex-start;
   }
 
-  .surface[data-openbitfun-layout="compact"] .content {
+  .surface[data-starmate-layout="compact"] .content {
     block-size: var(--starmate-control-chat-composer-compact-track-height);
     align-self: center;
     padding: 0;
@@ -134,7 +134,7 @@
     gap: var(--starmate-space-1);
   }
 
-  .actionButton[data-openbitfun-component="icon-button"] {
+  .actionButton[data-starmate-component="icon-button"] {
     inline-size: var(--starmate-control-chat-composer-control-height);
     block-size: var(--starmate-control-chat-composer-control-height);
     min-inline-size: var(--starmate-control-chat-composer-control-height);
@@ -142,23 +142,23 @@
     border-radius: var(--starmate-radius-pill);
   }
 
-  .actionButton[data-openbitfun-component="icon-button"] [data-openbitfun-part="icon"] {
+  .actionButton[data-starmate-component="icon-button"] [data-starmate-part="icon"] {
     inline-size: var(--starmate-control-chat-composer-action-icon-size);
     block-size: var(--starmate-control-chat-composer-action-icon-size);
   }
 
-  .actionButton[data-openbitfun-variant="fill"][aria-expanded="true"] {
+  .actionButton[data-starmate-variant="fill"][aria-expanded="true"] {
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
-  .surface[data-openbitfun-layout="compact"] .startActions,
-  .surface[data-openbitfun-layout="compact"] .endActions {
+  .surface[data-starmate-layout="compact"] .startActions,
+  .surface[data-starmate-layout="compact"] .endActions {
     block-size: var(--starmate-control-chat-composer-compact-track-height);
     min-block-size: 0;
     align-self: center;
   }
 
-  .root[data-openbitfun-state~="disabled"] .surface {
+  .root[data-starmate-state~="disabled"] .surface {
     cursor: not-allowed;
     opacity: var(--starmate-opacity-disabled);
   }

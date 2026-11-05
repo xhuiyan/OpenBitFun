@@ -1,5 +1,5 @@
 .openbitfun-usage-stats {
-  [data-openbitfun-part='activityPanel'] .openbitfun-config-page-section__body {
+  [data-starmate-part='activityPanel'] .openbitfun-config-page-section__body {
     padding: var(--starmate-space-4) var(--starmate-space-5);
   }
 
@@ -30,11 +30,11 @@
     margin: 0;
   }
 
-  [data-openbitfun-part='distributions'] [role='tabpanel'] > .openbitfun-config-page-row:first-child {
+  [data-starmate-part='distributions'] [role='tabpanel'] > .openbitfun-config-page-row:first-child {
     border-top: 1px solid var(--openbitfun-component-config-page-divider);
   }
 
-  [data-openbitfun-part='trendPanel'] {
+  [data-starmate-part='trendPanel'] {
     width: 100%;
     min-width: 0;
   }
@@ -103,7 +103,7 @@
 }
 
 @container config-panel (max-width: 520px) {
-  .openbitfun-usage-stats [data-openbitfun-part='activityPanel'] .openbitfun-config-page-section__body {
+  .openbitfun-usage-stats [data-starmate-part='activityPanel'] .openbitfun-config-page-section__body {
     padding: var(--starmate-space-4);
   }
 }

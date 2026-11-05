@@ -65,7 +65,7 @@
   border-radius: var(--starmate-layout-field-group-radius);
   background: var(--starmate-color-surface-tertiary);
 
-  > [data-openbitfun-component='empty'] {
+  > [data-starmate-component='empty'] {
     box-sizing: border-box;
     min-height: 200px;
   }
@@ -92,11 +92,11 @@
   font-size: var(--starmate-type-label-sm-font-size);
   line-height: var(--starmate-type-label-sm-line-height);
 
-  &[data-openbitfun-status='error'] {
+  &[data-starmate-status='error'] {
     color: var(--starmate-color-status-danger-content);
   }
 
-  &[data-openbitfun-status='saved'] {
+  &[data-starmate-status='saved'] {
     color: var(--starmate-color-status-success-content);
   }
 
@@ -134,7 +134,7 @@
     &__actions {
       width: 100%;
 
-      > [data-openbitfun-component='button'] {
+      > [data-starmate-component='button'] {
         flex: 1 1 0;
       }
     }

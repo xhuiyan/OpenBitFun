@@ -577,14 +577,14 @@ export const BranchQuickSwitch: React.FC<BranchQuickSwitchProps> = ({
           data-state={phase}
           data-motion="presence"
           aria-hidden={!isOpen || undefined}
-          {...(!isOpen ? { inert: '' } : {})}
+          data-starmate-placement={popoverLayout?.placement ?? 'top'} data-starmate-native-webview-occlusion {...(!isOpen ? { inert: '' } : {})}
           style={{
             top: popoverLayout?.bottom === undefined ? `${popoverLayout?.top ?? 0}px` : undefined,
             bottom: popoverLayout?.bottom === undefined ? undefined : `${popoverLayout.bottom}px`,
             left: `${popoverLayout?.left ?? 0}px`,
             visibility: popoverLayout ? 'visible' : 'hidden',
           }}
-         data-starmate-native-webview-occlusion data-starmate-placement={popoverLayout?.placement ?? 'top'} >
+           >
           {popover}
         </div>,
         getAppearanceOverlayHost(),

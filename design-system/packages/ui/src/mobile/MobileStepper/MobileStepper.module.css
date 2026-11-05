@@ -11,16 +11,16 @@
   .control { display: inline-flex; min-inline-size: 0; flex: 0 0 auto; align-items: center; gap: var(--starmate-space-1); border: var(--starmate-border-width-default) solid var(--starmate-color-field-border); border-radius: var(--starmate-radius-md); background: var(--starmate-color-field-background); }
   .root[data-invalid="true"] .control { border-color: var(--starmate-color-status-danger-border); }
   .root:not([data-disabled="true"]) .control:focus-within,
-  .root[data-openbitfun-preview-state="focus-within"] .control { border-color: var(--starmate-color-field-border-focus); box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring); }
+  .root[data-starmate-preview-state="focus-within"] .control { border-color: var(--starmate-color-field-border-focus); box-shadow: 0 0 0 var(--starmate-focus-width) var(--starmate-color-focus-ring); }
 
   .button { display: grid; inline-size: 44px; block-size: 44px; flex: 0 0 44px; margin: 0; padding: 0; border: 0; border-radius: var(--starmate-radius-md); place-items: center; color: var(--starmate-color-content-secondary); background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard); }
   .button > svg { inline-size: 18px; block-size: 18px; }
   @media (hover: hover) and (pointer: fine) {
-    .button:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled),
-    .root[data-openbitfun-preview-state="hover"] .button:not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
+    .button:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled),
+    .root[data-starmate-preview-state="hover"] .button:not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .button:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled),
-  .root[data-openbitfun-preview-state="active"] .button:not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .button:is(:active, [data-starmate-preview-state="active"]):not(:disabled),
+  .root[data-starmate-preview-state="active"] .button:not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
   .button:focus-visible { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
   .button:disabled { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 

@@ -302,7 +302,7 @@
     overflow: hidden;
     background: var(--starmate-color-surface-workbench);
 
-    :root[data-openbitfun-appearance-mode='light'] & {
+    :root[data-starmate-appearance-mode='light'] & {
       background: var(--starmate-color-surface-scene);
     }
   }

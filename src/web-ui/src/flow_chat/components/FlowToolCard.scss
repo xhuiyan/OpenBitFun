@@ -18,7 +18,7 @@
   opacity: var(--starmate-opacity-muted);
 }
 
-$tool-card-root: '[data-openbitfun-component="flow-chat-tool-card"][data-openbitfun-part="root"]';
+$tool-card-root: '[data-starmate-component="flow-chat-tool-card"][data-starmate-part="root"]';
 
 // The inline row owns capsule width; the header and retained detail body must
 // follow the same width instead of shrinking again when the body unmounts.
@@ -35,12 +35,12 @@ $tool-card-root: '[data-openbitfun-component="flow-chat-tool-card"][data-openbit
 // Public cards own their border and radius; adapter wrappers also include the
 // card's margins, so outlining a wrapper creates a second, offset frame.
 .flow-tool-card-wrapper--permission-pending #{$tool-card-root} {
-  &[data-openbitfun-attention="prominent"] {
+  &[data-starmate-attention="prominent"] {
     border-color: var(--starmate-color-status-warning-border);
   }
 }
 
-.flow-tool-card-wrapper--permission-pending[data-openbitfun-attention="prominent"]:not([data-openbitfun-presentation="relation"]) > :first-child:not(#{$tool-card-root}):not(:has(#{$tool-card-root})) {
+.flow-tool-card-wrapper--permission-pending[data-starmate-attention="prominent"]:not([data-starmate-presentation="relation"]) > :first-child:not(#{$tool-card-root}):not(:has(#{$tool-card-root})) {
   outline: var(--starmate-border-width-default) solid var(--starmate-color-status-warning-border);
   outline-offset: calc(-1 * var(--starmate-border-width-default));
   border-radius: var(--starmate-radius-lg);
@@ -48,12 +48,12 @@ $tool-card-root: '[data-openbitfun-component="flow-chat-tool-card"][data-openbit
 
 @media (forced-colors: active) {
   .flow-tool-card-wrapper--permission-pending #{$tool-card-root} {
-    &[data-openbitfun-attention="prominent"] {
+    &[data-starmate-attention="prominent"] {
       border-color: Highlight;
     }
   }
 
-  .flow-tool-card-wrapper--permission-pending[data-openbitfun-attention="prominent"]:not([data-openbitfun-presentation="relation"]) > :first-child:not(#{$tool-card-root}):not(:has(#{$tool-card-root})) {
+  .flow-tool-card-wrapper--permission-pending[data-starmate-attention="prominent"]:not([data-starmate-presentation="relation"]) > :first-child:not(#{$tool-card-root}):not(:has(#{$tool-card-root})) {
     outline-color: Highlight;
   }
 }

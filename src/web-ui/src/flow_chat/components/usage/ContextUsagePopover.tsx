@@ -131,7 +131,7 @@ export function ContextUsagePopover({
             data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="legend" data-starmate-product-component="context-usage-popover" data-starmate-product-part="legend" >
             {rows.map(key => <div key={key} className="context-usage-popover__row" data-usage-category={key}
               data-openbitfun-product-component="context-usage-popover" data-openbitfun-product-part="item"
-              tabIndex={0} {...highlight(series.find(row => row.key === key) ?? { key })} data-starmate-product-component="context-usage-popover" data-starmate-product-part="item" >
+              tabIndex={0} data-starmate-product-part="item" data-starmate-product-component="context-usage-popover" {...highlight(series.find(row => row.key === key) ?? { key })}   >
               <dt><span aria-hidden="true" className={`context-usage-popover__swatch context-usage-popover__series--${key}`} />
                 <OverflowText>{t(`usage.context.categories.${key}`)}</OverflowText>
                 {previewSession && key !== 'summarizedConversation' && key !== 'conversation' && (

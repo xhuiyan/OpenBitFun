@@ -28,7 +28,7 @@ test("ScrollArea exposes orientation, scroll chaining, and scrollbar visibility 
   );
 
   assert.match(markup, /data-openbitfun-orientation="both"/);
-  assert.match(markup, /data-openbitfun-overscroll-behavior-y="auto"/);
+  assert.match(markup, /data-starmate-overscroll-behavior-y="auto"/);
   assert.match(markup, /data-openbitfun-scrollbar-visibility="always"/);
 });
 
@@ -54,7 +54,7 @@ test("ScrollArea styling uses public scrollbar tokens and preserves native scrol
   assert.match(styles, /overflow-y: auto/);
   assert.match(styles, /overflow-x: auto/);
   assert.match(styles, /overflow: scroll/);
-  assert.match(styles, /\[data-openbitfun-overscroll-behavior-y="auto"\]\s*\{\s*overscroll-behavior-y:\s*auto/);
+  assert.match(styles, /\[data-starmate-overscroll-behavior-y="auto"\]\s*\{\s*overscroll-behavior-y:\s*auto/);
   assert.doesNotMatch(styles, /scrollbar-color:|::-webkit-scrollbar/);
 
   // The published stylesheet must carry the shared policy for both ordinary
@@ -64,7 +64,7 @@ test("ScrollArea styling uses public scrollbar tokens and preserves native scrol
   assert.match(publishedStyles, /--starmate-scrollbar-radius/);
   assert.match(publishedStyles, /--starmate-color-scrollbar-thumb/);
   assert.match(publishedStyles, /--starmate-color-scrollbar-thumb-hover/);
-  assert.match(publishedStyles, /\[data-openbitfun-scrollbar-visibility\]/);
+  assert.match(publishedStyles, /\[data-starmate-scrollbar-visibility\]/);
   assert.match(publishedStyles, /scrollbar-width:\s*none/);
   assert.doesNotMatch(styles, /#[0-9a-f]{3,8}/i);
 });

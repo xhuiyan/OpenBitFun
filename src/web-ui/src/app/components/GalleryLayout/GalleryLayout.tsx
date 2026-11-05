@@ -12,9 +12,9 @@ const GalleryLayout: React.FC<GalleryLayoutProps> = ({ header, children, classNa
   <div
     data-openbitfun-component="gallery-layout"
     data-openbitfun-part="root"
-    {...rootProps}
+    data-starmate-part="root" data-starmate-component="gallery-layout" {...rootProps}
     className={['gallery-layout', className].filter(Boolean).join(' ')}
-   data-starmate-component="gallery-layout" data-starmate-part="root" >
+     >
     {header}
     <ScrollArea className="gallery-layout__body" data-openbitfun-component="gallery-layout" data-openbitfun-part="body" data-starmate-component="gallery-layout" data-starmate-part="body" >
       <div className="gallery-layout__body-inner" data-openbitfun-component="gallery-layout" data-openbitfun-part="content" data-starmate-component="gallery-layout" data-starmate-part="content" >

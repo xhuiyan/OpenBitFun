@@ -47,19 +47,19 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .root:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+    .root:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
       color: var(--starmate-color-content-primary);
       background: var(--starmate-color-action-neutral-surface-hover);
       box-shadow: var(--starmate-shadow-sm);
     }
   }
 
-  .root:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .root:is(:active, [data-starmate-preview-state="active"]):not(:disabled) {
     color: var(--starmate-color-content-primary);
     background: var(--starmate-color-action-neutral-surface-pressed);
   }
 
-  .root:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) {
+  .root:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) {
     outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
     outline-offset: var(--starmate-focus-offset);
   }

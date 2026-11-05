@@ -210,13 +210,13 @@ describe('NavPanel layout styles', () => {
     expect(stylesheet).toContain(
       ".openbitfun-nav-panel__top-action-btn,\n" +
       ".openbitfun-nav-panel__miniapp-entry {\n" +
-      "  > [data-openbitfun-part='leading'] {\n" +
+      "  > [data-starmate-part='leading'] {\n" +
       '    flex: 0 0 var(--_nav-icon-slot-size);\n' +
       '    inline-size: var(--_nav-icon-slot-size);\n' +
       '    block-size: var(--_nav-icon-slot-size);',
     );
     expect(stylesheet).toContain(
-      "> [data-openbitfun-part='label'] {\n" +
+      "> [data-starmate-part='label'] {\n" +
       '    flex: 1;',
     );
     expect(stylesheet).not.toContain(
@@ -229,7 +229,7 @@ describe('NavPanel layout styles', () => {
     const itemBlock = extractBlock(stylesheet, '&__miniapp-item');
     const trailingBlock = extractBlock(
       stylesheet,
-      "&__miniapp-item > [data-openbitfun-part='actions']",
+      "&__miniapp-item > [data-starmate-part='actions']",
     );
 
     // The row paints its hover/selected pill on the ActionItem trigger, so the

@@ -64,7 +64,7 @@
       content: '';
     }
 
-    &[data-openbitfun-state='indeterminate'] {
+    &[data-starmate-state='indeterminate'] {
       // Keep the wave near the bottom until byte progress can set the water level.
       transform: translateY(calc(100% - var(--starmate-space-1) / 4));
     }

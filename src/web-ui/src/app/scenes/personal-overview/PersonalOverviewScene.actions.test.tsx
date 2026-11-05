@@ -170,7 +170,7 @@ describe('overview catalog actions', () => {
   it('combines built-in and custom agents in one card and opens the full catalog', async () => {
     useAgentsStore.setState({ agentFilterLevel: 'builtin', agentFilterType: 'subagent', searchQuery: 'old' });
     await render();
-    expect(container.querySelectorAll('[data-openbitfun-part="agents"] .overview-split-card__pane')).toHaveLength(2);
+    expect(container.querySelectorAll('[data-starmate-part="agents"] .overview-split-card__pane')).toHaveLength(2);
     expect(container.querySelector('[data-testid="personal-overview-agents"] .overview-split-card__value')?.textContent).toBe('2');
     await click('personal-overview-agents');
     expect(useAgentsStore.getState()).toMatchObject({ page: 'home', agentFilterLevel: 'all', agentFilterType: 'all', searchQuery: '' });
@@ -383,9 +383,9 @@ describe('overview catalog actions', () => {
       category: 'utilities', tags: [], version: 1, permissions: {}, created_at: 1, updated_at: 1 }];
     await render();
     const trigger = container.querySelector<HTMLButtonElement>('[data-testid="personal-overview-installed-miniapp"]')!;
-    const card = trigger.closest('[data-openbitfun-component="action-card"]')!;
+    const card = trigger.closest('[data-starmate-component="action-card"]')!;
     const launch = card.querySelector<HTMLButtonElement>('[aria-label="miniApps.start"]')!;
-    expect(card.querySelectorAll('[data-openbitfun-part="actions"] button')).toHaveLength(1);
+    expect(card.querySelectorAll('[data-starmate-part="actions"] button')).toHaveLength(1);
     expect(launch.dataset.openbitfunVariant).toBe('glass');
     expect(launch.dataset.openbitfunShape).toBe('circle');
     expect(launch.dataset.size).toBe('standard');
@@ -450,7 +450,7 @@ describe('overview catalog actions', () => {
     await render();
     expect(container.querySelector('[data-testid="personal-overview-miniapp-count"]')?.textContent)
       .toBe(status === 'loading' ? 'loadingValue' : 'unavailableValue');
-    expect(container.querySelector('[data-openbitfun-part="miniApps"] [role="status"]')?.textContent)
+    expect(container.querySelector('[data-starmate-part="miniApps"] [role="status"]')?.textContent)
       .toContain(status === 'loading' ? 'miniApps.loading' : 'miniApps.failed');
   });
 });

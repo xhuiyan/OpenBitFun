@@ -10,15 +10,15 @@
   .item[data-selected="true"] .icon { background: var(--starmate-color-selection-surface); }
 
   @media (hover: hover) and (pointer: fine) {
-    .item:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled),
-    .root[data-openbitfun-preview-state="hover"] .item:not(:disabled) { color: var(--starmate-color-content-primary); }
-    .item:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) .icon,
-    .root[data-openbitfun-preview-state="hover"] .item:not(:disabled) .icon { background: var(--starmate-color-action-neutral-surface-hover); }
+    .item:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled),
+    .root[data-starmate-preview-state="hover"] .item:not(:disabled) { color: var(--starmate-color-content-primary); }
+    .item:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) .icon,
+    .root[data-starmate-preview-state="hover"] .item:not(:disabled) .icon { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .item:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) .icon,
-  .root[data-openbitfun-preview-state="active"] .item:not(:disabled) .icon { background: var(--starmate-color-action-neutral-surface-pressed); }
-  .item:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]),
-  .root[data-openbitfun-preview-state="focus-visible"] .item[data-selected="true"] { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
+  .item:is(:active, [data-starmate-preview-state="active"]):not(:disabled) .icon,
+  .root[data-starmate-preview-state="active"] .item:not(:disabled) .icon { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .item:is(:focus-visible, [data-starmate-preview-state="focus-visible"]),
+  .root[data-starmate-preview-state="focus-visible"] .item[data-selected="true"] { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
   .item:disabled { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 
   .icon { position: relative; display: grid; box-sizing: border-box; inline-size: 64px; block-size: 32px; place-items: center; border-radius: var(--starmate-radius-pill); transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard); }

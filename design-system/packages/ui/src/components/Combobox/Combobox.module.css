@@ -226,7 +226,7 @@
   }
 
   .valueLeading > :where(svg, img),
-  .valueLeading > [data-openbitfun-component="icon"] {
+  .valueLeading > [data-starmate-component="icon"] {
     inline-size: 100%;
     block-size: 100%;
   }
@@ -321,7 +321,7 @@
   }
 
   .indicator > svg,
-  .indicator > [data-openbitfun-component="icon"] {
+  .indicator > [data-starmate-component="icon"] {
     inline-size: 100%;
     block-size: 100%;
   }
@@ -418,11 +418,11 @@
     min-block-size: 0;
   }
 
-  .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="label"] {
+  .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="label"] {
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
-  .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
+  .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="indicator"] {
     color: var(--starmate-color-control-highlight-background);
   }
 
@@ -471,7 +471,7 @@
       box-shadow: 0 0 0 var(--starmate-focus-width) Highlight;
     }
 
-    .listbox [data-openbitfun-listbox-option][data-selected="true"] [data-openbitfun-part="indicator"] {
+    .listbox [data-starmate-listbox-option][data-selected="true"] [data-starmate-part="indicator"] {
       color: Highlight;
     }
   }

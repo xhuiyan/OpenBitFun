@@ -175,7 +175,7 @@
   }
 
   // Preserve collection action geometry and feedback for the shared button root.
-  &[data-openbitfun-component='icon-button'] {
+  &[data-starmate-component='icon-button'] {
     flex-shrink: 1;
 
     &::before { content: none; }
@@ -185,12 +185,12 @@
       outline-offset: 2px;
     }
 
-    > [data-openbitfun-part='icon'] {
+    > [data-starmate-part='icon'] {
       --openbitfun-opacity-icon-artwork: inherit;
       display: contents;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+    > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
       inline-size: 14px;
       block-size: 14px;
     }

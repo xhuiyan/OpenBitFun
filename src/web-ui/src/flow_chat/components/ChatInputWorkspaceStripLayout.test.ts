@@ -73,7 +73,7 @@ describe('composer context track layout', () => {
     );
     for (const stylesheet of [workspaceStrip, branchPicker, targetPicker]) {
       expect(stylesheet).not.toMatch(
-        /\[data-openbitfun-part='(?:list|section-items)'\][^{]*\{[^}]*\bgap:/,
+        /\[data-starmate-part='(?:list|section-items)'\][^{]*\{[^}]*\bgap:/,
       );
     }
     expect(targetPicker).toMatch(
@@ -92,7 +92,7 @@ describe('composer context track layout', () => {
       /small \{[\s\S]*?font-size: var\(--starmate-type-meta-font-size\);/,
     );
     expect(targetPicker).toMatch(
-      /\&\[data-openbitfun-part='option'\] \{[\s\S]*?strong \{[\s\S]*?color: var\(--starmate-color-content-secondary\);[\s\S]*?opacity: var\(--starmate-opacity-focus\);/,
+      /\&\[data-starmate-part='option'\] \{[\s\S]*?strong \{[\s\S]*?color: var\(--starmate-color-content-secondary\);[\s\S]*?opacity: var\(--starmate-opacity-focus\);/,
     );
     expect(targetPicker).toMatch(
       /small \{[\s\S]*?color: var\(--starmate-color-content-muted\);[\s\S]*?opacity: 0\.5;/,
@@ -106,7 +106,7 @@ describe('composer context track layout', () => {
       /branch-quick-switch__list \{[\s\S]*?block-size: clamp\(0px, calc\(100vh - 96px\), 280px\);/,
     );
     expect(branchPicker).toMatch(
-      /branch-quick-switch__list \[data-openbitfun-part='list'\] \{[\s\S]*?min-block-size: 100%;/,
+      /branch-quick-switch__list \[data-starmate-part='list'\] \{[\s\S]*?min-block-size: 100%;/,
     );
     expect(branchPicker).toMatch(
       /branch-quick-switch__loading,[\s\S]*?branch-quick-switch__empty \{[\s\S]*?flex: 1 1 auto;/,
@@ -149,7 +149,7 @@ describe('composer context track layout', () => {
     expect(mixin).toContain('height: 18px;');
     expect(mixin).toContain('border-radius: 999px;');
     expect(mixin).toContain('background: transparent;');
-    expect(mixin).toMatch(/> :is\(svg, \[data-openbitfun-component='icon'\]\) \{[\s\S]*?width: var\(--starmate-control-icon-size-xs\);/);
+    expect(mixin).toMatch(/> :is\(svg, \[data-starmate-component='icon'\]\) \{[\s\S]*?width: var\(--starmate-control-icon-size-xs\);/);
 
     for (const control of [
       '    .dispatch-target-picker__trigger {\n      @include strip-control;',
@@ -239,8 +239,8 @@ describe('composer context track layout', () => {
   it('orders the left rail as situation and the right rail as the next turn', () => {
     const component = readWorkspaceStripComponent();
     const stylesheet = readWorkspaceStripStylesheet();
-    const contextIndex = component.indexOf('data-openbitfun-part="context"');
-    const nextIndex = component.indexOf('data-openbitfun-part="next"');
+    const contextIndex = component.indexOf('data-starmate-part="context"');
+    const nextIndex = component.indexOf('data-starmate-part="next"');
     const contextMarkup = component.slice(contextIndex, nextIndex);
     const locationIndex = contextMarkup.indexOf('__location');
     const targetIndex = contextMarkup.indexOf('<DispatchTargetPicker');
@@ -260,7 +260,7 @@ describe('composer context track layout', () => {
     // open; the menu lists every open workspace and marks the active one.
     expect(component).toContain('data-testid="chat-input-workspace-trigger"');
     expect(component).toContain('data-testid="chat-input-workspace-menu"');
-    expect(component).toContain('data-openbitfun-part="workspaceOption"');
+    expect(component).toContain('data-starmate-part="workspaceOption"');
     // Every entry carries one compact secondary detail line: repositories use
     // their real path, while assistants expose their product role instead of
     // leaking the internal assistant workspace directory.
@@ -352,12 +352,12 @@ describe('composer context track layout', () => {
     expect(additionalModeItemsIndex).toBeGreaterThan(additionalModesIndex);
     expect(contextIndex).toBeGreaterThan(additionalModeItemsIndex);
     expect(chatInput).toContain('additionalModeItems.map(item => (');
-    expect(chatInput).toContain('data-openbitfun-boost-item-kind="additional-mode"');
+    expect(chatInput).toContain('data-starmate-boost-item-kind="additional-mode"');
     expect(chatInput).toContain('data-testid={`chat-input-additional-mode-${item.id}`}');
     expect(chatInput).not.toContain('boost-submenu-item--unavailable');
     expect(chatInput).not.toContain('boost-submenu-item-status');
-    expect(chatInput).not.toContain('data-openbitfun-boost-item-kind="workflow"');
-    expect(chatInput).not.toContain('data-openbitfun-agent-id="Review"');
+    expect(chatInput).not.toContain('data-starmate-boost-item-kind="workflow"');
+    expect(chatInput).not.toContain('data-starmate-agent-id="Review"');
     expect(chatInput).toContain(
       'resolveChatInputQuickSkillShortcuts(resolvedModeSkills)',
     );
@@ -392,7 +392,7 @@ describe('composer context track layout', () => {
     expect(standaloneHarnessIndex).toBeLessThan(endActionsIndex);
     expect(chatInput).toContain('isMultiLine && executionLevelPolicy.userConfigurable ? (');
     expect(stylesheet).toMatch(
-      /&\[data-openbitfun-layout='expanded'\] \{[\s\S]*?\.openbitfun-harness-selector__trigger \{[\s\S]*?height: var\(--starmate-control-chat-composer-control-height\);/,
+      /&\[data-starmate-layout='expanded'\] \{[\s\S]*?\.openbitfun-harness-selector__trigger \{[\s\S]*?height: var\(--starmate-control-chat-composer-control-height\);/,
     );
     expect(modelIndex).toBeGreaterThan(endActionsIndex);
     expect(chatInput).not.toContain('harnessControl');
@@ -401,12 +401,12 @@ describe('composer context track layout', () => {
     const modelSelector = readLocalFile('ModelSelector.tsx');
     expect(stylesheet).not.toContain('.openbitfun-reasoning-preset-selector,');
     expect(modelSelector).not.toContain('tokenPercentage');
-    expect(modelSelector).not.toContain('data-openbitfun-part="contextUsage"');
+    expect(modelSelector).not.toContain('data-starmate-part="contextUsage"');
     expect(modelSelector).toContain('buildContextUsageTooltip');
     expect(modelSelector).toContain('buildModelSelectorTooltipDetails');
     expect(stylesheet).not.toContain('.openbitfun-model-selector__ctx-usage {');
     expect(stylesheet).toContain(
-      ".openbitfun-reasoning-preset-selector[data-openbitfun-presentation='label']",
+      ".openbitfun-reasoning-preset-selector[data-starmate-presentation='label']",
     );
   });
 
@@ -455,7 +455,7 @@ describe('composer context track layout', () => {
 
     expect(modelPair).toContain('border: 0;');
     expect(modelPair).toMatch(
-      /&:hover,\s*&\[data-openbitfun-state='open'\] \{\s*background: var\(--starmate-color-action-quiet-hover\);/,
+      /&:hover,\s*&\[data-starmate-state='open'\] \{\s*background: var\(--starmate-color-action-quiet-hover\);/,
     );
     expect(modelPair).not.toContain('border-color:');
   });
@@ -481,7 +481,7 @@ describe('composer context track layout', () => {
     const component = readLocalFile('ChatInput.tsx');
     const stylesheet = readChatInputStylesheet();
     const compactControls = stylesheet.slice(
-      stylesheet.indexOf("    &[data-openbitfun-layout='compact'] {"),
+      stylesheet.indexOf("    &[data-starmate-layout='compact'] {"),
       stylesheet.indexOf('  &--capsule {'),
     );
     expect(compactControls).toContain('height: 100%;');

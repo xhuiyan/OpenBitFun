@@ -29,7 +29,7 @@
   }
   &__avatar { display: flex; align-items: center; justify-content: center; inline-size: 136px; block-size: 136px; flex-shrink: 0;
     color: var(--starmate-color-content-secondary); border-radius: var(--starmate-radius-3xl);
-    > [data-openbitfun-part="icon"] { inline-size: 100%; block-size: 100%; }
+    > [data-starmate-part="icon"] { inline-size: 100%; block-size: 100%; }
     &:is(:hover, :focus-visible):not(:disabled) .project-resources__icon-edit-indicator { opacity: 1; }
   }
   &__icon-edit-indicator {

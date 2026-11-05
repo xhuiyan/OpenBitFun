@@ -687,6 +687,7 @@ fn miniapp_compiler_preserves_head_injection_contract() {
 
     assert!(out.contains("<meta charset=\"utf-8\">"));
     assert!(out.contains("data-openbitfun-appearance-mode=\"dark\""));
+    assert!(out.contains("data-starmate-appearance-mode=\"dark\""));
     assert!(out.contains("*::-webkit-scrollbar-track-piece"));
     assert!(out.contains("scrollbar-width: auto !important"));
     assert!(out.contains("scrollbar-color: var(--openbitfun-scrollbar-thumb) transparent"));
@@ -1753,8 +1754,7 @@ fn miniapp_builtin_contract_owns_seed_plan_and_marker_wire_shape() {
         worker_js: r#"console.log("worker");"#,
         esm_dependencies_json: "[]",
     };
-    let artifacts =
-        starmate_product_domains::miniapp::builtin::build_builtin_seed_artifacts(&app);
+    let artifacts = starmate_product_domains::miniapp::builtin::build_builtin_seed_artifacts(&app);
     let marker = build_builtin_install_marker(&app, &artifacts.content_hash);
 
     assert_eq!(artifacts.marker, marker);

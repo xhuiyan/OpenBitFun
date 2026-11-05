@@ -155,7 +155,7 @@
 
 /* Sidebar: the panel keeps its own surface and its block-fill selection. The footer loses its rule
    — this frame separates its regions with fills and space, never with lines. */
-.design-home-preview-sidebar [data-openbitfun-part="footer"] {
+.design-home-preview-sidebar [data-starmate-part="footer"] {
   border-block-start-color: transparent;
 }
 
@@ -166,7 +166,7 @@
   padding-block: var(--starmate-space-2) 0;
 }
 
-.design-home-preview-search > [data-openbitfun-component="search-field"] {
+.design-home-preview-search > [data-starmate-component="search-field"] {
   flex: 1 1 auto;
   min-inline-size: 0;
 }
@@ -238,12 +238,12 @@
 
 /* The display PageHeader is sized in the page's own scale; inside the frame it follows the frame
    instead, so the window stays a legible picture at every width the page allows. */
-.design-home-preview-welcome-header [data-openbitfun-part="heading"] {
+.design-home-preview-welcome-header [data-starmate-part="heading"] {
   font-size: clamp(var(--starmate-type-heading-panel-font-size), 4.6cqi, var(--starmate-type-heading-welcome-font-size)); /* typography-audit: allow -- This scaled specimen keeps fluid container/viewport geometry between the established type scale bounds. */
   text-wrap: balance;
 }
 
-.design-home-preview-welcome-header [data-openbitfun-part="description"] {
+.design-home-preview-welcome-header [data-starmate-part="description"] {
   color: var(--starmate-color-content-secondary);
   font-size: clamp(var(--starmate-type-body-sm-font-size), 2.2cqi, var(--starmate-type-page-intro-font-size)); /* typography-audit: allow -- This scaled specimen keeps fluid container/viewport geometry between the established type scale bounds. */
 }

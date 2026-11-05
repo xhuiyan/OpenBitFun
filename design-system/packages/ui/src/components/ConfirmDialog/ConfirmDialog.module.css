@@ -40,20 +40,20 @@
   }
 
   .icon > svg,
-  .icon > [data-openbitfun-component="icon"] {
+  .icon > [data-starmate-component="icon"] {
     inline-size: var(--starmate-layout-confirm-dialog-icon-glyph-size);
     block-size: var(--starmate-layout-confirm-dialog-icon-glyph-size);
   }
 
-  .icon[data-openbitfun-status="success"] {
+  .icon[data-starmate-status="success"] {
     color: var(--starmate-color-status-success-emphasis);
   }
 
-  .icon[data-openbitfun-status="warning"] {
+  .icon[data-starmate-status="warning"] {
     color: var(--starmate-color-status-warning-emphasis);
   }
 
-  .icon[data-openbitfun-status="danger"] {
+  .icon[data-starmate-status="danger"] {
     color: var(--starmate-color-status-danger-emphasis);
   }
 

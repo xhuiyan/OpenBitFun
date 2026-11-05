@@ -13,10 +13,10 @@
   .root[data-disabled="true"] .field { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 
   @media (hover: hover) and (pointer: fine) {
-    .field:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
+    .field:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .field:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
-  .field:is(:focus-visible, [data-openbitfun-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
+  .field:is(:active, [data-starmate-preview-state="active"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .field:is(:focus-visible, [data-starmate-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
 
   .value { min-inline-size: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .value[data-placeholder="true"] { color: var(--starmate-color-content-muted); }

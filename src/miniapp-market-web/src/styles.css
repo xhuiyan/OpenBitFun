@@ -1603,11 +1603,11 @@ main {
   line-height: 1.45;
 }
 
-.field :is([data-openbitfun-component="input"], input[type="file"]),
+.field :is([data-starmate-component="input"], input[type="file"]),
 .field select,
 .field textarea,
-.review-actions [data-openbitfun-component="input"],
-.moderation-panel [data-openbitfun-component="input"] {
+.review-actions [data-starmate-component="input"],
+.moderation-panel [data-starmate-component="input"] {
   width: 100%;
   min-height: 34px;
   padding: 7px 9px;
@@ -1640,16 +1640,16 @@ main {
   cursor: pointer;
 }
 
-.field [data-openbitfun-component="input"]:focus-within,
+.field [data-starmate-component="input"]:focus-within,
 .field select:focus,
 .field textarea:focus,
-.review-actions [data-openbitfun-component="input"]:focus-within,
-.moderation-panel [data-openbitfun-component="input"]:focus-within {
+.review-actions [data-starmate-component="input"]:focus-within,
+.moderation-panel [data-starmate-component="input"]:focus-within {
   border-color: var(--starmate-color-accent-default);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--starmate-color-accent-default) 10%, transparent);
 }
 
-.field [data-openbitfun-component="input"]:has(input[readonly]) {
+.field [data-starmate-component="input"]:has(input[readonly]) {
   background: var(--starmate-color-surface-tertiary);
   color: var(--starmate-color-content-muted);
 }
@@ -2610,11 +2610,11 @@ footer a:hover {
 }
 .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border: 0; }
 
-.market-input[data-openbitfun-component='input'] {
+.market-input[data-starmate-component='input'] {
   block-size: auto;
   min-width: 0;
 }
-.market-input[data-openbitfun-component='input'] > input {
+.market-input[data-starmate-component='input'] > input {
   outline: 0;
   font: inherit;
   letter-spacing: inherit;
@@ -2629,7 +2629,7 @@ footer a:hover {
 }
 
 /* Textarea owns a wrapper; keep the native editor filling its form column. */
-.market-textarea[data-openbitfun-component="textarea"] {
+.market-textarea[data-starmate-component="textarea"] {
   display: flex;
   width: 100%;
   min-width: 0;
@@ -2640,7 +2640,7 @@ footer a:hover {
 }
 
 /* Keep each surface's control geometry while using shared button semantics. */
-:where([data-openbitfun-component="button"]) {
+:where([data-starmate-component="button"]) {
   display: inline-block;
   block-size: auto;
   padding: 0;
@@ -2650,26 +2650,26 @@ footer a:hover {
   letter-spacing: inherit;
   white-space: normal;
 }
-:where([data-openbitfun-component="icon-button"]) {
+:where([data-starmate-component="icon-button"]) {
   inline-size: auto;
   block-size: auto;
 }
-[data-openbitfun-component="button"]::before,
-[data-openbitfun-component="icon-button"]::before {
+[data-starmate-component="button"]::before,
+[data-starmate-component="icon-button"]::before {
   content: none;
 }
 /* Rich labels (previews, review cards, icon + text) retain the root layout. */
-[data-openbitfun-component="button"] > [data-openbitfun-part="content"],
-[data-openbitfun-component="button"] > [data-openbitfun-part="content"] > [data-openbitfun-part="label"] {
+[data-starmate-component="button"] > [data-starmate-part="content"],
+[data-starmate-component="button"] > [data-starmate-part="content"] > [data-starmate-part="label"] {
   display: contents;
   white-space: inherit;
 }
-[data-openbitfun-component="icon-button"] > [data-openbitfun-part="icon"] {
+[data-starmate-component="icon-button"] > [data-starmate-part="icon"] {
   position: static;
   inline-size: auto;
   block-size: auto;
 }
-[data-openbitfun-component="icon-button"] > [data-openbitfun-part="icon"] > svg {
+[data-starmate-component="icon-button"] > [data-starmate-part="icon"] > svg {
   inline-size: 18px;
   block-size: 18px;
 }

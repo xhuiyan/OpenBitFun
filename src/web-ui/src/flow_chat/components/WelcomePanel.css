@@ -202,12 +202,12 @@
   transform: translateY(-10%);
 }
 
-.welcome-panel__mode-mark > [data-openbitfun-component='icon'] {
+.welcome-panel__mode-mark > [data-starmate-component='icon'] {
   inline-size: var(--_welcome-mode-size);
   block-size: var(--_welcome-mode-size);
 }
 
-.welcome-panel__mode-option .welcome-panel__mode-mark > [data-openbitfun-component='icon'] {
+.welcome-panel__mode-option .welcome-panel__mode-mark > [data-starmate-component='icon'] {
   inline-size: var(--_welcome-mode-glyph-size);
   block-size: var(--_welcome-mode-glyph-size);
   transition:
@@ -336,7 +336,7 @@
 
 .welcome-panel__inline-btn::before { content: none; }
 
-.welcome-panel__inline-btn > [data-openbitfun-part='content'] { gap: inherit; }
+.welcome-panel__inline-btn > [data-starmate-part='content'] { gap: inherit; }
 
 .welcome-panel__inline-btn--interactive {
   cursor: pointer;
@@ -426,7 +426,7 @@
   .welcome-panel__mode-option,
   .welcome-panel__mode-mark,
   .welcome-panel__mode-name,
-  .welcome-panel__mode-option .welcome-panel__mode-mark > [data-openbitfun-component='icon'] {
+  .welcome-panel__mode-option .welcome-panel__mode-mark > [data-starmate-component='icon'] {
     transition-duration: 0ms;
   }
 }

@@ -23,8 +23,8 @@ describe('FlowChat collapse spacing', () => {
     const projectionRoots = [
       '.explore-region__content',
       '.thinking-content',
-      "[data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-part='expanded']",
-      "[data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-part='error']",
+      "[data-starmate-component='flow-chat-tool-card'][data-starmate-part='expanded']",
+      "[data-starmate-component='flow-chat-tool-card'][data-starmate-part='error']",
       '.subagent-projection-container--expanded',
     ];
 
@@ -55,7 +55,7 @@ describe('FlowChat collapse spacing', () => {
     const exploreStyles = readSource('../../../../../../design-system/packages/ui/src/flow-chat/conversation/ConversationBlocks.css');
 
     expect(renderer).toMatch(
-      /<div\s+data-openbitfun-component=\{[^}]+\}\s+data-openbitfun-part="header"[\s\S]*?data-testid=/,
+      /<div[\s\S]*?data-starmate-component=\{[^}]+\}[\s\S]*?data-starmate-part="header"[\s\S]*?data-testid=/,
     );
     expect(renderer).not.toMatch(
       /<button[\s\S]*?data-testid=/,

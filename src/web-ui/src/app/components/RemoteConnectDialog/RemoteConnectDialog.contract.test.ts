@@ -79,7 +79,7 @@ describe('Remote Connect safety contracts', () => {
     expect(overview).toContain("view: 'account'");
     expect(overview).toContain("view: 'network'");
     expect(overview).toContain("view: 'bot'");
-    expect(dialogSource).not.toContain('data-openbitfun-part="groupTab"');
+    expect(dialogSource).not.toContain('data-starmate-part="groupTab"');
     expect(dialogSource).not.toContain('remote-connect-group-');
   });
 
@@ -88,9 +88,9 @@ describe('Remote Connect safety contracts', () => {
     expect(dialogSource).toContain('className="openbitfun-remote-connect-dialog"');
     expect(dialogSource).toContain('className="openbitfun-remote-connect-dialog__header"');
     expect(dialogSource).toContain('className="openbitfun-remote-connect-dialog__body"');
-    expect(dialogSource).toContain('data-openbitfun-part="sidebar"');
-    expect(dialogSource).toContain('data-openbitfun-part="sidebarBrand"');
-    expect(dialogSource).toContain('data-openbitfun-part="main"');
+    expect(dialogSource).toContain('data-starmate-part="sidebar"');
+    expect(dialogSource).toContain('data-starmate-part="sidebarBrand"');
+    expect(dialogSource).toContain('data-starmate-part="main"');
     expect(dialogSource).toContain('className="openbitfun-remote-connect__navigation"');
     expect(dialogSource).toContain("aria-current={activeView === view ? 'page' : undefined}");
   });
@@ -174,7 +174,7 @@ describe('Remote Connect safety contracts', () => {
     expect(desktopGeometry).toContain('block-size: min(620px, calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter)))');
     expect(desktopGeometry).toContain('min-block-size: min(620px, calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter)))');
     expect(desktopGeometry).toContain('max-block-size: min(620px, calc(100vh - 2 * var(--starmate-overlay-dialog-viewport-gutter)))');
-    expect(dialogStyleSource).toContain(".openbitfun-remote-connect [data-openbitfun-part='panel']");
+    expect(dialogStyleSource).toContain(".openbitfun-remote-connect [data-starmate-part='panel']");
     expect(dialogSource).toContain('<ScrollArea');
   });
 
@@ -185,7 +185,7 @@ describe('Remote Connect safety contracts', () => {
     expect(dialogSource).toContain("panelId: 'remote-connect-bot-tabpanel'");
     expect(dialogSource.match(/<TabGroup/g)).toHaveLength(2);
     expect(dialogSource).not.toContain('handleTabArrowKey');
-    expect(dialogSource).not.toContain('data-openbitfun-part="subtab"');
+    expect(dialogSource).not.toContain('data-starmate-part="subtab"');
   });
 
   it('offers two relay endpoints and the supported chat providers', () => {
@@ -209,7 +209,7 @@ describe('Remote Connect safety contracts', () => {
       dialogStyleSource.indexOf('.openbitfun-remote-connect__bot-identity-title'),
     );
     const overviewMessageBrandStart = navPanelStyleSource.indexOf(
-      "&[data-openbitfun-device-kind='message-app'] .openbitfun-device-overview__device-icon {",
+      "&[data-starmate-device-kind='message-app'] .openbitfun-device-overview__device-icon {",
     );
     const overviewMessageBrandStyle = navPanelStyleSource.slice(
       overviewMessageBrandStart,

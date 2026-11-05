@@ -31,17 +31,17 @@
 
   &::before { content: none; }
 
-  > [data-openbitfun-part='icon'] {
+  > [data-starmate-part='icon'] {
     --openbitfun-opacity-icon-artwork: inherit;
     display: contents;
   }
 
-  > :where([data-openbitfun-part='icon']) > :where(svg) {
+  > :where([data-starmate-part='icon']) > :where(svg) {
     inline-size: 15px;
     block-size: 15px;
   }
 
-  > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+  > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
     inline-size: 14px;
     block-size: 14px;
   }

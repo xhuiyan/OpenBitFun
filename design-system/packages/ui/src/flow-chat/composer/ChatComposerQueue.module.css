@@ -84,7 +84,7 @@
     color: var(--starmate-color-content-primary);
   }
 
-  .item[data-openbitfun-state="sending"] {
+  .item[data-starmate-state="sending"] {
     opacity: var(--starmate-opacity-disabled);
   }
 

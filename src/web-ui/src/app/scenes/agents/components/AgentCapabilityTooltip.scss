@@ -2,7 +2,7 @@
   // Capability details often contain long model IDs, paths, or provider names.
   // Widen this tooltip locally while keeping the shared viewport clamp and
   // height/scroll behavior.
-  [data-openbitfun-part='content'] {
+  [data-starmate-part='content'] {
     max-inline-size: min(360px, calc(100vw - 16px));
   }
 

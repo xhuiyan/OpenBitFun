@@ -175,22 +175,22 @@ const css = [
   renderCss(semanticThemes.light, {
     aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
-    selector: ':where([data-openbitfun-design-system-root]), :where([data-openbitfun-design-system-root][data-color-scheme="light"])',
+    selector: ':where([data-starmate-design-system-root]), :where([data-starmate-design-system-root][data-color-scheme="light"])',
   }),
   renderCss(semanticThemes.dark, {
     aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
-    selector: ':where([data-openbitfun-design-system-root][data-color-scheme="dark"])',
+    selector: ':where([data-starmate-design-system-root][data-color-scheme="dark"])',
   }),
   renderCss(diffResolvedTokens(semanticThemes.light, semanticThemes.highContrastLight), {
     aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
-    selector: ':where([data-openbitfun-design-system-root][data-color-scheme="light"][data-contrast="high"])',
+    selector: ':where([data-starmate-design-system-root][data-color-scheme="light"][data-contrast="high"])',
   }),
   renderCss(diffResolvedTokens(semanticThemes.dark, semanticThemes.highContrastDark), {
     aliasPrefix: "starmate",
     layer: "openbitfun.tokens.theme",
-    selector: ':where([data-openbitfun-design-system-root][data-color-scheme="dark"][data-contrast="high"])',
+    selector: ':where([data-starmate-design-system-root][data-color-scheme="dark"][data-contrast="high"])',
   }),
 ].join("\n");
 

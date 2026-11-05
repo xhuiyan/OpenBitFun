@@ -69,7 +69,7 @@ describe('Runtime settings information architecture', () => {
     expect(styles).toContain('border: 1px solid transparent;');
     expect(styles).toContain('&__pet-card:hover,\n  &__pet-card:focus-within {\n    border-color: var(--starmate-color-border-default);');
     expect(styles).not.toContain('&__pet-preview-popover');
-    expect(styles).toContain(":root[data-openbitfun-appearance-mode='light'] &");
+    expect(styles).toContain(":root[data-starmate-appearance-mode='light'] &");
   });
 
   it('uses the app confirmation owner before deleting an imported pet', () => {

@@ -15,17 +15,17 @@
   }
 
   .root:not([data-disabled="true"]):hover,
-  .root:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="hover"]) {
+  .root:not([data-disabled="true"]):has(.trigger[data-starmate-preview-state="hover"]) {
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .root:not([data-disabled="true"]):has(.trigger:active),
-  .root:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="active"]) {
+  .root:not([data-disabled="true"]):has(.trigger[data-starmate-preview-state="active"]) {
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
   .root:not([data-disabled="true"]):has(.trigger:active) .label,
-  .root:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="active"]) .label {
+  .root:not([data-disabled="true"]):has(.trigger[data-starmate-preview-state="active"]) .label {
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
@@ -38,17 +38,17 @@
     cursor: not-allowed;
   }
 
-  .root[data-openbitfun-tone="danger"]:not([data-disabled="true"]) {
+  .root[data-starmate-tone="danger"]:not([data-disabled="true"]) {
     color: var(--starmate-color-status-danger-content);
   }
 
-  .root[data-openbitfun-tone="danger"]:not([data-disabled="true"]):hover,
-  .root[data-openbitfun-tone="danger"]:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="hover"]) {
+  .root[data-starmate-tone="danger"]:not([data-disabled="true"]):hover,
+  .root[data-starmate-tone="danger"]:not([data-disabled="true"]):has(.trigger[data-starmate-preview-state="hover"]) {
     background: var(--starmate-color-status-danger-surface);
   }
 
-  .root[data-openbitfun-tone="danger"]:not([data-disabled="true"]):has(.trigger:active),
-  .root[data-openbitfun-tone="danger"]:not([data-disabled="true"]):has(.trigger[data-openbitfun-preview-state="active"]) {
+  .root[data-starmate-tone="danger"]:not([data-disabled="true"]):has(.trigger:active),
+  .root[data-starmate-tone="danger"]:not([data-disabled="true"]):has(.trigger[data-starmate-preview-state="active"]) {
     background: var(--starmate-color-status-danger-surface);
   }
 
@@ -85,7 +85,7 @@
   }
 
   .leading > :where(svg, img),
-  .leading > [data-openbitfun-component="icon"] {
+  .leading > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;

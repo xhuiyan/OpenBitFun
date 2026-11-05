@@ -94,10 +94,10 @@
   container-type: size;
   color: inherit;
 
-  &[data-openbitfun-state='voice'] { --_conversation-header-overlap: 0px; }
+  &[data-starmate-state='voice'] { --_conversation-header-overlap: 0px; }
 
   // The identity stays on one axis; text records pass beneath its compact form.
-  .openbitfun-conversation-mode-surface__body > [data-openbitfun-part='identity'] {
+  .openbitfun-conversation-mode-surface__body > [data-starmate-part='identity'] {
     z-index: 1;
     isolation: isolate;
     margin-block-end: calc(0px - var(--_conversation-header-overlap));
@@ -118,22 +118,22 @@
     }
   }
 
-  &[data-openbitfun-state='chat'] .openbitfun-conversation-mode-surface__body:has(
+  &[data-starmate-state='chat'] .openbitfun-conversation-mode-surface__body:has(
     > .openbitfun-conversation-mode-surface__transcript[data-scrolled='true']
-  ) > [data-openbitfun-part='identity']::before { opacity: 1; }
+  ) > [data-starmate-part='identity']::before { opacity: 1; }
 
   .openbitfun-conversation-mode-surface__transcript {
     padding-block-start: 0;
     scroll-padding-block-start: calc(var(--_conversation-header-overlap) + var(--starmate-space-3));
 
-    > [data-openbitfun-part='entries'] {
+    > [data-starmate-part='entries'] {
       padding-block-start: calc(var(--_conversation-header-overlap) + var(--starmate-space-3));
       transition: padding-block-start 480ms cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 
   @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    .openbitfun-conversation-mode-surface__body > [data-openbitfun-part='identity']::before {
+    .openbitfun-conversation-mode-surface__body > [data-starmate-part='identity']::before {
       background: color-mix(in srgb, var(--starmate-color-surface-raised) 72%, transparent);
       -webkit-backdrop-filter: var(--starmate-effect-blur-medium) var(--starmate-effect-blur-medium);
       backdrop-filter: var(--starmate-effect-blur-medium) var(--starmate-effect-blur-medium);
@@ -141,7 +141,7 @@
   }
 
   @media (prefers-reduced-transparency: reduce) {
-    .openbitfun-conversation-mode-surface__body > [data-openbitfun-part='identity']::before {
+    .openbitfun-conversation-mode-surface__body > [data-starmate-part='identity']::before {
       background: var(--starmate-color-surface-raised);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
@@ -149,9 +149,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .openbitfun-conversation-mode-surface__body > [data-openbitfun-part='identity'],
-    .openbitfun-conversation-mode-surface__body > [data-openbitfun-part='identity']::before,
-    .openbitfun-conversation-mode-surface__transcript > [data-openbitfun-part='entries'] { transition: none; }
+    .openbitfun-conversation-mode-surface__body > [data-starmate-part='identity'],
+    .openbitfun-conversation-mode-surface__body > [data-starmate-part='identity']::before,
+    .openbitfun-conversation-mode-surface__transcript > [data-starmate-part='entries'] { transition: none; }
   }
 }
 
@@ -192,7 +192,7 @@
   .markdown-renderer { white-space: normal; }
 }
 
-.openbitfun-conversation-mode-surface__transcript[data-openbitfun-presentation='voice'] .markdown-renderer {
+.openbitfun-conversation-mode-surface__transcript[data-starmate-presentation='voice'] .markdown-renderer {
   color: inherit;
   font: inherit;
   :is(p, h1, h2, h3, h4, h5, h6, strong, em, li) { color: inherit; }

@@ -245,7 +245,7 @@ $chevron-box-slack: 5px;
     font-size: var(--starmate-type-label-sm-font-size);
     font-weight: var(--starmate-type-label-sm-font-weight);
 
-    > [data-openbitfun-component='icon'] {
+    > [data-starmate-component='icon'] {
       margin-inline-start: -$chevron-box-slack;
     }
   }
@@ -728,7 +728,7 @@ $chevron-box-slack: 5px;
     font-size: inherit;
     font-weight: inherit;
 
-    > [data-openbitfun-component='icon'] {
+    > [data-starmate-component='icon'] {
       margin-inline-end: -$chevron-box-slack;
     }
   }

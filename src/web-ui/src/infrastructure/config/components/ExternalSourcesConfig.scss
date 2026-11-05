@@ -334,12 +334,12 @@
 
     &::before { content: none; }
 
-    > [data-openbitfun-part='icon'] {
+    > [data-starmate-part='icon'] {
       --openbitfun-opacity-icon-artwork: inherit;
       display: contents;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+    > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
       inline-size: var(--starmate-control-icon-size-md);
       block-size: var(--starmate-control-icon-size-md);
     }
@@ -394,7 +394,7 @@
     margin-bottom: 12px;
     padding: 0;
 
-    &[data-openbitfun-component='alert'] {
+    &[data-starmate-component='alert'] {
       display: block;
       border: 0;
       border-radius: 0;
@@ -404,10 +404,10 @@
       line-height: inherit;
       letter-spacing: inherit;
 
-      > [data-openbitfun-part='content'] {
+      > [data-starmate-part='content'] {
         display: block;
 
-        > [data-openbitfun-part='message'] {
+        > [data-starmate-part='message'] {
           color: inherit;
         }
       }

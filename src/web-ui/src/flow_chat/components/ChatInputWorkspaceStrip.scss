@@ -76,7 +76,7 @@ $track-item-gap: 10px;
 
   // One glyph size for the whole track, enforced here so component-owned
   // icons land on the same rhythm without the strip reaching into them.
-  > :is(svg, [data-openbitfun-component='icon']) {
+  > :is(svg, [data-starmate-component='icon']) {
     flex: none;
     width: var(--starmate-control-icon-size-xs);
     height: var(--starmate-control-icon-size-xs);
@@ -286,7 +286,7 @@ $track-item-gap: 10px;
     // Running is the quiet case, so only the glyph says the goal is alive.
     // `<Icon>` owns the svg, so the flag is tinted on the icon slot itself;
     // hovering the control then lifts the label without dimming the flag.
-    &--active > [data-openbitfun-component='icon'] {
+    &--active > [data-starmate-component='icon'] {
       color: var(--starmate-color-accent-default);
     }
 
@@ -323,7 +323,7 @@ $track-item-gap: 10px;
 
   // Clearing cannot be undone, so the one irreversible control on the track says
   // so before it is pressed instead of joining the quiet ink of the rest.
-  &__goal-clear:hover:not(:disabled) > [data-openbitfun-component='icon'] {
+  &__goal-clear:hover:not(:disabled) > [data-starmate-component='icon'] {
     color: var(--starmate-color-status-danger-emphasis);
   }
 

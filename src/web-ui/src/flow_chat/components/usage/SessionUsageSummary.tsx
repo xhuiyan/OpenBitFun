@@ -152,7 +152,7 @@ export function SessionUsageSummary({ report, workspaceName, onPreviewContext, p
           {tokenRows.map(row => row.share !== undefined && row.share > 0 && (
             <div key={row.key} className="session-usage-panel__bar-group" data-usage-category={row.key}
               data-openbitfun-product-component="session-usage-panel" data-openbitfun-product-part="tokenGroup"
-              {...highlightTokens(row)} style={{ flexGrow: row.share }} data-starmate-product-component="session-usage-panel" data-starmate-product-part="tokenGroup" >
+              data-starmate-product-part="tokenGroup" data-starmate-product-component="session-usage-panel" {...highlightTokens(row)} style={{ flexGrow: row.share }}   >
               {(row.key === 'input' && hasCacheSplit ? cacheRows : [row]).map(segment => segment.share! > 0 && (
                 <span key={segment.key} className={`session-usage-panel__bar-segment session-usage-panel__series--${segment.key}`}
                   {...highlightTokens(segment)} data-usage-category={segment.key} data-usage-parent={segment.parentKey}

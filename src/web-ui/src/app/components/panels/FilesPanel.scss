@@ -222,7 +222,7 @@
     min-width: 0;
   }
 
-  &__search-modes > [data-openbitfun-part="segment"] {
+  &__search-modes > [data-starmate-part="segment"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -278,11 +278,11 @@
     // Active and responsive states remain owned by this search toolbar.
     &::before { content: none; }
 
-    > [data-openbitfun-part='icon'] {
+    > [data-starmate-part='icon'] {
       display: contents;
     }
 
-    > :where([data-openbitfun-part='icon']) > :where(svg) {
+    > :where([data-starmate-part='icon']) > :where(svg) {
       inline-size: 14px;
       block-size: 14px;
     }
@@ -703,10 +703,10 @@
   }
 }
 
-.openbitfun-files-panel__search-modes[data-openbitfun-component='segmented-control'] {
+.openbitfun-files-panel__search-modes[data-starmate-component='segmented-control'] {
   padding: 0;
   background: transparent;
-  > [data-openbitfun-part='segment'] {
+  > [data-starmate-part='segment'] {
     block-size: 22px;
   }
 }

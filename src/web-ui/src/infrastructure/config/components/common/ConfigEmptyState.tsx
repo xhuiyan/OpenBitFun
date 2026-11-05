@@ -22,9 +22,9 @@ export const ConfigEmptyState: React.FC<ConfigEmptyStateProps> = ({
   <div
     data-openbitfun-component="config"
     data-openbitfun-part="emptyState"
-    {...props}
+    data-starmate-part="emptyState" data-starmate-component="config" {...props}
     className={`openbitfun-config-empty-state ${className}`.trim()}
-   data-starmate-component="config" data-starmate-part="emptyState" >
+     >
     <Empty icon={icon} title={formatStandaloneUiCopy(title)} description={formatStandaloneUiCopy(description)} actions={actions} />
   </div>
 );

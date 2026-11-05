@@ -15,8 +15,8 @@ $_resize-target-width: 12px;
 
   @include shell-surfaces.sidebar-background;
 
-  :root[data-openbitfun-native-material='sidebar'] &,
-  .openbitfun-app-layout[data-openbitfun-background-media='video'] & {
+  :root[data-starmate-native-material='sidebar'] &,
+  .openbitfun-app-layout[data-starmate-background-media='video'] & {
     background: transparent;
   }
 
@@ -62,12 +62,12 @@ $_resize-target-width: 12px;
   .openbitfun-nav-panel__brand-header,
   .openbitfun-nav-panel__sticky-section-header,
   .openbitfun-nav-panel__layer--scene,
-  .openbitfun-nav-panel [data-openbitfun-component='navigation-panel'] {
+  .openbitfun-nav-panel [data-starmate-component='navigation-panel'] {
     background: transparent;
   }
 
   // Settings and other scene navigation share the same material as MainNav.
-  [data-openbitfun-component='search-field'] > [data-openbitfun-component='input'] {
+  [data-starmate-component='search-field'] > [data-starmate-component='input'] {
     @include shell-surfaces.sidebar-overlay(var(--starmate-color-field-background));
 
     &:hover,
@@ -192,7 +192,7 @@ $_resize-target-width: 12px;
   background: var(--starmate-color-surface-scene);
   box-shadow: -4px 0 12px -6px color-mix(in srgb, var(--starmate-color-content-muted) 8%, transparent);
 
-  :root[data-openbitfun-appearance-mode='dark'] & {
+  :root[data-starmate-appearance-mode='dark'] & {
     box-shadow: -5px 0 16px -7px color-mix(in srgb, var(--starmate-color-content-on-light) 30%, transparent);
   }
 
@@ -235,7 +235,7 @@ $_resize-target-width: 12px;
 
 // The compact toolbar remains reachable when the navigation panel is hidden.
 .openbitfun-workspace-body__nav-area.is-collapsed + .openbitfun-workspace-body__scene-area {
-  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-openbitfun-part='leading'] {
+  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-starmate-part='leading'] {
     padding-inline-start: calc(#{$_nav-collapsed-width} + var(--starmate-space-1));
   }
 }
@@ -262,14 +262,14 @@ $_resize-target-width: 12px;
 }
 
 .openbitfun-app-layout--macos .openbitfun-workspace-body__nav-area.is-collapsed + .openbitfun-workspace-body__scene-area {
-  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-openbitfun-part='leading'] {
+  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-starmate-part='leading'] {
     transition: padding-inline-start var(--starmate-motion-duration-content-swap) var(--starmate-motion-easing-standard);
   }
 }
 
 // Reserve traffic-light space only while the native window is not fullscreen.
 .openbitfun-app-layout--macos:not(.openbitfun-app-layout--fullscreen-chrome) .openbitfun-workspace-body__nav-area.is-collapsed + .openbitfun-workspace-body__scene-area {
-  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-openbitfun-part='leading'] {
+  .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-starmate-part='leading'] {
     padding-inline-start: calc(#{$_nav-collapsed-width} + var(--starmate-space-1) + 72px);
   }
 }
@@ -291,7 +291,7 @@ $_resize-target-width: 12px;
 
 @media (prefers-reduced-motion: reduce) {
   .openbitfun-app-layout--macos .openbitfun-workspace-body__collapsed-nav > .openbitfun-nav-bar,
-  .openbitfun-app-layout--macos .openbitfun-workspace-body__nav-area.is-collapsed + .openbitfun-workspace-body__scene-area .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-openbitfun-part='leading'] {
+  .openbitfun-app-layout--macos .openbitfun-workspace-body__nav-area.is-collapsed + .openbitfun-workspace-body__scene-area .openbitfun-workspace-body__scene-surface .openbitfun-scene-top-bar > [data-starmate-part='leading'] {
     transition: none;
   }
 

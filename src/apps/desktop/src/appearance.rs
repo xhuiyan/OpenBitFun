@@ -342,7 +342,7 @@ impl AppearanceConfig {
         // bootstrap nor the Web UI paints an opaque page background over the
         // transparent corners.
         let native_frame_attribute = if cfg!(target_os = "linux") {
-            "root.setAttribute('data-openbitfun-native-frame', 'client');"
+            "root.setAttribute('data-openbitfun-native-frame', 'client');root.setAttribute('data-starmate-native-frame', 'client');"
         } else {
             ""
         };
@@ -354,8 +354,7 @@ impl AppearanceConfig {
         ))
         .unwrap_or_else(|_| "\"warn\"".to_string());
         let perf_trace_enabled = cfg!(debug_assertions)
-            || ((cfg!(feature = "devtools")
-                || std::env::var_os("STARMATE_PERF_TRACE").is_some())
+            || ((cfg!(feature = "devtools") || std::env::var_os("STARMATE_PERF_TRACE").is_some())
                 && std::env::var_os("STARMATE_WEBDRIVER_PORT").is_some());
         let bootstrap_appearance_id_json =
             serde_json::to_string(&self.id).unwrap_or_else(|_| "\"openbitfun-light\"".to_string());
@@ -372,9 +371,7 @@ impl AppearanceConfig {
         let bootstrap_workspace_startup_state_assignment = workspace_startup_state
             .and_then(|state| serde_json::to_string(state).ok())
             .filter(|json| json.len() <= MAX_BOOTSTRAP_WORKSPACE_STATE_JSON_BYTES)
-            .map(|json| {
-                format!("window.__STARMATE_BOOTSTRAP_WORKSPACE_STARTUP_STATE__ = {json};")
-            })
+            .map(|json| format!("window.__STARMATE_BOOTSTRAP_WORKSPACE_STARTUP_STATE__ = {json};"))
             .unwrap_or_default();
 
         format!(
@@ -394,15 +391,20 @@ impl AppearanceConfig {
                     if (!root) return false;
                     
                     root.setAttribute('data-openbitfun-appearance', '{id}');
+                    root.setAttribute('data-starmate-appearance', '{id}');
                     root.setAttribute('data-openbitfun-appearance-mode', '{appearance_mode}');
+                    root.setAttribute('data-starmate-appearance-mode', '{appearance_mode}');
                     root.setAttribute('data-openbitfun-design-system-root', '');
+                    root.setAttribute('data-starmate-design-system-root', '');
                     root.setAttribute('data-color-scheme', '{appearance_mode}');
                     root.setAttribute('data-contrast', 'standard');
                     root.setAttribute('data-density', 'compact');
                     if ({native_sidebar_material}) {{
                         root.setAttribute('data-openbitfun-native-material', 'sidebar');
+                        root.setAttribute('data-starmate-native-material', 'sidebar');
                     }} else {{
                         root.removeAttribute('data-openbitfun-native-material');
+                        root.removeAttribute('data-starmate-native-material');
                     }}
                     {native_frame_attribute}
                     
@@ -495,6 +497,8 @@ mod startup_appearance_tests {
         assert!(script.contains("data-openbitfun-appearance"));
         assert!(script.contains("data-openbitfun-appearance-mode"));
         assert!(script.contains("data-openbitfun-design-system-root"));
+        assert!(script.contains("data-starmate-design-system-root"));
+        assert!(script.contains("data-starmate-appearance-mode"));
         assert!(script.contains("data-color-scheme"));
         assert!(script.contains("--openbitfun-color-surface-canvas"));
         assert!(script.contains("--openbitfun-color-surface-scene"));

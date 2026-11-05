@@ -1731,7 +1731,7 @@ export const RichTextInput = React.forwardRef<HTMLDivElement, RichTextInputProps
         data-openbitfun-component="rich-text-input"
         data-openbitfun-part="root"
         data-openbitfun-state={[isFocused ? 'focused' : '', disabled ? 'disabled' : ''].filter(Boolean).join(' ') || undefined}
-        {...restProps}
+        data-starmate-state={[isFocused ? 'focused' : '', disabled ? 'disabled' : ''].filter(Boolean).join(' ') || undefined} data-starmate-part="root" data-starmate-component="rich-text-input" {...restProps}
         ref={internalRef}
         className={`rich-text-input ${isFocused ? 'rich-text-input--focused' : ''} ${className}`}
         contentEditable={!disabled}
@@ -1748,7 +1748,7 @@ export const RichTextInput = React.forwardRef<HTMLDivElement, RichTextInputProps
         onCompositionEnd={handleCompositionEnd}
         data-placeholder={placeholder}
         suppressContentEditableWarning
-       data-starmate-component="rich-text-input" data-starmate-part="root" data-starmate-state={[isFocused ? 'focused' : '', disabled ? 'disabled' : ''].filter(Boolean).join(' ') || undefined} />
+          />
       <Dialog
         initialFocusRef={largePasteTextareaRef}
         onOpenChange={(open) => {

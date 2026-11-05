@@ -236,7 +236,7 @@
       vertical-align: middle;
     }
 
-    &[data-openbitfun-state='online']::before {
+    &[data-starmate-state='online']::before {
       background: var(--starmate-color-status-success-content);
     }
   }
@@ -273,7 +273,7 @@
     align-items: center;
     gap: var(--starmate-space-2);
 
-    > [data-openbitfun-component='icon-button'] {
+    > [data-starmate-component='icon-button'] {
       flex-shrink: 0;
     }
   }

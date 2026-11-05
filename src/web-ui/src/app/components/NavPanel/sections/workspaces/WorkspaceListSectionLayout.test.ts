@@ -217,11 +217,11 @@ describe('WorkspaceListSection layout styles', () => {
     const remoteHost = extractBlock(stylesheet, '&__workspace-item-remote-host');
     const remoteNameRow = extractBlock(
       stylesheet,
-      "&__workspace-item[data-openbitfun-state~='remote'] &__workspace-item-name-row",
+      "&__workspace-item[data-starmate-state~='remote'] &__workspace-item-name-row",
     );
     const remoteNameButton = extractBlock(
       stylesheet,
-      "&__workspace-item[data-openbitfun-state~='remote'] &__workspace-item-name-btn",
+      "&__workspace-item[data-starmate-state~='remote'] &__workspace-item-name-btn",
     );
 
     expect(remoteNameRow).toContain('gap: var(--starmate-space-2);');
@@ -269,7 +269,7 @@ describe('WorkspaceListSection layout styles', () => {
     expect(workspaceCard).toContain('align-items: center;');
     expect(collapseButton).toContain('min-height: 30px;');
     expect(stylesheet).not.toContain(
-      "&__workspace-item[data-openbitfun-state~='remote'] &__workspace-item-collapse-btn",
+      "&__workspace-item[data-starmate-state~='remote'] &__workspace-item-collapse-btn",
     );
   });
 

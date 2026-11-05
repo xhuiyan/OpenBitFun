@@ -10,11 +10,11 @@
     outline-color: transparent;
   }
 
-  &__surface [data-openbitfun-part='actions'] {
+  &__surface [data-starmate-part='actions'] {
     gap: var(--starmate-space-2);
   }
 
-  &__surface [data-openbitfun-component='icon-button']:hover:not(:disabled) .miniapp-installed-card__launch-icon {
+  &__surface [data-starmate-component='icon-button']:hover:not(:disabled) .miniapp-installed-card__launch-icon {
     color: var(--starmate-color-status-success-emphasis);
   }
 
@@ -29,11 +29,11 @@
     pointer-events: none;
   }
 
-  &__surface [data-openbitfun-part='leading'] {
+  &__surface [data-starmate-part='leading'] {
     flex: 0 0 var(--starmate-space-8);
     inline-size: var(--starmate-space-8);
     block-size: var(--starmate-space-8);
-    > [data-openbitfun-component='icon'] {
+    > [data-starmate-component='icon'] {
       inline-size: 100%;
       block-size: 100%;
     }

@@ -4,11 +4,11 @@
   .option[data-selected="true"] { color: var(--starmate-color-content-primary); background: var(--starmate-color-action-neutral-surface); box-shadow: var(--starmate-shadow-xs); }
   @media (hover: hover) and (pointer: fine) {
     .option:not([data-selected="true"]):hover:not(:disabled),
-    .root[data-openbitfun-preview-state="hover"] .option:not([data-selected="true"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
+    .root[data-starmate-preview-state="hover"] .option:not([data-selected="true"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
   .option:active:not(:disabled),
-  .root[data-openbitfun-preview-state="active"] .option:not([data-selected="true"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
-  .root[data-openbitfun-preview-state="focus-visible"] .option[data-selected="true"] { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
+  .root[data-starmate-preview-state="active"] .option:not([data-selected="true"]):not(:disabled) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .root[data-starmate-preview-state="focus-visible"] .option[data-selected="true"] { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
   .option:focus-visible { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: calc(var(--starmate-focus-offset) * -1); }
   .option:disabled { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
   @media (prefers-reduced-motion: reduce) { .option { transition: none; } }

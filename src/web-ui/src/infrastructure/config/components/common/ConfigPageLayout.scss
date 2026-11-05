@@ -209,12 +209,12 @@
   .openbitfun-config-page-row--wide
 ):has(
   > .openbitfun-config-page-row__control > :where(
-    [data-openbitfun-component='input'],
-    [data-openbitfun-component='search-field'],
-    [data-openbitfun-component='number-input'],
-    [data-openbitfun-component='select'],
-    [data-openbitfun-component='combobox'],
-    [data-openbitfun-component='multi-select']
+    [data-starmate-component='input'],
+    [data-starmate-component='search-field'],
+    [data-starmate-component='number-input'],
+    [data-starmate-component='select'],
+    [data-starmate-component='combobox'],
+    [data-starmate-component='multi-select']
   ):only-child
 ),
 .openbitfun-config-page-row:not(
@@ -222,12 +222,12 @@
   .openbitfun-config-page-row--wide
 ):has(
   > .openbitfun-config-page-row__control > div:only-child > :where(
-    [data-openbitfun-component='input'],
-    [data-openbitfun-component='search-field'],
-    [data-openbitfun-component='number-input'],
-    [data-openbitfun-component='select'],
-    [data-openbitfun-component='combobox'],
-    [data-openbitfun-component='multi-select']
+    [data-starmate-component='input'],
+    [data-starmate-component='search-field'],
+    [data-starmate-component='number-input'],
+    [data-starmate-component='select'],
+    [data-starmate-component='combobox'],
+    [data-starmate-component='multi-select']
   ):only-child
 ) {
   --row-grid-cols: minmax(0, 1fr) minmax(
@@ -237,12 +237,12 @@
 }
 
 .openbitfun-config-page-section__extra > :where(
-  [data-openbitfun-component='input'],
-  [data-openbitfun-component='search-field'],
-  [data-openbitfun-component='number-input'],
-  [data-openbitfun-component='select'],
-  [data-openbitfun-component='combobox'],
-  [data-openbitfun-component='multi-select']
+  [data-starmate-component='input'],
+  [data-starmate-component='search-field'],
+  [data-starmate-component='number-input'],
+  [data-starmate-component='select'],
+  [data-starmate-component='combobox'],
+  [data-starmate-component='multi-select']
 ) {
   flex: 0 1 var(--starmate-overlay-menu-inline-size);
   inline-size: min(100%, var(--starmate-overlay-menu-inline-size));
@@ -295,43 +295,43 @@
   // controls such as Switch, Button, Checkbox, and StatusPill keep the
   // geometry owned by their design-system component.
   > :where(
-    [data-openbitfun-component='input'],
-    [data-openbitfun-component='search-field'],
-    [data-openbitfun-component='textarea'],
-    [data-openbitfun-component='combobox'],
-    [data-openbitfun-component='multi-select'],
-    [data-openbitfun-component='select'],
-    [data-openbitfun-component='number-input']
+    [data-starmate-component='input'],
+    [data-starmate-component='search-field'],
+    [data-starmate-component='textarea'],
+    [data-starmate-component='combobox'],
+    [data-starmate-component='multi-select'],
+    [data-starmate-component='select'],
+    [data-starmate-component='number-input']
   ),
   > div:has(
     > :where(
-      [data-openbitfun-component='input'],
-      [data-openbitfun-component='search-field'],
-      [data-openbitfun-component='textarea'],
-      [data-openbitfun-component='combobox'],
-      [data-openbitfun-component='multi-select'],
-      [data-openbitfun-component='select'],
-      [data-openbitfun-component='number-input']
+      [data-starmate-component='input'],
+      [data-starmate-component='search-field'],
+      [data-starmate-component='textarea'],
+      [data-starmate-component='combobox'],
+      [data-starmate-component='multi-select'],
+      [data-starmate-component='select'],
+      [data-starmate-component='number-input']
     )
   ),
   > div:has(
     > :where(
-      [data-openbitfun-component='input'],
-      [data-openbitfun-component='search-field'],
-      [data-openbitfun-component='textarea'],
-      [data-openbitfun-component='combobox'],
-      [data-openbitfun-component='multi-select'],
-      [data-openbitfun-component='select'],
-      [data-openbitfun-component='number-input']
+      [data-starmate-component='input'],
+      [data-starmate-component='search-field'],
+      [data-starmate-component='textarea'],
+      [data-starmate-component='combobox'],
+      [data-starmate-component='multi-select'],
+      [data-starmate-component='select'],
+      [data-starmate-component='number-input']
     )
   ) > :where(
-    [data-openbitfun-component='input'],
-    [data-openbitfun-component='search-field'],
-    [data-openbitfun-component='textarea'],
-    [data-openbitfun-component='combobox'],
-    [data-openbitfun-component='multi-select'],
-    [data-openbitfun-component='select'],
-    [data-openbitfun-component='number-input']
+    [data-starmate-component='input'],
+    [data-starmate-component='search-field'],
+    [data-starmate-component='textarea'],
+    [data-starmate-component='combobox'],
+    [data-starmate-component='multi-select'],
+    [data-starmate-component='select'],
+    [data-starmate-component='number-input']
   ) {
     inline-size: 100%;
     min-inline-size: 0;
@@ -379,12 +379,12 @@
   }
 
   .openbitfun-config-page-section__extra > :where(
-    [data-openbitfun-component='input'],
-    [data-openbitfun-component='search-field'],
-    [data-openbitfun-component='number-input'],
-    [data-openbitfun-component='select'],
-    [data-openbitfun-component='combobox'],
-    [data-openbitfun-component='multi-select']
+    [data-starmate-component='input'],
+    [data-starmate-component='search-field'],
+    [data-starmate-component='number-input'],
+    [data-starmate-component='select'],
+    [data-starmate-component='combobox'],
+    [data-starmate-component='multi-select']
   ) {
     flex-basis: 100%;
     inline-size: 100%;

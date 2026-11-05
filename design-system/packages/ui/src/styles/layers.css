@@ -1,35 +1,35 @@
 @layer openbitfun.tokens.system, openbitfun.tokens.theme, openbitfun.reset, openbitfun.base, openbitfun.components, openbitfun.overrides;
 
 @layer openbitfun.reset {
-  [data-openbitfun-design-system-root],
-  [data-openbitfun-design-system-root] *,
-  [data-openbitfun-design-system-root] *::before,
-  [data-openbitfun-design-system-root] *::after {
+  [data-starmate-design-system-root],
+  [data-starmate-design-system-root] *,
+  [data-starmate-design-system-root] *::before,
+  [data-starmate-design-system-root] *::after {
     box-sizing: border-box;
   }
 
-  [data-openbitfun-design-system-root] button,
-  [data-openbitfun-design-system-root] input,
-  [data-openbitfun-design-system-root] textarea,
-  [data-openbitfun-design-system-root] select {
+  [data-starmate-design-system-root] button,
+  [data-starmate-design-system-root] input,
+  [data-starmate-design-system-root] textarea,
+  [data-starmate-design-system-root] select {
     font: inherit;
   }
 }
 
 @layer openbitfun.base {
-  [data-openbitfun-design-system-root] select option,
-  [data-openbitfun-design-system-root] select optgroup {
+  [data-starmate-design-system-root] select option,
+  [data-starmate-design-system-root] select optgroup {
     color: var(--starmate-color-content-primary);
     background-color: var(--starmate-color-surface-panel);
   }
 
-  [data-openbitfun-design-system-root] select option:disabled {
+  [data-starmate-design-system-root] select option:disabled {
     color: var(--starmate-color-content-disabled);
   }
 
   @media (forced-colors: active) {
-    [data-openbitfun-design-system-root] select option,
-    [data-openbitfun-design-system-root] select optgroup {
+    [data-starmate-design-system-root] select option,
+    [data-starmate-design-system-root] select optgroup {
       color: FieldText;
       background-color: Field;
     }
@@ -42,7 +42,7 @@
    * as their size and color. Match only Lucide's default stroke attribute so
    * reviewed fill icons and intentionally custom line artwork remain intact.
    */
-  [data-openbitfun-icon-slot="true"] > :where(svg.lucide[stroke-width="2"]) {
+  [data-starmate-icon-slot="true"] > :where(svg.lucide[stroke-width="2"]) {
     color: inherit;
     stroke-width: var(--starmate-control-icon-stroke-width);
   }

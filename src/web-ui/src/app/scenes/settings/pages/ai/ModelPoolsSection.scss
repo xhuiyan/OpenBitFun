@@ -17,7 +17,7 @@
   min-width: 0;
 }
 
-.openbitfun-model-pools__summary > [data-openbitfun-component='status-pill'] {
+.openbitfun-model-pools__summary > [data-starmate-component='status-pill'] {
   flex-shrink: 0;
 }
 
@@ -66,7 +66,7 @@
 .openbitfun-model-pools__member-button {
   padding-inline-start: var(--starmate-space-1);
 
-  [data-openbitfun-part='leading-icon'] {
+  [data-starmate-part='leading-icon'] {
     inline-size: var(--starmate-space-4);
     block-size: var(--starmate-space-4);
   }
@@ -169,7 +169,7 @@
   gap: var(--starmate-space-3);
   overflow: hidden;
 
-  > [data-openbitfun-component='search-field'] {
+  > [data-starmate-component='search-field'] {
     flex-shrink: 0;
   }
 }
@@ -185,7 +185,7 @@
   align-items: flex-start;
   gap: var(--starmate-space-2);
 
-  > [data-openbitfun-component='button'] {
+  > [data-starmate-component='button'] {
     max-inline-size: 100%;
   }
 

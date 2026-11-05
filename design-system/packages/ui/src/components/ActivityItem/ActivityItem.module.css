@@ -71,7 +71,7 @@
   }
 
   .leading > :where(svg, img),
-  .leading > [data-openbitfun-component="icon"] {
+  .leading > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;
@@ -153,12 +153,12 @@
     block-size: var(--starmate-control-activity-item-surface-icon-size);
   }
 
-  .root[data-appearance="surface"]:not([data-disabled="true"]):is(:hover, [data-openbitfun-preview-state="hover"]) {
+  .root[data-appearance="surface"]:not([data-disabled="true"]):is(:hover, [data-starmate-preview-state="hover"]) {
     outline-color: var(--starmate-color-border-default);
     background: var(--starmate-color-action-neutral-surface-hover);
   }
 
-  .root[data-appearance="surface"]:not([data-disabled="true"]):is(:active, [data-openbitfun-preview-state="active"]) {
+  .root[data-appearance="surface"]:not([data-disabled="true"]):is(:active, [data-starmate-preview-state="active"]) {
     background: var(--starmate-color-action-neutral-surface-pressed);
   }
 

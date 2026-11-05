@@ -460,9 +460,9 @@
 
 }
 
-:root[data-openbitfun-appearance-mode="light"] .m-editor .markdown-body,
-:root[data-openbitfun-appearance-mode="light"] .m-editor .markdown-body,
-[data-openbitfun-appearance-mode="light"] .m-editor .markdown-body,
+:root[data-starmate-appearance-mode="light"] .m-editor .markdown-body,
+:root[data-starmate-appearance-mode="light"] .m-editor .markdown-body,
+[data-starmate-appearance-mode="light"] .m-editor .markdown-body,
 .light .m-editor .markdown-body {
   code {
     color: markdownCode.$inline-code-fg-light;

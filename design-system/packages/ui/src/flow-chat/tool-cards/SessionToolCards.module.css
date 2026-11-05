@@ -25,7 +25,7 @@
 
   .record { padding-block: var(--starmate-space-2); }
 
-  .record [data-openbitfun-part="sectionLabel"] {
+  .record [data-starmate-part="sectionLabel"] {
     color: var(--starmate-color-content-primary);
   }
 

@@ -40,11 +40,11 @@
     transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .button:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled)::before {
+  .button:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled)::before {
     background: var(--_icon-button-background-hover);
   }
 
-  .button:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled)::before {
+  .button:is(:active, [data-starmate-preview-state="active"]):not(:disabled)::before {
     background: var(--_icon-button-background-active);
   }
 
@@ -53,11 +53,11 @@
     outline-offset: var(--starmate-focus-offset);
   }
 
-  .button[data-openbitfun-variant="annotation"][data-openbitfun-tone="neutral"]:not(:disabled) {
+  .button[data-starmate-variant="annotation"][data-starmate-tone="neutral"]:not(:disabled) {
     --_icon-button-content: var(--starmate-color-content-muted);
   }
 
-  .button[data-openbitfun-variant="annotation"][data-openbitfun-tone="neutral"]:is(:hover, :active, :focus-visible, [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .button[data-starmate-variant="annotation"][data-starmate-tone="neutral"]:is(:hover, :active, :focus-visible, [data-starmate-preview-state="hover"], [data-starmate-preview-state="active"]):not(:disabled) {
     --_icon-button-content: var(--starmate-color-content-secondary);
   }
 
@@ -67,55 +67,55 @@
     cursor: not-allowed;
   }
 
-  .button[data-openbitfun-variant="fill"],
-  .button[data-openbitfun-variant="primary"] {
+  .button[data-starmate-variant="fill"],
+  .button[data-starmate-variant="primary"] {
     background: var(--starmate-color-surface-tertiary);
   }
 
-  .button[data-openbitfun-variant="fill"] {
+  .button[data-starmate-variant="fill"] {
     --_icon-button-background: var(--starmate-color-action-neutral-surface);
     --_icon-button-background-hover: var(--starmate-color-action-neutral-surface-hover);
     --_icon-button-background-active: var(--starmate-color-action-neutral-surface-pressed);
   }
 
-  .button[data-openbitfun-variant="outline"] {
+  .button[data-starmate-variant="outline"] {
     border: var(--starmate-border-width-default) solid var(--starmate-color-action-neutral-surface-hover);
   }
 
-  .button[data-openbitfun-variant="outline"]:is(:hover, :active, [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .button[data-starmate-variant="outline"]:is(:hover, :active, [data-starmate-preview-state="hover"], [data-starmate-preview-state="active"]):not(:disabled) {
     border-color: transparent;
   }
 
-  .button[data-openbitfun-variant="primary"] {
+  .button[data-starmate-variant="primary"] {
     --_icon-button-background: var(--starmate-color-action-primary-background);
     --_icon-button-background-hover: var(--starmate-color-action-primary-hover);
     --_icon-button-background-active: var(--starmate-color-action-primary-pressed);
     --_icon-button-content: var(--starmate-color-action-primary-content);
   }
 
-  .button[data-openbitfun-variant="primary"]:disabled {
+  .button[data-starmate-variant="primary"]:disabled {
     --_icon-button-background: var(--starmate-color-action-neutral-surface);
     --_icon-button-content: var(--starmate-color-action-neutral-content-disabled);
   }
 
-  .button[data-openbitfun-tone="danger"] {
+  .button[data-starmate-tone="danger"] {
     --_icon-button-background-hover: var(--starmate-color-status-danger-surface);
     --_icon-button-background-active: var(--starmate-color-status-danger-surface);
     --_icon-button-content: var(--starmate-color-status-danger-emphasis);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="fill"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="fill"] {
     --_icon-button-background: var(--starmate-color-status-danger-surface);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="primary"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="primary"] {
     --_icon-button-background: var(--starmate-color-status-danger-content);
     --_icon-button-background-hover: var(--starmate-color-status-danger-content);
     --_icon-button-background-active: var(--starmate-color-status-danger-content);
     --_icon-button-content: var(--starmate-color-content-inverse);
   }
 
-  .button[data-openbitfun-shape="circle"] {
+  .button[data-starmate-shape="circle"] {
     border-radius: var(--starmate-radius-pill);
   }
 
@@ -124,11 +124,11 @@
     --_icon-button-size: var(--starmate-control-icon-button-xs-size);
   }
 
-  .button[data-size="xs"][data-openbitfun-variant="annotation"] {
+  .button[data-size="xs"][data-starmate-variant="annotation"] {
     --_icon-button-icon-size: var(--starmate-control-icon-size-xs);
   }
 
-  .button[data-size="xs"][data-openbitfun-shape="square"] {
+  .button[data-size="xs"][data-starmate-shape="square"] {
     border-radius: var(--starmate-radius-xs);
   }
 
@@ -160,7 +160,7 @@
   }
 
   .icon > :where(svg, img),
-  .icon > [data-openbitfun-component="icon"] {
+  .icon > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;

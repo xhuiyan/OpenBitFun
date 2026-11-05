@@ -75,12 +75,12 @@ $action-size: var(--starmate-control-flow-chat-metadata-action-size);
 
   &::before { content: none; }
 
-  > [data-openbitfun-part='icon'] {
+  > [data-starmate-part='icon'] {
     --openbitfun-opacity-icon-artwork: inherit;
     display: contents;
   }
 
-  > :where([data-openbitfun-part='icon']) > :where(svg, [data-openbitfun-component='icon']) {
+  > :where([data-starmate-part='icon']) > :where(svg, [data-starmate-component='icon']) {
     inline-size: var(--starmate-control-flow-chat-row-icon-size);
     block-size: var(--starmate-control-flow-chat-row-icon-size);
     display: block;

@@ -3,7 +3,7 @@
   .trigger { display: flex; inline-size: 100%; min-block-size: 44px; align-items: center; gap: var(--starmate-space-2); margin: 0; padding: var(--starmate-space-2) 0; border: 0; color: inherit; background: transparent; cursor: pointer; text-align: start; font: inherit; }
   @media (hover: hover) and (pointer: fine) {
     .trigger:not(:disabled):hover,
-    .root[data-openbitfun-preview-state="hover"] .trigger:not(:disabled) { color: var(--starmate-color-content-primary); background: var(--starmate-color-action-neutral-surface-hover); box-shadow: 0 0 0 var(--starmate-space-2) var(--starmate-color-action-neutral-surface-hover); }
+    .root[data-starmate-preview-state="hover"] .trigger:not(:disabled) { color: var(--starmate-color-content-primary); background: var(--starmate-color-action-neutral-surface-hover); box-shadow: 0 0 0 var(--starmate-space-2) var(--starmate-color-action-neutral-surface-hover); }
   }
   .trigger:focus-visible { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); border-radius: var(--starmate-radius-sm); }
   .trigger:disabled { color: var(--starmate-color-content-disabled); cursor: not-allowed; }

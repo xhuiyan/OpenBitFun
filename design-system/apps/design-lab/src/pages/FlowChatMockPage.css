@@ -224,7 +224,7 @@ html:has(.flow-chat-mock-page[data-fullscreen]) {
   margin-bottom: 0;
 }
 
-.flow-chat-mock__assistant > :is(p, ul, .flow-thinking-item, .flow-chat-mock__tool, [data-openbitfun-component="ask-user"]) {
+.flow-chat-mock__assistant > :is(p, ul, .flow-thinking-item, .flow-chat-mock__tool, [data-starmate-component="ask-user"]) {
   margin: 0 0 var(--starmate-control-flow-chat-flow-item-gap) 0;
 }
 
@@ -314,7 +314,7 @@ html:has(.flow-chat-mock-page[data-fullscreen]) {
   line-height: var(--starmate-type-flow-body-line-height);
 }
 
-.flow-chat-mock__composer [data-openbitfun-layout="compact"] textarea {
+.flow-chat-mock__composer [data-starmate-layout="compact"] textarea {
   /* typography-audit: allow -- matches the compact composer control track */
   line-height: var(--starmate-control-chat-composer-compact-track-height);
 }
@@ -359,7 +359,7 @@ html:has(.flow-chat-mock-page[data-fullscreen]) {
 }
 
 .flow-chat-mock__model > span:last-child { color: var(--starmate-color-content-muted); }
-.flow-chat-mock__model > [data-openbitfun-component="overflow-text"] { max-width: var(--starmate-control-flow-chat-model-name-max-width); }
+.flow-chat-mock__model > [data-starmate-component="overflow-text"] { max-width: var(--starmate-control-flow-chat-model-name-max-width); }
 .flow-chat-mock__model:hover {
   background: var(--starmate-color-action-neutral-surface-hover);
   color: var(--starmate-color-content-primary);

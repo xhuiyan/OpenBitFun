@@ -24,8 +24,8 @@
   margin-block-start: var(--starmate-control-flow-chat-flow-item-gap);
 }
 
-.flow-chat-tool-sequence__rows > [data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-attention='ambient'][data-openbitfun-expanded-shell='false']
-  + [data-openbitfun-component='flow-chat-tool-card'][data-openbitfun-attention='ambient'][data-openbitfun-expanded-shell='false'] {
+.flow-chat-tool-sequence__rows > [data-starmate-component='flow-chat-tool-card'][data-starmate-attention='ambient'][data-starmate-expanded-shell='false']
+  + [data-starmate-component='flow-chat-tool-card'][data-starmate-attention='ambient'][data-starmate-expanded-shell='false'] {
   margin-block-start: 0;
 }
 

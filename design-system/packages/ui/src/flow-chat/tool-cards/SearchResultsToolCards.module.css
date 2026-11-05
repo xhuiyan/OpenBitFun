@@ -40,8 +40,8 @@
     overflow-wrap: anywhere;
   }
 
-  [data-openbitfun-tool-card="glob-search"] .detail,
-  [data-openbitfun-tool-card="glob-search"] .detailLabel {
+  [data-starmate-tool-card="glob-search"] .detail,
+  [data-starmate-tool-card="glob-search"] .detailLabel {
     color: var(--starmate-color-content-primary);
   }
 
@@ -67,13 +67,13 @@
     border-block-start: 1px solid var(--starmate-color-border-subtle);
   }
 
-  [data-openbitfun-tool-card="glob-search"] .details,
-  [data-openbitfun-tool-card="grep-search"] .details {
+  [data-starmate-tool-card="glob-search"] .details,
+  [data-starmate-tool-card="grep-search"] .details {
     padding-block-end: 0;
     border-block-end: 0;
   }
 
-  [data-openbitfun-tool-card="glob-search"] .result + .result {
+  [data-starmate-tool-card="glob-search"] .result + .result {
     border-block-start: 0;
   }
 
@@ -84,7 +84,7 @@
     color: var(--starmate-color-content-muted);
   }
 
-  .resultIcon > :is(svg, [data-openbitfun-component="icon"]) {
+  .resultIcon > :is(svg, [data-starmate-component="icon"]) {
     inline-size: var(--starmate-control-flow-chat-row-icon-size);
     block-size: var(--starmate-control-flow-chat-row-icon-size);
   }
@@ -96,27 +96,27 @@
     gap: var(--starmate-space-1);
   }
 
-  [data-openbitfun-tool-card="glob-search"] .result {
+  [data-starmate-tool-card="glob-search"] .result {
     grid-template-columns: var(--starmate-control-flow-chat-row-icon-size) minmax(0, 1fr);
   }
 
-  [data-openbitfun-tool-card="glob-search"] .resultBody {
+  [data-starmate-tool-card="glob-search"] .resultBody {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     align-items: baseline;
     gap: var(--starmate-space-2);
   }
 
-  [data-openbitfun-tool-card="glob-search"] .resultBody:not(:has(> .resultDescription)) > :is(.resultTitle, .resultButton) {
+  [data-starmate-tool-card="glob-search"] .resultBody:not(:has(> .resultDescription)) > :is(.resultTitle, .resultButton) {
     grid-column: 1 / -1;
   }
 
-  [data-openbitfun-tool-card="glob-search"] .resultMeta {
+  [data-starmate-tool-card="glob-search"] .resultMeta {
     grid-column: 2;
     white-space: normal;
   }
 
-  [data-openbitfun-tool-card="glob-search"] .resultUrl {
+  [data-starmate-tool-card="glob-search"] .resultUrl {
     grid-column: 1 / -1;
   }
 
@@ -130,9 +130,9 @@
     overflow-wrap: anywhere;
   }
 
-  [data-openbitfun-tool-card="glob-search"] .resultTitle,
-  [data-openbitfun-tool-card="glob-search"] .resultButton,
-  [data-openbitfun-tool-card="glob-search"] .resultDescription {
+  [data-starmate-tool-card="glob-search"] .resultTitle,
+  [data-starmate-tool-card="glob-search"] .resultButton,
+  [data-starmate-tool-card="glob-search"] .resultDescription {
     color: var(--starmate-color-content-secondary);
   }
 
@@ -251,7 +251,7 @@
   @container tool-card-results (max-width: 28rem) {
     .result { grid-template-columns: var(--starmate-control-flow-chat-row-icon-size) minmax(0, 1fr); }
     .resultMeta { grid-column: 2; white-space: normal; }
-    [data-openbitfun-tool-card="glob-search"] .resultBody {
+    [data-starmate-tool-card="glob-search"] .resultBody {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--starmate-space-1);
     }

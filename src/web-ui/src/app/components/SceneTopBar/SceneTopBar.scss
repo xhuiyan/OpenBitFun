@@ -17,19 +17,19 @@
 
   // Header and body inherit the same resolved/live-drag width from SplitView.
   &[data-panel-open='true'] {
-    > [data-openbitfun-part='trailing'] { position: relative; grid-column: 3; justify-self: stretch; }
+    > [data-starmate-part='trailing'] { position: relative; grid-column: 3; justify-self: stretch; }
   }
 
   &[data-panel-maximized='true'] {
     grid-template-columns: minmax(0, 1fr);
-    > [data-openbitfun-part='trailing'] {
+    > [data-starmate-part='trailing'] {
       grid-column: 1;
       border-start-start-radius: var(--starmate-layout-split-view-content-panel-radius);
     }
   }
 
-  > [data-openbitfun-part='leading'],
-  > [data-openbitfun-part='trailing'] {
+  > [data-starmate-part='leading'],
+  > [data-starmate-part='trailing'] {
     box-sizing: border-box;
     padding-inline: var(--starmate-space-2);
     min-width: 0;
@@ -43,20 +43,20 @@
   &[data-tab-drag-active='true'] {
     .openbitfun-scene-top-bar__panel-divider { visibility: hidden; }
 
-    > [data-openbitfun-part='leading'],
-    > [data-openbitfun-part='trailing'] {
+    > [data-starmate-part='leading'],
+    > [data-starmate-part='trailing'] {
       background: var(--starmate-color-action-neutral-surface);
     }
 
-    > [data-openbitfun-part='leading'] {
+    > [data-starmate-part='leading'] {
       border-start-start-radius: var(--starmate-layout-split-view-content-panel-radius);
     }
-    > [data-openbitfun-part='trailing'] {
+    > [data-starmate-part='trailing'] {
       border-start-end-radius: var(--starmate-layout-split-view-content-panel-radius);
     }
 
-    &[data-tab-drop-target='leading'] > [data-openbitfun-part='leading'],
-    &[data-tab-drop-target='trailing'] > [data-openbitfun-part='trailing'] {
+    &[data-tab-drop-target='leading'] > [data-starmate-part='leading'],
+    &[data-tab-drop-target='trailing'] > [data-starmate-part='trailing'] {
       background: var(--starmate-color-action-neutral-surface-hover);
     }
   }
@@ -83,7 +83,7 @@
     position: static;
   }
 
-  &:has(.window-controls--windows) > [data-openbitfun-part='trailing'] {
+  &:has(.window-controls--windows) > [data-starmate-part='trailing'] {
     align-self: stretch;
     padding-inline-end: 0;
   }

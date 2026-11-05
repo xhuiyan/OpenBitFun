@@ -676,7 +676,7 @@ $_section-header-height: 22px;
   // plus that region's own inset pushed the trigger 12px off the row's right edge
   // and the pill stopped short with it. Trailing the region as an overlay keeps
   // the bubbles on their existing gutter and lets the pill span the full row.
-  &__miniapp-item > [data-openbitfun-part='actions'] {
+  &__miniapp-item > [data-starmate-part='actions'] {
     position: absolute;
     inset-block: 0;
     inset-inline-end: var(--starmate-space-2);
@@ -1386,10 +1386,10 @@ $_section-header-height: 22px;
   transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
               color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
-  > [data-openbitfun-part='content'] {
+  > [data-starmate-part='content'] {
     gap: 0;
 
-    > [data-openbitfun-part='label'] {
+    > [data-starmate-part='label'] {
       display: block;
       max-inline-size: 0;
       margin-inline-start: 0;
@@ -1406,7 +1406,7 @@ $_section-header-height: 22px;
     background: var(--starmate-color-status-danger-surface);
     text-decoration: none;
 
-    > [data-openbitfun-part='content'] > [data-openbitfun-part='label'] {
+    > [data-starmate-part='content'] > [data-starmate-part='label'] {
       max-inline-size: 20em;
       margin-inline-start: var(--starmate-space-1);
       opacity: 1;
@@ -1418,7 +1418,7 @@ $_section-header-height: 22px;
   }
 
   @media (hover: none) {
-    > [data-openbitfun-part='content'] > [data-openbitfun-part='label'] {
+    > [data-starmate-part='content'] > [data-starmate-part='label'] {
       max-inline-size: 20em;
       margin-inline-start: var(--starmate-space-1);
       opacity: 1;
@@ -1427,7 +1427,7 @@ $_section-header-height: 22px;
 
   @media (prefers-reduced-motion: reduce) {
     &,
-    > [data-openbitfun-part='content'] > [data-openbitfun-part='label'] {
+    > [data-starmate-part='content'] > [data-starmate-part='label'] {
       transition: none;
     }
   }
@@ -1460,7 +1460,7 @@ $_section-header-height: 22px;
   transition: color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
               background var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
-  > [data-openbitfun-part='icon'] {
+  > [data-starmate-part='icon'] {
     inline-size: var(--starmate-control-icon-size-md);
     block-size: var(--starmate-control-icon-size-md);
   }
@@ -1491,7 +1491,7 @@ $_section-header-height: 22px;
   align-items: center;
   justify-content: center;
 
-  > [data-openbitfun-component='icon'] {
+  > [data-starmate-component='icon'] {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -1763,8 +1763,8 @@ $_section-header-height: 22px;
   z-index: 2;
   padding: 0;
 
-  > [data-openbitfun-part='header-content'] { display: none; }
-  > [data-openbitfun-part='actions'] { flex: 0 0 auto; }
+  > [data-starmate-part='header-content'] { display: none; }
+  > [data-starmate-part='actions'] { flex: 0 0 auto; }
 }
 
 .openbitfun-device-overview__header-actions {
@@ -1886,7 +1886,7 @@ $_section-header-height: 22px;
     color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard),
     background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
-  > [data-openbitfun-part='icon'] {
+  > [data-starmate-part='icon'] {
     inline-size: var(--starmate-control-icon-size-sm);
     block-size: var(--starmate-control-icon-size-sm);
   }
@@ -2143,7 +2143,7 @@ $_section-header-height: 22px;
   padding-inline: var(--starmate-space-2);
   border-radius: var(--starmate-radius-sm);
 
-  &[data-openbitfun-device-kind='message-app'] .openbitfun-device-overview__device-icon {
+  &[data-starmate-device-kind='message-app'] .openbitfun-device-overview__device-icon {
     background: transparent;
     color: var(--starmate-color-content-primary);
   }
@@ -2171,7 +2171,7 @@ $_section-header-height: 22px;
   text-align: center;
 }
 
-.openbitfun-device-overview__device-row[data-openbitfun-activities~='controlling'] .openbitfun-device-overview__device-icon::after {
+.openbitfun-device-overview__device-row[data-starmate-activities~='controlling'] .openbitfun-device-overview__device-icon::after {
   content: '';
   position: absolute;
   inset-inline-end: 0;
@@ -2463,7 +2463,7 @@ $_section-header-height: 22px;
 
   // Follow the ActionItem anatomy explicitly so component-library slots are not
   // mistaken for labels when new spans are added to the component.
-  > [data-openbitfun-part='label'] {
+  > [data-starmate-part='label'] {
     flex: 1;
     min-width: 0;
     overflow: hidden;
@@ -2525,14 +2525,14 @@ $_section-header-height: 22px;
 // inside it inherit this fixed geometry instead of participating in label growth.
 .openbitfun-nav-panel__top-action-btn,
 .openbitfun-nav-panel__miniapp-entry {
-  > [data-openbitfun-part='leading'] {
+  > [data-starmate-part='leading'] {
     flex: 0 0 var(--_nav-icon-slot-size);
     inline-size: var(--_nav-icon-slot-size);
     block-size: var(--_nav-icon-slot-size);
   }
 }
 
-.openbitfun-nav-panel__top-action-btn--sub > [data-openbitfun-part='leading'] {
+.openbitfun-nav-panel__top-action-btn--sub > [data-starmate-part='leading'] {
   flex-basis: var(--_nav-icon-size);
   inline-size: var(--_nav-icon-size);
   block-size: var(--_nav-icon-size);

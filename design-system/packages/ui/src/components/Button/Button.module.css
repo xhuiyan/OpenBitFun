@@ -54,19 +54,19 @@
     transition: background-color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .button:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled)::before {
+  .button:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled)::before {
     background: var(--_button-background-hover);
   }
 
-  .button:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .button:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     border-color: var(--_button-border-hover);
   }
 
-  .button:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled)::before {
+  .button:is(:active, [data-starmate-preview-state="active"]):not(:disabled)::before {
     background: var(--_button-background-active);
   }
 
-  .button:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .button:is(:active, [data-starmate-preview-state="active"]):not(:disabled) {
     border-color: var(--_button-border-active);
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
@@ -81,7 +81,7 @@
     cursor: not-allowed;
   }
 
-  .button[data-openbitfun-variant="fill"] {
+  .button[data-starmate-variant="fill"] {
     --_button-background: var(--starmate-component-button-fill-background);
     --_button-background-hover: var(--starmate-component-button-fill-background-hover);
     --_button-background-active: var(--starmate-component-button-fill-background-pressed);
@@ -91,17 +91,17 @@
   }
 
   /* GlassAction owns the material, including contrast/transparency fallbacks. */
-  .button[data-openbitfun-variant="glass"] {
+  .button[data-starmate-variant="glass"] {
     --_button-border: transparent;
     --_button-border-hover: transparent;
     --_button-border-active: transparent;
   }
 
-  .button[data-openbitfun-variant="glass"]::before {
+  .button[data-starmate-variant="glass"]::before {
     content: none;
   }
 
-  .button[data-openbitfun-variant="primary"] {
+  .button[data-starmate-variant="primary"] {
     --_button-background: var(--starmate-component-button-primary-background);
     --_button-background-hover: var(--starmate-component-button-primary-background-hover);
     --_button-background-active: var(--starmate-component-button-primary-background-pressed);
@@ -112,7 +112,7 @@
     --_button-content-disabled: var(--starmate-component-button-primary-content-disabled);
   }
 
-  .button[data-openbitfun-variant="secondary"] {
+  .button[data-starmate-variant="secondary"] {
     --_button-background: var(--starmate-color-surface-tertiary);
     --_button-background-hover: var(--starmate-color-surface-tertiary);
     --_button-background-active: var(--starmate-color-surface-tertiary);
@@ -122,16 +122,16 @@
     --_button-content: var(--starmate-color-action-neutral-content);
   }
 
-  .button[data-openbitfun-variant="primary"]:disabled {
+  .button[data-starmate-variant="primary"]:disabled {
     --_button-background: var(--starmate-component-button-fill-background);
   }
 
-  .button[data-openbitfun-variant="secondary"]:disabled {
+  .button[data-starmate-variant="secondary"]:disabled {
     --_button-background: var(--starmate-color-surface-tertiary);
     --_button-content: var(--starmate-color-action-neutral-content-disabled);
   }
 
-  .button[data-openbitfun-variant="text"] {
+  .button[data-starmate-variant="text"] {
     --_button-background: transparent;
     --_button-background-hover: transparent;
     --_button-background-active: transparent;
@@ -144,7 +144,7 @@
     border-radius: 0;
   }
 
-  .button[data-openbitfun-variant="quiet"] {
+  .button[data-starmate-variant="quiet"] {
     --_button-background: transparent;
     --_button-background-hover: transparent;
     --_button-background-active: transparent;
@@ -157,29 +157,29 @@
     border-radius: var(--starmate-radius-base);
   }
 
-  .button[data-openbitfun-tone="neutral"][data-openbitfun-variant="quiet"]:is(:hover, :active, [data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .button[data-starmate-tone="neutral"][data-starmate-variant="quiet"]:is(:hover, :active, [data-starmate-preview-state="hover"], [data-starmate-preview-state="active"]):not(:disabled) {
     --_button-content: var(--starmate-color-content-primary);
   }
 
-  .button[data-openbitfun-variant="text"]:is(:hover, [data-openbitfun-preview-state="hover"]):not(:disabled) {
+  .button[data-starmate-variant="text"]:is(:hover, [data-starmate-preview-state="hover"]):not(:disabled) {
     --_button-content: var(--starmate-component-button-text-content-hover);
 
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
-  .button[data-openbitfun-variant="text"]:is(:active, [data-openbitfun-preview-state="active"]):not(:disabled) {
+  .button[data-starmate-variant="text"]:is(:active, [data-starmate-preview-state="active"]):not(:disabled) {
     --_button-content: var(--starmate-component-button-text-content);
 
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
-  .button[data-openbitfun-variant="fill"]:disabled {
+  .button[data-starmate-variant="fill"]:disabled {
     --_button-background: var(--starmate-component-button-fill-background);
   }
 
-  .button[data-openbitfun-tone="danger"] {
+  .button[data-starmate-tone="danger"] {
     --_button-background-hover: var(--starmate-color-status-danger-surface);
     --_button-background-active: var(--starmate-color-status-danger-surface);
     --_button-border: var(--starmate-color-status-danger-border);
@@ -189,12 +189,12 @@
     --_button-content-disabled: var(--starmate-color-action-neutral-content-disabled);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="fill"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="fill"] {
     --_button-background: var(--starmate-color-status-danger-surface);
     --_button-border: var(--starmate-color-status-danger-border);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="primary"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="primary"] {
     --_button-background: var(--starmate-color-status-danger-content);
     --_button-background-hover: var(--starmate-color-status-danger-content);
     --_button-background-active: var(--starmate-color-status-danger-content);
@@ -202,24 +202,24 @@
     --_button-content: var(--starmate-color-content-inverse);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="secondary"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="secondary"] {
     --_button-background: var(--starmate-color-status-danger-surface);
     --_button-background-hover: var(--starmate-color-status-danger-surface);
     --_button-background-active: var(--starmate-color-status-danger-surface);
     --_button-border: var(--starmate-color-status-danger-border);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="text"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="text"] {
     --_button-content: var(--starmate-color-status-danger-content);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="quiet"] {
+  .button[data-starmate-tone="danger"][data-starmate-variant="quiet"] {
     --_button-border: transparent;
     --_button-border-hover: var(--starmate-color-status-danger-border);
     --_button-border-active: var(--starmate-color-status-danger-border);
   }
 
-  .button[data-openbitfun-tone="danger"][data-openbitfun-variant="fill"]:disabled {
+  .button[data-starmate-tone="danger"][data-starmate-variant="fill"]:disabled {
     --_button-background: var(--starmate-color-status-danger-surface);
   }
 
@@ -289,7 +289,7 @@
   }
 
   .icon > :where(svg, img),
-  .icon > [data-openbitfun-component="icon"] {
+  .icon > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;

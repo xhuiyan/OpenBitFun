@@ -83,7 +83,7 @@ test('ambient headers distinguish plain targets, recorded results and icon-only 
       }) }),
     ));
     assert.match(html, /data-variant="plain"/);
-    assert.match(html, /data-openbitfun-part="resultSummary"[^>]*>.*?>0<\/span>/);
+    assert.match(html, /data-starmate-part="resultSummary"[^>]*>.*?>0<\/span>/);
     assert.ok(html.includes(`${expected}</span>`));
     assert.doesNotMatch(html, /Search::|搜索：：/);
   }
@@ -95,7 +95,7 @@ test('ambient headers distinguish plain targets, recorded results and icon-only 
   }));
   assert.match(failed, /aria-label="Access denied" role="img" tabindex="0"/);
   assert.match(failed, /report\.md/);
-  assert.doesNotMatch(failed, /data-openbitfun-part="extra"|>Access denied</);
+  assert.doesNotMatch(failed, /data-starmate-part="extra"|>Access denied</);
 });
 
 test('unresolved agent identities use static hatch artwork without inventing navigation', () => {
@@ -103,9 +103,9 @@ test('unresolved agent identities use static hatch artwork without inventing nav
     status: 'completed', action: 'Send',
     interaction: { operation: 'send', target: { label: 'Agent', kind: 'agent' } },
   }));
-  assert.match(html, /data-openbitfun-component="subagent-hatch"/);
+  assert.match(html, /data-starmate-component="subagent-hatch"/);
   assert.match(html, /data-phase="stopped"/);
-  assert.doesNotMatch(html, /lucide-bot|data-openbitfun-affordance="open-panel-right"/);
+  assert.doesNotMatch(html, /lucide-bot|data-starmate-affordance="open-panel-right"/);
 });
 
 test('interaction identities retain host avatars and direction without status badges', () => {
@@ -119,8 +119,8 @@ test('interaction identities retain host avatars and direction without status ba
   assert.match(html, /Current chat/);
   assert.match(html, /Curious Otter/);
   assert.match(html, /data-avatar="otter"/);
-  assert.match(html, /data-openbitfun-name="arrow-right"/);
-  assert.doesNotMatch(html, /data-openbitfun-component="status-pill"|data-tone="danger"/);
+  assert.match(html, /data-starmate-name="arrow-right"/);
+  assert.doesNotMatch(html, /data-starmate-component="status-pill"|data-tone="danger"/);
 });
 
 test('Grep excerpts separate file paths, line numbers and escaped code while retaining raw notices', () => {
@@ -139,11 +139,11 @@ test('Grep excerpts separate file paths, line numbers and escaped code while ret
       { kind: 'text', text: 'Output truncated for session preview' },
     ],
   }));
-  assert.equal((html.match(/data-openbitfun-part="grepFilePath"/g) ?? []).length, 1);
-  assert.equal((html.match(/data-openbitfun-part="grepLineNumber"/g) ?? []).length, 3);
+  assert.equal((html.match(/data-starmate-part="grepFilePath"/g) ?? []).length, 1);
+  assert.equal((html.match(/data-starmate-part="grepLineNumber"/g) ?? []).length, 3);
   assert.match(html, /data-kind="context"/);
   assert.match(html, /data-gap-before="true"/);
-  assert.match(html, /data-openbitfun-part="grepLineContent"[^>]*>  &lt;needle value=&quot;a:12:b&quot; \/&gt;<\/pre>/);
+  assert.match(html, /data-starmate-part="grepLineContent"[^>]*>  &lt;needle value=&quot;a:12:b&quot; \/&gt;<\/pre>/);
   assert.match(html, /Output truncated for session preview/);
   assert.doesNotMatch(html, /legacy fallback/);
   assert.doesNotMatch(html, /src\/app\.ts:9:/);
@@ -152,7 +152,7 @@ test('Grep excerpts separate file paths, line numbers and escaped code while ret
     status: 'completed', summary: 'needle', isExpanded: true,
     resultText: 'src/app.ts:12', onToggle() {},
   }));
-  assert.match(fallback, /data-openbitfun-part="resultText"[^>]*>src\/app\.ts:12<\/pre>/);
+  assert.match(fallback, /data-starmate-part="resultText"[^>]*>src\/app\.ts:12<\/pre>/);
 });
 
 test('Grep shares the widest line-number track across files and preserves a minimum gutter', () => {
@@ -165,10 +165,10 @@ test('Grep shares the widest line-number track across files and preserves a mini
         { kind: 'file', path: 'src/last.ts', lines: [{ kind: 'match', lineNumber: lastLine, text: 'last' }] },
       ],
     }));
-    const sharedResults = html.match(/<div[^>]+data-openbitfun-part="grepResults"[^>]*>/)[0];
+    const sharedResults = html.match(/<div[^>]+data-starmate-part="grepResults"[^>]*>/)[0];
     assert.ok(sharedResults.includes(`--_grep-line-number-width:${width}ch`));
     assert.equal((html.match(/--_grep-line-number-width:/g) ?? []).length, 1);
-    assert.equal((html.match(/data-openbitfun-part="grepFile"/g) ?? []).length, 2);
+    assert.equal((html.match(/data-starmate-part="grepFile"/g) ?? []).length, 2);
   }
 });
 
@@ -177,10 +177,10 @@ test('ambient commands keep failures accessible from the icon and expand the err
     emptyCommand: 'No command', isExpanded: false, status: 'completed',
     output: createElement('pre', null, 'output'), onToggle() {} };
   const closed = renderToStaticMarkup(createElement(CommandToolCard, props));
-  assert.match(closed, /data-openbitfun-attention="ambient"/);
-  assert.match(closed, /data-openbitfun-expanded-shell="false"/);
+  assert.match(closed, /data-starmate-attention="ambient"/);
+  assert.match(closed, /data-starmate-expanded-shell="false"/);
   assert.match(closed, /aria-expanded="false"/);
-  assert.doesNotMatch(closed, /data-tool-capsule="true"|data-openbitfun-attention="prominent"/);
+  assert.doesNotMatch(closed, /data-tool-capsule="true"|data-starmate-attention="prominent"/);
   const failed = renderToStaticMarkup(createElement(CommandToolCard, { ...props, status: 'error', error: 'Command failed' }));
   assert.match(failed, /Command failed/);
   assert.doesNotMatch(failed, />Command failed</);
@@ -189,10 +189,10 @@ test('ambient commands keep failures accessible from the icon and expand the err
   assert.match(expanded, /<pre>output<\/pre>/);
   const approval = renderToStaticMarkup(createElement(CommandToolCard, { ...props,
     requiresConfirmation: true, status: 'pending_confirmation' }));
-  assert.match(approval, /data-openbitfun-attention="ambient"/);
-  assert.match(approval, /data-openbitfun-state="confirmation"/);
+  assert.match(approval, /data-starmate-attention="ambient"/);
+  assert.match(approval, /data-starmate-state="confirmation"/);
   assert.match(approval, /data-default-icon="tool"/);
-  assert.doesNotMatch(approval, /data-openbitfun-attention="prominent"/);
+  assert.doesNotMatch(approval, /data-starmate-attention="prominent"/);
 });
 
 test('capsules retain a type icon, expose an accessible button and reveal actual failures', () => {
@@ -262,21 +262,21 @@ test("flow-chat entry publishes the ambient and prominent framework anatomy", ()
     }),
   );
 
-  assert.match(ambientMarkup, /data-openbitfun-attention="ambient"/);
-  assert.match(ambientMarkup, /data-openbitfun-part="surface"/);
-  assert.match(ambientMarkup, /data-openbitfun-part="iconAffordanceButton"/);
+  assert.match(ambientMarkup, /data-starmate-attention="ambient"/);
+  assert.match(ambientMarkup, /data-starmate-part="surface"/);
+  assert.match(ambientMarkup, /data-starmate-part="iconAffordanceButton"/);
   assert.match(ambientMarkup, /aria-label="Expand details"/);
-  assert.match(prominentMarkup, /data-openbitfun-attention="prominent"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="summary"/);
-  assert.doesNotMatch(prominentMarkup, /data-openbitfun-part="header"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="extra"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="changeSummary"/);
-  assert.match(prominentMarkup, /data-openbitfun-change="added"[^>]*>\+6/);
-  assert.match(prominentMarkup, /data-openbitfun-change="removed"[^>]*>-0/);
-  assert.match(prominentMarkup, /data-openbitfun-part="actionRegion"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="actions"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="copyButton"/);
-  assert.match(prominentMarkup, /data-openbitfun-part="affordanceButton"/);
+  assert.match(prominentMarkup, /data-starmate-attention="prominent"/);
+  assert.match(prominentMarkup, /data-starmate-part="summary"/);
+  assert.doesNotMatch(prominentMarkup, /data-starmate-part="header"/);
+  assert.match(prominentMarkup, /data-starmate-part="extra"/);
+  assert.match(prominentMarkup, /data-starmate-part="changeSummary"/);
+  assert.match(prominentMarkup, /data-starmate-change="added"[^>]*>\+6/);
+  assert.match(prominentMarkup, /data-starmate-change="removed"[^>]*>-0/);
+  assert.match(prominentMarkup, /data-starmate-part="actionRegion"/);
+  assert.match(prominentMarkup, /data-starmate-part="actions"/);
+  assert.match(prominentMarkup, /data-starmate-part="copyButton"/);
+  assert.match(prominentMarkup, /data-starmate-part="affordanceButton"/);
   assert.match(prominentMarkup, /aria-expanded="false"/);
   assert.doesNotMatch(prominentMarkup, /lucide-chevron-down/);
 });
@@ -291,13 +291,13 @@ test("panel-open actions stay in the trailing action region after metadata", () 
         actions: createElement("button", { type: "button" }, "Export"),
       }),
     }));
-    const open = markup.indexOf('data-openbitfun-part="affordanceButton"');
-    const actions = markup.indexOf('data-openbitfun-part="actionRegion"');
-    const extra = markup.indexOf('data-openbitfun-part="extra"');
+    const open = markup.indexOf('data-starmate-part="affordanceButton"');
+    const actions = markup.indexOf('data-starmate-part="actionRegion"');
+    const extra = markup.indexOf('data-starmate-part="extra"');
     assert.ok(markup.indexOf(content ?? "Canvas") < extra);
     assert.ok(extra < actions && actions < open);
-    assert.doesNotMatch(markup, /data-openbitfun-part="contentActions"/);
-    assert.equal((markup.match(/data-openbitfun-part="affordanceButton"/g) ?? []).length, 1);
+    assert.doesNotMatch(markup, /data-starmate-part="contentActions"/);
+    assert.equal((markup.match(/data-starmate-part="affordanceButton"/g) ?? []).length, 1);
     assert.doesNotMatch(markup, /aria-expanded=/);
   }
 });
@@ -313,9 +313,9 @@ test("tool-card pointer cursors are limited to interactive surfaces and buttons"
   );
 
   assert.match(styles, /\.prominentSurface\s*\{[^}]*cursor:\s*default;/s);
-  assert.match(styles, /\.prominentSurface\[data-openbitfun-interactive="true"\]\s*\{\s*cursor:\s*pointer;/s);
+  assert.match(styles, /\.prominentSurface\[data-starmate-interactive="true"\]\s*\{\s*cursor:\s*pointer;/s);
   assert.match(styles, /\.ambientSurface\s*\{[^}]*cursor:\s*default;/s);
-  assert.match(styles, /\.ambientSurface\[data-openbitfun-interactive="true"\]\s*\{\s*cursor:\s*pointer;/s);
+  assert.match(styles, /\.ambientSurface\[data-starmate-interactive="true"\]\s*\{\s*cursor:\s*pointer;/s);
   assert.match(iconButtonStyles, /\.button\s*\{[^}]*cursor:\s*pointer;/s);
 });
 
@@ -342,11 +342,11 @@ test("tool-card change summaries use the same markers as the code diff", async (
 
   assert.match(
     styles,
-    /\.changeSummary \[data-openbitfun-change="added"\]\s*\{\s*color: var\(--starmate-color-code-diff-added-marker\);/,
+    /\.changeSummary \[data-starmate-change="added"\]\s*\{\s*color: var\(--starmate-color-code-diff-added-marker\);/,
   );
   assert.match(
     styles,
-    /\.changeSummary \[data-openbitfun-change="removed"\]\s*\{\s*color: var\(--starmate-color-code-diff-removed-marker\);/,
+    /\.changeSummary \[data-starmate-change="removed"\]\s*\{\s*color: var\(--starmate-color-code-diff-removed-marker\);/,
   );
 });
 
@@ -378,7 +378,7 @@ test("prominent error status can opt into expandable supporting details", () => 
     }),
   );
 
-  assert.match(markup, /data-openbitfun-state="expanded failed"/);
+  assert.match(markup, /data-starmate-state="expanded failed"/);
   assert.match(markup, /data-openbitfun-expandable="true"/);
   assert.match(markup, /aria-expanded="true"/);
   assert.match(markup, /data-openbitfun-part="expandedCollapse"[^>]+data-open="true"/);
@@ -420,8 +420,8 @@ test("cancelled and rejected tool cards rely on status copy instead of a duplica
       }),
     );
 
-    assert.match(agentMarkup, new RegExp(`data-openbitfun-part="agentStatus"[^>]*><span[^>]*>${statusLabel}<`));
-    assert.doesNotMatch(agentMarkup, /data-openbitfun-part="status"/);
+    assert.match(agentMarkup, new RegExp(`data-starmate-part="agentStatus"[^>]*><span[^>]*>${statusLabel}<`));
+    assert.doesNotMatch(agentMarkup, /data-starmate-part="status"/);
     assert.doesNotMatch(agentMarkup, /lucide-x/);
   }
 
@@ -488,8 +488,8 @@ test("file-operation failures stay collapsed and use the warning emphasis status
     "utf8",
   );
 
-  assert.match(collapsedMarkup, /data-openbitfun-state="failed"/);
-  assert.match(collapsedMarkup, /data-openbitfun-expandable="true"/);
+  assert.match(collapsedMarkup, /data-starmate-state="failed"/);
+  assert.match(collapsedMarkup, /data-starmate-expandable="true"/);
   assert.match(collapsedMarkup, /aria-expanded="false"/);
   assert.match(collapsedMarkup, /data-openbitfun-icon="warning"/);
   assert.match(collapsedMarkup, /data-openbitfun-part="errorCollapse"[^>]+data-open="false"/);
@@ -507,14 +507,14 @@ test("file-operation failures stay collapsed and use the warning emphasis status
   );
   assert.match(
     styles,
-    /\.errorTitle > :where\(svg, img, \[data-openbitfun-component="icon"\]\)\s*\{[^}]*inline-size: var\(--starmate-font-size-xl\);[^}]*block-size: var\(--starmate-font-size-xl\);/s,
+    /\.errorTitle > :where\(svg, img, \[data-starmate-component="icon"\]\)\s*\{[^}]*inline-size: var\(--starmate-font-size-xl\);[^}]*block-size: var\(--starmate-font-size-xl\);/s,
   );
 });
 
 test("auxiliary actions reveal on hover or keyboard focus and remain available without hover", async () => {
   const styles = await readFile(new URL("../src/flow-chat/tool-cards/FlowChatToolCard.module.css", import.meta.url), "utf8");
 
-  assert.match(styles, /data-openbitfun-preview-state="hover"/);
+  assert.match(styles, /data-starmate-preview-state="hover"/);
   assert.match(styles, /:has\(:focus-visible\)/);
   assert.match(styles, /@media \(hover: none\), \(pointer: coarse\)/);
   assert.match(styles, /opacity:\s*0/);
@@ -760,9 +760,9 @@ test("ambient card cursors distinguish static traces from interactive cards", as
   );
   assert.match(
     styles,
-    /ambientSurface[^}]*\[data-openbitfun-interactive=["']?true["']?\][^{]*\{[^}]*cursor:\s*pointer/s,
+    /ambientSurface[^}]*\[data-starmate-interactive=["']?true["']?\][^{]*\{[^}]*cursor:\s*pointer/s,
   );
-  assert.match(staticMarkup, /data-openbitfun-interactive="false"/);
+  assert.match(staticMarkup, /data-starmate-interactive="false"/);
   assert.doesNotMatch(staticMarkup, /role="button"/);
   assert.doesNotMatch(staticMarkup, /tabindex="0"/);
 });
@@ -828,39 +828,39 @@ test("standard FlowChat tool views publish their concrete component contracts", 
     }),
   );
 
-  assert.match(readMarkup, /data-openbitfun-tool-card="read-file"/);
+  assert.match(readMarkup, /data-starmate-tool-card="read-file"/);
   assert.match(readMarkup, /lucide-file-text/);
   assert.match(readMarkup, /data-default-icon="tool"/);
-  assert.match(readMarkup, /data-openbitfun-attention="ambient"/);
-  assert.match(readMarkup, /data-openbitfun-direct-action="true"/);
+  assert.match(readMarkup, /data-starmate-attention="ambient"/);
+  assert.match(readMarkup, /data-starmate-direct-action="true"/);
   assert.match(readMarkup, /role="button"/);
   assert.match(readMarkup, /tabindex="0"/);
   assert.match(readMarkup, /aria-label="Open src\/index\.ts"/);
-  assert.match(contextMarkup, /data-openbitfun-component="context-compression-tool-card"/);
-  assert.match(contextMarkup, /data-openbitfun-part="summary"/);
+  assert.match(contextMarkup, /data-starmate-component="context-compression-tool-card"/);
+  assert.match(contextMarkup, /data-starmate-part="summary"/);
   assert.match(contextMarkup, /Compressed context length 31k \(compression ratio 75%\)/);
-  assert.doesNotMatch(contextMarkup, /data-openbitfun-part="(?:savings|meta|tokenChange)"/);
-  assert.match(commandMarkup, /data-openbitfun-component="command-tool-card"/);
-  assert.match(commandMarkup, /data-openbitfun-part="outputFrame"/);
+  assert.doesNotMatch(contextMarkup, /data-starmate-part="(?:savings|meta|tokenChange)"/);
+  assert.match(commandMarkup, /data-starmate-component="command-tool-card"/);
+  assert.match(commandMarkup, /data-starmate-part="outputFrame"/);
   assert.match(commandMarkup, /57 tests passed/);
-  assert.match(deleteMarkup, /data-openbitfun-operation="delete"/);
-  assert.match(deleteMarkup, /data-openbitfun-attention="prominent"/);
-  assert.match(deleteMarkup, /data-openbitfun-part="action"[^>]*><span[^>]*data-overflow="false"[^>]*><span[^>]*data-overflow-content=""[^>]*>Delete file<\/span><\/span><\/span>/);
-  assert.match(deleteMarkup, /data-openbitfun-part="content"[^>]*>/);
-  assert.match(editMarkup, /data-openbitfun-operation="edit"/);
-  assert.match(editMarkup, /data-openbitfun-attention="prominent"/);
+  assert.match(deleteMarkup, /data-starmate-operation="delete"/);
+  assert.match(deleteMarkup, /data-starmate-attention="prominent"/);
+  assert.match(deleteMarkup, /data-starmate-part="action"[^>]*><span[^>]*data-overflow="false"[^>]*><span[^>]*data-overflow-content=""[^>]*>Delete file<\/span><\/span><\/span>/);
+  assert.match(deleteMarkup, /data-starmate-part="content"[^>]*>/);
+  assert.match(editMarkup, /data-starmate-operation="edit"/);
+  assert.match(editMarkup, /data-starmate-attention="prominent"/);
   assert.match(editMarkup, /\+ migrated view/);
-  assert.match(editMarkup, /data-openbitfun-part="changeSummary"/);
-  assert.match(editMarkup, /data-openbitfun-part="affordanceButton"/);
-  assert.match(editMarkup, /data-openbitfun-part="actionRegion"/);
-  assert.doesNotMatch(editMarkup, /data-openbitfun-part="(?:trailingActions|contentActions)"/);
-  assert.match(editMarkup, /data-openbitfun-part="openPanelButton"/);
-  assert.match(editMarkup, /data-openbitfun-affordance="open-panel-right"/);
-  assert.match(editMarkup, /data-openbitfun-icon="open-panel-right"/);
+  assert.match(editMarkup, /data-starmate-part="changeSummary"/);
+  assert.match(editMarkup, /data-starmate-part="affordanceButton"/);
+  assert.match(editMarkup, /data-starmate-part="actionRegion"/);
+  assert.doesNotMatch(editMarkup, /data-starmate-part="(?:trailingActions|contentActions)"/);
+  assert.match(editMarkup, /data-starmate-part="openPanelButton"/);
+  assert.match(editMarkup, /data-starmate-affordance="open-panel-right"/);
+  assert.match(editMarkup, /data-starmate-icon="open-panel-right"/);
   assert.equal((editMarkup.match(/<button\b/g) ?? []).length, 2);
   assert.ok(
-    editMarkup.indexOf('data-openbitfun-part="changeSummary"')
-      < editMarkup.indexOf('data-openbitfun-part="actionRegion"'),
+    editMarkup.indexOf('data-starmate-part="changeSummary"')
+      < editMarkup.indexOf('data-starmate-part="actionRegion"'),
   );
   assert.doesNotMatch(editMarkup, /lucide-file-diff|lucide-chevron-right|lucide-chevron-down/);
 });
@@ -872,14 +872,14 @@ test("file deletion retains prominent approval and expandable error information"
   const failed = renderToStaticMarkup(createElement(FileOperationToolCard, {
     ...props, status: "error", isExpanded: true, onToggle() {}, error: { message: "Access denied" },
   }));
-  assert.match(failed, /data-openbitfun-attention="prominent"/);
-  assert.match(failed, /data-openbitfun-status="error"/);
+  assert.match(failed, /data-starmate-attention="prominent"/);
+  assert.match(failed, /data-starmate-status="error"/);
   assert.match(failed, /report\.md/);
   assert.match(failed, /Access denied/);
   const pending = renderToStaticMarkup(createElement(FileOperationToolCard, {
     ...props, status: "pending_confirmation", requiresConfirmation: true,
   }));
-  assert.match(pending, /data-openbitfun-state="confirmation"/);
+  assert.match(pending, /data-starmate-state="confirmation"/);
 });
 
 test("every migrated FlowChat tool view publishes a stable concrete card identity", () => {
@@ -1007,7 +1007,7 @@ test("every migrated FlowChat tool view publishes a stable concrete card identit
 
   for (const [identity, card] of cards) {
     const markup = renderToStaticMarkup(card);
-    assert.match(markup, new RegExp(`data-openbitfun-tool-card="${identity}"`), identity);
+    assert.match(markup, new RegExp(`data-starmate-tool-card="${identity}"`), identity);
     if (identity === "skill") {
       assert.match(markup, /lucide-book-open/);
       assert.match(markup, /data-openbitfun-part="statusSlot"[^>]*data-default-icon="tool"/);
@@ -1056,14 +1056,14 @@ test("file diff summary matches the compact file-operation information hierarchy
   const styles = await readFile(new URL("../dist/styles.css", import.meta.url), "utf8");
   const pathRule = styles.match(/\.[_a-zA-Z0-9-]*diffPath[_a-zA-Z0-9-]*\{([^}]*)\}/)?.[1];
 
-  assert.match(markup, /data-path="src\/index\.ts"[^>]*data-openbitfun-part="path"[^>]*data-overflow-text="src\/index\.ts"/);
+  assert.match(markup, /data-path="src\/index\.ts"[^>]*data-starmate-part="path"[^>]*data-overflow-text="src\/index\.ts"/);
   assert.doesNotMatch(markup, /\stitle=/);
   assert.match(markup, />index\.ts<\/span>/);
-  assert.match(markup, /data-openbitfun-part="changeSummary"/);
+  assert.match(markup, /data-starmate-part="changeSummary"/);
   assert.match(markup, /aria-label="12 additions and 0 deletions"/);
-  assert.match(markup, /data-openbitfun-change="added"[^>]*>\+12/);
-  assert.match(markup, /data-openbitfun-change="removed"[^>]*>-0/);
-  assert.doesNotMatch(markup, /Git HEAD|data-openbitfun-part="diffType"/);
+  assert.match(markup, /data-starmate-change="added"[^>]*>\+12/);
+  assert.match(markup, /data-starmate-change="removed"[^>]*>-0/);
+  assert.doesNotMatch(markup, /Git HEAD|data-starmate-part="diffType"/);
   assert.ok(pathRule, "file-diff path rule should exist");
   assert.match(pathRule, /var\(--starmate-color-content-secondary\)/);
   assert.doesNotMatch(pathRule, /font-(?:family|size|weight):/);
@@ -1085,21 +1085,21 @@ test("todo rows identify the task list with a shared icon and expose progress wh
   const collapsed = renderToStaticMarkup(createElement(TodoToolCard, props));
   const compact = renderToStaticMarkup(createElement(TodoToolCard, { ...props, mode: "compact" }));
 
-  assert.match(collapsed, /data-openbitfun-attention="prominent"/);
+  assert.match(collapsed, /data-starmate-attention="prominent"/);
 
   for (const markup of [collapsed, compact]) {
-    assert.match(markup, /data-openbitfun-name="list-todo"/);
+    assert.match(markup, /data-starmate-name="list-todo"/);
     assert.match(markup, /aria-label="Tasks"/);
     assert.match(markup, /stroke-width="var\(--starmate-control-icon-stroke-width\)"/);
     assert.match(markup, /Migrate FlowChat adapter/);
     assert.doesNotMatch(markup, /role="progressbar"/);
   }
-  assert.doesNotMatch(collapsed, /data-openbitfun-part="action"/);
+  assert.doesNotMatch(collapsed, /data-starmate-part="action"/);
 
   const complete = renderToStaticMarkup(createElement(TodoToolCard, {
     ...props, completedCount: 3, summary: "All tasks completed",
   }));
-  assert.match(complete, /data-openbitfun-name="list-todo"/);
+  assert.match(complete, /data-starmate-name="list-todo"/);
   assert.match(complete, /All tasks completed/);
 
   const expanded = renderToStaticMarkup(createElement(TodoToolCard, { ...props, isExpanded: true }));
@@ -1143,16 +1143,16 @@ test("concrete tool views expose semantic parts instead of legacy CSS selectors"
     statusText: "Viewed image",
   }));
 
-  assert.match(agentMarkup, /data-openbitfun-part="agentSummary"/);
-  assert.match(agentMarkup, /data-openbitfun-part="agentStatus"/);
-  assert.match(agentMarkup, /data-openbitfun-component="shimmer-text"[^>]*>Running<\/span>/);
+  assert.match(agentMarkup, /data-starmate-part="agentSummary"/);
+  assert.match(agentMarkup, /data-starmate-part="agentStatus"/);
+  assert.match(agentMarkup, /data-starmate-component="shimmer-text"[^>]*>Running<\/span>/);
   assert.match(agentMarkup, /data-agent-capsule-trigger="true"/);
-  assert.match(agentMarkup, /data-openbitfun-affordance="open-panel-right"/);
+  assert.match(agentMarkup, /data-starmate-affordance="open-panel-right"/);
   assert.doesNotMatch(agentMarkup, /aria-expanded|expandedCollapse|interruptAgentButton|lucide-chevron-down/);
-  assert.doesNotMatch(agentMarkup, /data-openbitfun-part="statusSlot"|data-openbitfun-part="processing"/);
-  assert.match(fetchMarkup, /data-openbitfun-part="sourceLink"/);
-  assert.match(fetchMarkup, /data-openbitfun-part="detail"/);
-  assert.match(imageMarkup, /data-openbitfun-part="imagePreview"/);
+  assert.doesNotMatch(agentMarkup, /data-openbitfun-part="statusSlot"|data-starmate-part="processing"/);
+  assert.match(fetchMarkup, /data-starmate-part="sourceLink"/);
+  assert.match(fetchMarkup, /data-starmate-part="detail"/);
+  assert.match(imageMarkup, /data-starmate-part="imagePreview"/);
 });
 
 test("failed commands retain partial output as well as the error", () => {

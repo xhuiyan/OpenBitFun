@@ -123,7 +123,7 @@
   .header { min-block-size: var(--starmate-control-height-sm); }
   .title { flex: 1; }
   .accountLabel { min-inline-size: 0; max-inline-size: 100%; }
-  .title > [data-openbitfun-component='status-pill'] { flex: none; max-inline-size: 100%; }
+  .title > [data-starmate-component='status-pill'] { flex: none; max-inline-size: 100%; }
   .meters { grid-template-columns: minmax(0, 1fr); }
 
   .meter {

@@ -108,30 +108,30 @@
     scroll-padding-block-end: var(--starmate-overlay-dialog-footer-fade-extent);
   }
 
-  .overlay[data-openbitfun-component="sheet"] {
+  .overlay[data-starmate-component="sheet"] {
     padding: 0;
   }
 
-  .overlay[data-openbitfun-component="sheet"][data-placement="left"] { justify-content: flex-start; }
-  .overlay[data-openbitfun-component="sheet"][data-placement="right"] { justify-content: flex-end; }
-  .overlay[data-openbitfun-component="sheet"][data-placement="bottom"] { align-items: flex-end; }
+  .overlay[data-starmate-component="sheet"][data-placement="left"] { justify-content: flex-start; }
+  .overlay[data-starmate-component="sheet"][data-placement="right"] { justify-content: flex-end; }
+  .overlay[data-starmate-component="sheet"][data-placement="bottom"] { align-items: flex-end; }
 
-  .surface[data-openbitfun-component="sheet"] {
+  .surface[data-starmate-component="sheet"] {
     max-block-size: 100vh;
     block-size: 100%;
     border-radius: 0;
   }
 
-  .surface[data-openbitfun-component="sheet"][data-placement="bottom"] {
+  .surface[data-starmate-component="sheet"][data-placement="bottom"] {
     block-size: auto;
     max-inline-size: none;
     border-start-start-radius: var(--starmate-overlay-dialog-surface-radius);
     border-start-end-radius: var(--starmate-overlay-dialog-surface-radius);
   }
 
-  .surface[data-openbitfun-component="sheet"][data-size="sm"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-small); }
-  .surface[data-openbitfun-component="sheet"][data-size="md"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-medium); }
-  .surface[data-openbitfun-component="sheet"][data-size="lg"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-large); }
+  .surface[data-starmate-component="sheet"][data-size="sm"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-small); }
+  .surface[data-starmate-component="sheet"][data-size="md"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-medium); }
+  .surface[data-starmate-component="sheet"][data-size="lg"] { max-inline-size: var(--starmate-overlay-dialog-max-inline-size-large); }
 
   .header {
     display: flex;

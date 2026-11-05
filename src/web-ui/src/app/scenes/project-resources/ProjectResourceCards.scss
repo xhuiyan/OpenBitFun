@@ -23,7 +23,7 @@
   }
   &__card { width: 100%; min-inline-size: 0; align-items: stretch;
     border-radius: var(--starmate-layout-card-radius-lg); background: var(--starmate-color-surface-tertiary); }
-  &__card > [data-openbitfun-part='actions'] {
+  &__card > [data-starmate-part='actions'] {
     inset-block-start: var(--starmate-space-2);
     inset-inline-end: var(--starmate-space-2);
     transform: none;

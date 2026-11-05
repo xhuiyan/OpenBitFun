@@ -223,8 +223,8 @@ export const FlowTextBlock = React.memo<FlowTextBlockProps>(({
       hidden={hidden}
       data-status={textItem.status}
       data-streaming={isVisuallyStreaming ? 'true' : 'false'}
-      {...testAttributes}
-     data-starmate-component="flow-text-block" data-starmate-part="root" data-starmate-mode={textItem.isMarkdown ? 'markdown' : 'text'} data-starmate-state={isActivelyStreaming ? 'streaming' : ''} >
+      data-starmate-state={isActivelyStreaming ? 'streaming' : ''} data-starmate-mode={textItem.isMarkdown ? 'markdown' : 'text'} data-starmate-part="root" data-starmate-component="flow-text-block" {...testAttributes}
+         >
       {parsedContent.hasProtocol ? (
         renderStructuredContent()
       ) : textItem.isMarkdown ? (

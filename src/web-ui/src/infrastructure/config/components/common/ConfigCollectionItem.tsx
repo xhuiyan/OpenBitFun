@@ -64,8 +64,8 @@ export const ConfigCollectionItem: React.FC<ConfigCollectionItemProps> = ({
       className={`openbitfun-collection-item ${isExpanded ? 'is-expanded' : ''} ${disabled ? 'is-disabled' : ''} ${className}`}
       data-openbitfun-component="config"
       data-openbitfun-part="collectionItem"
-      {...rootProps}
-     data-starmate-component="config" data-starmate-part="collectionItem" >
+      data-starmate-part="collectionItem" data-starmate-component="config" {...rootProps}
+       >
       <Disclosure
         className="openbitfun-collection-item__disclosure"
         summary={label}

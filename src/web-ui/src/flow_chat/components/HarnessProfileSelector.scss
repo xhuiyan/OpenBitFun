@@ -31,7 +31,7 @@
     color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
 
   &:hover,
-  &[data-openbitfun-state~='open'] {
+  &[data-starmate-state~='open'] {
     background: var(--starmate-color-action-quiet-hover);
     color: var(--starmate-color-content-primary);
   }
@@ -65,37 +65,37 @@
 
   width: 100%;
 
-  &[data-openbitfun-profile='Minimal'] {
+  &[data-starmate-profile='Minimal'] {
     --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-minimal);
   }
 
-  &[data-openbitfun-profile='Standard'] {
+  &[data-starmate-profile='Standard'] {
     --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-standard);
   }
 
-  &[data-openbitfun-profile='Ultimate'] {
+  &[data-starmate-profile='Ultimate'] {
     --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-ultimate);
   }
 
-  &[data-openbitfun-profile='Creative'] {
+  &[data-starmate-profile='Creative'] {
     --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-creative);
   }
 
-  [data-openbitfun-part='label'] {
+  [data-starmate-part='label'] {
     color: var(--openbitfun-harness-profile-accent);
     font-family: var(--starmate-type-flow-control-font-family);
     font-weight: var(--starmate-type-label-sm-font-weight);
   }
 
-  &[data-openbitfun-profile='Ultimate'] [data-openbitfun-component='action-item'] {
-    [data-openbitfun-part='label'] {
+  &[data-starmate-profile='Ultimate'] [data-starmate-component='action-item'] {
+    [data-starmate-part='label'] {
       font-style: italic;
       font-weight: var(--starmate-type-label-selected-font-weight);
     }
   }
 
-  &[data-openbitfun-profile='Creative'] [data-openbitfun-component='action-item'] {
-    [data-openbitfun-part='label'] {
+  &[data-starmate-profile='Creative'] [data-starmate-component='action-item'] {
+    [data-starmate-part='label'] {
       font-family: var(--starmate-type-flow-code-font-family);
       font-weight: var(--starmate-type-label-sm-font-weight);
       letter-spacing: var(--starmate-type-modifier-tracking-subtle-letter-spacing);
@@ -108,10 +108,10 @@
 // the glow keeps the same geometry for every Harness identity color.
 .openbitfun-chat-input__mode-dropdown--agent-boost:has(
   .openbitfun-harness-selector--menu-item:is(
-    [data-openbitfun-profile='Minimal'],
-    [data-openbitfun-profile='Standard'],
-    [data-openbitfun-profile='Ultimate'],
-    [data-openbitfun-profile='Creative']
+    [data-starmate-profile='Minimal'],
+    [data-starmate-profile='Standard'],
+    [data-starmate-profile='Ultimate'],
+    [data-starmate-profile='Creative']
   )
 ) {
   overflow: hidden;
@@ -136,32 +136,32 @@
     pointer-events: none;
   }
 
-  > [data-openbitfun-part='viewport'] {
+  > [data-starmate-part='viewport'] {
     position: relative;
     z-index: 1;
   }
 }
 
 .openbitfun-chat-input__mode-dropdown--agent-boost:has(
-  .openbitfun-harness-selector--menu-item[data-openbitfun-profile='Minimal']
+  .openbitfun-harness-selector--menu-item[data-starmate-profile='Minimal']
 ) {
   --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-minimal);
 }
 
 .openbitfun-chat-input__mode-dropdown--agent-boost:has(
-  .openbitfun-harness-selector--menu-item[data-openbitfun-profile='Standard']
+  .openbitfun-harness-selector--menu-item[data-starmate-profile='Standard']
 ) {
   --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-standard);
 }
 
 .openbitfun-chat-input__mode-dropdown--agent-boost:has(
-  .openbitfun-harness-selector--menu-item[data-openbitfun-profile='Ultimate']
+  .openbitfun-harness-selector--menu-item[data-starmate-profile='Ultimate']
 ) {
   --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-ultimate);
 }
 
 .openbitfun-chat-input__mode-dropdown--agent-boost:has(
-  .openbitfun-harness-selector--menu-item[data-openbitfun-profile='Creative']
+  .openbitfun-harness-selector--menu-item[data-starmate-profile='Creative']
 ) {
   --openbitfun-harness-profile-accent: var(--openbitfun-color-identity-harness-creative);
 }
@@ -200,7 +200,7 @@
   color: var(--starmate-color-identity-harness-creative);
 }
 
-.openbitfun-harness-selector__menu [data-openbitfun-part='label'] {
+.openbitfun-harness-selector__menu [data-starmate-part='label'] {
   font-family: var(--starmate-type-flow-control-font-family);
 }
 

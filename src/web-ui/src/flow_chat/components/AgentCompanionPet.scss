@@ -103,8 +103,8 @@
    SVG outline filter (defined inline in the markup) so the silhouette is
    surrounded by a single continuous light contour rather than per-shape
    outlines on every internal element. */
-:root[data-openbitfun-appearance-mode='dark'] .openbitfun-agent-companion-pet,
-[data-openbitfun-appearance-mode='dark'] .openbitfun-agent-companion-pet {
+:root[data-starmate-appearance-mode='dark'] .openbitfun-agent-companion-pet,
+[data-starmate-appearance-mode='dark'] .openbitfun-agent-companion-pet {
   --openbitfun-pet-decor: var(--openbitfun-pet-cream);
   --openbitfun-pet-decor-soft: color-mix(in srgb, var(--openbitfun-pet-cream) 60%, transparent);
 

@@ -93,7 +93,7 @@
       border-color: var(--starmate-color-status-success-border);
 
       > svg,
-      > [data-openbitfun-component='icon'] {
+      > [data-starmate-component='icon'] {
         color: var(--starmate-color-status-success-emphasis);
       }
     }
@@ -104,8 +104,8 @@
       border-color: var(--starmate-color-status-warning-border);
 
       > svg,
-      > [data-openbitfun-component='icon'],
-      > [data-openbitfun-part='processing'] {
+      > [data-starmate-component='icon'],
+      > [data-starmate-part='processing'] {
         color: var(--starmate-color-status-warning-emphasis);
       }
     }
@@ -116,7 +116,7 @@
       border-color: var(--starmate-color-status-danger-border);
 
       > svg,
-      > [data-openbitfun-component='icon'] {
+      > [data-starmate-component='icon'] {
         color: var(--starmate-color-status-danger-emphasis);
       }
     }

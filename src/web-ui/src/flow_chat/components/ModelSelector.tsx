@@ -2564,11 +2564,11 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({
             data-mode-empty={showEmptyModeCard || undefined}
             aria-busy={modelInformationLoading || undefined}
             aria-hidden={!dropdownOpen}
-            {...(!dropdownOpen ? { inert: '' } : {})}
+            data-starmate-part="dropdown" data-starmate-component="model-selector" {...(!dropdownOpen ? { inert: '' } : {})}
             aria-label={activeProviderGroup?.providerName ?? (activePanel === 'modes'
                 ? t('modelSelector.modes.selection') : t('modelSelector.modelSettings'))}
             onKeyDown={isSelectionPanel ? handlePanelKeyDown : handleDropdownKeyDown}
-           data-starmate-component="model-selector" data-starmate-part="dropdown" >
+             >
             {!showModelLoadingState && !isSelectionPanel && !activeProviderGroup
               && (currentModelMode === 'smart' || currentModelMode === 'pool') && (
                 <ModelModeAnimation mode={currentModelMode} />

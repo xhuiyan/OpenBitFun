@@ -34,24 +34,24 @@ html, body {
 // frame; the root element then owns both the frame radius and the background the
 // frame used to paint, and everything below it stays transparent so the corners
 // show through.
-html[data-openbitfun-native-frame='client'],
-html[data-openbitfun-native-frame='client'] body,
-html[data-openbitfun-native-frame='client'] #root,
-html[data-openbitfun-native-frame='client'] .openbitfun-app-layout {
+html[data-starmate-native-frame='client'],
+html[data-starmate-native-frame='client'] body,
+html[data-starmate-native-frame='client'] #root,
+html[data-starmate-native-frame='client'] .openbitfun-app-layout {
   background: transparent;
 }
 
-html[data-openbitfun-native-frame='client'] #root {
+html[data-starmate-native-frame='client'] #root {
   border-radius: 12px;
   background: var(--starmate-color-surface-canvas);
 }
 
-html[data-openbitfun-native-frame='client'][data-openbitfun-window-maximized] #root {
+html[data-starmate-native-frame='client'][data-starmate-window-maximized] #root {
   border-radius: 0;
 }
 
-html[data-openbitfun-native-material='sidebar'],
-html[data-openbitfun-native-material='sidebar'] body {
+html[data-starmate-native-material='sidebar'],
+html[data-starmate-native-material='sidebar'] body {
   background: transparent;
 }
 
@@ -87,11 +87,11 @@ html[data-openbitfun-native-material='sidebar'] body {
     outline: none;
   }
 
-  &[data-openbitfun-background-media='video'] {
+  &[data-starmate-background-media='video'] {
     background: transparent;
   }
 
-  :root[data-openbitfun-native-material='sidebar'] &:has(.openbitfun-workspace-body) {
+  :root[data-starmate-native-material='sidebar'] &:has(.openbitfun-workspace-body) {
     background: transparent;
   }
 
@@ -147,7 +147,7 @@ html[data-openbitfun-native-material='sidebar'] body {
   background: transparent;
 }
 
-.openbitfun-app-layout--toolbar-mode > [data-openbitfun-product-component='toolbar-mode'][data-openbitfun-product-part='root'] {
+.openbitfun-app-layout--toolbar-mode > [data-starmate-product-component='toolbar-mode'][data-starmate-product-part='root'] {
   position: relative;
   z-index: 1;
 }

@@ -141,7 +141,7 @@
       pointer-events: none;
     }
 
-    &[data-openbitfun-part='scrollPrevious']::before {
+    &[data-starmate-part='scrollPrevious']::before {
       inset-inline-start: 0;
       background: linear-gradient(
         to right,
@@ -151,7 +151,7 @@
       );
     }
 
-    &[data-openbitfun-part='scrollNext']::before {
+    &[data-starmate-part='scrollNext']::before {
       inset-inline-end: 0;
       background: linear-gradient(
         to left,
@@ -176,12 +176,12 @@
     }
   }
 
-  &__tabs [data-openbitfun-part='item'] {
+  &__tabs [data-starmate-part='item'] {
     // Cap the resting capsule; TabGroup grows its action area beyond this width.
     max-inline-size: 220px;
   }
 
-  &__tabs [data-openbitfun-part='label'] {
+  &__tabs [data-starmate-part='label'] {
     // Reserve three full-width characters, excluding tab padding and actions.
     min-inline-size: 3em;
   }

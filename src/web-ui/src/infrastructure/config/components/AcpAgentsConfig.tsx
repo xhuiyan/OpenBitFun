@@ -1387,8 +1387,8 @@ const AcpAgentsConfig = forwardRef<AcpAgentsConfigHandle, AcpAgentsConfigProps>(
         data-openbitfun-component="acp-agents-config"
         data-openbitfun-part="content"
         aria-busy={saving}
-        {...(saving ? { inert: '' } : {})}
-       data-starmate-component="acp-agents-config" data-starmate-part="content" >
+        data-starmate-part="content" data-starmate-component="acp-agents-config" {...(saving ? { inert: '' } : {})}
+         >
         <div className="openbitfun-acp-agents__view-controls">
           <TabGroup
             className="openbitfun-acp-agents__tabs"

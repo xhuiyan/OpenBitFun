@@ -288,7 +288,7 @@ describeWithJsdom('AgentsScene', () => {
     expect(presentation?.getAttribute('role')).toBe('list');
     expect(presentation?.getAttribute('aria-label')).toBe('harnessZone.title');
     expect(presentation?.querySelectorAll(':scope > li')).toHaveLength(4);
-    expect(presentation?.querySelectorAll('[data-openbitfun-component="harness-profile-step"]')).toHaveLength(4);
+    expect(presentation?.querySelectorAll('[data-starmate-component="harness-profile-step"]')).toHaveLength(4);
 
     for (const id of ['Minimal', 'Standard', 'Ultimate', 'Creative']) {
       const profile = container.querySelector<HTMLElement>(`[data-testid="agents-harness-${id}"]`);
@@ -338,7 +338,7 @@ describeWithJsdom('AgentsScene', () => {
       expect(document.querySelector('[data-testid="agent-detail-panel"]')).toBeNull();
 
       await act(async () => {
-        preview?.querySelector<HTMLButtonElement>('[data-openbitfun-part="close"]')?.click();
+        preview?.querySelector<HTMLButtonElement>('[data-starmate-part="close"]')?.click();
       });
       await act(async () => { await new Promise(resolve => setTimeout(resolve, 220)); });
       expect(document.querySelector('[data-testid="harness-preview-dialog"]')).toBeNull();
@@ -360,7 +360,7 @@ describeWithJsdom('AgentsScene', () => {
       card.click();
     });
     const preview = document.querySelector<HTMLElement>('[data-testid="harness-preview-dialog"]')!;
-    const overlay = preview.closest('[data-openbitfun-part="overlay"]');
+    const overlay = preview.closest('[data-starmate-part="overlay"]');
     const heading = preview.querySelector('h2');
     const animate = vi.fn(() => ({ cancel: vi.fn() }));
     Object.defineProperty(window.HTMLElement.prototype, 'animate', { value: animate, configurable: true });
@@ -376,17 +376,17 @@ describeWithJsdom('AgentsScene', () => {
     expect(document.querySelector('[data-testid="agent-detail-panel"]')).toBeNull();
     expect(preview.dataset.detailView).toBe('transitioning');
     expect(preview.dataset.state).toBe('open');
-    expect(document.querySelectorAll('[data-openbitfun-component="dialog"][data-openbitfun-part="overlay"]')).toHaveLength(1);
+    expect(document.querySelectorAll('[data-starmate-component="dialog"][data-starmate-part="overlay"]')).toHaveLength(1);
     await act(async () => { await new Promise(resolve => setTimeout(resolve, 220)); });
     expect(document.querySelector('[data-testid="harness-preview-dialog"]')).toBeNull();
     expect(document.querySelector('[data-testid="agent-detail-panel"]')).toBe(preview);
-    expect(preview.closest('[data-openbitfun-part="overlay"]')).toBe(overlay);
+    expect(preview.closest('[data-starmate-part="overlay"]')).toBe(overlay);
     expect(preview.querySelector('h2')).toBe(heading);
     expect(preview.dataset.size).toBe('lg');
     expect(preview.querySelector('[data-testid="agent-detail-title"]')?.textContent).toBe('Standard');
     expect(preview.querySelector('[data-testid="agent-detail-basic-section"]')).toBeTruthy();
     expect(preview.querySelector('[data-testid="agent-detail-capability-cards"]')).toBeTruthy();
-    expect(document.activeElement).toBe(preview.querySelector('[data-openbitfun-part="close"]'));
+    expect(document.activeElement).toBe(preview.querySelector('[data-starmate-part="close"]'));
     expect(animate).toHaveBeenCalledWith([
       { width: '420px', height: '400px' }, { width: '960px', height: '540px' },
     ], expect.objectContaining({ duration: 350 }));
@@ -528,7 +528,7 @@ describeWithJsdom('AgentsScene', () => {
       Array.from(container.querySelectorAll<HTMLButtonElement>('button')).find(button => button.textContent === agent.name)?.click();
     });
     const dialog = document.querySelector<HTMLElement>('[data-testid="agent-detail-panel"]')!;
-    const overlay = dialog.closest('[data-openbitfun-part="overlay"]');
+    const overlay = dialog.closest('[data-starmate-part="overlay"]');
     expect(dialog.dataset.size).toBe('lg');
     expect(dialog.querySelector('[data-testid="agent-detail-basic-section"]')).toBeTruthy();
     expect(dialog.querySelector('[data-testid="agent-detail-description"]')?.textContent).toBe(agent.description);
@@ -540,13 +540,13 @@ describeWithJsdom('AgentsScene', () => {
     const tools = dialog.querySelector<HTMLElement>('[data-detail-section="tools"]')!;
     await act(async () => { tools.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); });
     expect(document.querySelector('[data-testid="agent-detail-panel"]')).toBe(dialog);
-    expect(dialog.closest('[data-openbitfun-part="overlay"]')).toBe(overlay);
+    expect(dialog.closest('[data-starmate-part="overlay"]')).toBe(overlay);
     expect(dialog.dataset.size).toBe('lg');
     expect(dialog.querySelector('[data-detail-page="tools"]')).toBeTruthy();
     expect(dialog.querySelector('[data-testid="agent-detail-capability-cards"]')).toBeNull();
     expect(dialog.querySelector('[data-testid="agent-detail-tool-summary"]')).toBeTruthy();
     expect(dialog.querySelector('[data-testid="agent-detail-title"]')).toBeNull();
-    expect(dialog.querySelector('[data-openbitfun-component="assistant-avatar"]')).toBeNull();
+    expect(dialog.querySelector('[data-starmate-component="assistant-avatar"]')).toBeNull();
     expect(dialog.getAttribute('aria-labelledby')).toBe(dialog.querySelector('.agent-detail-dialog__section-title')?.id);
     const back = dialog.querySelector<HTMLButtonElement>('[data-testid="agent-detail-back"]')!;
     expect(back.getAttribute('aria-label')).toBe('agentsOverview.detail.backToOverview');
@@ -556,7 +556,7 @@ describeWithJsdom('AgentsScene', () => {
     expect(dialog.querySelector('[data-testid="agent-detail-basic-section"]')).toBeTruthy();
     expect(dialog.querySelector('[data-testid="agent-detail-title"]')?.textContent).toBe(agent.name);
     expect(document.activeElement).toBe(dialog.querySelector('[data-detail-section="tools"]'));
-    expect(document.querySelectorAll('[data-openbitfun-component="dialog"][data-openbitfun-part="overlay"]')).toHaveLength(1);
+    expect(document.querySelectorAll('[data-starmate-component="dialog"][data-starmate-part="overlay"]')).toHaveLength(1);
   });
 
   it('keeps the tools configuration entry available when no tools are enabled', async () => {

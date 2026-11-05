@@ -9,7 +9,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 :root { color-scheme: dark; }
-:root[data-openbitfun-appearance-mode="light"] { color-scheme: light; }
+:root[data-starmate-appearance-mode="light"] { color-scheme: light; }
 body { margin: 0; font: 13px/1.5 var(--openbitfun-font-sans); color: var(--openbitfun-text); background: var(--openbitfun-bg); }
 button, input, select, textarea { font: inherit; color: inherit; }
 button, select, input:not([type="range"]):not([type="checkbox"]) { min-height: 34px; border: 1px solid var(--openbitfun-border); border-radius: 6px; background: var(--openbitfun-field-bg); padding: 6px 8px; }

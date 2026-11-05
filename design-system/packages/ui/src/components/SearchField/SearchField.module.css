@@ -44,7 +44,7 @@
     outline-color: var(--starmate-color-border-default);
   }
 
-  .field [data-openbitfun-part="trailing"] {
+  .field [data-starmate-part="trailing"] {
     gap: var(--starmate-space-1);
   }
 
@@ -164,7 +164,7 @@
   }
 
   .icon > :where(svg, img),
-  .icon > [data-openbitfun-component="icon"] {
+  .icon > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;

@@ -91,19 +91,19 @@
 
   .tab:hover:not(:disabled)::before,
   .item:hover .tab:not(:disabled)::before,
-  .tabGroup[data-openbitfun-preview-state="hover"] .tab[aria-selected="false"]:not(:disabled)::before {
+  .tabGroup[data-starmate-preview-state="hover"] .tab[aria-selected="false"]:not(:disabled)::before {
     background: var(--_tab-background-hover);
     border-color: var(--starmate-component-button-outline-border-interactive);
   }
 
   .tab:active:not(:disabled)::before,
-  .tabGroup[data-openbitfun-preview-state="active"] .tab[aria-selected="false"]:not(:disabled)::before {
+  .tabGroup[data-starmate-preview-state="active"] .tab[aria-selected="false"]:not(:disabled)::before {
     background: var(--_tab-background-active);
     border-color: var(--starmate-component-button-outline-border-interactive);
   }
 
   .tab:active:not(:disabled),
-  .tabGroup[data-openbitfun-preview-state="active"] .tab[aria-selected="false"]:not(:disabled) {
+  .tabGroup[data-starmate-preview-state="active"] .tab[aria-selected="false"]:not(:disabled) {
     font-weight: var(--starmate-type-label-selected-font-weight);
   }
 
@@ -130,7 +130,7 @@
     }
 
     .item[data-has-end-action="true"]:is(:hover, :focus-visible, :has(:focus-visible)),
-    .tabGroup:is([data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="focus-visible"]) .item[data-has-end-action="true"] {
+    .tabGroup:is([data-starmate-preview-state="hover"], [data-starmate-preview-state="focus-visible"]) .item[data-has-end-action="true"] {
       padding-inline-end: calc(var(--_tab-group-action-padding) - var(--_tab-group-item-padding-inline));
     }
 
@@ -140,38 +140,38 @@
     }
 
     .item:hover > .endAction,
-    .tabGroup[data-openbitfun-preview-state="hover"] .endAction {
+    .tabGroup[data-starmate-preview-state="hover"] .endAction {
       visibility: visible;
       transition-delay: var(--starmate-motion-duration-fast);
     }
 
     .item:hover > .endAction > button,
-    .tabGroup[data-openbitfun-preview-state="hover"] .endAction > button {
+    .tabGroup[data-starmate-preview-state="hover"] .endAction > button {
       transition-delay: var(--starmate-motion-duration-fast), 0s, 0s;
     }
 
-    .tabGroup:is([data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="focus-visible"]) .endAction {
+    .tabGroup:is([data-starmate-preview-state="hover"], [data-starmate-preview-state="focus-visible"]) .endAction {
       pointer-events: auto;
     }
 
-    .tabGroup:is([data-openbitfun-preview-state="hover"], [data-openbitfun-preview-state="focus-visible"]) .endAction > button {
+    .tabGroup:is([data-starmate-preview-state="hover"], [data-starmate-preview-state="focus-visible"]) .endAction > button {
       opacity: 1;
     }
   }
 
   .item:is(:focus-visible, :has(:focus-visible)),
-  .tabGroup[data-openbitfun-preview-state="focus-visible"] .item {
+  .tabGroup[data-starmate-preview-state="focus-visible"] .item {
     transition: none;
   }
 
   .item:is(:focus-visible, :has(:focus-visible)) > .endAction,
-  .tabGroup[data-openbitfun-preview-state="focus-visible"] .endAction {
+  .tabGroup[data-starmate-preview-state="focus-visible"] .endAction {
     visibility: visible;
     transition: none;
   }
 
   .item:is(:focus-visible, :has(:focus-visible)) > .endAction > button,
-  .tabGroup[data-openbitfun-preview-state="focus-visible"] .endAction > button {
+  .tabGroup[data-starmate-preview-state="focus-visible"] .endAction > button {
     transition: none;
   }
 
@@ -188,7 +188,7 @@
   }
 
   .icon > :where(svg, img),
-  .icon > [data-openbitfun-component="icon"] {
+  .icon > [data-starmate-component="icon"] {
     display: block;
     inline-size: 100%;
     block-size: 100%;
@@ -211,7 +211,7 @@
   }
 
   /* Native tab actions share the glass material; IconButtons keep their tone and states. */
-  .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])) {
+  .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -230,16 +230,16 @@
       color var(--starmate-motion-duration-fast) var(--starmate-motion-easing-standard);
   }
 
-  .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])):hover {
+  .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])):hover {
     color: var(--starmate-color-action-neutral-content);
   }
 
-  .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])):focus-visible {
+  .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])):focus-visible {
     outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring);
     outline-offset: var(--starmate-focus-offset);
   }
 
-  .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])):disabled {
+  .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])):disabled {
     color: var(--starmate-color-action-neutral-content-disabled);
     cursor: not-allowed;
   }
@@ -249,7 +249,7 @@
     .tab,
     .tab::before,
     .endAction,
-    .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])) {
+    .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])) {
       transition: none;
     }
   }
@@ -272,7 +272,7 @@
       outline-color: Highlight;
     }
 
-    .endAction > :where(button, [role="button"]):where(:not([data-openbitfun-component="icon-button"])):focus-visible {
+    .endAction > :where(button, [role="button"]):where(:not([data-starmate-component="icon-button"])):focus-visible {
       outline-color: Highlight;
     }
 

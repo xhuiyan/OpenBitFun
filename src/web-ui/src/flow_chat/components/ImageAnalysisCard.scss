@@ -241,7 +241,7 @@
   color: var(--image-analysis-error);
 }
 
-:root[data-openbitfun-appearance-mode='dark'] .image-analysis-card {
+:root[data-starmate-appearance-mode='dark'] .image-analysis-card {
   --image-analysis-surface: var(--starmate-color-surface-raised);
   --image-analysis-background: var(--starmate-color-surface-canvas);
   --image-analysis-border: var(--starmate-color-border-default);

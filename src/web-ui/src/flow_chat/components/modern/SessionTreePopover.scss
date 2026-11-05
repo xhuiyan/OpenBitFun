@@ -123,7 +123,7 @@
       }
     }
 
-    &[data-openbitfun-placement='top'] {
+    &[data-starmate-placement='top'] {
       --session-tree-popover-offset: 4px;
       transform-origin: center bottom;
     }
@@ -218,7 +218,7 @@
     cursor: pointer;
 
     > svg,
-    > [data-openbitfun-component='icon'] {
+    > [data-starmate-component='icon'] {
       flex: 0 0 auto;
       color: var(--starmate-color-content-secondary);
     }

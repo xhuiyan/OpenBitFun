@@ -62,7 +62,7 @@ $transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-.openbitfun-toolbar-mode[data-openbitfun-communication-mode='voice'] {
+.openbitfun-toolbar-mode[data-starmate-communication-mode='voice'] {
   border: 0;
   border-radius: calc(var(--starmate-space-8) + var(--starmate-space-1));
   background: transparent;
@@ -495,17 +495,17 @@ $transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   // The existing variants retain their surfaces; the shared component owns the button.
   &::before { content: none; }
 
-  > [data-openbitfun-part='icon'] {
+  > [data-starmate-part='icon'] {
     --openbitfun-opacity-icon-artwork: inherit;
     display: contents;
   }
 
-  > :where([data-openbitfun-part='icon']) > :where(svg) {
+  > :where([data-starmate-part='icon']) > :where(svg) {
     inline-size: 14px;
     block-size: 14px;
   }
 
-  > :where([data-openbitfun-part='icon']) > :where([data-openbitfun-component='icon']) {
+  > :where([data-starmate-part='icon']) > :where([data-starmate-component='icon']) {
     inline-size: 16px;
     block-size: 16px;
   }

@@ -6,10 +6,10 @@
   .root[data-disabled="true"] { color: var(--starmate-color-content-disabled); cursor: not-allowed; }
 
   @media (hover: hover) and (pointer: fine) {
-    .root:is(:hover, [data-openbitfun-preview-state="hover"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-hover); }
+    .root:is(:hover, [data-starmate-preview-state="hover"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-hover); }
   }
-  .root:is(:active, [data-openbitfun-preview-state="active"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-pressed); }
-  .root:is(:has(.input:focus-visible), [data-openbitfun-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
+  .root:is(:active, [data-starmate-preview-state="active"]):not([data-disabled="true"]) { background: var(--starmate-color-action-neutral-surface-pressed); }
+  .root:is(:has(.input:focus-visible), [data-starmate-preview-state="focus-visible"]) { outline: var(--starmate-focus-width) solid var(--starmate-color-focus-ring); outline-offset: var(--starmate-focus-offset); }
 
   .copy { display: flex; box-sizing: border-box; min-inline-size: 0; flex: 1 1 auto; flex-direction: column; gap: var(--starmate-space-1); }
   .label { color: var(--starmate-color-content-primary); font-size: var(--starmate-type-body-md-font-size); font-weight: var(--starmate-type-label-lg-font-weight); }
@@ -25,5 +25,5 @@
   .root:dir(rtl)[data-checked="true"] .thumb { transform: translateX(var(--starmate-control-switch-thumb-travel-reverse)); }
 
   @media (prefers-reduced-motion: reduce) { .root, .track, .thumb { transition: none; } }
-  @media (forced-colors: active) { .root[data-appearance="surface"] { border-color: ButtonText; } .track { border: var(--starmate-border-width-default) solid ButtonText; } .root:has(.input:focus-visible), .root[data-openbitfun-preview-state="focus-visible"] { outline-color: Highlight; } }
+  @media (forced-colors: active) { .root[data-appearance="surface"] { border-color: ButtonText; } .track { border: var(--starmate-border-width-default) solid ButtonText; } .root:has(.input:focus-visible), .root[data-starmate-preview-state="focus-visible"] { outline-color: Highlight; } }
 }

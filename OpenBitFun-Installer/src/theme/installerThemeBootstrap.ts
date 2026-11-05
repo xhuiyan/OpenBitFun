@@ -7,6 +7,8 @@ const colorScheme = window.matchMedia?.('(prefers-color-scheme: dark)').matches
 const root = document.documentElement;
 
 root.setAttribute('data-openbitfun-design-system-root', '');
+
+root.setAttribute('data-starmate-design-system-root', '');
 root.setAttribute('data-color-scheme', colorScheme);
 root.setAttribute('data-contrast', 'standard');
 root.setAttribute('data-density', 'comfortable');

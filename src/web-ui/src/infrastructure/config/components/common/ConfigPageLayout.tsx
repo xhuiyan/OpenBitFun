@@ -24,7 +24,7 @@ export const ConfigPageLayout: React.FC<ConfigPageLayoutProps> = ({
   ...props
 }) => {
   return (
-    <ScrollArea className={`openbitfun-config-page-layout ${className}`} data-openbitfun-component="config" data-openbitfun-part="root" {...props} data-starmate-component="config" data-starmate-part="root" >
+    <ScrollArea className={`openbitfun-config-page-layout ${className}`} data-openbitfun-component="config" data-openbitfun-part="root" data-starmate-part="root" data-starmate-component="config" {...props}   >
       {children}
       {/* Real DOM spacer: keeps a guaranteed blank tail at the end of the scroll range. */}
       <div className="openbitfun-config-page-layout__scroll-end-spacer" aria-hidden="true" />
@@ -48,7 +48,7 @@ export const ConfigPageContent: React.FC<ConfigPageContentProps> = ({
   ...props
 }) => {
   return (
-    <div id={id} className={`openbitfun-config-page-content ${className}`} data-openbitfun-component="config" data-openbitfun-part="content" {...props} data-starmate-component="config" data-starmate-part="content" >
+    <div id={id} className={`openbitfun-config-page-content ${className}`} data-openbitfun-component="config" data-openbitfun-part="content" data-starmate-part="content" data-starmate-component="config" {...props}   >
       <div className="openbitfun-config-page-content__inner" data-openbitfun-component="config" data-openbitfun-part="contentInner" data-starmate-component="config" data-starmate-part="contentInner" >
         {children}
       </div>
@@ -139,8 +139,8 @@ export const ConfigPageSection: React.FC<ConfigPageSectionProps> = ({
       actions={extra ? (
         <div className="openbitfun-config-page-section__extra">{extra}</div>
       ) : undefined}
-      {...props}
-     data-starmate-component="config" data-starmate-part="section" >
+      data-starmate-part="section" data-starmate-component="config" {...props}
+       >
       {hasBody ? (
         <FieldGroup
           appearance={bodySurface ? 'subtle' : 'plain'}
@@ -213,8 +213,8 @@ export const ConfigPageRow: React.FC<ConfigPageRowProps> = ({
       data-openbitfun-align={align}
       data-openbitfun-layout={wide ? 'wide' : balanced ? 'balanced' : multiline ? 'multiline' : 'default'}
       data-required={required ? 'true' : 'false'}
-      {...props}
-     data-starmate-component="config" data-starmate-part="row" data-starmate-align={align} data-starmate-layout={wide ? 'wide' : balanced ? 'balanced' : multiline ? 'multiline' : 'default'} >
+      data-starmate-layout={wide ? 'wide' : balanced ? 'balanced' : multiline ? 'multiline' : 'default'} data-starmate-align={align} data-starmate-part="row" data-starmate-component="config" {...props}
+         >
       <div className="openbitfun-config-page-row__meta">
         {/* div (not p): label may contain buttons; button-in-p freezes React event path */}
         <div id={labelId} className="openbitfun-config-page-row__label" data-openbitfun-component="config" data-openbitfun-part="rowLabel" data-starmate-component="config" data-starmate-part="rowLabel" >
