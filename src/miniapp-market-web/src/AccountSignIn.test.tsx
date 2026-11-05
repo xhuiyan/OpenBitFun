@@ -72,11 +72,11 @@ it('remembers only the exact native app callback target', async () => {
   await act(async () => root.unmount());
   root = createRoot(container);
   await act(async () => root.render(<AccountSignIn />));
-  expect(sessionStorage.getItem('openbitfun.auth.returnTo')).toBe('openbitfun://auth/callback');
+  expect(sessionStorage.getItem('starmate.auth.returnTo')).toBe('openbitfun://auth/callback');
 
   window.history.replaceState(null, '', '/sign-in?returnTo=https%3A%2F%2Fevil.example%2F#ticket=device-ticket');
   await act(async () => root.unmount());
   root = createRoot(container);
   await act(async () => root.render(<AccountSignIn />));
-  expect(sessionStorage.getItem('openbitfun.auth.returnTo')).toBeNull();
+  expect(sessionStorage.getItem('starmate.auth.returnTo')).toBeNull();
 });

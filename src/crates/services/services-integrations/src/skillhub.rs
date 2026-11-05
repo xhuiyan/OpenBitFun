@@ -11,7 +11,8 @@ use std::time::Duration;
 const MAX_PACKAGE_BYTES: usize = 20 * 1024 * 1024;
 const MAX_EXTRACTED_BYTES: u64 = 50 * 1024 * 1024;
 const MAX_FILES: usize = 1000;
-pub const ORIGIN_FILE: &str = ".openbitfun-skillhub.json";
+pub const ORIGIN_FILE: &str = ".starmate-skillhub.json";
+pub const LEGACY_ORIGIN_FILE: &str = ".openbitfun-skillhub.json";
 
 pub struct SkillHubClient {
     base: Url,
@@ -257,7 +258,7 @@ pub fn unpack_package(bytes: &[u8]) -> Result<SkillPackage, String> {
         if entry.is_dir() {
             continue;
         }
-        if name.eq_ignore_ascii_case(ORIGIN_FILE) {
+        if name.eq_ignore_ascii_case(ORIGIN_FILE) || name.eq_ignore_ascii_case(LEGACY_ORIGIN_FILE) {
             return Err("SkillHub package contains reserved installation metadata".into());
         }
         total = total
@@ -343,7 +344,10 @@ pub fn install_package(
 /// Used only for local paths on the serving host, never for remote workspace paths.
 pub async fn read_installation_source(path: &Path) -> Option<String> {
     use tokio::io::AsyncReadExt;
-    let file = tokio::fs::File::open(path.join(ORIGIN_FILE)).await.ok()?;
+    let file = match tokio::fs::File::open(path.join(ORIGIN_FILE)).await {
+        Ok(file) => file,
+        Err(_) => tokio::fs::File::open(path.join(LEGACY_ORIGIN_FILE)).await.ok()?,
+    };
     let mut bytes = Vec::new();
     file.take(8193).read_to_end(&mut bytes).await.ok()?;
     if bytes.len() > 8192 {

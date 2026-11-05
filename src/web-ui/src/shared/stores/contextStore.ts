@@ -146,7 +146,7 @@ const defaultContextStore = create<ContextState>()(
     persist<ContextState, [['zustand/devtools', never]]>(
       contextStateCreator,
       {
-        name: 'openbitfun-context-storage',
+        name: 'starmate-context-storage',
         
         serialize: (state: any) => {
           return JSON.stringify({
@@ -208,7 +208,7 @@ export const selectHasInvalidContexts = (state: ContextState) =>
  
 export const cleanupImageContextsFromStorage = () => {
   try {
-    const storageKey = 'openbitfun-context-storage';
+    const storageKey = 'starmate-context-storage';
     const stored = localStorage.getItem(storageKey);
     
     if (stored) {

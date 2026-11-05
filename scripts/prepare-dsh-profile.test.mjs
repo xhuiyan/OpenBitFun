@@ -41,7 +41,7 @@ function createPackageTree() {
 }
 
 function writeStamp(outDir, stamp = { profile: 'openbitfun-acp', content: 'abc' }) {
-  const stampPath = path.join(outDir, '.openbitfun-bridge.json');
+  const stampPath = path.join(outDir, '.starmate-bridge.json');
   writeFileSync(stampPath, `${JSON.stringify(stamp)}\n`);
   return stampPath;
 }

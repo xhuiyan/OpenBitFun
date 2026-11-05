@@ -25,7 +25,11 @@ export function DailyAppUpdateGate(): ReactElement | null {
   useEffect(() => {
     if (!canCheckForAppUpdates()) return;
     const onStorage = (event: StorageEvent) => {
-      if (event.key !== null && !event.key.startsWith('openbitfun:update:')) return;
+      if (
+        event.key !== null
+        && !event.key.startsWith('starmate:update:')
+        && !event.key.startsWith('openbitfun:update:')
+      ) return;
       const skippedVersion = getSkippedVersion();
       const current = useUpdateInstallStore.getState();
       useUpdateInstallStore.setState({

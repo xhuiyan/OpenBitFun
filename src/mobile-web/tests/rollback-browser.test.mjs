@@ -56,7 +56,7 @@ test('edit and rollback sheets use the full message width through resize and kee
       await page.goto(server.origin);
       await page.evaluate(async ({ text, theme }) => {
         document.documentElement.setAttribute('data-color-scheme', theme);
-        localStorage.setItem('openbitfun-mobile-language', 'en-US');
+        localStorage.setItem('starmate-mobile-language', 'en-US');
         window.rollbackFixture = (await import('/tests/fixtures/chat-rollback.tsx')).mountRollbackFixture(text);
       }, { text, theme });
       await page.waitForSelector('.chat-msg--user');

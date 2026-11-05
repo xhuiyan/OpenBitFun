@@ -40,7 +40,8 @@ const SOURCE_DIR_ENV: &str = "STARMATE_DSH_PROFILE_DIR";
 const DSH_HOME_ENV: &str = "DSH_HOME";
 
 /// Basename of the build stamp `scripts/build-profile.mjs` writes.
-const STAMP_FILENAME: &str = ".openbitfun-bridge.json";
+const STAMP_FILENAME: &str = ".starmate-bridge.json";
+const LEGACY_STAMP_FILENAME: &str = ".openbitfun-bridge.json";
 
 /// Directories the build owns end to end, replaced rather than merged.
 ///
@@ -231,7 +232,9 @@ fn profile_name_of(directory: &Path) -> Option<String> {
     struct NamedProfile {
         profile: String,
     }
-    let contents = std::fs::read(directory.join(STAMP_FILENAME)).ok()?;
+    let contents = std::fs::read(directory.join(STAMP_FILENAME))
+        .or_else(|_| std::fs::read(directory.join(LEGACY_STAMP_FILENAME)))
+        .ok()?;
     serde_json::from_slice::<NamedProfile>(&contents)
         .ok()
         .map(|stamp| stamp.profile)
@@ -240,7 +243,13 @@ fn profile_name_of(directory: &Path) -> Option<String> {
 /// Read a build stamp, distinguishing "not installed" from "unreadable".
 fn read_stamp(directory: &Path) -> StarMateResult<Option<BridgeStamp>> {
     let path = directory.join(STAMP_FILENAME);
-    let contents = match std::fs::read(&path) {
+    let contents = match std::fs::read(&path).or_else(|error| {
+        if error.kind() == std::io::ErrorKind::NotFound {
+            std::fs::read(directory.join(LEGACY_STAMP_FILENAME))
+        } else {
+            Err(error)
+        }
+    }) {
         Ok(contents) => contents,
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
         Err(error) => {
@@ -287,10 +296,12 @@ fn install_profile(source: &Path, destination: &Path) -> StarMateResult<()> {
 
     // A half-written stamp is the one file that must never be believed, so drop
     // it up front: everything below runs with the destination marked stale.
-    match std::fs::remove_file(destination.join(STAMP_FILENAME)) {
-        Ok(()) => {}
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
-        Err(error) => return Err(write_error(error)),
+    for stamp in [STAMP_FILENAME, LEGACY_STAMP_FILENAME] {
+        match std::fs::remove_file(destination.join(stamp)) {
+            Ok(()) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(write_error(error)),
+        }
     }
     std::fs::create_dir_all(destination).map_err(write_error)?;
     for managed in MANAGED_SUBDIRECTORIES {
@@ -302,11 +313,12 @@ fn install_profile(source: &Path, destination: &Path) -> StarMateResult<()> {
     }
 
     copy_tree(source, destination, true).map_err(write_error)?;
-    std::fs::copy(
-        source.join(STAMP_FILENAME),
-        destination.join(STAMP_FILENAME),
-    )
-    .map_err(write_error)?;
+    let source_stamp = if source.join(STAMP_FILENAME).exists() {
+        source.join(STAMP_FILENAME)
+    } else {
+        source.join(LEGACY_STAMP_FILENAME)
+    };
+    std::fs::copy(source_stamp, destination.join(STAMP_FILENAME)).map_err(write_error)?;
     Ok(())
 }
 
@@ -319,7 +331,7 @@ fn copy_tree(source: &Path, destination: &Path, skip_stamp: bool) -> std::io::Re
     for entry in std::fs::read_dir(source)? {
         let entry = entry?;
         let name = entry.file_name();
-        if skip_stamp && name == STAMP_FILENAME {
+        if skip_stamp && (name == STAMP_FILENAME || name == LEGACY_STAMP_FILENAME) {
             continue;
         }
         let target = destination.join(&name);
@@ -536,7 +548,7 @@ fn remote_probe_script(profile: &str, launcher: &str, exports: &str) -> String {
          printf 'launcher=%s\\n' \"$(command -v {launcher} 2>/dev/null | head -n 1 | tr -d '\\r')\"\n\
          printf 'version=%s\\n' \"$({launcher} --version 2>&1 | head -n 1 | tr -d '\\r')\"\n\
          printf 'node=%s\\n' \"$(node --version 2>/dev/null | head -n 1 | tr -d '\\r')\"\n\
-         printf 'stamp=%s\\n' \"$(cat \"$profiles\"/{profile}/{STAMP_FILENAME} 2>/dev/null | tr -d '\\n\\r')\"\n"
+         printf 'stamp=%s\\n' \"$( (cat \"$profiles\"/{profile}/{STAMP_FILENAME} 2>/dev/null || cat \"$profiles\"/{profile}/{LEGACY_STAMP_FILENAME} 2>/dev/null) | tr -d '\\n\\r')\"\n"
     )
 }
 
@@ -578,7 +590,7 @@ fn remote_install_script(profile: &str, exports: &str) -> String {
          {exports}profiles=\"${{DSH_HOME:-$HOME/.dsh}}/profiles\"\n\
          destination=\"$profiles\"/{profile}\n\
          mkdir -p \"$destination\"\n\
-         rm -f \"$destination\"/{STAMP_FILENAME}\n\
+         rm -f \"$destination\"/{STAMP_FILENAME} \"$destination\"/{LEGACY_STAMP_FILENAME}\n\
          rm -rf {managed}\n\
          exec tar -xf - -C \"$destination\"\n"
     )

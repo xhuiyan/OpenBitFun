@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { useMiniAppNavigationStore } from './miniAppNavigationStore';
 
 const store = useMiniAppNavigationStore;
-const storageKey = 'openbitfun-miniapp-navigation';
+const storageKey = 'starmate-miniapp-navigation';
 
 beforeEach(() => {
   localStorage.clear();

@@ -1,6 +1,7 @@
 import { canonicalAgentId } from '../../../shared/agent-harness/contract.generated';
 import type { SessionWorkspaceContext } from './workspaceIdentity';
-const STORAGE_KEY = 'openbitfun.mobile.navigation.v1';
+const STORAGE_KEY = 'starmate.mobile.navigation.v1';
+const LEGACY_STORAGE_KEY = 'openbitfun.mobile.navigation.v1';
 
 export interface MobileNavigationScope {
   accountId: string;
@@ -49,7 +50,7 @@ export function loadMobileNavigation(
   storage: StorageLike | null = browserStorage(),
 ): MobileNavigation | null {
   try {
-    const raw = storage?.getItem(STORAGE_KEY);
+    const raw = storage?.getItem(STORAGE_KEY) ?? storage?.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return null;
     const record = JSON.parse(raw);
     if (record.version !== 1
@@ -90,8 +91,10 @@ export function saveMobileNavigation(
 }
 
 export function clearMobileNavigation(storage: StorageLike | null = browserStorage()): void {
-  try { storage?.removeItem(STORAGE_KEY); }
-  catch { /* Browser storage is optional. */ }
+  try {
+    storage?.removeItem(STORAGE_KEY);
+    storage?.removeItem(LEGACY_STORAGE_KEY);
+  } catch { /* Browser storage is optional. */ }
 }
 
 /** Preserve this tab's target when its old per-tab account joins a shared browser identity. */
@@ -101,7 +104,7 @@ export function migrateMobileNavigationController(
 ): void {
   if (previousId === controllerDeviceId) return;
   try {
-    const raw = storage?.getItem(STORAGE_KEY);
+    const raw = storage?.getItem(STORAGE_KEY) ?? storage?.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return;
     const record = JSON.parse(raw);
     if (record.version === 1 && record.accountId === accountId && record.relayUrl === relayUrl

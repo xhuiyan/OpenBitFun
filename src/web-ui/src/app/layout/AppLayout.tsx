@@ -282,10 +282,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ className = '' }) => {
       // Always initialize FlowChat so historical sessions list even when SSH is not connected yet.
       try {
         const explicitPreferredMode =
-          sessionStorage.getItem('openbitfun:flowchat:preferredMode') ||
+          sessionStorage.getItem('starmate:flowchat:preferredMode') ||
           undefined;
         if (explicitPreferredMode) {
-          sessionStorage.removeItem('openbitfun:flowchat:preferredMode');
+          sessionStorage.removeItem('starmate:flowchat:preferredMode');
         }
 
         const initializationPreferredMode =

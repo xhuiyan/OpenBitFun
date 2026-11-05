@@ -374,7 +374,7 @@ test('legacy tab credentials migrate with their keys and navigation without revi
     assert.equal((await readAccount(second)).controllerDeviceId, 'legacy-a');
     assert.equal(relay.logins.length, 0);
     assert.ok(relay.pings.every(ping => ping.controller === 'legacy-a' && ping.client.id === 'legacy-a'));
-    assert.equal(await second.evaluate(() => JSON.parse(sessionStorage.getItem('openbitfun.mobile.navigation.v1')).controllerDeviceId), 'legacy-a');
+    assert.equal(await second.evaluate(() => JSON.parse(sessionStorage.getItem('starmate.mobile.navigation.v1')).controllerDeviceId), 'legacy-a');
     await signOut(first);
     await second.waitForSelector('.pairing-page__form');
     await second.reload(); // init script deliberately reintroduces a stale legacy token.
@@ -465,7 +465,7 @@ test('unreadable future records are retained and the UI reports the storage prob
       const { getBrowserAccountStore, releaseBrowserAccount } = await import('/src/services/BrowserAccountStore.ts');
       releaseBrowserAccount(await getBrowserAccountStore(location.origin).read());
       await new Promise((resolve, reject) => {
-        const request = indexedDB.open('openbitfun-mobile-account', 1);
+        const request = indexedDB.open('starmate-mobile-account', 1);
         request.onerror = reject;
         request.onsuccess = () => {
           const tx = request.result.transaction('accounts', 'readwrite');
@@ -479,7 +479,7 @@ test('unreadable future records are retained and the UI reports the storage prob
     await page.waitForSelector('.pairing-page__error');
     assert.match(await page.$eval('.pairing-page__error', el => el.textContent), /has been kept/);
     assert.deepEqual(await page.evaluate(() => new Promise((resolve, reject) => {
-      const request = indexedDB.open('openbitfun-mobile-account', 1);
+      const request = indexedDB.open('starmate-mobile-account', 1);
       request.onerror = reject;
       request.onsuccess = () => {
         const read = request.result.transaction('accounts').objectStore('accounts').get(location.origin);
@@ -554,7 +554,7 @@ test('a retired official relay token stays archived and is never rebound to the 
   const result=await page.evaluate(async endpoint=>{
    const {BrowserAccountStore}=await import('/src/services/BrowserAccountStore.ts');
    const retired=endpoint.replace(/\/v\/[^/]+$/, '/v/retired');
-   const db=await new Promise((resolve,reject)=>{const request=indexedDB.open('openbitfun-mobile-account',1);request.onupgradeneeded=()=>request.result.createObjectStore('accounts',{keyPath:'relayUrl'});request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)});
+   const db=await new Promise((resolve,reject)=>{const request=indexedDB.open('starmate-mobile-account',1);request.onupgradeneeded=()=>request.result.createObjectStore('accounts',{keyPath:'relayUrl'});request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)});
    const old={version:1,relayUrl:retired,controllerDeviceId:'old-controller',privateKey:btoa(String.fromCharCode(...new Uint8Array(32).fill(3))),revision:1,session:{token:'old-database-token',userId:'42'}};
    await new Promise((resolve,reject)=>{const tx=db.transaction('accounts','readwrite');tx.objectStore('accounts').put(old);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
    const snapshot=await new BrowserAccountStore(endpoint).read();

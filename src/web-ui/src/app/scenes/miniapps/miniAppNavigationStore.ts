@@ -36,7 +36,7 @@ export const useMiniAppNavigationStore = create<MiniAppNavigationState>()(persis
     }),
   }),
   {
-    name: 'openbitfun-miniapp-navigation',
+    name: 'starmate-miniapp-navigation',
     storage: createJSONStorage(() => localStorage),
     partialize: state => ({ pinnedAppIdsBySurface: state.pinnedAppIdsBySurface }),
     merge: (persisted, current) => ({

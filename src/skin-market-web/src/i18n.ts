@@ -5,7 +5,8 @@ export type Locale = 'en-US' | 'zh-CN';
 type MessageKey = keyof typeof messages['en-US'];
 type MessageValues = Record<string, string | number>;
 
-const LOCALE_STORAGE_KEY = 'openbitfun-skin-market-locale';
+const LOCALE_STORAGE_KEY = 'starmate-skin-market-locale';
+const LEGACY_LOCALE_STORAGE_KEY = 'openbitfun-skin-market-locale';
 
 const messages = {
   'en-US': {
@@ -290,7 +291,7 @@ function isLocale(value: string | null): value is Locale {
 
 function resolveInitialLocale(): Locale {
   try {
-    const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    const stored = window.(localStorage.getItem(LOCALE_STORAGE_KEY) ?? localStorage.getItem(LEGACY_LOCALE_STORAGE_KEY));
     if (isLocale(stored)) return stored;
   } catch {
     // Fall back to browser preference.

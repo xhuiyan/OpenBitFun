@@ -1,10 +1,12 @@
+import { migrateMobileBrowserStorage } from './services/brandStorageMigration';
 import { themes } from '@starmate/theme-openbitfun';
 
 // Apply the saved theme before React and the main stylesheet load, avoiding a
 // light/dark flash without requiring an inline script under the mobile CSP.
 let initialTheme: 'dark' | 'light' = 'dark';
 try {
-  const savedTheme = localStorage.getItem('openbitfun-mobile-theme');
+  migrateMobileBrowserStorage();
+  const savedTheme = localStorage.getItem('starmate-mobile-theme');
   if (savedTheme === 'dark' || savedTheme === 'light') {
     initialTheme = savedTheme;
   }

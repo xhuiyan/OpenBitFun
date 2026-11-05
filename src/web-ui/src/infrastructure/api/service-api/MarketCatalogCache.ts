@@ -1,7 +1,7 @@
 /** Public browse snapshots only. Installed state and account details stay live. */
 import { createLogger } from '@/shared/utils/logger';
 
-const STORAGE_KEY = 'openbitfun:market-catalog:v1';
+const STORAGE_KEY = 'starmate:market-catalog:v1';
 const MAX_PAGES = 12;
 const MAX_BYTES = 1024 * 1024;
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;

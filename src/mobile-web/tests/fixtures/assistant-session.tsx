@@ -105,7 +105,7 @@ export async function mountAssistantSessionFixture({ legacyWorkspace = false, qu
   useMobileStore.setState({ authenticatedUserId: account, connectionHealth: 'connected',
     // A paired relay has no device name, so the header shows the workspace line.
     controlTarget: { deviceId: device, deviceName: selectedProject ? null : 'Host' }, error: null });
-  localStorage.setItem('openbitfun-mobile-language', 'en-US');
+  localStorage.setItem('starmate-mobile-language', 'en-US');
   const element = document.createElement('main');
   element.className = 'mobile-app';
   document.body.replaceChildren(element);

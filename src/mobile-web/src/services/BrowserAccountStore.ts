@@ -4,9 +4,10 @@ import { fromB64, generateKeyPair, toB64 } from './E2EEncryption';
 import { migrateMobileNavigationController } from './MobileNavigationStore';
 import { pairingRelayUrl } from './pairingLink';
 
-const DATABASE = 'openbitfun-mobile-account';
+const DATABASE = 'starmate-mobile-account';
 const ACCOUNTS = 'accounts';
-const CHANGE_CHANNEL = 'openbitfun.mobile.account.changed';
+const CHANGE_CHANNEL = 'starmate.mobile.account.changed';
+const LEGACY_DATABASE = 'openbitfun-mobile-account';
 const LEGACY_SESSION_KEY = 'openbitfun.mobile.account_session.v2';
 
 interface BrowserAccountRecord {
@@ -25,6 +26,61 @@ export interface BrowserAccountSnapshot {
   revision: number;
   session: CloudAccountSession | null;
   lastChange?: 'signed-out' | 'expired';
+}
+
+function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function openLegacyAccountDatabase(): Promise<IDBDatabase | null> {
+  if (typeof indexedDB === 'undefined') return Promise.resolve(null);
+  return new Promise(resolve => {
+    let request: IDBOpenDBRequest;
+    try { request = indexedDB.open(LEGACY_DATABASE); }
+    catch { resolve(null); return; }
+    request.onblocked = () => resolve(null);
+    request.onerror = () => resolve(null);
+    request.onupgradeneeded = () => { /* do not create stores for a fresh legacy DB */ };
+    request.onsuccess = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains('accounts')) {
+        db.close();
+        resolve(null);
+        return;
+      }
+      resolve(db);
+    };
+  });
+}
+
+/** Copy OpenBitFun-era browser identities into the StarMate database once. */
+async function migrateLegacyAccountDatabase(target: IDBDatabase): Promise<void> {
+  try {
+    const existing = await requestToPromise(target.transaction('accounts', 'readonly').objectStore('accounts').count());
+    if (existing > 0) return;
+    const legacy = await openLegacyAccountDatabase();
+    if (!legacy) return;
+    try {
+      const records = await requestToPromise(
+        legacy.transaction('accounts', 'readonly').objectStore('accounts').getAll(),
+      ) as unknown[];
+      if (records.length === 0) return;
+      await new Promise<void>((resolve, reject) => {
+        const tx = target.transaction('accounts', 'readwrite');
+        tx.oncomplete = () => resolve();
+        tx.onerror = tx.onabort = () => reject(tx.error);
+        const store = tx.objectStore('accounts');
+        for (const record of records) store.put(record);
+      });
+    } finally {
+      legacy.close();
+    }
+  } catch (error) {
+    console.warn('[BrowserAccountStore] legacy account database migration failed', error);
+  }
 }
 
 export class BrowserAccountStorageError extends Error {
@@ -106,10 +162,11 @@ export class BrowserAccountStore {
       request.onblocked = fail;
       request.onerror = fail;
       request.onupgradeneeded = () => request.result.createObjectStore(ACCOUNTS, { keyPath: 'relayUrl' });
-      request.onsuccess = () => {
+      request.onsuccess = async () => {
         const db = request.result;
         if (settled) { db.close(); return; }
         db.onversionchange = () => { db.close(); this.database = null; };
+        await migrateLegacyAccountDatabase(db);
         resolve(db);
       };
     }).catch(error => { this.database = null; throw error; });
@@ -169,6 +226,7 @@ export class BrowserAccountStore {
       // transaction commits. A retained signed-out record prevents resurrection
       // when another, previously suspended legacy tab later loads this build.
       window.sessionStorage.removeItem(LEGACY_SESSION_KEY);
+      window.sessionStorage.removeItem(`starmate.mobile.device_key:${this.relayUrl}:${legacy.controllerDeviceId}`);
       window.sessionStorage.removeItem(`openbitfun.mobile.device_key:${this.relayUrl}:${legacy.controllerDeviceId}`);
     } catch { /* A shared record is authoritative even if legacy cleanup fails. */ }
   }

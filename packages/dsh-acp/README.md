@@ -49,7 +49,7 @@ $DSH_HOME/profiles/openbitfun-acp/
   lib/**                  the compiled bridge
   presets/**              the modes the session offers
   node_modules/           only what the harness closure does NOT already carry
-  .openbitfun-bridge.json     build stamp; OpenBitFun re-syncs when it changes
+  .starmate-bridge.json       build stamp; StarMate re-syncs when it changes
 ```
 
 Everything else resolves out of the user's own dsh: on every launch the harness

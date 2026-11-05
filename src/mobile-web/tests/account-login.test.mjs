@@ -300,22 +300,22 @@ test('legacy v2 account proof remains readable and scoped for migration', () => 
     version: 2, relay_url: storedAccount.relayUrl, username: '123', token: 'test-token',
     user_id: '123', device_secret: Buffer.alloc(32, 7).toString('base64'), controller_device_id: 'browser-a',
   });
-  storage.setItem('openbitfun.mobile.account_session.v2', legacy);
+  storage.setItem('starmate.mobile.account_session.v2', legacy);
   const restored = accountStore.loadMatchingCloudAccountSession(storedAccount.relayUrl, '', 'browser-a', storage);
   assert.deepEqual(restored, storedAccount);
   accountStore.saveCloudAccountSession(restored, storage);
-  assert.deepEqual(JSON.parse(storage.getItem('openbitfun.mobile.account_session.v2')), JSON.parse(legacy));
+  assert.deepEqual(JSON.parse(storage.getItem('starmate.mobile.account_session.v2')), JSON.parse(legacy));
   for (const [relay, username, controllerId] of [
     ['https://remote.openbitfun.com/v/1.0.2', '', 'browser-a'],
     [storedAccount.relayUrl, '', 'browser-b'], [storedAccount.relayUrl, '456', 'browser-a'],
   ]) assert.equal(accountStore.loadMatchingCloudAccountSession(relay, username, controllerId, storage), null);
-  assert.equal(storage.getItem('openbitfun.mobile.account_session.v2'), legacy);
+  assert.equal(storage.getItem('starmate.mobile.account_session.v2'), legacy);
   accountStore.clearCloudAccountSession(storage);
   assert.equal(accountStore.loadMatchingCloudAccountSession(storedAccount.relayUrl, '', 'browser-a', storage), null);
   for (const raw of ['{', JSON.stringify({ version: 99 })]) {
-    storage.setItem('openbitfun.mobile.account_session.v2', raw);
+    storage.setItem('starmate.mobile.account_session.v2', raw);
     assert.equal(accountStore.loadMatchingCloudAccountSession(storedAccount.relayUrl, '', 'browser-a', storage), null);
-    assert.equal(storage.getItem('openbitfun.mobile.account_session.v2'), raw);
+    assert.equal(storage.getItem('starmate.mobile.account_session.v2'), raw);
   }
 });
 

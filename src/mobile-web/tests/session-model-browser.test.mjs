@@ -23,9 +23,13 @@ async function fixture(t, options = {}, preference = null, width = 390) {
   page.setDefaultTimeout(5_000);
   await page.setViewport({ width, height: 844 });
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  // Pin the fixture language independently of the host OS locale.
+  await page.evaluateOnNewDocument(() => {
+    localStorage.setItem('starmate-mobile-language', 'en-US');
+  });
   await page.goto(server.origin);
   await page.evaluate(async ({ options, preference, preferenceKey }) => {
-    localStorage.setItem('openbitfun-mobile-language', 'en-US');
+    localStorage.setItem('starmate-mobile-language', 'en-US');
     if (preference !== null) localStorage.setItem(preferenceKey, preference);
     else localStorage.removeItem(preferenceKey);
     window.modelFixture = (await import('/tests/fixtures/session-model.tsx')).mountSessionModelFixture(options);

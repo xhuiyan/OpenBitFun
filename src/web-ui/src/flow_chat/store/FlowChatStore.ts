@@ -2247,9 +2247,9 @@ export class FlowChatStore {
   private clearOldStorage(): void {
     try {
       const keysToRemove = [
-        'openbitfun-flow-chat-state',
-        'openbitfun-flow-chat-global',
-        'openbitfun-session-ids'
+        'starmate-flow-chat-state',
+        'starmate-flow-chat-global',
+        'starmate-session-ids'
       ];
       
       keysToRemove.forEach(key => {
@@ -2259,7 +2259,7 @@ export class FlowChatStore {
       });
 
       Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('openbitfun-session-')) {
+        if (key.startsWith('starmate-session-')) {
           localStorage.removeItem(key);
         }
       });

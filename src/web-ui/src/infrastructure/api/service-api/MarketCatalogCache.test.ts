@@ -85,7 +85,7 @@ describe('public marketplace catalog snapshots', () => {
   });
 
   it('tolerates absent, malformed, future and expired records without deleting them', () => {
-    const key = 'openbitfun:market-catalog:v1';
+    const key = 'starmate:market-catalog:v1';
     const valid = (value: unknown): value is number => typeof value === 'number';
     expect(readMarketCatalog('test', valid)).toBeUndefined();
     for (const raw of ['broken', JSON.stringify({ version: 9, pages: [] }), JSON.stringify({

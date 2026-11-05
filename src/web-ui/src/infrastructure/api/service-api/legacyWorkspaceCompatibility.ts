@@ -184,10 +184,14 @@ export async function workspaceWatchRequest(workspaceId: string, path: string, r
 export function migrateLegacySkillReceipts(storage: Storage, records: Array<{
   id: string; rootPath: string; workspaceKind?: string;
 }>): void {
-  const prefix = 'openbitfun:external-skill-import:';
+  const legacyPrefix = 'openbitfun:external-skill-import:';
+  const currentPrefix = 'starmate:external-skill-import:';
   const keys = Array.from({ length: storage.length }, (_, index) => storage.key(index));
   for (const key of keys) {
-    if (!key?.startsWith(prefix) || key.startsWith(`${prefix}v2:`)) continue;
+    const prefix = key?.startsWith(currentPrefix)
+      ? currentPrefix
+      : key?.startsWith(legacyPrefix) ? legacyPrefix : null;
+    if (!key || !prefix || key.startsWith(`${prefix}v2:`)) continue;
     try {
       const tuple = JSON.parse(key.slice(prefix.length));
       if (!Array.isArray(tuple) || tuple.length !== 2 || tuple.some(value => typeof value !== 'string')) continue;
@@ -196,7 +200,7 @@ export function migrateLegacySkillReceipts(storage: Storage, records: Array<{
         && normalizePath(record.rootPath) === normalizePath(root)).map(record => record.id));
       if (root && ids.size !== 1) continue;
       const id = root ? [...ids][0] : '';
-      const target = `${prefix}v2:${JSON.stringify(['local', id, source])}`;
+      const target = `${currentPrefix}v2:${JSON.stringify(['local', id, source])}`;
       if (storage.getItem(target) !== null) continue;
       const raw = storage.getItem(key);
       if (!root && raw !== null) {

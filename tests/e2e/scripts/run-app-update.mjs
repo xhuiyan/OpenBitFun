@@ -128,9 +128,9 @@ class AppUpdatePage {
   wait(selector, timeout) { return until(() => this.present(selector), selector, timeout); }
   click(id) { return click(`[data-testid="${id}"]`); }
   snapshot() { return execute(() => ({
-    discovery: JSON.parse(localStorage.getItem('openbitfun:update:checkSnapshot') ?? 'null'),
-    reminders: JSON.parse(localStorage.getItem('openbitfun:update:reminders') ?? '{}'),
-    skipped: localStorage.getItem('openbitfun:update:skippedVersion'),
+    discovery: JSON.parse(localStorage.getItem('starmate:update:checkSnapshot') ?? 'null'),
+    reminders: JSON.parse(localStorage.getItem('starmate:update:reminders') ?? '{}'),
+    skipped: localStorage.getItem('starmate:update:skippedVersion'),
     foreground: document.hasFocus(), visibility: document.visibilityState,
   })); }
   async checkManually() {
@@ -200,7 +200,7 @@ try {
   // Age only the real persisted dismissal in this isolated profile to exercise 24-hour expiry.
   // Network responses, package bytes, runtime state and the system clock remain untouched.
   await execute(() => {
-    const key = 'openbitfun:update:reminders';
+    const key = 'starmate:update:reminders';
     const reminders = JSON.parse(localStorage.getItem(key));
     reminders.available.deferredAt -= 25 * 60 * 60 * 1000;
     localStorage.setItem(key, JSON.stringify(reminders));

@@ -22,7 +22,7 @@ interface I18nContextValue {
   formatDuration: (milliseconds: number, precision?: DurationPrecision) => string;
 }
 
-const STORAGE_KEY = 'openbitfun-mobile-language';
+const STORAGE_KEY = 'starmate-mobile-language';
 
 function getByPath(source: unknown, path: string): string | null {
   const segments = path.split('.');

@@ -57,7 +57,7 @@ const VENDORED = {
 }
 
 /** Basename of the build stamp OpenBitFun compares before re-materializing. */
-const STAMP_FILENAME = '.openbitfun-bridge.json'
+const STAMP_FILENAME = '.starmate-bridge.json'
 
 const { values } = parseArgs({
   args: process.argv.slice(2),

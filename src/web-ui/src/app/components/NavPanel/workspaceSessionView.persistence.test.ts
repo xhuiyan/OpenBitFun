@@ -3,7 +3,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_WORKSPACE_SESSION_VIEW, useWorkspaceSessionViewStore } from './workspaceSessionView';
 
-const STORAGE_KEY = 'openbitfun.workspace-session-view.v2';
+const STORAGE_KEY = 'starmate.workspace-session-view.v2';
 
 describe('workspace session view persistence', () => {
   beforeEach(() => {

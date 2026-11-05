@@ -729,14 +729,14 @@ describe('AcpAgentsConfig', () => {
 
     expect(listSavedConnectionsMock).toHaveBeenCalledTimes(1);
     expect(container.textContent).not.toContain('Huawei Server');
-    expect(JSON.parse(localStorage.getItem('openbitfun:settings:acp-agents:hidden-remote-connections:v1') || '[]'))
+    expect(JSON.parse(localStorage.getItem('starmate:settings:acp-agents:hidden-remote-connections:v1') || '[]'))
       .toEqual(['huawei-server']);
     expect(container.textContent).toContain('remote.showHiddenConnections');
   });
 
   it('restores a hidden remote server from the hidden list', async () => {
     localStorage.setItem(
-      'openbitfun:settings:acp-agents:hidden-remote-connections:v1',
+      'starmate:settings:acp-agents:hidden-remote-connections:v1',
       JSON.stringify(['huawei-server'])
     );
     listSavedConnectionsMock.mockResolvedValue([{
@@ -777,14 +777,14 @@ describe('AcpAgentsConfig', () => {
       await Promise.resolve();
     });
 
-    expect(localStorage.getItem('openbitfun:settings:acp-agents:hidden-remote-connections:v1'))
+    expect(localStorage.getItem('starmate:settings:acp-agents:hidden-remote-connections:v1'))
       .toBe('[]');
     expect(container.textContent).toContain('Huawei Server');
   });
 
   it('does not probe hidden remote servers until they are restored', async () => {
     localStorage.setItem(
-      'openbitfun:settings:acp-agents:hidden-remote-connections:v1',
+      'starmate:settings:acp-agents:hidden-remote-connections:v1',
       JSON.stringify(['huawei-server'])
     );
     listSavedConnectionsMock.mockResolvedValue([{

@@ -45,7 +45,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PACKAGE_DIR = path.join(ROOT_DIR, 'packages', 'dsh-acp');
 const OUT_DIR = path.join(PACKAGE_DIR, 'dist-profile');
-const STAMP_FILENAME = '.openbitfun-bridge.json';
+const STAMP_FILENAME = '.starmate-bridge.json';
 
 /** One installed harness package is enough to tell a populated tree from a bare one. */
 const DEPS_PROBE = path.join(PACKAGE_DIR, 'node_modules', '@deepseek-ai', 'dsh-app-boot');
@@ -111,7 +111,7 @@ export function getNewestInputMtime(entryPath) {
  * Decide whether the shipped profile needs a rebuild.
  *
  * A directory is not enough: Tauri only needs the path to exist, but OpenBitFun's
- * resolver rejects an unstamped tree. The stamp `.openbitfun-bridge.json` is the
+ * resolver rejects an unstamped tree. The stamp `.starmate-bridge.json` is the
  * same file `scripts/build-profile.mjs` writes and ACP reads.
  *
  * @param {{

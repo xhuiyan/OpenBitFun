@@ -152,7 +152,7 @@ describe('Gitee panel state and asynchronous request ordering', () => {
   it('isolates remembered remotes by device and preserves legacy local preferences', async () => {
     const path = `/remote-preferences-${++testNumber}`;
     const workspaceId = workspaceIdFor(path);
-    const legacyKey = `openbitfun:review-platform:last-remote:id:${workspaceId}`;
+    const legacyKey = `starmate:review-platform:last-remote:id:${workspaceId}`;
     window.localStorage.setItem(legacyKey, 'local-origin');
     mocks.context.mockImplementation(({ repositoryPath }, remoteId) => {
       const result = snapshot(repositoryPath);
@@ -173,7 +173,7 @@ describe('Gitee panel state and asynchronous request ordering', () => {
 
   it('migrates a legacy path preference only on the local device', async () => {
     const path = `/legacy-remote-preference-${++testNumber}`;
-    const legacyKey = `openbitfun:review-platform:last-remote:${path}`;
+    const legacyKey = `starmate:review-platform:last-remote:${path}`;
     window.localStorage.setItem(legacyKey, 'old-origin');
     mocks.context.mockImplementation(() => new Promise(() => {}));
     await act(async () => {
@@ -184,7 +184,7 @@ describe('Gitee panel state and asynchronous request ordering', () => {
     expect(window.localStorage.getItem(legacyKey)).toBe('old-origin');
     await act(async () => { activateSurface('local'); });
     expect(mocks.context).toHaveBeenLastCalledWith(locator(path), 'old-origin');
-    expect(window.localStorage.getItem(`openbitfun:review-platform:last-remote:id:${workspaceIdFor(path)}`)).toBe('old-origin');
+    expect(window.localStorage.getItem(`starmate:review-platform:last-remote:id:${workspaceIdFor(path)}`)).toBe('old-origin');
     expect(window.localStorage.getItem(legacyKey)).toBeNull();
   });
 

@@ -1,6 +1,6 @@
 import { createStore } from 'zustand/vanilla';
 
-export const SIDEBAR_PREFERENCES_KEY = 'openbitfun:appearance:sidebar';
+export const SIDEBAR_PREFERENCES_KEY = 'starmate:appearance:sidebar';
 export const DEFAULT_SIDEBAR_PINS = ['builtin.todos'];
 // The old standalone import page moved into Settings. Keep its saved ID for
 // older installs, but exclude it from the current sidebar and visible ordering.

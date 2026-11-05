@@ -45,7 +45,7 @@ describe('workbench pane layout compatibility', () => {
   });
 
   it('falls back for unknown layout preferences without rewriting them', () => {
-    const storage = preferences({ 'openbitfun:sessionPaneDisplayMode': 'future', 'openbitfun:sessionOverlayWidth': 'invalid' });
+    const storage = preferences({ 'starmate:sessionPaneDisplayMode': 'future', 'starmate:sessionOverlayWidth': 'invalid' });
     const store = createSessionPaneLayoutStore(storage);
     expect(store.getState().displayMode).toBe('split');
     expect(store.getState().preferredOverlayWidth).toBeGreaterThan(0);

@@ -1,6 +1,6 @@
 import type { ModelPoolDefinition } from '@/infrastructure/api/service-api/ModelPoolAPI';
 
-const STORAGE_PREFIX = 'openbitfun.model-selection.pool.v1:';
+const STORAGE_PREFIX = 'starmate.model-selection.pool.v1:';
 
 /** Device/session-scoped UI preference; the host owns the actual selection. */
 export function getRecentModelPool(scopeKey: string): string | undefined {

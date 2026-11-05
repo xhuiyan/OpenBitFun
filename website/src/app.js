@@ -2,13 +2,14 @@ import { matchingItems, queryTokens, scoreCapability } from './search.js';
 
 const root = document.querySelector('#app');
 const pageData = JSON.parse(document.querySelector('#page-data')?.textContent ?? '{}');
-const THEME_STORAGE_KEY = 'openbitfun-playbook-theme';
-const SIDEBAR_SCROLL_STORAGE_KEY = 'openbitfun-playbook-sidebar-scroll';
+const THEME_STORAGE_KEY = 'starmate-playbook-theme';
+const SIDEBAR_SCROLL_STORAGE_KEY = 'starmate-playbook-sidebar-scroll';
 const THEME_CHOICES = ['system', 'light', 'dark'];
 
 function readPreference(key) {
   try {
-    return localStorage.getItem(key);
+    return localStorage.getItem(key)
+      ?? localStorage.getItem(key.replace(/^starmate-/, 'openbitfun-'));
   } catch {
     return null;
   }
@@ -45,7 +46,7 @@ function storedTheme() {
 
 const state = {
   catalog: null,
-  language: readPreference('openbitfun-playbook-language')
+  language: readPreference('starmate-playbook-language')
     ?? (navigator.language.startsWith('zh') ? 'zh' : 'en'),
   query: new URLSearchParams(location.search).get('q') ?? '',
   kind: 'all',
@@ -603,7 +604,7 @@ function bindCommonEvents() {
     saveSidebarScroll();
     document.body.classList.remove('sidebar-open');
     state.language = state.language === 'zh' ? 'en' : 'zh';
-    writePreference('openbitfun-playbook-language', state.language);
+    writePreference('starmate-playbook-language', state.language);
     render();
   });
   document.querySelectorAll('[data-theme-choice]').forEach((button) => {
