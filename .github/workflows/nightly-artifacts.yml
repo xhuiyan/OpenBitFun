@@ -72,8 +72,8 @@ jobs:
       STARMATE_RELEASE_CHANNEL: nightly
       # Nightly does not publish a Tauri latest-v1.json feed yet. Preserve its
       # existing stable updater endpoints until that publishing path exists.
-      TAURI_UPDATER_ENDPOINT: https://github.com/GCWing/OpenBitFun/releases/latest/download/latest-v1.json
-      TAURI_UPDATER_FALLBACK_ENDPOINT: https://openbitfun.com/release/latest-v1.json
+      TAURI_UPDATER_ENDPOINT: https://github.com/xhuiyan/OpenBitFun/releases/latest/download/latest-v1.json
+      TAURI_UPDATER_FALLBACK_ENDPOINT: https://starmate.xtdl.ltd/release/latest-v1.json
       # Nightly relay archives are signed too (linux-binaries.yml receives the
       # key), so nightly Desktop needs the same trust root to verify them.
       STARMATE_RELEASE_PUBKEY: ${{ secrets.TAURI_UPDATER_PUBKEY }}
@@ -338,13 +338,13 @@ jobs:
               find_bundle_dir '*.app'
               find_bundle_file '*.dmg'
               shopt -s nullglob
-              cli_archives=(openbitfun-cli-*-"${PACKAGE_TARGET}".tar.gz)
+              cli_archives=(starmate-cli-*-"${PACKAGE_TARGET}".tar.gz)
               [[ ${#cli_archives[@]} -eq 1 ]]
               test -s "${cli_archives[0]}"
               test -s "${cli_archives[0]}.sha256"
               ;;
             windows-x64)
-              test -s OpenBitFun-Installer/src-tauri/target/release/openbitfun-installer.exe
+              test -s OpenBitFun-Installer/src-tauri/target/release/starmate-installer.exe
               ;;
             *)
               echo "Unsupported package platform: ${{ matrix.platform }}" >&2
@@ -356,18 +356,18 @@ jobs:
         if: ${{ inputs.upload_artifacts }}
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-${{ inputs.artifact_prefix }}-${{ matrix.platform }}-bundle
+          name: starmate-${{ inputs.artifact_prefix }}-${{ matrix.platform }}-bundle
           if-no-files-found: error
           retention-days: ${{ inputs.artifact_retention_days }}
           path: |
             target/*/release/bundle
             target/release/bundle
             src/apps/desktop/target/release/bundle
-            OpenBitFun-Installer/src-tauri/target/release/openbitfun-installer.exe
-            openbitfun-cli-*-apple-darwin.tar.gz
-            openbitfun-cli-*-apple-darwin.tar.gz.sha256
-            openbitfun-cli-*-apple-darwin.tar.gz.sig
-            openbitfun-cli-*-apple-darwin.tar.gz.sha256.sig
+            OpenBitFun-Installer/src-tauri/target/release/starmate-installer.exe
+            starmate-cli-*-apple-darwin.tar.gz
+            starmate-cli-*-apple-darwin.tar.gz.sha256
+            starmate-cli-*-apple-darwin.tar.gz.sig
+            starmate-cli-*-apple-darwin.tar.gz.sha256.sig
 
   linux-binaries:
     name: Linux CLI and Relay Server

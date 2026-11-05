@@ -135,7 +135,7 @@ jobs:
 
           git fetch origin main --tags --force
           CHECKOUT_SHA="$(git rev-parse "${CHECKOUT_REF}^{commit}")"
-          if [[ "${GITHUB_REPOSITORY}" == "GCWing/OpenBitFun" ]] && \
+          if [[ "${GITHUB_REPOSITORY}" == "xhuiyan/OpenBitFun" ]] && \
              ! git merge-base --is-ancestor "${CHECKOUT_SHA}" origin/main; then
             echo "Ref ${CHECKOUT_REF} (${CHECKOUT_SHA}) is not part of the protected main history." >&2
             exit 1
@@ -202,8 +202,8 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=6144
       STARMATE_ENABLE_UPDATER_ARTIFACTS: ${{ needs.prepare.outputs.upload_to_release }}
       STARMATE_RELEASE_CHANNEL: ${{ needs.prepare.outputs.release_channel }}
-      TAURI_UPDATER_ENDPOINT: ${{ github.repository != 'GCWing/OpenBitFun' && (needs.prepare.outputs.release_channel == 'beta' && format('https://github.com/{0}/releases/download/channel-v1-beta/latest-v1.json', github.repository) || format('https://github.com/{0}/releases/latest/download/latest-v1.json', github.repository)) || '' }}
-      TAURI_UPDATER_FALLBACK_ENDPOINT: ${{ github.repository != 'GCWing/OpenBitFun' && (needs.prepare.outputs.release_channel == 'beta' && format('https://github.com/{0}/releases/download/channel-v1-beta/latest-v1.json', github.repository) || format('https://github.com/{0}/releases/latest/download/latest-v1.json', github.repository)) || '' }}
+      TAURI_UPDATER_ENDPOINT: ${{ github.repository != 'xhuiyan/OpenBitFun' && (needs.prepare.outputs.release_channel == 'beta' && format('https://github.com/{0}/releases/download/channel-v1-beta/latest-v1.json', github.repository) || format('https://github.com/{0}/releases/latest/download/latest-v1.json', github.repository)) || '' }}
+      TAURI_UPDATER_FALLBACK_ENDPOINT: ${{ github.repository != 'xhuiyan/OpenBitFun' && (needs.prepare.outputs.release_channel == 'beta' && format('https://github.com/{0}/releases/download/channel-v1-beta/latest-v1.json', github.repository) || format('https://github.com/{0}/releases/latest/download/latest-v1.json', github.repository)) || '' }}
       TAURI_UPDATER_PUBKEY: ${{ secrets.TAURI_UPDATER_PUBKEY }}
       # Same trust root, compiled into the Desktop binary so one-click relay
       # deploy can verify the signed checksum locally and hand the remote host
@@ -413,7 +413,7 @@ jobs:
           if ($env:WINDOWS_CERTIFICATE_THUMBPRINT) {
             # Tauri restores the unsigned raw EXE after bundling; sign it again
             # before the custom installer snapshots and hashes its payload.
-            & ./scripts/ci/sign-windows.ps1 -Path 'target/x86_64-pc-windows-msvc/release/openbitfun-desktop.exe'
+            & ./scripts/ci/sign-windows.ps1 -Path 'target/x86_64-pc-windows-msvc/release/starmate-desktop.exe'
             $installers = @(Get-ChildItem 'target/x86_64-pc-windows-msvc/release/bundle/nsis/*.exe' -File)
             if ($installers.Count -eq 0) { throw 'NSIS installer was not produced.' }
             foreach ($installer in $installers) {
@@ -428,11 +428,11 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           # The payload manifest must hash the already signed desktop executable.
-          $env:STARMATE_INSTALLER_APP_EXE = 'target/x86_64-pc-windows-msvc/release/openbitfun-desktop.exe'
+          $env:STARMATE_INSTALLER_APP_EXE = 'target/x86_64-pc-windows-msvc/release/starmate-desktop.exe'
           pnpm run installer:build:only
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if ($env:WINDOWS_CERTIFICATE_THUMBPRINT) {
-            & ./scripts/ci/sign-windows.ps1 -Path 'OpenBitFun-Installer/src-tauri/target/release/openbitfun-installer.exe'
+            & ./scripts/ci/sign-windows.ps1 -Path 'OpenBitFun-Installer/src-tauri/target/release/starmate-installer.exe'
           }
 
       - name: Verify Apple signature and notarization
@@ -468,7 +468,7 @@ jobs:
         if: failure() && runner.os == 'macOS' && steps.apple_verification.outcome == 'failure'
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-verification-recovery
+          name: starmate-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-verification-recovery
           path: macos-verification-recovery.tar.gz
           if-no-files-found: error
           retention-days: 7
@@ -476,13 +476,13 @@ jobs:
       - name: Upload bundles
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-bundle
+          name: starmate-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-bundle
           if-no-files-found: error
           path: |
             target/*/release/bundle
             target/release/bundle
             src/apps/desktop/target/release/bundle
-            OpenBitFun-Installer/src-tauri/target/release/openbitfun-installer.exe
+            OpenBitFun-Installer/src-tauri/target/release/starmate-installer.exe
 
   recover-macos:
     name: Package (${{ matrix.platform.name }})
@@ -527,7 +527,7 @@ jobs:
             x86_64-apple-darwin) architecture=x86_64 ;;
             aarch64-apple-darwin) architecture=arm64 ;;
           esac
-          lipo "target/$MACOS_TARGET/release/bundle/macos/StarMate.app/Contents/MacOS/openbitfun-desktop" -verify_arch "$architecture"
+          lipo "target/$MACOS_TARGET/release/bundle/macos/StarMate.app/Contents/MacOS/starmate-desktop" -verify_arch "$architecture"
       - name: Configure Apple Developer ID signing and notarization
         env:
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
@@ -551,14 +551,14 @@ jobs:
         if: failure() && steps.apple_verification.outcome == 'failure'
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-verification-recovery
+          name: starmate-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-verification-recovery
           path: macos-verification-recovery.tar.gz
           if-no-files-found: error
           retention-days: 7
       - name: Upload bundles
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-bundle
+          name: starmate-${{ needs.prepare.outputs.release_tag }}-${{ matrix.platform.name }}-bundle
           path: target/${{ matrix.platform.target }}/release/bundle/
           if-no-files-found: error
 
@@ -599,7 +599,7 @@ jobs:
     steps:
       - name: Resolve image repository
         shell: bash
-        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/openbitfun-relay-server" >> "$GITHUB_ENV"
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/starmate-relay-server" >> "$GITHUB_ENV"
 
       - name: Checkout
         uses: actions/checkout@v5
@@ -610,7 +610,7 @@ jobs:
         if: needs.prepare.outputs.relay_image_only != 'true'
         uses: actions/download-artifact@v7
         with:
-          pattern: openbitfun-linux-${{ needs.prepare.outputs.release_tag }}-*
+          pattern: starmate-linux-${{ needs.prepare.outputs.release_tag }}-*
           path: linux-release-assets
           merge-multiple: true
 
@@ -626,16 +626,16 @@ jobs:
           gh release download "${RELEASE_TAG}" \
             --repo "${GITHUB_REPOSITORY}" \
             --dir linux-release-assets \
-            --pattern 'openbitfun-relay-server-*.tar.gz' \
-            --pattern 'openbitfun-relay-server-*.tar.gz.sha256'
+            --pattern 'starmate-relay-server-*.tar.gz' \
+            --pattern 'starmate-relay-server-*.tar.gz.sha256'
 
       - name: Verify image inputs
         shell: bash
         run: |
           set -euo pipefail
-          test -f linux-release-assets/openbitfun-relay-server-x86_64-unknown-linux-gnu.tar.gz
-          test -f linux-release-assets/openbitfun-relay-server-aarch64-unknown-linux-gnu.tar.gz
-          for archive in linux-release-assets/openbitfun-relay-server-*.tar.gz; do
+          test -f linux-release-assets/starmate-relay-server-x86_64-unknown-linux-gnu.tar.gz
+          test -f linux-release-assets/starmate-relay-server-aarch64-unknown-linux-gnu.tar.gz
+          for archive in linux-release-assets/starmate-relay-server-*.tar.gz; do
             (cd linux-release-assets && sha256sum --check "$(basename "${archive}").sha256")
           done
           cp src/apps/relay-server/Dockerfile.release linux-release-assets/Dockerfile.release
@@ -742,7 +742,7 @@ jobs:
       - name: Upload signed image descriptor
         uses: actions/upload-artifact@v6
         with:
-          name: openbitfun-relay-image-${{ needs.prepare.outputs.release_tag }}
+          name: starmate-relay-image-${{ needs.prepare.outputs.release_tag }}
           if-no-files-found: error
           retention-days: 7
           path: |
@@ -807,7 +807,7 @@ jobs:
         if: ${{ !inputs.artifact_run_ids }}
         uses: actions/download-artifact@v7
         with:
-          pattern: openbitfun-${{ needs.prepare.outputs.release_tag }}-*-bundle
+          pattern: starmate-${{ needs.prepare.outputs.release_tag }}-*-bundle
           path: release-assets
           merge-multiple: true
 
@@ -815,7 +815,7 @@ jobs:
         if: ${{ !inputs.artifact_run_ids }}
         uses: actions/download-artifact@v7
         with:
-          pattern: openbitfun-linux-${{ needs.prepare.outputs.release_tag }}-*
+          pattern: starmate-linux-${{ needs.prepare.outputs.release_tag }}-*
           path: linux-release-assets
           merge-multiple: true
 
@@ -823,7 +823,7 @@ jobs:
         if: ${{ !inputs.artifact_run_ids }}
         uses: actions/download-artifact@v7
         with:
-          name: openbitfun-relay-image-${{ needs.prepare.outputs.release_tag }}
+          name: starmate-relay-image-${{ needs.prepare.outputs.release_tag }}
           path: relay-image-assets
 
       - name: Download verified artifacts from completed producers
@@ -949,10 +949,10 @@ jobs:
             release-assets/**/*.dmg \
             release-assets/**/*.dmg.sig \
             release-assets/minisign.pub \
-            linux-release-assets/openbitfun-cli-*.tar.gz \
-            linux-release-assets/openbitfun-cli-*.tar.gz.sha256 \
-            linux-release-assets/openbitfun-relay-server-*.tar.gz \
-            linux-release-assets/openbitfun-relay-server-*.tar.gz.sha256 \
+            linux-release-assets/starmate-cli-*.tar.gz \
+            linux-release-assets/starmate-cli-*.tar.gz.sha256 \
+            linux-release-assets/starmate-relay-server-*.tar.gz \
+            linux-release-assets/starmate-relay-server-*.tar.gz.sha256 \
             linux-release-assets/*.tar.gz.sig \
             linux-release-assets/*.tar.gz.sha256.sig \
             linux-release-assets/linux-binaries-v1.json \
@@ -1010,10 +1010,10 @@ jobs:
           MOBILE_VERSION="${MOBILE_VERSION:-$RELEASE_VERSION}"
           gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" \
             --json body --jq .body > release-notes.md
-          if ! grep -q '<!-- openbitfun-mobile-release -->' release-notes.md; then
+          if ! grep -q '<!-- starmate-mobile-release -->' release-notes.md; then
             cat >> release-notes.md <<EOF
 
-          <!-- openbitfun-mobile-release -->
+          <!-- starmate-mobile-release -->
           ### Android mobile
 
           Android mobile version **${MOBILE_VERSION}** is published separately as a prerelease:
@@ -1074,7 +1074,7 @@ jobs:
             -o relay-image.published.json
           test "$(jq -r '.tag' relay-image.published.json)" = "${{ needs.prepare.outputs.release_tag }}"
           test "$(jq -r '.version' relay-image.published.json)" = "${{ needs.prepare.outputs.version }}"
-          test "$(jq -r '.image' relay-image.published.json)" = "ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/openbitfun-relay-server"
+          test "$(jq -r '.image' relay-image.published.json)" = "ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/starmate-relay-server"
           jq -e '.platforms | sort == ["linux/amd64", "linux/arm64"]' relay-image.published.json >/dev/null
           jq -e '.digest | test("^sha256:[0-9a-f]{64}$")' relay-image.published.json >/dev/null
           curl -fsSL --retry 5 --retry-delay 3 \
@@ -1174,9 +1174,9 @@ jobs:
       # 10-minute cron tick. Until the mirror has these bytes, clients have
       # only the GitHub origin to fall back to. Best effort: the cron run is
       # still the source of truth, so a failed or unconfigured ping never fails
-      # the release. Receiver: scripts/openbitfun-release-sync.sh.
+      # the release. Receiver: scripts/starmate-release-sync.sh.
       - name: Request openbitfun mirror sync
-        if: github.repository == 'GCWing/OpenBitFun'
+        if: github.repository == 'xhuiyan/OpenBitFun'
         continue-on-error: true
         env:
           SYNC_WEBHOOK_URL: ${{ secrets.STARMATE_SYNC_WEBHOOK_URL }}

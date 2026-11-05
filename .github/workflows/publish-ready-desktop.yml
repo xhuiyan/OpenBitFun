@@ -83,14 +83,14 @@ jobs:
           set -euo pipefail
           for platform in windows-x64 linux-x64 linux-arm64; do
             gh run download "$SOURCE_RUN" --repo "$GITHUB_REPOSITORY" \
-              --name "openbitfun-${RELEASE_TAG}-${platform}-bundle" --dir "release-assets/$platform"
+              --name "starmate-${RELEASE_TAG}-${platform}-bundle" --dir "release-assets/$platform"
           done
           for platform in linux-x64 linux-arm64; do
             gh run download "$SOURCE_RUN" --repo "$GITHUB_REPOSITORY" \
-              --name "openbitfun-linux-${RELEASE_TAG}-${platform}" --dir linux-release-assets
+              --name "starmate-linux-${RELEASE_TAG}-${platform}" --dir linux-release-assets
           done
           gh run download "$SOURCE_RUN" --repo "$GITHUB_REPOSITORY" \
-            --name "openbitfun-relay-image-${RELEASE_TAG}" --dir relay-image-assets
+            --name "starmate-relay-image-${RELEASE_TAG}" --dir relay-image-assets
 
       - name: Sign and stage available assets
         shell: bash
@@ -228,7 +228,7 @@ jobs:
           done
           jq -e --arg job "Package ($MACOS_PLATFORM)" '.jobs | any(.name == $job and
             (.steps | any(.name == "Verify Apple signature and notarization" and .conclusion == "success")))' macos-jobs.json
-          artifact="openbitfun-${RELEASE_TAG}-${MACOS_PLATFORM}-bundle"
+          artifact="starmate-${RELEASE_TAG}-${MACOS_PLATFORM}-bundle"
           jq -e --arg name "$artifact" '
             [.artifacts[] | select(.name == $name)] | length == 1 and .[0].expired == false' macos-artifacts.json
           gh run download "$MACOS_RUN" --repo "$GITHUB_REPOSITORY" \

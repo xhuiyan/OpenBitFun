@@ -114,7 +114,7 @@ jobs:
             STARMATE_SIGNING_KEY="YQ==" \
             bash scripts/sign-release-assets.sh "$test_root/missing-asset"
 
-          "$test_root/openbitfun-minisign-0.12/bin/minisign" -v
+          "$test_root/starmate-minisign-0.12/bin/minisign" -v
 
   # ── CLI: independent tests ─────────────────────────────────────────
   cli-test:
@@ -357,7 +357,7 @@ jobs:
 
           $testLog = $testOutput | Out-String
           $knownTauriLoaderFailure = (
-            $testLog -match 'process .*exit successfully:.*openbitfun_desktop_lib-' -and
+            $testLog -match 'process .*exit successfully:.*starmate_desktop_lib-' -and
             $testLog -match 'exit code: 0xc0000139' -and
             $testLog -match 'STATUS_ENTRYPOINT_NOT_FOUND' -and
             $testLog -notmatch 'test result: FAILED'
@@ -377,7 +377,7 @@ jobs:
           cargo test --locked -p starmate-product-capabilities every_agent_runtime_delivery_profile_includes_product_control_discovery
 
       # These crates own platform-sensitive behavior that is not exercised by
-      # testing openbitfun-core/openbitfun-desktop alone. Keep their focused contract
+      # testing starmate-core/starmate-desktop alone. Keep their focused contract
       # suites in the OS matrix so Linux success cannot hide Windows/macOS
       # regressions in worker interruption, relay storage, or OAuth handling.
       - name: Run Page Functions runtime tests
@@ -557,7 +557,7 @@ jobs:
           set -euo pipefail
           root=packages/dsh-acp/dist-profile
           for path in \
-            "$root/.openbitfun-bridge.json" \
+            "$root/.starmate-bridge.json" \
             "$root/cordis.patch.yml" \
             "$root/package.json" \
             "$root/lib/app.js" \
@@ -576,8 +576,8 @@ jobs:
             exit 1
           fi
           node -e '
-            const stamp = require("./packages/dsh-acp/dist-profile/.openbitfun-bridge.json");
-            if (stamp.profile !== "openbitfun-acp") throw new Error("wrong profile name: " + stamp.profile);
+            const stamp = require("./packages/dsh-acp/dist-profile/.starmate-bridge.json");
+            if (stamp.profile !== "starmate-acp") throw new Error("wrong profile name: " + stamp.profile);
             if (!/^[0-9a-f]{64}$/.test(stamp.content)) throw new Error("no content digest");
             process.stdout.write(`profile ${stamp.profile} @ ${stamp.bridge}, min dsh ${stamp.minDshVersion}\n`);
           '
