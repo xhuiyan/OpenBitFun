@@ -110,21 +110,21 @@ describe('AppearanceService', () => {
   });
 
   it('uses and consumes the desktop bootstrap selection before reading config', async () => {
-    globalThis.__STARMATE_BOOTSTRAP_APPEARANCE_ID__ = 'openbitfun-dark';
-    globalThis.__STARMATE_BOOTSTRAP_APPEARANCE_SELECTION__ = 'openbitfun-dark';
+    globalThis.__STARMATE_BOOTSTRAP_APPEARANCE_ID__ = 'starmate-dark';
+    globalThis.__STARMATE_BOOTSTRAP_APPEARANCE_SELECTION__ = 'starmate-dark';
     const { runtime, service } = createService();
 
     await service.initialize();
 
     expect(configMocks.getConfig).not.toHaveBeenCalled();
     expect(runtime.initialize).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'openbitfun-dark' }),
+      expect.objectContaining({ id: 'starmate-dark' }),
       {},
     );
     expect(service.getSnapshot()).toMatchObject({
       initialized: true,
-      selectedAppearanceId: 'openbitfun-dark',
-      resolvedAppearanceId: 'openbitfun-dark',
+      selectedAppearanceId: 'starmate-dark',
+      resolvedAppearanceId: 'starmate-dark',
     });
     expect(Object.prototype.hasOwnProperty.call(globalThis, '__STARMATE_BOOTSTRAP_APPEARANCE_ID__')).toBe(false);
     expect(Object.prototype.hasOwnProperty.call(globalThis, '__STARMATE_BOOTSTRAP_APPEARANCE_SELECTION__')).toBe(false);
@@ -135,12 +135,12 @@ describe('AppearanceService', () => {
     const { service } = createService();
     await service.initialize();
 
-    await service.select('openbitfun-dark');
+    await service.select('starmate-dark');
 
-    expect(configMocks.setConfig).toHaveBeenCalledWith('appearance.selection', 'openbitfun-dark');
+    expect(configMocks.setConfig).toHaveBeenCalledWith('appearance.selection', 'starmate-dark');
     expect(service.getSnapshot()).toMatchObject({
-      selectedAppearanceId: 'openbitfun-dark',
-      resolvedAppearanceId: 'openbitfun-dark',
+      selectedAppearanceId: 'starmate-dark',
+      resolvedAppearanceId: 'starmate-dark',
     });
   });
 
@@ -151,24 +151,24 @@ describe('AppearanceService', () => {
     const { service } = createService();
     await service.initialize();
 
-    const selection = service.select('openbitfun-dark');
+    const selection = service.select('starmate-dark');
     await vi.waitFor(() => expect(configMocks.setConfig).toHaveBeenCalledOnce());
 
     expect(service.getSnapshot()).toMatchObject({
       status: 'applying',
       selectedAppearanceId: 'system',
-      pendingSelectionId: 'openbitfun-dark',
+      pendingSelectionId: 'starmate-dark',
     });
-    expect(service.hasAppliedPendingSelection('openbitfun-dark')).toBe(true);
-    expect(service.hasAppliedPendingSelection('openbitfun-light')).toBe(false);
+    expect(service.hasAppliedPendingSelection('starmate-dark')).toBe(true);
+    expect(service.hasAppliedPendingSelection('starmate-light')).toBe(false);
 
     pendingWrite.resolve(undefined);
     await selection;
-    expect(service.hasAppliedPendingSelection('openbitfun-dark')).toBe(false);
+    expect(service.hasAppliedPendingSelection('starmate-dark')).toBe(false);
   });
 
   it('reconciles externally persisted selections without writing them again', async () => {
-    configMocks.getConfig.mockResolvedValueOnce('system').mockResolvedValueOnce('openbitfun-dark');
+    configMocks.getConfig.mockResolvedValueOnce('system').mockResolvedValueOnce('starmate-dark');
     const { service } = createService();
     await service.initialize();
 
@@ -176,8 +176,8 @@ describe('AppearanceService', () => {
 
     expect(configMocks.setConfig).not.toHaveBeenCalled();
     expect(service.getSnapshot()).toMatchObject({
-      selectedAppearanceId: 'openbitfun-dark',
-      resolvedAppearanceId: 'openbitfun-dark',
+      selectedAppearanceId: 'starmate-dark',
+      resolvedAppearanceId: 'starmate-dark',
     });
   });
 
@@ -189,14 +189,14 @@ describe('AppearanceService', () => {
 
     expect(configMocks.setConfig).not.toHaveBeenCalled();
     expect(runtime.initialize).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'openbitfun-light' }),
+      expect.objectContaining({ id: 'starmate-light' }),
       {},
     );
     expect(service.getSnapshot()).toMatchObject({
       selectedAppearanceId: 'system',
       persistedSelectionId: 'missing-appearance',
       unavailableSelectionId: 'missing-appearance',
-      resolvedAppearanceId: 'openbitfun-light',
+      resolvedAppearanceId: 'starmate-light',
       status: 'degraded',
     });
   });
@@ -360,22 +360,22 @@ describe('AppearanceService', () => {
     await service.initialize();
     configMocks.setConfig.mockRejectedValueOnce(new Error('config unavailable'));
 
-    await expect(service.select('openbitfun-dark')).rejects.toThrow('config unavailable');
+    await expect(service.select('starmate-dark')).rejects.toThrow('config unavailable');
 
     expect(runtime.applyPackage).toHaveBeenNthCalledWith(
       1,
-      expect.objectContaining({ id: 'openbitfun-dark' }),
+      expect.objectContaining({ id: 'starmate-dark' }),
       {},
     );
     expect(runtime.applyPackage).toHaveBeenNthCalledWith(
       2,
-      expect.objectContaining({ id: 'openbitfun-light' }),
+      expect.objectContaining({ id: 'starmate-light' }),
       {},
     );
     expect(service.getSnapshot()).toMatchObject({
       status: 'ready',
       selectedAppearanceId: 'system',
-      resolvedAppearanceId: 'openbitfun-light',
+      resolvedAppearanceId: 'starmate-light',
     });
   });
 
@@ -388,8 +388,8 @@ describe('AppearanceService', () => {
     const { runtime, service } = createService();
     await service.initialize();
 
-    const first = service.select('openbitfun-dark');
-    const second = service.select('openbitfun-light');
+    const first = service.select('starmate-dark');
+    const second = service.select('starmate-light');
     await vi.waitFor(() => expect(configMocks.setConfig).toHaveBeenCalledTimes(1));
     expect(runtime.applyPackage).toHaveBeenCalledTimes(1);
 
@@ -397,13 +397,13 @@ describe('AppearanceService', () => {
     await Promise.all([first, second]);
 
     expect(configMocks.setConfig.mock.calls).toEqual([
-      ['appearance.selection', 'openbitfun-dark'],
-      ['appearance.selection', 'openbitfun-light'],
+      ['appearance.selection', 'starmate-dark'],
+      ['appearance.selection', 'starmate-light'],
     ]);
     expect(service.getSnapshot()).toMatchObject({
       status: 'ready',
-      selectedAppearanceId: 'openbitfun-light',
-      resolvedAppearanceId: 'openbitfun-light',
+      selectedAppearanceId: 'starmate-light',
+      resolvedAppearanceId: 'starmate-light',
     });
   });
 
@@ -481,15 +481,15 @@ describe('AppearanceService', () => {
     const second = createSyncedService();
     await Promise.all([first.initialize(), second.initialize()]);
 
-    await first.select('openbitfun-dark');
+    await first.select('starmate-dark');
     await vi.waitFor(() => {
-      expect(second.getSnapshot().selectedAppearanceId).toBe('openbitfun-dark');
+      expect(second.getSnapshot().selectedAppearanceId).toBe('starmate-dark');
     });
 
     expect(configMocks.setConfig).toHaveBeenCalledTimes(1);
     expect(second.getSnapshot()).toMatchObject({
       status: 'ready',
-      resolvedAppearanceId: 'openbitfun-dark',
+      resolvedAppearanceId: 'starmate-dark',
     });
   });
 
@@ -695,8 +695,8 @@ describe('AppearanceService', () => {
     expect(service.getSnapshot()).toMatchObject({
       status: 'degraded',
       selectedAppearanceId: 'system',
-      resolvedAppearanceId: 'openbitfun-light',
-      current: expect.objectContaining({ id: 'openbitfun-light' }),
+      resolvedAppearanceId: 'starmate-light',
+      current: expect.objectContaining({ id: 'starmate-light' }),
     });
   });
 
@@ -713,19 +713,19 @@ describe('AppearanceService', () => {
       }),
       removeEventListener: vi.fn(),
     });
-    configMocks.getConfig.mockResolvedValueOnce('system').mockResolvedValueOnce('openbitfun-dark');
+    configMocks.getConfig.mockResolvedValueOnce('system').mockResolvedValueOnce('starmate-dark');
     const { service } = createService();
     await service.initialize();
 
     focusListener?.();
     await vi.waitFor(() => {
-      expect(service.getSnapshot().selectedAppearanceId).toBe('openbitfun-dark');
+      expect(service.getSnapshot().selectedAppearanceId).toBe('starmate-dark');
     });
 
     expect(configMocks.setConfig).not.toHaveBeenCalled();
     expect(service.getSnapshot()).toMatchObject({
       status: 'ready',
-      resolvedAppearanceId: 'openbitfun-dark',
+      resolvedAppearanceId: 'starmate-dark',
     });
   });
 

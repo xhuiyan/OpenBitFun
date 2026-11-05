@@ -197,11 +197,20 @@ impl AppearanceConfig {
     }
 
     pub fn get_builtin_appearance(appearance_id: &str) -> Option<Self> {
+        let resolved_id = Self::normalize_appearance_id(appearance_id);
         Self::startup_appearance_bootstrap_manifest()
             .appearances
             .iter()
-            .find(|appearance| appearance.id == appearance_id)
-            .map(|appearance| appearance.to_appearance_config(Some(appearance_id.to_string())))
+            .find(|appearance| appearance.id == resolved_id)
+            .map(|appearance| appearance.to_appearance_config(Some(resolved_id.clone())))
+    }
+
+    /// Persisted OpenBitFun-era builtin appearance ids still resolve after the rebrand.
+    fn normalize_appearance_id(appearance_id: &str) -> String {
+        match appearance_id.strip_prefix("openbitfun-") {
+            Some(suffix) => format!("starmate-{suffix}"),
+            None => appearance_id.to_string(),
+        }
     }
 
     fn startup_appearance_bootstrap_manifest() -> &'static StartupAppearanceBootstrapManifest {
@@ -357,7 +366,7 @@ impl AppearanceConfig {
             || ((cfg!(feature = "devtools") || std::env::var_os("STARMATE_PERF_TRACE").is_some())
                 && std::env::var_os("STARMATE_WEBDRIVER_PORT").is_some());
         let bootstrap_appearance_id_json =
-            serde_json::to_string(&self.id).unwrap_or_else(|_| "\"openbitfun-light\"".to_string());
+            serde_json::to_string(&self.id).unwrap_or_else(|_| "\"starmate-light\"".to_string());
         let bootstrap_appearance_selection_json = self
             .selection_id
             .as_ref()

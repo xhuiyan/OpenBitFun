@@ -101,7 +101,7 @@ const DARK_TONE = createTone('dark');
 const LIGHT_TONE = createTone('light');
 
 function createBuiltinInstallerTheme(
-  id: Extract<ThemeId, 'openbitfun-dark' | 'openbitfun-light'>,
+  id: Extract<ThemeId, 'starmate-dark' | 'starmate-light'>,
   name: string,
   type: Extract<ThemeDataName, 'dark' | 'light'>,
 ): InstallerTheme {
@@ -147,45 +147,45 @@ function createInstallerTheme(seed: ThemeSeed): InstallerTheme {
 }
 
 export const THEMES: InstallerTheme[] = [
-  createBuiltinInstallerTheme('openbitfun-dark', 'Dark', 'dark'),
-  createBuiltinInstallerTheme('openbitfun-light', 'Light', 'light'),
+  createBuiltinInstallerTheme('starmate-dark', 'Dark', 'dark'),
+  createBuiltinInstallerTheme('starmate-light', 'Light', 'light'),
   createInstallerTheme({
-    id: 'openbitfun-midnight',
+    id: 'starmate-midnight',
     name: 'Midnight',
     type: 'dark',
     background: { primary: MIDNIGHT_CARD_BACKGROUND, secondary: DARK_CARD_SURFACE },
     accent: DEFAULT_BLUE,
   }),
   createInstallerTheme({
-    id: 'openbitfun-china-style',
+    id: 'starmate-china-style',
     name: 'Ink Charm',
     type: 'light',
     background: { primary: '#faf8f0', secondary: '#f5f3e8' },
     accent: '#2e5e8a',
   }),
   createInstallerTheme({
-    id: 'openbitfun-china-night',
+    id: 'starmate-china-night',
     name: 'Ink Night',
     type: 'dark',
     background: { primary: '#1a1814', secondary: DARK_CARD_SURFACE },
     accent: '#73a5cc',
   }),
   createInstallerTheme({
-    id: 'openbitfun-cyber',
+    id: 'starmate-cyber',
     name: 'Cyber',
     type: 'dark',
     background: { primary: '#0e0e10', secondary: DARK_CARD_SURFACE },
     accent: '#00e6ff',
   }),
   createInstallerTheme({
-    id: 'openbitfun-tokyo-night',
+    id: 'starmate-tokyo-night',
     name: 'Tokyo Night',
     type: 'dark',
     background: { primary: '#1a1b26', secondary: DARK_CARD_SURFACE },
     accent: '#7aa2f7',
   }),
   createInstallerTheme({
-    id: 'openbitfun-slate',
+    id: 'starmate-slate',
     name: 'Slate',
     type: 'dark',
     background: { primary: DARK_CARD_SURFACE },
@@ -194,18 +194,18 @@ export const THEMES: InstallerTheme[] = [
 ];
 
 export const THEME_DISPLAY_ORDER: ThemeId[] = [
-  'openbitfun-light',
-  'openbitfun-slate',
-  'openbitfun-dark',
-  'openbitfun-midnight',
-  'openbitfun-china-style',
-  'openbitfun-china-night',
-  'openbitfun-cyber',
-  'openbitfun-tokyo-night',
+  'starmate-light',
+  'starmate-slate',
+  'starmate-dark',
+  'starmate-midnight',
+  'starmate-china-style',
+  'starmate-china-night',
+  'starmate-cyber',
+  'starmate-tokyo-night',
 ];
 
 export function findInstallerThemeById(id: ThemeId): InstallerTheme {
   return THEMES.find((theme) => theme.id === id)
-    ?? THEMES.find((theme) => theme.id === 'openbitfun-light')
+    ?? THEMES.find((theme) => theme.id === 'starmate-light')
     ?? THEMES[0];
 }

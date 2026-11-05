@@ -5965,7 +5965,7 @@
             ]
           },
           "evidence": [
-            "source:src/web-ui/src/locales/zh-CN/settings/application.json#appearance.presets.openbitfun-tokyo-night.name"
+            "source:src/web-ui/src/locales/zh-CN/settings/application.json#appearance.presets.starmate-tokyo-night.name"
           ]
         },
         {

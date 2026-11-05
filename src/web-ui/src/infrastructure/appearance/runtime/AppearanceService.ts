@@ -1,4 +1,5 @@
 import { configAPI } from '@/infrastructure/api/service-api/ConfigAPI';
+import { normalizeAppearanceId } from '../builtins/appearanceIdMigration';
 import { createLogger } from '@/shared/utils/logger';
 import {
   builtinAppearanceCatalog,
@@ -437,9 +438,11 @@ export class AppearanceService {
     const bootstrap = consumeBootstrapAppearance();
     const configuredSelection = bootstrap.selection
       ?? await configAPI.getConfig(APPEARANCE_SELECTION_CONFIG_PATH, { skipRetryOnNotFound: true });
-    const selected = typeof configuredSelection === 'string' && configuredSelection.trim()
-      ? configuredSelection.trim()
-      : SYSTEM_APPEARANCE_ID;
+    const selected = normalizeAppearanceId(
+      typeof configuredSelection === 'string' && configuredSelection.trim()
+        ? configuredSelection.trim()
+        : SYSTEM_APPEARANCE_ID,
+    );
     this.persistedSelectionId = selected;
     try {
       await this.applySelectionTransaction(selected, {
@@ -477,6 +480,7 @@ export class AppearanceService {
     selected: AppearanceSelectionId,
     options: ApplySelectionOptions,
   ): Promise<void> {
+    selected = normalizeAppearanceId(selected) as AppearanceSelectionId;
     const resolvedId = selected === SYSTEM_APPEARANCE_ID ? getSystemAppearanceId() : selected;
     const unchanged = this.snapshot.initialized
       && this.snapshot.selectedAppearanceId === selected
@@ -667,9 +671,11 @@ export class AppearanceService {
       APPEARANCE_SELECTION_CONFIG_PATH,
       { skipRetryOnNotFound: true },
     );
-    const selected = typeof configuredSelection === 'string' && configuredSelection.trim()
-      ? configuredSelection.trim()
-      : SYSTEM_APPEARANCE_ID;
+    const selected = normalizeAppearanceId(
+      typeof configuredSelection === 'string' && configuredSelection.trim()
+        ? configuredSelection.trim()
+        : SYSTEM_APPEARANCE_ID,
+    );
     const appearances = await this.loadCatalog();
     this.persistedSelectionId = selected;
     if (!appearanceCatalogsEqual(this.snapshot.appearances, appearances)

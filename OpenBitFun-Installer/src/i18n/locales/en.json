@@ -248,14 +248,14 @@
     "subtitle": "Select a theme to preview it. You can change it anytime.",
     "followSystem": "Match system",
     "themeNames": {
-      "openbitfun-dark": "Dark",
-      "openbitfun-light": "Light",
-      "openbitfun-midnight": "Midnight",
-      "openbitfun-china-style": "Ink Charm",
-      "openbitfun-china-night": "Ink Night",
-      "openbitfun-cyber": "Cyber",
-      "openbitfun-slate": "Slate",
-      "openbitfun-tokyo-night": "Tokyo Night"
+      "starmate-dark": "Dark",
+      "starmate-light": "Light",
+      "starmate-midnight": "Midnight",
+      "starmate-china-style": "Ink Charm",
+      "starmate-china-night": "Ink Night",
+      "starmate-cyber": "Cyber",
+      "starmate-slate": "Slate",
+      "starmate-tokyo-night": "Tokyo Night"
     }
   },
   "complete": {

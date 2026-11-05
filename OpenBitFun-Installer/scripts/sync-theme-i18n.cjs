@@ -5,14 +5,14 @@ const INSTALLER_ROOT = path.resolve(__dirname, "..");
 const PROJECT_ROOT = path.resolve(INSTALLER_ROOT, "..");
 
 const THEME_IDS = [
-  "openbitfun-dark",
-  "openbitfun-light",
-  "openbitfun-midnight",
-  "openbitfun-china-style",
-  "openbitfun-china-night",
-  "openbitfun-cyber",
-  "openbitfun-slate",
-  "openbitfun-tokyo-night",
+  "starmate-dark",
+  "starmate-light",
+  "starmate-midnight",
+  "starmate-china-style",
+  "starmate-china-night",
+  "starmate-cyber",
+  "starmate-slate",
+  "starmate-tokyo-night",
 ];
 
 function readJson(filePath) {

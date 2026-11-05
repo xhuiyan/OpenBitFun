@@ -27,7 +27,7 @@ describe('composeAppearancePackage', () => {
   });
 
   it('keeps usage series colorful in the monochrome appearance', () => {
-    const tokens = getBuiltinAppearanceThemeTokens('openbitfun-monochrome');
+    const tokens = getBuiltinAppearanceThemeTokens('starmate-monochrome');
     expect(tokens['--openbitfun-component-session-usage-input']).toBe(themes.light['color.status.info.emphasis']);
     expect(tokens['--openbitfun-component-session-usage-output']).toBe(themes.light['color.accent.secondary']);
     expect(tokens['--openbitfun-component-session-usage-input']).not.toBe(tokens['--openbitfun-component-session-usage-output']);

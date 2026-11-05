@@ -230,9 +230,9 @@ describe('AppearancePackageConfigSection', () => {
       const groups = Array.from(listbox?.querySelectorAll('[role="group"]') ?? []);
       expect(groups.map(group => Array.from(group.querySelectorAll('[role="option"]'))
         .map(option => option.getAttribute('data-appearance-id')))).toEqual([
-        ['system', 'openbitfun-light', 'openbitfun-dark'],
+        ['system', 'starmate-light', 'starmate-dark'],
         builtinAppearanceCatalog
-          .filter(appearance => !['openbitfun-light', 'openbitfun-dark'].includes(appearance.id))
+          .filter(appearance => !['starmate-light', 'starmate-dark'].includes(appearance.id))
           .map(appearance => appearance.id),
       ]);
       expect(listbox?.querySelector('[data-openbitfun-part="group-label"]')).toBeNull();
@@ -243,12 +243,12 @@ describe('AppearancePackageConfigSection', () => {
       expect(builtinSelect).not.toBeNull();
       await act(async () => {
         if (builtinSelect) {
-          builtinSelect.value = 'openbitfun-light';
+          builtinSelect.value = 'starmate-light';
           builtinSelect.dispatchEvent(new Event('change', { bubbles: true }));
         }
         await Promise.resolve();
       });
-      expect(selectAppearanceMock).toHaveBeenCalledWith('openbitfun-light');
+      expect(selectAppearanceMock).toHaveBeenCalledWith('starmate-light');
 
       const importedCard = container.querySelector<HTMLButtonElement>(
         '[data-appearance-id="sample.appearance"] .appearance-package-config__card-select',
@@ -258,7 +258,7 @@ describe('AppearancePackageConfigSection', () => {
         await Promise.resolve();
       });
       expect(importedCard?.closest('[data-openbitfun-component="action-card"]')).not.toBeNull();
-      expect(selectAppearanceMock.mock.calls).toEqual([['openbitfun-light'], ['sample.appearance']]);
+      expect(selectAppearanceMock.mock.calls).toEqual([['starmate-light'], ['sample.appearance']]);
     } finally {
       act(() => root.unmount());
       container.remove();

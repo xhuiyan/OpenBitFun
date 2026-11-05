@@ -123,7 +123,7 @@ describe('OpenBitFunControl presentation bridge', () => {
   it('acknowledges a GUI-applied appearance without waiting on its own config mutation', async () => {
     vi.spyOn(appearanceService, 'getSnapshot').mockReturnValue({
       ...appearanceService.getSnapshot(),
-      selectedAppearanceId: 'openbitfun-dark',
+      selectedAppearanceId: 'starmate-dark',
     });
     const reload = vi.spyOn(configManager, 'applyExternalReload').mockResolvedValue(undefined);
     const reconcile = vi.spyOn(appearanceService, 'reconcilePersistedState').mockResolvedValue(undefined);
@@ -132,7 +132,7 @@ describe('OpenBitFunControl presentation bridge', () => {
       capabilityId: 'setting.application.appearance',
       optionId: 'theme',
       changedPaths: ['appearance.selection'],
-      value: 'openbitfun-dark',
+      value: 'starmate-dark',
     })).resolves.toEqual({ status: 'alreadyApplied' });
     expect(reload).not.toHaveBeenCalled();
     expect(reconcile).not.toHaveBeenCalled();
@@ -143,7 +143,7 @@ describe('OpenBitFunControl presentation bridge', () => {
       ...appearanceService.getSnapshot(),
       status: 'applying',
       selectedAppearanceId: 'system',
-      pendingSelectionId: 'openbitfun-dark',
+      pendingSelectionId: 'starmate-dark',
     });
     const pendingApplied = vi.spyOn(appearanceService, 'hasAppliedPendingSelection')
       .mockReturnValue(true);
@@ -154,9 +154,9 @@ describe('OpenBitFunControl presentation bridge', () => {
       capabilityId: 'setting.application.appearance',
       optionId: 'theme',
       changedPaths: ['appearance.selection'],
-      value: 'openbitfun-dark',
+      value: 'starmate-dark',
     })).resolves.toEqual({ status: 'alreadyApplied' });
-    expect(pendingApplied).toHaveBeenCalledWith('openbitfun-dark');
+    expect(pendingApplied).toHaveBeenCalledWith('starmate-dark');
     expect(reload).not.toHaveBeenCalled();
     expect(reconcile).not.toHaveBeenCalled();
   });
@@ -173,7 +173,7 @@ describe('OpenBitFunControl presentation bridge', () => {
       capabilityId: 'setting.application.appearance',
       optionId: 'theme',
       changedPaths: ['appearance.selection'],
-      value: 'openbitfun-tokyo-night',
+      value: 'starmate-tokyo-night',
     })).resolves.toEqual({ status: 'applied' });
     expect(reload).toHaveBeenCalledOnce();
     expect(reconcile).toHaveBeenCalledOnce();
@@ -196,7 +196,7 @@ describe('OpenBitFunControl presentation bridge', () => {
   it('reconciles the previous appearance when the native transaction rolls back', async () => {
     vi.spyOn(appearanceService, 'getSnapshot').mockReturnValue({
       ...appearanceService.getSnapshot(),
-      selectedAppearanceId: 'openbitfun-dark',
+      selectedAppearanceId: 'starmate-dark',
     });
     const reload = vi.spyOn(configManager, 'applyExternalReload').mockResolvedValue(undefined);
     const reconcile = vi.spyOn(appearanceService, 'reconcilePersistedState').mockResolvedValue(undefined);

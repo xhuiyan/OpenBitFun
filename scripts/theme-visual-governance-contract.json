@@ -7,7 +7,7 @@
       "owner": "src/web-ui/src/app/layout; src/web-ui/src/app/components/NavPanel",
       "platforms": ["desktop-webview", "web"],
       "formFactors": ["desktop", "narrow"],
-      "themes": ["dark", "light", "system", "openbitfun-monochrome"],
+      "themes": ["dark", "light", "system", "starmate-monochrome"],
       "states": ["default", "hover", "focus", "selected", "disabled"],
       "tokenFamilies": ["--openbitfun-color-surface-*", "--openbitfun-color-content-*", "--openbitfun-color-border-*", "--openbitfun-color-action-*", "--openbitfun-component-scene-*", "--openbitfun-nav-*"],
       "evidence": [
@@ -31,7 +31,7 @@
       "owner": "src/web-ui/src/flow_chat; src/web-ui/src/app/scenes/session",
       "platforms": ["desktop-webview", "web"],
       "formFactors": ["desktop", "narrow"],
-      "themes": ["dark", "light", "system", "openbitfun-monochrome"],
+      "themes": ["dark", "light", "system", "starmate-monochrome"],
       "states": ["default", "streaming", "hover", "focus", "selected", "error", "empty"],
       "tokenFamilies": ["--openbitfun-color-surface-*", "--openbitfun-color-content-*", "--openbitfun-color-accent-*", "--openbitfun-color-action-*", "--openbitfun-color-status-*", "--openbitfun-domain-tool-*"],
       "evidence": [
@@ -175,7 +175,7 @@
       "owner": "src/web-ui/src/app/scenes/settings; src/web-ui/src/infrastructure/appearance",
       "platforms": ["desktop-webview", "web"],
       "formFactors": ["desktop", "narrow"],
-      "themes": ["dark", "light", "system", "openbitfun-monochrome"],
+      "themes": ["dark", "light", "system", "starmate-monochrome"],
       "states": ["default", "selected", "hover", "focus", "imported-appearance", "system-appearance"],
       "tokenFamilies": ["--openbitfun-color-*", "--openbitfun-shadow-*", "--openbitfun-effect-*", "--openbitfun-opacity-*", "--openbitfun-component-config-page-*", "--openbitfun-domain-*"],
       "evidence": [
@@ -219,7 +219,7 @@
       "owner": "OpenBitFun-Installer/src/theme; OpenBitFun-Installer/src/pages; OpenBitFun-Installer/src/styles",
       "platforms": ["installer"],
       "formFactors": ["desktop", "narrow"],
-      "themes": ["dark", "light", "system", "openbitfun-dark", "openbitfun-light", "openbitfun-midnight", "openbitfun-china-style", "openbitfun-china-night", "openbitfun-cyber", "openbitfun-slate", "openbitfun-tokyo-night"],
+      "themes": ["dark", "light", "system", "starmate-dark", "starmate-light", "starmate-midnight", "starmate-china-style", "starmate-china-night", "starmate-cyber", "starmate-slate", "starmate-tokyo-night"],
       "states": ["theme-setup", "language", "options", "loading", "progress", "error", "completed", "hover", "focus"],
       "tokenFamilies": ["@starmate/theme-openbitfun", "--openbitfun-color-surface-*", "--openbitfun-color-content-*", "--openbitfun-color-border-*", "--openbitfun-color-action-*", "--openbitfun-color-accent-*", "--openbitfun-color-status-*"],
       "evidence": [

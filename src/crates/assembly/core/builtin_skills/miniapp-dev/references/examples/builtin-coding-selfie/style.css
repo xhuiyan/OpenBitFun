@@ -2,8 +2,8 @@
  * Design system reference:
  *   palette  ─ Inherits OpenBitFun host theme (--openbitfun-* tokens). Surfaces,
  *              text and borders all proxy through host vars so the dashboard
- *              reads as a native OpenBitFun panel under both openbitfun-dark and
- *              openbitfun-light. The host contract owns first-paint defaults.
+ *              reads as a native OpenBitFun panel under both starmate-dark and
+ *              starmate-light. The host contract owns first-paint defaults.
  *   accent   ─ host primary (cool blue / slate) for hero/streak/heatmap
  *              accents. Diff stats keep semantic green/red so additions and
  *              deletions stay glanceable.

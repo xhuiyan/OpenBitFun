@@ -25,14 +25,14 @@ export interface ExistingInstallation {
 }
 
 export type ThemeId =
-  | 'openbitfun-dark'
-  | 'openbitfun-light'
-  | 'openbitfun-midnight'
-  | 'openbitfun-china-style'
-  | 'openbitfun-china-night'
-  | 'openbitfun-cyber'
-  | 'openbitfun-slate'
-  | 'openbitfun-tokyo-night';
+  | 'starmate-dark'
+  | 'starmate-light'
+  | 'starmate-midnight'
+  | 'starmate-china-style'
+  | 'starmate-china-night'
+  | 'starmate-cyber'
+  | 'starmate-slate'
+  | 'starmate-tokyo-night';
 
 /** Matches main app `themes.current` when following OS appearance. */
 export const SYSTEM_THEME_ID = 'system' as const;

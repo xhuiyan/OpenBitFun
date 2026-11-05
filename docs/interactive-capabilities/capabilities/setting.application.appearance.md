@@ -55,7 +55,7 @@ Switch themes and languages, tune typography, and install or import appearance p
 
 | 选项 / Option | 可用值 / Values | 中文说明 | English description |
 | --- | --- | --- | --- |
-| 主题 / Theme | `system` / `openbitfun-light` / `openbitfun-monochrome` / `openbitfun-slate` / `openbitfun-dark` / `openbitfun-midnight` / `openbitfun-china-style` / `openbitfun-china-night` / `openbitfun-cyber` / `openbitfun-tokyo-night` | 使用系统、星伴深色或星伴浅色外观。 | Use the system, StarMate dark, or StarMate light appearance. |
+| 主题 / Theme | `system` / `starmate-light` / `starmate-monochrome` / `starmate-slate` / `starmate-dark` / `starmate-midnight` / `starmate-china-style` / `starmate-china-night` / `starmate-cyber` / `starmate-tokyo-night` | 使用系统、星伴深色或星伴浅色外观。 | Use the system, StarMate dark, or StarMate light appearance. |
 | 界面语言 / Interface language | `zh-CN` / `en-US` / `zh-TW` | 设置星伴的界面语言。 | Set the StarMate interface language. |
 
 ## 可以直接对智能体说 / Try saying

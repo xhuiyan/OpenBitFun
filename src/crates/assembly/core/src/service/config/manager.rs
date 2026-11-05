@@ -1243,7 +1243,7 @@ mod tests {
     fn complete_installer_handoff() -> InstallerConfigHandoff {
         InstallerConfigHandoff {
             language: Some("en-US".to_string()),
-            appearance_selection: Some("openbitfun-light".to_string()),
+            appearance_selection: Some("starmate-light".to_string()),
             model: Some(InstallerModelHandoff {
                 name: "Installer model".to_string(),
                 provider: "openai".to_string(),
@@ -1340,7 +1340,7 @@ mod tests {
                 .await
                 .unwrap();
             assert_eq!(manager.config.app.language, "en-US");
-            assert_eq!(manager.config.appearance.selection, "openbitfun-light");
+            assert_eq!(manager.config.appearance.selection, "starmate-light");
             assert_eq!(
                 manager
                     .config
@@ -1779,7 +1779,7 @@ mod tests {
         path_manager.initialize_user_directories().await.unwrap();
         let original = r#"{
   "app": { "language": "en-US" },
-  "themes": { "current": "openbitfun-midnight" }
+  "themes": { "current": "starmate-midnight" }
 }"#;
         tokio::fs::write(path_manager.app_config_file(), original)
             .await
@@ -1789,7 +1789,7 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(manager.config.app.language, "en-US");
-        assert_eq!(manager.config.appearance.selection, "openbitfun-midnight");
+        assert_eq!(manager.config.appearance.selection, "starmate-midnight");
         let persisted: GlobalConfig = serde_json::from_slice(
             &tokio::fs::read(path_manager.app_config_file())
                 .await

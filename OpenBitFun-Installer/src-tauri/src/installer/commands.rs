@@ -874,14 +874,14 @@ pub(crate) fn close_installer(window: Window) {
 pub(crate) async fn set_theme_preference(theme_preference: String) -> Result<(), String> {
     let allowed = [
         "system",
-        "openbitfun-dark",
-        "openbitfun-light",
-        "openbitfun-midnight",
-        "openbitfun-china-style",
-        "openbitfun-china-night",
-        "openbitfun-cyber",
-        "openbitfun-slate",
-        "openbitfun-tokyo-night",
+        "starmate-dark",
+        "starmate-light",
+        "starmate-midnight",
+        "starmate-china-style",
+        "starmate-china-night",
+        "starmate-cyber",
+        "starmate-slate",
+        "starmate-tokyo-night",
     ];
     if !allowed.contains(&theme_preference.as_str()) {
         return Err("Unsupported theme preference".to_string());
@@ -1974,7 +1974,7 @@ mod tests {
             apply_first_launch_language_at(&handoff_path, "en")
                 .await
                 .unwrap();
-            apply_theme_preference_at(&handoff_path, "openbitfun-light")
+            apply_theme_preference_at(&handoff_path, "starmate-light")
                 .await
                 .unwrap();
 
@@ -1986,7 +1986,7 @@ mod tests {
             assert_eq!(handoff.language.as_deref(), Some("en-US"));
             assert_eq!(
                 handoff.appearance_selection.as_deref(),
-                Some("openbitfun-light")
+                Some("starmate-light")
             );
             assert!(handoff.model.is_none());
         });

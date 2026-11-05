@@ -4,8 +4,8 @@
   "title": "StarMate Playbook",
   "origin": "https://playbook.openbitfun.com",
   "source": "src/shared/interactive-capabilities/catalog.json",
-  "digest": "c3f53baa5c95026c5d80f918d4b9b3eba6511c5ea590d2f9cf7663e4cd8b8e2f",
-  "ownerDigest": "3cc6d7d869b2c90c2161494a854b5ff7eb72ea69a1a28e40ccd42065fb3382e2",
+  "digest": "24590e6d32bbbe44e2d9695d1cee2844078443f50db6e7f9e8e6599472529f44",
+  "ownerDigest": "bf020ed2873824dae7c60f1e029649f525b7ec35d33aa45a7d4e1fa79827ebad",
   "searchAcceptance": [
     {
       "id": "native-image-generation",
@@ -12298,15 +12298,15 @@
         "type": "string",
         "enum": [
           "system",
-          "openbitfun-light",
-          "openbitfun-monochrome",
-          "openbitfun-slate",
-          "openbitfun-dark",
-          "openbitfun-midnight",
-          "openbitfun-china-style",
-          "openbitfun-china-night",
-          "openbitfun-cyber",
-          "openbitfun-tokyo-night"
+          "starmate-light",
+          "starmate-monochrome",
+          "starmate-slate",
+          "starmate-dark",
+          "starmate-midnight",
+          "starmate-china-style",
+          "starmate-china-night",
+          "starmate-cyber",
+          "starmate-tokyo-night"
         ]
       },
       "outputSchema": {
@@ -27628,15 +27628,15 @@
             "type": "string",
             "enum": [
               "system",
-              "openbitfun-light",
-              "openbitfun-monochrome",
-              "openbitfun-slate",
-              "openbitfun-dark",
-              "openbitfun-midnight",
-              "openbitfun-china-style",
-              "openbitfun-china-night",
-              "openbitfun-cyber",
-              "openbitfun-tokyo-night"
+              "starmate-light",
+              "starmate-monochrome",
+              "starmate-slate",
+              "starmate-dark",
+              "starmate-midnight",
+              "starmate-china-style",
+              "starmate-china-night",
+              "starmate-cyber",
+              "starmate-tokyo-night"
             ]
           }
         },

@@ -248,14 +248,14 @@
     "subtitle": "点击主题即可预览，之后也可以随时更换。",
     "followSystem": "跟随系统",
     "themeNames": {
-      "openbitfun-dark": "暗色",
-      "openbitfun-light": "浅色",
-      "openbitfun-midnight": "午夜",
-      "openbitfun-china-style": "墨韵",
-      "openbitfun-china-night": "墨夜",
-      "openbitfun-cyber": "赛博",
-      "openbitfun-slate": "石板灰",
-      "openbitfun-tokyo-night": "东京夜"
+      "starmate-dark": "暗色",
+      "starmate-light": "浅色",
+      "starmate-midnight": "午夜",
+      "starmate-china-style": "墨韵",
+      "starmate-china-night": "墨夜",
+      "starmate-cyber": "赛博",
+      "starmate-slate": "石板灰",
+      "starmate-tokyo-night": "东京夜"
     }
   },
   "complete": {

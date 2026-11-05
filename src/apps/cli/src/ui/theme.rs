@@ -268,7 +268,7 @@ fn parse_osc_color(s: &str) -> Option<(u8, u8, u8)> {
 
 impl Theme {
     pub(crate) fn dark() -> Self {
-        Self::from_builtin_preset("openbitfun-dark", Appearance::Dark)
+        Self::from_builtin_preset("starmate-dark", Appearance::Dark)
     }
 
     pub(crate) fn dark_ansi16() -> Self {
@@ -305,7 +305,7 @@ impl Theme {
     }
 
     pub(crate) fn light() -> Self {
-        Self::from_builtin_preset("openbitfun-light", Appearance::Light)
+        Self::from_builtin_preset("starmate-light", Appearance::Light)
     }
 
     pub(crate) fn light_ansi16() -> Self {
@@ -725,45 +725,45 @@ static BUILTIN_OPENCODE_THEMES: Lazy<HashMap<&'static str, OpencodeThemeJson>> =
 
     HashMap::from([
         parse(
-            "openbitfun-cyber",
+            "starmate-cyber",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-cyber.json"
+                "/themes/presets/starmate-cyber.json"
             )),
         ),
         parse(
-            "openbitfun-dark",
+            "starmate-dark",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-dark.json"
+                "/themes/presets/starmate-dark.json"
             )),
         ),
         parse(
-            "openbitfun-ink-night",
+            "starmate-ink-night",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-ink-night.json"
+                "/themes/presets/starmate-ink-night.json"
             )),
         ),
         parse(
-            "openbitfun-light",
+            "starmate-light",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-light.json"
+                "/themes/presets/starmate-light.json"
             )),
         ),
         parse(
-            "openbitfun-midnight",
+            "starmate-midnight",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-midnight.json"
+                "/themes/presets/starmate-midnight.json"
             )),
         ),
         parse(
-            "openbitfun-tokyo-night",
+            "starmate-tokyo-night",
             include_str!(concat!(
                 env!("CARGO_MANIFEST_DIR"),
-                "/themes/presets/openbitfun-tokyo-night.json"
+                "/themes/presets/starmate-tokyo-night.json"
             )),
         ),
     ])
@@ -778,8 +778,16 @@ pub(crate) fn builtin_theme_ids() -> Vec<String> {
     ids
 }
 
+/// Persisted OpenBitFun-era theme ids still resolve after the rebrand.
+pub(crate) fn normalize_theme_id(id: &str) -> String {
+    match id.strip_prefix("openbitfun-") {
+        Some(suffix) => format!("starmate-{suffix}"),
+        None => id.to_string(),
+    }
+}
+
 pub(crate) fn builtin_theme_json(id: &str) -> Option<&'static OpencodeThemeJson> {
-    BUILTIN_OPENCODE_THEMES.get(id)
+    BUILTIN_OPENCODE_THEMES.get(normalize_theme_id(id).as_str())
 }
 
 #[derive(Debug, Default)]
@@ -939,6 +947,15 @@ fn blend_alpha_channel(fg: u8, alpha: u8, bg: u8) -> u8 {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn legacy_theme_ids_resolve_after_rebrand() {
+        assert_eq!(normalize_theme_id("openbitfun-dark"), "starmate-dark");
+        assert!(builtin_theme_json("openbitfun-dark").is_some());
+        assert!(builtin_theme_json("openbitfun-tokyo-night").is_some());
+        assert_eq!(normalize_theme_id("starmate-dark"), "starmate-dark");
+        assert_eq!(normalize_theme_id("custom-theme"), "custom-theme");
+    }
+
     use super::*;
 
     #[test]

@@ -55,7 +55,7 @@ describe('builtin appearance preset output', () => {
         const accent = tokens[name];
         expect(APPEARANCE_ROOT_TOKEN_NAMES).toContain(name);
         expect(accent).not.toBe(palette.colors.text.primary);
-        if (palette.id === 'openbitfun-dark') {
+        if (palette.id === 'starmate-dark') {
           expect([character.body, character.knob, character.stem, character.face]).toContain(accent);
         }
         const background = palette.colors.background.scene;
@@ -66,7 +66,7 @@ describe('builtin appearance preset output', () => {
   });
 
   it('keeps published light field states in root and chrome while preserving named palettes', () => {
-    const settings = getBuiltinAppearance('openbitfun-light')?.renderers?.['theme-tokens']?.settings;
+    const settings = getBuiltinAppearance('starmate-light')?.renderers?.['theme-tokens']?.settings;
     for (const tokens of [settings?.tokens, settings?.scopes?.chrome].filter(Boolean)) {
       for (const [name, value] of Object.entries(themes.light)) {
         if (name.startsWith('color.field.') || name === 'color.actionCard.background' || name.startsWith('color.composer.')) expect(tokens?.[themeCssVariables[name as ThemeTokenName]]).toBe(value);
@@ -82,7 +82,7 @@ describe('builtin appearance preset output', () => {
     expect(settings?.tokens['--openbitfun-color-field-group-background']).toBe('rgba(0, 0, 0, 0.03)');
     expect(settings?.tokens['--openbitfun-color-field-placeholder']).toBe('rgba(0, 0, 0, 0.40)');
     for (const palette of builtinAppearancePalettes) {
-      if (palette.id === 'openbitfun-light') continue;
+      if (palette.id === 'starmate-light') continue;
       const tokens = getBuiltinAppearanceThemeTokens(palette.id);
       expect(tokens['--openbitfun-color-action-card-background']).toBe(palette.colors.element.base);
       expect(tokens['--openbitfun-color-field-border']).toBe(palette.colors.border.base);
@@ -101,7 +101,7 @@ describe('builtin appearance preset output', () => {
         expect(settings?.tokens[themeCssVariables[name as ThemeTokenName]]).toBe(value);
       }
     }
-    const light = getBuiltinAppearanceThemeTokens('openbitfun-light');
+    const light = getBuiltinAppearanceThemeTokens('starmate-light');
     expect(light['--openbitfun-component-button-content']).toBe('rgba(0, 0, 0, 0.80)');
     expect(light['--openbitfun-component-button-text-content']).toBe('#059cb0');
     expect(light['--openbitfun-color-action-primary-background']).toBe('#101a27');
@@ -110,7 +110,7 @@ describe('builtin appearance preset output', () => {
 
   it('preserves the action colors of branded presets through the Button contract', () => {
     for (const palette of builtinAppearancePalettes) {
-      if (palette.id === 'openbitfun-light' || palette.id === 'openbitfun-dark') continue;
+      if (palette.id === 'starmate-light' || palette.id === 'starmate-dark') continue;
       const tokens = getBuiltinAppearanceThemeTokens(palette.id);
       expect(tokens['--openbitfun-component-button-primary-background']).toBe(tokens['--openbitfun-color-action-primary-background']);
       expect(tokens['--openbitfun-component-button-text-content']).toBe(tokens['--openbitfun-color-accent-default']);
@@ -119,12 +119,12 @@ describe('builtin appearance preset output', () => {
   });
 
   it('keeps menu label and caption colors consistent between the public light theme and product portals', () => {
-    const settings = getBuiltinAppearance('openbitfun-light')!.renderers!['theme-tokens']!.settings;
+    const settings = getBuiltinAppearance('starmate-light')!.renderers!['theme-tokens']!.settings;
     for (const tokens of [settings.tokens, ...(settings.scopes?.chrome ? [settings.scopes.chrome] : [])]) {
       expect(tokens['--openbitfun-color-action-neutral-content']).toBe(themes.light['color.action.neutral.content']);
       expect(tokens['--openbitfun-color-content-caption']).toBe(themes.light['color.content.caption']);
     }
-    for (const palette of builtinAppearancePalettes.filter(p => p.id !== 'openbitfun-light')) {
+    for (const palette of builtinAppearancePalettes.filter(p => p.id !== 'starmate-light')) {
       expect(getBuiltinAppearanceThemeTokens(palette.id)['--openbitfun-color-action-neutral-content']).toBe(palette.colors.text.secondary);
     }
   });
@@ -217,7 +217,7 @@ describe('builtin appearance preset output', () => {
 
   it('keeps approved near-neutral preset stops scoped to their semantic roles', () => {
     const serializedAppearances = JSON.stringify(builtinAppearancePalettes).toLowerCase();
-    const lightAppearance = builtinAppearancePalettes.find(appearance => appearance.id === 'openbitfun-light');
+    const lightAppearance = builtinAppearancePalettes.find(appearance => appearance.id === 'starmate-light');
 
     expect(lightAppearance?.colors.background.primary).toBe('#fdfdfd');
     expect(lightAppearance?.monaco?.colors.background).toBe('#ffffff');
@@ -228,8 +228,8 @@ describe('builtin appearance preset output', () => {
   });
 
   it('keeps the default light appearance on the neutral, navy, and restrained semantic palette', () => {
-    const lightAppearance = builtinAppearancePalettes.find(appearance => appearance.id === 'openbitfun-light');
-    const tokens = getBuiltinAppearanceThemeTokens('openbitfun-light');
+    const lightAppearance = builtinAppearancePalettes.find(appearance => appearance.id === 'starmate-light');
+    const tokens = getBuiltinAppearanceThemeTokens('starmate-light');
 
     expect(lightAppearance).toMatchObject({
       description: 'Light appearance - Crisp white surfaces, soft neutral grays, deep navy actions',
@@ -294,9 +294,9 @@ describe('builtin appearance preset output', () => {
 
   it('keeps settings row hover feedback separated from dark scene surfaces', () => {
     const darkAppearance = builtinAppearancePalettes.find(
-      appearance => appearance.id === 'openbitfun-dark',
+      appearance => appearance.id === 'starmate-dark',
     );
-    const tokens = getBuiltinAppearanceThemeTokens('openbitfun-dark');
+    const tokens = getBuiltinAppearanceThemeTokens('starmate-dark');
 
     expect(tokens).toMatchObject({
       '--openbitfun-color-surface-scene': '#1c1c1f',
@@ -325,10 +325,10 @@ describe('builtin appearance preset output', () => {
 
   it('keeps monochrome content readable while projecting inverse structural chrome', () => {
     const monochrome = builtinAppearancePalettes.find(
-      appearance => appearance.id === 'openbitfun-monochrome',
+      appearance => appearance.id === 'starmate-monochrome',
     );
-    const monochromePackage = getBuiltinAppearance('openbitfun-monochrome');
-    const tokens = getBuiltinAppearanceThemeTokens('openbitfun-monochrome');
+    const monochromePackage = getBuiltinAppearance('starmate-monochrome');
+    const tokens = getBuiltinAppearanceThemeTokens('starmate-monochrome');
     const chromeTokens = monochromePackage?.renderers?.['theme-tokens']?.settings.scopes?.chrome;
 
     expect(monochrome).toMatchObject({
@@ -450,48 +450,48 @@ describe('builtin appearance preset output', () => {
     }))).toMatchInlineSnapshot(`
       [
         {
-          "hash": "cfde4833bc6febca47a8ee559dbe8fcd3464a6a6658ed6f7cb7876e1d6f94e45",
-          "id": "openbitfun-light",
+          "hash": "55f533988d5f21752e3e15345bf4cb457b446fc40a919857456c738a3cc7590f",
+          "id": "starmate-light",
           "type": "light",
         },
         {
-          "hash": "e6228f9dc52570fb2897015bf93f63417224f7491b0b212776f9045bc2a00384",
-          "id": "openbitfun-monochrome",
+          "hash": "7fe8c0c2ef8e63cd20f3fc28124b488938ac9f3b44bb3269d409c3f01ac49664",
+          "id": "starmate-monochrome",
           "type": "light",
         },
         {
-          "hash": "da79198eeed334a53f6dbbf09ffccc4e517d3e31cd35edc03e810fdb63428a6f",
-          "id": "openbitfun-slate",
+          "hash": "1152de9ce9f380e6797c1ab568e2294031c9c9d6e13674d9ea0d1cb58353c016",
+          "id": "starmate-slate",
           "type": "dark",
         },
         {
-          "hash": "eae65bea12bda70a4fe9cc06ec8bbf4a1d4cd5558e53006965ed78edbe2ae944",
-          "id": "openbitfun-dark",
+          "hash": "da806773dc81bc7917f380b7d48165370ed442740fc23f56f04becdee66fd19f",
+          "id": "starmate-dark",
           "type": "dark",
         },
         {
-          "hash": "848139cb1abe90f15fd830de847973951399fe1a74304fb790d4ebd99ec03648",
-          "id": "openbitfun-midnight",
+          "hash": "021f5161b664cc4bad10d2a13fa5639aa9f3dd2358aeb03549f03ffdb9d279c7",
+          "id": "starmate-midnight",
           "type": "dark",
         },
         {
-          "hash": "8b3c68dae4b926dec4f2eb9a9f6f269be86ac63bc6ec7dd0edf18f53a3a4dee6",
-          "id": "openbitfun-china-style",
+          "hash": "005222075fb423f9a946643a60c5a477744b763f8a80e77d28a6b4c9439023d4",
+          "id": "starmate-china-style",
           "type": "light",
         },
         {
-          "hash": "16e9669e06115f51b008a864dbc895214f0d4d7bd788a7b76090168b680af72b",
-          "id": "openbitfun-china-night",
+          "hash": "b39ac2bf5823bb2a67f9f37aea681f43227bf3adcdbab35f8461a5985d8d311d",
+          "id": "starmate-china-night",
           "type": "dark",
         },
         {
-          "hash": "c3c9cf20a941fdc94f91ed2707c17959f38863eef670185e490f3b48f0b4c712",
-          "id": "openbitfun-cyber",
+          "hash": "923d60d3b03c6879c3150d3a3de8aeecb72d5d5ddec8e44ec4edf2df004c623e",
+          "id": "starmate-cyber",
           "type": "dark",
         },
         {
-          "hash": "ae426310c63985afdf08c0028b224e86318e08959bbd44e14ef87cc0aec86816",
-          "id": "openbitfun-tokyo-night",
+          "hash": "79fb84197c6c22339ced14b946e7ecfa4f21254a215738d5d070a330b86bf1f8",
+          "id": "starmate-tokyo-night",
           "type": "dark",
         },
       ]

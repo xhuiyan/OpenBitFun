@@ -383,9 +383,9 @@ mod tests {
     #[test]
     fn permission_footer_secondary_content_remains_visible_in_ansi16_themes() {
         for theme_id in [
-            "openbitfun-dark",
-            "openbitfun-midnight",
-            "openbitfun-tokyo-night",
+            "starmate-dark",
+            "starmate-midnight",
+            "starmate-tokyo-night",
         ] {
             let theme = Theme::dark()
                 .apply_opencode_theme_json(

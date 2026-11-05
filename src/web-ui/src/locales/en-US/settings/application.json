@@ -50,39 +50,39 @@
     "systemAppearance": "Match system",
     "systemAppearanceDescription": "Switch between light and dark themes with the system",
     "presets": {
-      "openbitfun-dark": {
+      "starmate-dark": {
         "name": "Dark",
         "description": "Default dark appearance"
       },
-      "openbitfun-light": {
+      "starmate-light": {
         "name": "Light",
         "description": "Light appearance - Crisp white surfaces, soft neutral grays, and deep navy actions"
       },
-      "openbitfun-monochrome": {
+      "starmate-monochrome": {
         "name": "Black & White",
         "description": "Black-and-white contrast appearance - Deep black chrome, bright white workspace, and soft neutral blocks"
       },
-      "openbitfun-midnight": {
+      "starmate-midnight": {
         "name": "Midnight",
         "description": "Midnight gray dark appearance - Professional and elegant, inspired by JetBrains IDE"
       },
-      "openbitfun-china-style": {
+      "starmate-china-style": {
         "name": "Ink Charm",
         "description": "Chinese style appearance - Rice paper and ink, blue and vermilion, warm and elegant"
       },
-      "openbitfun-china-night": {
+      "starmate-china-night": {
         "name": "Ink Night",
         "description": "Chinese dark appearance - Starlit ink night, moonlight like water, serene and elegant"
       },
-      "openbitfun-cyber": {
+      "starmate-cyber": {
         "name": "Cyber",
         "description": "Tech-style appearance - Deep black hole, neon future, ultimate tech aesthetics"
       },
-      "openbitfun-slate": {
+      "starmate-slate": {
         "name": "Slate",
         "description": "Slate gray geometric appearance - Deep immersion, high contrast grayscale aesthetics"
       },
-      "openbitfun-tokyo-night": {
+      "starmate-tokyo-night": {
         "name": "Tokyo Night",
         "description": "Popular Tokyo Night palette - Indigo night, blue and violet highlights"
       }

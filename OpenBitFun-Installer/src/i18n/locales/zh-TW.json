@@ -248,14 +248,14 @@
     "subtitle": "點選佈景主題即可預覽，之後也可以隨時更換。",
     "followSystem": "跟隨系統",
     "themeNames": {
-      "openbitfun-dark": "暗色",
-      "openbitfun-light": "亮色",
-      "openbitfun-midnight": "午夜",
-      "openbitfun-china-style": "墨韻",
-      "openbitfun-china-night": "墨夜",
-      "openbitfun-cyber": "賽博",
-      "openbitfun-slate": "石板灰",
-      "openbitfun-tokyo-night": "東京夜"
+      "starmate-dark": "暗色",
+      "starmate-light": "亮色",
+      "starmate-midnight": "午夜",
+      "starmate-china-style": "墨韻",
+      "starmate-china-night": "墨夜",
+      "starmate-cyber": "賽博",
+      "starmate-slate": "石板灰",
+      "starmate-tokyo-night": "東京夜"
     }
   },
   "complete": {

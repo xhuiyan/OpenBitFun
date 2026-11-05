@@ -174,7 +174,7 @@ describe('L0 Appearance', () => {
   });
 
   it('should project the neutral and navy light palette into the native app', async () => {
-    await selectAppearance('openbitfun-light');
+    await selectAppearance('starmate-light');
 
     const lightNavigation = await browser.execute(() => {
       const styles = window.getComputedStyle(document.documentElement);
@@ -210,7 +210,7 @@ describe('L0 Appearance', () => {
   });
 
   it('should compile inverse new-session hover colors for the light appearance', async () => {
-    await selectAppearance('openbitfun-light');
+    await selectAppearance('starmate-light');
 
     const hoverContract = await browser.execute(() => {
       const styleRules: CSSStyleRule[] = [];
@@ -269,7 +269,7 @@ describe('L0 Appearance', () => {
   });
 
   it('should lift only the scene viewport above the light navigation shell', async () => {
-    await selectAppearance('openbitfun-light');
+    await selectAppearance('starmate-light');
     await waitForDisplayed('.openbitfun-workspace-body__scene-area');
     await waitForDisplayed('.openbitfun-scene-viewport');
 
@@ -317,7 +317,7 @@ describe('L0 Appearance', () => {
   });
 
   it('should keep Mini Apps and the selected navigation surface visually light', async () => {
-    await selectAppearance('openbitfun-light');
+    await selectAppearance('starmate-light');
 
     const navBack = await waitForDisplayed(
       '[data-openbitfun-component="nav-bar"][data-openbitfun-part="back"]:not(.is-inactive)',
@@ -672,7 +672,7 @@ describe('L0 Appearance', () => {
       ));
       const lightInverseRule = styleRules.find(rule => (
         rule.selectorText.includes('data-openbitfun-appearance')
-        && rule.selectorText.includes('openbitfun-light')
+        && rule.selectorText.includes('starmate-light')
         && rule.selectorText.includes('.miniapp-card')
       ));
 
@@ -719,7 +719,7 @@ describe('L0 Appearance', () => {
   });
 
   it('should render monochrome structural chrome against a white workspace', async () => {
-    await selectAppearance('openbitfun-monochrome');
+    await selectAppearance('starmate-monochrome');
     await browser.execute(() => {
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
@@ -803,7 +803,7 @@ describe('L0 Appearance', () => {
     });
 
     expect(contrastPresentation).toEqual({
-      appearanceId: 'openbitfun-monochrome',
+      appearanceId: 'starmate-monochrome',
       appearanceMode: 'light',
       contentBackgroundToken: '#ffffff',
       contentTextToken: '#1c1c1f',

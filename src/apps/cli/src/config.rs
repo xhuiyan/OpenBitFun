@@ -117,7 +117,7 @@ impl Default for UiConfig {
     fn default() -> Self {
         Self {
             theme: "dark".to_string(),
-            theme_id: "openbitfun-dark".to_string(),
+            theme_id: "starmate-dark".to_string(),
             show_tips: true,
             animation: true,
             color_scheme: "default".to_string(),
@@ -232,6 +232,7 @@ impl CliConfig {
         }
         let content = fs::read_to_string(config_path)?;
         let mut config: Self = toml::from_str(&content)?;
+        config.ui.theme_id = crate::ui::theme::normalize_theme_id(&config.ui.theme_id);
         config.normalize_legacy_shortcuts();
         Ok(config)
     }
@@ -290,7 +291,7 @@ mod tests {
         let serialized = toml::to_string(&config).unwrap();
 
         assert_eq!(config.ui.theme, "dark");
-        assert_eq!(config.ui.theme_id, "openbitfun-dark");
+        assert_eq!(config.ui.theme_id, "starmate-dark");
         assert!(config.ui.show_tips);
         assert!(config.ui.animation);
         assert_eq!(config.ui.color_scheme, "default");
