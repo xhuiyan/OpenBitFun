@@ -101,6 +101,14 @@ const ENABLE_OFFICE: SkillPolicyRule = SkillPolicyRule {
     effect: PolicyEffect::Enable,
 };
 
+// Finance domain skills stay available in research and co-working workflows,
+// where the user is most likely to ask for earnings, model or compliance
+// analysis. Specialist agent modes keep them opt-in.
+const ENABLE_FINANCE: SkillPolicyRule = SkillPolicyRule {
+    selector: SkillSelector::Group(BuiltinSkillGroup::Finance),
+    effect: PolicyEffect::Enable,
+};
+
 const ENABLE_META: SkillPolicyRule = SkillPolicyRule {
     selector: SkillSelector::Group(BuiltinSkillGroup::Meta),
     effect: PolicyEffect::Enable,
@@ -175,6 +183,7 @@ const COWORK_POLICY: ModeSkillPolicy = ModeSkillPolicy {
     builtin_default: PolicyEffect::Disable,
     rules: &[
         ENABLE_OFFICE,
+        ENABLE_FINANCE,
         ENABLE_META,
         ENABLE_COORDINATION,
         ENABLE_PLANNING,
@@ -184,7 +193,12 @@ const COWORK_POLICY: ModeSkillPolicy = ModeSkillPolicy {
 
 const DEEP_RESEARCH_POLICY: ModeSkillPolicy = ModeSkillPolicy {
     builtin_default: PolicyEffect::Disable,
-    rules: &[ENABLE_META, ENABLE_COORDINATION, ENABLE_GENERATE_IMAGE],
+    rules: &[
+        ENABLE_META,
+        ENABLE_COORDINATION,
+        ENABLE_FINANCE,
+        ENABLE_GENERATE_IMAGE,
+    ],
 };
 
 const ULTRA_POLICY: ModeSkillPolicy = ModeSkillPolicy {
@@ -457,6 +471,50 @@ mod tests {
                     "creation skill {skill} has unexpected default exposure in {mode_id}"
                 );
             }
+        }
+    }
+
+    const FINANCE_SKILLS: &[&str] = &[
+        "china-audit-xls",
+        "china-break-trace",
+        "china-client-report",
+        "china-dd-checklist",
+        "china-deal-tracker",
+        "china-earnings-analysis",
+        "china-earnings-preview",
+        "china-kyc-rules",
+        "china-ppt-template-creator",
+    ];
+
+    #[test]
+    fn finance_skills_default_on_for_general_and_research_workflows() {
+        for skill in FINANCE_SKILLS {
+            for mode_id in ["Standard", "Claw", "Creative", "Cowork", "DeepResearch"] {
+                assert_eq!(
+                    resolve_builtin_default_enabled(skill, mode_id),
+                    Some(true),
+                    "finance skill {skill} should be available in {mode_id}"
+                );
+            }
+
+            for mode_id in ["ComputerUse", "Ultimate", "SwarmWorker", "SomeUnknownMode"] {
+                assert_eq!(
+                    resolve_builtin_default_enabled(skill, mode_id),
+                    Some(false),
+                    "finance skill {skill} should stay opt-in in {mode_id}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn finance_skills_share_one_product_catalog_group() {
+        for skill in FINANCE_SKILLS {
+            assert_eq!(
+                crate::skills::builtin_skill_group_key(skill),
+                Some("finance"),
+                "finance skill {skill} is missing its product catalog group"
+            );
         }
     }
 }

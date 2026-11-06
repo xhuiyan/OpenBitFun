@@ -9,9 +9,9 @@ use starmate_agent_runtime::skills::{
     resolve_skill_state_for_mode, resolve_user_config_skill_root, resolve_visible_skills,
     sort_skills, ExplicitSkillInvocationResolution, ModeSkillStateReason, SkillCandidate,
     SkillData, SkillInfo, SkillLocation, SkillParseError, UserModeSkillOverrides,
-    STARMATE_SYSTEM_SKILL_DIR, STARMATE_SYSTEM_SKILL_SLOT, STARMATE_USER_SKILL_SLOT,
-    PROJECT_SKILL_KEY_PREFIX, PROJECT_SKILL_ROOTS, USER_CONFIG_SKILL_ROOTS, USER_HOME_SKILL_ROOTS,
-    USER_SKILL_KEY_PREFIX,
+    PROJECT_SKILL_KEY_PREFIX, PROJECT_SKILL_ROOTS, STARMATE_SYSTEM_SKILL_DIR,
+    STARMATE_SYSTEM_SKILL_SLOT, STARMATE_USER_SKILL_SLOT, USER_CONFIG_SKILL_ROOTS,
+    USER_HOME_SKILL_ROOTS, USER_SKILL_KEY_PREFIX,
 };
 
 fn builtin_skill(dir_name: &str) -> SkillInfo {
@@ -488,6 +488,37 @@ fn builtin_skill_catalog_and_mode_policy_are_runtime_owned() {
     assert_eq!(builtin_skill_group_key("docs-canvas"), Some("canvas"));
     assert_eq!(builtin_skill_group_key("multitask"), Some("coordination"));
     assert_eq!(builtin_skill_group_key("plan"), Some("planning"));
+    for finance in [
+        "china-audit-xls",
+        "china-break-trace",
+        "china-client-report",
+        "china-dd-checklist",
+        "china-deal-tracker",
+        "china-earnings-analysis",
+        "china-earnings-preview",
+        "china-kyc-rules",
+        "china-ppt-template-creator",
+    ] {
+        assert_eq!(
+            builtin_skill_group_key(finance),
+            Some("finance"),
+            "finance skill {finance} should be grouped under finance"
+        );
+        for mode in ["Standard", "Claw", "Creative", "Cowork", "DeepResearch"] {
+            assert_eq!(
+                resolve_builtin_default_enabled(finance, mode),
+                Some(true),
+                "finance skill {finance} should be available in {mode}"
+            );
+        }
+        for mode in ["ComputerUse", "Ultimate", "SwarmWorker"] {
+            assert_eq!(
+                resolve_builtin_default_enabled(finance, mode),
+                Some(false),
+                "finance skill {finance} should stay opt-in in {mode}"
+            );
+        }
+    }
     assert_eq!(builtin_skill_group_key("unknown-skill"), None);
 
     assert_eq!(

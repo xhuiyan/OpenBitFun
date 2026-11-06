@@ -156,6 +156,7 @@
     },
     "builtin": {
       "office": "Office",
+      "finance": "Finance",
       "computerUse": "$t(shared:agents.ComputerUse)",
       "meta": "Meta",
       "miniapp": "MiniApp",

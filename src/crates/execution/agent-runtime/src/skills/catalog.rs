@@ -1,6 +1,7 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub(super) enum BuiltinSkillGroup {
     Office,
+    Finance,
     Meta,
     MiniApp,
     Creation,
@@ -15,6 +16,7 @@ impl BuiltinSkillGroup {
     fn as_str(self) -> &'static str {
         match self {
             Self::Office => "office",
+            Self::Finance => "finance",
             Self::Meta => "meta",
             Self::MiniApp => "miniapp",
             Self::Creation => "creation",
@@ -93,6 +95,42 @@ pub(super) const BUILTIN_SKILL_SPECS: &[BuiltinSkillSpec] = &[
     BuiltinSkillSpec {
         dir_name: "ppt-design",
         group: BuiltinSkillGroup::Office,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-audit-xls",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-break-trace",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-client-report",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-dd-checklist",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-deal-tracker",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-earnings-analysis",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-earnings-preview",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-kyc-rules",
+        group: BuiltinSkillGroup::Finance,
+    },
+    BuiltinSkillSpec {
+        dir_name: "china-ppt-template-creator",
+        group: BuiltinSkillGroup::Finance,
     },
     BuiltinSkillSpec {
         dir_name: "pr-review-canvas",

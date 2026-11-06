@@ -120,9 +120,7 @@ async fn write_installed_manifest(root: &Path) -> StarMateResult<()> {
     Ok(())
 }
 
-async fn acquire_install_lock(
-    user_skills_root: &Path,
-) -> StarMateResult<BuiltinSkillsInstallLock> {
+async fn acquire_install_lock(user_skills_root: &Path) -> StarMateResult<BuiltinSkillsInstallLock> {
     let lock_path = builtin_skills_install_lock_path(user_skills_root);
 
     // Use an OS-backed advisory file lock so parallel test processes and app
@@ -149,9 +147,7 @@ async fn acquire_install_lock(
     Ok(BuiltinSkillsInstallLock { file })
 }
 
-async fn install_builtin_skills_to_staging(
-    staging_root: &Path,
-) -> StarMateResult<(usize, usize)> {
+async fn install_builtin_skills_to_staging(staging_root: &Path) -> StarMateResult<(usize, usize)> {
     let mut installed = 0usize;
     let mut updated = 0usize;
 
@@ -490,8 +486,7 @@ mod tests {
         let metadata = embedded_skill_text("create-starmate-skin/agents/openai.yaml");
         assert!(metadata.contains("display_name: \"StarMate Appearance Manual\""));
 
-        let workflow =
-            embedded_skill_text("create-starmate-skin/references/authoring-workflow.md");
+        let workflow = embedded_skill_text("create-starmate-skin/references/authoring-workflow.md");
         assert!(workflow.contains("Bump it whenever the manifest"));
     }
 
@@ -502,6 +497,54 @@ mod tests {
         assert!(skill
             .contains("Co-authored-by: StarMate <318544290+bitfun-ai@users.noreply.github.com>"));
         assert!(skill.contains("Generated with [StarMate](https://github.com/bitfun-ai)"));
+    }
+
+    #[test]
+    fn embedded_builtin_skills_parse_with_required_frontmatter() {
+        for dir in BUILTIN_SKILLS_DIR.dirs() {
+            if dir.path().components().count() != 1 {
+                continue;
+            }
+            let dir_name = dir
+                .path()
+                .file_name()
+                .and_then(|name| name.to_str())
+                .expect("built-in skill directory should have a UTF-8 name");
+            let path = format!("{dir_name}/SKILL.md");
+            let skill = SkillData::from_markdown(
+                format!("/openbitfun-system/{dir_name}"),
+                embedded_skill_text(&path),
+                SkillLocation::User,
+                true,
+            )
+            .unwrap_or_else(|error| {
+                panic!("embedded built-in skill '{dir_name}' should parse: {error:?}")
+            });
+
+            assert_eq!(skill.dir_name, dir_name);
+            assert_eq!(skill.name, dir_name);
+            assert!(!skill.description.trim().is_empty());
+        }
+    }
+
+    #[test]
+    fn finance_skills_are_embedded_as_one_product_suite() {
+        for dir_name in [
+            "china-audit-xls",
+            "china-break-trace",
+            "china-client-report",
+            "china-dd-checklist",
+            "china-deal-tracker",
+            "china-earnings-analysis",
+            "china-earnings-preview",
+            "china-kyc-rules",
+            "china-ppt-template-creator",
+        ] {
+            assert!(
+                BUILTIN_SKILLS_DIR.get_dir(dir_name).is_some(),
+                "finance skill '{dir_name}' must be embedded in the built-in skills bundle"
+            );
+        }
     }
 
     #[test]

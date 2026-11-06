@@ -156,6 +156,7 @@
     },
     "builtin": {
       "office": "Office",
+      "finance": "金融",
       "computerUse": "Computer Use",
       "meta": "Meta",
       "miniapp": "MiniApp",

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { GroupableSkill } from './skillGroups';
 import {
+  builtinSkillGroupLabelKey,
   createUserSkillGroupsConfig,
   normalizeUserSkillGroupsConfig,
   resolveSkillGroupSummary,
@@ -24,6 +25,17 @@ const skills: GroupableSkill[] = [
   { key: 'user::review', name: 'Review', description: '', isBuiltin: false },
 ];
 
+const financeSkills: GroupableSkill[] = [
+  ...skills,
+  {
+    key: 'builtin::finance-report',
+    name: 'Finance report',
+    description: '',
+    isBuiltin: true,
+    groupKey: 'finance',
+  },
+];
+
 describe('skillGroups', () => {
   it('keeps user groups before backend-owned builtin groups', () => {
     const groups = resolveSkillGroups(skills, [{
@@ -38,6 +50,22 @@ describe('skillGroups', () => {
       'builtin:planning',
     ]);
     expect(groups[0].skills.map((skill) => skill.key)).toEqual(['builtin::docs', 'user::review']);
+  });
+
+  it('maps the finance builtin group to its locale label key', () => {
+    expect(builtinSkillGroupLabelKey('finance')).toBe('finance');
+  });
+
+  it('orders the finance builtin group after office and before planning', () => {
+    const groups = resolveSkillGroups(financeSkills, [], labels);
+
+    expect(groups.map((group) => group.id)).toEqual([
+      'builtin:office',
+      'builtin:finance',
+      'builtin:planning',
+    ]);
+    expect(groups[1].label).toBe('builtin:finance');
+    expect(groups[1].skillKeys).toEqual(['builtin::finance-report']);
   });
 
   it('clears overlapping skills from the final selection', () => {

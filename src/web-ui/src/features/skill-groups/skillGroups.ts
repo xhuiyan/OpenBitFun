@@ -47,6 +47,7 @@ const BUILTIN_SKILL_GROUP_ORDER = [
   'miniapp',
   'computer-use',
   'office',
+  'finance',
   'canvas',
   'debugging',
   'coordination',
@@ -55,6 +56,7 @@ const BUILTIN_SKILL_GROUP_ORDER = [
 
 const BUILTIN_SKILL_GROUP_LABEL_KEYS: Record<string, string> = {
   office: 'office',
+  finance: 'finance',
   'computer-use': 'computerUse',
   meta: 'meta',
   miniapp: 'miniapp',

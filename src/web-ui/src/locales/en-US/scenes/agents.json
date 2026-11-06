@@ -208,6 +208,7 @@
     "skillGroups": {
       "computerUse": "$t(shared:agents.ComputerUse)",
       "office": "Office",
+      "finance": "Finance",
       "meta": "Meta",
       "miniapp": "MiniApp",
       "canvas": "Canvas",

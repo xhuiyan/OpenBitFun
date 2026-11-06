@@ -12,6 +12,23 @@ mod tests {
     #[test]
     fn builtin_skill_groups_match_expected_sets() {
         assert_eq!(builtin_skill_group_key("ppt-design"), Some("office"));
+        for finance in [
+            "china-audit-xls",
+            "china-break-trace",
+            "china-client-report",
+            "china-dd-checklist",
+            "china-deal-tracker",
+            "china-earnings-analysis",
+            "china-earnings-preview",
+            "china-kyc-rules",
+            "china-ppt-template-creator",
+        ] {
+            assert_eq!(
+                builtin_skill_group_key(finance),
+                Some("finance"),
+                "finance skill {finance} should be grouped under finance"
+            );
+        }
         for removed in ["docx", "pdf", "pptx", "xlsx"] {
             assert_eq!(builtin_skill_group_key(removed), None);
         }
