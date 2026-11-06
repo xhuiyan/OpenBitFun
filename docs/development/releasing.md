@@ -67,6 +67,25 @@ dispatched ref's HEAD as artifacts and ignores this input.
 target. Publishing a real release still needs every platform plus the Relay image
 descriptor.
 
+## Automatic retry when no hosted runner was acquired
+
+GitHub can cancel a job that no hosted runner takes in time. The job runs no
+step and produces no artifact, but the whole `Desktop Package` run ends red.
+Because no job ever started, a retry inside the build cannot help.
+
+The `Desktop Package Retry` workflow reacts to a failed `Desktop Package` run and
+re-runs its failed jobs only when every failed job ran no step and carries
+GitHub's "The job was not acquired by Runner of type ..." annotation. It waits
+five minutes for the runner pool to recover, then requests the rerun; at most
+three attempts run in total per workflow run. A failure that executed any step is
+treated as a real build failure and is never retried automatically, so a broken
+build still fails fast. Manual recovery paths below remain unchanged.
+
+To inspect the decision without waiting for another failure, dispatch `Desktop
+Package Retry` with the failed run id and the default `dry_run=true`; it reports
+whether the run would be re-run and why. Set `dry_run=false` to request the
+rerun immediately.
+
 ## Recovering one macOS package
 
 For an existing immutable tag, dispatch `Desktop Package` from the current
