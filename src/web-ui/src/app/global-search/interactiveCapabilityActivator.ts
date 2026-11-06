@@ -25,7 +25,8 @@ export async function activateInteractiveCapability(
   }
   const destination = item?.destination ?? capability.destination;
   if (!isInteractiveCapabilityDestinationAvailable(destination)) {
-    throw new Error('The Git panel is no longer available');
+    // The host capability stays executable; this release profile withholds its entry point.
+    throw new Error('This capability has no entry point in the current release');
   }
 
   switch (destination.kind) {

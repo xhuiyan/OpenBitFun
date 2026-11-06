@@ -25,8 +25,8 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import './SettingsNav.scss';
 import {
-  SETTINGS_CATEGORIES,
-  SETTINGS_PAGE_MANIFESTS,
+  SETTINGS_NAV_CATEGORIES,
+  SETTINGS_NAV_PAGE_MANIFESTS,
   preloadSettingsPage,
   type SettingsPageManifest,
   type SettingsSearchPhrase,
@@ -62,12 +62,12 @@ function resolvePhrases(i18n: I18nApi, phrases: readonly SettingsSearchPhrase[])
 }
 
 function buildSettingsSearchIndex(t: SettingsT, i18n: I18nApi): SettingsSearchRow[] {
-  const categoryLabels = new Map(SETTINGS_CATEGORIES.map((category) => [
+  const categoryLabels = new Map(SETTINGS_NAV_CATEGORIES.map((category) => [
     category.id,
     translateString(t, category.labelKey, category.id),
   ]));
 
-  return SETTINGS_PAGE_MANIFESTS.flatMap((page) => {
+  return SETTINGS_NAV_PAGE_MANIFESTS.flatMap((page) => {
     const categoryLabel = categoryLabels.get(page.categoryId) ?? page.categoryId;
     const pageLabel = translateString(t, page.labelKey, page.id);
     const description = translateString(t, page.descriptionKey, '');
@@ -362,7 +362,7 @@ const SettingsNav: React.FC = () => {
                 {t('navigation.search.empty')}
               </div>
             )
-          ) : SETTINGS_CATEGORIES.map((category) => (
+          ) : SETTINGS_NAV_CATEGORIES.map((category) => (
             <NavigationPanelSection
               key={category.id}
               className="openbitfun-settings-nav__category"

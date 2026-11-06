@@ -6,7 +6,14 @@ import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { AppearancePackageValidationError, builtinAppearanceCatalog } from '@/infrastructure/appearance';
+import {
+  AppearancePackageValidationError,
+  builtinAppearanceCatalog,
+  EXPOSED_DARK_APPEARANCE_ID,
+  EXPOSED_INK_APPEARANCE_ID,
+  EXPOSED_LIGHT_APPEARANCE_ID,
+  EXPOSED_SLATE_APPEARANCE_ID,
+} from '@/infrastructure/appearance';
 import {
   AppearancePackageConfigSection,
   AppearancePackageFailurePanel,
@@ -77,8 +84,7 @@ describe('AppearancePackageConfigSection', () => {
     expect(html).toContain('data-openbitfun-package-type="native"');
     expect(html).toContain('data-openbitfun-package-type="imported"');
     expect(html).toContain('data-testid="appearance-builtin-theme-select"');
-    expect(html.match(/data-testid="appearance-builtin-theme-option"/g))
-      .toHaveLength(builtinAppearanceCatalog.length + 1);
+    expect(html.match(/data-testid="appearance-builtin-theme-option"/g)).toHaveLength(5);
     expect(html.match(/class="appearance-package-config__selected-mark"/g)).toHaveLength(1);
     expect(html).toContain('aria-label="package.export"');
     expect(html).toContain('aria-label="package.delete"');
@@ -88,6 +94,37 @@ describe('AppearancePackageConfigSection', () => {
     expect(html).toContain('openbitfun-config-page-section');
     expect(html).not.toContain('appearance-package-config__action-button');
     expect(html).not.toContain('.openbitfun-skin');
+  });
+
+  it('offers only the release-profile appearances in the built-in theme picker', () => {
+    const html = renderToStaticMarkup(<AppearancePackageConfigSection />);
+
+    for (const id of [
+      'system',
+      EXPOSED_LIGHT_APPEARANCE_ID,
+      EXPOSED_DARK_APPEARANCE_ID,
+      EXPOSED_INK_APPEARANCE_ID,
+      EXPOSED_SLATE_APPEARANCE_ID,
+    ]) {
+      expect(html).toContain(`data-appearance-id="${id}"`);
+    }
+    for (const appearance of builtinAppearanceCatalog) {
+      if ([
+        EXPOSED_LIGHT_APPEARANCE_ID,
+        EXPOSED_DARK_APPEARANCE_ID,
+        EXPOSED_INK_APPEARANCE_ID,
+        EXPOSED_SLATE_APPEARANCE_ID,
+      ].includes(appearance.id)) continue;
+      expect(html).not.toContain(`data-appearance-id="${appearance.id}"`);
+    }
+  });
+
+  it('marks the native card when a withheld persisted appearance resolves to an exposed one', () => {
+    appearanceStateMock.selectedAppearanceId = 'starmate-tokyo-night';
+
+    const html = renderToStaticMarkup(<AppearancePackageConfigSection />);
+
+    expect(html.match(/class="appearance-package-config__selected-mark"/g)).toHaveLength(1);
   });
 
   it('hides the Skin market and appearance package import entry points', () => {
@@ -230,10 +267,8 @@ describe('AppearancePackageConfigSection', () => {
       const groups = Array.from(listbox?.querySelectorAll('[role="group"]') ?? []);
       expect(groups.map(group => Array.from(group.querySelectorAll('[role="option"]'))
         .map(option => option.getAttribute('data-appearance-id')))).toEqual([
-        ['system', 'starmate-light', 'starmate-dark'],
-        builtinAppearanceCatalog
-          .filter(appearance => !['starmate-light', 'starmate-dark'].includes(appearance.id))
-          .map(appearance => appearance.id),
+        ['system', EXPOSED_LIGHT_APPEARANCE_ID, EXPOSED_DARK_APPEARANCE_ID],
+        [EXPOSED_SLATE_APPEARANCE_ID, EXPOSED_INK_APPEARANCE_ID],
       ]);
       expect(listbox?.querySelector('[data-openbitfun-part="group-label"]')).toBeNull();
 
@@ -243,12 +278,12 @@ describe('AppearancePackageConfigSection', () => {
       expect(builtinSelect).not.toBeNull();
       await act(async () => {
         if (builtinSelect) {
-          builtinSelect.value = 'starmate-light';
+          builtinSelect.value = EXPOSED_LIGHT_APPEARANCE_ID;
           builtinSelect.dispatchEvent(new Event('change', { bubbles: true }));
         }
         await Promise.resolve();
       });
-      expect(selectAppearanceMock).toHaveBeenCalledWith('starmate-light');
+      expect(selectAppearanceMock).toHaveBeenCalledWith(EXPOSED_LIGHT_APPEARANCE_ID);
 
       const importedCard = container.querySelector<HTMLButtonElement>(
         '[data-appearance-id="sample.appearance"] .appearance-package-config__card-select',
@@ -258,7 +293,7 @@ describe('AppearancePackageConfigSection', () => {
         await Promise.resolve();
       });
       expect(importedCard?.closest('[data-openbitfun-component="action-card"]')).not.toBeNull();
-      expect(selectAppearanceMock.mock.calls).toEqual([['starmate-light'], ['sample.appearance']]);
+      expect(selectAppearanceMock.mock.calls).toEqual([[EXPOSED_LIGHT_APPEARANCE_ID], ['sample.appearance']]);
     } finally {
       act(() => root.unmount());
       container.remove();

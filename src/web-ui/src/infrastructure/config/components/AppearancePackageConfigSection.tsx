@@ -6,10 +6,12 @@ import { OverflowText, Button, Icon, IconButton, Select, Tooltip } from '@starma
 
 import { confirmDialog } from '@/infrastructure/confirm-dialog';
 import {
-  DEFAULT_DARK_APPEARANCE_ID,
-  DEFAULT_LIGHT_APPEARANCE_ID,
+  EXPOSED_DARK_APPEARANCE_ID,
+  EXPOSED_LIGHT_APPEARANCE_ID,
   SYSTEM_APPEARANCE_ID,
   getAppearancePackageValidationError,
+  isBuiltinAppearanceExposed,
+  resolveExposedAppearanceId,
   useAppearance,
   type AppearanceCatalogEntry,
   type AppearancePackageValidationError,
@@ -24,7 +26,7 @@ import {
 import { ConfigPageSection, formatStandaloneUiText } from './common';
 
 const DEFAULT_APPEARANCE_PREVIEW_SRC = '/assets/appearance/openbitfun-default-preview@4x.png';
-const DEFAULT_THEME_IDS: readonly string[] = [DEFAULT_LIGHT_APPEARANCE_ID, DEFAULT_DARK_APPEARANCE_ID];
+const PREFERRED_THEME_IDS: readonly string[] = [EXPOSED_LIGHT_APPEARANCE_ID, EXPOSED_DARK_APPEARANCE_ID];
 
 function downloadArchive(bytes: ArrayBuffer, filename: string): void {
   const url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' }));
@@ -294,8 +296,10 @@ export function AppearancePackageConfigSection() {
     initialized,
     status,
   } = useAppearance();
+  // Release profile: only the exposed built-in appearances are offered.
   const builtinAppearances = useMemo(
-    () => appearanceCatalog.filter(appearance => appearance.source === 'builtin'),
+    () => appearanceCatalog.filter(appearance => appearance.source === 'builtin'
+      && isBuiltinAppearanceExposed(appearance.id)),
     [appearanceCatalog],
   );
   const importedAppearances = useMemo(
@@ -305,12 +309,17 @@ export function AppearancePackageConfigSection() {
   const selectedAppearance = importedAppearances.find(
     appearance => appearance.id === selectedAppearanceId,
   );
-  const defaultPackageSelected = selectedAppearanceId === SYSTEM_APPEARANCE_ID
-    || builtinAppearances.some(appearance => appearance.id === selectedAppearanceId);
+  // A withheld persisted selection keeps its stored identity but renders the
+  // exposed appearance of the same mode, so the native card reflects what is applied.
+  const selectedVisibleAppearanceId = selectedAppearanceId === SYSTEM_APPEARANCE_ID
+    ? SYSTEM_APPEARANCE_ID
+    : resolveExposedAppearanceId(selectedAppearanceId);
+  const defaultPackageSelected = selectedVisibleAppearanceId === SYSTEM_APPEARANCE_ID
+    || builtinAppearances.some(appearance => appearance.id === selectedVisibleAppearanceId);
   const builtinThemeOptions = useMemo(() => {
     const orderedAppearances = [
-      ...DEFAULT_THEME_IDS.flatMap(id => builtinAppearances.filter(appearance => appearance.id === id)),
-      ...builtinAppearances.filter(appearance => !DEFAULT_THEME_IDS.includes(appearance.id)),
+      ...PREFERRED_THEME_IDS.flatMap(id => builtinAppearances.filter(appearance => appearance.id === id)),
+      ...builtinAppearances.filter(appearance => !PREFERRED_THEME_IDS.includes(appearance.id)),
     ];
     return [
       {
@@ -323,13 +332,13 @@ export function AppearancePackageConfigSection() {
       ...orderedAppearances.map(appearance => ({
         value: appearance.id,
         label: builtinAppearanceDisplayName(appearance, tApplication),
-        group: DEFAULT_THEME_IDS.includes(appearance.id) ? 'default' : 'presets',
+        group: PREFERRED_THEME_IDS.includes(appearance.id) ? 'default' : 'presets',
         testId: 'appearance-builtin-theme-option',
         testAttributes: { 'data-appearance-id': appearance.id },
       })),
     ];
   }, [builtinAppearances, tApplication]);
-  const selectedBuiltinThemeId = defaultPackageSelected ? selectedAppearanceId : '';
+  const selectedBuiltinThemeId = defaultPackageSelected ? selectedVisibleAppearanceId : '';
   const busy = loading || !initialized || status === 'applying';
   const hasPackageActions = APPEARANCE_MARKET_ENTRY_VISIBLE
     || APPEARANCE_PACKAGE_IMPORT_VISIBLE

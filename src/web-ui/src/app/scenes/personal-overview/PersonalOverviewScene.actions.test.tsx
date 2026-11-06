@@ -40,6 +40,10 @@ vi.mock('@/shared/notification-system', () => ({ useNotification: () => ({ error
 vi.mock('@/shared/utils/logger', () => ({ createLogger: () => ({ error: vi.fn(), warn: vi.fn(), debug: vi.fn() }) }));
 vi.mock('@starmate/ui/brand', () => ({ useSubagentAvatarMotion: () => undefined }));
 vi.mock('./OverviewAccountButton', () => ({ OverviewAccountButton: () => null }));
+// Rendered as a marker so the release-visibility assertions do not depend on the Tauri runtime.
+vi.mock('./OverviewDesktopCardsSection', () => ({
+  OverviewDesktopCardsSection: () => React.createElement('section', { 'data-testid': 'overview-desktop-cards' }),
+}));
 vi.mock('@/infrastructure/config/components/UsageActivityGrid', () => ({ UsageActivityGrid: () => null }));
 vi.mock('@/infrastructure/api/service-api/RemoteConnectAPI', async original => ({
   ...await original<typeof import('@/infrastructure/api/service-api/RemoteConnectAPI')>(),
@@ -452,5 +456,17 @@ describe('overview catalog actions', () => {
       .toBe(status === 'loading' ? 'loadingValue' : 'unavailableValue');
     expect(container.querySelector('[data-starmate-part="miniApps"] [role="status"]')?.textContent)
       .toContain(status === 'loading' ? 'miniApps.loading' : 'miniApps.failed');
+  });
+});
+
+describe('minimal release surfaces', () => {
+  it('withholds the home device strip and desktop cards without removing other home sections', async () => {
+    await render();
+    expect(container.querySelector('[data-starmate-part="devices"]')).toBeNull();
+    expect(container.querySelector('[data-testid="personal-overview-local-device"]')).toBeNull();
+    expect(container.querySelector('[data-testid="overview-desktop-cards"]')).toBeNull();
+    expect(container.querySelector('[data-starmate-part="agents"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-part="miniApps"]')).not.toBeNull();
+    expect(container.querySelector('[data-starmate-part="skills"]')).not.toBeNull();
   });
 });

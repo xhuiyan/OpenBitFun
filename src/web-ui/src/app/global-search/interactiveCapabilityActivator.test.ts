@@ -68,7 +68,6 @@ describe('activateInteractiveCapability', () => {
     ['setting.tools.execution', 'permission-mode', { pageId: 'ai.permissions' }],
     ['setting.tools.execution', 'timeouts', { pageId: 'ai.execution' }],
     ['setting.tools.execution', 'computer-use', { pageId: 'tools.desktop-control' }],
-    ['setting.tools.automation', 'hooks-enabled', { pageId: 'tools.automation', sectionId: 'hooks' }],
   ])('opens the reorganized destination for %s / %s using the stable host ID', async (capabilityId, itemId, destination) => {
     await activateInteractiveCapability(capabilityId, { itemId });
     expect(mocks.openDestination).toHaveBeenLastCalledWith({ kind: 'settings', ...destination });
@@ -87,16 +86,23 @@ describe('activateInteractiveCapability', () => {
     expect(mocks.openDestination).toHaveBeenCalledWith({ kind: 'settings', pageId: 'ai.models' });
   });
 
-  it('opens external import in Settings using its stable capability ID', async () => {
-    await activateInteractiveCapability('feature.ecosystem-compatibility');
-    expect(mocks.openDestination).toHaveBeenCalledWith({ kind: 'settings', pageId: 'tools.external-import' });
-    expect(mocks.openScene).toHaveBeenCalledWith('settings');
+  it('withholds settings entry points that the release profile hides', async () => {
+    for (const capabilityId of [
+      'feature.ecosystem-compatibility',
+      'setting.tools.automation',
+      'feature.desktop-cards',
+    ]) {
+      await expect(activateInteractiveCapability(capabilityId))
+        .rejects.toThrow('This capability has no entry point in the current release');
+    }
+    expect(mocks.openDestination).not.toHaveBeenCalled();
+    expect(mocks.openScene).not.toHaveBeenCalled();
   });
 
   it('rejects Git panel requests, including documented items, without opening a scene', async () => {
     for (const itemId of [undefined, 'commit', 'status-diff']) {
       await expect(activateInteractiveCapability('feature.git', { itemId }))
-        .rejects.toThrow('The Git panel is no longer available');
+        .rejects.toThrow('This capability has no entry point in the current release');
     }
     expect(mocks.openScene).not.toHaveBeenCalled();
   });

@@ -1,3 +1,4 @@
+import { isSettingsPageVisible, isSettingsSectionVisible } from '@/app/uiSurfaceVisibility';
 import type { I18nNamespace } from '@/infrastructure/i18n/types';
 import { getActiveSurfaceScope } from '@/infrastructure/peer-device/deviceSurface';
 import { lazyWithRecovery, type RecoverableLazyComponent } from '@/shared/utils/lazyWithRecovery';
@@ -545,6 +546,43 @@ export const SETTINGS_CATEGORIES: readonly SettingsCategory[] = CATEGORY_ORDER.m
   labelKey: `navigation.categories.${categoryId}`,
   pages: SETTINGS_PAGE_MANIFESTS.filter((page) => page.categoryId === categoryId),
 }));
+
+/**
+ * Release profile: a hidden section also drops its anchor, its search phrases
+ * and the page keywords it exclusively owns. Page owners keep the full manifest.
+ */
+function stripHiddenSettingsSections(page: SettingsPageManifest): SettingsPageManifest {
+  const allSections = page.sections ?? [];
+  const hiddenSections = allSections.filter((section) => !isSettingsSectionVisible(page.id, section.id));
+  if (hiddenSections.length === 0) return page;
+  const hiddenPhrases = new Set(hiddenSections.flatMap((section) => (
+    section.searchPhrases.map((phrase) => `${phrase.namespace}#${phrase.key}`)
+  )));
+  const hiddenKeywords = new Set(hiddenSections.flatMap((section) => section.keywords));
+  return {
+    ...page,
+    sections: allSections.filter((section) => isSettingsSectionVisible(page.id, section.id)),
+    searchPhrases: page.searchPhrases.filter((phrase) => !hiddenPhrases.has(`${phrase.namespace}#${phrase.key}`)),
+    keywords: page.keywords.filter((keyword) => !hiddenKeywords.has(keyword)),
+  };
+}
+
+/**
+ * Settings navigation and search entries for the current release profile.
+ * Full page manifests above stay registered because page owners and embedded
+ * product surfaces (for example the ecosystem-compatibility scene) still render
+ * them; only the Settings entry points are withheld.
+ */
+export const SETTINGS_NAV_PAGE_MANIFESTS: readonly SettingsPageManifest[] = SETTINGS_PAGE_MANIFESTS
+  .filter((page) => isSettingsPageVisible(page.id))
+  .map(stripHiddenSettingsSections);
+
+export const SETTINGS_NAV_CATEGORIES: readonly SettingsCategory[] = SETTINGS_CATEGORIES
+  .map((category) => ({
+    ...category,
+    pages: SETTINGS_NAV_PAGE_MANIFESTS.filter((page) => page.categoryId === category.id),
+  }))
+  .filter((category) => category.pages.length > 0);
 
 export const DEFAULT_SETTINGS_PAGE_ID: SettingsPageId = 'application.general';
 

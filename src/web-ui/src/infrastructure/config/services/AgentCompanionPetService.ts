@@ -4,6 +4,7 @@ import type { AgentCompanionPetSelection } from './AIExperienceConfigService';
 import { isTauriRuntime } from '@/infrastructure/runtime';
 import { createLogger } from '@/shared/utils/logger';
 import builtinPetMetadata from './agentCompanionBuiltinPetMetadata.json';
+import { isCompanionPetPresetExposed } from './agentCompanionPetPresets';
 import { getPetSpriteLayout } from './agentCompanionPetSprite';
 
 const log = createLogger('AgentCompanionPetService');
@@ -225,7 +226,10 @@ async function withPreviewSrc(pet: AgentCompanionPetSelection): Promise<AgentCom
 }
 
 export async function listAgentCompanionPets(): Promise<AgentCompanionPetPackage[]> {
-  const builtinPets = await Promise.all(BUILTIN_PETS.map(withPreviewSrc));
+  // Release profile: withheld presets stay on disk, but the picker never lists them.
+  const builtinPets = await Promise.all(BUILTIN_PETS
+    .filter(pet => isCompanionPetPresetExposed(pet.id))
+    .map(withPreviewSrc));
   if (!isTauriRuntime()) return builtinPets;
   try {
     const response = await api.invoke<ListAgentCompanionPetsResponse>('list_agent_companion_pets');

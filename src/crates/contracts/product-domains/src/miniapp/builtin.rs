@@ -159,6 +159,21 @@ pub const BUILTIN_APPS: &[BuiltinMiniAppBundle] = &[
     },
 ];
 
+/// Release profile: built-in MiniApps seeded into a user data directory.
+///
+/// The other bundles stay registered in [`BUILTIN_APPS`] because updates,
+/// customization, routing and the market locate builtins by id; only seeding a
+/// new installation is limited. Restoring an app means adding its id back here
+/// (and flipping the matching release-profile test).
+pub const SEEDED_BUILTIN_APP_IDS: &[&str] = &["builtin-ppt-live", "builtin-gomoku"];
+
+/// Built-in MiniApps seeded for new installations, in registration order.
+pub fn seeded_builtin_apps() -> impl Iterator<Item = &'static BuiltinMiniAppBundle> {
+    BUILTIN_APPS
+        .iter()
+        .filter(|app| SEEDED_BUILTIN_APP_IDS.contains(&app.id))
+}
+
 pub fn builtin_content_hash(app: &BuiltinMiniAppBundle) -> String {
     let mut hasher = Sha256::new();
     hash_builtin_asset(&mut hasher, "meta.json", app.meta_json);
@@ -236,8 +251,8 @@ pub fn resolve_builtin_seed_action(
 pub async fn seed_builtin_miniapps_with_host(
     host: &dyn BuiltinMiniAppSeedHost,
 ) -> Vec<BuiltinMiniAppSeedReport> {
-    let mut reports = Vec::with_capacity(BUILTIN_APPS.len());
-    for app in BUILTIN_APPS {
+    let mut reports = Vec::with_capacity(SEEDED_BUILTIN_APP_IDS.len());
+    for app in seeded_builtin_apps() {
         reports.push(BuiltinMiniAppSeedReport {
             app_id: app.id,
             outcome: seed_builtin_miniapp_with_host(host, app).await,
@@ -343,8 +358,9 @@ mod tests {
 
     use super::{
         build_builtin_seed_artifacts, builtin_content_hash, seed_builtin_miniapp_with_host,
-        BuiltinInstallMarker, BuiltinMiniAppSeedBundleRequest, BuiltinMiniAppSeedHost,
-        BuiltinMiniAppSeedOutcome, BuiltinSeedArtifacts, BUILTIN_APPS,
+        seed_builtin_miniapps_with_host, seeded_builtin_apps, BuiltinInstallMarker,
+        BuiltinMiniAppSeedBundleRequest, BuiltinMiniAppSeedHost, BuiltinMiniAppSeedOutcome,
+        BuiltinSeedArtifacts, BUILTIN_APPS,
     };
     use crate::miniapp::ports::{MiniAppPortFuture, MiniAppPortResult};
     use std::sync::{Arc, Mutex};
@@ -372,6 +388,33 @@ mod tests {
             assert!(!app.worker_js.trim().is_empty());
             assert!(builtin_content_hash(app).starts_with("sha256:"));
         }
+    }
+
+    #[test]
+    fn release_profile_seeds_only_ppt_live_and_gomoku() {
+        let seeded = seeded_builtin_apps().map(|app| app.id).collect::<Vec<_>>();
+
+        assert_eq!(seeded, vec!["builtin-gomoku", "builtin-ppt-live"]);
+        // Every seedable app is still a registered bundle.
+        for id in seeded {
+            assert!(BUILTIN_APPS.iter().any(|app| app.id == id));
+        }
+    }
+
+    #[tokio::test]
+    async fn seed_host_orchestrator_skips_withheld_builtins() {
+        let host = FakeSeedHost::new();
+
+        let reports = seed_builtin_miniapps_with_host(host.as_ref()).await;
+
+        assert_eq!(
+            reports
+                .iter()
+                .map(|report| report.app_id)
+                .collect::<Vec<_>>(),
+            vec!["builtin-gomoku", "builtin-ppt-live"]
+        );
+        assert_eq!(host.seeded_bundles.lock().unwrap().len(), 2);
     }
 
     #[derive(Default)]
@@ -606,8 +649,9 @@ mod tests {
             .as_array()
             .is_some_and(|scopes| scopes.iter().any(|scope| scope == "{appdata}")));
         assert!(!app.ui_js.contains("Sparo"));
-        assert!(include_str!("builtin/assets/ppt-live/ui.js")
-            .contains("installStarMateBackendAdapter"));
+        assert!(
+            include_str!("builtin/assets/ppt-live/ui.js").contains("installStarMateBackendAdapter")
+        );
         // The single cowork agent turn loads the stable ppt-design skill key.
         assert!(prompt_source.contains("user::openbitfun-system::ppt-design"));
         let ppt_live_source = include_str!("builtin/assets/ppt-live/ui.js");

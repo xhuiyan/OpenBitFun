@@ -107,13 +107,13 @@ describe('AIExperienceConfigService startup behavior', () => {
     });
   });
 
-  it('preserves an existing user-selected companion pet', async () => {
+  it('preserves an exposed user-selected companion pet', async () => {
     const selectedPet = {
-      id: 'usagi',
-      displayName: 'Usagi',
+      id: 'gugugaga',
+      displayName: '咕咕嘎嘎',
       source: 'preset' as const,
-      packagePath: '/agent-companion-pets/usagi',
-      spritesheetPath: '/agent-companion-pets/usagi/spritesheet.webp',
+      packagePath: '/agent-companion-pets/gugugaga',
+      spritesheetPath: '/agent-companion-pets/gugugaga/spritesheet.webp',
       spritesheetMimeType: 'image/webp',
     };
     configManagerMock.getConfig.mockResolvedValueOnce({
@@ -125,6 +125,30 @@ describe('AIExperienceConfigService startup behavior', () => {
     const settings = await aiExperienceConfigService.getSettingsAsync();
 
     expect(settings.agent_companion_pet).toEqual(selectedPet);
+  });
+
+  it('renders the exposed default for a withheld preset without rewriting the stored selection', async () => {
+    const withheldPet = {
+      id: 'usagi',
+      displayName: 'Usagi',
+      source: 'preset' as const,
+      packagePath: '/agent-companion-pets/usagi',
+      spritesheetPath: '/agent-companion-pets/usagi/spritesheet.webp',
+      spritesheetMimeType: 'image/webp',
+    };
+    configManagerMock.getConfig.mockResolvedValueOnce({
+      enable_agent_companion: true,
+      agent_companion_pet: withheldPet,
+    });
+    const { aiExperienceConfigService } = await import('./AIExperienceConfigService');
+
+    const settings = await aiExperienceConfigService.getSettingsAsync();
+
+    expect(settings.agent_companion_pet).toMatchObject({
+      id: 'bitblob',
+      packagePath: '/agent-companion-pets/bitblob',
+    });
+    expect(configManagerMock.setConfig).not.toHaveBeenCalled();
   });
 
   it('drops the retired input display mode during cross-window refresh', async () => {

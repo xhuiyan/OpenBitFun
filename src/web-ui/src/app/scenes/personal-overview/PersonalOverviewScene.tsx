@@ -22,6 +22,7 @@ import { getOverviewIdentity } from './overviewIdentity';
 import { OverviewAccountButton } from './OverviewAccountButton';
 import { OverviewDesktopCardsSection } from './OverviewDesktopCardsSection';
 import { OverviewDevicesSection } from './OverviewDevicesSection';
+import { isUiSurfaceVisible } from '@/app/uiSurfaceVisibility';
 import { OverviewSplitCard, OverviewSplitCardAction, OverviewSplitCardSection } from './OverviewSplitCard';
 import { OverviewMiniAppLogos } from './OverviewMiniAppLogos';
 import joystickArtwork from '@/flow_chat/assets/subagent-avatars/robot-04.svg?raw';
@@ -256,7 +257,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
               )}
             </section>
 
-            <OverviewDevicesSection identity={identity} />
+            {isUiSurfaceVisible('personal-overview.devices') && <OverviewDevicesSection identity={identity} />}
 
             <section className="personal-overview__section" aria-labelledby="overview-miniapps-title" aria-busy={miniApps.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="miniApps" data-catalog-status={miniApps.status} data-starmate-scene="personal-overview" data-starmate-part="miniApps" >
               <div className="personal-overview__section-header">
@@ -298,7 +299,7 @@ const PersonalOverviewScene: React.FC<{ isActive?: boolean }> = ({ isActive = tr
               </div>
             </section>
 
-            <OverviewDesktopCardsSection isActive={isActive} />
+            {isUiSurfaceVisible('personal-overview.desktopCards') && <OverviewDesktopCardsSection isActive={isActive} />}
 
             <section className="personal-overview__section" aria-labelledby="overview-skills-title" aria-busy={skills.status === 'loading'} data-openbitfun-scene="personal-overview" data-openbitfun-part="skills" data-starmate-scene="personal-overview" data-starmate-part="skills" >
               <div className="personal-overview__section-header">

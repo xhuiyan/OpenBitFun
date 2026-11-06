@@ -201,6 +201,26 @@ describe('AppearanceService', () => {
     });
   });
 
+  it('renders a withheld built-in selection as the exposed appearance of its mode', async () => {
+    configMocks.getConfig.mockResolvedValue('starmate-tokyo-night');
+    const { runtime, service } = createService();
+
+    await service.initialize();
+
+    expect(runtime.initialize).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'starmate-dark' }),
+      {},
+    );
+    expect(service.getSnapshot()).toMatchObject({
+      selectedAppearanceId: 'starmate-tokyo-night',
+      persistedSelectionId: 'starmate-tokyo-night',
+      resolvedAppearanceId: 'starmate-dark',
+      status: 'ready',
+    });
+    // The stored choice is retained, so restoring the appearance later restores the preference.
+    expect(configMocks.setConfig).not.toHaveBeenCalled();
+  });
+
   it('rehydrates a shared selection when its device-local package becomes available', async () => {
     configMocks.getConfig.mockResolvedValue('market.shared');
     const storage = new MemoryAppearanceStorage();

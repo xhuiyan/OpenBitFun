@@ -2,7 +2,7 @@ import en from '@/locales/en-US/scenes/capabilities.json';
 import cn from '@/locales/zh-CN/scenes/capabilities.json';
 import tw from '@/locales/zh-TW/scenes/capabilities.json';
 import { describe, expect, it } from 'vitest';
-import { INTERACTIVE_CAPABILITY_CATALOG } from '../interactiveCapabilityCatalog';
+import { INTERACTIVE_CAPABILITY_CATALOG, isInteractiveCapabilityDestinationAvailable } from '../interactiveCapabilityCatalog';
 import type { GlobalSearchRequest } from '../types';
 import { interactiveCapabilitySearchProvider } from './interactiveCapabilitySearchProvider';
 
@@ -28,6 +28,26 @@ function request(query: string, locale: keyof typeof resources = 'en-US'): Globa
 }
 
 describe('interactiveCapabilitySearchProvider', () => {
+  it('withholds entry points for release-hidden settings destinations', async () => {
+    expect(isInteractiveCapabilityDestinationAvailable({ kind: 'settings', pageId: 'tools.automation' })).toBe(false);
+    expect(isInteractiveCapabilityDestinationAvailable({ kind: 'settings', pageId: 'tools.external-import' })).toBe(false);
+    expect(isInteractiveCapabilityDestinationAvailable({
+      kind: 'settings', pageId: 'application.pet', sectionId: 'desktop-cards',
+    })).toBe(false);
+    expect(isInteractiveCapabilityDestinationAvailable({
+      kind: 'settings', pageId: 'application.pet', sectionId: 'pet',
+    })).toBe(true);
+
+    const signal = new AbortController().signal;
+    for (const capabilityId of ['setting.tools.automation', 'feature.ecosystem-compatibility', 'feature.desktop-cards']) {
+      const hidden = await interactiveCapabilitySearchProvider.search(request(capabilityId), signal);
+      expect(hidden.items.filter(item => item.target.kind === 'capability' && item.target.capabilityId === capabilityId)).toEqual([]);
+    }
+    const visible = await interactiveCapabilitySearchProvider.search(request('feature.desktop-pet'), signal);
+    expect(visible.items.some(item => item.target.kind === 'capability'
+      && item.target.capabilityId === 'feature.desktop-pet')).toBe(true);
+  });
+
   it.each(['en-US', 'zh-CN', 'zh-TW'] as const)('uses %s display labels for both English and Chinese queries', async locale => {
     const labels: string[] = [];
     for (const query of ['terminal', '终端']) {
@@ -127,7 +147,6 @@ describe('interactiveCapabilitySearchProvider', () => {
   it.each([
     ['快捷键', 'setting.application.shortcuts', 'shortcut-browser'],
     ['editor font', 'setting.application.development', 'editor-appearance'],
-    ['Hooks 设置', 'setting.tools.automation', 'hooks-enabled'],
   ])('routes %s to the matching settings subview', async (query, capabilityId, itemId) => {
     const result = await interactiveCapabilitySearchProvider.search(
       request(query),
@@ -169,15 +188,24 @@ describe('interactiveCapabilitySearchProvider', () => {
   });
 
   it('satisfies the shared cross-surface search acceptance corpus', async () => {
+    const capabilityById = new Map(INTERACTIVE_CAPABILITY_CATALOG.capabilities.map(capability => [capability.id, capability]));
+    // The corpus describes host capability discovery. The Web UI entry point may be
+    // withheld by the release profile; the capability itself stays executable.
+    const entryVisible = (capabilityId: string, itemId?: string) => {
+      const capability = capabilityById.get(capabilityId);
+      if (!capability || !isInteractiveCapabilityDestinationAvailable(capability.destination)) return false;
+      const item = itemId ? capability.items.find(candidate => candidate.id === itemId) : undefined;
+      return !item?.destination || isInteractiveCapabilityDestinationAvailable(item.destination);
+    };
     for (const acceptance of INTERACTIVE_CAPABILITY_CATALOG.searchAcceptance) {
       const result = await interactiveCapabilitySearchProvider.search(
         request(acceptance.query),
         new AbortController().signal,
       );
-      // Git remains in the host discovery contract, but no longer has a Web UI panel entry.
-      if (acceptance.expectedFirstCapabilityId === 'feature.git') {
-        expect(result.items.some(item => item.target.kind === 'capability'
-          && item.target.capabilityId === 'feature.git')).toBe(false);
+      const capabilityIds = new Set(result.items.flatMap((item) =>
+        item.target.kind === 'capability' ? [item.target.capabilityId] : []));
+      if (!entryVisible(acceptance.expectedFirstCapabilityId)) {
+        expect(capabilityIds.has(acceptance.expectedFirstCapabilityId), `${acceptance.id} exposed a withheld entry`).toBe(false);
         continue;
       }
       const ranked = [...result.items].sort((left, right) => right.score - left.score);
@@ -185,14 +213,20 @@ describe('interactiveCapabilitySearchProvider', () => {
         ranked[0]?.target.kind === 'capability' ? ranked[0].target.capabilityId : undefined,
         acceptance.id,
       ).toBe(acceptance.expectedFirstCapabilityId);
-      const capabilityIds = new Set(result.items.flatMap((item) =>
-        item.target.kind === 'capability' ? [item.target.capabilityId] : []));
       for (const capabilityId of acceptance.expectedCapabilityIds) {
+        if (!entryVisible(capabilityId)) {
+          expect(capabilityIds.has(capabilityId), `${acceptance.id} exposed ${capabilityId}`).toBe(false);
+          continue;
+        }
         expect(capabilityIds.has(capabilityId), `${acceptance.id} missed ${capabilityId}`).toBe(true);
       }
       if (acceptance.expectedItem) {
         const match = result.items.find((item) => item.target.kind === 'capability'
           && item.target.capabilityId === acceptance.expectedItem?.capabilityId);
+        if (!entryVisible(acceptance.expectedItem.capabilityId, acceptance.expectedItem.itemId)) {
+          expect(match, `${acceptance.id} exposed a withheld item route`).toBeUndefined();
+          continue;
+        }
         expect(match?.target, `${acceptance.id} item route`).toEqual({
           kind: 'capability',
           capabilityId: acceptance.expectedItem.capabilityId,

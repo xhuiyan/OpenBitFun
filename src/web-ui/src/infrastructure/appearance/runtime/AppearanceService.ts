@@ -6,6 +6,7 @@ import {
   getSystemAppearanceId,
 } from '../builtins/catalog';
 import { composeAppearancePackage } from '../builtins/composeAppearancePackage';
+import { resolveExposedAppearanceId } from '../builtins/exposedAppearances';
 import type { AppearancePackageParser } from '../schema/AppearancePackageParser';
 import {
   noopAppearanceSyncPort,
@@ -184,8 +185,18 @@ export class AppearanceService {
     if (this.snapshot.status !== 'applying' || this.snapshot.pendingSelectionId !== id) {
       return false;
     }
-    const resolvedId = id === SYSTEM_APPEARANCE_ID ? getSystemAppearanceId() : id;
-    return this.runtime.getSnapshot()?.id === resolvedId;
+    return this.runtime.getSnapshot()?.id === this.resolveSelectionId(id);
+  }
+
+  /**
+   * Resolve a selection to the package the runtime applies. Release-profile rules
+   * live here: following the system maps to the exposed light/dark appearance,
+   * and a withheld built-in selection keeps its persisted identity while the
+   * exposed appearance of the same mode is what actually renders.
+   */
+  private resolveSelectionId(selected: string): string {
+    const resolved = selected === SYSTEM_APPEARANCE_ID ? getSystemAppearanceId() : selected;
+    return resolveExposedAppearanceId(resolved);
   }
 
   getPackage(id: string): Promise<AppearancePackage | null> {
@@ -477,7 +488,7 @@ export class AppearanceService {
     selected: AppearanceSelectionId,
     options: ApplySelectionOptions,
   ): Promise<void> {
-    const resolvedId = selected === SYSTEM_APPEARANCE_ID ? getSystemAppearanceId() : selected;
+    const resolvedId = this.resolveSelectionId(selected);
     const unchanged = this.snapshot.initialized
       && this.snapshot.selectedAppearanceId === selected
       && this.snapshot.resolvedAppearanceId === resolvedId
@@ -677,7 +688,7 @@ export class AppearanceService {
       this.setSnapshot({ ...this.snapshot, appearances });
     }
 
-    const resolvedId = selected === SYSTEM_APPEARANCE_ID ? getSystemAppearanceId() : selected;
+    const resolvedId = this.resolveSelectionId(selected);
     const importedSelection = !getBuiltinAppearance(resolvedId);
     const importedEntry = importedSelection
       ? appearances.find(entry => entry.id === resolvedId && entry.source === 'imported')

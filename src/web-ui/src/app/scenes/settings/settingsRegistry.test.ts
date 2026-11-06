@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { registerSettingsDraft, resetSettingsDraftRegistryForTests, getSettingsDraftSnapshot } from '@/infrastructure/config/settingsDraftRegistry';
 import { isLegacyEcosystemCompatibilityDestination, resolveSettingsDestination } from './settingsDestination';
-import { SETTINGS_CATEGORIES, SETTINGS_PAGE_MANIFESTS, getSettingsPageManifest, isSettingsPageId, preloadSettingsPage, isSettingsPageReady } from './settingsRegistry';
+import { SETTINGS_CATEGORIES, SETTINGS_NAV_CATEGORIES, SETTINGS_NAV_PAGE_MANIFESTS, SETTINGS_PAGE_MANIFESTS, getSettingsPageManifest, isSettingsPageId, preloadSettingsPage, isSettingsPageReady } from './settingsRegistry';
 import { useSettingsStore } from './settingsStore';
 import { i18nService } from '@/infrastructure/i18n/core/I18nService';
 import migrations from './settingsDestinationMigrations.json';
@@ -17,6 +17,26 @@ afterEach(() => {
   vi.restoreAllMocks();
   resetSettingsDraftRegistryForTests();
   useSettingsStore.setState(useSettingsStore.getInitialState());
+});
+
+describe('settings release profile', () => {
+  it('withholds hidden pages and sections from navigation without removing page owners', () => {
+    expect(SETTINGS_NAV_PAGE_MANIFESTS.map(page => page.id)).toEqual([
+      'application.general', 'application.appearance', 'application.pet', 'application.input',
+      'ai.models', 'ai.session-memory', 'ai.execution', 'ai.permissions',
+      'development.editor', 'development.terminal', 'development.workspace',
+      'tools.web-search', 'tools.desktop-control', 'tools.mcp',
+      'data.usage', 'data.archived', 'data.diagnostics',
+    ]);
+    // Page owners and the product surfaces embedding them keep rendering.
+    expect(SETTINGS_PAGE_MANIFESTS.some(page => page.id === 'tools.external-import')).toBe(true);
+    expect(SETTINGS_PAGE_MANIFESTS.some(page => page.id === 'tools.external-agents')).toBe(true);
+    expect(SETTINGS_PAGE_MANIFESTS.some(page => page.id === 'tools.automation')).toBe(true);
+    const pet = SETTINGS_NAV_PAGE_MANIFESTS.find(page => page.id === 'application.pet')!;
+    expect(pet.sections?.map(section => section.id)).toEqual(['voice-call', 'pet']);
+    expect(pet.searchPhrases).not.toContainEqual({ namespace: 'settings/runtime', key: 'features.desktopCards.title' });
+    expect(SETTINGS_NAV_CATEGORIES.map(category => category.id)).toEqual(['application', 'ai', 'development', 'tools', 'data']);
+  });
 });
 
 describe('settings information architecture', () => {

@@ -22,6 +22,7 @@ export * from './builtins/buildBuiltinAppearance';
 export * from './builtins/catalog';
 export * from './builtins/AppearancePalette';
 export * from './builtins/palettes';
+export * from './builtins/exposedAppearances';
 export * from './builtins/startupAppearanceBootstrap';
 export * from './builtins/appearancePromptSnapshots';
 export * from './adapters/MonacoAppearanceAdapter';

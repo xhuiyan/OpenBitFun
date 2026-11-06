@@ -3,6 +3,7 @@ import type { SettingsDestination } from '@/app/scenes/settings/settingsTypes';
 import type { ProductActionId } from './productActionCatalog';
 import generatedCatalog from './generated/interactive-capabilities.json';
 import { WORKSPACE_SEARCH_AVAILABLE } from '@/infrastructure/config/workspaceSearchAvailability';
+import { isSettingsDestinationVisible } from '@/app/uiSurfaceVisibility';
 import { projectSettingsCapabilityDestination } from './settingsCapabilityDestination';
 
 export type InteractiveCapabilityKind = 'feature' | 'setting';
@@ -14,10 +15,15 @@ export type InteractiveCapabilityDestination =
   | { kind: 'scene'; sceneId: SceneTabId }
   | { kind: 'event'; eventName: string; detail?: Record<string, unknown> };
 
-/** Git operations remain host capabilities, but their standalone panel has no entry point. */
+/**
+ * Entry-point availability, not capability availability. A destination stays
+ * executable as a host capability; it just must not surface an entry point the
+ * current release profile withholds.
+ */
 export function isInteractiveCapabilityDestinationAvailable(
   destination: InteractiveCapabilityDestination,
 ): boolean {
+  if (destination.kind === 'settings') return isSettingsDestinationVisible(destination);
   return destination.kind !== 'scene' || destination.sceneId !== 'git';
 }
 

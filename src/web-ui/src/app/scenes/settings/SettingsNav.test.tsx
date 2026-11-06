@@ -21,13 +21,16 @@ vi.mock('./settingsRegistry', () => {
     },
     { id: 'ai.models', categoryId: 'ai', labelKey: 'Models' },
   ].map((page) => ({ icon, descriptionKey: 'Description', keywords: ['settings'], searchPhrases: [], ...page }));
+  const categories = [
+    { id: 'application', labelKey: 'Application', pages: pages.slice(0, 3) },
+    { id: 'ai', labelKey: 'AI', pages: pages.slice(3) },
+  ];
   return {
     DEFAULT_SETTINGS_PAGE_ID: 'application.general',
     SETTINGS_PAGE_MANIFESTS: pages,
-    SETTINGS_CATEGORIES: [
-      { id: 'application', labelKey: 'Application', pages: pages.slice(0, 3) },
-      { id: 'ai', labelKey: 'AI', pages: pages.slice(3) },
-    ],
+    SETTINGS_CATEGORIES: categories,
+    SETTINGS_NAV_PAGE_MANIFESTS: pages,
+    SETTINGS_NAV_CATEGORIES: categories,
     getSettingsPageManifest: (id: string) => pages.find(page => page.id === id),
     isSettingsPageId: (value: string) => pages.some((page) => page.id === value),
     preloadSettingsPage: vi.fn(async () => undefined),

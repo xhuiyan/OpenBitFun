@@ -18,13 +18,12 @@ describe('AgentCompanionPetService built-in presets', () => {
     invoke.mockReset();
   });
 
-  it('defaults to BitBlob v2 while retaining previous presets', async () => {
+  it('exposes only the release-profile presets and resolves BitBlob v2 without host access', async () => {
     const { DEFAULT_AGENT_COMPANION_PET, listAgentCompanionPets, resolveAgentCompanionPet } = await import('./AgentCompanionPetService');
 
     const pets = await listAgentCompanionPets();
-    const blueGolden = pets.find(pet => pet.id === 'blue-golden');
-    const openbitfun = pets.find(pet => pet.id === 'openbitfun');
 
+    expect(pets.map(pet => pet.id)).toEqual(['bitblob', 'gugugaga']);
     expect(DEFAULT_AGENT_COMPANION_PET).toMatchObject({
       id: 'bitblob',
       displayName: 'BitBlob',
@@ -34,14 +33,6 @@ describe('AgentCompanionPetService built-in presets', () => {
       spritesheetMimeType: 'image/webp',
       spriteVersionNumber: 2,
     });
-    expect(blueGolden).toMatchObject({
-      id: 'blue-golden',
-      displayName: '困困',
-      source: 'preset',
-      packagePath: '/agent-companion-pets/blue-golden',
-      spritesheetPath: '/agent-companion-pets/blue-golden/spritesheet.png',
-      spritesheetMimeType: 'image/png',
-    });
     expect(pets[0]).toMatchObject(DEFAULT_AGENT_COMPANION_PET);
     expect(pets[0]).toMatchObject({
       ...bitblobManifest,
@@ -50,28 +41,31 @@ describe('AgentCompanionPetService built-in presets', () => {
     expect((await resolveAgentCompanionPet(pets[0])).layout).toMatchObject({
       version: 2, columns: 8, rows: 11, supportsLook: true,
     });
-    expect(openbitfun).toMatchObject({
-      displayName: 'StarMate',
-      packagePath: '/agent-companion-pets/openbitfun',
-      spritesheetPath: '/agent-companion-pets/openbitfun/spritesheet.webp',
+    expect(pets[1]).toMatchObject({
+      id: 'gugugaga',
+      displayName: '咕咕嘎嘎',
+      source: 'preset',
+      packagePath: '/agent-companion-pets/gugugaga',
+      spritesheetPath: '/agent-companion-pets/gugugaga/spritesheet.webp',
+      spritesheetMimeType: 'image/webp',
     });
     expect(invoke).not.toHaveBeenCalled();
   });
 
-  it('retains Fangling and resolves its packaged v2 layout without host access', async () => {
+  it('keeps withheld preset assets renderable even though the picker withholds them', async () => {
     const { listAgentCompanionPets, resolveAgentCompanionPet } = await import('./AgentCompanionPetService');
     const pets = await listAgentCompanionPets();
-    const girl = pets[2];
+    expect(pets.some(pet => pet.id === 'openbitfun-girl')).toBe(false);
 
-    expect(pets.slice(0, 4).map(pet => pet.id)).toEqual([
-      'bitblob', 'blue-golden', 'openbitfun-girl', 'deepseek-goldwhale',
-    ]);
-    expect(girl).toMatchObject({
-      ...girlManifest,
-      source: 'preset',
+    const girl = {
+      id: girlManifest.id,
+      displayName: girlManifest.displayName,
+      source: 'preset' as const,
+      packagePath: '/agent-companion-pets/openbitfun-girl',
       spritesheetPath: `/agent-companion-pets/${girlManifest.id}/${girlManifest.spritesheetPath}`,
       spritesheetMimeType: 'image/webp',
-    });
+      spriteVersionNumber: 2,
+    };
     const resolved = await resolveAgentCompanionPet(girl);
     expect(resolved.src).toBe(girl.spritesheetPath);
     expect(resolved.layout).toMatchObject({ version: 2, columns: 8, rows: 11, supportsLook: true });

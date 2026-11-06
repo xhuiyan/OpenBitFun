@@ -2,6 +2,7 @@
 
 import { configManager } from './ConfigManager';
 import { DEFAULT_AGENT_COMPANION_PET } from './AgentCompanionPetService';
+import { resolveExposedCompanionPet } from './agentCompanionPetPresets';
 import { configAPI } from '@/infrastructure/api/service-api/ConfigAPI';
 import { createLogger } from '@/shared/utils/logger';
 import { getActiveSurfaceScope, isSurfaceChangedError, onSurfaceActivated } from '@/infrastructure/peer-device/deviceSurface';
@@ -122,9 +123,12 @@ function normalizeSettings(settings: PersistedAIExperienceSettings | null | unde
       : undefined,
   };
   // Legacy configs used null to mean the built-in SVG panda. Resolve null to the current preset.
-  if (!merged.agent_companion_pet) {
-    merged.agent_companion_pet = DEFAULT_AGENT_COMPANION_PET;
-  }
+  // A persisted preset the release profile withholds renders the exposed default; the
+  // stored value stays untouched so restoring the preset restores the user's choice.
+  merged.agent_companion_pet = resolveExposedCompanionPet(
+    merged.agent_companion_pet ?? DEFAULT_AGENT_COMPANION_PET,
+    DEFAULT_AGENT_COMPANION_PET,
+  );
   return merged;
 }
 

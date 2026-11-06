@@ -1,3 +1,4 @@
+import { isSettingsSectionVisible } from '@/app/uiSurfaceVisibility';
 import type { SettingsPageProps } from '../../settingsTypes';
 import { SettingsPage } from '../shared/SettingsPage';
 import DesktopCardsSettingsSection from './DesktopCardsSettingsSection';
@@ -9,7 +10,7 @@ export default function PetAssistantSettingsPage({ isActive }: SettingsPageProps
     <SettingsPage pageId="application.pet">
       <RealtimeVoiceSettingsSection />
       <PetSettingsSection isActive={isActive} />
-      <DesktopCardsSettingsSection />
+      {isSettingsSectionVisible('application.pet', 'desktop-cards') && <DesktopCardsSettingsSection />}
     </SettingsPage>
   );
 }
