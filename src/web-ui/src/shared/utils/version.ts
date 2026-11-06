@@ -1,6 +1,6 @@
  
 
-import type { VersionInfo, AboutInfo } from '../types/version';
+import type { VersionInfo } from '../types/version';
 import { i18nService } from '@/infrastructure/i18n';
 
  
@@ -91,24 +91,4 @@ export function getRelativeTime(buildTimestamp: number): string {
   if (hours > 0) return i18nService.t('common:time.hoursAgo', { count: hours });
   if (minutes > 0) return i18nService.t('common:time.minutesAgo', { count: minutes });
   return i18nService.t('common:time.just_now');
-}
-
- 
-export function getAboutInfo(): AboutInfo {
-  const versionInfo = getVersionInfo();
-  
-  return {
-    version: versionInfo,
-    license: {
-      type: 'MIT',
-      text: 'MIT License - Copyright (c) 2025 StarMate',
-      url: 'https://opensource.org/licenses/MIT'
-    },
-    links: {
-      homepage: 'https://github.com/yourusername/openbitfun',
-      repository: 'https://github.com/yourusername/openbitfun',
-      documentation: 'https://github.com/yourusername/openbitfun/wiki',
-      issues: 'https://github.com/yourusername/openbitfun/issues'
-    }
-  };
 }

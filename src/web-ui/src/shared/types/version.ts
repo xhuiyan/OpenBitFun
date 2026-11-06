@@ -23,29 +23,3 @@ export interface VersionInfo {
 
   releaseChannel?: 'stable' | 'beta' | 'nightly';
 }
-
- 
-export interface LicenseInfo {
-   
-  type: string;
-   
-  text?: string;
-   
-  url?: string;
-}
-
- 
- 
-export interface AboutInfo {
-   
-  version: VersionInfo;
-   
-  license: LicenseInfo;
-   
-  links: {
-    homepage?: string;
-    repository?: string;
-    documentation?: string;
-    issues?: string;
-  };
-}

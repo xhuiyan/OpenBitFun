@@ -17,10 +17,7 @@ export const aboutDialogAppearanceDescriptor: AppearanceSurfaceDescriptor = {
     { id: 'infoRow', visualRole: 'content' },
     { id: 'infoLabel', propertyProfile: 'paint', visualRole: 'content' },
     { id: 'infoValue', propertyProfile: 'paint', visualRole: 'content' },
-    { id: 'copyButton', propertyProfile: 'control', visualRole: 'control' },
-    { id: 'starCallout', visualRole: 'toolbar', continuityGroup: 'about-dialog' },
     { id: 'footer', visualRole: 'toolbar', continuityGroup: 'about-dialog' },
-    { id: 'license', propertyProfile: 'paint', visualRole: 'content' },
     { id: 'copyright', propertyProfile: 'paint', visualRole: 'content' },
   ],
   states: [

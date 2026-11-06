@@ -1,6 +1,6 @@
 /**
  * About dialog composition. Dialog owns the surface, focus and scrolling;
- * this file owns brand placement, build details and repository invitation.
+ * this file owns brand placement, version/build details and the legal footer.
  */
 
 .openbitfun-about-dialog__close {
@@ -129,10 +129,6 @@
   font-variant-numeric: tabular-nums;
   text-align: end;
   overflow-wrap: anywhere;
-
-  &--mono {
-    font-family: var(--starmate-type-code-md-font-family);
-  }
 }
 
 .openbitfun-about-dialog__info-value-group {
@@ -145,42 +141,9 @@
   margin: 0;
 }
 
-.openbitfun-about-dialog__channel-badge,
-.openbitfun-about-dialog__copy-action {
+.openbitfun-about-dialog__channel-badge {
   display: inline-flex;
   flex: 0 0 auto;
-}
-
-.openbitfun-about-dialog__star-callout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--starmate-space-6);
-  padding-top: var(--starmate-space-6);
-  border-top: 1px solid var(--starmate-color-border-subtle);
-}
-
-.openbitfun-about-dialog__star-copy {
-  min-width: 0;
-}
-
-.openbitfun-about-dialog__star-title {
-  margin: 0;
-  color: var(--starmate-color-content-primary);
-  font-size: var(--starmate-type-body-sm-font-size);
-  font-weight: var(--starmate-type-label-sm-font-weight);
-  line-height: var(--starmate-type-body-sm-line-height);
-}
-
-.openbitfun-about-dialog__star-description {
-  margin: var(--starmate-space-1) 0 0;
-  color: var(--starmate-color-content-muted);
-  font-size: var(--starmate-type-label-md-font-size);
-  line-height: var(--starmate-type-flow-support-line-height);
-}
-
-.openbitfun-about-dialog__star-button {
-  white-space: nowrap;
 }
 
 .openbitfun-about-dialog__update-card {
@@ -288,7 +251,9 @@
   flex: 0 0 auto;
   flex-direction: column;
   gap: var(--starmate-space-6);
-  padding: 0 var(--starmate-space-8) var(--starmate-space-6);
+  margin: 0 var(--starmate-space-8);
+  padding: var(--starmate-space-6) 0 var(--starmate-space-6);
+  border-top: 1px solid var(--starmate-color-border-subtle);
 }
 
 .openbitfun-about-dialog__copyright {
@@ -323,18 +288,7 @@
   }
 
   .openbitfun-about-dialog__footer {
-    padding-inline: var(--starmate-space-6);
-  }
-}
-
-@media (max-width: 480px) {
-  .openbitfun-about-dialog__star-callout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--starmate-space-3);
-  }
-
-  .openbitfun-about-dialog__star-button {
-    justify-self: start;
+    margin-inline: var(--starmate-space-6);
   }
 }
 
